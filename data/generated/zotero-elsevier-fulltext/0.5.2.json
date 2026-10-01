@@ -1,0 +1,504 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-elsevier-fulltext",
+ "repo": "ching-chiang/zotero-elsevier-fulltext",
+ "version": "0.5.2",
+ "tag": "v0.5.2",
+ "releaseAuthor": "Ching-Chiang",
+ "publishedAt": "2026-07-23T07:50:14Z",
+ "prerelease": false,
+ "asset": {
+  "name": "elsevier-fulltext-0.5.2.xpi",
+  "url": "https://github.com/Ching-Chiang/zotero-elsevier-fulltext/releases/download/v0.5.2/elsevier-fulltext-0.5.2.xpi",
+  "size": 10815,
+  "sha256": "cf6142826b1d2346781659ddb26b5ecdf176dafdd35a710460213903b78424cc",
+  "githubAssetId": 486920513,
+  "uploader": "Ching-Chiang",
+  "uploadedAt": "2026-07-23T07:50:14Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-elsevier-fulltext@ching-chiang.github.io",
+  "name": "Elsevier API Full Text",
+  "version": "0.5.2",
+  "description": "Download entitled Elsevier PDFs with the official Article Retrieval API and attach them to Zotero items.",
+  "homepageUrl": "https://github.com/Ching-Chiang/zotero-elsevier-fulltext",
+  "updateUrl": "https://raw.githubusercontent.com/Ching-Chiang/zotero-elsevier-fulltext/main/updates.json",
+  "strictMinVersion": "8.999",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1557,
+   "sha256": "951f110d014a2145b0ea4e5e5f75c0207e73b826f5ee1ce4203ce943f9959797"
+  },
+  {
+   "path": "chrome/content/elsevier-fulltext.js",
+   "size": 18777,
+   "sha256": "3727ded4c4ffbaf2640f8d062d4824175cff4e25bf4651ec22b50eb56fb27e1a"
+  },
+  {
+   "path": "chrome/content/preferences.css",
+   "size": 240,
+   "sha256": "f80eb824a1104cff6c20e7904ad7f1b5afacc0f2c3d95ef5f5993c662cc47319"
+  },
+  {
+   "path": "chrome/content/preferences.xhtml",
+   "size": 2476,
+   "sha256": "d5b789988edcdee200686f6748de2417f666557922e4d55bace791c398e4e021"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1069,
+   "sha256": "06368ebdae0edce49daacb43d94bf67946747062aa4c736fe3ced941cd8c56bd"
+  },
+  {
+   "path": "manifest.json",
+   "size": 649,
+   "sha256": "2d0a8d33cdc3fa60691ea5597de11dc881aeb83b7101099bfd8ba6da29d2bf08"
+  },
+  {
+   "path": "prefs.js",
+   "size": 244,
+   "sha256": "810a95a7cc59eaf4b326f11aa695838fd847b969af7f151edf3b0bc7c507b589"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-elsevier-fulltext",
+   "version": "0.5.2",
+   "sha256": "cf6142826b1d2346781659ddb26b5ecdf176dafdd35a710460213903b78424cc"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "chrome/content/preferences.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 23054,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/elsevier-fulltext.js",
+       "line": 441,
+       "column": 30,
+       "snippet": "const request = await Zotero.HTTP.download(url, tempPath, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/elsevier-fulltext.js",
+       "line": 541,
+       "column": 14,
+       "snippet": "await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.elsevier.com",
+     "category": "scholarly-api",
+     "provider": "Elsevier (Scopus)",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/elsevier-fulltext.js",
+       "line": 8,
+       "column": 19,
+       "snippet": "const API_ROOT = \"https://api.elsevier.com/content\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/elsevier-fulltext.js",
+       "line": 434,
+       "column": 18,
+       "snippet": "const url = `${API_ROOT}/article/doi/${encodedDOI}?httpAccept=application%2Fpdf`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/elsevier-fulltext.js",
+       "line": 543,
+       "column": 10,
+       "snippet": "`${API_ROOT}/serial/title?count=1`,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/elsevier-fulltext.js",
+       "line": 471,
+       "column": 35,
+       "snippet": "attachment.setField(\"url\", `https://doi.org/${doi}`);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.xhtml",
+       "line": 68,
+       "column": 24,
+       "snippet": "<description>GitHub：https://github.com/Ching-Chiang</description>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/serial/title?count=1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/elsevier-fulltext.js",
+       "line": 541,
+       "column": 14,
+       "snippet": "await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/elsevier-fulltext.js",
+      "line": 175,
+      "column": 28,
+      "snippet": "const apiKey = String(this.getPref(\"apiKey\") || \"\").trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/elsevier-fulltext.js",
+      "line": 178,
+      "column": 26,
+      "snippet": "instToken: String(this.getPref(\"instToken\") || \"\").trim(),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/elsevier-fulltext.js",
+      "line": 529,
+      "column": 8,
+      "snippet": "this.setPref(\"apiKey\", enteredKey);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/elsevier-fulltext.js",
+      "line": 530,
+      "column": 8,
+      "snippet": "this.setPref(\"instToken\", String(tokenInput?.value || \"\").trim());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 1,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-elsevier-fulltext.apiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-elsevier-fulltext.instToken\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "apiKey",
+      "extensions.zotero-elsevier-fulltext.apiKey",
+      "extensions.zotero-elsevier-fulltext.instToken",
+      "instToken"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/elsevier-fulltext.js",
+      "line": 454,
+      "column": 32,
+      "snippet": "const signature = await IOUtils.read(tempPath, { maxBytes: 5 });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/elsevier-fulltext.js",
+      "line": 477,
+      "column": 18,
+      "snippet": "if (await IOUtils.exists(tempPath)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/elsevier-fulltext.js",
+      "line": 478,
+      "column": 16,
+      "snippet": "await IOUtils.remove(tempPath, { ignoreAbsent: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Ching-Chiang/zotero-elsevier-fulltext/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Ching-Chiang/zotero-elsevier-fulltext/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Ching-Chiang account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-elsevier-fulltext",
+   "version": "0.5.2",
+   "sha256": "cf6142826b1d2346781659ddb26b5ecdf176dafdd35a710460213903b78424cc"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "5a2a6534a3be4226011d1855c3f5d8e41563d76f2eda224f8e9676ccd085e847"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.elsevier.com",
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-23T07:50:14Z",
+    "lastCommitAt": "2026-07-23T07:49:58Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T06:35:10Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 2,
+    "dialogs": 2
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

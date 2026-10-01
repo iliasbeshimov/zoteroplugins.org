@@ -1,0 +1,255 @@
+---
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Base from "../layouts/Base.astro";
+
+/**
+ * Two plugins with the same grade can have very different reasons. Rows follow the scorecard's
+ * order, so what you learned reading one plugin page carries over. The plugins come from ?p=a,b,c
+ * and their rows from /p/<slug>.json.
+ */
+const ROWS = [
+  ["data", "Where your data goes"],
+  ["code", "Code transparency"],
+  ["caps", "Powerful capabilities"],
+  ["compat", "Works with"],
+  ["needs", "What you'll need"],
+  ["maint", "Maintenance"],
+  ["lang", "Languages"],
+];
+---
+
+<Base title="Compare plugins · Zotero Plugins Atlas" description="Compare Zotero plugins side by side, row by row in the scorecard's order.">
+  <SiteHeader active="browse" search />
+  <div class="wrap">
+    <nav aria-label="Breadcrumb" class="crumb"><a href="/">Home</a><span>›</span><a href="/browse">Browse</a><span>›</span><span>Compare</span></nav>
+    <h1 data-title>Compare plugins</h1>
+    <div class="dashed-note" data-empty hidden>
+      Pick two or three plugins to compare: tick them on any <a href="/c/ai">category page</a>.
+    </div>
+    <div class="table-wrap">
+      <div class="grid" data-grid data-rows={JSON.stringify(ROWS)} hidden></div>
+    </div>
+  </div>
+  <SiteFooter />
+</Base>
+
+<template id="head-cell">
+  <div class="hc">
+    <span class="hn"><a data-name></a><span class="mono-sm" data-meta></span></span>
+    <span class="hg"><span class="gt" data-tag></span><strong data-word></strong></span>
+    <span class="hw"><span class="muted">because </span><span data-why></span></span>
+  </div>
+</template>
+
+<script>
+  const LV: Record<string, [string, string] | undefined> = { low: ["Low", "few"], medium: ["Medium", "rev"], high: ["High", "ser"], unknown: ["Unknown", "nd"] };
+  const TOK: Record<string, string> = { "A+": "ap", A: "a", B: "b", C: "c" };
+  interface Row {
+    slug: string;
+    name: string;
+    version: string;
+    downloads: string;
+    grade: string;
+    gradeWord: string;
+    gradeTone: string;
+    because: string;
+    areas: { key: string; level: string; value: string; sub: string }[];
+  }
+  const grid = document.querySelector<HTMLElement>("[data-grid]")!;
+  const rows = JSON.parse(grid.dataset.rows!) as [string, string][];
+  const slugs = (new URLSearchParams(location.search).get("p") ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter((s) => /^[a-z0-9-]+$/.test(s))
+    .slice(0, 3);
+
+  const el = (tag: string, cls?: string, text?: string) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  };
+
+  async function main() {
+    const data = (await Promise.all(slugs.map((s) => fetch(`/p/${s}.json`).then((r) => (r.ok ? (r.json() as Promise<Row>) : null)).catch(() => null)))).filter(
+      (x): x is Row => !!x,
+    );
+    if (data.length < 1) {
+      document.querySelector<HTMLElement>("[data-empty]")!.hidden = false;
+      return;
+    }
+    document.querySelector("[data-title]")!.textContent = `Compare ${data.length} plugin${data.length > 1 ? "s" : ""}`;
+    document.title = `Compare ${data.map((d) => d.name).join(", ")} · Zotero Plugins Atlas`;
+    grid.style.gridTemplateColumns = `200px repeat(${data.length}, minmax(220px, 1fr))`;
+    grid.append(el("div", "corner"));
+    const tpl = document.querySelector<HTMLTemplateElement>("#head-cell")!;
+    for (const d of data) {
+      const n = tpl.content.cloneNode(true) as DocumentFragment;
+      const a = n.querySelector<HTMLAnchorElement>("[data-name]")!;
+      a.textContent = d.name;
+      a.href = `/p/${d.slug}`;
+      n.querySelector("[data-meta]")!.textContent = `v${d.version} · ${d.downloads} downloads`;
+      const tag = n.querySelector<HTMLElement>("[data-tag]")!;
+      const t = TOK[d.grade];
+      tag.textContent = t ? d.grade : "–";
+      tag.setAttribute("role", "img");
+      tag.setAttribute("aria-label", `Atlas grade ${d.grade}`);
+      if (t) tag.style.cssText = `background:var(--g-${t});color:var(--g-${t}-on)`;
+      else tag.classList.add("none");
+      const w = n.querySelector<HTMLElement>("[data-word]")!;
+      w.textContent = d.gradeWord;
+      w.style.color = `var(--${d.gradeTone}-fg)`;
+      n.querySelector("[data-why]")!.textContent = d.because;
+      grid.append(n);
+    }
+    for (const [key, label] of rows) {
+      grid.append(el("div", "rl", label));
+      for (const d of data) {
+        const a = d.areas.find((x) => x.key === key);
+        const cell = el("div", "cell");
+        const lv = a && LV[a.level];
+        if (lv) {
+          const l = el("span", "lvl", lv[0]);
+          l.style.color = `var(--${lv[1]}-fg)`;
+          cell.append(l);
+        }
+        cell.append(el("span", "v", a?.value ?? "—"));
+        if (a?.sub) cell.append(el("span", "s", a.sub));
+        grid.append(cell);
+      }
+    }
+    grid.hidden = false;
+  }
+  main();
+</script>
+
+<style>
+  .wrap {
+    padding: 36px var(--gutter) 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .crumb {
+    font-size: 14px;
+    color: var(--ink-2);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  h1 {
+    margin: 0;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 760;
+  }
+  .table-wrap {
+    overflow-x: auto;
+  }
+  .grid {
+    display: grid;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    min-width: min-content;
+  }
+  .grid[hidden] {
+    display: none;
+  }
+  .grid :global(.corner) {
+    border-bottom: 2px solid var(--ink);
+  }
+  .grid :global(.hc) {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px 22px 20px;
+    border-left: 1px solid var(--line);
+    border-bottom: 2px solid var(--ink);
+  }
+  .grid :global(.hn) {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .grid :global(.hn a) {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .grid :global(.hg) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+  }
+  .grid :global(.gt) {
+    display: inline-flex;
+    align-items: center;
+    height: 34px;
+    min-width: 53px;
+    padding: 0 21px 0 10px;
+    font: 800 17px/1 var(--font-sans);
+    letter-spacing: -0.02em;
+    clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 50%, calc(100% - 11px) 100%, 0 100%);
+  }
+  .grid :global(.gt.none) {
+    clip-path: none;
+    justify-content: center;
+    padding: 0 10px;
+    min-width: 44px;
+    border: 1.5px dashed var(--nd-line);
+    color: var(--nd-fg);
+  }
+  .grid :global(.hw) {
+    font-size: 14.5px;
+    line-height: 1.4;
+  }
+  .grid :global(.muted) {
+    color: var(--ink-2);
+  }
+  .grid :global(.rl) {
+    padding: 16px 22px;
+    border-top: 1px solid var(--line);
+    font: 600 11.5px/1.35 var(--font-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .grid :global(.cell) {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 22px;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    min-width: 0;
+  }
+  .grid :global(.lvl) {
+    font: 600 12px/1 var(--font-sans);
+  }
+  .grid :global(.v) {
+    font-size: 15px;
+    line-height: 1.4;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+  .grid :global(.s) {
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 720px) {
+    h1 {
+      font-size: 34px;
+    }
+  }
+</style>

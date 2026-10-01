@@ -1,0 +1,432 @@
+{
+ "schemaVersion": 1,
+ "slug": "research-assistant-zotero",
+ "repo": "0frost0/research-assistant-zotero",
+ "version": "0.2.0",
+ "tag": "research",
+ "releaseAuthor": "0frost0",
+ "publishedAt": "2026-09-22T02:20:06Z",
+ "prerelease": false,
+ "asset": {
+  "name": "research-assistant-0.2.0.xpi",
+  "url": "https://github.com/0frost0/research-assistant-zotero/releases/download/research/research-assistant-0.2.0.xpi",
+  "size": 13893,
+  "sha256": "f09a319846fa0abe3b1668f46e7bbde714bc00781be46dabbfd94854b052866e",
+  "githubAssetId": 580372875,
+  "uploader": "0frost0",
+  "uploadedAt": "2026-09-22T02:32:18Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "research-assistant@local",
+  "name": "Research Assistant Bridge",
+  "version": "0.2.0",
+  "description": "Collection-scoped literature and reading-note knowledge bases.",
+  "updateUrl": "https://example.invalid/research-assistant/update.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "assistant.css",
+   "size": 5820,
+   "sha256": "0ca2b87948cd9a6d66a390e7c0e6fbead70e276e5372f0ca12b2cfbc94512297"
+  },
+  {
+   "path": "assistant.js",
+   "size": 11863,
+   "sha256": "c945c9112315a838de9d2618dd407f154ca938e24ec9b22f662a8a391b02557b"
+  },
+  {
+   "path": "assistant.xhtml",
+   "size": 4347,
+   "sha256": "c24379fbe67194d6f2f9acd754188d962ab8250488e604961a3ebedf60f40fcd"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 1215,
+   "sha256": "43114908cf7fb003cce611d0f601d481660d5aba35ee63ac34e4087cb31b47a3"
+  },
+  {
+   "path": "bridge.js",
+   "size": 16144,
+   "sha256": "4a8d6f8ea1287e5ce7e4ad84388137bbe1b3ef2f5b2d36647a974af04ef33719"
+  },
+  {
+   "path": "manifest.json",
+   "size": 440,
+   "sha256": "185d9f764b2038ab5f631a925b8ca1c75bd689502b1ff4eaab1ba4ab7629531a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "research-assistant-zotero",
+   "version": "0.2.0",
+   "sha256": "f09a319846fa0abe3b1668f46e7bbde714bc00781be46dabbfd94854b052866e"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "assistant.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 33569,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 32,
+       "column": 29,
+       "snippet": "const response = await window.fetch(this.endpoint() + \"/api/knowledge/\" + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 8765,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 19,
+       "column": 46,
+       "snippet": "const url = new URL(this.pref(\"endpoint\", \"http://127.0.0.1:8765\"));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 104,
+       "column": 69,
+       "snippet": "const endpoint = window.prompt(\"科研助手后端地址\", this.pref(\"endpoint\", \"http://127.0.0.1:8765\"));",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/api/knowledge/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 32,
+       "column": 29,
+       "snippet": "const response = await window.fetch(this.endpoint() + \"/api/knowledge/\" + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 111,
+      "column": 4,
+      "snippet": "this.setPref(\"token\", secret.value.trim());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 119,
+      "column": 6,
+      "snippet": "this.setPref(\"token\", old.token);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 218,
+      "column": 28,
+      "snippet": "const content = await IOUtils.read(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 309,
+      "column": 10,
+      "snippet": "await IOUtils.write(picker.file, bytes);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "user-chosen",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 13,
+      "column": 52,
+      "snippet": "const { Subprocess } = ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 167,
+      "column": 33,
+      "snippet": "this.engineProcess = await Subprocess.call({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://example.invalid/research-assistant/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://example.invalid/research-assistant/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the 0frost0 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "research-assistant-zotero",
+   "version": "0.2.0",
+   "sha256": "f09a319846fa0abe3b1668f46e7bbde714bc00781be46dabbfd94854b052866e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "bf800e806edded19281665844bd0ade08e81364ffe4f44356a270613376dbc6f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts programs on this computer",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-22T02:20:06Z",
+    "lastCommitAt": "2026-09-22T02:03:10Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T11:10:11Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 4,
+    "dialogs": 4
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

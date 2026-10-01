@@ -1,0 +1,669 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-agent-mcp",
+ "repo": "jingyangyuan/zotero-agent-mcp",
+ "version": "0.3.1",
+ "tag": "release",
+ "releaseAuthor": "JingYangYuan",
+ "publishedAt": "2026-09-16T13:37:10Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-agent-mcp.xpi",
+  "url": "https://github.com/JingYangYuan/zotero-agent-mcp/releases/download/release/zotero-agent-mcp.xpi",
+  "size": 21864,
+  "sha256": "971d179023f0f53234e71ec7614df08ac8b9ee7bef9ffbe69bbfde6c20efecf2",
+  "githubAssetId": 568045937,
+  "uploader": "JingYangYuan",
+  "uploadedAt": "2026-09-16T13:37:09Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-agent-mcp@yjy.dev",
+  "name": "Zotero-Agent-MCP",
+  "version": "0.3.1",
+  "description": "Let local AI agents (ZCode / Claude / Cursor) read and file into your Zotero library: token-protected HTTP API + zero-dependency MCP bridge (metadata, fulltext, annotations, citations, notes/tags, local file import).",
+  "homepageUrl": "https://github.com/JingYangYuan/zotero-agent-mcp",
+  "updateUrl": "https://github.com/JingYangYuan/zotero-agent-mcp/releases/download/release/update.json",
+  "strictMinVersion": "7.0.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1594,
+   "sha256": "3d80107122b7e308e1836facc67e747ec1159719b7c84ec209e340c0e2b72307"
+  },
+  {
+   "path": "bridge-source.js",
+   "size": 14231,
+   "sha256": "d0abcca77549e6718c23e40220757695271f1c8af6f79198693095552ae9deaa"
+  },
+  {
+   "path": "icon.png",
+   "size": 1369,
+   "sha256": "4e561dd9499cd038ab51003ce26d12d6f37efaf051cc266fa4f34f4e54ed2471"
+  },
+  {
+   "path": "manifest.json",
+   "size": 736,
+   "sha256": "99dd2e1e3a2850504b669707e3f3f1b6032d2fdae9274eaa41c1b20cfa1f0cf8"
+  },
+  {
+   "path": "prefs.js",
+   "size": 5664,
+   "sha256": "bdcd8b23742f588c24edc4f51161cbe5d7b29cbec9d99f678eb0eb0c64890490"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 3205,
+   "sha256": "1f1b27f3ce9ed3a0e3cc31c3168fbfe8fa5798919c5beba1155512b8697381cc"
+  },
+  {
+   "path": "zotero-agent-mcp.js",
+   "size": 39643,
+   "sha256": "369630b2fc91cba100c14efbc3f7a51c0cc7642e870137dcb574ce3a4081f8ab"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-agent-mcp",
+   "version": "0.3.1",
+   "sha256": "971d179023f0f53234e71ec7614df08ac8b9ee7bef9ffbe69bbfde6c20efecf2"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 64337,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "zotero-agent-mcp.js",
+       "line": 1001,
+       "column": 8,
+       "snippet": "Zotero.RecognizeDocument.recognizeItems([att]);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 23119,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 8,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge-source.js",
+       "line": 2,
+       "column": 17,
+       "snippet": "var BRIDGE_SRC = \"#!/usr/bin/env node\\n/* zotero-agent MCP bridge — zero-dependency Model Context Protocol server over stdio.\\n * Released by \\\"Zotero-Agent-MCP\\\" to <Zotero data dir>/zotero-agent-mcp",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 37,
+       "column": 11,
+       "snippet": "return `http://127.0.0.1:${port}/zotero-agent-mcp`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 8,
+       "column": 60,
+       "snippet": "<checkbox id=\"ab-enabled\" label=\"启用 Zotero-Agent-MCP 服务（http://127.0.0.1:23119/zotero-agent-mcp/）\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-agent-mcp.js",
+       "line": 663,
+       "column": 11,
+       "snippet": "url: `http://127.0.0.1:23119/zotero-agent-mcp`,",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-agent-mcp.js",
+       "line": 672,
+       "column": 30,
+       "snippet": "ZOTERO_AGENT_URL: \"http://127.0.0.1:23119/zotero-agent-mcp\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-agent-mcp.js",
+       "line": 766,
+       "column": 15,
+       "snippet": "baseUrl: `http://127.0.0.1:${port}${BASE}`,",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-agent-mcp.js",
+       "line": 1094,
+       "column": 17,
+       "snippet": "Zotero.debug(`AgentMCP ${version}: ${ROUTES.length} endpoints registered on http://127.0.0.1:23119/zotero-agent-mcp/`);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "http://127.0.0.1:<expr>/zotero-agent-mcp",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 37,
+       "column": 11,
+       "snippet": "return `http://127.0.0.1:${port}/zotero-agent-mcp`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "http://127.0.0.1:<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "zotero-agent-mcp.js",
+       "line": 766,
+       "column": 15,
+       "snippet": "baseUrl: `http://127.0.0.1:${port}${BASE}`,",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 22,
+      "column": 36,
+      "snippet": "const ch = Components.classes[\"@mozilla.org/widget/clipboardhelper;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 23,
+      "column": 20,
+      "snippet": ".getService(Components.interfaces.nsIClipboardHelper);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 132,
+      "column": 21,
+      "snippet": "let cur = String(getPref(\"token\") || \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 136,
+      "column": 8,
+      "snippet": "setPref(\"token\", saved);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 139,
+      "column": 6,
+      "snippet": "setPref(\"token\", randomString(40));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 141,
+      "column": 26,
+      "snippet": "let finalTok = String(getPref(\"token\") || \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 154,
+      "column": 4,
+      "snippet": "setPref(\"token\", t);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 664,
+      "column": 13,
+      "snippet": "token: getPref(\"token\"),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 673,
+      "column": 32,
+      "snippet": "ZOTERO_AGENT_TOKEN: getPref(\"token\"),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 714,
+      "column": 26,
+      "snippet": "let real = String(getPref(\"token\") || \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 36,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 108,
+      "column": 25,
+      "snippet": "let exists = await IOUtils.exists(bridgePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 114,
+      "column": 25,
+      "snippet": "let stat = await IOUtils.stat(auditPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 168,
+      "column": 8,
+      "snippet": "Zotero.File.reveal(Zotero.AgentMCP.bridgePath());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 177,
+      "column": 8,
+      "snippet": "Zotero.File.reveal(Zotero.AgentMCP.auditPath());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 101,
+      "column": 16,
+      "snippet": "if (await IOUtils.exists(oldDir)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 102,
+      "column": 14,
+      "snippet": "await IOUtils.makeDirectory(bridgeDir(), { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 105,
+      "column": 19,
+      "snippet": "if ((await IOUtils.exists(oldTok)) && !(await IOUtils.exists(newTok))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 105,
+      "column": 54,
+      "snippet": "if ((await IOUtils.exists(oldTok)) && !(await IOUtils.exists(newTok))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 106,
+      "column": 16,
+      "snippet": "await IOUtils.move(oldTok, newTok);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 108,
+      "column": 14,
+      "snippet": "await IOUtils.remove(oldDir, { recursive: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 1076,
+      "column": 6,
+      "snippet": "Zotero.Server.Endpoints[r.path] = ep;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zotero-agent-mcp/ping"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/JingYangYuan/zotero-agent-mcp/releases/download/release/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/JingYangYuan/zotero-agent-mcp/releases/download/release/update.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 978,
+      "column": 16,
+      "snippet": "await item.saveTx();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-agent-mcp.js",
+      "line": 1076,
+      "column": 6,
+      "snippet": "Zotero.Server.Endpoints[r.path] = ep;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zotero-agent-mcp/ping"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the JingYangYuan account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-agent-mcp",
+   "version": "0.3.1",
+   "sha256": "971d179023f0f53234e71ec7614df08ac8b9ee7bef9ffbe69bbfde6c20efecf2"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "f6fdec843616bbac0f2a0c6e65e00912967652d3b8cef3ede5eae3e788bcca19"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address has no version for Zotero 10"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ],
+      "unconfirmed": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-16T13:37:10Z",
+    "lastCommitAt": "2026-09-16T13:36:20Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T06:54:52Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

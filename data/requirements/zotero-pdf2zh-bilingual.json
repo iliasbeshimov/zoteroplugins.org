@@ -1,0 +1,34 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf2zh-bilingual",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Only OpenAI-compatible model endpoints that ask for a key; the default local Ollama address needs none",
+  "worksWithout": "Local Ollama at 127.0.0.1:11434 (the default), with the API key left empty",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.pdf2zhtranslate.localApiBaseURL\", \"http://127.0.0.1:11434/v1\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.pdf2zhtranslate.localApiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, intro",
+   "quote": "并支持本地 Ollama 或其他 OpenAI 兼容模型接口",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Default localApiBaseURL is http://127.0.0.1:11434/v1 (Ollama) with localApiKey \"\" and localTextModel translategemma:latest, so the default works without a key. A key field exists for other OpenAI-compatible endpoints; the pack does not name which ones need it."
+}

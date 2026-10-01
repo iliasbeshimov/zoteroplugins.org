@@ -1,0 +1,31 @@
+{
+ "schemaVersion": 1,
+ "slug": "cli2openai",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "A sign-in to the Claude Code or Codex CLI it drives (no separate API key)",
+  "worksWithout": "",
+  "services": [
+   "Anthropic (Claude Code)",
+   "OpenAI (Codex CLI)"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Requirements",
+   "quote": "An installed and authenticated Claude Code or Codex CLI.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.paperbridge.backend\", \"claude\");     // \"claude\" | \"codex\"",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README requires \"An installed and authenticated Claude Code or Codex CLI.\" Backends are limited to claude or codex (`pref(\"extensions.paperbridge.backend\", \"claude\");     // \"claude\" | \"codex\"`), and the README says \"the Codex backend remains fixed to `gpt-5.5`\"; nothing offers a local model."
+}

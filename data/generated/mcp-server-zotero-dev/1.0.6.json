@@ -1,0 +1,389 @@
+{
+ "schemaVersion": 1,
+ "slug": "mcp-server-zotero-dev",
+ "repo": "introfini/mcp-server-zotero-dev",
+ "version": "1.0.6",
+ "tag": "plugin-v1.0.6",
+ "releaseAuthor": "introfini",
+ "publishedAt": "2026-09-20T09:24:35Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-mcp-bridge-1.0.6.xpi",
+  "url": "https://github.com/introfini/mcp-server-zotero-dev/releases/download/plugin-v1.0.6/zotero-mcp-bridge-1.0.6.xpi",
+  "size": 8275,
+  "sha256": "c1853f48243dc5273b49e7f59a1eced5e721384ca1d16dc05ae896fe8876f130",
+  "githubAssetId": 576521335,
+  "uploader": "introfini",
+  "uploadedAt": "2026-09-20T09:24:35Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "mcp-rdp@zotero.org",
+  "name": "MCP Bridge for Zotero",
+  "version": "1.0.6",
+  "description": "Enables Remote Debugging Protocol for AI-assisted Zotero plugin development",
+  "homepageUrl": "https://github.com/introfini/mcp-server-zotero-dev",
+  "updateUrl": "https://raw.githubusercontent.com/introfini/mcp-server-zotero-dev/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 19632,
+   "sha256": "59529e8e7211d7fe08c0f981e93850e231018bc9c3250cb34530fcfbe7536d47"
+  },
+  {
+   "path": "content/icons/icon-48.svg",
+   "size": 269,
+   "sha256": "385ea7c183bd20c5e56fd04fae5c71776c7fc9c4da68b78646c25804e1e59f59"
+  },
+  {
+   "path": "content/icons/icon-96.svg",
+   "size": 270,
+   "sha256": "a16433b01e9a12012bf6bbcc64266e37cc44e44fd6fc59fd26abf20c8cd3b9c8"
+  },
+  {
+   "path": "locale/en-US/addon.ftl",
+   "size": 178,
+   "sha256": "6aff558f4909a34ba75a2087f6c3fbc449edbbe90f08c96feeb5dc0562fa395e"
+  },
+  {
+   "path": "manifest.json",
+   "size": 633,
+   "sha256": "ec9a4e447633408de9121fd92aa16e6bba2744da642e13fedf94c5e7627e39b5"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "mcp-server-zotero-dev",
+   "version": "1.0.6",
+   "sha256": "c1853f48243dc5273b49e7f59a1eced5e721384ca1d16dc05ae896fe8876f130"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "content/icons/icon-48.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/icon-96.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/addon.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 19632,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "disables-security",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 433,
+      "column": 4,
+      "snippet": "Services.prefs.setBoolPref(start + \"remote-enabled\", true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 434,
+      "column": 4,
+      "snippet": "Services.prefs.setBoolPref(start + \"prompt-connection\", false);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 435,
+      "column": 4,
+      "snippet": "Services.prefs.setBoolPref(\"devtools.chrome.enabled\", true);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "devtools.chrome.enabled",
+      "devtools.debugger.prompt-connection",
+      "devtools.debugger.remote-enabled"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 52,
+      "column": 4,
+      "snippet": "IOUtils.writeUTF8(f, new Date().toISOString() + \" \" + msg + \"\\n\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "own-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 150,
+      "column": 46,
+      "snippet": "var socketModule = devToolsLoader.require(\"devtools/shared/security/socket\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "debugging server"
+     ]
+    }
+   },
+   {
+    "id": "runs-sent-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 150,
+      "column": 46,
+      "snippet": "var socketModule = devToolsLoader.require(\"devtools/shared/security/socket\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "debugger clients"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/introfini/mcp-server-zotero-dev/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/introfini/mcp-server-zotero-dev/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the introfini account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "mcp-server-zotero-dev",
+   "version": "1.0.6",
+   "sha256": "c1853f48243dc5273b49e7f59a1eced5e721384ca1d16dc05ae896fe8876f130"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "5136ffa364762dce5f549e3e2d5584db9f614b471603c3c889fd1a7f8ea8204f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "disables-security",
+      "label": "Turns off a Zotero security setting",
+      "concern": "high",
+      "detail": "It turns on developer tools for Zotero itself, stops Zotero asking before a debugger connects, turns on remote debugging"
+     },
+     {
+      "id": "runs-sent-code",
+      "label": "Lets debugging tools on this computer run code in Zotero",
+      "concern": "medium"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "own-server",
+      "label": "Runs its own server for programs on this computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "high",
+    "drivers": [
+     "CAP-DISABLES-SECURITY",
+     "CAP-MINOR",
+     "CAP-SENT-CODE"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-20T09:24:35Z",
+    "lastCommitAt": "2026-09-20T09:25:03Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "high-concern",
+   "ruleId": "OV-HIGH",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Turns off a Zotero security setting"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T08:12:52Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

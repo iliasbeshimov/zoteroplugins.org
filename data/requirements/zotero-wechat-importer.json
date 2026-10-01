@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-wechat-importer",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "DeepSeek API key, needed for the AI step that finds references in the article",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, step 2",
+   "quote": "插件直接访问 DeepSeek 官方接口，需要用户自己的 API Key。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/wechat-import.js:3",
+   "quote": "deepSeekURL: \"https://api.deepseek.com/chat/completions\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: \"插件直接访问 DeepSeek 官方接口，需要用户自己的 API Key。\"; code hardcodes api.deepseek.com and the pack shows no configurable URL, Ollama or localhost."
+}

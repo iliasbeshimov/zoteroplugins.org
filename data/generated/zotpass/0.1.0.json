@@ -1,0 +1,414 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotpass",
+ "repo": "nerdneilsfield/zotpass",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-09-11T03:03:44Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotpass.xpi",
+  "url": "https://github.com/nerdneilsfield/ZotPass/releases/download/v0.1.0/zotpass.xpi",
+  "size": 27030,
+  "sha256": "88283d37628167ddaafdd686bea73fe9e0cbe465ff6693ce901ecbebc774cb2e",
+  "githubAssetId": 556349397,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-09-11T03:03:44Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotpass@zotpass",
+  "name": "ZotPass",
+  "version": "0.1.0",
+  "description": "Authenticated PDF Downloads for Zotero",
+  "updateUrl": "https://github.com/nerdneilsfield/ZotPass/releases/download/release/update.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1723,
+   "sha256": "4edf37c4976a3f9586954df7f8d6b1a7c403d0829d2d1d44edbbe66dbdfdd85b"
+  },
+  {
+   "path": "content/icons/zotpass-32.png",
+   "size": 1703,
+   "sha256": "a776e692a8c6c09019b664709b4e2fd240ce61df3543b9b32cc684652843f744"
+  },
+  {
+   "path": "content/icons/zotpass-48.png",
+   "size": 3024,
+   "sha256": "bb6969a00538f953b3c378064e86ea4aef3903b2b774cedf0aee271187061843"
+  },
+  {
+   "path": "content/icons/zotpass-96.png",
+   "size": 9134,
+   "sha256": "69ab1e2f88f559f3ca29192b288e963e7a87300a7f47b6cef31820806b801224"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 2143,
+   "sha256": "d5e62596d0759fbaafcec33ca0abd5a53bc0cdf196b9bb27c564245f500c3494"
+  },
+  {
+   "path": "content/scripts/zotpass.js",
+   "size": 38121,
+   "sha256": "9d735bfbcc3d89c3aaff4e957532313ea84ff257e46ada35dab2800dfe06c1de"
+  },
+  {
+   "path": "manifest.json",
+   "size": 544,
+   "sha256": "e4844d73d177d5a21a6bbafa1654d54cb94457e954ce141424e67af453f3ef1d"
+  },
+  {
+   "path": "prefs.js",
+   "size": 50,
+   "sha256": "0dd51e8d1311b042b1ad6905444977ed9909bd6311dd5449b0357f5a2b47bfa8"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotpass",
+   "version": "0.1.0",
+   "sha256": "88283d37628167ddaafdd686bea73fe9e0cbe465ff6693ce901ecbebc774cb2e"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "content/icons/zotpass-32.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/icons/zotpass-48.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/icons/zotpass-96.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 42037,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "content/scripts/zotpass.js"
+     ],
+     "identifiedBy": "package-json"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/zotpass.js",
+       "line": 626,
+       "column": 11,
+       "snippet": "return Zotero.HTTP.request(\"GET\", url, options);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "zotpass-test-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 31,
+       "column": 2,
+       "snippet": "<html:input id=\"zotpass-test-url\" type=\"url\" />",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/zotpass.js",
+      "line": 28,
+      "column": 13,
+      "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/zotpass.js",
+      "line": 31,
+      "column": 6,
+      "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v, true);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.debug-bridge.password"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/zotpass.js",
+      "line": 64,
+      "column": 24,
+      "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "AsyncFunction"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/zotpass.js",
+      "line": 698,
+      "column": 14,
+      "snippet": "await IOUtils.write(path, new Uint8Array(buffer));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/zotpass.js",
+      "line": 700,
+      "column": 31,
+      "snippet": "const sample = await Zotero.File.getContentsAsync(path, void 0, 1e3);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/zotpass.js",
+      "line": 712,
+      "column": 16,
+      "snippet": "await IOUtils.remove(path, { ignoreAbsent: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/nerdneilsfield/ZotPass/releases/download/release/update.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/nerdneilsfield/ZotPass/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotpass",
+   "version": "0.1.0",
+   "sha256": "88283d37628167ddaafdd686bea73fe9e0cbe465ff6693ce901ecbebc774cb2e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "eb82efdeede3a47bac8b1a875bdea4e955c538946ccae83f5aa75211dc631e55"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-11T03:03:44Z",
+    "lastCommitAt": "2026-09-11T02:52:42Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:49:16Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

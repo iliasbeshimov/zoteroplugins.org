@@ -1,0 +1,1000 @@
+{
+ "repo": "X-T-E-R/zotero-resource-search-mcp",
+ "slug": "zotero-resource-search-mcp",
+ "group": "sample-2026",
+ "rank": 791,
+ "name": "Zotero Resource Search MCP",
+ "stars": 0,
+ "downloads": 11,
+ "createdAt": "2026-04-10T14:44:13Z",
+ "tag": "v0.2.4",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-resource-search-mcp-0.2.4.xpi",
+    "url": "https://github.com/X-T-E-R/zotero-resource-search-mcp/releases/download/v0.2.4/zotero-resource-search-mcp-0.2.4.xpi",
+    "size": 583356,
+    "uploadedAt": "2026-04-15T10:23:28Z",
+    "sha256": "b62577b0cfb6c74973e750d995742229c3e1afcefa4fdd6923462dd78754189f"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero-resource-search-mcp@xter.org",
+    "name": "Zotero Resource Search MCP",
+    "version": "0.2.4",
+    "description": "Zotero plugin providing MCP-based academic and web resource search across multiple platforms with direct Zotero integration",
+    "homepageUrl": null,
+    "updateUrl": "https://github.com/X-T-E-R/zotero-resource-search-mcp/releases/latest/download/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-resource-search-mcp",
+     "version": "0.2.4",
+     "sha256": "b62577b0cfb6c74973e750d995742229c3e1afcefa4fdd6923462dd78754189f"
+    },
+    "coverage": {
+     "filesTotal": 15,
+     "filesAnalyzed": 6,
+     "filesSkipped": [
+      {
+       "path": "content/icons/icon48.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/icon96.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/workspace.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zotero-resource-search-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zotero-resource-search-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/zotero-resource-search-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/zotero-resource-search-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "providers/index.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/zotero-resource-search.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 9651,
+         "column": 22,
+         "snippet": "const r = await fetch(candidate, { cache: \"no-store\" });",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 9669,
+         "column": 20,
+         "snippet": "const r = await fetch(entry.downloadUrl, { cache: \"no-store\" });",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "api": "xhr",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 5653,
+         "column": 20,
+         "snippet": "const xhr = new XMLHttpRequest();",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 5551,
+         "column": 24,
+         "snippet": "const xhr = await Zotero.HTTP.request(init.method, url, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "...",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/preferences.xhtml",
+         "line": 368,
+         "column": 33,
+         "snippet": "placeholder=\"https://...\"",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "127.0.0.1",
+       "port": 8000,
+       "category": "localhost",
+       "provider": "This computer",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 7803,
+         "column": 19,
+         "snippet": "placeholder: \"http://127.0.0.1:8000\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 9196,
+         "column": 38,
+         "snippet": "const parsed = new URL(rawPath, \"http://127.0.0.1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.crossref.org",
+       "category": "scholarly-api",
+       "provider": "Crossref",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 5790,
+         "column": 17,
+         "snippet": "var BASE_URL = \"https://api.crossref.org/works\";",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.exa.ai",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 7056,
+         "column": 64,
+         "snippet": "base_url: configProvider.getString(\"web.exa.baseUrl\", \"https://api.exa.ai\"),",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 7514,
+         "column": 66,
+         "snippet": "const baseURL = configProvider.getString(\"web.exa.baseUrl\", \"https://api.exa.ai\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 34,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.exa.baseUrl\", \"https://api.exa.ai\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 34,
+         "column": 65,
+         "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.exa.baseUrl\", \"https://api.exa.ai\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.firecrawl.dev",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 7050,
+         "column": 70,
+         "snippet": "base_url: configProvider.getString(\"web.firecrawl.baseUrl\", \"https://api.firecrawl.dev\"),",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 7424,
+         "column": 72,
+         "snippet": "const baseURL = configProvider.getString(\"web.firecrawl.baseUrl\", \"https://api.firecrawl.dev\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 29,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.firecrawl.baseUrl\", \"https://api.firecrawl.dev\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 29,
+         "column": 71,
+         "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.firecrawl.baseUrl\", \"https://api.firecrawl.dev\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.tavily.com",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 7044,
+         "column": 67,
+         "snippet": "base_url: configProvider.getString(\"web.tavily.baseUrl\", \"https://api.tavily.com\"),",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 7325,
+         "column": 69,
+         "snippet": "const baseURL = configProvider.getString(\"web.tavily.baseUrl\", \"https://api.tavily.com\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 23,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.tavily.baseUrl\", \"https://api.tavily.com\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 23,
+         "column": 68,
+         "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.tavily.baseUrl\", \"https://api.tavily.com\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.x.ai",
+       "category": "llm-provider",
+       "provider": "xAI",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 5,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 7062,
+         "column": 64,
+         "snippet": "base_url: configProvider.getString(\"web.xai.baseUrl\", \"https://api.x.ai/v1\"),",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 7621,
+         "column": 66,
+         "snippet": "const baseURL = configProvider.getString(\"web.xai.baseUrl\", \"https://api.x.ai/v1\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 7705,
+         "column": 78,
+         "snippet": "baseURL: socialBaseUrl || configProvider.getString(\"web.xai.baseUrl\", \"https://api.x.ai/v1\"),",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 38,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.xai.baseUrl\", \"https://api.x.ai/v1\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 38,
+         "column": 65,
+         "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.xai.baseUrl\", \"https://api.x.ai/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "doi.org",
+       "category": "scholarly-api",
+       "provider": "DOI resolver",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 5824,
+         "column": 29,
+         "snippet": "if (cleaned.startsWith(\"https://doi.org/\")) {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 5825,
+         "column": 36,
+         "snippet": "cleaned = cleaned.substring(\"https://doi.org/\".length);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 5826,
+         "column": 36,
+         "snippet": "} else if (cleaned.startsWith(\"http://doi.org/\")) {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 5827,
+         "column": 36,
+         "snippet": "cleaned = cleaned.substring(\"http://doi.org/\".length);",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/preferences.xhtml",
+         "line": 212,
+         "column": 24,
+         "snippet": "href=\"https://github.com/X-T-E-R/zotero-resource-search-mcp\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 3387,
+         "column": 11,
+         "snippet": "url: \"git+https://github.com/X-T-E-R/zotero-resource-search-mcp.git\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 3390,
+         "column": 14,
+         "snippet": "homepage: \"https://github.com/X-T-E-R/zotero-resource-search-mcp\",",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "---\nname: zotero-resource-search-mcp\ndescription: <expr>\n---\n\n# Zotero Resource Search MCP\n\n## Connection\n\n- Endpoint: `http://127.0.0.1:<expr>/mcp`\n- Help: `http://127.0.0.1:<expr>/mcp/help`\n- Status",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 8522,
+         "column": 11,
+         "snippet": "return `---",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 10977,
+         "column": 6,
+         "snippet": "`chrome://${config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/workspace.html",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 11189,
+         "column": 27,
+         "snippet": "const workspaceUrl = `chrome://${config.addonRef}/content/workspace.html`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "http://127.0.0.1:<expr>/mcp",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 8474,
+         "column": 18,
+         "snippet": "endpoint: `http://127.0.0.1:${port}/mcp`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "http://127.0.0.1:<expr>/mcp/help",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 8475,
+         "column": 22,
+         "snippet": "helpEndpoint: `http://127.0.0.1:${port}/mcp/help`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "http://127.0.0.1:<expr>/mcp/status",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 8476,
+         "column": 24,
+         "snippet": "statusEndpoint: `http://127.0.0.1:${port}/mcp/status`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "MCP endpoint: http://127.0.0.1:<expr>/mcp",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 8456,
+         "column": 6,
+         "snippet": "`MCP endpoint: http://127.0.0.1:${port}/mcp`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "MCP 地址：http://127.0.0.1:<expr>/mcp",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 8452,
+         "column": 6,
+         "snippet": "`MCP \\u5730\\u5740\\uFF1Ahttp://127.0.0.1:${port}/mcp`,",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.zotero.zotero-resource-search.web.exa.baseUrl",
+       "defaultValue": "https://api.exa.ai",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 34,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.exa.baseUrl\", \"https://api.exa.ai\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "extensions.zotero.zotero-resource-search.web.firecrawl.baseUrl",
+       "defaultValue": "https://api.firecrawl.dev",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 29,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.firecrawl.baseUrl\", \"https://api.firecrawl.dev\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "extensions.zotero.zotero-resource-search.web.tavily.baseUrl",
+       "defaultValue": "https://api.tavily.com",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 23,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.tavily.baseUrl\", \"https://api.tavily.com\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "extensions.zotero.zotero-resource-search.web.xai.baseUrl",
+       "defaultValue": "https://api.x.ai/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 38,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.xai.baseUrl\", \"https://api.x.ai/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "providers.registryUrl",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 9694,
+         "column": 16,
+         "snippet": "const url = getPref(\"providers.registryUrl\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 9806,
+         "column": 23,
+         "snippet": "registryUrl: getPref(\"providers.registryUrl\")",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-resource-search.js",
+         "line": 11483,
+         "column": 19,
+         "snippet": "registryUrl: getPref(\"providers.registryUrl\")",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 5,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 472,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 472,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 518,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 9959,
+        "column": 18,
+        "snippet": "const ch = Cc[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Ci.nsIClipboardHelper);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 9959,
+        "column": 70,
+        "snippet": "const ch = Cc[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Ci.nsIClipboardHelper);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "credential-storage",
+      "occurrences": 5,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 18,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.mysearch.apiKey\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 22,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.tavily.apiKey\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 28,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.firecrawl.apiKey\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 33,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.exa.apiKey\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 37,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.zotero-resource-search.web.xai.apiKey\", \"\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "extensions.zotero.zotero-resource-search.web.exa.apiKey",
+        "extensions.zotero.zotero-resource-search.web.firecrawl.apiKey",
+        "extensions.zotero.zotero-resource-search.web.mysearch.apiKey",
+        "extensions.zotero.zotero-resource-search.web.tavily.apiKey",
+        "extensions.zotero.zotero-resource-search.web.xai.apiKey"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 17,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 507,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 507,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 6229,
+        "column": 20,
+        "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 6229,
+        "column": 64,
+        "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 6256,
+        "column": 93,
+        "snippet": "od = importESModuleMaybe(\"resource://gre/modules/OS.sys.mjs\") ?? importJSMMaybe(\"resource://gre/modules/osfile.jsm\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 6280,
+        "column": 47,
+        "snippet": "const profD = Services.dirsvc.get(\"ProfD\", Ci.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 6301,
+        "column": 14,
+        "snippet": "await IOUtils.mkdir(path, { create: true, recursive: true });",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 6320,
+        "column": 19,
+        "snippet": "if (typeof IOUtils.readDirectory === \"function\") {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 6321,
+        "column": 24,
+        "snippet": "names = await IOUtils.readDirectory(root);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 6333,
+        "column": 27,
+        "snippet": "const st = await IOUtils.stat(full);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "OS.File",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "local-http-server",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 9254,
+        "column": 31,
+        "snippet": "this.serverSocket = Cc[\"@mozilla.org/network/server-socket;1\"].createInstance(",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "nsIServerSocket"
+       ]
+      }
+     },
+     {
+      "id": "login-manager",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-resource-search.js",
+        "line": 4030,
+        "column": 13,
+        "snippet": "return Services.logins ?? null;",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "nsILoginManager"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 14,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/X-T-E-R/zotero-resource-search-mcp/releases/latest/download/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/X-T-E-R/zotero-resource-search-mcp/releases/latest/download/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "localhost": [
+      "127.0.0.1"
+     ],
+     "scholarly-api": [
+      "api.crossref.org",
+      "doi.org"
+     ],
+     "llm-provider": [
+      "api.x.ai"
+     ],
+     "code-hosting": [
+      "github.com"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "concern": "none"
+     },
+     {
+      "id": "login-manager",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

@@ -1,0 +1,609 @@
+{
+ "schemaVersion": 1,
+ "slug": "z-o-bridge",
+ "repo": "sjtuhdt/z-o-bridge",
+ "version": "1.1.2",
+ "tag": "v1.1.2",
+ "releaseAuthor": "SJTUHDT",
+ "publishedAt": "2026-08-04T10:17:01Z",
+ "prerelease": false,
+ "asset": {
+  "name": "z-o-bridge-v1.1.2.xpi",
+  "url": "https://github.com/SJTUHDT/Z-O-Bridge/releases/download/v1.1.2/z-o-bridge-v1.1.2.xpi",
+  "size": 12161,
+  "sha256": "721f8dc8e2dce27659b1dd889c17d38d75896bea6a14f6e7681552895c02fff3",
+  "githubAssetId": 501194767,
+  "uploader": "SJTUHDT",
+  "uploadedAt": "2026-08-04T10:17:00Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "z-o-bridge@local",
+  "name": "Z-O-Bridge",
+  "version": "1.1.2",
+  "description": "Send Zotero literature to Obsidian and generate structured AI literature cards.",
+  "homepageUrl": "https://example.invalid/zotero-obsidian-ai-bridge",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1480,
+   "sha256": "82bb45bb471c144971a1fca78b26222d39760b37d95b8f668db5397eaffa5463"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 3147,
+   "sha256": "bef933ca905a7278d89470a8b632354d0ae3ff30ee5b592161744f9f824722bd"
+  },
+  {
+   "path": "content/scripts/bridge.js",
+   "size": 23919,
+   "sha256": "e3c73545379603d7bc567b7f8b2cffc2b52657b00a2bab7630b8ca96f22f3a07"
+  },
+  {
+   "path": "icon.svg",
+   "size": 315,
+   "sha256": "58080d49409d59cdac3eed4e23248ec275e203886050410490268edc21c34630"
+  },
+  {
+   "path": "manifest.json",
+   "size": 477,
+   "sha256": "141e7d5998ed3a158c40e1f392d58363a75d349dce96fc1c43f0bb325bba7fc9"
+  },
+  {
+   "path": "prefs.js",
+   "size": 717,
+   "sha256": "8ad007bf768c6e6a402ba3b4bce955f6191f5c5ed124cbe3d83a8c0af6d28a78"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "z-o-bridge",
+   "version": "1.1.2",
+   "sha256": "721f8dc8e2dce27659b1dd889c17d38d75896bea6a14f6e7681552895c02fff3"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 29263,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 161,
+       "column": 23,
+       "snippet": "response = await Zotero.HTTP.request(\"POST\", config.base + \"/chat/completions\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 235,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", base + \"/v1/import\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 257,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", base + \"/v1/health\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 308,
+       "column": 33,
+       "snippet": "try { const response = await Zotero.HTTP.request(\"GET\", `http://127.0.0.1:${setting(\"pdf2zhPort\")}/health`, { timeout: 2000 }); return response.status >= 200 && response.status < 300; }",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 27123,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 5,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 9,
+       "column": 17,
+       "snippet": "receiverUrl: \"http://127.0.0.1:27123\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 308,
+       "column": 60,
+       "snippet": "try { const response = await Zotero.HTTP.request(\"GET\", `http://127.0.0.1:${setting(\"pdf2zhPort\")}/health`, { timeout: 2000 }); return response.status >= 200 && response.status < 300; }",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 348,
+       "column": 22,
+       "snippet": "[\"receiverUrl\", \"Obsidian 接收地址（默认 http://127.0.0.1:27123）\"], [\"receiverToken\", \"Obsidian 共享令牌\"],",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-obsidian-ai-bridge.receiverUrl\", \"http://127.0.0.1:27123\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 57,
+       "snippet": "pref(\"extensions.zotero-obsidian-ai-bridge.receiverUrl\", \"http://127.0.0.1:27123\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 224,
+       "column": 1063,
+       "snippet": "tions}\\n\\n## 🔗 来源与知识关联\\n\\n- Zotero：[打开条目](${record.zoteroURI})\\n${record.doi ? `- DOI：[${record.doi}](https://doi.org/${record.doi})\\n` : \"\"}- 本地原文：{{PDF_LINK}}\\n`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/chat/completions",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 161,
+       "column": 23,
+       "snippet": "response = await Zotero.HTTP.request(\"POST\", config.base + \"/chat/completions\", {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr>/v1/health",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 257,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", base + \"/v1/health\", {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr>/v1/import",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 235,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", base + \"/v1/import\", {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "http://127.0.0.1:<expr>/health",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 308,
+       "column": 33,
+       "snippet": "try { const response = await Zotero.HTTP.request(\"GET\", `http://127.0.0.1:${setting(\"pdf2zhPort\")}/health`, { timeout: 2000 }); return response.status >= 200 && response.status < 300; }",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/bridge.js",
+       "line": 308,
+       "column": 60,
+       "snippet": "try { const response = await Zotero.HTTP.request(\"GET\", `http://127.0.0.1:${setting(\"pdf2zhPort\")}/health`, { timeout: 2000 }); return response.status >= 200 && response.status < 300; }",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero-obsidian-ai-bridge.apiBaseUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 14,
+       "column": 47,
+       "snippet": "<html:input id=\"zoab-api-base\" type=\"text\" preference=\"extensions.zotero-obsidian-ai-bridge.apiBaseUrl\" placeholder=\"https://api.example.com/v1\" />",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero-obsidian-ai-bridge.receiverUrl",
+     "defaultValue": "http://127.0.0.1:27123",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 7,
+       "column": 51,
+       "snippet": "<html:input id=\"zoab-receiver-url\" type=\"text\" preference=\"extensions.zotero-obsidian-ai-bridge.receiverUrl\" placeholder=\"http://127.0.0.1:27123\" />",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-obsidian-ai-bridge.receiverUrl\", \"http://127.0.0.1:27123\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "zoab-api-base",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 14,
+       "column": 4,
+       "snippet": "<html:input id=\"zoab-api-base\" type=\"text\" preference=\"extensions.zotero-obsidian-ai-bridge.apiBaseUrl\" placeholder=\"https://api.example.com/v1\" />",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "zoab-receiver-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 7,
+       "column": 4,
+       "snippet": "<html:input id=\"zoab-receiver-url\" type=\"text\" preference=\"extensions.zotero-obsidian-ai-bridge.receiverUrl\" placeholder=\"http://127.0.0.1:27123\" />",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-obsidian-ai-bridge.receiverToken\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 5,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-obsidian-ai-bridge.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero-obsidian-ai-bridge.apiKey",
+      "extensions.zotero-obsidian-ai-bridge.receiverToken"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/bridge.js",
+      "line": 119,
+      "column": 21,
+      "snippet": "return await Zotero.File.getContentsAsync(cacheFile.path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/bridge.js",
+      "line": 300,
+      "column": 40,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/bridge.js",
+      "line": 300,
+      "column": 84,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/bridge.js",
+      "line": 335,
+      "column": 36,
+      "snippet": "try { if (pidFile) text = await Zotero.File.getContentsAsync(pidFile); } catch (_) {}",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/bridge.js",
+      "line": 302,
+      "column": 43,
+      "snippet": "const process = Components.classes[\"@mozilla.org/process/util;1\"].createInstance(Components.interfaces.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/bridge.js",
+      "line": 302,
+      "column": 89,
+      "snippet": "onst process = Components.classes[\"@mozilla.org/process/util;1\"].createInstance(Components.interfaces.nsIProcess);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIProcess"
+     ],
+     "programs": [
+      "kill",
+      "osascript"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the SJTUHDT account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "z-o-bridge",
+   "version": "1.1.2",
+   "sha256": "721f8dc8e2dce27659b1dd889c17d38d75896bea6a14f6e7681552895c02fff3"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "e1d0688638f2f91b97a16dfc72ecb2934a1fb00f168419604d31b0062896baea"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include kill, osascript"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-04T10:17:01Z",
+    "lastCommitAt": "2026-08-04T10:15:53Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "installProblem": "no-update-url",
+    "label": "Zotero won't install this file: its manifest has no update address, which Zotero requires",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

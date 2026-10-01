@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-copy-anything",
+  "version": "1.0.8",
+  "sha256": "d3b7f37290fca574314e1d32c667a93f217dd9855e79e0208ec0e2c43b5fe1db",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
+  "summary": "On first start it downloads a small helper program from the developer's gitee.com page, then runs it when you copy attachments. The README says so, but the file isn't checked, and we can't read the program itself.",
+  "facts": {
+    "what": "A small helper program (copyfiles.exe on Windows, copyfiles-mac on macOS, copyfiles-linux on Linux) that the plugin uses to copy attachment files to the clipboard. Size not established.",
+    "urls": [
+      "https://gitee.com/windheartyolo/zotero-copy-anything/releases/download/binary/copyfiles.exe",
+      "https://gitee.com/windheartyolo/zotero-copy-anything/releases/download/binary/copyfiles-mac",
+      "https://gitee.com/windheartyolo/zotero-copy-anything/releases/download/binary/copyfiles-linux"
+    ],
+    "source": "developer-own",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "automatic",
+    "toldInReadme": "yes",
+    "readmeQuote": "The plugin requires binary files to run, which need to be downloaded from the internet.",
+    "triggerQuote": {
+      "file": "content/scripts/zoterocopyanything.js",
+      "text": "if (await downloadBinaryFile()) {"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/zoterocopyanything.js",
+      "text": "const response = await fetch(downloadUrl);"
+    },
+    "notes": "Download runs from onMainWindowLoad on every Zotero window load, but is skipped if the file already exists (isExist). No confirmation prompt and no locale string announcing it. Saved to {Zotero data dir}/storage/zotero-copy-anything. On macOS/Linux the file is chmod 777, then run with Zotero.Utilities.Internal.exec(binaryFilePath, filePaths) when the user copies attachments. Hosted on the developer's gitee.com release tagged 'binary' (not GitHub, not the plugin's own release); the file can be replaced at that URL. No hash or checksum comparison. README also lists the same links and says manual download is possible. Binary contents were not inspected; asset size not obtained (gh api on GitHub returned nothing; the files are on Gitee)."
+  }
+}

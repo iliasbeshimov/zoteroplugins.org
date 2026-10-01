@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-rvk-classifier",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Cloud LLM services such as OpenAI or OpenRouter",
+  "worksWithout": "A local Ollama endpoint, which is the default",
+  "services": [
+   "OpenAI",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Configuration table",
+   "quote": "| API Key | *(empty)* | Required for cloud services (OpenAI, OpenRouter, etc.) |",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero-rvk-classifier.ai.baseUrl\", \"http://localhost:11434/v1\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README Features",
+   "quote": "Works with any OpenAI-compatible API (Ollama, LM Studio, OpenAI, OpenRouter, etc.)",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README table quotes are in the pack: '| API Key | *(empty)* | Required for cloud services (OpenAI, OpenRouter, etc.) |'; default prefs.js baseUrl is 'http://localhost:11434/v1' (Ollama), so it works keyless by default."
+}

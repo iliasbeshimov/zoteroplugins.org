@@ -1,0 +1,312 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotfetch",
+ "repo": "nikhilweee/zotfetch",
+ "version": "0.2",
+ "tag": "v0.2",
+ "releaseAuthor": "nikhilweee",
+ "publishedAt": "2024-05-19T02:41:26Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotfetch.xpi",
+  "url": "https://github.com/nikhilweee/zotfetch/releases/download/v0.2/zotfetch.xpi",
+  "size": 5487,
+  "sha256": "3a5cd73a6093279e1380576fb147ab3813c7acc15def150ddacf7037675887e7",
+  "githubAssetId": 168771730,
+  "uploader": "nikhilweee",
+  "uploadedAt": "2024-05-19T02:41:19Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotfetch@nikhilweee.me",
+  "name": "Zotfetch",
+  "version": "0.2",
+  "description": "Fetch missing attachments",
+  "homepageUrl": "https://github.com/nikhilweee/zotfetch",
+  "updateUrl": "https://raw.githubusercontent.com/nikhilweee/zotfetch/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "7.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 714,
+   "sha256": "3a363307df9364420a438c93cce3e0450819018dff82ec7e17c84105b6fbf788"
+  },
+  {
+   "path": "locale/en-US/make-it-red.ftl",
+   "size": 62,
+   "sha256": "ea53529347ba30256eb91b23d2a29c314e20e5c89c1cf488b609e9403cefcdcb"
+  },
+  {
+   "path": "locale/en-US/zotfetch.ftl",
+   "size": 93,
+   "sha256": "d29f3d93cd36d78f356baa1dcf0982c8f8b6e163b6c534d4ea147793e9b9781c"
+  },
+  {
+   "path": "make-it-red.js",
+   "size": 2391,
+   "sha256": "6847b99f4571c8678de2a2ef1a6d5e5e8d9262c93647f0af3a5ab688a149f578"
+  },
+  {
+   "path": "manifest.json",
+   "size": 475,
+   "sha256": "c23a154019ea6275305db510ac49eafae053f96c431b9545f95042005a97201f"
+  },
+  {
+   "path": "prefs.js",
+   "size": 43,
+   "sha256": "cc41d5d20f70eb74a0aaa4ec1561f723f67918b51dbbe534461e493f807261e4"
+  },
+  {
+   "path": "style.css",
+   "size": 75,
+   "sha256": "68e52a228c365c43191203bd34a4e56a011135e032866c9a058e5bee2271d989"
+  },
+  {
+   "path": "zotfetch.js",
+   "size": 7313,
+   "sha256": "5c224d9f8a236d803e931b9c0bfc96af95bd8287591ad2d89ef568f9a307f9b5"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotfetch",
+   "version": "0.2",
+   "sha256": "3a5cd73a6093279e1380576fb147ab3813c7acc15def150ddacf7037675887e7"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/make-it-red.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/zotfetch.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "style.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 10461,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "zotfetch.js",
+       "line": 123,
+       "column": 29,
+       "snippet": "const newPDF = await Zotero.Attachments.addAvailablePDF(item);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "zotfetch.js",
+      "line": 126,
+      "column": 18,
+      "snippet": "await IOUtils.move(",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 27,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/nikhilweee/zotfetch/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/nikhilweee/zotfetch/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the nikhilweee account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotfetch",
+   "version": "0.2",
+   "sha256": "3a5cd73a6093279e1380576fb147ab3813c7acc15def150ddacf7037675887e7"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "ed8e9e471bc8e7eb06156583481e29c60f45581f051bc6ae468a03017bee4ee6"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "dormant",
+    "lastReleaseAt": "2024-05-19T02:41:26Z",
+    "lastCommitAt": "2024-05-19T02:37:46Z",
+    "concern": "medium"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

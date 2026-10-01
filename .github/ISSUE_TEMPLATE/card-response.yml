@@ -1,0 +1,63 @@
+name: Respond to your plugin's card
+description: For plugin developers. Correct, dispute or add context to what zoteroplugins.org says about your plugin.
+title: "[card] "
+labels: ["card-response"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. Your response is published on your plugin's page next to the card,
+        as you write it here, together with our reply.
+
+        How it works:
+        - We check that you maintain the plugin's repository (from your GitHub account's access to it).
+        - We re-check the finding against the release file and reply here, usually within a week.
+        - A card changes only when we change the analyzer or the rules, for every plugin at once.
+          If the finding was wrong for you, it's probably wrong for others too, and we fix it that way.
+        - If we keep a finding, the page shows your response and our reasons side by side.
+
+        Please don't post secrets, API keys or private data.
+  - type: input
+    id: plugin
+    attributes:
+      label: Plugin
+      description: The plugin's page on zoteroplugins.org, or its GitHub repository.
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+  - type: dropdown
+    id: about
+    attributes:
+      label: Which part of the card?
+      options:
+        - Source transparency (obfuscation, source match, updates)
+        - Data sharing (servers the plugin contacts)
+        - Capabilities (what the plugin can do on your computer)
+        - Compatibility
+        - Something else
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The version the card describes, if it matters.
+  - type: textarea
+    id: response
+    attributes:
+      label: Your response
+      description: Published on the page as written (up to about 2,000 characters).
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: File and line in the release, a commit, documentation. Anything that helps us check.
+  - type: checkboxes
+    id: maintainer
+    attributes:
+      label: Maintainer
+      options:
+        - label: I maintain this plugin's repository.
+          required: true

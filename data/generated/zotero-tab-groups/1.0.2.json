@@ -1,0 +1,518 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-tab-groups",
+ "repo": "shourovj/zotero-tab-groups",
+ "version": "1.0.2",
+ "tag": "v1.0.2",
+ "releaseAuthor": "shourovj",
+ "publishedAt": "2026-08-20T05:14:27Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-tab-groups.xpi",
+  "url": "https://github.com/shourovj/zotero-tab-groups/releases/download/v1.0.2/zotero-tab-groups.xpi",
+  "size": 40465,
+  "sha256": "459401f962924275531c9dd2e213f341e5907098788f293095839bb578db730e",
+  "githubAssetId": 521794541,
+  "uploader": "shourovj",
+  "uploadedAt": "2026-08-20T05:14:27Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "tabgroups@shourovj.github.io",
+  "name": "Zotero Tab Groups",
+  "version": "1.0.2",
+  "description": "Edge-style horizontal tab groups for Zotero 7+: named, colored, collapsible tab clusters with drag-and-drop",
+  "homepageUrl": "https://github.com/shourovj/zotero-tab-groups#readme",
+  "updateUrl": "https://github.com/shourovj/zotero-tab-groups/releases/download/release/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "999.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1663,
+   "sha256": "65eb0144b37a4918c4d4d3592cc74a8fb45dfbf2ebe00f3d17f27a01787f0e59"
+  },
+  {
+   "path": "content/icons/favicon.png",
+   "size": 677,
+   "sha256": "2fd7c8f97dea9a603d03e9e418a9ae3b58414f8f7c262b982dab7a425b10860b"
+  },
+  {
+   "path": "content/icons/favicon@0.5x.png",
+   "size": 836,
+   "sha256": "cc8b158a3f035fe70aa817b259788e7e51e334e6541813f8b6216a3a13bac105"
+  },
+  {
+   "path": "content/scripts/tabgroups.js",
+   "size": 152062,
+   "sha256": "8e77f79b0d862859238dee888eee02415522b8c4bbae3e9b12ea6707c10cb9ed"
+  },
+  {
+   "path": "content/tabgroups.css",
+   "size": 1473,
+   "sha256": "5e5a03bda60639a026e1050f6b0f521f898225e366e274be468ded054919fee3"
+  },
+  {
+   "path": "locale/en-US/tabgroups-addon.ftl",
+   "size": 35,
+   "sha256": "e0d60f34e8b3f6bca0fc6ba746105cd837bbf3b9f55d8fff0f65daa5c536d640"
+  },
+  {
+   "path": "manifest.json",
+   "size": 685,
+   "sha256": "b27539479ec4a656c262039d346e7a07bbb60cd93eabd176cc22842ada5ba384"
+  },
+  {
+   "path": "prefs.js",
+   "size": 48,
+   "sha256": "c7aa7ec69dd8390171b38f45029f59d5c49b15cf60444bc215e12694fc60295d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-tab-groups",
+   "version": "1.0.2",
+   "sha256": "459401f962924275531c9dd2e213f341e5907098788f293095839bb578db730e"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "content/icons/favicon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/icons/favicon@0.5x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/tabgroups.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/tabgroups-addon.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 153773,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "content/scripts/tabgroups.js"
+     ],
+     "identifiedBy": "package-json"
+    }
+   ]
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [
+    {
+     "pattern": "chrome://<expr>/content/icons/favicon.png",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/tabgroups.js",
+       "line": 4379,
+       "column": 6,
+       "snippet": "`chrome://${config.addonRef}/content/icons/favicon.png`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "chrome://<expr>/content/tabgroups.css",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/tabgroups.js",
+       "line": 4435,
+       "column": 16,
+       "snippet": "href: `chrome://${addon.data.config.addonRef}/content/tabgroups.css`",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 3,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/tabgroups.js",
+      "line": 490,
+      "column": 49,
+      "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/tabgroups.js",
+      "line": 490,
+      "column": 95,
+      "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/tabgroups.js",
+      "line": 536,
+      "column": 43,
+      "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard",
+      "osascript (fixed command)"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/tabgroups.js",
+      "line": 28,
+      "column": 13,
+      "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/tabgroups.js",
+      "line": 31,
+      "column": 6,
+      "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v, true);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.debug-bridge.password"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/tabgroups.js",
+      "line": 64,
+      "column": 24,
+      "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "AsyncFunction"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/tabgroups.js",
+      "line": 525,
+      "column": 38,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/tabgroups.js",
+      "line": 525,
+      "column": 82,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "link-installs-addons",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/tabgroups.js",
+      "line": 129,
+      "column": 6,
+      "snippet": "Services.io.getProtocolHandler(\"zotero\").wrappedJSObject._extensions[\"zotero://plugin\"] = pluginBridgeExtension;",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "zotero://plugin"
+     ],
+     "asksFirst": false
+    }
+   },
+   {
+    "id": "link-runs-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/tabgroups.js",
+      "line": 85,
+      "column": 6,
+      "snippet": "Services.io.getProtocolHandler(\"zotero\").wrappedJSObject._extensions[\"zotero://ztoolkit-debug\"] = debugBridgeExtension;",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "zotero://ztoolkit-debug (asks first)"
+     ],
+     "asksFirst": true
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/shourovj/zotero-tab-groups/releases/download/release/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/shourovj/zotero-tab-groups/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the shourovj account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-tab-groups",
+   "version": "1.0.2",
+   "sha256": "459401f962924275531c9dd2e213f341e5907098788f293095839bb578db730e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "82ac5c0a80802c90cf1625b43798a786ec6b4e70ea0a8441022087f98318a1ae"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address has no version for Zotero 10"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "link-installs-addons",
+      "label": "A zotero:// link (a web page can open one) can make it install add-ons without asking you",
+      "concern": "medium",
+      "libraries": [
+       "zotero-plugin-toolkit"
+      ],
+      "detail": "zotero://plugin"
+     },
+     {
+      "id": "link-runs-code",
+      "label": "A zotero:// link can make it run code if you approve a prompt",
+      "concern": "medium",
+      "libraries": [
+       "zotero-plugin-toolkit"
+      ],
+      "detail": "zotero://ztoolkit-debug"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-LINK-INSTALL",
+     "CAP-LINK-CODE"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-20T05:14:27Z",
+    "lastCommitAt": "2026-08-20T05:09:13Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from zotero-plugin-toolkit)",
+    "A zotero:// link can make it run code if you approve a prompt (from zotero-plugin-toolkit)"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T09:48:12Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

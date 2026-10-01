@@ -1,0 +1,638 @@
+<title>Zotero Plugin Census</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --page: #f5f4f0;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #7b7973;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --ring: rgba(11, 11, 11, 0.1);
+    --accent: #8a3324;
+    --accent-wash: rgba(138, 51, 36, 0.08);
+    --chip: #ecebe6;
+    --cat-current: #2a78d6;
+    --cat-older: #eb6834;
+    --cat-legacy: #1baf7a;
+    --cat-unknown: #a8a6a0;
+    --good: #0ca30c;
+    --warn: #b27700;
+    --bad: #d03b3b;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --page: #0f0f0e;
+      --surface: #1a1a19;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --muted: #929089;
+      --grid: #2c2c2a;
+      --axis: #43433f;
+      --ring: rgba(255, 255, 255, 0.1);
+      --accent: #e8a092;
+      --accent-wash: rgba(232, 160, 146, 0.1);
+      --chip: #262624;
+      --cat-current: #3987e5;
+      --cat-older: #d95926;
+      --cat-legacy: #199e70;
+      --cat-unknown: #6d6b66;
+      --warn: #fab219;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page: #0f0f0e;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #929089;
+    --grid: #2c2c2a;
+    --axis: #43433f;
+    --ring: rgba(255, 255, 255, 0.1);
+    --accent: #e8a092;
+    --accent-wash: rgba(232, 160, 146, 0.1);
+    --chip: #262624;
+    --cat-current: #3987e5;
+    --cat-older: #d95926;
+    --cat-legacy: #199e70;
+    --cat-unknown: #6d6b66;
+    --warn: #fab219;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font: 15px/1.5 var(--sans);
+    padding-inline: 16px;
+    padding-block: 28px 56px;
+  }
+  .wrap { max-width: 1180px; margin-inline: auto; display: grid; gap: 20px; }
+  a { color: inherit; text-decoration-color: var(--axis); text-underline-offset: 2px; }
+  a:hover { text-decoration-color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  header { display: grid; gap: 6px; }
+  .eyebrow { font: 500 12px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  h1 { margin: 0; font-size: clamp(26px, 4vw, 34px); font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
+  .lede { margin: 0; color: var(--ink-2); max-width: 70ch; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--grid); border: 1px solid var(--grid); border-radius: 10px; overflow: hidden; }
+  .stat { background: var(--surface); padding: 14px 16px; display: grid; gap: 2px; align-content: start; }
+  .stat .label { font-size: 13px; color: var(--ink-2); }
+  .stat .value { font-size: 28px; font-weight: 600; letter-spacing: -0.01em; }
+  .stat .sub { font-size: 12.5px; color: var(--muted); }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; }
+  .filters input[type="search"], .filters select {
+    font: inherit; font-size: 14px; color: var(--ink); background: var(--surface);
+    border: 1px solid var(--axis); border-radius: 8px; padding: 7px 10px; min-height: 36px;
+  }
+  .filters input[type="search"] { flex: 1 1 220px; min-width: 0; }
+  .check { display: inline-flex; gap: 6px; align-items: center; font-size: 14px; color: var(--ink-2); cursor: pointer; }
+  .check input { accent-color: var(--accent); width: 16px; height: 16px; }
+  .count { font-size: 13px; color: var(--muted); margin-left: auto; font-variant-numeric: tabular-nums; }
+
+  .card { background: var(--surface); border: 1px solid var(--ring); border-radius: 12px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
+  .card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; }
+  .card h2 { margin: 0; font-size: 16px; font-weight: 600; }
+  .card .note { margin: 0; font-size: 13px; color: var(--muted); }
+  .seg { display: inline-flex; border: 1px solid var(--axis); border-radius: 8px; overflow: hidden; margin: 0; padding: 0; min-width: 0; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .seg button { font: inherit; font-size: 13px; background: transparent; color: var(--ink-2); border: 0; padding: 5px 12px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
+  .sq { width: 10px; height: 10px; border-radius: 2px; display: inline-block; flex: none; }
+
+  .chart { position: relative; width: 100%; }
+  .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .chart text { font-family: var(--sans); }
+  .tick { font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+  .axis-title { font-size: 12px; fill: var(--ink-2); }
+  .gridline { stroke: var(--grid); stroke-width: 1; }
+  .guide { stroke: var(--axis); stroke-width: 1; }
+  .guide-label { font-size: 11px; fill: var(--muted); }
+  .zone-label { font-size: 11px; fill: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+  .pt { stroke: var(--surface); stroke-width: 1.5; }
+  .pt.dim { opacity: 0.18; }
+  .pt-hl { fill: none; stroke: var(--ink); stroke-width: 2; pointer-events: none; }
+  .direct { font-size: 11.5px; fill: var(--ink-2); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+  .bar-label { font-size: 12.5px; fill: var(--ink-2); }
+  .bar-value { font-size: 12px; fill: var(--ink); font-variant-numeric: tabular-nums; }
+
+  .tip {
+    position: absolute; z-index: 5; pointer-events: none; min-width: 220px; max-width: 300px;
+    background: var(--surface); color: var(--ink); border: 1px solid var(--ring); border-radius: 10px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14); padding: 10px 12px; font-size: 13px; display: grid; gap: 6px;
+  }
+  .tip[hidden] { display: none; }
+  .tip.pinned { pointer-events: auto; }
+  .tip .t-name { font-weight: 600; font-size: 14px; line-height: 1.25; }
+  .tip .t-repo { font: 12px var(--mono); color: var(--muted); word-break: break-all; }
+  .tip .t-desc { color: var(--ink-2); font-size: 12.5px; }
+  .tip dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; }
+  .tip dt { font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+  .tip dd { margin: 0; color: var(--ink-2); }
+  .tip .t-hint { font-size: 11.5px; color: var(--muted); }
+
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+
+  .table-wrap { overflow-x: auto; margin-inline: -16px; padding-inline: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 760px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  th { font-size: 12px; font-weight: 500; color: var(--muted); white-space: nowrap; }
+  th button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  th button[aria-sort] { color: var(--ink); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .p-name { font-weight: 600; }
+  .p-repo { font: 12px var(--mono); color: var(--muted); }
+  .chips { display: inline-flex; gap: 3px; }
+  .zc { font: 500 11px/1 var(--mono); padding: 4px 5px; border-radius: 4px; background: var(--chip); color: var(--muted); }
+  .zc.on { background: var(--cat-current); color: #fff; }
+  .zc.on.old { background: var(--cat-older); }
+  .zc.on.leg { background: var(--cat-legacy); }
+  .pill { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+  .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+  .pill.active::before { background: var(--good); }
+  .pill.slowing::before { background: var(--warn); }
+  .pill.dormant::before { background: var(--bad); }
+  .pill.archived::before { background: transparent; border: 1.5px solid var(--muted); width: 5px; height: 5px; }
+  .tag { font: 500 10.5px/1 var(--mono); padding: 3px 5px; border-radius: 4px; border: 1px solid var(--axis); color: var(--ink-2); margin-left: 6px; white-space: nowrap; }
+  .tag.new { border-color: var(--accent); color: var(--accent); }
+  tr.has-sum > td { border-bottom: 0; padding-bottom: 4px; }
+  tr.sum-row > td { padding-top: 0; padding-bottom: 14px; }
+  .sum { position: sticky; left: 0; margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; max-width: min(90ch, var(--sum-w, calc(100vw - 80px))); font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+  .sum dt { font: 500 10.5px/19px var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+  .sum dd { margin: 0; }
+  .tip .t-sum { display: grid; gap: 4px; font-size: 12.5px; color: var(--ink-2); }
+  .tip .t-sum b { font: 500 10px/1.4 var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); display: block; }
+  .more { justify-self: start; font: inherit; font-size: 14px; background: transparent; color: var(--ink); border: 1px solid var(--axis); border-radius: 8px; padding: 7px 14px; cursor: pointer; }
+  .more:hover { background: var(--accent-wash); }
+
+  details.method { font-size: 14px; color: var(--ink-2); }
+  details.method summary { cursor: pointer; font-weight: 600; color: var(--ink); }
+  details.method ul { padding-left: 18px; margin: 8px 0 0; display: grid; gap: 4px; max-width: 80ch; }
+  footer { font-size: 12.5px; color: var(--muted); }
+
+  @media (max-width: 560px) {
+    .stat .value { font-size: 24px; }
+    .count { margin-left: 0; width: 100%; }
+    .sum { grid-template-columns: 1fr; gap: 0; }
+    .sum dd + dt { margin-top: 6px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .pt { transition: opacity 120ms ease; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="eyebrow">Zotero plugin census</div>
+    <h1>Every Zotero plugin on GitHub, mapped</h1>
+    <p class="lede" id="lede"></p>
+  </header>
+
+  <section class="stats" id="stats" aria-label="Census summary"></section>
+
+  <search class="filters">
+    <input type="search" id="q" placeholder="Search plugins, repos, descriptions" aria-label="Search plugins">
+    <select id="compat" aria-label="Zotero compatibility">
+      <option value="all">Any compatibility</option>
+      <option value="current">Works with current Zotero</option>
+      <option value="older">Zotero 7–9 only</option>
+      <option value="legacy">Legacy (Zotero 6 or older)</option>
+      <option value="unknown">No supported version declared</option>
+    </select>
+    <select id="maint" aria-label="Maintenance status">
+      <option value="all">Any maintenance status</option>
+      <option value="active">Active (≤ 6 months)</option>
+      <option value="slowing">Slowing (6–18 months)</option>
+      <option value="dormant">Dormant (&gt; 18 months)</option>
+      <option value="archived">Archived</option>
+    </select>
+    <label class="check"><input type="checkbox" id="newOnly"> Only new finds</label>
+    <label class="check"><input type="checkbox" id="hideForks"> Hide forks</label>
+    <span class="count" id="count" aria-live="polite"></span>
+  </search>
+
+  <section class="card" aria-labelledby="map-title">
+    <div class="card-head">
+      <div>
+        <h2 id="map-title">Popularity against time since last activity</h2>
+        <p class="note">One dot per plugin. Size is contributors. Hover for details, click to pin.</p>
+      </div>
+      <fieldset class="seg">
+        <legend class="sr-only">Vertical axis</legend>
+        <button type="button" data-metric="d" aria-pressed="true">Downloads</button>
+        <button type="button" data-metric="s" aria-pressed="false">Stars</button>
+      </fieldset>
+    </div>
+    <div class="legend" id="legend-map"></div>
+    <div class="chart" id="map"></div>
+  </section>
+
+  <div class="two">
+    <section class="card" aria-labelledby="compat-title">
+      <div class="card-head">
+        <h2 id="compat-title">Which Zotero versions they support</h2>
+      </div>
+      <p class="note">Plugins whose latest release declares support for each major version.</p>
+      <div class="chart" id="compat-chart"></div>
+    </section>
+    <section class="card" aria-labelledby="maint-title">
+      <div class="card-head">
+        <h2 id="maint-title">Maintenance, by compatibility</h2>
+      </div>
+      <div class="legend" id="legend-maint"></div>
+      <div class="chart" id="maint-chart"></div>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="table-title">
+    <div class="card-head">
+      <h2 id="table-title">All plugins</h2>
+      <p class="note">Sorted by <span id="sort-label">downloads</span>. Click a column to re-sort.<span id="sum-note"></span></p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><button type="button" data-sort="n">Plugin</button></th>
+            <th class="num"><button type="button" data-sort="d">Downloads</button></th>
+            <th class="num"><button type="button" data-sort="s">Stars</button></th>
+            <th class="num"><button type="button" data-sort="c">Contributors</button></th>
+            <th><button type="button" data-sort="a">Last activity</button></th>
+            <th>Zotero</th>
+            <th class="num"><button type="button" data-sort="src">Lists</button></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <button type="button" class="more" id="more">Show 50 more</button>
+  </section>
+
+  <details class="method">
+    <summary>How this was built</summary>
+    <ul id="method"></ul>
+  </details>
+  <footer id="footer"></footer>
+</div>
+
+<script id="census-data" type="application/json">{"placeholder":"__DATA__"}</script>
+<script>
+(() => {
+  const DATA = JSON.parse(document.getElementById("census-data").textContent);
+  const META = DATA.meta;
+  const CUR = META.currentMajor;
+  const NEXT = META.nextMajor;
+  const TODAY = new Date(META.generatedAt);
+  const DAY = 86400000;
+  const CATS = [
+    { id: "current", label: `Works with Zotero ${CUR}`, color: "--cat-current" },
+    { id: "older", label: `Zotero 7–${CUR - 1} only`, color: "--cat-older" },
+    { id: "legacy", label: "Legacy (Zotero 6 or older)", color: "--cat-legacy" },
+    { id: "unknown", label: "No supported version declared", color: "--cat-unknown" },
+  ];
+  const CAT = Object.fromEntries(CATS.map((c) => [c.id, c]));
+  const MAINT = ["active", "slowing", "dormant", "archived"];
+  const MAINT_LABEL = { active: "Active", slowing: "Slowing", dormant: "Dormant", archived: "Archived", unknown: "Unknown" };
+  const SOURCE_LABEL = {
+    "addon-market": "Add-on Market", "addon-market-tracked": "Add-on Market (tracked)",
+    "zotero-chinese": "zotero-chinese list", sheet: "Research sheet", "zotero-wiki-archive": "Zotero wiki (archived)",
+    topic: "GitHub topic", "name-or-description": "GitHub name/description search",
+    "code-search": "GitHub code search", "template-fork": "Plugin-template fork",
+  };
+
+  const rows = DATA.rows.map((r) => {
+    const z = r.z || [];
+    const cat = z.includes(CUR) || (NEXT && z.includes(NEXT)) ? "current"
+      : z.some((m) => m >= 7 && m < CUR) ? "older"
+      : r.v === "l" || z.includes(6) ? "legacy" : "unknown";
+    return { ...r, z, cat, t: r.a ? Date.parse(r.a) : null, hay: `${r.n} ${r.r} ${r.desc || ""} ${r.sum ? `${r.sum.does} ${r.sum.pain}` : ""}`.toLowerCase() };
+  });
+
+  const state = { q: "", compat: "all", maint: "all", newOnly: false, hideForks: false, metric: "d", sort: "d", dir: -1, shown: 50, pinned: null };
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => (n === null || n === undefined ? "–" : n.toLocaleString("en-US"));
+  const compact = (n) => {
+    if (n === null || n === undefined) return "–";
+    if (n >= 1e6) return `${(n / 1e6).toFixed(n >= 1e7 ? 0 : 1)}M`;
+    if (n >= 1e3) return `${(n / 1e3).toFixed(n >= 1e4 ? 0 : 1)}K`;
+    return String(n);
+  };
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+  const svgEl = (tag, attrs = {}) => { const e = document.createElementNS("http://www.w3.org/2000/svg", tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); return e; };
+
+  function filtered() {
+    const q = state.q.trim().toLowerCase();
+    return rows.filter((r) =>
+      (!q || r.hay.includes(q)) &&
+      (state.compat === "all" || r.cat === state.compat) &&
+      (state.maint === "all" || r.m === state.maint) &&
+      (!state.newOnly || r.nf) &&
+      (!state.hideForks || !r.f));
+  }
+
+  // ---------------------------------------------------------------- header & stats
+  function renderStatic() {
+    const all = rows;
+    const cur = all.filter((r) => r.cat === "current").length;
+    const active = all.filter((r) => r.m === "active").length;
+    const dl = all.reduce((s, r) => s + (r.d || 0), 0);
+    const nf = all.filter((r) => r.nf).length;
+    const legacy = all.filter((r) => r.v === "l").length;
+    const nSum = all.filter((r) => r.sum).length;
+    $("eyebrow").textContent = `Zotero plugin census · ${META.generatedAt.slice(0, 10)}`;
+    $("lede").textContent = `${fmt(all.length)} confirmed plugins, found by scanning GitHub from ${META.sources} free sources and reading the manifest inside each plugin's latest release. Zotero ${CUR} is the current release; Zotero ${NEXT ?? "–"} is in development. No AI was used to build the census data${nSum ? `; the summaries of the ${nSum} most-downloaded plugins were written by Claude from each project's README` : ""}.`;
+    if (nSum && META.summaryMin) $("sum-note").textContent = ` Claude wrote summaries for the ${nSum} plugins that had ${compact(META.summaryMin)}+ downloads on ${META.summaryDate}.`;
+    const tiles = [
+      ["Confirmed plugins", fmt(all.length), `${fmt(legacy)} of them legacy (Zotero 6 or older)`],
+      [`Work with Zotero ${CUR}`, fmt(cur), `${Math.round((100 * cur) / all.length)}% of all plugins`],
+      ["Active in the last 6 months", fmt(active), `${Math.round((100 * active) / all.length)}% of all plugins`],
+      ["GitHub downloads", compact(dl), "lifetime .xpi downloads, a floor"],
+      ["New finds", fmt(nf), "in none of the curated lists"],
+    ];
+    const box = $("stats");
+    box.replaceChildren(...tiles.map(([l, v, s]) => { const d = el("div", "stat"); d.append(el("div", "label", l), el("div", "value", v), el("div", "sub", s)); return d; }));
+    const leg = (id) => $(id).replaceChildren(...CATS.map((c) => { const s = el("span"); const d = el("span", "dot"); d.style.background = `var(${c.color})`; s.append(d, document.createTextNode(c.label)); return s; }));
+    leg("legend-maint");
+    const lm = $("legend-map");
+    leg("legend-map");
+    const size = el("span"); size.style.marginLeft = "auto";
+    const sm = el("span", "dot"); sm.style.cssText = "width:8px;height:8px;background:var(--muted)";
+    const lg = el("span", "dot"); lg.style.cssText = "width:20px;height:20px;background:var(--muted)";
+    size.append(sm, document.createTextNode("1 contributor"), lg, document.createTextNode("50+"));
+    lm.append(size);
+    $("method").replaceChildren(...META.method.map((m) => el("li", "", m)));
+    $("footer").textContent = `Generated ${META.generatedAt.slice(0, 16).replace("T", " ")} UTC by pnpm atlas census · Zotero ${Object.entries(META.release).map(([p, v]) => `${v} (${p})`).join(", ")} · data: data/census/census.csv`;
+  }
+
+  // ---------------------------------------------------------------- scatter
+  const tip = el("div", "tip"); tip.hidden = true; tip.setAttribute("role", "status");
+  let points = [];
+
+  function renderMap(list) {
+    const host = $("map");
+    const W = Math.max(320, host.clientWidth);
+    const H = W < 560 ? 340 : 460;
+    const M = { l: 52, r: 14, t: 30, b: 40 };
+    const iw = W - M.l - M.r, ih = H - M.t - M.b;
+    const metric = state.metric;
+    // Most plugins were touched recently, so a linear date axis would pile them against the right
+    // edge. Days-since-activity on a log scale gives the last few months room.
+    const ageOf = (t) => Math.max(1, (TODAY.getTime() - t) / DAY);
+    const maxAge = Math.max(3653, ...rows.filter((r) => r.t).map((r) => ageOf(r.t)));
+    const x = (age) => M.l + (1 - Math.log10(age) / Math.log10(maxAge)) * iw;
+    const maxV = Math.max(10, ...rows.map((r) => r[metric] || 0));
+    const top = Math.ceil(Math.log10(maxV + 1));
+    const y = (v) => M.t + ih - (Math.log10((v || 0) + 1) / top) * ih;
+    const rad = (c) => 4 + Math.sqrt(Math.min(c || 1, 50)) * 1.4;
+
+    const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `Scatter plot of ${list.length} plugins: last activity against ${metric === "d" ? "downloads" : "stars"}` });
+    // y grid + ticks
+    for (let p = 0; p <= top; p++) {
+      const v = p === 0 ? 0 : 10 ** p;
+      const yy = y(v);
+      svg.append(svgEl("line", { class: "gridline", x1: M.l, x2: W - M.r, y1: yy, y2: yy }));
+      const tt = svgEl("text", { class: "tick", x: M.l - 8, y: yy + 4, "text-anchor": "end" }); tt.textContent = compact(v); svg.append(tt);
+    }
+    // x ticks (time since last activity)
+    const xticks = [[1, "today"], [7, "1 week"], [30, "1 month"], [91, "3 months"], [365, "1 year"], [730, "2 years"], [1826, "5 years"], [3653, "10 years"]];
+    for (const [days, label] of xticks) {
+      if (days > maxAge || (W < 560 && [7, 91, 730].includes(days))) continue;
+      const xx = x(days);
+      const tt = svgEl("text", { class: "tick", x: xx, y: H - M.b + 18, "text-anchor": days === 1 ? "end" : "middle" }); tt.textContent = label; svg.append(tt);
+      svg.append(svgEl("line", { class: "gridline", x1: xx, x2: xx, y1: H - M.b, y2: H - M.b + 5 }));
+    }
+    svg.append(svgEl("line", { stroke: "var(--axis)", x1: M.l, x2: W - M.r, y1: H - M.b, y2: H - M.b }));
+    const xt = svgEl("text", { class: "axis-title", x: W - M.r, y: H - 4, "text-anchor": "end" }); xt.textContent = "Time since last commit or release (log) · more recent →"; svg.append(xt);
+    const yt = svgEl("text", { class: "axis-title", x: M.l - 44, y: M.t - 18 }); yt.textContent = metric === "d" ? "GitHub .xpi downloads (log)" : "GitHub stars (log)"; svg.append(yt);
+    // maintenance zones: dormant | slowing | active, split at 18 and 6 months
+    const x6 = x(183), x18 = x(548);
+    for (const xx of [x6, x18]) svg.append(svgEl("line", { class: "guide", x1: xx, x2: xx, y1: M.t, y2: H - M.b }));
+    for (const [label, a, b] of [["Dormant", M.l, x18], ["Slowing", x18, x6], ["Active", x6, W - M.r]]) {
+      const z = svgEl("text", { class: "zone-label", x: (a + b) / 2, y: M.t - 6, "text-anchor": "middle" }); z.textContent = label; svg.append(z);
+    }
+    // points: big first so small dots stay on top
+    const plotted = list.filter((r) => r.t).map((r) => ({ r, cx: x(ageOf(r.t)), cy: y(r[metric]), rr: rad(r.c) })).sort((a, b) => b.rr - a.rr);
+    const gPts = svgEl("g");
+    for (const p of plotted) {
+      gPts.append(svgEl("circle", { class: "pt", cx: p.cx.toFixed(1), cy: p.cy.toFixed(1), r: p.rr.toFixed(1), fill: `var(${CAT[p.r.cat].color})`, "fill-opacity": "0.85" }));
+    }
+    svg.append(gPts);
+    // selective direct labels: the eight largest by the current metric, skipping collisions
+    const boxes = [];
+    for (const p of [...plotted].sort((a, b) => (b.r[metric] || 0) - (a.r[metric] || 0)).slice(0, 8)) {
+      const w = Math.min(p.r.n.length, 26) * 6.2, h = 13;
+      let lx = p.cx + p.rr + 4, anchor = "start";
+      if (lx + w > W - M.r) { lx = p.cx - p.rr - 4; anchor = "end"; }
+      const bx = anchor === "start" ? lx : lx - w, by = p.cy - h / 2;
+      if (boxes.some((b) => bx < b.x + b.w && bx + w > b.x && by < b.y + b.h && by + h > b.y)) continue;
+      boxes.push({ x: bx, y: by, w, h });
+      const t = svgEl("text", { class: "direct", x: lx, y: p.cy + 4, "text-anchor": anchor });
+      t.textContent = p.r.n.length > 26 ? `${p.r.n.slice(0, 25)}…` : p.r.n;
+      svg.append(t);
+    }
+    const hl = svgEl("circle", { class: "pt-hl", r: 0, cx: -99, cy: -99 });
+    svg.append(hl);
+    host.replaceChildren(svg, tip);
+    points = plotted;
+
+    const nearest = (evt) => {
+      const rect = svg.getBoundingClientRect();
+      const sx = ((evt.clientX - rect.left) / rect.width) * W, sy = ((evt.clientY - rect.top) / rect.height) * H;
+      let best = null, bd = 24 * 24;
+      for (const p of points) { const d = (p.cx - sx) ** 2 + (p.cy - sy) ** 2 - p.rr * p.rr; if (d < bd) { bd = d; best = p; } }
+      return best;
+    };
+    const show = (p, pinned) => {
+      if (!p) { if (!state.pinned) { tip.hidden = true; hl.setAttribute("r", 0); } return; }
+      hl.setAttribute("cx", p.cx); hl.setAttribute("cy", p.cy); hl.setAttribute("r", p.rr + 3);
+      fillTip(p.r, pinned);
+      const rect = svg.getBoundingClientRect(), scale = rect.width / W;
+      const px = p.cx * scale, py = p.cy * scale;
+      tip.hidden = false;
+      const tw = tip.offsetWidth, th = tip.offsetHeight;
+      const left = px + 14 + tw > host.clientWidth ? px - tw - 14 : px + 14;
+      tip.style.left = `${Math.max(0, left)}px`;
+      tip.style.top = `${Math.max(0, Math.min(py - th / 2, host.clientHeight - th))}px`;
+    };
+    svg.addEventListener("pointermove", (e) => { if (!state.pinned) show(nearest(e), false); });
+    svg.addEventListener("pointerleave", () => { if (!state.pinned) show(null); });
+    svg.addEventListener("click", (e) => {
+      const p = nearest(e);
+      state.pinned = p ? p.r.r : null;
+      tip.classList.toggle("pinned", Boolean(p));
+      show(p, true);
+      if (!p) { tip.hidden = true; hl.setAttribute("r", 0); }
+    });
+    if (state.pinned) { const p = points.find((q) => q.r.r === state.pinned); if (p) { tip.classList.add("pinned"); show(p, true); } else state.pinned = null; }
+  }
+
+  function fillTip(r, pinned) {
+    const name = el("div", "t-name", r.n);
+    const repo = el("div", "t-repo");
+    if (pinned) { const a = el("a", "", r.r); a.href = `https://github.com/${r.r}`; a.target = "_blank"; a.rel = "noopener"; repo.append(a); } else repo.textContent = r.r;
+    const dl = el("dl");
+    const row = (v, l) => dl.append(el("dt", "", v), el("dd", "", l));
+    row(fmt(r.d), "downloads");
+    row(fmt(r.s), "stars");
+    row(fmt(r.c), r.c === 1 ? "contributor" : "contributors");
+    row(r.a ? r.a : "–", `last activity · ${MAINT_LABEL[r.m] || r.m}`);
+    row(r.z.length ? r.z.join(", ") : "none", "Zotero versions");
+    if (r.lt) row(r.lt, "latest release");
+    const parts = [name, repo];
+    if (r.sum) {
+      const s = el("div", "t-sum");
+      for (const [label, text] of [["What it does", r.sum.does], ["Pain it solves", r.sum.pain]]) { const p = el("div"); p.append(el("b", "", label), text); s.append(p); }
+      parts.push(s);
+    } else if (r.desc) parts.push(el("div", "t-desc", r.desc));
+    parts.push(dl);
+    const flags = [r.nf ? "New find: in no curated list" : "", r.f ? "Fork" : "", r.v === "l" ? "Legacy install.rdf plugin" : ""].filter(Boolean);
+    if (flags.length) parts.push(el("div", "t-hint", flags.join(" · ")));
+    parts.push(el("div", "t-hint", pinned ? "Click empty space to unpin" : "Click to pin and open on GitHub"));
+    tip.replaceChildren(...parts);
+  }
+
+  // ---------------------------------------------------------------- bar charts
+  function hbar(host, data, opts) {
+    const W = Math.max(300, host.clientWidth);
+    const labelW = opts.labelW, valueW = 64, rowH = 34, barH = 18;
+    const H = data.length * rowH + 6;
+    const iw = W - labelW - valueW;
+    const max = Math.max(1, ...data.map((d) => d.total));
+    const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opts.aria });
+    data.forEach((d, i) => {
+      const yy = i * rowH + (rowH - barH) / 2;
+      const lab = svgEl("text", { class: "bar-label", x: 0, y: yy + barH / 2 + 4 }); lab.textContent = d.label; svg.append(lab);
+      svg.append(svgEl("line", { stroke: "var(--axis)", x1: labelW, x2: labelW, y1: yy - 4, y2: yy + barH + 4 }));
+      let x0 = labelW;
+      const segs = d.segments.filter((s) => s.v > 0);
+      segs.forEach((s, j) => {
+        const w = (s.v / max) * iw;
+        const gap = j < segs.length - 1 ? 2 : 0;
+        const ww = Math.max(0, w - gap);
+        const last = j === segs.length - 1;
+        const rr = last ? Math.min(4, ww / 2) : 0;
+        const path = last
+          ? `M${x0},${yy} h${ww - rr} a${rr},${rr} 0 0 1 ${rr},${rr} v${barH - 2 * rr} a${rr},${rr} 0 0 1 -${rr},${rr} h-${ww - rr} z`
+          : `M${x0},${yy} h${ww} v${barH} h-${ww} z`;
+        const seg = svgEl("path", { d: path, fill: `var(${s.color})` });
+        const title = svgEl("title"); title.textContent = `${d.label}: ${fmt(s.v)} ${s.name}`; seg.append(title);
+        svg.append(seg);
+        x0 += w;
+      });
+      const val = svgEl("text", { class: "bar-value", x: x0 + 8, y: yy + barH / 2 + 4 }); val.textContent = fmt(d.total); svg.append(val);
+    });
+    host.replaceChildren(svg);
+  }
+
+  function renderCompat(list) {
+    const majors = [6, 7, 8, 9, 10, 11].filter((m) => m <= (NEXT || CUR));
+    const data = majors.map((m) => {
+      const n = list.filter((r) => r.z.includes(m)).length;
+      const color = m >= CUR ? "--cat-current" : m >= 7 ? "--cat-older" : "--cat-legacy";
+      return { label: `Zotero ${m}${m === CUR ? " (current)" : m === NEXT ? " (dev)" : ""}`, total: n, segments: [{ v: n, color, name: "plugins" }] };
+    });
+    hbar($("compat-chart"), data, { labelW: 150, aria: "Bar chart of plugins supporting each Zotero major version" });
+  }
+
+  function renderMaint(list) {
+    const data = MAINT.map((m) => {
+      const g = list.filter((r) => r.m === m);
+      return { label: MAINT_LABEL[m], total: g.length, segments: CATS.map((c) => ({ v: g.filter((r) => r.cat === c.id).length, color: c.color, name: c.label })) };
+    });
+    hbar($("maint-chart"), data, { labelW: 96, aria: "Stacked bar chart of maintenance status by compatibility" });
+  }
+
+  // ---------------------------------------------------------------- table
+  const SORT_LABEL = { n: "name", d: "downloads", s: "stars", c: "contributors", a: "last activity", src: "number of lists" };
+  function sortVal(r, k) { return k === "n" ? r.n.toLowerCase() : k === "a" ? r.t || 0 : k === "src" ? r.cl : r[k] ?? -1; }
+  // Summaries span the full row but must stay readable without scrolling the table sideways.
+  function fitSummaries() { const w = document.querySelector(".table-wrap"); w.style.setProperty("--sum-w", `${w.clientWidth - 64}px`); }
+  function renderTable(list) {
+    const k = state.sort, dir = state.dir;
+    const sorted = [...list].sort((a, b) => { const x = sortVal(a, k), y = sortVal(b, k); return (x < y ? -1 : x > y ? 1 : 0) * dir || a.r.localeCompare(b.r); });
+    const body = $("tbody");
+    const frag = document.createDocumentFragment();
+    for (const r of sorted.slice(0, state.shown)) {
+      const tr = el("tr");
+      const c1 = el("td");
+      const a = el("a", "p-name", r.n); a.href = `https://github.com/${r.r}`; a.target = "_blank"; a.rel = "noopener";
+      c1.append(a);
+      if (r.nf) c1.append(el("span", "tag new", "new find"));
+      if (r.f) c1.append(el("span", "tag", "fork"));
+      if (r.v === "l") c1.append(el("span", "tag", "legacy"));
+      c1.append(el("div", "p-repo", r.r));
+      const cz = el("td"); const chips = el("span", "chips");
+      for (const m of [6, 7, 8, 9, 10, 11].filter((q) => q <= (NEXT || CUR))) {
+        const on = r.z.includes(m);
+        chips.append(el("span", `zc${on ? " on" : ""}${on && m < CUR && m >= 7 ? " old" : ""}${on && m < 7 ? " leg" : ""}`, String(m)));
+      }
+      chips.setAttribute("aria-label", r.z.length ? `Supports Zotero ${r.z.join(", ")}` : "No supported Zotero version declared");
+      cz.append(chips);
+      const ca = el("td"); ca.append(el("div", "", r.a || "–"), el("span", `pill ${r.m}`, MAINT_LABEL[r.m] || r.m));
+      const lists = el("td", "num", String(r.cl)); lists.title = r.src.map((s) => SOURCE_LABEL[s] || s).join(", ");
+      tr.append(c1, el("td", "num", fmt(r.d)), el("td", "num", fmt(r.s)), el("td", "num", fmt(r.c)), ca, cz, lists);
+      frag.append(tr);
+      if (r.sum) {
+        tr.className = "has-sum";
+        const sr = el("tr", "sum-row"); const td = el("td"); td.colSpan = 7;
+        const dl = el("dl", "sum");
+        dl.append(el("dt", "", "What it does"), el("dd", "", r.sum.does), el("dt", "", "Pain it solves"), el("dd", "", r.sum.pain));
+        td.append(dl); sr.append(td); frag.append(sr);
+      }
+    }
+    body.replaceChildren(frag);
+    fitSummaries();
+    $("more").hidden = sorted.length <= state.shown;
+    $("more").textContent = `Show ${Math.min(50, sorted.length - state.shown)} more`;
+    $("sort-label").textContent = `${SORT_LABEL[k]}, ${dir < 0 ? "highest first" : "lowest first"}`;
+    for (const b of document.querySelectorAll("th button")) {
+      if (b.dataset.sort === k) b.setAttribute("aria-sort", dir < 0 ? "descending" : "ascending");
+      else b.removeAttribute("aria-sort");
+    }
+  }
+
+  // ---------------------------------------------------------------- wiring
+  function render() {
+    const list = filtered();
+    $("count").textContent = `Showing ${fmt(list.length)} of ${fmt(rows.length)} plugins`;
+    renderMap(list);
+    renderCompat(list);
+    renderMaint(list);
+    renderTable(list);
+  }
+  const bind = (id, key, prop = "value") => $(id).addEventListener(prop === "checked" ? "change" : "input", (e) => { state[key] = e.target[prop]; state.shown = 50; render(); });
+  bind("q", "q"); bind("compat", "compat"); bind("maint", "maint"); bind("newOnly", "newOnly", "checked"); bind("hideForks", "hideForks", "checked");
+  for (const b of document.querySelectorAll(".seg button")) b.addEventListener("click", () => {
+    state.metric = b.dataset.metric;
+    for (const o of document.querySelectorAll(".seg button")) o.setAttribute("aria-pressed", String(o === b));
+    renderMap(filtered());
+  });
+  for (const b of document.querySelectorAll("th button")) b.addEventListener("click", () => {
+    const k = b.dataset.sort;
+    state.dir = state.sort === k ? -state.dir : k === "n" ? 1 : -1;
+    state.sort = k;
+    renderTable(filtered());
+  });
+  $("more").addEventListener("click", () => { state.shown += 50; renderTable(filtered()); });
+  let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { const l = filtered(); renderMap(l); renderCompat(l); renderMaint(l); fitSummaries(); }, 80); }).observe($("map"));
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+
+  renderStatic();
+  render();
+})();
+</script>

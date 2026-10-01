@@ -1,0 +1,224 @@
+{
+ "repo": "AtlasField92/zotero-bulk-importer-plugin",
+ "slug": "zotero-bulk-importer-plugin",
+ "group": "sample-2026",
+ "rank": 735,
+ "name": "Bulk Import from URL List",
+ "stars": 0,
+ "downloads": 13,
+ "createdAt": "2026-05-14T15:30:10Z",
+ "tag": "v1.1",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "bulk-importer.xpi",
+    "url": "https://github.com/AtlasField92/zotero-bulk-importer-plugin/releases/download/v1.1/bulk-importer.xpi",
+    "size": 26936,
+    "uploadedAt": "2026-06-20T15:20:19Z",
+    "sha256": "0b29cedbcc0c70fd7b02bf440f439d419439b04993f5c8c6a67ac85bf3c119f6"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "bulk-importer@atlasfield92",
+    "name": "Bulk Import from URL List",
+    "version": "1.1",
+    "description": "Import scientific references in bulk from a text file containing URLs, with full metadata retrieval via Zotero translators.",
+    "homepageUrl": null,
+    "updateUrl": "https://raw.githubusercontent.com/AtlasField92/zotero-bulk-import-plugin/refs/heads/main/updates.json",
+    "minVersion": "7.0",
+    "maxVersion": "10.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-bulk-importer-plugin",
+     "version": "1.1",
+     "sha256": "0b29cedbcc0c70fd7b02bf440f439d419439b04993f5c8c6a67ac85bf3c119f6"
+    },
+    "coverage": {
+     "filesTotal": 16,
+     "filesAnalyzed": 3,
+     "filesSkipped": [
+      {
+       "path": "content/bulkImport.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "icon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "locale/ar/bulkImport.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/de-DE/bulkImport.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/bulkImport.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/es-ES/bulkImport.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/fr-FR/bulkImport.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/hi-IN/bulkImport.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/ja-JP/bulkImport.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/pt-BR/bulkImport.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/ru-RU/bulkImport.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/bulkImport.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/bulkImportDialog.js",
+         "line": 189,
+         "column": 27,
+         "snippet": "let response = await fetch(url, { method: \"HEAD\" });",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "www.buymeacoffee.com",
+       "category": "documentation",
+       "provider": "Buy Me a Coffee",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/bulkImportDialog.js",
+         "line": 10,
+         "column": 19,
+         "snippet": "const DONATE_URL = \"https://www.buymeacoffee.com/atlasfield92\";",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/bulkImportDialog.js",
+        "line": 98,
+        "column": 23,
+        "snippet": "var fileContents = Zotero.File.getContents(this._selectedFilePath);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 14,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/AtlasField92/zotero-bulk-import-plugin/refs/heads/main/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/AtlasField92/zotero-bulk-import-plugin/refs/heads/main/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "unknown-endpoints",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

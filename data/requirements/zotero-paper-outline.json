@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paper-outline",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "cloud AI providers (DeepSeek default, OpenAI, Kimi, etc.) and MinerU for scanned PDFs",
+  "worksWithout": "local Ollama (no key needed)",
+  "services": [
+   "DeepSeek",
+   "OpenAI",
+   "Moonshot (Kimi)",
+   "Zhipu",
+   "Alibaba Qwen",
+   "SiliconFlow",
+   "Xiaomi MiMo",
+   "MinerU"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README provider table",
+   "quote": "| Ollama | 本地运行，无需 API Key |",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "paperOutline.js:1550",
+   "quote": "ollama: { label: \"本地 Ollama\", url: \"http://localhost:11434/v1/chat/completions\", model: \"qwen2.5\", json: false },",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says '| Ollama | 本地运行，无需 API Key |' and paperOutline.js:1550 points to http://localhost:11434. Bookmark outlines and the text clean-up run without AI, while DeepSeek, the default AI provider, needs a key."
+}

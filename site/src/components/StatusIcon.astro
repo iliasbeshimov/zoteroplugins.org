@@ -1,0 +1,53 @@
+---
+/** Shape-coded finding level, so it never relies on colour alone: ring (low), half-diamond (medium), octagon (high), dashed ring (unknown), square (fact). */
+interface Props {
+  kind: "few" | "review" | "serious" | "nodata" | "info";
+  size?: number;
+  color?: string;
+  inner?: string;
+}
+const { kind, size = 20, color, inner = "var(--surface)" } = Astro.props;
+const tok = { few: "var(--few-fg)", review: "var(--rev-fg)", serious: "var(--ser-fg)", nodata: "var(--nd-fg)", info: "var(--ink-3)" }[kind];
+---
+
+<span aria-hidden="true" style={`display:inline-flex;flex:none;line-height:0;color:${color ?? tok}`}>
+  {
+    kind === "few" && (
+      <svg width={size} height={size} viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="3" />
+        <circle cx="12" cy="12" r="3" fill="currentColor" />
+      </svg>
+    )
+  }
+  {
+    kind === "review" && (
+      <svg width={size} height={size} viewBox="0 0 24 24">
+        <path d="M12 2.2 21.8 12 12 21.8 2.2 12Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round" />
+        <path d="M12 2.2 21.8 12H2.2Z" fill="currentColor" />
+      </svg>
+    )
+  }
+  {
+    kind === "serious" && (
+      <svg width={size} height={size} viewBox="0 0 24 24">
+        <path d="M8 1.5h8l6.5 6.5v8L16 22.5H8L1.5 16V8Z" fill="currentColor" />
+        <rect x="10.6" y="6" width="2.8" height="8" rx="1.4" style={`fill:${inner}`} />
+        <circle cx="12" cy="17.4" r="1.6" style={`fill:${inner}`} />
+      </svg>
+    )
+  }
+  {
+    kind === "nodata" && (
+      <svg width={size} height={size} viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="3.4 2.6" />
+      </svg>
+    )
+  }
+  {
+    kind === "info" && (
+      <svg width={size} height={size} viewBox="0 0 24 24">
+        <rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" />
+      </svg>
+    )
+  }
+</span>

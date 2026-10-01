@@ -1,0 +1,404 @@
+{
+ "schemaVersion": 1,
+ "slug": "texglot",
+ "repo": "mengqi-lei/texglot",
+ "version": "1.0.0",
+ "tag": "v1.2.0",
+ "releaseAuthor": "Mengqi-Lei",
+ "publishedAt": "2026-09-25T03:14:20Z",
+ "prerelease": false,
+ "asset": {
+  "name": "texglot-zotero-1.0.0.xpi",
+  "url": "https://github.com/Mengqi-Lei/texglot/releases/download/v1.2.0/texglot-zotero-1.0.0.xpi",
+  "size": 617387,
+  "sha256": "dd93b9b17aeaeddbc1de7cdcf6964f97dd4bc4b63d5d9097d7e5c633f6c72aae",
+  "githubAssetId": 587382896,
+  "uploader": "Mengqi-Lei",
+  "uploadedAt": "2026-09-25T02:59:55Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero@texglot.org",
+  "name": "TeXGlot for Zotero",
+  "version": "1.0.0",
+  "description": "Send Zotero papers to a local TeXGlot service and keep translated PDFs as child attachments.",
+  "homepageUrl": "https://github.com/Mengqi-Lei/texglot",
+  "updateUrl": "https://github.com/Mengqi-Lei/texglot/releases/latest/download/texglot-zotero-update.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.99.99"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 4478,
+   "sha256": "f4f8a2a6aabab39c7f0bde8f0502c61df1d398716d19ba45ce26fc92ec905907"
+  },
+  {
+   "path": "dist/addon.js",
+   "size": 154521,
+   "sha256": "f06f50d6d4363cb7647538d726c7e48ed2f1219eb83e487c01d6e809bf5d64a6"
+  },
+  {
+   "path": "icons/texglot.png",
+   "size": 596976,
+   "sha256": "a1482db283d2294eac1a7040a333c3ab8fc096848df5908528e55a51d5b26f6b"
+  },
+  {
+   "path": "manifest.json",
+   "size": 636,
+   "sha256": "40cca77e2e88067ed5e186aabff0b1f8f3d1bf907a42c671feb48350ed23ff32"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "texglot",
+   "version": "1.0.0",
+   "sha256": "dd93b9b17aeaeddbc1de7cdcf6964f97dd4bc4b63d5d9097d7e5c633f6c72aae"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "icons/texglot.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 158999,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 20,
+       "column": 4,
+       "snippet": "fetch: globalThis.fetch,",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "dist/addon.js",
+       "line": 430,
+       "column": 24,
+       "snippet": "const request = this.fetcher(`${baseUrl}${path}`, requestInit);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 8765,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "dist/addon.js",
+       "line": 375,
+       "column": 21,
+       "snippet": "var DEFAULT_BASE = \"http://127.0.0.1:8765\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "dist/addon.js",
+       "line": 376,
+       "column": 30,
+       "snippet": "var DESKTOP_FALLBACK_BASE = \"http://127.0.0.1:8766\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "dist/addon.js",
+       "line": 3005,
+       "column": 30,
+       "snippet": "zotero?.launchURL?.(\"http://127.0.0.1:8765/?settings=1\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "dist/addon.js",
+       "line": 3009,
+       "column": 58,
+       "snippet": "openReader: (taskId, mode = \"comparison\", baseUrl = \"http://127.0.0.1:8765\") => {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "dist/addon.js",
+       "line": 430,
+       "column": 24,
+       "snippet": "const request = this.fetcher(`${baseUrl}${path}`, requestInit);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "TeXGlot",
+     "provider": "",
+     "category": "unknown",
+     "documents": true,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "dist/addon.js",
+       "line": 375,
+       "column": 21,
+       "snippet": "var DEFAULT_BASE = \"http://127.0.0.1:8765\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "dist/addon.js",
+      "line": 1632,
+      "column": 40,
+      "snippet": "const clipboard = xpcom.classes[\"@mozilla.org/widget/clipboard;1\"].getService(xpcom.interfaces.nsIClipboard);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "dist/addon.js",
+      "line": 1632,
+      "column": 86,
+      "snippet": "const clipboard = xpcom.classes[\"@mozilla.org/widget/clipboard;1\"].getService(xpcom.interfaces.nsIClipboard);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/Mengqi-Lei/texglot/releases/latest/download/texglot-zotero-update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/Mengqi-Lei/texglot/releases/latest/download/texglot-zotero-update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Mengqi-Lei account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "texglot",
+   "version": "1.0.0",
+   "sha256": "dd93b9b17aeaeddbc1de7cdcf6964f97dd4bc4b63d5d9097d7e5c633f6c72aae"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "654b9770f85a4f04fa0907f2bfb04b7897e6565655cf263b14069d5b978e6a9a"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ],
+      "unconfirmed": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "unknown",
+      "hosts": [
+       "TeXGlot"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Hands your documents to TeXGlot; we can't check where they go from there",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN-HANDOFF"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-25T03:14:20Z",
+    "lastCommitAt": "2026-09-25T02:48:21Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Hands your documents to TeXGlot; we can't check where they go from there"
+   ]
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T10:53:37Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 2,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

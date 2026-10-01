@@ -1,0 +1,33 @@
+{
+ "schemaVersion": 1,
+ "slug": "metadata-filler-for-zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "OpenAI, Anthropic and Google Gemini providers need their own API key; OpenAlex has an optional key field",
+  "worksWithout": "Apple Intelligence on-device (macOS only) or a local model such as Ollama via the OpenAI-compatible endpoint",
+  "services": [
+   "OpenAI",
+   "Anthropic",
+   "Google Gemini",
+   "OpenAlex"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Supported AI providers",
+   "quote": "| **Apple Intelligence (on-device)** | _(single model)_ | — _(macOS only, see below)_ |",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README Supported AI providers",
+   "quote": "download Ollama and install an open source model, and point your OpenAI-compatible endpoint to Ollama",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: 'If you don't want to pay for a model... download Ollama ... point your OpenAI-compatible endpoint to Ollama'. Apple on-device: 'no API keys, no network'. Cloud providers and OpenAlex need or accept keys, so keys are needed only for some providers."
+}

@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zoterocitationcountsagent",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "NASA ADS lookups need your own NASA ADS API key",
+  "worksWithout": "Crossref, INSPIRE-HEP and Semantic Scholar citation counts",
+  "services": [
+   "NASA ADS"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Setting NASA ADS API Key",
+   "quote": "To use the NASA ADS API, you need to set your API key.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "src/prefs.js",
+   "quote": "pref(\"extensions.citationcounts.nasaadsApiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "The add-on can auto-fetch citation counts for journal articles using various APIs, including [Crossref](https://www.crossref.org), [INSPIRE-HEP](https://inspirehep.net), and [Semantic Scholar](https://www.semanticscholar.org).",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README: \"To use the NASA ADS API, you need to set your API key.\" The default nasaadsApiKey is empty, and Crossref, INSPIRE-HEP and Semantic Scholar are listed as other sources. No AI features."
+}

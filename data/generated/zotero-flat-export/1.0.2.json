@@ -1,0 +1,334 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-flat-export",
+ "repo": "kylekahraman/zotero-flat-export",
+ "version": "1.0.2",
+ "tag": "v1.0.2",
+ "releaseAuthor": "kylekahraman",
+ "publishedAt": "2026-09-02T22:11:35Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-flat-export.xpi",
+  "url": "https://github.com/kylekahraman/zotero-flat-export/releases/download/v1.0.2/zotero-flat-export.xpi",
+  "size": 6332,
+  "sha256": "43cc43fd735ca5286e6f45bb0b1b30a58e7691ebae7320f37e03789978dc4103",
+  "githubAssetId": 541825497,
+  "uploader": "kylekahraman",
+  "uploadedAt": "2026-09-02T22:11:34Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-flat-export@kylekahraman",
+  "name": "Zotero Flat Export",
+  "version": "1.0.2",
+  "description": "Export all PDFs and notes from a collection flat into a folder with a clean BibTeX file",
+  "updateUrl": "https://raw.githubusercontent.com/kylekahraman/zotero-flat-export/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 15651,
+   "sha256": "5f2ea0e9148907846e22fe83418d0d87a892abdcba1f94c33ff3868bf4ee4820"
+  },
+  {
+   "path": "icon.png",
+   "size": 123,
+   "sha256": "b95a2889d2b93989445ca4b6419249c6b3ccc4fc13f7c24327b142de6c568283"
+  },
+  {
+   "path": "locale/en-US/export-pdfs.ftl",
+   "size": 143,
+   "sha256": "42dcad8cac0eff80f3b63df7e231b4ed56269babc554a37f94e561ec0d8fbf08"
+  },
+  {
+   "path": "manifest.json",
+   "size": 510,
+   "sha256": "133fa49930388a3f9757a459e61af114c71b32e0e9369c29375e1c6d8c50bda4"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-flat-export",
+   "version": "1.0.2",
+   "sha256": "43cc43fd735ca5286e6f45bb0b1b30a58e7691ebae7320f37e03789978dc4103"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "locale/en-US/export-pdfs.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 15651,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 312,
+      "column": 23,
+      "snippet": "exists = await IOUtils.exists(srcPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 328,
+      "column": 19,
+      "snippet": "while (await IOUtils.exists(destPath)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 330,
+      "column": 30,
+      "snippet": "let srcStat = await IOUtils.stat(srcPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 331,
+      "column": 31,
+      "snippet": "let destStat = await IOUtils.stat(destPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 342,
+      "column": 14,
+      "snippet": "await IOUtils.copy(srcPath, destPath, { noOverwrite: false });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 398,
+      "column": 16,
+      "snippet": "await IOUtils.writeUTF8(notePath, mdContent);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 411,
+      "column": 14,
+      "snippet": "await IOUtils.writeUTF8(notePath, mdContent);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 495,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(bibPath, bibContent);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/kylekahraman/zotero-flat-export/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/kylekahraman/zotero-flat-export/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the kylekahraman account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-flat-export",
+   "version": "1.0.2",
+   "sha256": "43cc43fd735ca5286e6f45bb0b1b30a58e7691ebae7320f37e03789978dc4103"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "4a7e1fafeead7761014887a04a13756a938609a3b0f52607940336a98b5a3765"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers version 1.0.2, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-02T22:11:35Z",
+    "lastCommitAt": "2026-09-02T22:11:31Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:44:33Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

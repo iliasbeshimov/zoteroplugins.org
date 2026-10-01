@@ -1,0 +1,387 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-bilingual",
+ "repo": "houxin2024/zotero-bilingual",
+ "version": "0.9.4",
+ "tag": "v0.9.4",
+ "releaseAuthor": "Houxin2024",
+ "publishedAt": "2026-08-16T18:10:02Z",
+ "prerelease": false,
+ "asset": {
+  "name": "bilingual-linked-reader-0.9.4.xpi",
+  "url": "https://github.com/Houxin2024/zotero-bilingual/releases/download/v0.9.4/bilingual-linked-reader-0.9.4.xpi",
+  "size": 15035,
+  "sha256": "4acd0879e57bf7fc6a449dbbad5c92e8be58700abea42fd34ec89d028fc24472",
+  "githubAssetId": 517079444,
+  "uploader": "Houxin2024",
+  "uploadedAt": "2026-08-16T18:14:31Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "bilingual-linked-reader@houxin2024.github.io",
+  "name": "Zotero Bilingual PDF Reader",
+  "version": "0.9.4",
+  "description": "Read layout-preserving bilingual PDFs in Zotero with click-to-match sentence highlighting; the Windows bundle includes one-click translation setup.",
+  "homepageUrl": "https://github.com/Houxin2024/zotero-bilingual",
+  "updateUrl": "https://raw.githubusercontent.com/Houxin2024/zotero-bilingual/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 681,
+   "sha256": "83eed2f7591c50e3843a2f27b9e8b8f1f0126ce9fb77e3d46f2bc2f74d1f9c45"
+  },
+  {
+   "path": "manifest.json",
+   "size": 632,
+   "sha256": "a625590b8b5c481ca990a55866f92d9324a1d76640b5efff93e3f0356ad212ed"
+  },
+  {
+   "path": "prefs.js",
+   "size": 402,
+   "sha256": "7a5c5bec76b637098a09bdf7b35e83af87421169d4d61963dbfa7469bfe11c8f"
+  },
+  {
+   "path": "sync.js",
+   "size": 62617,
+   "sha256": "3cb2968f480ca96a87fe98cc8b18cfb208619197f429fe866ceb8f5a51eee624"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-bilingual",
+   "version": "0.9.4",
+   "sha256": "4acd0879e57bf7fc6a449dbbad5c92e8be58700abea42fd34ec89d028fc24472"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 63700,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "sync.js",
+       "line": 616,
+       "column": 31,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 8890,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.bilingualLinkedReader.serverURL\", \"http://127.0.0.1:8890\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 51,
+       "snippet": "pref(\"extensions.bilingualLinkedReader.serverURL\", \"http://127.0.0.1:8890\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "sync.js",
+       "line": 572,
+       "column": 30,
+       "snippet": "return (configured || \"http://127.0.0.1:8890\").replace(/\\/+$/, \"\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.bilingualLinkedReader.serverURL",
+     "defaultValue": "http://127.0.0.1:8890",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.bilingualLinkedReader.serverURL\", \"http://127.0.0.1:8890\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "sync.js",
+       "line": 565,
+       "column": 32,
+       "snippet": "configured = String(Zotero.Prefs.get(ownKey, true) || \"\").trim();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "programs": [
+    {
+     "program": "pdf2zh server",
+     "provider": "the translation service it's set up with",
+     "category": "translation",
+     "documents": true,
+     "automatic": true,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "sync.js",
+       "line": 572,
+       "column": 30,
+       "snippet": "return (configured || \"http://127.0.0.1:8890\").replace(/\\/+$/, \"\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "sync.js",
+      "line": 555,
+      "column": 19,
+      "snippet": "if (typeof Zotero.File?.getContentsAsync === \"function\") {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "sync.js",
+      "line": 556,
+      "column": 36,
+      "snippet": "return JSON.parse(await Zotero.File.getContentsAsync(path));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Houxin2024/zotero-bilingual/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Houxin2024/zotero-bilingual/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Houxin2024 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-bilingual",
+   "version": "0.9.4",
+   "sha256": "4acd0879e57bf7fc6a449dbbad5c92e8be58700abea42fd34ec89d028fc24472"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "fd2c4c0bb99bef04b16a094acd3a49fc5755897074495fc7a57c3460ee3f878b"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "translation",
+      "hosts": [
+       "pdf2zh server (the translation service it's set up with)"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-16T18:10:02Z",
+    "lastCommitAt": "2026-08-16T18:42:32Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T06:14:23Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

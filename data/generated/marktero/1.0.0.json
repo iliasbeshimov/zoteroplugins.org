@@ -1,0 +1,375 @@
+{
+ "schemaVersion": 1,
+ "slug": "marktero",
+ "repo": "partlyjadedyouth/marktero",
+ "version": "1.0.0",
+ "tag": "v1.0.0",
+ "releaseAuthor": "partlyjadedyouth",
+ "publishedAt": "2026-06-18T06:42:06Z",
+ "prerelease": false,
+ "asset": {
+  "name": "MarkTero-1.0.0.xpi",
+  "url": "https://github.com/partlyjadedyouth/marktero/releases/download/v1.0.0/MarkTero-1.0.0.xpi",
+  "size": 11655,
+  "sha256": "5bacea82b3273cd98589f88722ced0c48fdb5815e70f959ee1698753a9cfc56d",
+  "githubAssetId": 450947290,
+  "uploader": "partlyjadedyouth",
+  "uploadedAt": "2026-06-18T06:42:06Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "marktero@local",
+  "name": "MarkTero",
+  "version": "1.0.0",
+  "description": "One-way automatic Markdown literature note generation for Zotero.",
+  "homepageUrl": "https://github.com/partlyjadedyouth/marktero",
+  "updateUrl": "https://raw.githubusercontent.com/partlyjadedyouth/marktero/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1072,
+   "sha256": "07a3943b335be2f18d479e0c9c2e56e6a20ec97c541a1c6027c51b7ec57e9217"
+  },
+  {
+   "path": "main.js",
+   "size": 30612,
+   "sha256": "e4d68b432efd584a18c71f36f9348d84746d7ea24df712ea4b264051d7bf2d5a"
+  },
+  {
+   "path": "manifest.json",
+   "size": 498,
+   "sha256": "3dd0a52a14d1385401ebd8a2a3343d3fec87c24d511bdb19243b8c55b6af5c1e"
+  },
+  {
+   "path": "preferences.css",
+   "size": 1007,
+   "sha256": "041daf89299046b3da581f9bbf92b733ed5edb3f9bb58783eb57fe2e269fc193"
+  },
+  {
+   "path": "preferences.js",
+   "size": 405,
+   "sha256": "460b3eb6bab1843815ca453c2bf94f334b8f4da5e9ac31b158a0fa08c4485232"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 2835,
+   "sha256": "4b6464d9c14612eb7554cfa07697376e3920d138a88d8e8c32cafef603b11773"
+  },
+  {
+   "path": "prefs.js",
+   "size": 676,
+   "sha256": "bbfe4c3125159acbb33a34fdb8a11121d38a646f094e13d76d596d27cfde0619"
+  },
+  {
+   "path": "README.txt",
+   "size": 85,
+   "sha256": "6fc13a4db8e6eec3c463c51bb8c51878e0f8b055d197af7ef975d8f48ca057ef"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "marktero",
+   "version": "1.0.0",
+   "sha256": "5bacea82b3273cd98589f88722ced0c48fdb5815e70f959ee1698753a9cfc56d"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "preferences.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.txt",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 35600,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [
+    {
+     "pattern": "zotero://<expr>/groups/<expr>/items/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "main.js",
+       "line": 756,
+       "column": 17,
+       "snippet": "return `zotero://${action}/groups/${groupID}/items/${key}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "zotero://<expr>/library/items/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "main.js",
+       "line": 761,
+       "column": 13,
+       "snippet": "return `zotero://${action}/library/items/${key}`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 7,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 94,
+      "column": 19,
+      "snippet": "return await IOUtils.exists(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 101,
+      "column": 25,
+      "snippet": "const stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 109,
+      "column": 38,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 109,
+      "column": 82,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 126,
+      "column": 17,
+      "snippet": "return await IOUtils.readUTF8(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 129,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(path, contents);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 556,
+      "column": 14,
+      "snippet": "await IOUtils.makeDirectory(targetFolder, { createAncestors: true, ignoreExisting: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/partlyjadedyouth/marktero/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/partlyjadedyouth/marktero/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the partlyjadedyouth account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "marktero",
+   "version": "1.0.0",
+   "sha256": "5bacea82b3273cd98589f88722ced0c48fdb5815e70f959ee1698753a9cfc56d"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "2319f238fdf7052baeed5772cc22a064b140bc4053a13dfd011f4f0aba4c4290"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version, but Zotero won't install it as an update: the file doesn't match the fingerprint the update address gives"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-06-18T06:42:06Z",
+    "lastCommitAt": "2026-06-18T06:44:58Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:18:09Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 4,
+    "dialogs": 3
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,458 @@
+{
+ "schemaVersion": 1,
+ "slug": "hypothesis2zotero",
+ "repo": "core-hn/hypothesis2zotero",
+ "version": "0.1.1",
+ "tag": "v0.1.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-09-04T07:11:56Z",
+ "prerelease": false,
+ "asset": {
+  "name": "hypothesis2zotero.xpi",
+  "url": "https://github.com/core-hn/hypothesis2zotero/releases/download/v0.1.1/hypothesis2zotero.xpi",
+  "size": 6568,
+  "sha256": "8b79820a40f9f2c5685b31a818e1746dfe6a07f6e84305f2e8ed7045431acba1",
+  "githubAssetId": 543944749,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-09-04T07:11:55Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "hypothesis-import@zotero-plugin",
+  "name": "Hypothesis2Zotero",
+  "version": "0.1.1",
+  "description": "Importe les annotations Hypothesis (privées de votre compte et publiques) dans Zotero",
+  "updateUrl": "https://raw.githubusercontent.com/core-hn/hypothesis2zotero/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 14300,
+   "sha256": "cd5de17dd2ebf85e5d93a6b2fc14346b994bc2e7c37b798f7c0d10a6b92bf2d5"
+  },
+  {
+   "path": "hypothesis.svg",
+   "size": 275,
+   "sha256": "38c4797a6b1573317cba92f7c478eaaef038d911d3765f1eabfc0973dfabb15a"
+  },
+  {
+   "path": "manifest.json",
+   "size": 556,
+   "sha256": "ff8323044f472ace9c3f357aec3adb492c4be803ff6a65891e18ec55f3d38049"
+  },
+  {
+   "path": "prefs.js",
+   "size": 155,
+   "sha256": "6830a0f49a8bc18668dc13a11c4da66f4ead8bafe1ee7a878cbd4fb20547c5d5"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 2063,
+   "sha256": "bd8823bbe65cc93fdc93257fa00db937f30de5a177f5f2f05bb0e673c9298c3a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "hypothesis2zotero",
+   "version": "0.1.1",
+   "sha256": "8b79820a40f9f2c5685b31a818e1746dfe6a07f6e84305f2e8ed7045431acba1"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "hypothesis.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 16518,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "xhr",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 129,
+       "column": 14,
+       "snippet": "var xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 327,
+       "column": 22,
+       "snippet": "if (doi) return \"https://doi.org/\" + doi;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "hypothes.is",
+     "category": "integration",
+     "provider": "Hypothesis",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 5,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 5,
+       "column": 23,
+       "snippet": "var DEFAULT_API_BASE = \"https://hypothes.is/api\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 240,
+       "column": 16,
+       "snippet": "(\"https://hypothes.is/a/\" + ann.id);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 0,
+       "snippet": "pref(\"extensions.hypothesis-import.apiBase\", \"https://hypothes.is/api\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 45,
+       "snippet": "pref(\"extensions.hypothesis-import.apiBase\", \"https://hypothes.is/api\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 41,
+       "column": 40,
+       "snippet": "hypothes.is → Profil → Developer (https://hypothes.is/account/developer).",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.hypothesis-import.apiBase",
+     "defaultValue": "https://hypothes.is/api",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 151,
+       "column": 18,
+       "snippet": "var apiBase = (Zotero.Prefs.get(PREF_API_BASE, true) || DEFAULT_API_BASE).replace(/\\/$/, \"\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 0,
+       "snippet": "pref(\"extensions.hypothesis-import.apiBase\", \"https://hypothes.is/api\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "pref-api-base",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 29,
+       "column": 4,
+       "snippet": "<input id=\"pref-api-base\" type=\"text\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 152,
+      "column": 17,
+      "snippet": "var apiToken = Zotero.Prefs.get(PREF_TOKEN, true) || \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 285,
+      "column": 21,
+      "snippet": "var currentToken = Zotero.Prefs.get(PREF_TOKEN, true) || \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 294,
+      "column": 2,
+      "snippet": "Zotero.Prefs.set(PREF_TOKEN, tokenRes.value.trim(), true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 3,
+      "column": 0,
+      "snippet": "pref(\"extensions.hypothesis-import.apiToken\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.hypothesis-import.apiToken"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/core-hn/hypothesis2zotero/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/core-hn/hypothesis2zotero/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "hypothesis2zotero",
+   "version": "0.1.1",
+   "sha256": "8b79820a40f9f2c5685b31a818e1746dfe6a07f6e84305f2e8ed7045431acba1"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "e9224c2602df05726af0eed7e2e6844f7a07c15777597ff0c48a08a7e3e99c51"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "hypothes.is"
+      ],
+      "observed": [
+       "hypothes.is"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED",
+     "DS-OBSERVED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-04T07:11:56Z",
+    "lastCommitAt": "2026-09-04T07:10:12Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:17:48Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 3,
+    "dialogs": 4
+   },
+   "contacted": [
+    "hypothes.is"
+   ],
+   "sentTo": [
+    {
+     "host": "hypothes.is",
+     "sent": [
+      "identifiers"
+     ]
+    }
+   ],
+   "unexpected": []
+  }
+ }
+}

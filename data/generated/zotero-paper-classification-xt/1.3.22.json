@@ -1,0 +1,464 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paper-classification-xt",
+ "repo": "peekabooxt/zotero_paper_classification_xt",
+ "version": "1.3.22",
+ "tag": "v1.3.22",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-08-22T13:25:28Z",
+ "prerelease": false,
+ "asset": {
+  "name": "xt-zotero-auto-classifier-1.3.22.xpi",
+  "url": "https://github.com/peekabooXT/Zotero_Paper_Classification_XT/releases/download/v1.3.22/xt-zotero-auto-classifier-1.3.22.xpi",
+  "size": 20563,
+  "sha256": "1c3ca601dd5f4296a92c71cdd6fc838bd57bd5ec78020604fe69b3d3c61bb42c",
+  "githubAssetId": 525066377,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-08-22T13:25:27Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "xt-zotero-auto-classifier@xutao",
+  "name": "XT Zotero Auto Classifier",
+  "version": "1.3.22",
+  "description": "Classify papers with an OpenAI-compatible model and create Zotero tags and collections.",
+  "homepageUrl": "https://github.com/peekabooXT/Zotero_Paper_Classification_XT",
+  "updateUrl": "https://raw.githubusercontent.com/peekabooXT/Zotero_Paper_Classification_XT/main/update.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1072,
+   "sha256": "279e96abf55f63f0f9385095619cb562a62a3090bf18c75d80eb0496b7cbadb4"
+  },
+  {
+   "path": "content/icons/icon.svg",
+   "size": 369,
+   "sha256": "b8fd2167809686fbd089d8e3e2161fb36d8ca8c200b93cb6a548839b1bccb1c1"
+  },
+  {
+   "path": "content/scripts/xt-auto-classifier.js",
+   "size": 76076,
+   "sha256": "2c7dd948704549b8038fdb0739aa48d15cd82151808e9dbcef3d9e993303517e"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1063,
+   "sha256": "8d001fa6deb4c1fa1454b07ababda2ae5ce62dd1ac8a131f8242c6e5f3250b80"
+  },
+  {
+   "path": "locale/en-US/xt-zotero-auto-classifier.ftl",
+   "size": 251,
+   "sha256": "070c936a975846f326910c30ed7ac66f54bd62cc4f80419a71065ed9a66649c3"
+  },
+  {
+   "path": "locale/zh-CN/xt-zotero-auto-classifier.ftl",
+   "size": 216,
+   "sha256": "d689ebf3dead1751e11ab6afe40601b71a1644eb58dc0bc97bcb11126ca2b2bb"
+  },
+  {
+   "path": "manifest.json",
+   "size": 693,
+   "sha256": "13c4c2e1930511fdebf86e78185a2a1931dce9f893c98c4af8627a25df84c448"
+  },
+  {
+   "path": "prefs.js",
+   "size": 574,
+   "sha256": "df3214656484ff249e2bfcc2cf7638dd78105970e74bebbf20520c7ef3e2b2be"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-paper-classification-xt",
+   "version": "1.3.22",
+   "sha256": "1c3ca601dd5f4296a92c71cdd6fc838bd57bd5ec78020604fe69b3d3c61bb42c"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "content/icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/xt-zotero-auto-classifier.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/xt-zotero-auto-classifier.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 77722,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/xt-auto-classifier.js",
+       "line": 922,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"POST\", settings.endpoint, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/xt-auto-classifier.js",
+       "line": 23,
+       "column": 16,
+       "snippet": "endpoint: \"https://api.deepseek.com/chat/completions\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 0,
+       "snippet": "pref(\"extensions.xt-zotero-auto-classifier.endpoint\", \"https://api.deepseek.com/chat/completions\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 54,
+       "snippet": "pref(\"extensions.xt-zotero-auto-classifier.endpoint\", \"https://api.deepseek.com/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dashscope.aliyuncs.com",
+     "category": "llm-provider",
+     "provider": "Alibaba Qwen (DashScope)",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/xt-auto-classifier.js",
+       "line": 28,
+       "column": 8,
+       "snippet": "\"https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.xt-zotero-auto-classifier.endpoint",
+     "defaultValue": "https://api.deepseek.com/chat/completions",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 0,
+       "snippet": "pref(\"extensions.xt-zotero-auto-classifier.endpoint\", \"https://api.deepseek.com/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "login-manager",
+    "occurrences": 9,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/xt-auto-classifier.js",
+      "line": 525,
+      "column": 8,
+      "snippet": "if (Services.logins.searchLoginsAsync) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/xt-auto-classifier.js",
+      "line": 526,
+      "column": 13,
+      "snippet": "return Services.logins.searchLoginsAsync({",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/xt-auto-classifier.js",
+      "line": 531,
+      "column": 11,
+      "snippet": "return Services.logins.findLogins(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/xt-auto-classifier.js",
+      "line": 548,
+      "column": 10,
+      "snippet": "if (Services.logins.removeLoginAsync) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/xt-auto-classifier.js",
+      "line": 549,
+      "column": 14,
+      "snippet": "await Services.logins.removeLoginAsync(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/xt-auto-classifier.js",
+      "line": 551,
+      "column": 8,
+      "snippet": "Services.logins.removeLogin(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/xt-auto-classifier.js",
+      "line": 567,
+      "column": 8,
+      "snippet": "if (Services.logins.addLoginAsync) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/xt-auto-classifier.js",
+      "line": 568,
+      "column": 12,
+      "snippet": "await Services.logins.addLoginAsync(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/xt-auto-classifier.js",
+      "line": 570,
+      "column": 6,
+      "snippet": "Services.logins.addLogin(login);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsILoginManager"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/peekabooXT/Zotero_Paper_Classification_XT/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/peekabooXT/Zotero_Paper_Classification_XT/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-paper-classification-xt",
+   "version": "1.3.22",
+   "sha256": "1c3ca601dd5f4296a92c71cdd6fc838bd57bd5ec78020604fe69b3d3c61bb42c"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "19a4215a773c464415e4a46c444693ff2d8dd28d52b881a5d508bd40c951becd"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com",
+       "dashscope.aliyuncs.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "login-manager",
+      "label": "Uses Zotero's password manager",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-22T13:25:28Z",
+    "lastCommitAt": "2026-08-22T13:20:40Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T05:32:05Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 5,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

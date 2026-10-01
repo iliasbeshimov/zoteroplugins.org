@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-glossary",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "the LLM lookup (DeepSeek by default); the API key setting is empty by default",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README setup step 4",
+   "quote": "paste your API key (get one at [platform.deepseek.com](https://platform.deepseek.com))",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "addon/modules/prefs.js DEFAULTS",
+   "quote": "apiKey: \"\",",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README says 'paste your API key (get one at platform.deepseek.com)' and the default is 'apiKey: \"\"'. llm.js:63-64 refuses to run when there is no key (`if (!apiKey) {`), so the LLM lookup cannot be used without one. The README says any OpenAI-compatible endpoint works by changing the base URL, but neither the pack nor the code mentions Ollama, localhost or local models, and a key is still required. So local use is not settled."
+}

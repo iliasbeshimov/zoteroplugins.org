@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-pdf2zh--tano2003",
+  "version": "4.0.7",
+  "sha256": "484aa0ab19b245d3326683e8cd8f23a6fe1c4dc68ed9a0859d889ad1c32680b7",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
+  "summary": "The first time you translate a PDF, it downloads a 180–206 MB translation program from the developer's GitHub release and runs it. The README doesn't mention it, the file is checked only against a checksum from the same place, and we can't read the program itself.",
+  "facts": {
+    "what": "A 180-206 MB zip (PDF2zh translation engine: a prebuilt executable plus bundled files) for the user's platform (macOS arm64/x64 or Windows x64) and chosen engine (pdf2zh or pdf2zh_next), unzipped into the Zotero profile folder and launched as a local process to translate PDFs.",
+    "urls": [
+      "https://github.com/TanO2003/zotero-pdf2zh/releases/download/v${RUNTIME_VERSION}/pdf2zh-runtime-${platform}-${engine}.zip",
+      "${manifest.archiveURL}.sha256"
+    ],
+    "source": "developer-own",
+    "transport": "https",
+    "integrity": "same-source-checksum",
+    "trigger": "automatic-on-feature-use",
+    "toldInReadme": "no",
+    "readmeQuote": "",
+    "triggerQuote": {
+      "file": "content/scripts/pdf2zh.js",
+      "text": "const runtime = await RuntimeManager.getInstance().ensureReady(engine);"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/pdf2zh.js",
+      "text": "const checksumResponse = await fetch(`${manifest.archiveURL}.sha256`);"
+    },
+    "notes": "Download happens the first time the user translates a PDF (WorkerClient.submit calls ensureReady, which calls installOrLocate if the executable is not already in the profile folder). Progress message shown is only 'preparing runtime' (Chinese). The SHA-256 is fetched from the same GitHub release as the zip (manifest sha256 is an empty string), so it catches corruption but not a replaced release; verifySHA256 returns without checking if expected is empty or starts with '__', and a missing checksum file aborts install. The README (an upstream copy describing a Python server setup) does not mention this download. The only UI text is a preferences string: 'The translation runtime is managed automatically by the plugin; no Python server is required.' Release v4.0.7 assets confirmed via gh api: six runtime zips (178-206 MB each) with .sha256 files; Linux not supported (getPlatform returns macOS for non-Windows). The 20-minute timeout kills the process; the program is started with nsIProcess, on non-Windows chmod 755. Contents of the zip were not inspected (too large to download); what the executable is beyond its name pdf2zh-worker-<engine> is unverified."
+  }
+}

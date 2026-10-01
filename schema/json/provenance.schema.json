@@ -1,0 +1,262 @@
+{
+  "$id": "https://github.com/iliasacademia/zoteroatlas/schema/json/provenance.schema.json",
+  "title": "provenance",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "checkerVersion": {
+      "type": "string"
+    },
+    "checkedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "reproduced",
+        "matches-source",
+        "plausible",
+        "mismatch",
+        "no-source",
+        "not-checked"
+      ]
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "direct-diff",
+        "rebuild",
+        "none"
+      ]
+    },
+    "tag": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{40}$"
+            },
+            "commitDate": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "matchedBy": {
+              "type": "string",
+              "enum": [
+                "exact",
+                "v-prefix",
+                "version-in-name",
+                "release-target-commitish"
+              ]
+            },
+            "stale": {
+              "type": "boolean",
+              "description": "Tag commit changes only docs and lags far behind while the .xpi contains new code."
+            }
+          },
+          "required": [
+            "name",
+            "commit",
+            "commitDate",
+            "matchedBy",
+            "stale"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "build": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "attempted": {
+              "type": "boolean"
+            },
+            "succeeded": {
+              "type": "boolean"
+            },
+            "timedOut": {
+              "type": "boolean"
+            },
+            "nodeVersion": {
+              "type": "string"
+            },
+            "command": {
+              "type": "string"
+            },
+            "durationMs": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "logExcerpt": {
+              "type": "string",
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "attempted",
+            "succeeded",
+            "timedOut"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "diff": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "identical": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "differing": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "onlyInRelease": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "onlyInSource": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "unexplained": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "bytes": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "evidence": {
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "const": "code"
+                        },
+                        "file": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "line": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "column": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "snippet": {
+                          "type": "string",
+                          "maxLength": 300
+                        },
+                        "inVendoredCode": {
+                          "type": "boolean",
+                          "description": "True when the location falls inside a bundled third-party library we identified."
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "file",
+                        "line",
+                        "snippet",
+                        "inVendoredCode"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "path",
+                  "bytes",
+                  "evidence"
+                ]
+              },
+              "description": "Substantial release code with no counterpart in the source. Drives `mismatch`."
+            }
+          },
+          "required": [
+            "identical",
+            "differing",
+            "onlyInRelease",
+            "onlyInSource",
+            "unexplained"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "attestation": {
+      "type": "object",
+      "properties": {
+        "present": {
+          "type": "boolean"
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "workflow": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "present",
+        "verified"
+      ]
+    },
+    "explanation": {
+      "type": "string",
+      "description": "Template-generated, factual sentence shown under the level."
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "checkerVersion",
+    "checkedAt",
+    "level",
+    "method",
+    "tag",
+    "build",
+    "diff",
+    "attestation",
+    "explanation"
+  ]
+}

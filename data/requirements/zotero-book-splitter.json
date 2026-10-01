@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-book-splitter",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "AI table-of-contents recognition (OpenAI default, Gemini or other compatible API) needs a key; Crossref/Open Library lookups are keyless",
+  "worksWithout": "Native PDF bookmarks, local TOC-page scan and EPUB navigation",
+  "services": [
+   "OpenAI",
+   "Google Gemini"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, intro",
+   "quote": "PDF 可以读取原生目录书签、通过你配置的 AI 接口识别目录，或在本地扫描目录页。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, 使用提示",
+   "quote": "介意隐私时可使用本地扫描或原生书签识别。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/ai-config.js:317",
+   "quote": "endpoint: \"http://localhost:1234/v1/chat/completions\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Native bookmark and local scan need no key; AI needs one. Code in content/ai-config.js has presets for ollama (http://localhost:11434/api/chat) and openai-compatible (http://localhost:1234/v1/chat/completions, model 'local-model')."
+}

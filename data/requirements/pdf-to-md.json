@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "pdf-to-md",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "MinerU API token for the mineru.net Token API mode; a local MinerU server may need a key only if its auth is on",
+  "worksWithout": "MinerU lightweight mode (no token) or a local MinerU API",
+  "services": [
+   "MinerU (mineru.net)"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "轻量模式：未填写 Token 且未启用本地 API 时使用 MinerU 轻量接口。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.pdftomd.apiToken\", \"\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README says '轻量模式：未填写 Token 且未启用本地 API 时使用 MinerU 轻量接口', so it works without a token. The optional local MinerU API is a document-parsing service, not clearly an LLM endpoint like Ollama, so unknown."
+}

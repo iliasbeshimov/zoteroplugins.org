@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-podcast",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "OpenAI API key, needed for all podcast generation",
+  "worksWithout": "",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Install",
+   "quote": "Open **Settings → Zotero Podcast**, save an OpenAI API key, and choose a writable output folder.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-podcast.js:62",
+   "quote": "var OPENAI_BASE_URL = \"https://api.openai.com/v1\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: 'Open **Settings → Zotero Podcast**, save an OpenAI API key, and choose a writable output folder.' Code hardcodes 'var OPENAI_BASE_URL = \"https://api.openai.com/v1\";' and the pack lists no other endpoint."
+}

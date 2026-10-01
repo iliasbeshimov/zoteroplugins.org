@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "hjfy-pdftranslate",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Sign-in to hjfy.top (WeChat or phone) is needed to start a new translation of a paper not yet translated, or to upload a PDF",
+  "worksWithout": "Downloading already-translated arXiv papers needs no sign-in",
+  "services": [
+   "hjfy.top (WeChat or phone sign-in)"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, FAQ",
+   "quote": "下载**已经翻译过**的论文不需要登录；登录只在你**发起新的翻译**（没翻译过的新论文、或上传 PDF）时才需要。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, FAQ",
+   "quote": "它只和 hjfy.top 通信，不会上传你的其它数据",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README quote is verbatim: downloading already-translated papers needs no login, and login is only for starting new translations. The code calls only hjfy.top and WeChat sign-in, so there is no local model."
+}

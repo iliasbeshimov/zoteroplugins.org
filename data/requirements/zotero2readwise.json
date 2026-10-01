@@ -1,0 +1,31 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero2readwise",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Readwise token plus Zotero API key and library ID",
+  "worksWithout": "",
+  "services": [
+   "Readwise",
+   "Zotero"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "chrome/content/background.js:14",
+   "quote": "if (!settings.readwiseToken || !settings.zoteroKey || !settings.zoteroLibraryId) {",
+   "supports": "apiKey"
+  },
+  {
+   "source": "description",
+   "where": "Manifest description (no AI features)",
+   "quote": "Export your Zotero annotations and notes to Readwise",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "I checked chrome/content/background.js:14 in the release file and the quoted line is there. The sync refuses to run without the Readwise token, Zotero key and library ID. The plugin has no AI features."
+}

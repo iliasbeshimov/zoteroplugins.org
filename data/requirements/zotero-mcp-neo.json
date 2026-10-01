@@ -1,0 +1,48 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-mcp-neo",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Semantic search embeddings via a hosted provider (OpenAI, Gemini, Voyage AI, etc.) need the user's own embedding API key",
+  "worksWithout": "The MCP server with its 6 tools (find, list, read, write, status, task) on the default local port",
+  "services": [
+   "OpenAI",
+   "Google Gemini",
+   "Alibaba DashScope",
+   "Zhipu",
+   "SiliconFlow",
+   "Voyage AI",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README features",
+   "quote": "**Semantic Search** — embedding vectors via OpenAI, Ollama, Gemini, Alibaba, Zhipu, SiliconFlow, Voyage AI, etc.",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-mcp-neo.js:15578",
+   "quote": "apiBase: \"http://localhost:11434/v1\",",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-mcp-neo.js:15778",
+   "quote": "const apiKey = Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.embedding.apiKey\", true) || \"\";",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README troubleshooting",
+   "quote": "Semantic search not working | Configure embedding API + build index",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The MCP server works without a key. Hosted embedding providers take a key (code: Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.embedding.apiKey\"...)). README lists Ollama and the code has apiBase \"http://localhost:11434/v1\"."
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "slug": "zopilot",
+  "version": "0.8.0",
+  "sha256": "1d576b73a4ae5684180a99ba9258a6a6af9c6312d039f81e5f2e5963796f7591",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
+  "summary": "When you press Install under Dependencies in its settings, it downloads a 97–128 MB PDF helper program from the developer's GitHub release and runs it. The file is checked only against a checksum from the same place, and we can't read the program itself.",
+  "facts": {
+    "what": "A PDF text-extraction helper program (about 97-128 MB zip, one per platform: macOS Apple silicon, macOS Intel, Windows x64) from the developer's own GitHub release, unpacked into Zotero's data folder and run to parse PDFs.",
+    "urls": [
+      "https://github.com/qyangcv/zopilot/releases/download/pdf-helper-v${PDF_HELPER_VERSION}/pdf-helper-manifest.json"
+    ],
+    "source": "developer-own",
+    "transport": "https",
+    "integrity": "same-source-checksum",
+    "trigger": "user-clicks-install",
+    "toldInReadme": "partly",
+    "readmeQuote": "配置 PDF 解析依赖: Zotero -> 设置 -> Zopilot -> 依赖管理 -> 安装",
+    "triggerQuote": {
+      "file": "locale/en-US/zopilot-preferences.ftl",
+      "text": "zopilot-pref-dependencies-install = Install"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/zopilot.js",
+      "text": "if (actualSha256 !== artifact.sha256.toLowerCase()) {"
+    },
+    "notes": "The plugin fetches a manifest JSON (schema v2, version-matched) from the GitHub release, picks the artifact for the platform, downloads the zip from artifact.url, checks size and SHA-256 against values in that same manifest, then extracts it and runs it via Subprocess (getPdfHelperCommand in the parser). The hash is not pinned in the plugin, so it protects against corruption but not against someone replacing the release files and manifest together. Asset sizes via gh api: macos-arm64 123086270, macos-x64 127972144, windows-x64 97261658 bytes. Install happens when the user clicks Install/Update on Settings > Zopilot > Dependencies (UI strings: PDF helper card, Downloading helper, Extracting helper); the sidebar refuses to send prompts until it is installed and tells the user to open Settings > Dependencies. However runParser calls getPdfHelperCommand, which would auto-install if the helper is missing and not yet ready. README (Chinese) tells users to install the PDF parsing dependency via Settings but does not say it downloads from GitHub; the README lists PDF helper docs link only. Local ftl says 'Manage the PDF helper for text extraction and page rendering without installing packages into system Python.' I did not inspect the helper binary contents."
+  }
+}

@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "vibe-zotero-translate",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "An API key for the chosen LLM provider (AWS Bedrock by default, or OpenAI-compatible); the code refuses to run without one, even for a local endpoint",
+  "worksWithout": "",
+  "services": [
+   "AWS Bedrock",
+   "OpenAI"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "content/index.js getConfig",
+   "quote": "throw new Error(\"Bedrock API key not configured. Please set it in Vibe Translate preferences.\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.vibe-zotero-translate.provider\", \"bedrock\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, OpenAI Compatible",
+   "quote": "Works with OpenAI, Azure OpenAI, Ollama, LM Studio, and any OpenAI-compatible API.",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "I checked content/index.js getConfig: it throws \"Bedrock API key not configured...\" (and the OpenAI equivalent) when the key is empty, and the default provider is bedrock. README says the OpenAI-compatible option \"Works with OpenAI, Azure OpenAI, Ollama, LM Studio, and any OpenAI-compatible API.\""
+}

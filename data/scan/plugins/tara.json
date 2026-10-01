@@ -1,0 +1,335 @@
+{
+ "repo": "l0o0/tara",
+ "slug": "tara",
+ "group": "top",
+ "rank": 25,
+ "name": "蒲公英",
+ "stars": 473,
+ "downloads": 590065,
+ "createdAt": "2022-10-26T14:08:18Z",
+ "tag": "v1.0.11",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "tara.xpi",
+    "url": "https://github.com/l0o0/tara/releases/download/v1.0.11/tara.xpi",
+    "size": 59783,
+    "uploadedAt": "2026-06-07T02:00:28Z",
+    "sha256": "0b19479328af6eecb2703ec95e5392b77c5eeba200c97b67c5d7f15d5c785f25"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "tara@linxzh.com",
+    "name": "__MSG_name__",
+    "version": "1.0.11",
+    "description": "__MSG_description__",
+    "homepageUrl": "https://github.com/l0o0/tara#readme",
+    "updateUrl": "https://github.com/l0o0/tara/releases/download/release/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "10.*.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "tara",
+     "version": "1.0.11",
+     "sha256": "0b19479328af6eecb2703ec95e5392b77c5eeba200c97b67c5d7f15d5c785f25"
+    },
+    "coverage": {
+     "filesTotal": 19,
+     "filesAnalyzed": 6,
+     "filesSkipped": [
+      {
+       "path": "_locales/en/messages.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "_locales/zh/messages.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/content/icons/create_icon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/content/icons/export_icon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/content/icons/import_icon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/content/icons/restore_icon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/content/icons/tara_icon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/content/icons/tara.png",
+       "reason": "binary"
+      },
+      {
+       "path": "locale/en-US/tara-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/tara-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/tara-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/tara-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "chrome/content/scripts/tara.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [],
+     "hosts": [],
+     "dynamicUrls": [
+      {
+       "pattern": "chrome://<expr>/content/icons",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/tara.js",
+         "line": 4662,
+         "column": 23,
+         "snippet": "const iconbase = `chrome://${config.addonRef}/content/icons`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/tara.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/tara.js",
+         "line": 4891,
+         "column": 6,
+         "snippet": "`chrome://${config.addonRef}/content/icons/tara.png`",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 3,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 576,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 576,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 628,
+        "column": 10,
+        "snippet": "Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 63,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 616,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 616,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 4054,
+        "column": 13,
+        "snippet": "return PathUtils.join(dira, dirb);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 4057,
+        "column": 15,
+        "snippet": "return PathUtils.join(dira, dirb[0]);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 4059,
+        "column": 37,
+        "snippet": "return dirb.reduce((a, c) => PathUtils.join(a, c), dira);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 4066,
+        "column": 26,
+        "snippet": "for (const f of await IOUtils.getChildren(dira)) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 4067,
+        "column": 23,
+        "snippet": "const destPath = PathUtils.join(dirb, PathUtils.filename(f));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 4067,
+        "column": 44,
+        "snippet": "const destPath = PathUtils.join(dirb, PathUtils.filename(f));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 4076,
+        "column": 12,
+        "snippet": "await IOUtils.copy(f, destPath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/tara.js",
+        "line": 4081,
+        "column": 12,
+        "snippet": "dir = Zotero.File.pathToFile(dir);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "zotero-data-dir",
+       "apis": [
+        "IOUtils/PathUtils",
+        "Zotero.File",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 16,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/l0o0/tara/releases/download/release/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/l0o0/tara/releases/download/release/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "no-network-found",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NONE"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

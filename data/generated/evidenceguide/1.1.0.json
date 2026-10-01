@@ -1,0 +1,502 @@
+{
+ "schemaVersion": 1,
+ "slug": "evidenceguide",
+ "repo": "mspet1995/evidenceguide",
+ "version": "1.1.0",
+ "tag": "v1.1.0",
+ "releaseAuthor": "mspet1995",
+ "publishedAt": "2026-09-17T03:13:50Z",
+ "prerelease": false,
+ "asset": {
+  "name": "evidence-guide-1.1.0.xpi",
+  "url": "https://github.com/mspet1995/EvidenceGuide/releases/download/v1.1.0/evidence-guide-1.1.0.xpi",
+  "size": 83255,
+  "sha256": "a9b31502d87a9190c5f1dfe901ec4e2150a72481c4a85db9a498f5486d8b78bc",
+  "githubAssetId": 569342794,
+  "uploader": "mspet1995",
+  "uploadedAt": "2026-09-17T03:12:37Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "evidence-guide@local.tools",
+  "name": "Evidence Guide",
+  "version": "1.1.0",
+  "description": "A guided article appraisal in the Zotero reader, adapted from Chris Aiken, MD's Grading Evidence method.",
+  "updateUrl": "https://evidence-guide.invalid/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 8019,
+   "sha256": "f08a1b6c0897dc6c11a173f9a5171c986afd8f06af2f85a46b92de6ba61bb5b5"
+  },
+  {
+   "path": "content/icon.svg",
+   "size": 289,
+   "sha256": "b6a6c506a17e12487a1583368dae9f94dc7b7d6fe72ed9e676cab014aaf369f9"
+  },
+  {
+   "path": "content/rules.js",
+   "size": 21123,
+   "sha256": "56fe8dc8df23f47ac799d41589c18929026b2487a6609e76ab0036132badf731"
+  },
+  {
+   "path": "content/wizard.css",
+   "size": 12705,
+   "sha256": "112c79abd95a1f08f9618ad4093dd5924130ebeeb1fc6d861c0369a1b6e46c78"
+  },
+  {
+   "path": "content/wizard.js",
+   "size": 32509,
+   "sha256": "e45a4388f1b235e55177ad5c5dda156be8001c4add393d0f116288c1013a4aa8"
+  },
+  {
+   "path": "content/wizard.xhtml",
+   "size": 472,
+   "sha256": "21760a558e0e1932a70ff1a8df46c0e5fe661408d9756e9a35044f22f95955c5"
+  },
+  {
+   "path": "content/xlsx.js",
+   "size": 6715,
+   "sha256": "7c9aaa2cdcdd9c834672bd27262617fd1f59c59430637713482c5a85e7be9b8f"
+  },
+  {
+   "path": "manifest.json",
+   "size": 539,
+   "sha256": "d9aa73dc07a136a20a036150ac58784a3b274bae0de3f90a848a5576284897be"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "evidenceguide",
+   "version": "1.1.0",
+   "sha256": "a9b31502d87a9190c5f1dfe901ec4e2150a72481c4a85db9a498f5486d8b78bc"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "content/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/wizard.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 68838,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 118,
+       "column": 28,
+       "snippet": "const res = await Zotero.HTTP.request(\"POST\", \"http://127.0.0.1:11434/api/chat\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 139,
+       "column": 22,
+       "snippet": "const res = await Zotero.HTTP.request(\"GET\", \"http://127.0.0.1:11434/api/tags\", { responseType: \"json\", timeout: 5000 });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 118,
+       "column": 56,
+       "snippet": "const res = await Zotero.HTTP.request(\"POST\", \"http://127.0.0.1:11434/api/chat\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 139,
+       "column": 49,
+       "snippet": "const res = await Zotero.HTTP.request(\"GET\", \"http://127.0.0.1:11434/api/tags\", { responseType: \"json\", timeout: 5000 });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "chatgpt.com",
+     "category": "llm-provider",
+     "provider": "OpenAI ChatGPT",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 91,
+       "column": 48,
+       "snippet": "if ([\"https://chrisaikenmd.com/ebm/\", \"https://chatgpt.com/\", \"https://www.nhlbi.nih.gov/health-topics/study-quality-assessment-tools\"].includes(url)) Zotero.launchURL(url);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/wizard.js",
+       "line": 256,
+       "column": 33,
+       "snippet": "chat.onclick = () => openURL(\"https://chatgpt.com/\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "chrisaikenmd.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 91,
+       "column": 15,
+       "snippet": "if ([\"https://chrisaikenmd.com/ebm/\", \"https://chatgpt.com/\", \"https://www.nhlbi.nih.gov/health-topics/study-quality-assessment-tools\"].includes(url)) Zotero.launchURL(url);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/rules.js",
+       "line": 7,
+       "column": 17,
+       "snippet": "const SOURCE = \"https://chrisaikenmd.com/ebm/\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.nhlbi.nih.gov",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 91,
+       "column": 72,
+       "snippet": "if ([\"https://chrisaikenmd.com/ebm/\", \"https://chatgpt.com/\", \"https://www.nhlbi.nih.gov/health-topics/study-quality-assessment-tools\"].includes(url)) Zotero.launchURL(url);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/rules.js",
+       "line": 9,
+       "column": 25,
+       "snippet": "const QUALITY_SOURCE = \"https://www.nhlbi.nih.gov/health-topics/study-quality-assessment-tools\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/rules.js",
+       "line": 139,
+       "column": 4,
+       "snippet": "\"The observational component walkthrough is a non-scoring decision aid. Yes/No/Unclear/Not applicable answers never assign points or automatically choose the overall rating. Sample-size and confou",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 94,
+      "column": 13,
+      "snippet": "Cc[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Ci.nsIClipboardHelper).copyString(text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 94,
+      "column": 65,
+      "snippet": "Cc[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Ci.nsIClipboardHelper).copyString(text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/wizard.js",
+      "line": 238,
+      "column": 16,
+      "snippet": "try { await navigator.clipboard.writeText(text); }",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 108,
+      "column": 44,
+      "snippet": "if (path !== picker.file && await IOUtils.exists(path)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 111,
+      "column": 16,
+      "snippet": "await IOUtils.write(path, new Uint8Array(bytes));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://evidence-guide.invalid/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://evidence-guide.invalid/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the mspet1995 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "evidenceguide",
+   "version": "1.1.0",
+   "sha256": "a9b31502d87a9190c5f1dfe901ec4e2150a72481c4a85db9a498f5486d8b78bc"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "a0d6709a89c40ad6cd97555d9a28695ac33e636576918c6bdf94595667b03bd2"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "chatgpt.com"
+      ],
+      "unconfirmed": [
+       "chatgpt.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-17T03:13:50Z",
+    "lastCommitAt": "2026-09-17T03:08:41Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:24:09Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 1,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

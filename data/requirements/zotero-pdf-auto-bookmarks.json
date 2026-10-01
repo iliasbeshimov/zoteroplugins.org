@@ -1,0 +1,28 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf-auto-bookmarks",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "the optional AI refinement, when it uses a hosted OpenAI-compatible service",
+  "worksWithout": "bookmark generation with the built-in local algorithm (no AI, no outside service)",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 可选 AI 接口",
+   "quote": "默认不调用任何外部服务。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, 可选 AI 接口",
+   "quote": "填写模型名称与 API 密钥；本地兼容服务可以不填密钥。",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README says \"默认不调用任何外部服务。\" and \"未配置 API 时完全使用高精度本地算法。\" The optional AI step takes an OpenAI-compatible address, and \"本地兼容服务可以不填密钥\" (local compatible services need no key). Local is reasonably supported, but the README never names Ollama or a model runner."
+}

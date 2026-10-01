@@ -1,0 +1,378 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-supplementary-downloader",
+ "repo": "israfil-hossen/zotero-supplementary-downloader",
+ "version": "1.3.0",
+ "tag": "v1.3.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-03-16T01:40:06Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-supplementary-downloader-1.3.0.xpi",
+  "url": "https://github.com/Israfil-Hossen/zotero-supplementary-downloader/releases/download/v1.3.0/zotero-supplementary-downloader-1.3.0.xpi",
+  "size": 8392,
+  "sha256": "5f57ae1b31467a6f8a44f1fa26e7ea697c66bcff218c0839bc43b05d58e72dc4",
+  "githubAssetId": 374628389,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-03-16T01:40:06Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "suppl-dl@example.com",
+  "name": "Zotero Supplementary File Downloader",
+  "version": "1.3.0",
+  "description": "Downloads and attaches supplementary/supporting files from publisher websites to Zotero items.",
+  "homepageUrl": "https://github.com/Israfil-Hossen/zotero-supplementary-downloader",
+  "updateUrl": "https://raw.githubusercontent.com/Israfil-Hossen/zotero-supplementary-downloader/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "8.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 657,
+   "sha256": "89f4f6e9dc06f2a5ce416b1b02aeed373043bbb34265298723345cc2df0474de"
+  },
+  {
+   "path": "icon.png",
+   "size": 551,
+   "sha256": "fb1f2bfd9113adb8b6ee274faf758bfb588dbdb68c5c3a9e41f1679e77608ab8"
+  },
+  {
+   "path": "icon@2x.png",
+   "size": 1124,
+   "sha256": "bcdebf369b6c0a7393068f2f9aaddc86d2ec90dfbbde5911fa964bec28beff31"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1107,
+   "sha256": "04406b2398fbb5ac23df488c90c78165d8357d5a40f540a7e2db846f58930f42"
+  },
+  {
+   "path": "manifest.json",
+   "size": 644,
+   "sha256": "774b23f871711216e23bbbf4d4d2e436f8b6a584c139b42aef0ae8fe5c5deab2"
+  },
+  {
+   "path": "supplementary.js",
+   "size": 15998,
+   "sha256": "235a0ad2923ab31c3a9d240be7f81a5e5b5903f74d70938553ab6430ab6c0e3e"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-supplementary-downloader",
+   "version": "1.3.0",
+   "sha256": "5f57ae1b31467a6f8a44f1fa26e7ea697c66bcff218c0839bc43b05d58e72dc4"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icon@2x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 16655,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "supplementary.js",
+       "line": 122,
+       "column": 20,
+       "snippet": "var r = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "supplementary.js",
+       "line": 313,
+       "column": 18,
+       "snippet": "var r = await Zotero.HTTP.request(\"GET\", link.url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "supplementary.js",
+       "line": 122,
+       "column": 20,
+       "snippet": "var r = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "supplementary.js",
+       "line": 160,
+       "column": 13,
+       "snippet": "return \"https://doi.org/\" + encodeURI(doi);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "supplementary.js",
+      "line": 331,
+      "column": 10,
+      "snippet": "await IOUtils.write(tmpFile, new Uint8Array(r.response));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "supplementary.js",
+      "line": 357,
+      "column": 12,
+      "snippet": "await IOUtils.remove(tmpFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "supplementary.js",
+      "line": 438,
+      "column": 27,
+      "snippet": "try { exists = await IOUtils.exists(subfolderPath); } catch (e) {}",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "supplementary.js",
+      "line": 440,
+      "column": 14,
+      "snippet": "await IOUtils.makeDirectory(subfolderPath, { createAncestors: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "supplementary.js",
+      "line": 455,
+      "column": 27,
+      "snippet": "var fileData = await IOUtils.read(srcPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "supplementary.js",
+      "line": 456,
+      "column": 12,
+      "snippet": "await IOUtils.write(destPath, fileData);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Israfil-Hossen/zotero-supplementary-downloader/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Israfil-Hossen/zotero-supplementary-downloader/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-supplementary-downloader",
+   "version": "1.3.0",
+   "sha256": "5f57ae1b31467a6f8a44f1fa26e7ea697c66bcff218c0839bc43b05d58e72dc4"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "d488bb4dfedb8d4a11e8feaa8513ecd80179327360f40c7768e95cef39820e78"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2026-03-16T01:40:06Z",
+    "lastCommitAt": "2026-03-16T01:39:20Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7–8",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

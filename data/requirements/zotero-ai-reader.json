@@ -1,0 +1,33 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-reader",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Cloud services (DeepSeek, OpenAI, OpenRouter, SiliconFlow) need the user's own API key",
+  "worksWithout": "Ollama on the user's own computer, which needs no key",
+  "services": [
+   "DeepSeek",
+   "OpenAI",
+   "OpenRouter",
+   "SiliconFlow"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 30-second start",
+   "quote": "云端服务首次使用时需填写对应 API Key",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, 30-second start",
+   "quote": "Ollama 默认使用 `http://localhost:11434/v1`，无需 API Key。",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README (line 74) says Ollama is built in: \"Ollama 默认使用 `http://localhost:11434/v1`，无需 API Key。\" Line 65 says cloud services need a key: \"云端服务首次使用时需填写对应 API Key\". Both quotes are in the pack."
+}

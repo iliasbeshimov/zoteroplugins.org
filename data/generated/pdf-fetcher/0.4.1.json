@@ -1,0 +1,652 @@
+{
+ "schemaVersion": 1,
+ "slug": "pdf-fetcher",
+ "repo": "hiyvri/pdf-fetcher",
+ "version": "0.4.1",
+ "tag": "v0.4.1",
+ "releaseAuthor": "HiYvri",
+ "publishedAt": "2026-07-02T13:07:16Z",
+ "prerelease": false,
+ "asset": {
+  "name": "pdf-fetcher.xpi",
+  "url": "https://github.com/HiYvri/pdf-fetcher/releases/download/v0.4.1/pdf-fetcher.xpi",
+  "size": 245509,
+  "sha256": "17d71f563ad91535ff1995c998e170d2e6e2bd5c5861721cf1679b0d34ac9d93",
+  "githubAssetId": 464330160,
+  "uploader": "HiYvri",
+  "uploadedAt": "2026-07-02T13:06:50Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "pdf-fetcher@yuric.local",
+  "name": "pdf-fetcher",
+  "version": "0.4.1",
+  "description": "Fetch PDFs from JLYL services and attach them to Zotero items.",
+  "homepageUrl": "https://github.com/HiYvri/pdf-fetcher",
+  "updateUrl": "https://github.com/HiYvri/pdf-fetcher/releases/latest/download/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1353,
+   "sha256": "77da25d97d6061996dc969f37554874d31fe3790b2651e76cf8c0338c480c2fa"
+  },
+  {
+   "path": "content/icons/icon.png",
+   "size": 213801,
+   "sha256": "ceb7a72f43dddf0df590292969395a3f19b736fea719d1920df5dfe34c12c350"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 1457,
+   "sha256": "a6f91006b51e44e8e73efdda1b28b6bd250c6031157c70acfc26e11111f64d5b"
+  },
+  {
+   "path": "content/scripts/pdf-fetcher.js",
+   "size": 134104,
+   "sha256": "c1aef71064135880ef5c9e51b0fb9dec6c197f8f582325e49cbceb0dc2ad4caa"
+  },
+  {
+   "path": "manifest.json",
+   "size": 585,
+   "sha256": "1075305c95505eb046ee2d4e23560bcef9ca53e5f6dce77c6941cbc9eb814eee"
+  },
+  {
+   "path": "prefs.js",
+   "size": 48,
+   "sha256": "ce4d4352b646ad0061a8640478b49597304136a2a1df783a201647eb10a8a0d3"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "pdf-fetcher",
+   "version": "0.4.1",
+   "sha256": "17d71f563ad91535ff1995c998e170d2e6e2bd5c5861721cf1679b0d34ac9d93"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "content/icons/icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 136962,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "content/scripts/pdf-fetcher.js"
+     ],
+     "identifiedBy": "package-json"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/pdf-fetcher.js",
+       "line": 3454,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", `${this.baseURL}/search/trans`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/pdf-fetcher.js",
+       "line": 3536,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", `${this.baseURL}${path}`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/pdf-fetcher.js",
+       "line": 3579,
+       "column": 13,
+       "snippet": "return Zotero.Attachments.importFromURL({",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.jlss.vip",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 9,
+       "column": 29,
+       "snippet": "<description>聚联医疗接口地址固定为 https://api.jlss.vip。Zotero 插件不会自动继承浏览器登录状态，需要填入网站 token。</description>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/pdf-fetcher.js",
+       "line": 3445,
+       "column": 21,
+       "snippet": "static baseURL = \"https://api.jlss.vip\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "jlyl.jlss.vip",
+     "category": "unknown",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/pdf-fetcher.js",
+       "line": 3836,
+       "column": 25,
+       "snippet": "Zotero.launchURL(\"https://jlyl.jlss.vip\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/search/trans",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/pdf-fetcher.js",
+       "line": 3454,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", `${this.baseURL}/search/trans`, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/pdf-fetcher.js",
+       "line": 3536,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", `${this.baseURL}${path}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "chrome://<expr>/content/icons/icon.svg",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/pdf-fetcher.js",
+       "line": 3729,
+       "column": 23,
+       "snippet": "const menuIcon = `chrome://${config.addonRef}/content/icons/icon.svg`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 3,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 472,
+      "column": 49,
+      "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 472,
+      "column": 95,
+      "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 518,
+      "column": 43,
+      "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard",
+      "osascript (fixed command)"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 28,
+      "column": 13,
+      "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 31,
+      "column": 6,
+      "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v, true);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 3528,
+      "column": 27,
+      "snippet": "const token = String(Zotero.Prefs.get(`${prefix}.token`) || \"\").trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 3806,
+      "column": 34,
+      "snippet": "const currentToken = String(Zotero.Prefs.get(tokenPref2) || \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 3819,
+      "column": 6,
+      "snippet": "Zotero.Prefs.set(tokenPref2, value.value.trim());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 3834,
+      "column": 32,
+      "snippet": "tokenInput.value = String(Zotero.Prefs.get(tokenPref) || \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 3864,
+      "column": 6,
+      "snippet": "Zotero.Prefs.set(tokenPref, String(value || \"\").trim());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 1,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.pdfFetcher.token\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.debug-bridge.password",
+      "extensions.zotero.pdfFetcher.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 64,
+      "column": 24,
+      "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 2122,
+      "column": 11,
+      "snippet": "return new global.Function(WRAPPER_FACTORY_SOURCE)();",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "AsyncFunction",
+      "global.Function"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 507,
+      "column": 38,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 507,
+      "column": 82,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "link-installs-addons",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 129,
+      "column": 6,
+      "snippet": "Services.io.getProtocolHandler(\"zotero\").wrappedJSObject._extensions[\"zotero://plugin\"] = pluginBridgeExtension;",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "zotero://plugin"
+     ],
+     "asksFirst": false
+    }
+   },
+   {
+    "id": "link-runs-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/pdf-fetcher.js",
+      "line": 85,
+      "column": 6,
+      "snippet": "Services.io.getProtocolHandler(\"zotero\").wrappedJSObject._extensions[\"zotero://ztoolkit-debug\"] = debugBridgeExtension;",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "zotero://ztoolkit-debug (asks first)"
+     ],
+     "asksFirst": true
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/HiYvri/pdf-fetcher/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/HiYvri/pdf-fetcher/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the HiYvri account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "pdf-fetcher",
+   "version": "0.4.1",
+   "sha256": "17d71f563ad91535ff1995c998e170d2e6e2bd5c5861721cf1679b0d34ac9d93"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "f7945fba1aaed19f125a47991a71bf7363f998191ac2559391e5c1652170c7e0"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers version 0.4.1, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [],
+    "concern": "medium",
+    "label": "Uses the network; we couldn't tell where",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "link-installs-addons",
+      "label": "A zotero:// link (a web page can open one) can make it install add-ons without asking you",
+      "concern": "medium",
+      "libraries": [
+       "zotero-plugin-toolkit"
+      ],
+      "detail": "zotero://plugin"
+     },
+     {
+      "id": "link-runs-code",
+      "label": "A zotero:// link can make it run code if you approve a prompt",
+      "concern": "medium",
+      "libraries": [
+       "zotero-plugin-toolkit"
+      ],
+      "detail": "zotero://ztoolkit-debug"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-LINK-INSTALL",
+     "CAP-LINK-CODE"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-02T13:07:16Z",
+    "lastCommitAt": "2026-07-09T07:50:51Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing",
+    "capabilities"
+   ],
+   "reasons": [
+    "Uses the network; we couldn't tell where",
+    "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from zotero-plugin-toolkit)",
+    "A zotero:// link can make it run code if you approve a prompt (from zotero-plugin-toolkit)"
+   ]
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T10:44:53Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 2,
+    "dialogs": 2
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

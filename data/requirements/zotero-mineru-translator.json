@@ -1,0 +1,32 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-mineru-translator",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "MinerU API token (PDF parsing) and an LLM API key for translation",
+  "worksWithout": "",
+  "services": [
+   "MinerU",
+   "DeepSeek",
+   "OpenAI"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 快速开始",
+   "quote": "你至少需要准备两个 Key：",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.minerudstranslator.mineruApiToken\", \"\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README 快速开始: \"你至少需要准备两个 Key：\" (MinerU token plus an LLM key), and prefs.js defaults both to empty. A custom OpenAI-compatible base URL exists, but nothing in the pack or code mentions localhost, Ollama or LM Studio, so local use is not settled."
+}

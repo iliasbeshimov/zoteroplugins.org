@@ -1,0 +1,868 @@
+{
+ "schemaVersion": 1,
+ "slug": "sci-download-for-zotero10",
+ "repo": "chenbin98/sci-download-for-zotero10",
+ "version": "1.5.0",
+ "tag": "v1.5.0",
+ "releaseAuthor": "chenbin98",
+ "publishedAt": "2026-09-14T04:57:06Z",
+ "prerelease": false,
+ "asset": {
+  "name": "sci-download-for-zotero-10.xpi",
+  "url": "https://github.com/chenbin98/Sci-Download-for-Zotero10/releases/download/v1.5.0/sci-download-for-zotero-10.xpi",
+  "size": 47946,
+  "sha256": "351646055a1647634f30e08c4d2b72dbc9400fba55bbef3af63138ade6ee49e2",
+  "githubAssetId": 562616110,
+  "uploader": "chenbin98",
+  "uploadedAt": "2026-09-14T04:57:06Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "scidownload@chen",
+  "name": "Sci-Download for Zotero 10",
+  "version": "1.5.0",
+  "description": "An independently maintained Zotero 10-focused fork for DOI-based PDF retrieval",
+  "homepageUrl": "https://github.com/chenbin98/sci-download-for-zotero#readme",
+  "updateUrl": "https://github.com/chenbin98/sci-download-for-zotero/releases/download/release/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1317,
+   "sha256": "06dae4d6ff2def5cc058ae657be5eabe843da469261681aa2b5ccf78247bb474"
+  },
+  {
+   "path": "content/icons/download.svg",
+   "size": 780,
+   "sha256": "134e1629d61ee04e32fa3153f61211c05590f689db9697364a123a4ff7e7e563"
+  },
+  {
+   "path": "content/scripts/scidownload.js",
+   "size": 176757,
+   "sha256": "101a840c8310d3f00eed66739d838738441fd21815b373ed471192c74b70a27b"
+  },
+  {
+   "path": "locale/en-US/scidownload-addon.ftl",
+   "size": 2835,
+   "sha256": "4fb3000798468048bd5e439dc496dc5373693bb8ed0eab2d5fdec5257939c9fb"
+  },
+  {
+   "path": "locale/zh-CN/scidownload-addon.ftl",
+   "size": 2859,
+   "sha256": "66037771ebb69a3484fa0b3b6f93bb1bc9cb9af77494ad8e6948c4e1fb8e94df"
+  },
+  {
+   "path": "manifest.json",
+   "size": 710,
+   "sha256": "2f60a024e3a4346a17eaabaf48f5658b2233e3a17cdd9f2cf18be84cde65083d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "sci-download-for-zotero10",
+   "version": "1.5.0",
+   "sha256": "351646055a1647634f30e08c4d2b72dbc9400fba55bbef3af63138ade6ee49e2"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "content/icons/download.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/scidownload-addon.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/scidownload-addon.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 178074,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "content/scripts/scidownload.js"
+     ],
+     "identifiedBy": "package-json"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 3546,
+       "column": 11,
+       "snippet": "return Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 3753,
+       "column": 16,
+       "snippet": "await Zotero.Attachments.importFromURL(importOptions);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 3907,
+       "column": 18,
+       "snippet": "const url = `https://api.crossref.org/works/${encodeURIComponent(doi)}`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 3966,
+       "column": 6,
+       "snippet": "`https://api.crossref.org/works?query.bibliographic=${encodeURIComponent(q)}&rows=1`",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4013,
+       "column": 8,
+       "snippet": "`https://api.crossref.org/works?query.bibliographic=${encodeURIComponent(title)}&rows=1`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "eutils.ncbi.nlm.nih.gov",
+     "category": "scholarly-api",
+     "provider": "NCBI E-utilities",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 3952,
+       "column": 6,
+       "snippet": "`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=${pmid}&retmode=json`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 3402,
+       "column": 11,
+       "snippet": "url: \"https://github.com/chenbin98/sci-download-for-zotero/issues\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 3404,
+       "column": 14,
+       "snippet": "homepage: \"https://github.com/chenbin98/sci-download-for-zotero#readme\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "sci-hub.ee",
+     "category": "scholarly-api",
+     "provider": "Sci-Hub",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4036,
+       "column": 4,
+       "snippet": "\"https://sci-hub.ee/\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "sci-hub.ren",
+     "category": "scholarly-api",
+     "provider": "Sci-Hub",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4037,
+       "column": 4,
+       "snippet": "\"https://sci-hub.ren/\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "tool.yovisun.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4450,
+       "column": 23,
+       "snippet": "Zotero.launchURL(\"https://tool.yovisun.com/scihub/\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.ablesci.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4446,
+       "column": 23,
+       "snippet": "Zotero.launchURL(\"https://www.ablesci.com/post/detail?id=9VP4Vw\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.et-fine.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4042,
+       "column": 4,
+       "snippet": "\"https://www.et-fine.com\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.sci-hub.ru",
+     "category": "scholarly-api",
+     "provider": "Sci-Hub",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4035,
+       "column": 4,
+       "snippet": "\"https://www.sci-hub.ru\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.sci-hub.se",
+     "category": "scholarly-api",
+     "provider": "Sci-Hub",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4033,
+       "column": 4,
+       "snippet": "\"https://www.sci-hub.se\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.sci-hub.st",
+     "category": "scholarly-api",
+     "provider": "Sci-Hub",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4034,
+       "column": 4,
+       "snippet": "\"https://www.sci-hub.st\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.sci-hub.wf",
+     "category": "scholarly-api",
+     "provider": "Sci-Hub",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4038,
+       "column": 4,
+       "snippet": "\"https://www.sci-hub.wf/\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.sci-hub.yt",
+     "category": "scholarly-api",
+     "provider": "Sci-Hub",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4039,
+       "column": 4,
+       "snippet": "\"https://www.sci-hub.yt/\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.tesble.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4041,
+       "column": 4,
+       "snippet": "\"https://www.tesble.com\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.wellesu.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4040,
+       "column": 4,
+       "snippet": "\"https://www.wellesu.com\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "chrome://<expr>/content/icons/download.svg",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/scidownload.js",
+       "line": 4162,
+       "column": 17,
+       "snippet": "var ICON_URI = `chrome://${config.addonRef}/content/icons/download.svg`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 3,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/scidownload.js",
+      "line": 461,
+      "column": 49,
+      "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/scidownload.js",
+      "line": 461,
+      "column": 95,
+      "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/scidownload.js",
+      "line": 507,
+      "column": 43,
+      "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard",
+      "osascript (fixed command)"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/scidownload.js",
+      "line": 28,
+      "column": 13,
+      "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/scidownload.js",
+      "line": 31,
+      "column": 6,
+      "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v, true);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.debug-bridge.password"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/scidownload.js",
+      "line": 64,
+      "column": 24,
+      "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/scidownload.js",
+      "line": 2109,
+      "column": 11,
+      "snippet": "return new global.Function(WRAPPER_FACTORY_SOURCE)();",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "AsyncFunction",
+      "global.Function"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/scidownload.js",
+      "line": 496,
+      "column": 38,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/scidownload.js",
+      "line": 496,
+      "column": 82,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/scidownload.js",
+      "line": 3849,
+      "column": 14,
+      "snippet": "await IOUtils.write(tempFile.path, bytes);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "link-installs-addons",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/scidownload.js",
+      "line": 129,
+      "column": 6,
+      "snippet": "Services.io.getProtocolHandler(\"zotero\").wrappedJSObject._extensions[\"zotero://plugin\"] = pluginBridgeExtension;",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "zotero://plugin"
+     ],
+     "asksFirst": false
+    }
+   },
+   {
+    "id": "link-runs-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/scidownload.js",
+      "line": 85,
+      "column": 6,
+      "snippet": "Services.io.getProtocolHandler(\"zotero\").wrappedJSObject._extensions[\"zotero://ztoolkit-debug\"] = debugBridgeExtension;",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "zotero://ztoolkit-debug (asks first)"
+     ],
+     "asksFirst": true
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/chenbin98/sci-download-for-zotero/releases/download/release/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/chenbin98/sci-download-for-zotero/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the chenbin98 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "sci-download-for-zotero10",
+   "version": "1.5.0",
+   "sha256": "351646055a1647634f30e08c4d2b72dbc9400fba55bbef3af63138ade6ee49e2"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "2ac862dfd5581075096ab62e80815b20e650c46b71abdcba4178d1ddf5d098ea"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository (under its old name)",
+     "check": "The update address offers version 1.5.0, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "eutils.ncbi.nlm.nih.gov",
+       "sci-hub.ee",
+       "sci-hub.ren",
+       "www.sci-hub.ru",
+       "www.sci-hub.se",
+       "www.sci-hub.st",
+       "www.sci-hub.wf",
+       "www.sci-hub.yt"
+      ],
+      "unconfirmed": [
+       "sci-hub.ee",
+       "sci-hub.ren",
+       "www.sci-hub.ru",
+       "www.sci-hub.se",
+       "www.sci-hub.st",
+       "www.sci-hub.wf",
+       "www.sci-hub.yt"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": true,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "link-installs-addons",
+      "label": "A zotero:// link (a web page can open one) can make it install add-ons without asking you",
+      "concern": "medium",
+      "libraries": [
+       "zotero-plugin-toolkit"
+      ],
+      "detail": "zotero://plugin"
+     },
+     {
+      "id": "link-runs-code",
+      "label": "A zotero:// link can make it run code if you approve a prompt",
+      "concern": "medium",
+      "libraries": [
+       "zotero-plugin-toolkit"
+      ],
+      "detail": "zotero://ztoolkit-debug"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-LINK-INSTALL",
+     "CAP-LINK-CODE"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-14T04:57:06Z",
+    "lastCommitAt": "2026-09-14T04:56:19Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from zotero-plugin-toolkit)",
+    "A zotero:// link can make it run code if you approve a prompt (from zotero-plugin-toolkit)"
+   ]
+  }
+ }
+}

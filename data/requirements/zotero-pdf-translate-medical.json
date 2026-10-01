@@ -1,0 +1,28 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf-translate-medical",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "AI and commercial services such as the built-in DeepSeek option, OpenAI, DeepL, Gemini, Claude",
+  "worksWithout": "Google (googleapi) or CNKI, chosen as the default service",
+  "services": [
+   "DeepSeek",
+   "OpenAI",
+   "DeepL",
+   "Anthropic",
+   "Google Gemini"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/zoteropdftranslate.js:40835",
+   "quote": "setPref(\"translateSource\", isZhCN ? \"cnki\" : \"googleapi\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Code default falls back to googleapi/cnki; DeepSeek key needed only for its medical feature. Custom API address is mentioned but no local model is named."
+}

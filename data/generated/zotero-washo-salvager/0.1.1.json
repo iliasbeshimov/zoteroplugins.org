@@ -1,0 +1,378 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-washo-salvager",
+ "repo": "yasu/zotero-washo-salvager",
+ "version": "0.1.1",
+ "tag": "v0.1.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-07-29T20:32:03Z",
+ "prerelease": false,
+ "asset": {
+  "name": "washo-salvager-0.1.1.xpi",
+  "url": "https://github.com/yasu/zotero-washo-salvager/releases/download/v0.1.1/washo-salvager-0.1.1.xpi",
+  "size": 18716,
+  "sha256": "2dc34afd17020c2012c1a0c22947977ff1090aa27f3f95be4b69766600a25da3",
+  "githubAssetId": 494503803,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-07-29T20:32:03Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "washo-salvager@yasu.github.io",
+  "name": "和書サルベージャ",
+  "version": "0.1.1",
+  "description": "ファイル名の ISBN から和書の書誌を一括解決し、未分類アイテムのコレクション配属を提案します。",
+  "homepageUrl": "https://github.com/yasu/zotero-washo-salvager",
+  "updateUrl": "https://raw.githubusercontent.com/yasu/zotero-washo-salvager/main/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1941,
+   "sha256": "c67895fd1e342c8b9606aa1de101b815e249f163272a6b2edc194849bfff0fbb"
+  },
+  {
+   "path": "locale/en-US/washo-salvager.ftl",
+   "size": 215,
+   "sha256": "a3677ed926b24520893110fb5d526b2e9483c70013c3492a57415f917adee319"
+  },
+  {
+   "path": "locale/ja-JP/washo-salvager.ftl",
+   "size": 244,
+   "sha256": "a0dfb40fb42977c6240e841c8fa9d7505293395c457029c8996fbaff8cd946fd"
+  },
+  {
+   "path": "manifest.json",
+   "size": 551,
+   "sha256": "483feaeca69e2be9b07cf9bf57bd3dc8dbb52627f3bbe034f17fe873ba5ea3bf"
+  },
+  {
+   "path": "src/classify.js",
+   "size": 12885,
+   "sha256": "bb1e6233ec9f5d913dacb97b496714e5f2330294bbdd2b3abf7574ec5bb0bce9"
+  },
+  {
+   "path": "src/isbn.js",
+   "size": 2421,
+   "sha256": "111d15a1ed8a1847e60ef1884b2e8251ad79452ce94595e0d1419cf200313895"
+  },
+  {
+   "path": "src/mapper.js",
+   "size": 2596,
+   "sha256": "647d98046d4520b3e139ba124182493ebab3df5351f1aa7215936e483f3ae2e7"
+  },
+  {
+   "path": "src/preview.js",
+   "size": 6035,
+   "sha256": "e110a5547caae2b75f59c1f0d32fa52f5b57e11da622328768ed764f50496828"
+  },
+  {
+   "path": "src/resolvers.js",
+   "size": 15304,
+   "sha256": "4a070349d5e9fc2c91b313575fcee9cdbaab7a985e902ad6b30dfa191c387975"
+  },
+  {
+   "path": "src/salvage.js",
+   "size": 9277,
+   "sha256": "ac65bdcd8141861a63e9fe9fff3c8f783ea143fc973428b4c89e13d9d4b0bfeb"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-washo-salvager",
+   "version": "0.1.1",
+   "sha256": "2dc34afd17020c2012c1a0c22947977ff1090aa27f3f95be4b69766600a25da3"
+  },
+  "coverage": {
+   "filesTotal": 10,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/washo-salvager.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/ja-JP/washo-salvager.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 50459,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/resolvers.js",
+       "line": 37,
+       "column": 18,
+       "snippet": "var res = await fetchFn('https://api.openbd.jp/v1/get?isbn=' + isbn13);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/resolvers.js",
+       "line": 140,
+       "column": 18,
+       "snippet": "var res = await fetchFn('https://ndlsearch.ndl.go.jp/api/opensearch?isbn=' + isbn13 + '&cnt=1');",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.openbd.jp",
+     "category": "scholarly-api",
+     "provider": "openBD (Japanese book data)",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/resolvers.js",
+       "line": 37,
+       "column": 26,
+       "snippet": "var res = await fetchFn('https://api.openbd.jp/v1/get?isbn=' + isbn13);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "ndlsearch.ndl.go.jp",
+     "category": "scholarly-api",
+     "provider": "National Diet Library Search",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/resolvers.js",
+       "line": 140,
+       "column": 26,
+       "snippet": "var res = await fetchFn('https://ndlsearch.ndl.go.jp/api/opensearch?isbn=' + isbn13 + '&cnt=1');",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://api.openbd.jp/v1/get?isbn=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/resolvers.js",
+       "line": 37,
+       "column": 18,
+       "snippet": "var res = await fetchFn('https://api.openbd.jp/v1/get?isbn=' + isbn13);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "https://ndlsearch.ndl.go.jp/api/opensearch?isbn=<expr>&cnt=1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/resolvers.js",
+       "line": 140,
+       "column": 18,
+       "snippet": "var res = await fetchFn('https://ndlsearch.ndl.go.jp/api/opensearch?isbn=' + isbn13 + '&cnt=1');",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 18,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/yasu/zotero-washo-salvager/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/yasu/zotero-washo-salvager/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-washo-salvager",
+   "version": "0.1.1",
+   "sha256": "2dc34afd17020c2012c1a0c22947977ff1090aa27f3f95be4b69766600a25da3"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "33f4c3a8d88219b014b5995d50bd9318f66274f968b7a30faed51c59ef4a7b50"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.openbd.jp",
+       "ndlsearch.ndl.go.jp"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-29T20:32:03Z",
+    "lastCommitAt": "2026-07-29T20:30:32Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:01:00Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 2,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

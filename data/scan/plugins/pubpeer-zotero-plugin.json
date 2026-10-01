@@ -1,0 +1,323 @@
+{
+ "repo": "PubPeerFoundation/pubpeer_zotero_plugin",
+ "slug": "pubpeer-zotero-plugin",
+ "group": "top",
+ "rank": 84,
+ "name": "Pubpeer Plugin for Zotero",
+ "stars": 216,
+ "downloads": 28450,
+ "createdAt": "2019-06-17T19:03:39Z",
+ "tag": "v1.0.9",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-pubpeer-1.0.9.xpi",
+    "url": "https://github.com/PubPeerFoundation/pubpeer_zotero_plugin/releases/download/v1.0.9/zotero-pubpeer-1.0.9.xpi",
+    "size": 51633,
+    "uploadedAt": "2026-09-16T08:54:49Z",
+    "sha256": "a3ec4a7ab83af85515add91621d28eec2063099614f53f78dfa737773282a841"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero-pubpeer@pubpeer.com",
+    "name": "Pubpeer Plugin for Zotero",
+    "version": "1.0.9",
+    "description": "Plugin to show if references in Zotero have PubPeer comments",
+    "homepageUrl": null,
+    "updateUrl": "https://github.com/PubPeerFoundation/pubpeer_zotero_plugin/releases/download/release/updates.json",
+    "minVersion": "7.0.0",
+    "maxVersion": "10.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "pubpeer-zotero-plugin",
+     "version": "1.0.9",
+     "sha256": "a3ec4a7ab83af85515add91621d28eec2063099614f53f78dfa737773282a841"
+    },
+    "coverage": {
+     "filesTotal": 22,
+     "filesAnalyzed": 3,
+     "filesSkipped": [
+      {
+       "path": "content/itemPane.tst",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/skin/html.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/skin/item-section/header.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/skin/item-section/header.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/skin/item-section/sidenav.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/skin/item-section/sidenav.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/skin/loading.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/skin/overlay.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/skin/pubpeer-highlighted.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/skin/pubpeer-highlighted@2x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/skin/pubpeer-muted.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/skin/pubpeer.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/skin/pubpeer.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/skin/pubpeer@2x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/zoteroPane.xulx",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zotero-pubpeer.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zotero-pubpeer.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zotero-pubpeer.properties",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "jose",
+       "files": [
+        "pubpeer.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "zotero-plugin",
+       "files": [
+        "bootstrap.js",
+        "pubpeer.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "pubpeer.js",
+         "line": 2670,
+         "column": 29,
+         "snippet": "const response = await fetch(`https://filebin.net/${this.name}/${this.filename}`, {",
+         "inVendoredCode": true
+        }
+       ]
+      },
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "pubpeer.js",
+         "line": 3295,
+         "column": 31,
+         "snippet": "const pubpeer = (await Zotero.HTTP.request(\"POST\", \"https://pubpeer.com/v3/publications?devkey=PubPeerZotero\", {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "pubpeer.com",
+       "category": "scholarly-api",
+       "provider": "PubPeer",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "pubpeer.js",
+         "line": 3295,
+         "column": 59,
+         "snippet": "const pubpeer = (await Zotero.HTTP.request(\"POST\", \"https://pubpeer.com/v3/publications?devkey=PubPeerZotero\", {",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "www.zotero.org",
+       "category": "zotero",
+       "provider": "Zotero",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "pubpeer.js",
+         "line": 3025,
+         "column": 38,
+         "snippet": "const style = Zotero.Styles.get(\"http://www.zotero.org/styles/apa\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "https://filebin.net/<expr>/<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "pubpeer.js",
+         "line": 2670,
+         "column": 29,
+         "snippet": "const response = await fetch(`https://filebin.net/${this.name}/${this.filename}`, {",
+         "inVendoredCode": true
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 2,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "pubpeer.js",
+        "line": 2635,
+        "column": 31,
+        "snippet": "const zipFile = saveTo ? Zotero.File.pathToFile(saveTo) : Zotero.getTempDirectory().clone();",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "pubpeer.js",
+        "line": 2655,
+        "column": 36,
+        "snippet": "return new Uint8Array(await IOUtils.read(zipFile.path));",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 13,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/PubPeerFoundation/pubpeer_zotero_plugin/releases/download/release/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/PubPeerFoundation/pubpeer_zotero_plugin/releases/download/release/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "scholarly-api": [
+      "pubpeer.com"
+     ],
+     "zotero": [
+      "www.zotero.org"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

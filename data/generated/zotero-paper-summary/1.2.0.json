@@ -1,0 +1,370 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paper-summary",
+ "repo": "programmerayaka/zotero_paper_summary",
+ "version": "1.2.0",
+ "tag": "v1.2.0",
+ "releaseAuthor": "ProgrammerAyaka",
+ "publishedAt": "2026-03-04T03:29:37Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-ai-summary-release.xpi",
+  "url": "https://github.com/ProgrammerAyaka/zotero_paper_summary/releases/download/v1.2.0/zotero-ai-summary-release.xpi",
+  "size": 5473,
+  "sha256": "eff75e6f524ae869f9dcc06e6b94fab012f0c230d948063cacaecbf87b752c45",
+  "githubAssetId": 366499341,
+  "uploader": "ProgrammerAyaka",
+  "uploadedAt": "2026-03-04T03:29:30Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-ai-summary@ProgrammerAyaka.github.io",
+  "name": "Zotero AI Summary",
+  "version": "1.2.0",
+  "description": "Zotero AI Summary Plugin",
+  "updateUrl": "https://raw.githubusercontent.com/ProgrammerAyaka/zotero_paper_summary/main/update.json",
+  "strictMinVersion": "7.0.0",
+  "strictMaxVersion": "8.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 9932,
+   "sha256": "635e52e1c75c3e181a66bf41abea472e68f5ebaa27d27c85a4249c867a6a21e9"
+  },
+  {
+   "path": "manifest.json",
+   "size": 447,
+   "sha256": "c687ef64d37ab8c3aba6d88f1c98c299c1f88db6c35cc4cc306bfa77269d13b8"
+  },
+  {
+   "path": "prefs.js",
+   "size": 335,
+   "sha256": "e7406ab5bf3a1d02aaaf9ba28887485dcef2a6122fc9b02715ba5fa1b0809d90"
+  },
+  {
+   "path": "prefs/preferences.xhtml",
+   "size": 3311,
+   "sha256": "014678f9a77cd1fd1f37b1d92b7a153ba224515a7c93c38373a250c22a12adad"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-paper-summary",
+   "version": "1.2.0",
+   "sha256": "eff75e6f524ae869f9dcc06e6b94fab012f0c230d948063cacaecbf87b752c45"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 13578,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 239,
+       "column": 29,
+       "snippet": "let response = await fetch(\"https://api.deepseek.com/chat/completions\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 258,
+       "column": 29,
+       "snippet": "let response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${geminiKey}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 239,
+       "column": 35,
+       "snippet": "let response = await fetch(\"https://api.deepseek.com/chat/completions\", {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "generativelanguage.googleapis.com",
+     "category": "llm-provider",
+     "provider": "Google Gemini",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 258,
+       "column": 35,
+       "snippet": "let response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${geminiKey}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 258,
+       "column": 29,
+       "snippet": "let response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${geminiKey}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 107,
+      "column": 25,
+      "snippet": "const deepseekKey = Zotero.Prefs.get(prefPrefix + \"deepseekKey\", true) || \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 108,
+      "column": 25,
+      "snippet": "const geminiKey = Zotero.Prefs.get(prefPrefix + \"geminiKey\", true) || \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref('extensions.ai-summary.deepseekKey', '');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 3,
+      "column": 0,
+      "snippet": "pref('extensions.ai-summary.geminiKey', '');",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.ai-summary.deepseekKey",
+      "extensions.ai-summary.geminiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/ProgrammerAyaka/zotero_paper_summary/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/ProgrammerAyaka/zotero_paper_summary/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the ProgrammerAyaka account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-paper-summary",
+   "version": "1.2.0",
+   "sha256": "eff75e6f524ae869f9dcc06e6b94fab012f0c230d948063cacaecbf87b752c45"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "62610477999710d878960049117e0619aec4ed46098711eaeea8b1d9794c5330"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com",
+       "generativelanguage.googleapis.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2026-03-04T03:29:37Z",
+    "lastCommitAt": "2026-03-05T08:52:32Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7–8",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

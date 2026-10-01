@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-scholar-assistant",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Google Gemini provider (Google AI Studio API key)",
+  "worksWithout": "Local Ollama, which is the default provider",
+  "services": [
+   "Google AI Studio"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.scholarAssistant.provider\", \"ollama\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/index.js:260",
+   "quote": "apiKey: provider === \"google\" ? getPref(prefKeys.googleApiKey, \"\") : \"\",",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.scholarAssistant.ollamaEndpoint\", \"http://127.0.0.1:11434\");",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Default prefs 'provider' is \"ollama\" with endpoint http://127.0.0.1:11434; googleApiKey defaults to \"\" and is used only when provider === \"google\"."
+}

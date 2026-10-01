@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-research-database",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "MinerU official web API token (only for the optional MinerU PDF conversion)",
+  "worksWithout": "Database views, local Codex/Ollama agent bridge and local MinerU deployment",
+  "services": [
+   "MinerU"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "插件不保存云端 API Key；Codex 身份验证与模型选择由 Codex 自己管理，Ollama 只连接用户明确配置的本机端点。",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "MinerU 官方网页 API Token 只从用户指定的本机环境变量读取（默认 `MINERU_API_TOKEN`）",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README lists '本地 Ollama' as a selectable agent and says '插件不保存云端 API Key ... Ollama 只连接用户明确配置的本机端点'; the MinerU token is only for the optional official web API and default mineruMode is local-client."
+}

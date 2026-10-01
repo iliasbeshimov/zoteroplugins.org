@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-skills",
+  "version": "0.8.4",
+  "sha256": "abdc789be8766e07901e3eb7660dd6848b80ff93eefeca1720683bfe9a38e4c2",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
+  "summary": "When you choose One-click Deploy and confirm, it downloads the Skill-Runner backend (about 20 MB) from the developer's GitHub releases and runs it, then installs more software with uv. The file is checked only against a checksum from the same place.",
+  "facts": {
+    "what": "The Skill-Runner backend (a ~20 MB tar.gz from the developer's own Skill-Runner GitHub releases). The plugin unpacks it with tar, then runs its Python scripts through uv, which installs further engines on first setup.",
+    "urls": [
+      "https://github.com/${repo}/releases/download/${version3}/skill-runner-${version3}.tar.gz",
+      "https://github.com/${repo}/releases/download/${version3}/skill-runner-${version3}.tar.gz.sha256"
+    ],
+    "source": "developer-own",
+    "transport": "https",
+    "integrity": "same-source-checksum",
+    "trigger": "asks-first",
+    "toldInReadme": "partly",
+    "readmeQuote": "The one-click local backend deployment is only suitable for users who cannot install Agent / Docker. Closing Zotero will terminate all tasks.",
+    "triggerQuote": {
+      "file": "locale/en-US/zotero-skills-preferences.ftl",
+      "text": "No local backend info was detected. The plugin will download the backend release package and run automatic deployment. Continue?"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/zotero-skills.js",
+      "text": "if (actualSha256 = await computeSha256Hex(downloadedArtifact), actualSha256 !== expectedSha256)"
+    },
+    "notes": "Repo is leike0813/Skill-Runner (DEFAULT_SKILL_RUNNER_RELEASE_REPO), a different repo from the plugin's. The checksum is a .sha256 file fetched from the same GitHub release as the tarball, so it catches corruption but not a replaced release. The version tag comes from a runtime feed (resolveSkillRunnerRuntimeVersion) or a preference override. Release v0.7.9 asset is 20,590,739 bytes. Trigger is the 'One-click Deploy/Start' button in Preferences; a confirm dialog (confirmDeployForPlan) lists install paths and cancel aborts. Startup auto-ensure only restarts an already-deployed runtime. After extraction the plugin runs `uv run python scripts/agent_manager.py --ensure` (sh -lc, or powershell on Windows) with a 20 minute timeout. The README calls one-click deploy an emergency option and never says it downloads anything. I did not fetch the tarball or inspect what it contains. The plugin XPI is byte-identical in code to zotero-agents (same zotero-skills.js)."
+  },
+  "alsoAppliesTo": [
+    {
+      "version": "0.5.0",
+      "sha256": "e49f124deb290d1232b775e088cb360c6a912e5bc38b43bf7a84e8d3e7864374",
+      "how": "Same download code (release address, same-source checksum, confirmation prompt) as 0.8.4, compared by hand."
+    }
+  ]
+}

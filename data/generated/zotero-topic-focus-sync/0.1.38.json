@@ -1,0 +1,337 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-topic-focus-sync",
+ "repo": "jykiki/zotero-topic-focus-sync",
+ "version": "0.1.38",
+ "tag": "v0.1.38",
+ "releaseAuthor": "JYKiki",
+ "publishedAt": "2026-07-03T02:08:05Z",
+ "prerelease": false,
+ "asset": {
+  "name": "topic-focus-sync-0.1.38.xpi",
+  "url": "https://github.com/JYKiki/Zotero-topic-focus-sync/releases/download/v0.1.38/topic-focus-sync-0.1.38.xpi",
+  "size": 18604,
+  "sha256": "667cd65781ef1121103813bfcb62d7aa4cf9ab297ab0fb8412857771f6df3c1b",
+  "githubAssetId": 464929989,
+  "uploader": "JYKiki",
+  "uploadedAt": "2026-07-03T02:08:05Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "topic-focus-sync@autoagent.my",
+  "name": "Topic Focus Sync",
+  "version": "0.1.38",
+  "description": "Sync academic PDF topic folders into Zotero linked-file collections and yearly topic-focus views.",
+  "homepageUrl": "https://github.com/JYKiki/Zotero-topic-focus-sync",
+  "updateUrl": "https://github.com/JYKiki/Zotero-topic-focus-sync/releases/latest/download/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.99.99"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 69705,
+   "sha256": "0764dec3fdb3f78413db3ee84fb8786f34d9df9db97b58929ca4e3b1bf79909a"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 10477,
+   "sha256": "1bc9a7d3e0e278045114398fbd044e781c2ad2a66f10370c45f0a82842a3eda1"
+  },
+  {
+   "path": "manifest.json",
+   "size": 567,
+   "sha256": "01a69b616c18a45e5159e65aaee413e20a591d694545a9bbeba4b331c2905526"
+  },
+  {
+   "path": "prefs.js",
+   "size": 673,
+   "sha256": "90b75282f6356db64dacd52e497218ad647debddac5c584a2eff35a7b306756a"
+  },
+  {
+   "path": "README.md",
+   "size": 676,
+   "sha256": "34cee663f88b0111f5fd1ba0a729dd3b36e14e3c65304557c8353db22390e173"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-topic-focus-sync",
+   "version": "0.1.38",
+   "sha256": "667cd65781ef1121103813bfcb62d7aa4cf9ab297ab0fb8412857771f6df3c1b"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 80855,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1141,
+       "column": 26,
+       "snippet": "const newItem = await Zotero.RecognizeDocument._recognize(attachment);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1288,
+      "column": 26,
+      "snippet": "const bytes = await IOUtils.read(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1753,
+      "column": 20,
+      "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1753,
+      "column": 64,
+      "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1762,
+      "column": 50,
+      "snippet": "files.push(entries.getNext().QueryInterface(Ci.nsIFile));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/JYKiki/Zotero-topic-focus-sync/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/JYKiki/Zotero-topic-focus-sync/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the JYKiki account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-topic-focus-sync",
+   "version": "0.1.38",
+   "sha256": "667cd65781ef1121103813bfcb62d7aa4cf9ab297ab0fb8412857771f6df3c1b"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "fe1329fc20cb1722ecdcb217751ed9df7ffcb8bdba40e433d5bd2df5a373208a"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services",
+       "services.zotero.org"
+      ],
+      "observed": [
+       "services.zotero.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED",
+     "DS-OBSERVED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-03T02:08:05Z",
+    "lastCommitAt": "2026-07-03T02:07:09Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:48:53Z",
+   "verdict": "unexpected",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 1,
+    "dialogs": 2
+   },
+   "contacted": [
+    "services.zotero.org"
+   ],
+   "unexpected": [
+    "contacted services.zotero.org, which its card didn't list before we ran it"
+   ]
+  }
+ }
+}

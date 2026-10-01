@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-extra",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Semantic Scholar API key gives faster requests (1s vs 3.5s rate limit)",
+  "worksWithout": "Semantic Scholar conference-name lookup works without a key, just rate-limited",
+  "services": [
+   "Semantic Scholar"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Features",
+   "quote": "Optional API key support for faster requests (configure in preferences)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README Features",
+   "quote": "Automatically fetches short conference names from [Semantic Scholar](https://www.semanticscholar.org) and saves them to items' **Extra** field.",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says \"Optional API key support for faster requests (configure in preferences)\" and \"3.5s without API key, 1s with API key\"; code adds x-api-key only if set and the default key is empty. No AI features."
+}

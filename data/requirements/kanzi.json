@@ -1,0 +1,34 @@
+{
+ "schemaVersion": 1,
+ "slug": "kanzi",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "none",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "manager.html:185",
+   "quote": "try { token = Services.prefs.getCharPref(\"extensions.kindleZoteroImporter.collectorToken\"); } catch(e) {}",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "manager.html:187",
+   "quote": "const response = await fetch(\"https://annotation.utkubilen.de/register\", {method: \"POST\"});",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "Import Kindle `My Clippings.txt` highlights into Zotero as native annotations, directly inside Zotero.",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The collectorToken is fetched automatically from annotation.utkubilen.de/register, which is the developer's own opt-in sharing service. The user supplies nothing; sharing is off by default (shareAnonymized false). It is a Kindle import tool with no AI."
+}

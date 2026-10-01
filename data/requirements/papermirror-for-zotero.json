@@ -1,0 +1,46 @@
+{
+ "schemaVersion": 1,
+ "slug": "papermirror-for-zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "LLM and paid translation providers (OpenAI, Anthropic, Gemini, DeepSeek, DeepL and others); the deep-explain feature needs an LLM provider",
+  "worksWithout": "Microsoft Bing free translation (the default), Google Translate free, and Ollama (local)",
+  "services": [
+   "OpenAI",
+   "Anthropic",
+   "Google Gemini",
+   "DeepSeek",
+   "DeepL"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js:63",
+   "quote": "// Default: free Bing engine — works out of the box with no API key.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Translation engines",
+   "quote": "**No key needed:** Microsoft (Bing) free, Google Translate free, Ollama (local).",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/index.js:8129",
+   "quote": "defaultBaseURL: \"http://localhost:11434\",",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "**No key needed:** Microsoft (Bing) free, Google Translate free, Ollama (local).",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The prefs say 'Default: free Bing engine — works out of the box with no API key.' The README says 'No key needed: Microsoft (Bing) free, Google Translate free, Ollama (local)', and the code has defaultBaseURL http://localhost:11434, so Ollama is supported."
+}

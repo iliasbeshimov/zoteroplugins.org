@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "autotag-zotero-plugin",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "the cloud providers (OpenAI, Gemini, DeepSeek, OpenRouter) each need the user's own API key",
+  "worksWithout": "local models through Ollama need no key",
+  "services": [
+   "OpenAI",
+   "Google Gemini",
+   "DeepSeek",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, What's new",
+   "quote": "Run tagging completely offline using local models such as LLaMA, Mistral, or Qwen through Ollama.\n    No API key required. Your data never leaves your machine.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Setting Up",
+   "quote": "Before using Autotag, you must enter your API key.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/autotag.js:885",
+   "quote": "\"http://127.0.0.1:11434\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says Ollama local models give 'No API key required', and the cloud providers have empty apiKey prefs. Code shows http://127.0.0.1:11434 and localhost:11434 (Ollama)."
+}

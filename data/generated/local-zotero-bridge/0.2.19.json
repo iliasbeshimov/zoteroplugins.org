@@ -1,0 +1,467 @@
+{
+ "schemaVersion": 1,
+ "slug": "local-zotero-bridge",
+ "repo": "mappedinfo/local-zotero-bridge",
+ "version": "0.2.19",
+ "tag": "v0.2.19",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-06-07T13:47:43Z",
+ "prerelease": false,
+ "asset": {
+  "name": "local-zotero-bridge-0.2.19.xpi",
+  "url": "https://github.com/Mappedinfo/local-zotero-bridge/releases/download/v0.2.19/local-zotero-bridge-0.2.19.xpi",
+  "size": 28257,
+  "sha256": "a2335a7a38124c8278bf879ad6607ac5d65b2e084bbe126120e58b7ec7558268",
+  "githubAssetId": 440934918,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-06-07T13:47:42Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "local-zotero-bridge@mappedinfo.com",
+  "name": "Local Zotero Bridge",
+  "version": "0.2.19",
+  "description": "Expose local Zotero collection, item, and native note metadata to Local Zotero Mirror.",
+  "homepageUrl": "https://github.com/mappedinfo/local-zotero-mirror",
+  "updateUrl": "https://raw.githubusercontent.com/Mappedinfo/local-zotero-bridge/main/updates.json",
+  "strictMinVersion": "7.999",
+  "strictMaxVersion": "10.999.999"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 38740,
+   "sha256": "79515419de58585b6e630fc69c044090628ed7683ae0ce45fbd95fbb1f7fe4c7"
+  },
+  {
+   "path": "content/icons/local-zotero-bridge.svg",
+   "size": 269,
+   "sha256": "f0d47a6c307153da7baddc8887d6714263bff8e34fa45d308de1b4d1128ca0c9"
+  },
+  {
+   "path": "locale/en-US/local-zotero-bridge.ftl",
+   "size": 285,
+   "sha256": "4edd47341c525c9b9a51e125bbdfbf273a3b999a836195ac31c67c38526038d8"
+  },
+  {
+   "path": "locale/zh-CN/local-zotero-bridge.ftl",
+   "size": 300,
+   "sha256": "deea6e90c75507d168093b12b7eb1196ea96634b9619d8d0c883efe76f73236f"
+  },
+  {
+   "path": "manifest.json",
+   "size": 688,
+   "sha256": "16092cf23a11af71ca4c2d7b91fdc2ac282efc93fea43fdaad165e01a2453f20"
+  },
+  {
+   "path": "prefs.js",
+   "size": 64,
+   "sha256": "5c5ce41655a7a0a1d90cbbb2b6b812f34947d476db61b25ed48e367cdf0d4853"
+  },
+  {
+   "path": "src/obsidian-note.js",
+   "size": 13208,
+   "sha256": "7c20dfe8bcebc0c732e0e599798384360def361b5a2300196c77e1fb459177f8"
+  },
+  {
+   "path": "src/obsidian.js",
+   "size": 9851,
+   "sha256": "ded805a92e642381ad38c1767691c02baf6f1b56cda90f9310ef40503068660c"
+  },
+  {
+   "path": "src/search-panel.js",
+   "size": 9106,
+   "sha256": "458bcb79d2aea2498133cf6d28833dd19585234bd7cc59e27c3f5fe1d02d558a"
+  },
+  {
+   "path": "src/serializer.js",
+   "size": 29324,
+   "sha256": "4d22e66fabae929671e0cc4c377715e502c9058bb4dc7bfb34b130a909a86b8a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "local-zotero-bridge",
+   "version": "0.2.19",
+   "sha256": "a2335a7a38124c8278bf879ad6607ac5d65b2e084bbe126120e58b7ec7558268"
+  },
+  "coverage": {
+   "filesTotal": 10,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "content/icons/local-zotero-bridge.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/local-zotero-bridge.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/local-zotero-bridge.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 100293,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/serializer.js",
+       "line": 603,
+       "column": 25,
+       "snippet": "const source = doi ? `https://doi.org/${doi}` : url;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "obsidian://new?vault=<expr>&file=<expr>&content=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/obsidian.js",
+       "line": 43,
+       "column": 11,
+       "snippet": "return `obsidian://new?vault=${encodeURIComponent(resolved.vaultName)}&file=${encodeURIComponent(",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "obsidian://open?vault=<expr>&file=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/obsidian.js",
+       "line": 34,
+       "column": 11,
+       "snippet": "return `obsidian://open?vault=${encodeURIComponent(resolved.vaultName)}&file=${encodeURIComponent(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1112,
+      "column": 47,
+      "snippet": "if (typeof IOUtils !== \"undefined\" && typeof IOUtils.readUTF8 === \"function\") {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1113,
+      "column": 11,
+      "snippet": "return IOUtils.readUTF8(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1115,
+      "column": 6,
+      "snippet": "if (Zotero.File?.getContentsAsync) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1116,
+      "column": 11,
+      "snippet": "return Zotero.File.getContentsAsync(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1122,
+      "column": 47,
+      "snippet": "if (typeof IOUtils !== \"undefined\" && typeof IOUtils.exists === \"function\") {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1123,
+      "column": 11,
+      "snippet": "return IOUtils.exists(path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 180,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[path] = Endpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/obsidian-zotero/citations",
+      "/obsidian-zotero/obsidian-note",
+      "/obsidian-zotero/search-obsidian-library",
+      "/obsidian-zotero/search-obsidian-note",
+      "/obsidian-zotero/snapshot",
+      "/obsidian-zotero/status"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Mappedinfo/local-zotero-bridge/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Mappedinfo/local-zotero-bridge/main/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 111,
+      "column": 26,
+      "snippet": "this.registerEndpoint(\"/obsidian-zotero/obsidian-note\", async (request) => {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/obsidian-note.js",
+      "line": 203,
+      "column": 54,
+      "snippet": "if (typeof item.saveTx === \"function\") return item.saveTx();",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/obsidian-zotero/obsidian-note"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "local-zotero-bridge",
+   "version": "0.2.19",
+   "sha256": "a2335a7a38124c8278bf879ad6607ac5d65b2e084bbe126120e58b7ec7558268"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "225e3a5ab0d1ff7515497ebbf461fc1a4aa42c8c0acf0bdd212a6ec926639f61"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found; its code names known services",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-06-07T13:47:43Z",
+    "lastCommitAt": "2026-06-07T13:47:41Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T05:57:24Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 2,
+    "dialogs": 2
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "douban-to-zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "only the optional OpenAI-compatible metadata cleaning",
+  "worksWithout": "Importing a Douban wish list (no key)",
+  "services": [
+   "OpenAI-compatible endpoint of the user's choice"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "OpenAI-compatible cleaning is optional and separate from normal import.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.doubantozoter.openaiCompatible.baseUrl\", \"\");",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says 'OpenAI-compatible cleaning is optional and separate from normal import', so the key is optional. The baseUrl pref is empty and user-set, and nothing in the pack names a local or Ollama endpoint, so local use is unproven."
+}

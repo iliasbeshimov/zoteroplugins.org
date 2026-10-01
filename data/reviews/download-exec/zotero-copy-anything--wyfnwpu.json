@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-copy-anything--wyfnwpu",
+  "version": "1.0.10",
+  "sha256": "f4181bee587a448d9535f7e4b286026a2d86f3f7ac7b71c3d80981718c86172d",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
+  "summary": "On first start it downloads a small helper program from the original developer's gitee.com page, then runs it when you copy attachments. The README says so, but the file isn't checked, and we can't read the program itself.",
+  "facts": {
+    "what": "A small helper program (copyfiles.exe on Windows, copyfiles-mac on macOS, copyfiles-linux on Linux) that the plugin uses to copy attachment files to the clipboard. Size not established.",
+    "urls": [
+      "https://gitee.com/windheartyolo/zotero-copy-anything/releases/download/binary/copyfiles.exe",
+      "https://gitee.com/windheartyolo/zotero-copy-anything/releases/download/binary/copyfiles-mac",
+      "https://gitee.com/windheartyolo/zotero-copy-anything/releases/download/binary/copyfiles-linux"
+    ],
+    "source": "third-party",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "automatic",
+    "toldInReadme": "yes",
+    "readmeQuote": "首次启动时，插件会自动下载并保存到：",
+    "triggerQuote": {
+      "file": "content/scripts/zoterocopyanything.js",
+      "text": "if (await downloadBinaryFile()) {"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/zoterocopyanything.js",
+      "text": "const response = await fetch(downloadUrl);"
+    },
+    "notes": "This is a fork (wyfnwpu) but it downloads the ORIGINAL author's (windheartyolo) Gitee binaries; README says so: '辅助程序下载地址仍使用原作者项目提供的发布地址'. So the fork's maintainer does not control the file. Runs automatically on every main window load, skipped if file exists. README (Chinese) says the plugin auto-downloads on first launch. No prompt, no locale strings about it. chmod 777 on macOS/Linux, then exec when the user copies. No hash or checksum comparison. Binary not inspected; size not obtained."
+  }
+}

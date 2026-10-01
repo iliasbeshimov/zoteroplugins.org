@@ -1,0 +1,35 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-tts",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Fish Audio, Azure Speech, Cloudflare Workers AI, Speechify, OpenAI, Xiaomi MiMo voices",
+  "worksWithout": "System voices (Windows/macOS), a local Kokoro-FastAPI server, or Zotero's own voices",
+  "services": [
+   "Fish Audio",
+   "Azure Speech",
+   "Cloudflare",
+   "Speechify",
+   "OpenAI",
+   "Xiaomi MiMo"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Providers table",
+   "quote": "| **System voices** | Nothing — Windows and macOS | Free, offline |",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Providers table",
+   "quote": "| **Kokoro-FastAPI** | A server on your machine or LAN",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The providers table lists \"System voices | Nothing — Windows and macOS | Free, offline\" and \"Kokoro-FastAPI | A server on your machine or LAN\", so some voices work without a key. The default prefs have local.baseURL 'http://localhost:8880' with engine 'kokoro', a local neural TTS model."
+}

@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-obsidian-connector",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Korean abstract translation via ChatGPT sign-in or an OpenAI-compatible endpoint (a key may be needed for cloud services)",
+  "worksWithout": "The core connector (literature notes, links, Markdown editor)",
+  "services": [
+   "OpenAI ChatGPT"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README overview",
+   "quote": "The core connector needs no API key, AI service, or Obsidian community plugin. Korean abstract translation is optional",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README OpenAI-compatible endpoint",
+   "quote": "This keeps the v0.3.0 workflow available for Ollama and compatible cloud services.",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "connector.js:35",
+   "quote": "endpoint: value.translationEndpoint || 'http://127.0.0.1:11434/v1/chat/completions',",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says \"The core connector needs no API key, AI service, or Obsidian community plugin. Korean abstract translation is optional\". It documents a fully local Ollama setup with endpoint http://127.0.0.1:11434/v1/chat/completions and API key \"Leave blank\"."
+}

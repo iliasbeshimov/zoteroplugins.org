@@ -1,0 +1,41 @@
+{
+ "schemaVersion": 1,
+ "slug": "aidea-zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "cloud providers: ChatGPT/Gemini/Copilot sign-in (OAuth) or an API key for hosted OpenAI-compatible services",
+  "worksWithout": "local models such as Ollama or LM Studio, which need no key",
+  "services": [
+   "OpenAI",
+   "Google Gemini",
+   "GitHub Copilot",
+   "OpenRouter",
+   "DeepSeek",
+   "Groq"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, OpenAI-compatible endpoint table",
+   "quote": "| **API Key**      | No       | Required only when the endpoint expects authentication",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, endpoint table",
+   "quote": "`http://localhost:11434/v1`",
+   "supports": "localModel"
+  },
+  {
+   "source": "description",
+   "where": "GitHub description",
+   "quote": "or local models (Ollama, LM Studio)",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README table: '| **API Key**      | No       | Required only when the endpoint expects authentication' and the base URL example `http://localhost:11434/v1`. The README also lists 'Local models — Ollama, LM Studio, vLLM' and OAuth sign-in 'no API key needed'."
+}

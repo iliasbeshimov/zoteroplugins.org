@@ -1,0 +1,27 @@
+{
+  "name": "zotero-plugin-atlas",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "atlas": "node pipeline/bin/atlas.js",
+    "lint": "biome ci .",
+    "format": "biome check --write .",
+    "typecheck": "pnpm -r typecheck",
+    "test": "vitest run",
+    "schema:generate": "pnpm --filter @atlas/schema generate",
+    "schema:check": "pnpm --filter @atlas/schema check",
+    "site:build": "pnpm --filter @atlas/site build",
+    "site:dev": "pnpm --filter @atlas/site dev",
+    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm schema:check && pnpm site:build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.14",
+    "@types/node": "^24.13.6",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.1"
+  }
+}

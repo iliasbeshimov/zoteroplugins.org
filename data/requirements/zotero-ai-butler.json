@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-butler",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "an LLM provider API key (default provider is OpenAI-compatible)",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "Google Gemini",
+   "Anthropic",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "privacy note",
+   "quote": "用户需自行申请并配置大模型API Key方可使用。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.aiButler.ollamaApiUrl\", \"http://localhost:11434\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "provider table",
+   "quote": "本地/局域网模型服务",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README privacy note says 用户需自行申请并配置大模型API Key方可使用, and the default provider is openai-compat with an empty key. The defaults include ollamaApiUrl \"http://localhost:11434\", and the README lists Ollama as 本地/局域网模型服务."
+}

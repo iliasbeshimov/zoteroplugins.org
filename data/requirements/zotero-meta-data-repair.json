@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-meta-data-repair",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "OpenAlex lookup needs a free OpenAlex API key",
+  "worksWithout": "Crossref lookup (keyless, the default)",
+  "services": [
+   "OpenAlex"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "The fuzzy search uses **Crossref** with no key by default",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "**OpenAlex** is used only when you set a free API key in the settings.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "manifest description",
+   "quote": "review and repair its metadata against external sources (DOI-first with a guarded fuzzy fallback)",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: \"The fuzzy search uses **Crossref** with no key by default\"; OpenAlex only with a free key. No AI features."
+}

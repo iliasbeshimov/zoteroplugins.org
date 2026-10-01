@@ -1,0 +1,436 @@
+{
+ "repo": "yanfeifan723/zotero-zotskim",
+ "slug": "zotero-zotskim",
+ "group": "sample-2026",
+ "rank": 1214,
+ "name": "ZotSkim",
+ "stars": 1,
+ "downloads": 2,
+ "createdAt": "2026-06-07T11:30:19Z",
+ "tag": "v0.4.2",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotskim.xpi",
+    "url": "https://github.com/yanfeifan723/zotero-zotskim/releases/download/v0.4.2/zotskim.xpi",
+    "size": 40319,
+    "uploadedAt": "2026-06-07T11:30:59Z",
+    "sha256": "d9b8132669205aa17a4a33346b824b3b6c007b4271644525ce52f3767718c1b2"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotskim@yanfeifan.github.io",
+    "name": "ZotSkim",
+    "version": "0.4.2",
+    "description": "AI 通读全文生成 Skim 笔记并自动分类（支持 OpenAI / Anthropic / Google 等多平台）",
+    "homepageUrl": "https://github.com/yanfeifan723/zotero-zotskim",
+    "updateUrl": "https://raw.githubusercontent.com/yanfeifan723/zotero-zotskim/main/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "10.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-zotskim",
+     "version": "0.4.2",
+     "sha256": "d9b8132669205aa17a4a33346b824b3b6c007b4271644525ce52f3767718c1b2"
+    },
+    "coverage": {
+     "filesTotal": 14,
+     "filesAnalyzed": 11,
+     "filesSkipped": [
+      {
+       "path": "assets/zotskim-icon-48.png",
+       "reason": "binary"
+      },
+      {
+       "path": "assets/zotskim-icon-96.png",
+       "reason": "binary"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "src/llm.js",
+         "line": 75,
+         "column": 25,
+         "snippet": "resp = await Zotero.HTTP.request(method, url, opt);",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.anthropic.com",
+       "category": "llm-provider",
+       "provider": "Anthropic",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/provider.xhtml",
+         "line": 54,
+         "column": 24,
+         "snippet": "anthropic: \"https://api.anthropic.com\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "src/llm.js",
+         "line": 127,
+         "column": 43,
+         "snippet": "let base = String(provider.base || \"https://api.anthropic.com\").trim().replace(/\\/+$/, \"\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "src/llm.js",
+         "line": 192,
+         "column": 43,
+         "snippet": "let base = String(provider.base || \"https://api.anthropic.com\").trim().replace(/\\/+$/, \"\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.deepseek.com",
+       "category": "llm-provider",
+       "provider": "DeepSeek",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/provider.xhtml",
+         "line": 43,
+         "column": 39,
+         "snippet": "<label value=\"常见 Base：DeepSeek https://api.deepseek.com ｜ Moonshot https://api.moonshot.cn ｜ 硅基流动 https://api.siliconflow.cn\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 11,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotskim.apiBase\", \"https://api.deepseek.com\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 11,
+         "column": 35,
+         "snippet": "pref(\"extensions.zotskim.apiBase\", \"https://api.deepseek.com\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "src/llm.js",
+         "line": 27,
+         "column": 48,
+         "snippet": "let base = String(this._pref(\"apiBase\", \"https://api.deepseek.com\")).trim();",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.moonshot.cn",
+       "category": "llm-provider",
+       "provider": "Moonshot (Kimi)",
+       "flags": [
+        "china-only"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/provider.xhtml",
+         "line": 43,
+         "column": 75,
+         "snippet": "<label value=\"常见 Base：DeepSeek https://api.deepseek.com ｜ Moonshot https://api.moonshot.cn ｜ 硅基流动 https://api.siliconflow.cn\"",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/provider.xhtml",
+         "line": 53,
+         "column": 21,
+         "snippet": "openai: \"https://api.openai.com\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.siliconflow.cn",
+       "category": "llm-provider",
+       "provider": "SiliconFlow",
+       "flags": [
+        "china-only"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/provider.xhtml",
+         "line": 43,
+         "column": 106,
+         "snippet": "ase：DeepSeek https://api.deepseek.com ｜ Moonshot https://api.moonshot.cn ｜ 硅基流动 https://api.siliconflow.cn\"",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "generativelanguage.googleapis.com",
+       "category": "llm-provider",
+       "provider": "Google Gemini",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/provider.xhtml",
+         "line": 55,
+         "column": 21,
+         "snippet": "google: \"https://generativelanguage.googleapis.com\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "src/llm.js",
+         "line": 156,
+         "column": 43,
+         "snippet": "let base = String(provider.base || \"https://generativelanguage.googleapis.com\").trim().replace(/\\/+$/, \"\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "src/llm.js",
+         "line": 200,
+         "column": 43,
+         "snippet": "let base = String(provider.base || \"https://generativelanguage.googleapis.com\").trim().replace(/\\/+$/, \"\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.zotskim.apiBase",
+       "defaultValue": "https://api.deepseek.com",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 11,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotskim.apiBase\", \"https://api.deepseek.com\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 12,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotskim.apiKey\", \"\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "extensions.zotskim.apiKey"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 6,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "src/zotskim.js",
+        "line": 366,
+        "column": 15,
+        "snippet": "return PathUtils.join(Zotero.DataDirectory.dir, \"zotskim-cache.json\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/zotskim.js",
+        "line": 371,
+        "column": 22,
+        "snippet": "if (await IOUtils.exists(path)) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/zotskim.js",
+        "line": 372,
+        "column": 41,
+        "snippet": "let o = JSON.parse(await IOUtils.readUTF8(path));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/zotskim.js",
+        "line": 379,
+        "column": 22,
+        "snippet": "await IOUtils.writeUTF8(path, JSON.stringify(o || {}));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/zotskim.js",
+        "line": 395,
+        "column": 28,
+        "snippet": "try { await IOUtils.writeUTF8(self._cacheFile(), JSON.stringify(self._cacheObj || {})); }",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/zotskim.js",
+        "line": 403,
+        "column": 14,
+        "snippet": "try { IOUtils.remove(this._cacheFile(), { ignoreAbsent: true }); } catch (e) { /* */ }",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 14,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/yanfeifan723/zotero-zotskim/main/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/yanfeifan723/zotero-zotskim/main/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.anthropic.com",
+      "api.deepseek.com",
+      "api.moonshot.cn",
+      "api.openai.com",
+      "api.siliconflow.cn",
+      "generativelanguage.googleapis.com"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

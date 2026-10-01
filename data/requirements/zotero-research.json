@@ -1,0 +1,32 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-research",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Direct API mode (model API key for an OpenAI/Anthropic-compatible endpoint)",
+  "worksWithout": "Web AI relay mode using already logged-in Gemini, DeepSeek, ChatGPT, Kimi, Claude or AI Studio pages in the browser",
+  "services": [
+   "DeepSeek",
+   "OpenAI-compatible provider",
+   "Anthropic-compatible provider"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README features",
+   "quote": "复用浏览器里已经登录的 AI 页面，无需为网页模式填写 API Key。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.researchAssistant.provider\", \"gemini\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README '无需为网页模式填写 API Key' and default provider gemini (web) support optional. Direct API takes a user-set Base URL (OpenAI/Anthropic compatible) but nothing in the README or code mentions Ollama or localhost, so local model use is not settled."
+}

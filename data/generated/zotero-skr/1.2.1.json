@@ -1,0 +1,938 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-skr",
+ "repo": "williamsliang/zotero-skr",
+ "version": "1.2.1",
+ "tag": "v1.2.1",
+ "releaseAuthor": "WilliamsLiang",
+ "publishedAt": "2026-07-09T11:35:43Z",
+ "prerelease": false,
+ "asset": {
+  "name": "skr-zotero7-9-1.2.1.xpi",
+  "url": "https://github.com/WilliamsLiang/zotero-skr/releases/download/v1.2.1/skr-zotero7-9-1.2.1.xpi",
+  "size": 226376,
+  "sha256": "d18c335ec8f9c1a38811a4bbec6d87c985bc01a5fd1d6ba91a403f727f08e0bb",
+  "githubAssetId": 471293014,
+  "uploader": "WilliamsLiang",
+  "uploadedAt": "2026-07-09T11:35:37Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "SKR@zotero.org",
+  "name": "Zotero-SKR",
+  "version": "1.2.1",
+  "description": "This is a tool used to generate a review based on the relevant literature provided by users.",
+  "homepageUrl": "https://github.com/WilliamsLiang/zotero-skr",
+  "updateUrl": "https://raw.githubusercontent.com/WilliamsLiang/zotero-skr/master/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*.*"
+ },
+ "files": [
+  {
+   "path": ".env.example",
+   "size": 1291,
+   "sha256": "ae83beda8ced7283eba71ca616a62b226dd2d3f7ba63ad2194997b288d2e06d0"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 2150,
+   "sha256": "fc07ec6424ebd251afc8b2cd5ac9e448a32fc04a0fbfadf67485790632839d31"
+  },
+  {
+   "path": "chrome/content/copy-bib/copy-bib.html",
+   "size": 2993,
+   "sha256": "bd7962d83559627c87e96e914fbc37c1ab6abe347487c6e0ddfa81e9db8055cf"
+  },
+  {
+   "path": "chrome/content/copy-bib/copy-bib.js",
+   "size": 3634,
+   "sha256": "d6b455affffdedb04f08610f0b4c4d9dac54bb3c5c1865f0fdbf113cb0616f67"
+  },
+  {
+   "path": "chrome/content/css/cloudflare.min.css",
+   "size": 73901,
+   "sha256": "b6593a1dc9d0789be185f83abcfeee4957c0e27be3595564f86758ef647da681"
+  },
+  {
+   "path": "chrome/content/example-display/example-dispaly.js",
+   "size": 26678,
+   "sha256": "3a481ed69c11fbae79229f35715aa45729132e3605763252e1e9e414755c0aed"
+  },
+  {
+   "path": "chrome/content/example-display/example-display.html",
+   "size": 4457,
+   "sha256": "4f9cd808fde8022de28e54f04126732bd316ab968bb81ed714ad1c53392c8bbd"
+  },
+  {
+   "path": "chrome/content/js/marked.min.js",
+   "size": 39665,
+   "sha256": "9eef90b3413583539ba4762908a2f119603fbf5adbbc49393a47910875aba2cc"
+  },
+  {
+   "path": "chrome/content/js/switch-module.js",
+   "size": 407360,
+   "sha256": "b327c452aa7857eecefb03d22f230bf1c3fb5962cae7b5e37d88e4385a72bc27"
+  },
+  {
+   "path": "chrome/content/prefernces/preferences.xhtml",
+   "size": 7117,
+   "sha256": "3042a7229acd4bc7c3ad27c5bfb235fa0a3b8aae083d05f1a279877fc0c634a7"
+  },
+  {
+   "path": "chrome/content/user-paper/user-paper-data.js",
+   "size": 12996,
+   "sha256": "94285091f280699453ce2a3a0523c7e7077fa9087518f99636d9e6d9d2185408"
+  },
+  {
+   "path": "chrome/content/user-paper/user-paper.html",
+   "size": 10136,
+   "sha256": "1c302055f6f1b5ca86e150bb004491dfda2e8e73a18ea2b290ccae9d98561f84"
+  },
+  {
+   "path": "chrome/content/user-tag/user-tag-data.js",
+   "size": 18309,
+   "sha256": "f8acdd8579b3d18e9887c6b023c07644308395253a30fa897d6ef252ea07f5fb"
+  },
+  {
+   "path": "chrome/content/user-tag/user-tag.html",
+   "size": 9715,
+   "sha256": "2caf4c3a89b47b6d2d5c38099200459531d66ae4ea7270f14244ad9a60a00c11"
+  },
+  {
+   "path": "chrome/icons/favicon-16x16.png",
+   "size": 925,
+   "sha256": "aa29279ea480c6905b64595fb42d7fe004e43e2e8a7bda352af57369d1888e7e"
+  },
+  {
+   "path": "chrome/icons/favicon-32x32.png",
+   "size": 2788,
+   "sha256": "7246c8300f2a2be8dc452a32ce025fd256445308c42f1baf55d41f1ee422b393"
+  },
+  {
+   "path": "chrome/modules/zot-data-api.js",
+   "size": 4039,
+   "sha256": "053d8e0ad21c674020788d7ab2de4e6cac513ed4e3edf2b207e5801625b5ed3d"
+  },
+  {
+   "path": "chrome/modules/zot-include.js",
+   "size": 703,
+   "sha256": "459d10d7b286619ce74b9d66bc19446488205ff4f40ce7afdeaffda8a07853fc"
+  },
+  {
+   "path": "chrome/modules/zot-l10.js",
+   "size": 743,
+   "sha256": "595611a8dbc6bd6105b55d188876ad02456dbfa9530c936bc02d737af309e013"
+  },
+  {
+   "path": "chrome/modules/zot-llm-api.js",
+   "size": 13746,
+   "sha256": "1de5ce280e053a8c43c8ad4d892b2a732de1ff281483d5fa6570b5bcef0e147a"
+  },
+  {
+   "path": "chrome/modules/zot-prompt-list.js",
+   "size": 17981,
+   "sha256": "a90ffab33158e8c12c1b3bb0d62f9be6c598714df0738afd7c90bd4e64aa623c"
+  },
+  {
+   "path": "locale/en-US/smart-knowledge-review.ftl",
+   "size": 4141,
+   "sha256": "707ea1ced630052a6f8d128bba0a6a038ee0ebcfe31d0930b3ffaed2dff4dfb7"
+  },
+  {
+   "path": "locale/zh-CN/smart-knowledge-review.ftl",
+   "size": 4006,
+   "sha256": "7e61cf4f9815b77488204b157d532a221dd6e8a833a65efbae3198e8c223512f"
+  },
+  {
+   "path": "manifest.json",
+   "size": 580,
+   "sha256": "13ac2eb2fcf681bea83fc4cc42a052f831b8b1d64539a22f6d1d70f8e68f6c6b"
+  },
+  {
+   "path": "preferences.css",
+   "size": 26,
+   "sha256": "596ddb8f87776502f1702c7d6743879b6fbdc56c0bc86b0599efb56b05ecb4c4"
+  },
+  {
+   "path": "prefs.js",
+   "size": 395,
+   "sha256": "88fe33a487e6f850e458f1e993449c70ad5e326373774e4b3bdbf00ef7d085be"
+  },
+  {
+   "path": "style.css",
+   "size": 74,
+   "sha256": "c7ca53cd269238908cafb2458c1d73ad1b8967769c9cbcbf4ca81c08e6323506"
+  },
+  {
+   "path": "utils/preferences.js",
+   "size": 18869,
+   "sha256": "0a3cc6ccdfa8d797d5f68fcc8af03ce1afa9bcd392a9e97a65fae82348b51f85"
+  },
+  {
+   "path": "utils/skr-user-paper.js",
+   "size": 3049,
+   "sha256": "bf7e7d084aa6b98c118f71a931e217421022ece0523bb3f4b9f2aef977d063bc"
+  },
+  {
+   "path": "utils/skr-user-tag.js",
+   "size": 2121,
+   "sha256": "2c441c1038cd5beb23a75f4d7f941f81e303d9c2cbbfb04a55d312c3119528f3"
+  },
+  {
+   "path": "utils/smart-knowledge-review.js",
+   "size": 5332,
+   "sha256": "1cfcf67ca57cc30dec5693b64e2916c6a6dc8c477fed775da1ff008ed288882f"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-skr",
+   "version": "1.2.1",
+   "sha256": "d18c335ec8f9c1a38811a4bbec6d87c985bc01a5fd1d6ba91a403f727f08e0bb"
+  },
+  "coverage": {
+   "filesTotal": 31,
+   "filesAnalyzed": 22,
+   "filesSkipped": [
+    {
+     "path": ".env.example",
+     "reason": "not-code"
+    },
+    {
+     "path": "chrome/content/css/cloudflare.min.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "chrome/icons/favicon-16x16.png",
+     "reason": "binary"
+    },
+    {
+     "path": "chrome/icons/favicon-32x32.png",
+     "reason": "binary"
+    },
+    {
+     "path": "locale/en-US/smart-knowledge-review.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/smart-knowledge-review.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "preferences.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "style.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 612188,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "minified",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [
+    "chrome/content/js/switch-module.js"
+   ],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "marked",
+     "files": [
+      "chrome/content/js/marked.min.js"
+     ],
+     "identifiedBy": "file-name"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "xhr",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/modules/zot-llm-api.js",
+       "line": 98,
+       "column": 20,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/modules/zot-llm-api.js",
+       "line": 65,
+       "column": 35,
+       "snippet": "const response = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "0.0.0.0",
+     "port": 8000,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "utils/preferences.js",
+       "line": 340,
+       "column": 68,
+       "snippet": "Zotero.Prefs.set(\"extensions.zotero.skr.review.apiurl\", \"http://0.0.0.0:8000/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.anthropic.com",
+     "category": "llm-provider",
+     "provider": "Anthropic",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "utils/preferences.js",
+       "line": 332,
+       "column": 38,
+       "snippet": "url_input.value = \"https://api.anthropic.com\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openai.com",
+     "category": "llm-provider",
+     "provider": "OpenAI",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "utils/preferences.js",
+       "line": 329,
+       "column": 38,
+       "snippet": "url_input.value = \"https://api.openai.com\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "evilmartians.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 23,
+       "column": 19854,
+       "snippet": "(e,t){let i=!1;function n(...a){console&&console.warn&&!i&&(i=!0,console.warn(e+`: postcss.plugin was deprecated. Migration guide:",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "generativelanguage.googleapis.com",
+     "category": "llm-provider",
+     "provider": "Google Gemini",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "utils/preferences.js",
+       "line": 326,
+       "column": 38,
+       "snippet": "url_input.value = \"https://generativelanguage.googleapis.com\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "libraries": [
+      "marked"
+     ],
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/js/marked.min.js",
+       "line": 6,
+       "column": 38466,
+       "snippet": ".postprocess(n)),n}catch(e){return i(e)}}}onError(e,t){return n=>{if(n.message+=\"\\nPlease report this to https://github.com/markedjs/marked.\",e){const e=\"<p>An error occurred:</p><pre>\"+W(n.message+\"\"",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 44,
+       "column": 48252,
+       "snippet": "s(),Rs),of=Oy(),F5=Mt(),j5=uv(),z5=cv(),U5=dv(),hv={browsers:B5,prefixes:z5},mv=`",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 57,
+       "column": 206,
+       "snippet": "cted.length!==0&&(e.add.selectors.length>0||Object.keys(e.add).length>2||r.warn(`Autoprefixer target browsers do not need any prefixes.You do not need Autoprefixer anymore.",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "tailwindcss.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 13,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 1,
+       "column": 15050,
+       "snippet": "Tailwind CSS v3.0.\",\"Update your configuration file to eliminate this warning.\",\"https://tailwindcss.com/docs/upgrade-guide#configure-content-sources\"]),r.safelist=(()=>{let{content:t,purge:i,safelist",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 1,
+       "column": 15523,
+       "snippet": "warn(\"blocklist-invalid\",[\"The `blocklist` option must be an array of strings.\",\"https://tailwindcss.com/docs/content-configuration#discarding-classes\"])}return[]})(),typeof r.prefix==\"function\"?(G.wa",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 1,
+       "column": 15805,
+       "snippet": "pdate `prefix` in your configuration to be a string to eliminate this warning.\",\"https://tailwindcss.com/docs/upgrade-guide#prefix-cannot-be-a-function\"]),r.prefix=\"\"):r.prefix=r.prefix??\"\",r.content=",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 27,
+       "column": 39241,
+       "snippet": "ves the same as `media`.\",\"Change `darkMode` to `media` or remove it entirely.\",\"https://tailwindcss.com/docs/upgrade-guide#remove-dark-mode-configuration\"])),t===\"variant\"){let n;if(Array.isArray(i)|",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 27,
+       "column": 46873,
+       "snippet": "}[hidden]:where(:not([hidden=until-found])){display:none}`);r([ee.comment({text:`! tailwindcss v${dh} | MIT License | https://tailwindcss.com`}),...e.nodes])},container:(()=>{function r(t=[]){return t",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 31,
+       "column": 14594,
+       "snippet": "nd CSS v3.0.\",\"Update your `safelist` configuration to eliminate this warning.\",\"https://tailwindcss.com/docs/content-configuration#safelisting-classes\"]);continue}f.push(d)}if(f.length>0){let d=new M",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 31,
+       "column": 15658,
+       "snippet": "S classes.`,\"Fix this pattern or remove it from your `safelist` configuration.\",\"https://tailwindcss.com/docs/content-configuration#safelisting-classes\"])}}let l=[].concat(e.tailwindConfig.darkMode??\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 31,
+       "column": 21205,
+       "snippet": ",\"Configure your content sources or your generated CSS will be missing styles.\",\"https://tailwindcss.com/docs/content-configuration\"]);try{let e=Kh();r.plugins.includes(e)&&(G.warn(\"line-clamp-in-core",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 32,
+       "column": 29327,
+       "snippet": "mance issues.`,`Pattern: \\`${l}\\``,\"See our documentation for recommendations:\",\"https://tailwindcss.com/docs/content-configuration#pattern-recommendations\"]))}}function h2(r,e){let t=r.map(o=>o.patte",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 32,
+       "column": 32840,
+       "snippet": "in Tailwind CSS v3.0.`,\"Use `@layer utilities` or `@layer components` instead.\",\"https://tailwindcss.com/docs/upgrade-guide#replace-variants-with-layer\"]),t.add(n))}),!e.has(\"base\")||!e.has(\"component",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "twitter.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 44,
+       "column": 48252,
+       "snippet": "s(),Rs),of=Oy(),F5=Mt(),j5=uv(),z5=cv(),U5=dv(),hv={browsers:B5,prefixes:z5},mv=`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.w3ctech.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/js/switch-module.js",
+       "line": 24,
+       "column": 121,
+       "snippet": "ss-8-plugin-migration`),m.env.LANG&&m.env.LANG.startsWith(\"cn\")&&console.warn(e+`: \\u91CC\\u9762 postcss.plugin \\u88AB\\u5F03\\u7528. \\u8FC1\\u79FB\\u6307\\u5357:",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/v1/chat/completions",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/modules/zot-llm-api.js",
+       "line": 65,
+       "column": 35,
+       "snippet": "const response = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero.skr.review.apiurl",
+     "defaultValue": "https://api.example.com/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/prefernces/preferences.xhtml",
+       "line": 29,
+       "column": 16,
+       "snippet": "preference=\"extensions.zotero.skr.review.apiurl\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/modules/zot-llm-api.js",
+       "line": 48,
+       "column": 20,
+       "snippet": "apiUrl: Zotero.Prefs.get(\"extensions.zotero.skr.review.apiurl\"),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.skr.review.apiurl\", \"https://api.example.com/v1\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "utils/preferences.js",
+       "line": 5,
+       "column": 20,
+       "snippet": "apiUrl: Zotero.Prefs.get(\"extensions.zotero.skr.review.apiurl\"),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "utils/preferences.js",
+       "line": 310,
+       "column": 20,
+       "snippet": "const url = Zotero.Prefs.get(\"extensions.zotero.skr.review.apiurl\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "utils/preferences.js",
+       "line": 344,
+       "column": 65,
+       "snippet": "document.getElementById('llm-api-url-input').value = Zotero.Prefs.get(\"extensions.zotero.skr.review.apiurl\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/modules/zot-llm-api.js",
+      "line": 49,
+      "column": 20,
+      "snippet": "apiKey: Zotero.Prefs.get(\"extensions.zotero.skr.review.apikey\"),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 3,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.skr.review.apikey\", \"sk-xxxxxxxxxxxxxxxxxxxxxxxx\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "utils/preferences.js",
+      "line": 6,
+      "column": 20,
+      "snippet": "apiKey: Zotero.Prefs.get(\"extensions.zotero.skr.review.apikey\"),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "utils/preferences.js",
+      "line": 341,
+      "column": 12,
+      "snippet": "Zotero.Prefs.set(\"extensions.zotero.skr.review.apikey\", \"qwen2.5-72b\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "utils/preferences.js",
+      "line": 345,
+      "column": 65,
+      "snippet": "document.getElementById('llm-api-key-input').value = Zotero.Prefs.get(\"extensions.zotero.skr.review.apikey\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "utils/preferences.js",
+      "line": 354,
+      "column": 12,
+      "snippet": "Zotero.Prefs.set(\"extensions.zotero.skr.review.apikey\", document.getElementById('llm-api-key-input').value);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.skr.review.apikey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/example-display/example-dispaly.js",
+      "line": 213,
+      "column": 44,
+      "snippet": "targetFile = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/example-display/example-dispaly.js",
+      "line": 213,
+      "column": 88,
+      "snippet": "targetFile = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/example-display/example-dispaly.js",
+      "line": 217,
+      "column": 48,
+      "snippet": "targetFile = dirService.get(\"Home\", Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/example-display/example-dispaly.js",
+      "line": 233,
+      "column": 8,
+      "snippet": "Zotero.File.putContents(targetFile, md);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "utils/preferences.js",
+      "line": 223,
+      "column": 61,
+      "snippet": "let homeDir = dirService.get(\"Home\", Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 18,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/WilliamsLiang/zotero-skr/master/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/WilliamsLiang/zotero-skr/master/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the WilliamsLiang account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-skr",
+   "version": "1.2.1",
+   "sha256": "d18c335ec8f9c1a38811a4bbec6d87c985bc01a5fd1d6ba91a403f727f08e0bb"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "3ddbf0d0fe88875c3d03e8cd3b72a3aa7d2ed005f8a9f94c62e95d4e5128605d"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Minified (compressed) code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.anthropic.com",
+       "api.openai.com",
+       "generativelanguage.googleapis.com"
+      ],
+      "unconfirmed": [
+       "api.anthropic.com",
+       "api.openai.com",
+       "generativelanguage.googleapis.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "0.0.0.0"
+      ],
+      "unconfirmed": [
+       "0.0.0.0"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-09T11:35:43Z",
+    "lastCommitAt": "2026-07-09T11:32:18Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T05:04:09Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 4,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

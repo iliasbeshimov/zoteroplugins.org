@@ -1,0 +1,331 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-avo-toolkit-dist",
+ "repo": "jlupini/zotero-avo-toolkit-dist",
+ "version": "1.4.1",
+ "tag": "v1.4.1",
+ "releaseAuthor": "jlupini",
+ "publishedAt": "2026-06-10T20:48:35Z",
+ "prerelease": false,
+ "asset": {
+  "name": "avo-toolkit.xpi",
+  "url": "https://github.com/jlupini/zotero-avo-toolkit-dist/releases/download/v1.4.1/avo-toolkit.xpi",
+  "size": 8141,
+  "sha256": "9169171d87c5ef8cedebc4f6652b212ce66f536943b7182fcd864b44074465da",
+  "githubAssetId": 444034194,
+  "uploader": "jlupini",
+  "uploadedAt": "2026-06-10T20:48:35Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "avo-toolkit@jlupini",
+  "name": "Avo Toolkit for Zotero",
+  "version": "1.4.1",
+  "description": "Custom format annotation note exports for Zotero",
+  "updateUrl": "https://raw.githubusercontent.com/jlupini/zotero-avo-toolkit-dist/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "annotation-note.js",
+   "size": 9765,
+   "sha256": "fb271bc4fc9d41c8f04a6baef8c039d7adb05170673a0944469a3601f60f39ea"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 819,
+   "sha256": "5ddd1398c3bc83ca6e94f8ea35a63d586bb75d5e5d65f1c041d7c335e68cc01e"
+  },
+  {
+   "path": "docx.js",
+   "size": 7912,
+   "sha256": "ab07048a9ca0eda9fd3d8f6b22c8419615f9e2248820a3a368486c7249d2a9d3"
+  },
+  {
+   "path": "manifest.json",
+   "size": 442,
+   "sha256": "1ce6c8cbfe20b2457c00bf0afbf34d83dbcfb3e217ece675df2861e553931050"
+  },
+  {
+   "path": "telemetry.js",
+   "size": 1346,
+   "sha256": "d8cc77fef6011cfdb903527681e442615cbe4109784e1fc13e034f6886f1197b"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-avo-toolkit-dist",
+   "version": "1.4.1",
+   "sha256": "9169171d87c5ef8cedebc4f6652b212ce66f536943b7182fcd864b44074465da"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 19842,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "minified",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [
+    "annotation-note.js"
+   ],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "telemetry.js",
+       "line": 1,
+       "column": 1031,
+       "snippet": "ndefined\"!=typeof Zotero&&Zotero.version||null,platform:this.platform()},t||{});Zotero.HTTP.request(\"POST\",this.ENDPOINT,{body:JSON.stringify(r),headers:{\"Content-Type\":\"application/json\",apikey:this.",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "cvcdkdpyfdzlesiqbtit.supabase.co",
+     "category": "cloud-function",
+     "provider": "Supabase",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "telemetry.js",
+       "line": 1,
+       "column": 27,
+       "snippet": "var AvoTelemetry={ENDPOINT:\"https://cvcdkdpyfdzlesiqbtit.supabase.co/rest/v1/usage_events\",ANON_KEY:\"sb_publishable_3cr7je9P_uha_lvE55f5Zw_FncBLkoo\",version:null,init({version:e}){this.version=e},enab",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "annotation-note.js",
+      "line": 1,
+      "column": 9577,
+      "snippet": "${n}).docx`,s=Zotero.getTempDirectory().path,a=PathUtils.join(s,i);return await IOUtils.write(a,o),Zotero.launchFile(a),this.reportUsage(\"export_word\",e),`Exported ${e.annotationCount} annotation(s) f",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/jlupini/zotero-avo-toolkit-dist/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/jlupini/zotero-avo-toolkit-dist/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the jlupini account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-avo-toolkit-dist",
+   "version": "1.4.1",
+   "sha256": "9169171d87c5ef8cedebc4f6652b212ce66f536943b7182fcd864b44074465da"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "220248e176d5028c74d764ce16c7cbc02194b1f08a74563e9e1a13b267422871"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Minified (compressed) code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "developer-servers",
+    "hosts": [
+     {
+      "category": "cloud-function",
+      "hosts": [
+       "cvcdkdpyfdzlesiqbtit.supabase.co"
+      ],
+      "observed": [
+       "cvcdkdpyfdzlesiqbtit.supabase.co"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts a server on a hosting platform: cvcdkdpyfdzlesiqbtit.supabase.co",
+    "legalRisk": false,
+    "drivers": [
+     "DS-DEVELOPER",
+     "DS-OBSERVED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-06-10T20:48:35Z",
+    "lastCommitAt": "2026-06-10T20:48:37Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Contacts a server on a hosting platform: cvcdkdpyfdzlesiqbtit.supabase.co"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T09:52:30Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 6,
+    "dialogs": 0
+   },
+   "contacted": [
+    "cvcdkdpyfdzlesiqbtit.supabase.co"
+   ],
+   "unexpected": []
+  }
+ }
+}

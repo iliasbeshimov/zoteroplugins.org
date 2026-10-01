@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "z-daena",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Summaries need an OpenAI or Google Gemini API key",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "Google Gemini"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Requirements",
+   "quote": "An API key for:",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "defaults/preferences/prefs.js",
+   "quote": "pref(\"extensions.aiSummarizer.openaiApiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/ai-summarizer.js:150",
+   "quote": "const url = \"https://api.openai.com/v1/responses\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README Requirements says 'An API key for: OpenAI ... or Google Gemini'. Code hard-codes the api.openai.com and generativelanguage.googleapis.com URLs, with no local endpoint option."
+}

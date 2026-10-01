@@ -1,0 +1,28 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paperlens",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "translation, which goes through an OpenAI-compatible provider you set up with your own key",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "DeepSeek",
+   "Qwen",
+   "OpenRouter",
+   "SiliconFlow"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, API 配置",
+   "quote": "**API Key**：填写服务商密钥。",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "There is no default profile, and the README says to fill in Base URL, API Key and Model. The release code has `if (!this.profile.apiKey.trim()) throw new ProviderError(401, \"missing API key\");`, so a key is enforced. A grep for ollama or localhost found nothing, so local stays unknown."
+}

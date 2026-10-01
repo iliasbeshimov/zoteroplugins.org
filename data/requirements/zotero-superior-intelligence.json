@@ -1,0 +1,28 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-superior-intelligence",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zoteromineru.llmApiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/preferences.js:120",
+   "quote": "ollama: { base: \"http://localhost:11434/v1\", model: \"qwen2.5:7b\" }",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Default is DeepSeek with llmApiKey empty (would need a key), but the README says Ollama/vLLM/LocalAI work at zero cost and MinerU has a keyless mode, so neither required nor optional is settled. Code quote 'ollama: { base: \"http://localhost:11434/v1\", model: \"qwen2.5:7b\" }' confirms local model support."
+}

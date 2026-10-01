@@ -1,0 +1,344 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-kokoro-read-aloud-bridge",
+ "repo": "pcf566/zotero-kokoro-read-aloud-bridge",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "pcf566",
+ "publishedAt": "2026-08-28T05:31:56Z",
+ "prerelease": false,
+ "asset": {
+  "name": "kokoro-read-aloud-bridge-0.1.0.xpi",
+  "url": "https://github.com/pcf566/zotero-kokoro-read-aloud-bridge/releases/download/v0.1.0/kokoro-read-aloud-bridge-0.1.0.xpi",
+  "size": 2795,
+  "sha256": "05247425f71aa4181c6a4649d997cfa512b5f9ac4141c6b63aef5c51b30dce66",
+  "githubAssetId": 533304355,
+  "uploader": "pcf566",
+  "uploadedAt": "2026-08-28T05:31:55Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "kokoro-read-aloud-bridge@pcf566.github.io",
+  "name": "Kokoro Read Aloud Bridge",
+  "version": "0.1.0",
+  "description": "Routes kokoro-* Zotero Read Aloud voices to a loopback Kokoro server.",
+  "homepageUrl": "https://github.com/pcf566/zotero-kokoro-read-aloud-bridge",
+  "updateUrl": "https://raw.githubusercontent.com/pcf566/zotero-kokoro-read-aloud-bridge/main/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 6863,
+   "sha256": "76569ed14552c86c228e52f0fc9885a0d8bd38f394b4a9e2973f36646ec74756"
+  },
+  {
+   "path": "manifest.json",
+   "size": 570,
+   "sha256": "b539f6bf3d4c9799e2a646f8c2fc43692881465f03a893451c9b3e5e937a176b"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-kokoro-read-aloud-bridge",
+   "version": "0.1.0",
+   "sha256": "05247425f71aa4181c6a4649d997cfa512b5f9ac4141c6b63aef5c51b30dce66"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 6863,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 81,
+       "column": 25,
+       "snippet": "let response = await Zotero.HTTP.request(\"GET\", `${this.baseURL}/v1/voices`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 96,
+       "column": 27,
+       "snippet": "let response = await Zotero.HTTP.request(\"POST\", `${this.baseURL}/v1/audio/speech`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 8880,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 3,
+       "column": 23,
+       "snippet": "var DEFAULT_BASE_URL = \"http://127.0.0.1:8880\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/v1/audio/speech",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 96,
+       "column": 27,
+       "snippet": "let response = await Zotero.HTTP.request(\"POST\", `${this.baseURL}/v1/audio/speech`, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr>/v1/voices",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 81,
+       "column": 25,
+       "snippet": "let response = await Zotero.HTTP.request(\"GET\", `${this.baseURL}/v1/voices`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "reader.readAloudKokoro.baseURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 77,
+       "column": 28,
+       "snippet": "return normalizeBaseURL(Zotero.Prefs.get(PREF_NAME) || DEFAULT_BASE_URL);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 115,
+       "column": 9,
+       "snippet": "if (!Zotero.Prefs.get(PREF_NAME)) Zotero.Prefs.set(PREF_NAME, DEFAULT_BASE_URL);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 132,
+       "column": 9,
+       "snippet": "if (!Zotero.Prefs.get(PREF_NAME)) Zotero.Prefs.set(PREF_NAME, DEFAULT_BASE_URL);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 13,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/pcf566/zotero-kokoro-read-aloud-bridge/main/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/pcf566/zotero-kokoro-read-aloud-bridge/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the pcf566 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-kokoro-read-aloud-bridge",
+   "version": "0.1.0",
+   "sha256": "05247425f71aa4181c6a4649d997cfa512b5f9ac4141c6b63aef5c51b30dce66"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "560ab17e02db6fa970738257fddea95f3fde413a9a04af42c75cd5b2960a7f82"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ],
+      "unconfirmed": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-28T05:31:56Z",
+    "lastCommitAt": "2026-08-28T05:31:37Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T06:50:36Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

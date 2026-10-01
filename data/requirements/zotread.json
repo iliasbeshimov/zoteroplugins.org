@@ -1,0 +1,38 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotread",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "An API key for the LLM provider (default DeepSeek); it can be a local Ollama endpoint instead",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek",
+   "OpenAI",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Settings",
+   "quote": "**API key** — your LLM provider's key",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zotread.llm.apiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README Features",
+   "quote": "**Bring your own model** — DeepSeek (default), OpenAI, OpenRouter, local\n  Ollama, or any OpenAI-compatible endpoint",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The default provider is DeepSeek (baseURL https://api.deepseek.com) with apiKey \"\", and the README says \"**API key** — your LLM provider's key\". Ranking can't run by default without a key. The README lists \"local\\n  Ollama\" as an option, so a local model works."
+}

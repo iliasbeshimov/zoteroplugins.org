@@ -1,0 +1,34 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-context-translate",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.contextTranslate.llm.baseUrl\", \"https://api.openai.com/v1\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/context-translate.js:4323",
+   "quote": "baseUrl: \"http://localhost:11434/v1\",",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, 支持的模型服务",
+   "quote": "设置里内置了\nDeepSeek / OpenAI / OpenRouter / Ollama / Claude / 自定义 六个预设。",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Code has `baseUrl: \"http://localhost:11434/v1\",` for an Ollama preset, and the README says \"如果你在本地跑 Ollama，把它配成自定义服务商也算是一种离线方案\". For the key, the default is OpenAI with an empty key, but the dictionary-only mode and the Ollama preset work without one, so unknown is the honest answer."
+}

@@ -1,0 +1,28 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-updateifse",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, install step 2",
+   "quote": "Register at [easyScholar](https://easyscholar.cc/) and log in，copy the secret key at user information, and paste to Green Frog Secretkey InputBox.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/greenfrog.js:2252-2258 (setExtraItems)",
+   "quote": "const secretKey = getPref(\"secretkey\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "A key is needed only for the easyScholar journal-info feature (README: 'Register at easyScholar ... paste to Green Frog Secretkey InputBox'). The README lists many other features that need no key: Extra-field clearing, author and title case tools, journal abbreviations and the toolbox. So the key covers one feature, not the whole plugin, and 'optional' fits better than 'required'. There is no AI feature, so no local model."
+}

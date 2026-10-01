@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-validate",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Semantic Scholar key (extra rate limit) and the optional LLM adjudicator (OpenAI, Anthropic, Gemini keys)",
+  "worksWithout": "Validation against Crossref, OpenAlex, arXiv, PubMed, dblp and the other scholarly databases, which are on by default",
+  "services": [
+   "Semantic Scholar",
+   "OpenAI",
+   "Anthropic",
+   "Google Gemini"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "Quick Start step 2",
+   "quote": "(Optional) Enter your email for Crossref/OpenAlex polite pools, or add API keys for Semantic Scholar and LLM providers.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "defaults/preferences/prefs.js",
+   "quote": "pref(\"extensions.zotero.reference-validator.behavior.use_llm\", false);",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:2105",
+   "quote": "endpoint = \"https://api.anthropic.com/v1/messages\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: \"(Optional) Enter your email for Crossref/OpenAlex polite pools, or add API keys for Semantic Scholar and LLM providers.\" Default pref use_llm is false. Code (bootstrap.js:2098-2112) only hardcodes the OpenAI, Anthropic and Gemini endpoints, with no local or custom endpoint and no ollama or localhost match."
+}

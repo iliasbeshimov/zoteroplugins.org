@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-assistant--1654842532",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "a DeepSeek API key",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "配置说明",
+   "quote": "在使用本插件前，您需要配置大模型的 API Key。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/ai-assistant.js:166",
+   "quote": "let res = await fetch(\"https://api.deepseek.com/chat/completions\", {",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README says 在使用本插件前，您需要配置大模型的 API Key, and the default is DeepSeek. The only network call in the code is the hardcoded fetch(\"https://api.deepseek.com/chat/completions\"), and I found no configurable base URL, Ollama or localhost reference in the script."
+}

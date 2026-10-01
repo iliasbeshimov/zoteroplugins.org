@@ -1,0 +1,313 @@
+{
+ "repo": "RoadToDream/ZotMeta",
+ "slug": "zotmeta",
+ "group": "top",
+ "rank": 81,
+ "name": "ZotMeta",
+ "stars": 207,
+ "downloads": 31285,
+ "createdAt": "2023-09-11T00:08:05Z",
+ "tag": "v2.0",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotmeta-2.0.xpi",
+    "url": "https://github.com/RoadToDream/ZotMeta/releases/download/v2.0/zotmeta-2.0.xpi",
+    "size": 26868,
+    "uploadedAt": "2026-06-11T23:07:26Z",
+    "sha256": "49c2423b7218d9bebfba7890c756ae8b67e9ea649f861fe5c0c844bf01385fc3"
+   },
+   "manifest": {
+    "format": "install.rdf",
+    "target": "zotero",
+    "addonId": "zotmeta@roadtodream.tech",
+    "name": "ZotMeta",
+    "version": "2.0",
+    "description": "Retrieve metadata for articles.",
+    "homepageUrl": "https://github.com/RoadToDream/ZotMeta",
+    "updateUrl": "https://raw.githubusercontent.com/RoadToDream/ZotMeta/master/updates.json",
+    "minVersion": "7.0",
+    "maxVersion": "9.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotmeta",
+     "version": "2.0",
+     "sha256": "49c2423b7218d9bebfba7890c756ae8b67e9ea649f861fe5c0c844bf01385fc3"
+    },
+    "coverage": {
+     "filesTotal": 18,
+     "filesAnalyzed": 13,
+     "filesSkipped": [
+      {
+       "path": "chrome.manifest",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/en-US/zotmeta.properties",
+       "reason": "not-code"
+      },
+      {
+       "path": "install.rdf",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zotmeta.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/utilities.js",
+         "line": 314,
+         "column": 12,
+         "snippet": "fetch(url, request)",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "arxiv.org",
+       "category": "scholarly-api",
+       "provider": "arXiv",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/arxiv.js",
+         "line": 49,
+         "column": 50,
+         "snippet": "var nodes = parent.getElementsByTagNameNS('http://arxiv.org/schemas/atom', localName);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/arxiv.js",
+         "line": 60,
+         "column": 50,
+         "snippet": "var nodes = parent.getElementsByTagNameNS('http://arxiv.org/schemas/atom', localName);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/arxiv.js",
+         "line": 145,
+         "column": 31,
+         "snippet": "\"URL\": \"https://arxiv.org/abs/\" + arxivID,",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/utilities.js",
+         "line": 565,
+         "column": 33,
+         "snippet": "item.setField('url', \"https://arxiv.org/abs/\" + identifiers.arxivID);",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "doi.org",
+       "category": "scholarly-api",
+       "provider": "DOI resolver",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/journal.js",
+         "line": 91,
+         "column": 18,
+         "snippet": "var url = 'https://doi.org/' + doi;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "export.arxiv.org",
+       "category": "scholarly-api",
+       "provider": "arXiv",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/arxiv.js",
+         "line": 109,
+         "column": 18,
+         "snippet": "var url = 'https://export.arxiv.org/api/query?id_list=' + encodeURIComponent(arxivID);",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "link",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "preferences.js",
+         "line": 563,
+         "column": 34,
+         "snippet": "link.setAttribute(\"href\", \"https://github.com/RoadToDream/ZotMeta\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "preferences.js",
+         "line": 567,
+         "column": 33,
+         "snippet": "Zotero.launchURL(\"https://github.com/RoadToDream/ZotMeta\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "preferences.xhtml",
+         "line": 322,
+         "column": 52,
+         "snippet": "<html:a class=\"zotmeta-pref-link\" href=\"https://github.com/RoadToDream/ZotMeta\">RoadToDream/ZotMeta</html:a>",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "openlibrary.org",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/book.js",
+         "line": 61,
+         "column": 18,
+         "snippet": "var url = 'https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:' + isbn;",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/utilities.js",
+        "line": 510,
+        "column": 25,
+        "snippet": "return await Zotero.File.getContentsAsync(cacheFile);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 10,
+        "column": 27,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/RoadToDream/ZotMeta/master/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/RoadToDream/ZotMeta/master/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "scholarly-api": [
+      "arxiv.org",
+      "doi.org",
+      "export.arxiv.org"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

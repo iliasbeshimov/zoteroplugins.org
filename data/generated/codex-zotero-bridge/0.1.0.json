@@ -1,0 +1,392 @@
+{
+ "schemaVersion": 1,
+ "slug": "codex-zotero-bridge",
+ "repo": "guoxin-ink/codex-zotero-bridge",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-07-27T12:40:43Z",
+ "prerelease": false,
+ "asset": {
+  "name": "codex-zotero-bridge-0.1.0.xpi",
+  "url": "https://github.com/GuoXin-Ink/codex-zotero-bridge/releases/download/v0.1.0/codex-zotero-bridge-0.1.0.xpi",
+  "size": 8903,
+  "sha256": "2a34560395a994f12fd60ed53d40cc0259ac7800e27b5986053b5b3416f2b016",
+  "githubAssetId": 491444667,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-07-27T12:40:43Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "codex-zotero-bridge@guoxin-ink.github.io",
+  "name": "Codex Zotero Bridge",
+  "version": "0.1.0",
+  "description": "A local, permission-gated bridge that lets Codex inspect and update Zotero.",
+  "homepageUrl": "https://github.com/GuoXin-Ink/codex-zotero-bridge",
+  "updateUrl": "https://raw.githubusercontent.com/GuoXin-Ink/codex-zotero-bridge/main/updates.json",
+  "strictMinVersion": "8.0.1",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 35557,
+   "sha256": "5c854b751d352dcd9f132d27b7d0700e729337582b31901c5468911825023453"
+  },
+  {
+   "path": "manifest.json",
+   "size": 556,
+   "sha256": "029cb9f691fb2574bde9532abf420eee345341b0ef24491502bb8de1e6686d41"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "codex-zotero-bridge",
+   "version": "0.1.0",
+   "sha256": "2a34560395a994f12fd60ed53d40cc0259ac7800e27b5986053b5b3416f2b016"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 35557,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 226,
+      "column": 23,
+      "snippet": "Components.classes[\"@mozilla.org/widget/clipboardhelper;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 227,
+      "column": 18,
+      "snippet": ".getService(Components.interfaces.nsIClipboardHelper)",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 85,
+      "column": 14,
+      "snippet": "token = Services.prefs.getStringPref(this.PREF_TOKEN, \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 86,
+      "column": 21,
+      "snippet": "tokenVersion = Services.prefs.getIntPref(this.PREF_TOKEN_VERSION, 0);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 95,
+      "column": 11,
+      "snippet": "return Services.prefs.getStringPref(this.PREF_TOKEN, \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 128,
+      "column": 4,
+      "snippet": "Services.prefs.setStringPref(this.PREF_TOKEN, token);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 129,
+      "column": 4,
+      "snippet": "Services.prefs.setIntPref(this.PREF_TOKEN_VERSION, this.TOKEN_VERSION);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.codexZoteroBridge.v1.token",
+      "extensions.codexZoteroBridge.v1.tokenVersion"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 321,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[path] = endpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/codex-zotero-bridge/v1/op",
+      "/codex-zotero-bridge/v1/pair",
+      "/codex-zotero-bridge/v1/status"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/GuoXin-Ink/codex-zotero-bridge/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/GuoXin-Ink/codex-zotero-bridge/main/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 442,
+      "column": 18,
+      "snippet": "this.register(`${this.ROOT}/op`, OperationEndpoint);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 625,
+      "column": 19,
+      "snippet": "return this.addToCollection(input, libraryID, dryRun);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/codex-zotero-bridge/v1/op"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "codex-zotero-bridge",
+   "version": "0.1.0",
+   "sha256": "2a34560395a994f12fd60ed53d40cc0259ac7800e27b5986053b5b3416f2b016"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "006da27f64848ecb37d811cd142a44f193ee3ca07f51663d02f5c575ccfc2598"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-27T12:40:43Z",
+    "lastCommitAt": "2026-08-20T15:24:57Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T05:42:07Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 5,
+    "dialogs": 7
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

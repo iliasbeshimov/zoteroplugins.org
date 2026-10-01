@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-plugin-paper-reading",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "An API key from the chosen AI provider (DeepSeek, OpenAI, Claude, Qwen or custom); the plugin refuses to ask without one",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek",
+   "OpenAI",
+   "Anthropic",
+   "Alibaba Qwen (DashScope)"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "Settings section",
+   "quote": "API Key：你的 provider API key",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:3016",
+   "quote": "if (!profile.apiKey) {",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "defaults/preferences/ai-read.js",
+   "quote": "pref(\"extensions.zotero.aiRead.apiKey\", \"\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README settings: 'API Key：你的 provider API key'; default provider is deepseek with empty apiKey, and code throws 'Enter an API key before refreshing models.' A custom OpenAI-compatible endpoint is supported, but no Ollama/localhost/local-model mention in pack or code, so local use is unsettled."
+}

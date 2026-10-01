@@ -1,0 +1,232 @@
+{
+ "repo": "iShareStuff/ZoteroTheme",
+ "slug": "zoterotheme",
+ "group": "top",
+ "rank": 78,
+ "name": "Zotero Theme",
+ "stars": 134,
+ "downloads": 33685,
+ "createdAt": "2022-10-16T16:22:22Z",
+ "tag": "0.0.9",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-theme.xpi",
+    "url": "https://github.com/iShareStuff/ZoteroTheme/releases/download/0.0.9/zotero-theme.xpi",
+    "size": 13679,
+    "uploadedAt": "2022-10-16T16:31:22Z",
+    "sha256": "dec0b63ee20f90f073700f721435bef85ad80771de69f4ca58cd6dea674e4044"
+   },
+   "manifest": {
+    "format": "install.rdf",
+    "target": "zotero",
+    "addonId": "ZoteroTheme@iShareStuff.com",
+    "name": "Zotero Theme",
+    "version": "0.0.9",
+    "description": "Zotero Themes",
+    "homepageUrl": "https://github.com/iShareStuff/ZoteroTheme#readme",
+    "updateUrl": "https://raw.githubusercontent.com/iShareStuff/ZoteroTheme/master/update.rdf",
+    "minVersion": "5.0",
+    "maxVersion": "*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zoterotheme",
+     "version": "0.0.9",
+     "sha256": "dec0b63ee20f90f073700f721435bef85ad80771de69f4ca58cd6dea674e4044"
+    },
+    "coverage": {
+     "filesTotal": 9,
+     "filesAnalyzed": 3,
+     "filesSkipped": [
+      {
+       "path": "chrome.manifest",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/en-US/overlay.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/zh-CN/overlay.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/skin/default/ZoteroTheme/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/skin/default/ZoteroTheme/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "install.rdf",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "minified",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [
+      "chrome/content/scripts/index.js"
+     ],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [],
+     "hosts": [
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "link",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/preferences.xul",
+         "line": 59,
+         "column": 103,
+         "snippet": "value=\"&zotero.ZoteroTheme.help.feedback.label;\" class=\"zotero-text-link\" href=\"https://github.com/iShareStuff/ZoteroTheme#readme\" />",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 7,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/index.js",
+        "line": 50,
+        "column": 25,
+        "snippet": "var chromePath = OS.Path.join(profile, \"chrome\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/index.js",
+        "line": 53,
+        "column": 24,
+        "snippet": "if (!(yield OS.File.exists(path))) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/index.js",
+        "line": 54,
+        "column": 14,
+        "snippet": "OS.File.makeDir(path, {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/index.js",
+        "line": 81,
+        "column": 14,
+        "snippet": "yield Zotero.File.putContentsAsync(csspath, data_css);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/index.js",
+        "line": 84,
+        "column": 10,
+        "snippet": "OS.File.removeDir(chromePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/index.js",
+        "line": 223,
+        "column": 25,
+        "snippet": "var chromePath = OS.Path.join(profile, \"chrome\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/index.js",
+        "line": 224,
+        "column": 8,
+        "snippet": "OS.File.removeDir(chromePath);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "zotero-data-dir",
+       "apis": [
+        "OS.File",
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 1,
+        "column": 0,
+        "snippet": "(whitespace)",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/iShareStuff/ZoteroTheme/master/update.rdf"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "no-network-found",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NONE"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

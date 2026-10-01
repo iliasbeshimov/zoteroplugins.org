@@ -1,0 +1,31 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-refolio",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "EasyScholar secret key and Garden API key for journal rank labels",
+  "worksWithout": "Crossref and Semantic Scholar based features, graphs and library tools",
+  "services": [
+   "EasyScholar",
+   "Garden (MagicZotero)"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.stylepersonal.easyscholar.secretKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/refolio.js:25176",
+   "quote": "const api = `https://api.semanticscholar.org/graph/v1/paper/${DOI}?fields=tldr`;",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The EasyScholar and Garden keys are only for journal rank labels (prefs.js secretKey, README step 4), and the other features work without them. The pack has no evidence on local AI either way. The Semantic Scholar tldr endpoint is a remote service, and no quoted line settles it, so unknown is safer than no."
+}

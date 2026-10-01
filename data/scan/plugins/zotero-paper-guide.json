@@ -1,0 +1,286 @@
+{
+ "repo": "luluyang928/zotero-paper-guide",
+ "slug": "zotero-paper-guide",
+ "group": "sample-2026",
+ "rank": 755,
+ "name": "文献导读 / Paper Guide",
+ "stars": 7,
+ "downloads": 12,
+ "createdAt": "2026-09-21T12:44:15Z",
+ "tag": "v0.4.6",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "paper-guide-0.4.6.xpi",
+    "url": "https://github.com/luluyang928/zotero-paper-guide/releases/download/v0.4.6/paper-guide-0.4.6.xpi",
+    "size": 21576,
+    "uploadedAt": "2026-09-21T13:05:15Z",
+    "sha256": "987fd8e93071ed5d63fb5804c0d53302a172ed893439391039552ee5e2512947"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "paper-guide@luluyang928.github.io",
+    "name": "文献导读 / Paper Guide",
+    "version": "0.4.6",
+    "description": "在 Zotero 中读取当前 PDF，用 OpenAI 或 DeepSeek 生成带原文依据的文献导读，并导出为 Markdown 笔记。",
+    "homepageUrl": null,
+    "updateUrl": "https://paper-guide.invalid/updates.json",
+    "minVersion": "9.0",
+    "maxVersion": "10.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-paper-guide",
+     "version": "0.4.6",
+     "sha256": "987fd8e93071ed5d63fb5804c0d53302a172ed893439391039552ee5e2512947"
+    },
+    "coverage": {
+     "filesTotal": 5,
+     "filesAnalyzed": 3,
+     "filesSkipped": [
+      {
+       "path": "content/panel.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 384,
+         "column": 18,
+         "snippet": "xhr = await Zotero.HTTP.request('POST', config.endpoint, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.deepseek.com",
+       "category": "llm-provider",
+       "provider": "DeepSeek",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 14,
+         "column": 16,
+         "snippet": "endpoint: 'https://api.deepseek.com/chat/completions',",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 9,
+         "column": 16,
+         "snippet": "endpoint: 'https://api.openai.com/v1/chat/completions',",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 2,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 267,
+        "column": 22,
+        "snippet": "const helper = Cc['@mozilla.org/widget/clipboardhelper;1'].getService(Ci.nsIClipboardHelper);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 267,
+        "column": 74,
+        "snippet": "const helper = Cc['@mozilla.org/widget/clipboardhelper;1'].getService(Ci.nsIClipboardHelper);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 285,
+        "column": 10,
+        "snippet": "await Zotero.File.putContentsAsync(path, this.buildMarkdown(paper, result));",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "login-manager",
+      "occurrences": 4,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 190,
+        "column": 11,
+        "snippet": "return Services.logins.findLogins(this.loginHost, null, realm)[0] || null;",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 206,
+        "column": 13,
+        "snippet": "if (old) Services.logins.modifyLogin(old, login);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 207,
+        "column": 15,
+        "snippet": "else await Services.logins.addLoginAsync(login);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 213,
+        "column": 13,
+        "snippet": "if (old) Services.logins.removeLogin(old);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "nsILoginManager"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 10,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://paper-guide.invalid/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://paper-guide.invalid/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.deepseek.com",
+      "api.openai.com"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "login-manager",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

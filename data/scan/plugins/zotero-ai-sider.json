@@ -1,0 +1,288 @@
+{
+ "repo": "Chenglinbo/zotero-AI-sider",
+ "slug": "zotero-ai-sider",
+ "group": "sample-2026",
+ "rank": 933,
+ "name": "Zotero AI Sider",
+ "stars": 2,
+ "downloads": 6,
+ "createdAt": "2026-03-09T06:00:57Z",
+ "tag": "v1.0.2",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-ai-sider.xpi",
+    "url": "https://github.com/Chenglinbo/zotero-AI-sider/releases/download/v1.0.2/zotero-ai-sider.xpi",
+    "size": 60305,
+    "uploadedAt": "2026-03-09T06:16:17Z",
+    "sha256": "c061f06405529b57c0f99885f3fc5af74c7c6834666513b6ab31eac16a2adbc6"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero-gemini@cheng",
+    "name": "Zotero AI Sider",
+    "version": "1.0.2",
+    "description": "AI sidebar for Zotero with Gemini and ChatGPT support",
+    "homepageUrl": null,
+    "updateUrl": "https://github.com/Chenglinbo/zotero-AI-sider/releases/download/release/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "8.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-ai-sider",
+     "version": "1.0.2",
+     "sha256": "c061f06405529b57c0f99885f3fc5af74c7c6834666513b6ab31eac16a2adbc6"
+    },
+    "coverage": {
+     "filesTotal": 11,
+     "filesAnalyzed": 6,
+     "filesSkipped": [
+      {
+       "path": "chrome.manifest",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/zh-CN/preferences.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/zoterogemini.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [],
+     "hosts": [
+      {
+       "host": "chatgpt.com",
+       "category": "llm-provider",
+       "provider": "OpenAI ChatGPT",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zoterogemini.js",
+         "line": 296,
+         "column": 11,
+         "snippet": "url: \"https://chatgpt.com\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "gemini.google.com",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zoterogemini.js",
+         "line": 282,
+         "column": 11,
+         "snippet": "url: \"https://gemini.google.com\",",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 5,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zoterogemini.js",
+        "line": 1003,
+        "column": 22,
+        "snippet": "const clip = Cc[\"@mozilla.org/widget/clipboard;1\"].getService(Ci.nsIClipboard);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoterogemini.js",
+        "line": 1003,
+        "column": 68,
+        "snippet": "const clip = Cc[\"@mozilla.org/widget/clipboard;1\"].getService(Ci.nsIClipboard);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoterogemini.js",
+        "line": 2750,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoterogemini.js",
+        "line": 2750,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoterogemini.js",
+        "line": 2796,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 4,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zoterogemini.js",
+        "line": 992,
+        "column": 22,
+        "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoterogemini.js",
+        "line": 992,
+        "column": 66,
+        "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoterogemini.js",
+        "line": 2785,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoterogemini.js",
+        "line": 2785,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 16,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/Chenglinbo/zotero-AI-sider/releases/download/release/update.json\"",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/Chenglinbo/zotero-AI-sider/releases/download/release/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "chatgpt.com"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

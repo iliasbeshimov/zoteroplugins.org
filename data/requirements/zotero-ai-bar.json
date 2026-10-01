@@ -1,0 +1,33 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-bar",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "an API key for an AI provider (default OpenAI)",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "Anthropic",
+   "Google Gemini",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "Usage",
+   "quote": "3. Add a provider, enter your API Key and select a model.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.${addonRef}.llm.baseURL\", \"https://api.openai.com/v1\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The README says \"Add a provider, enter your API Key and select a model\", and the default baseURL is OpenAI. I found no Ollama, localhost or LM Studio reference in the pack or the script, so local use is unknown."
+}

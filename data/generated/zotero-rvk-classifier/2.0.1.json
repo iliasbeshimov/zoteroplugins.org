@@ -1,0 +1,756 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-rvk-classifier",
+ "repo": "nbtkmy/zotero-rvk-classifier",
+ "version": "2.0.1",
+ "tag": "v2.0.1",
+ "releaseAuthor": "NbtKmy",
+ "publishedAt": "2026-05-12T13:07:15Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-rvk-classifier-2.0.1.xpi",
+  "url": "https://github.com/NbtKmy/zotero-rvk-classifier/releases/download/v2.0.1/zotero-rvk-classifier-2.0.1.xpi",
+  "size": 14774,
+  "sha256": "cdb8cb39112f8e9a882a5a49da9d86c7bce48a207b3d31172a1e76ee65606834",
+  "githubAssetId": 554919942,
+  "uploader": "NbtKmy",
+  "uploadedAt": "2026-09-10T11:56:23Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-rvk-classifier@nbtkmy.org",
+  "name": "RVK Classifier",
+  "version": "2.0.1",
+  "description": "Predict RVK classification notations for books using an LLM",
+  "updateUrl": "https://raw.githubusercontent.com/NbtKmy/zotero-rvk-classifier/main/update.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "addon/content/icons/rvk-sidenav.svg",
+   "size": 179,
+   "sha256": "2b105dcb46ad1fef6c86b84f64744099e7049286ee5700c07e7d9a52c13ddb64"
+  },
+  {
+   "path": "addon/content/icons/rvk.svg",
+   "size": 720,
+   "sha256": "0d4db3bff807714d82137a6024ca89f2d7e8038c622565767bbe2f7b2be735ec"
+  },
+  {
+   "path": "addon/content/index.js",
+   "size": 24466,
+   "sha256": "ee739bf59a57c17aa0ee15506bc484531fcc881d6d64acea8463e69b90cf86a3"
+  },
+  {
+   "path": "addon/content/prefs.html",
+   "size": 1917,
+   "sha256": "7a56ceaeaa376b3d1c7f8ba5408a04369703c59b469e99c8b41887599a501148"
+  },
+  {
+   "path": "addon/content/prefs.js",
+   "size": 1792,
+   "sha256": "f0f8b72506e464474c599e3b77810e446606a40a5398c2fe19146f42110fb9e3"
+  },
+  {
+   "path": "addon/content/prefs.xhtml",
+   "size": 4181,
+   "sha256": "ed7aee9b8e3d52f7081fb1b0f45e06e4dcd274a04aef9acdd54180b1c9ad2c1a"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 1780,
+   "sha256": "567f537d008aef59415df31cd26fea9bc2af2180f4afc11977a2e0ef6a0110d3"
+  },
+  {
+   "path": "locale/en-US/zotero-rvk-classifier.ftl",
+   "size": 350,
+   "sha256": "9502a3d0467c3d7fe57ff54c6ce2f8d4ca57f12404f5977f3241cef54b000fdb"
+  },
+  {
+   "path": "manifest.json",
+   "size": 450,
+   "sha256": "c23f978721db32403cd3baea3d4347d2aaf08870e2f6774a9bfff927ad518bc1"
+  },
+  {
+   "path": "prefs.js",
+   "size": 272,
+   "sha256": "e60d8af819b5cf8bc41edc01412bc7ffa318a83d042b5da96dfab25be1dbb62d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-rvk-classifier",
+   "version": "2.0.1",
+   "sha256": "cdb8cb39112f8e9a882a5a49da9d86c7bce48a207b3d31172a1e76ee65606834"
+  },
+  "coverage": {
+   "filesTotal": 10,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "addon/content/icons/rvk-sidenav.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "addon/content/icons/rvk.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/zotero-rvk-classifier.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 34408,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/prefs.js",
+       "line": 36,
+       "column": 24,
+       "snippet": "const res = await fetch(`${baseUrl}/models`, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 47,
+       "column": 27,
+       "snippet": "const resp = await Zotero.HTTP.request(\"GET\", url, { timeout: 5e3 });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 118,
+       "column": 25,
+       "snippet": "const resp = await Zotero.HTTP.request(\"GET\", url, { timeout: 8e3 });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 132,
+       "column": 25,
+       "snippet": "const resp = await Zotero.HTTP.request(\"GET\", url, { timeout: 8e3 });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 210,
+       "column": 23,
+       "snippet": "const resp = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "bvbr.bib-bvb.de",
+     "port": 5661,
+     "category": "scholarly-api",
+     "provider": "Bibliotheksverbund Bayern",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 13,
+       "column": 12,
+       "snippet": "base: \"http://bvbr.bib-bvb.de:5661/bvb01sru?version=1.1&recordSchema=marcxml&operation=searchRetrieve\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "eu04.alma.exlibrisgroup.com",
+     "category": "scholarly-api",
+     "provider": "Ex Libris library catalogue",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 23,
+       "column": 12,
+       "snippet": "base: \"https://eu04.alma.exlibrisgroup.com/view/sru/49HBZ_NETWORK?version=1.1&operation=searchRetrieve&recordSchema=marcxml\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "localhost",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 5,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 425,
+       "column": 17,
+       "snippet": "baseUrl: Zotero.Prefs.get(`${PREF_BASE}.ai.baseUrl`, true) || \"http://localhost:11434/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 425,
+       "column": 70,
+       "snippet": "baseUrl: Zotero.Prefs.get(`${PREF_BASE}.ai.baseUrl`, true) || \"http://localhost:11434/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "addon/content/prefs.js",
+       "line": 24,
+       "column": 9,
+       "snippet": "|| \"http://localhost:11434/v1\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-rvk-classifier.ai.baseUrl\", \"http://localhost:11434/v1\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 52,
+       "snippet": "pref(\"extensions.zotero-rvk-classifier.ai.baseUrl\", \"http://localhost:11434/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "rvk.uni-regensburg.de",
+     "category": "scholarly-api",
+     "provider": "RVK classification",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 79,
+       "column": 22,
+       "snippet": "var RVK_NODE_BASE = \"https://rvk.uni-regensburg.de/api_neu/json/node/\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 80,
+       "column": 24,
+       "snippet": "var RVK_SEARCH_BASE = \"https://rvk.uni-regensburg.de/api/xml/nodes/\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "services.dnb.de",
+     "category": "scholarly-api",
+     "provider": "Deutsche Nationalbibliothek",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 8,
+       "column": 12,
+       "snippet": "base: \"https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&recordSchema=MARC21-xml\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "services.obvsg.at",
+     "category": "scholarly-api",
+     "provider": "Austrian Library Network (OBV)",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 28,
+       "column": 12,
+       "snippet": "base: \"https://services.obvsg.at/sru/OBV-LIT?version=1.1&operation=searchRetrieve&recordSchema=marcxml\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "sru.hebis.de",
+     "category": "scholarly-api",
+     "provider": "HeBIS library network",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 38,
+       "column": 12,
+       "snippet": "base: \"http://sru.hebis.de/sru/DB=2.1?version=1.1&operation=searchRetrieve&recordSchema=marc21&startRecord=1&recordPacking=xml\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "sru.k10plus.de",
+     "category": "scholarly-api",
+     "provider": "K10plus union catalogue (GBV/SWB)",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 33,
+       "column": 12,
+       "snippet": "base: \"https://sru.k10plus.de/opac-de-627?version=1.1&operation=searchRetrieve&recordSchema=marcxml\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "swisscovery.slsp.ch",
+     "category": "scholarly-api",
+     "provider": "swisscovery (SLSP)",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 18,
+       "column": 12,
+       "snippet": "base: \"https://swisscovery.slsp.ch/view/sru/41SLSP_NETWORK?version=1.2&operation=searchRetrieve&recordSchema=marcxml\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/chat/completions",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 210,
+       "column": 23,
+       "snippet": "const resp = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr>/models",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/prefs.js",
+       "line": 36,
+       "column": 24,
+       "snippet": "const res = await fetch(`${baseUrl}/models`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "base-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/prefs.html",
+       "line": 61,
+       "column": 4,
+       "snippet": "<input type=\"text\" id=\"base-url\" placeholder=\"http://localhost:11434/v1\" />",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero-rvk-classifier.ai.baseUrl",
+     "defaultValue": "http://localhost:11434/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/index.js",
+       "line": 425,
+       "column": 17,
+       "snippet": "baseUrl: Zotero.Prefs.get(`${PREF_BASE}.ai.baseUrl`, true) || \"http://localhost:11434/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "addon/content/prefs.js",
+       "line": 23,
+       "column": 9,
+       "snippet": "|| Zotero.Prefs.get(`${this.PREF_BASE}.ai.baseUrl`, true)",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "addon/content/prefs.xhtml",
+       "line": 13,
+       "column": 10,
+       "snippet": "preference=\"extensions.zotero-rvk-classifier.ai.baseUrl\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-rvk-classifier.ai.baseUrl\", \"http://localhost:11434/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "rvk-base-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "addon/content/prefs.xhtml",
+       "line": 11,
+       "column": 8,
+       "snippet": "<html:input id=\"rvk-base-url\" type=\"text\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "addon/content/index.js",
+      "line": 427,
+      "column": 16,
+      "snippet": "apiKey: Zotero.Prefs.get(`${PREF_BASE}.ai.apiKey`, true) || void 0",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "addon/content/prefs.js",
+      "line": 26,
+      "column": 9,
+      "snippet": "|| Zotero.Prefs.get(`${this.PREF_BASE}.ai.apiKey`, true)",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 3,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-rvk-classifier.ai.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero-rvk-classifier.ai.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/NbtKmy/zotero-rvk-classifier/main/update.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/NbtKmy/zotero-rvk-classifier/main/update.json"
+    }
+   },
+   {
+    "id": "sends-unencrypted",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "addon/content/index.js",
+      "line": 13,
+      "column": 12,
+      "snippet": "base: \"http://bvbr.bib-bvb.de:5661/bvb01sru?version=1.1&recordSchema=marcxml&operation=searchRetrieve\"",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "addon/content/index.js",
+      "line": 38,
+      "column": 12,
+      "snippet": "base: \"http://sru.hebis.de/sru/DB=2.1?version=1.1&operation=searchRetrieve&recordSchema=marc21&startRecord=1&recordPacking=xml\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "unencrypted": [
+      {
+       "host": "bvbr.bib-bvb.de",
+       "sends": [
+        "identifiers"
+       ]
+      },
+      {
+       "host": "sru.hebis.de",
+       "sends": [
+        "identifiers"
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the NbtKmy account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-rvk-classifier",
+   "version": "2.0.1",
+   "sha256": "cdb8cb39112f8e9a882a5a49da9d86c7bce48a207b3d31172a1e76ee65606834"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "e68fdb59b35fb69db52f2c7b0b01f60df5948913d6cf80166d7a20491aa92dc7"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "bvbr.bib-bvb.de",
+       "eu04.alma.exlibrisgroup.com",
+       "rvk.uni-regensburg.de",
+       "services.dnb.de",
+       "services.obvsg.at",
+       "sru.hebis.de",
+       "sru.k10plus.de",
+       "swisscovery.slsp.ch"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "sends-unencrypted",
+      "label": "Sends lookups unencrypted (http://) to bvbr.bib-bvb.de and sru.hebis.de",
+      "concern": "low",
+      "detail": "Only public identifiers, titles or search terms, such as a DOI or an ISBN; anyone on the network in between can read it"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-05-12T13:07:15Z",
+    "lastCommitAt": "2026-09-10T11:59:21Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:16:18Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

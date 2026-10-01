@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-gpt-pro",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "An OpenAI (or compatible) secret key for the OpenAI route",
+  "worksWithout": "Falls back to the keyless chatbot.theb.ai service when no secretKey is set",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/index.js (release file)",
+   "quote": "async function getGPTResponse(e){return Zotero.Prefs.get(`${config.addonRef}.secretKey`)?await getGPTResponseByOpenAI(e):await getGPTResponseBy(requestArgs[1],e)}",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/index.js:1",
+   "quote": "{api:\"https://chatbot.theb.ai/api/chat-process\",headers:{},body:",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Code quote \"return Zotero.Prefs.get(`${config.addonRef}.secretKey`)?await getGPTResponseByOpenAI(e):await getGPTResponseBy(requestArgs[1],e)\" is in the pack, and the pack lists chatbot.theb.ai as a keyless fallback. The API base is configurable, but nothing names a local model."
+}

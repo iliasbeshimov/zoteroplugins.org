@@ -1,0 +1,254 @@
+{
+ "repo": "argenos/zotero-mdnotes",
+ "slug": "zotero-mdnotes",
+ "group": "top",
+ "rank": 47,
+ "name": "Mdnotes for Zotero",
+ "stars": 1399,
+ "downloads": 114263,
+ "createdAt": "2020-07-28T13:11:37Z",
+ "tag": "0.2.3",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "mdnotes-0.2.3.xpi",
+    "url": "https://github.com/argenos/zotero-mdnotes/releases/download/0.2.3/mdnotes-0.2.3.xpi",
+    "size": 64537,
+    "uploadedAt": "2022-05-03T13:32:54Z",
+    "sha256": "64892fc1af54ac377325805243a029bbf630756cd7289f4cd3a85f60e7d68917"
+   },
+   "manifest": {
+    "format": "install.rdf",
+    "target": "zotero",
+    "addonId": "mdnotes@mdnotes.github.io",
+    "name": "Mdnotes for Zotero",
+    "version": "0.2.3",
+    "description": "Export Zotero items and notes to markdown",
+    "homepageUrl": "https://github.com/argenos/zotero-mdnotes",
+    "updateUrl": "https://raw.githubusercontent.com/argenos/zotero-mdnotes/master/update.rdf",
+    "minVersion": "5.0.79",
+    "maxVersion": "6.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-mdnotes",
+     "version": "0.2.3",
+     "sha256": "64892fc1af54ac377325805243a029bbf630756cd7289f4cd3a85f60e7d68917"
+    },
+    "coverage": {
+     "filesTotal": 12,
+     "filesAnalyzed": 5,
+     "filesSkipped": [
+      {
+       "path": "chrome.manifest",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/markdown-utils.js.LICENSE.txt",
+       "reason": "not-code"
+      },
+      {
+       "path": "install.rdf",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/mdnotes.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/mdnotes.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "skin/default/overlay.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "update.rdf",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "minified",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [
+      "content/markdown-utils.js"
+     ],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [],
+     "hosts": [],
+     "dynamicUrls": [
+      {
+       "pattern": "obsidian://open?vault=<expr>&file=",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/mdnotes.js",
+         "line": 741,
+         "column": 17,
+         "snippet": "let uriStart = `obsidian://open?vault=${getPref(\"obsidian.vault\")}&file=`;",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 13,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/mdnotes.js",
+        "line": 280,
+        "column": 17,
+        "snippet": "let fileLink = Zotero.File.pathToFileURI(attachment.getFilePath());",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/mdnotes.js",
+        "line": 414,
+        "column": 13,
+        "snippet": "fileName = Zotero.File.getValidFileName(fileName);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/mdnotes.js",
+        "line": 491,
+        "column": 21,
+        "snippet": "template = await Zotero.File.getContentsAsync(",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/mdnotes.js",
+        "line": 502,
+        "column": 8,
+        "snippet": "await Zotero.File.iterateDirectory(",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/mdnotes.js",
+        "line": 737,
+        "column": 9,
+        "snippet": "return OS.Path.join(OS.Path.normalize(path), `${filename}.md`);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/mdnotes.js",
+        "line": 737,
+        "column": 22,
+        "snippet": "return OS.Path.join(OS.Path.normalize(path), `${filename}.md`);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/mdnotes.js",
+        "line": 751,
+        "column": 24,
+        "snippet": "let encodedFileName = Zotero.File.encodeFilePath(fileWithPath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/mdnotes.js",
+        "line": 793,
+        "column": 17,
+        "snippet": "let fileName = OS.Path.basename(outputFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/mdnotes.js",
+        "line": 944,
+        "column": 10,
+        "snippet": "Zotero.File.putContentsAsync(outputFile, file.content);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/mdnotes.js",
+        "line": 1060,
+        "column": 10,
+        "snippet": "Zotero.File.putContentsAsync(outputFile, file.content);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "user-chosen",
+       "apis": [
+        "OS.File",
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 1,
+        "column": 0,
+        "snippet": "(whitespace)",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/argenos/zotero-mdnotes/master/update.rdf"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "no-network-found",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NONE"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

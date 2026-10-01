@@ -1,0 +1,33 @@
+{
+ "schemaVersion": 1,
+ "slug": "codex-bilingual-reader-for-zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Either a local Codex CLI login (default backend) or an API key for OpenAI, DeepSeek or another provider",
+  "worksWithout": "",
+  "services": [
+   "OpenAI (Codex CLI login or API key)",
+   "DeepSeek",
+   "OpenRouter",
+   "Alibaba Qwen (DashScope)"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Known limitations",
+   "quote": "either a valid Codex CLI login or a working OpenAI-compatible API configuration",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/prefsPane-init.js:39",
+   "quote": "ollama: { url: \"http://127.0.0.1:11434/v1\", models: [\"qwen2.5:14b\", \"llama3.3\", \"deepseek-r1\"] },",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The default backend is \"cli\" and needs \"either a valid Codex CLI login or a working OpenAI-compatible API configuration\". The API key pref defaults to empty. The code has an Ollama preset, `ollama: { url: \"http://127.0.0.1:11434/v1\", ...`, so a local model is supported."
+}

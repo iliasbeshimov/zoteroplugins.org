@@ -1,0 +1,380 @@
+{
+ "schemaVersion": 1,
+ "slug": "search-works-for-zotero",
+ "repo": "minhhaduong/search-works-for-zotero",
+ "version": "0.4.10",
+ "tag": "v0.4.10",
+ "releaseAuthor": "MinhHaDuong",
+ "publishedAt": "2026-09-14T13:19:37Z",
+ "prerelease": false,
+ "asset": {
+  "name": "sdt-pack-sitter-0.4.10.xpi",
+  "url": "https://github.com/MinhHaDuong/search-works-for-zotero/releases/download/v0.4.10/sdt-pack-sitter-0.4.10.xpi",
+  "size": 78871,
+  "sha256": "4569249e6c7bc338d213969e340ebf097349d1ad33294369c22b30e2d22a961b",
+  "githubAssetId": 563438652,
+  "uploader": "MinhHaDuong",
+  "uploadedAt": "2026-09-14T13:19:36Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "sdt-pack-sitter@search-works-for-zotero.invalid",
+  "name": "SDT Pack Sitter (experimental)",
+  "version": "0.4.10",
+  "description": "Warm native Zotero SDT packs, one attachment at a time; a disposable on-disk cache carries pack-freshness and duration observations across sessions, never an active-job or failure ledger. A failed document is suppressed for the session and asked again on the next activation. Indexing is asked about once, then held by a persisted on/off switch in the add-on's own window, which stops admissions and lets the file under way finish. State transitions go to Zotero's debug output and a volatile in-session ring.",
+  "homepageUrl": "https://github.com/MinhHaDuong/search-works-for-zotero",
+  "updateUrl": "https://raw.githubusercontent.com/MinhHaDuong/search-works-for-zotero/main/plugins/sdt-sitter/update.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 202669,
+   "sha256": "2bd38564c35acc86986ebafbb933e271bcbb17a5429f59558e9c2cf1fd94109c"
+  },
+  {
+   "path": "manifest.json",
+   "size": 1040,
+   "sha256": "7df7d50ab70144c06d7c97ec50c64653764babc23ed3bcdfefeb920a44512d3a"
+  },
+  {
+   "path": "scheduler.js",
+   "size": 26234,
+   "sha256": "dae76834e764f02c011cc9a1e156733ff749178fcb30b61a0c6725da306c5f49"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "search-works-for-zotero",
+   "version": "0.4.10",
+   "sha256": "4569249e6c7bc338d213969e340ebf097349d1ad33294369c22b30e2d22a961b"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 228903,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1891,
+      "column": 8,
+      "snippet": "try { Zotero.Utilities.Internal.copyTextToClipboard(text); return true; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1894,
+      "column": 7,
+      "snippet": "Cc['@mozilla.org/widget/clipboardhelper;1'].getService(Ci.nsIClipboardHelper).copyString(text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1894,
+      "column": 59,
+      "snippet": "Cc['@mozilla.org/widget/clipboardhelper;1'].getService(Ci.nsIClipboardHelper).copyString(text);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 13,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 235,
+      "column": 21,
+      "snippet": "try { head = await IOUtils.read(path, { offset: 0, maxBytes: SDT_MAGIC_BYTES }); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1858,
+      "column": 4,
+      "snippet": "Zotero.File.putContents(Zotero.File.pathToFile(path), text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1863,
+      "column": 8,
+      "snippet": "if (Zotero.File.getContents(path) !== text) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2733,
+      "column": 30,
+      "snippet": "for (const line of (await IOUtils.readUTF8(cachePath)).split('\\n')) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2768,
+      "column": 14,
+      "snippet": "await IOUtils.write(cachePath, bytes, compact ? { tmpPath: `${cachePath}.tmp` } : { mode: 'append' });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2985,
+      "column": 25,
+      "snippet": "try { source = await IOUtils.stat(sourcePath); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 3021,
+      "column": 23,
+      "snippet": "try { stat = await IOUtils.stat(path); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 3029,
+      "column": 30,
+      "snippet": "const bytes = await IOUtils.read(path, { offset, maxBytes: length });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 3096,
+      "column": 23,
+      "snippet": "const memory = Zotero.File.getContents('/proc/meminfo');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 3105,
+      "column": 28,
+      "snippet": "const load = Number(Zotero.File.getContents('/proc/loadavg').split(' ')[0]);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/MinhHaDuong/search-works-for-zotero/main/plugins/sdt-sitter/update.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/MinhHaDuong/search-works-for-zotero/main/plugins/sdt-sitter/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the MinhHaDuong account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "search-works-for-zotero",
+   "version": "0.4.10",
+   "sha256": "4569249e6c7bc338d213969e340ebf097349d1ad33294369c22b30e2d22a961b"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "ac3865e5af0a6c72bd0dbdcf6e5f5351f5839ad13c590e630b8e569225805939"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address has no version for Zotero 10"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-14T13:19:37Z",
+    "lastCommitAt": "2026-09-24T16:30:37Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:25:20Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 1,
+    "dialogs": 1
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

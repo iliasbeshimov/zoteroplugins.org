@@ -1,0 +1,351 @@
+{
+ "schemaVersion": 1,
+ "slug": "sumno-zotero",
+ "repo": "sumno-app/sumno-zotero",
+ "version": "0.1.5",
+ "tag": "v0.1.5",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-05-14T21:21:52Z",
+ "prerelease": false,
+ "asset": {
+  "name": "sumno-zotero-0.1.5.xpi",
+  "url": "https://github.com/sumno-app/sumno-zotero/releases/download/v0.1.5/sumno-zotero-0.1.5.xpi",
+  "size": 4740,
+  "sha256": "cb45a4faf36a0bd122964d498b514d9828bd4a32ef56a4f65fb2cca5957e67ac",
+  "githubAssetId": 420476266,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-05-14T21:21:51Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "sumno-zotero@sumno.com.br",
+  "name": "sumno-zotero",
+  "version": "0.1.5",
+  "description": "Read-only sync from your sumno library into Zotero. See sumno.com.br.",
+  "homepageUrl": "https://github.com/sumno-app/sumno-zotero",
+  "updateUrl": "https://github.com/sumno-app/sumno-zotero/releases/latest/download/update.json",
+  "strictMinVersion": "7.0.0",
+  "strictMaxVersion": "99.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 10006,
+   "sha256": "97c2bddc61a180bd738c691a4b7dd7c4990d08ca42f9676a479064d5c307fc88"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1066,
+   "sha256": "a884727228ee1268782c16622d898e7fd1c81d4de47a9e6def3790af04ee0b85"
+  },
+  {
+   "path": "manifest.json",
+   "size": 797,
+   "sha256": "4deda3905d88a52e5e5f75a9b49dcdec57ac95543469ed8bfa9a4365b89001c5"
+  },
+  {
+   "path": "update.json",
+   "size": 424,
+   "sha256": "3a8ae106630e621d9c745fda34914de66b2f30a9d03075ba7b6a344c3637aeb4"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "sumno-zotero",
+   "version": "0.1.5",
+   "sha256": "cb45a4faf36a0bd122964d498b514d9828bd4a32ef56a4f65fb2cca5957e67ac"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "update.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 10006,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 147,
+       "column": 20,
+       "snippet": "const res = await fetch(url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "www.sumno.com.br",
+     "category": "developer-server",
+     "provider": "Plugin developer (name match)",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 12,
+       "column": 25,
+       "snippet": "const DEFAULT_API_BASE = 'https://www.sumno.com.br';",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.sumno.apiBase",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 52,
+       "column": 9,
+       "snippet": "return Zotero.Prefs.get(PREF_API_BASE, true) || DEFAULT_API_BASE;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 43,
+      "column": 9,
+      "snippet": "return Zotero.Prefs.get(PREF_TOKEN, true) || null;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 46,
+      "column": 2,
+      "snippet": "Zotero.Prefs.set(PREF_TOKEN, token, true);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.sumno.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/sumno-app/sumno-zotero/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/sumno-app/sumno-zotero/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "sumno-zotero",
+   "version": "0.1.5",
+   "sha256": "cb45a4faf36a0bd122964d498b514d9828bd4a32ef56a4f65fb2cca5957e67ac"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "09bf87a9936cb922799f92b5f04f343109d4d7afc586336a0fd6f5964ec44155"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "developer-servers",
+    "hosts": [
+     {
+      "category": "developer-server",
+      "hosts": [
+       "www.sumno.com.br"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts the developer's server: www.sumno.com.br",
+    "legalRisk": false,
+    "drivers": [
+     "DS-DEVELOPER"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-05-14T21:21:52Z",
+    "lastCommitAt": "2026-05-15T20:07:06Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Contacts the developer's server: www.sumno.com.br"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T09:59:36Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 2,
+    "dialogs": 3
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

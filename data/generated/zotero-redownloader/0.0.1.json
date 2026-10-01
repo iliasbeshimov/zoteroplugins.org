@@ -1,0 +1,313 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-redownloader",
+ "repo": "elbaro/zotero-redownloader",
+ "version": "0.0.1",
+ "tag": "v0.0.2",
+ "releaseAuthor": "elbaro",
+ "publishedAt": "2019-03-13T09:50:20Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-redownloader.xpi",
+  "url": "https://github.com/elbaro/zotero-redownloader/releases/download/v0.0.2/zotero-redownloader.xpi",
+  "size": 3979,
+  "sha256": "5bee1658f2cb92874dfa29b40098100a8f68ca1c7ecf3b158aaed038a0d3f4cb",
+  "githubAssetId": 11503998,
+  "uploader": "elbaro",
+  "uploadedAt": "2019-03-13T09:49:37Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "install.rdf",
+  "legacy": true,
+  "addonId": "helloworld@zotero.org",
+  "name": "Zotero Redownloader",
+  "version": "0.0.1",
+  "description": "Download missing attachments from url",
+  "strictMinVersion": "5.0.0",
+  "strictMaxVersion": "5.0.*"
+ },
+ "files": [
+  {
+   "path": "chrome.manifest",
+   "size": 225,
+   "sha256": "80a7dbaf4ecf64332c86b99aba8999cba683332ad7fa0c30d690e62e27969b36"
+  },
+  {
+   "path": "content/overlay.xul",
+   "size": 709,
+   "sha256": "143e2ba43bc58c2fc2bf536da0bde58a9f9cca6ec3c22642794623f808de955f"
+  },
+  {
+   "path": "content/Redownloader.js",
+   "size": 2890,
+   "sha256": "f5ef71affa53227a0da909a5435d1f1664a2532c4eff2f566e00b5aaed3a0a0e"
+  },
+  {
+   "path": "install.rdf",
+   "size": 1068,
+   "sha256": "60a6a293e409b32afc95d61ac1d13b66afcca8edd1f94da8c9127b299b5aa5f8"
+  },
+  {
+   "path": "locale/en-US/zotero-redownloader.dtd",
+   "size": 50,
+   "sha256": "6a166b281747c119ee2363c020b77372c1c892f9e1738ce84e64117217f39838"
+  },
+  {
+   "path": "locale/en-US/zotero-redownloader.properties",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "skin/overlay.css",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-redownloader",
+   "version": "0.0.1",
+   "sha256": "5bee1658f2cb92874dfa29b40098100a8f68ca1c7ecf3b158aaed038a0d3f4cb"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "install.rdf",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/zotero-redownloader.dtd",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/zotero-redownloader.properties",
+     "reason": "not-code"
+    },
+    {
+     "path": "skin/overlay.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 3599,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/Redownloader.js",
+       "line": 20,
+       "column": 27,
+       "snippet": "let result = await fetch(url)",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "(the item's own URL)",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/Redownloader.js",
+       "line": 20,
+       "column": 27,
+       "snippet": "let result = await fetch(url)",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/Redownloader.js",
+      "line": 24,
+      "column": 18,
+      "snippet": "await OS.File.makeDir(OS.Path.dirname(absolutePath))",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/Redownloader.js",
+      "line": 24,
+      "column": 34,
+      "snippet": "await OS.File.makeDir(OS.Path.dirname(absolutePath))",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/Redownloader.js",
+      "line": 33,
+      "column": 14,
+      "snippet": "await OS.File.writeAtomic(absolutePath, buf, { tmpPath: tmpPath, noOverwrite: true })",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "OS.File"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the elbaro account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-redownloader",
+   "version": "0.0.1",
+   "sha256": "5bee1658f2cb92874dfa29b40098100a8f68ca1c7ecf3b158aaed038a0d3f4cb"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "edaffee1b4f1255b1c58ce39a2d9cb0b6bb1c92b441ea134935b3d025af4ba30"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [],
+    "concern": "none",
+    "label": "Only visits the web addresses saved in your items",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "dormant",
+    "lastReleaseAt": "2019-03-13T09:50:20Z",
+    "lastCommitAt": "2019-03-13T09:36:32Z",
+    "concern": "medium"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for older Zotero versions",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

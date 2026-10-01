@@ -1,0 +1,838 @@
+---
+import GradeTag from "../../components/GradeTag.astro";
+import InstallSheet from "../../components/InstallSheet.astro";
+import Scorecard from "../../components/Scorecard.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import StatusIcon from "../../components/StatusIcon.astro";
+import Tip from "../../components/Tip.astro";
+import Base from "../../layouts/Base.astro";
+import SameIdRow from "../../components/SameIdRow.astro";
+import { allPlugins, alternatives, bySlug, type Plugin, sameIdGroupOf, sameIdText } from "../../lib/atlas.ts";
+import { JOB_BY_SLUG } from "../../lib/jobs.ts";
+import { REPORT_URL, RESPOND_URL } from "../../lib/links.ts";
+
+export function getStaticPaths() {
+  return allPlugins().map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+
+const { p } = Astro.props as { p: Plugin };
+const all = bySlug();
+const alts = alternatives(p, 4);
+const sid = sameIdGroupOf(p);
+const sidText = sid ? sameIdText(sid, p) : null;
+const sidTop = sid ? sid.plugins.filter((x) => x.slug !== p.slug && !x.hidden).slice(0, 3) : [];
+const better = alternatives(p, 3, p.grade);
+const data = p.areas.find((a) => a.key === "data")!;
+const job0 = p.jobs[0] ? JOB_BY_SLUG[p.jobs[0]] : null;
+const blocked = !!p.banner;
+const canInstall = !!p.installUrl;
+const installLabel = blocked ? "Blocked by Zotero" : !canInstall ? "No installable release" : `Install v${p.version}`;
+const installNote = canInstall
+  ? `Downloads a .xpi file (${p.size}). In Zotero, open Tools → Plugins and install it from the file.`
+  : "There's no release file current Zotero can install. The source stays linked for reference.";
+const stats = [
+  ["Stars", p.stars, "People who starred the repository on GitHub: a rough measure of interest."],
+  ["Downloads", p.downloads, "All-time downloads of its release files from GitHub. Installs from elsewhere aren't counted."],
+  ["Contributors", p.contributors, "People who have committed code to the repository."],
+  ["Licence", p.license, "The licence the code is published under, as GitHub reports it."],
+];
+const forkSlug = p.forkOf?.slug && all[p.forkOf.slug] ? p.forkOf.slug : null;
+const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.level === "medium" || a.level === "high").map((a) => a.key) : [];
+---
+
+<Base title={`${p.name} · Zotero Plugins Atlas`} description={`${p.name}: Atlas grade ${p.grade} (${p.gradeLong}). ${p.oneLiner}`}>
+  <SiteHeader search />
+  {
+    p.banner && (
+      <div role="alert" class="banner">
+        <span class="bi">
+          <StatusIcon kind="serious" size={20} color="var(--ser-on)" inner="var(--ser-solid)" />
+        </span>
+        <span>
+          <strong>On Zotero's official blocklist.</strong> {p.banner}
+        </span>
+      </div>
+    )
+  }
+
+  <div class="hero">
+    <div class="intro">
+      <span class="crumb"><a href="/browse">Plugins</a>{job0 && <> / <a href={`/c/${job0.slug}`}>{job0.title}</a></>}</span>
+      <h1>{p.name}</h1>
+      <span class="by">by {p.author} · <a href={p.repoUrl}>github.com/{p.repo}</a></span>
+      <p class="lead">{p.oneLiner}</p>
+      {
+        p.jobs.length > 0 && (
+          <div class="cats">
+            {p.jobs.map((j) => (
+              <a href={`/c/${j}`}>{JOB_BY_SLUG[j].title}</a>
+            ))}
+          </div>
+        )
+      }
+      <div class="actions">
+        <button type="button" class="btn btn-primary install" disabled={!canInstall} data-open-install={canInstall ? "" : undefined}>{installLabel}</button>
+        <a href={p.repoUrl} class="btn">View source</a>
+      </div>
+      <span class="note">{installNote}</span>
+      <dl class="stats">
+        {
+          stats.map(([k, v, tip]) => (
+            <div>
+              <dt>
+                <Tip text={tip} class="tip-start">{k}</Tip>
+              </dt>
+              <dd>{v}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+    <div class="card" id="scorecard">
+      <Scorecard p={p} open={openAreas} />
+    </div>
+  </div>
+
+  <div class="body">
+    <main>
+      <section>
+        {p.description ? <div class="sh"><h2>What it does</h2><span class="mono-sm">Written by AI from the README</span></div> : <h2>What it does</h2>}
+        {
+          p.description ? (
+            p.description.map((d) => <p class="prose">{d}</p>)
+          ) : (
+            <div class="dashed-note">
+              <strong style="color:var(--ink)">Description coming soon.</strong> We haven't written a summary yet. {p.descSoon ? "" : "The line above is the developer's own description; "}the developer's README is linked above.
+            </div>
+          )
+        }
+      </section>
+
+      <section>
+        <div class="sh"><h2>What you'll need</h2><span class="mono-sm">Detected automatically</span></div>
+        {
+          p.needs.length ? (
+            <ul class="needs">
+              {p.needs.map((n) => (
+                <li>
+                  <span aria-hidden="true" class="dot" />
+                  <span class="nt">
+                    <strong>{n.t}</strong>
+                    {n.sub && <span>{n.sub}</span>}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="muted">We haven't detected any setup requirements. That isn't the same as none: check the developer's README.</p>
+          )
+        }
+      </section>
+
+      <section>
+        <h2>Where your data goes</h2>
+        <p class="prose"><strong>We found: {data.value.charAt(0).toLowerCase() + data.value.slice(1)}.</strong> {data.sub}</p>
+        {
+          data.groups.map((g) => (
+            <div class="dg">
+              {g.name && <span class="eyebrow">{g.name}</span>}
+              <div class="chips">
+                {g.items.map((c) => (
+                  <span class:list={["chip", c.tone && `t-${c.tone}`, { mono: c.mono }]}>
+                    {c.t}
+                    {c.note && <span class="cn">{c.note}</span>}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+        {
+          data.evidence.length > 0 && (
+            <div class="evs">
+              <span class="eyebrow">Evidence · file and line</span>
+              {data.evidence.map((e) => (
+                <div class="ev">
+                  <div class="evh">
+                    <strong>{e.what}</strong>
+                    <span>{e.loc}</span>
+                  </div>
+                  <pre>{e.code}</pre>
+                </div>
+              ))}
+            </div>
+          )
+        }
+      </section>
+
+      <section>
+        <h2>Forks and alternatives</h2>
+        {p.forkOf && <p>Fork of {forkSlug ? <a href={`/p/${forkSlug}`} style="font-weight:650">{p.forkOf.name}</a> : <strong>{p.forkOf.name}</strong>}.</p>}
+        {
+          sid && sidText && (
+            <details class="sameid">
+              <summary>
+                <span class="si">
+                  <StatusIcon kind="review" size={18} />
+                </span>
+                <span>
+                  <strong>{sidText.heading}.</strong> {sidText.tag} {sidText.why}
+                  <span class="more">Show what this means</span>
+                </span>
+              </summary>
+              <div class="sid-body">
+                <ul class="sid-points">
+                  <li><strong>You can only have one.</strong> Zotero sees them as the same plugin.</li>
+                  <li><strong>Installing another replaces it.</strong> If you install one of the others, it takes this one's place.</li>
+                  <li>{sid.cause === "copies" ? <><strong>Check what you install.</strong> Several share this plugin's name, so make sure the file comes from the one you meant.</> : <><strong>They do different things.</strong> The one you install may have nothing to do with the one it replaces.</>}</li>
+                </ul>
+                {sid.plugins.filter((x) => !x.hidden).length > 0 && (
+                  <div>
+                    <SameIdRow p={p} current />
+                    {sidTop.map((x) => <SameIdRow p={x} note={sid.cause === "copies" ? (x.forkOf?.slug === sid.plugins[0].slug ? "Fork" : x.slug === sid.plugins[0].slug ? "The most used" : "Copy") : ""} />)}
+                  </div>
+                )}
+                <a href={`/id/${sid.path}`} class="sid-all">See all {sid.plugins.length} and how they differ →</a>
+              </div>
+            </details>
+          )
+        }
+        <p class="muted">{p.forksCount ? `${p.forksCount} listed fork${p.forksCount > 1 ? "s" : ""}.` : "No forks listed."}</p>
+        {
+          alts.length > 0 && (
+            <>
+              <span class="eyebrow">Plugins for the same job</span>
+              <ul class="alts">
+                {alts.map((a) => (
+                  <li>
+                    <span class="an">
+                      <a href={`/p/${a.slug}`}>{a.name}</a>
+                      <span>{a.categories.join(" · ")}</span>
+                    </span>
+                    <span class="ag" style={`color:var(--${a.gradeTone}-fg)`}>
+                      <GradeTag grade={a.grade} size="xs" />
+                      {a.gradeLong}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+      </section>
+
+      <section>
+        <h2>The developer's response</h2>
+        {
+          p.responses.length ? (
+            p.responses.map((r) => (
+              <figure class="resp">
+                <blockquote>“{r.text}”</blockquote>
+                <figcaption class="mono-sm">
+                  {r.who} · <a href={r.url}>{r.date}</a>
+                </figcaption>
+                {r.reply && <p class="muted">Our reply: {r.reply}</p>}
+              </figure>
+            ))
+          ) : (
+            <div class="nodev">
+              <span class="muted" style="max-width:48ch">
+                <strong style="color:var(--ink)">The developer hasn't responded.</strong> Developers can reply here, and their reply sits next to our findings.
+              </span>
+              <a href={RESPOND_URL} class="btn">I'm the developer</a>
+            </div>
+          )
+        }
+      </section>
+    </main>
+
+    <aside>
+      <section>
+        <h2 class="h3">Compatibility</h2>
+        <div class="compat">
+          {
+            p.compat.map((c) => (
+              <div>
+                <span class="cv">
+                  Zotero {c.v}
+                  {c.cur && <Tip text="The newest stable Zotero release." class="curtag plain">CURRENT</Tip>}
+                </span>
+                <span style={`color:${c.ok ? "var(--few-fg)" : c.ok === null || c.v.includes("beta") ? "var(--ink-2)" : "var(--rev-fg)"}`}>
+                  {c.ok ? "✓ Works" : c.ok === null ? "? Not known" : "✗ Doesn't work"}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+        <span class="muted small">{p.autoText}</span>
+      </section>
+      <section>
+        <h2 class="h3">Languages</h2>
+        <div class="langs">
+          <span class="muted">Documentation</span><span><span class:list={{ hl: p.chineseDocs }}>{p.docs}</span></span>
+          <span class="muted">Interface</span><span>{p.ui}</span>
+        </div>
+      </section>
+      <section>
+        <h2 class="h3">Version history</h2>
+        {
+          p.version ? (
+            <ol class="versions">
+              <li>
+                <span class="vg">
+                  <GradeTag grade={p.grade} size="xs" />
+                </span>
+                <span class="vl">
+                  <span>v{p.version}</span>
+                  <span class="muted">{p.released}</span>
+                </span>
+                <span style={`color:var(--${p.gradeTone}-fg);font-size:13.5px;font-weight:600`}>{p.gradeLong}</span>
+              </li>
+            </ol>
+          ) : (
+            <p class="muted">No release file.</p>
+          )
+        }
+        <span class="muted small">We grade the latest release. <a href={p.releasesUrl}>All releases on GitHub</a></span>
+      </section>
+      <section class="report">
+        <h2 class="h3">Report a problem</h2>
+        <p class="muted">Something wrong on this page, or something we missed in the code? Tell us. We read every report.</p>
+        <a href={REPORT_URL} class="btn btn-dark">Report a problem</a>
+        <a href={`/developers/${p.slug}`} class="small">Developer checklist for this plugin</a>
+      </section>
+    </aside>
+  </div>
+
+  {canInstall && <InstallSheet p={p} better={better} />}
+  <SiteFooter />
+</Base>
+
+<style>
+  .banner {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px var(--gutter);
+    background: var(--ser-solid);
+    color: var(--ser-on);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .bi {
+    flex: none;
+    padding-top: 1px;
+    display: flex;
+  }
+  .hero {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 36px 44px;
+    padding: 44px var(--gutter) 24px;
+    align-items: flex-start;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .intro {
+    flex: 1 1 340px;
+    min-width: 0;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .crumb {
+    font: 500 12.5px/1.3 var(--font-mono);
+    color: var(--ink-3);
+  }
+  .crumb a {
+    color: var(--ink-2);
+  }
+  h1 {
+    margin: 0;
+    font-size: 54px;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 760;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+  .by {
+    font: 500 13px/1.4 var(--font-mono);
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  .lead {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.42;
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+  }
+  .cats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .cats a {
+    padding: 4px 11px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 13.5px;
+    font-weight: 560;
+    text-decoration: none;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 4px;
+  }
+  .install {
+    min-height: 48px;
+    padding: 0 22px;
+    font-size: 16px;
+    font-weight: 700;
+    box-shadow: var(--shadow-1);
+  }
+  .install:disabled {
+    background: var(--surface-2);
+    border-color: var(--line-strong);
+    color: var(--ink-2);
+    cursor: not-allowed;
+    filter: none;
+  }
+  .actions .btn {
+    min-height: 48px;
+  }
+  .note {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  /* No overflow clipping here: it would cut off the labels' tooltips. */
+  .stats {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .stats div {
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .stats div + div {
+    border-left: 1px solid var(--line);
+  }
+  dt {
+    font: 500 11px/1.2 var(--font-mono);
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  dd {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    overflow-wrap: anywhere;
+  }
+  .card {
+    flex: 1.5 1 540px;
+    min-width: 0;
+    scroll-margin-top: 16px;
+  }
+  .body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px 56px;
+    padding: 40px var(--gutter) 64px;
+    align-items: flex-start;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  main {
+    flex: 1.6 1 540px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+  aside {
+    flex: 1 1 300px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  section {
+    border-top: 2px solid var(--ink);
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  h2 {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    font-weight: 720;
+  }
+  h2.h3 {
+    font-size: 20px;
+    letter-spacing: -0.02em;
+  }
+  .sh {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .prose {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 66ch;
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+  }
+  p {
+    margin: 0;
+  }
+  .muted {
+    color: var(--ink-2);
+  }
+  .small {
+    font-size: 14px;
+  }
+  .needs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--line);
+  }
+  .needs li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    background: var(--surface);
+  }
+  .dot {
+    flex: none;
+    margin-top: 7px;
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+  .nt {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .nt strong {
+    font-weight: 650;
+  }
+  .nt span {
+    font-size: 14.5px;
+    color: var(--ink-2);
+  }
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .chip {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 2px 6px;
+    align-items: baseline;
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 14px;
+    background: var(--surface-2);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    overflow-wrap: anywhere;
+  }
+  .chip.mono {
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .chip.t-few {
+    background: var(--few-bg);
+    color: var(--few-fg);
+    border-color: var(--few-line);
+  }
+  .chip.t-rev {
+    background: var(--rev-bg);
+    color: var(--rev-fg);
+    border-color: var(--rev-line);
+  }
+  .chip.t-ser {
+    background: var(--ser-bg);
+    color: var(--ser-fg);
+    border-color: var(--ser-line);
+  }
+  .chip.t-nd {
+    background: var(--nd-bg);
+    color: var(--nd-fg);
+    border-color: var(--nd-line);
+  }
+  .cn {
+    font: 600 11.5px/1.2 var(--font-mono);
+  }
+  .evs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ev {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .evh {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 14px;
+    padding: 8px 12px;
+    background: var(--surface-2);
+    font: 500 12.5px/1.4 var(--font-mono);
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  .evh strong {
+    color: var(--ink);
+  }
+  pre {
+    margin: 0;
+    padding: 10px 12px;
+    font: 13px/1.55 var(--font-mono);
+    background: var(--code-bg);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .sameid > summary {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    cursor: pointer;
+    list-style: none;
+  }
+  .sameid > summary::-webkit-details-marker { display: none; }
+  .sameid .more { display: block; margin-top: 6px; font-weight: 600; color: var(--accent-ink); }
+  .sameid[open] .more { display: none; }
+  .sid-body { display: flex; flex-direction: column; gap: 14px; margin-top: 14px; }
+  .sid-points { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; line-height: 1.5; }
+  .sid-all { font-weight: 650; }
+  .sameid {
+    display: block;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--rev-bg);
+    border: 1px solid var(--rev-line);
+  }
+  .si {
+    flex: none;
+    display: flex;
+    padding-top: 2px;
+  }
+  .alts {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--line);
+  }
+  .alts li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .an {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .an a {
+    font-weight: 680;
+    color: var(--ink);
+  }
+  .an span {
+    font-size: 13.5px;
+    color: var(--ink-2);
+  }
+  .ag {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 620;
+  }
+  .resp {
+    margin: 0;
+    padding: 18px 20px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  blockquote {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  .nodev {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-radius: 14px;
+    border: 1.5px dashed var(--line-strong);
+  }
+  .compat {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+  .compat div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-top: 1px solid var(--line);
+    font-size: 15px;
+    font-weight: 620;
+  }
+  .compat div:first-child {
+    border-top: 0;
+  }
+  .cv {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .compat :global(.curtag) {
+    font: 600 10.5px/1 var(--font-mono);
+    padding: 3px 6px;
+    border-radius: 5px;
+    background: var(--accent-soft);
+  }
+  .langs {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 14px;
+    font-size: 15px;
+  }
+  .langs > span:nth-child(even) {
+    font-weight: 650;
+  }
+  .hl {
+    background: var(--accent-soft);
+    padding: 1px 6px;
+    border-radius: 5px;
+  }
+  .versions {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .versions li {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 2px 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .vg {
+    grid-row: span 2;
+    padding-top: 1px;
+    display: flex;
+  }
+  .vl {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font: 600 14px/1.3 var(--font-mono);
+  }
+  .vl .muted {
+    font-weight: 500;
+  }
+  .report {
+    border-top: 0;
+    padding: 18px;
+    border-radius: 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    gap: 10px;
+  }
+  .report .btn {
+    align-self: flex-start;
+  }
+  .report p {
+    font-size: 14.5px;
+  }
+  @media (max-width: 720px) {
+    .hero {
+      padding-top: 24px;
+    }
+    h1 {
+      font-size: 38px;
+    }
+    .lead {
+      font-size: 18px;
+    }
+    .intro {
+      max-width: none;
+    }
+    .stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .stats div:nth-child(odd) {
+      border-left: 0;
+    }
+    .stats div:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+    .card,
+    main {
+      flex-basis: 100%;
+    }
+  }
+</style>

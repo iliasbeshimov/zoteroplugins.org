@@ -1,0 +1,452 @@
+{
+ "schemaVersion": 1,
+ "slug": "obsidian-zotero-vault-bridge",
+ "repo": "chengcheng-cx/obsidian-zotero-vault-bridge",
+ "version": "0.5.0",
+ "tag": "v0.5.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-08-27T15:15:48Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-vault-bridge-companion-0.5.0.xpi",
+  "url": "https://github.com/chengcheng-cx/obsidian-zotero-vault-bridge/releases/download/v0.5.0/zotero-vault-bridge-companion-0.5.0.xpi",
+  "size": 8932,
+  "sha256": "83428e47d2067b260c28065d6fc817958149901f9c854c90587b8f3563a5996c",
+  "githubAssetId": 532476223,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-08-27T15:15:47Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-vault-bridge@example.local",
+  "name": "Zotero Vault Bridge Companion",
+  "version": "0.5.0",
+  "description": "Recognizes and relinks Vault PDFs, persists citation keys, and serves authenticated citation search to Obsidian.",
+  "homepageUrl": "https://github.com/chengcheng-cx/obsidian-zotero-vault-bridge",
+  "updateUrl": "https://github.com/chengcheng-cx/obsidian-zotero-vault-bridge/releases/latest/download/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 658,
+   "sha256": "48a04f3427ecdd1fca8b39a8654c61463b565a560c15eedabad78d9ef26f34cb"
+  },
+  {
+   "path": "bridge.js",
+   "size": 26009,
+   "sha256": "6824c4de749c15e5ced7f7b4ef66f616c780a8625f929dd282523060931d0b3e"
+  },
+  {
+   "path": "core.js",
+   "size": 5058,
+   "sha256": "dacc8b45eabcf7a3b677af6e4b2cfc749faef9bd106562244829637a83ed5ddc"
+  },
+  {
+   "path": "manifest.json",
+   "size": 601,
+   "sha256": "74c43e411d0ca37a5fafa668b3cd6f8e395c927a82089b913c14eab4fed9c781"
+  },
+  {
+   "path": "prefs.js",
+   "size": 115,
+   "sha256": "69f9dfd803d5b46d606a2a5027aa4df2fd8c20973cbb4a030e2a4646c62cd5aa"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "obsidian-zotero-vault-bridge",
+   "version": "0.5.0",
+   "sha256": "83428e47d2067b260c28065d6fc817958149901f9c854c90587b8f3563a5996c"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 31840,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 403,
+       "column": 18,
+       "snippet": "parent = await Zotero.RecognizeDocument._recognize(attachment);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 66,
+      "column": 15,
+      "snippet": "let stored = getPref(\"authToken\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 624,
+      "column": 22,
+      "snippet": "let storedToken = getPref(\"authToken\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 648,
+      "column": 23,
+      "snippet": "let storedToken = getPref(\"authToken\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 653,
+      "column": 5,
+      "snippet": "setPref(\"authToken\", token);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-vault-bridge.authToken\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "authToken",
+      "extensions.zotero-vault-bridge.authToken"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 7,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 769,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINTS.status] = endpointTypes.status;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 770,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINTS.configure] = endpointTypes.configure;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 771,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINTS.import] = endpointTypes.import;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 772,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINTS.relink] = endpointTypes.relink;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 773,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINTS.attachmentVerify] = endpointTypes.attachmentVerify;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 774,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINTS.citationSearch] = endpointTypes.citationSearch;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 775,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINTS.citationResolve] = endpointTypes.citationResolve;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zotero-vault-bridge/attachments/verify",
+      "/zotero-vault-bridge/citations/resolve",
+      "/zotero-vault-bridge/citations/search",
+      "/zotero-vault-bridge/configure",
+      "/zotero-vault-bridge/import",
+      "/zotero-vault-bridge/relink",
+      "/zotero-vault-bridge/status"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/chengcheng-cx/obsidian-zotero-vault-bridge/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/chengcheng-cx/obsidian-zotero-vault-bridge/releases/latest/download/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 461,
+      "column": 27,
+      "snippet": "let replacement = await Zotero.Attachments.linkFromFile({ file: filePath });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 771,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINTS.import] = endpointTypes.import;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zotero-vault-bridge/citations/resolve",
+      "/zotero-vault-bridge/import",
+      "/zotero-vault-bridge/relink"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": true,
+   "verified": false,
+   "workflow": ".github/workflows/release.yml"
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. GitHub holds a build attestation for this exact file; we haven't checked its signature. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "obsidian-zotero-vault-bridge",
+   "version": "0.5.0",
+   "sha256": "83428e47d2067b260c28065d6fc817958149901f9c854c90587b8f3563a5996c"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "b57bd576db3f14006476b7f2bfaac961520131479e3a7da72296fdd34eaa219c"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-27T15:15:48Z",
+    "lastCommitAt": "2026-09-04T07:56:18Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:24:53Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

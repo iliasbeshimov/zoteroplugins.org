@@ -1,0 +1,426 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pmcid-fetcher",
+ "repo": "retorquere/zotero-pmcid-fetcher",
+ "version": "1.0.3",
+ "tag": "v1.0.3",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-08-24T15:02:38Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-pmcid-fetcher-1.0.3.xpi",
+  "url": "https://github.com/retorquere/zotero-pmcid-fetcher/releases/download/v1.0.3/zotero-pmcid-fetcher-1.0.3.xpi",
+  "size": 29025,
+  "sha256": "01b30c1a5aa38b0591e61e41775592b9e383eb67b429cb3afa3a79c7f7766164",
+  "githubAssetId": 527764491,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-08-24T15:02:39Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-pmcid-fetcher@iris-advies.com",
+  "name": "PMCID fetcher for Zotero",
+  "version": "1.0.3",
+  "description": "PMCID fetcher",
+  "updateUrl": "https://github.com/retorquere/zotero-pmcid-fetcher/releases/download/release/updates.json",
+  "strictMinVersion": "8.0.1",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 93666,
+   "sha256": "21742cca74f407b22cb1ff8eba9dad8449d8f5056f257187171f3fe1e7e61726"
+  },
+  {
+   "path": "lib.js",
+   "size": 14860,
+   "sha256": "1024383bdfc39a55e44a4defe08855bdd4057c429ea97cfd8da27d475506de51"
+  },
+  {
+   "path": "logo.svg",
+   "size": 914,
+   "sha256": "eaf16143bfca8488492573403fee415e679c192d756d56847bd5607e45b41099"
+  },
+  {
+   "path": "manifest.json",
+   "size": 405,
+   "sha256": "63314d2a2d3f560c7a819bf410974f3469e39d45481b887a9669b1800333a955"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 1277,
+   "sha256": "1e747b538be3e7e5377d268cae95ad80f6511a3976c1acd34ab1121d250bdbfc"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-pmcid-fetcher",
+   "version": "1.0.3",
+   "sha256": "01b30c1a5aa38b0591e61e41775592b9e383eb67b429cb3afa3a79c7f7766164"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "logo.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 109803,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "jose",
+     "files": [
+      "bootstrap.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "uzip",
+     "files": [
+      "bootstrap.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "zotero-plugin",
+     "files": [
+      "bootstrap.js"
+     ],
+     "identifiedBy": "package-json"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 8,
+     "inVendoredCodeOnly": false,
+     "libraries": [
+      "zotero-plugin"
+     ],
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 2311,
+       "column": 29,
+       "snippet": "const response = await fetch(`https://filebin.net/${this.key}/${this.name}`, {",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "lib.js",
+       "line": 284,
+       "column": 33,
+       "snippet": "const response = await fetch(url);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lib.js",
+       "line": 319,
+       "column": 33,
+       "snippet": "const response = await fetch(url);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lib.js",
+       "line": 354,
+       "column": 38,
+       "snippet": "const text = await (await fetch(url)).text();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "eutils.ncbi.nlm.nih.gov",
+     "category": "scholarly-api",
+     "provider": "NCBI E-utilities",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib.js",
+       "line": 275,
+       "column": 20,
+       "snippet": "const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?${Object.entries({",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lib.js",
+       "line": 353,
+       "column": 24,
+       "snippet": "const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=PubMed&tool=Zotero&retmode=xml&rettype=citation&id=${item.pmid || item.pmcid}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "filebin.net",
+     "category": "integration",
+     "provider": "Filebin (public file drop)",
+     "flags": [
+      "public-relay"
+     ],
+     "usage": "request",
+     "inVendoredCode": true,
+     "libraries": [
+      "zotero-plugin"
+     ],
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 2311,
+       "column": 35,
+       "snippet": "const response = await fetch(`https://filebin.net/${this.key}/${this.name}`, {",
+       "inVendoredCode": true
+      }
+     ]
+    },
+    {
+     "host": "www.ncbi.nlm.nih.gov",
+     "category": "scholarly-api",
+     "provider": "NCBI",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib.js",
+       "line": 308,
+       "column": 20,
+       "snippet": "const url = `https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/?${Object.entries({",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://filebin.net/<expr>/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 2311,
+       "column": 29,
+       "snippet": "const response = await fetch(`https://filebin.net/${this.key}/${this.name}`, {",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/retorquere/zotero-pmcid-fetcher/releases/download/release/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/retorquere/zotero-pmcid-fetcher/releases/download/release/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-pmcid-fetcher",
+   "version": "1.0.3",
+   "sha256": "01b30c1a5aa38b0591e61e41775592b9e383eb67b429cb3afa3a79c7f7766164"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "2eb5bf8971c3db04db2aa919846cdc550f9a55b3fe0171fcd3b79041633fe601"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "filebin.net"
+      ],
+      "observed": [
+       "filebin.net"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "eutils.ncbi.nlm.nih.gov",
+       "www.ncbi.nlm.nih.gov"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Sends data through a public relay: filebin.net",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED",
+     "DS-PUBLIC-RELAY",
+     "DS-OBSERVED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-24T15:02:38Z",
+    "lastCommitAt": "2026-08-24T15:01:51Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Sends data through a public relay: filebin.net"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T08:40:05Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 3,
+    "dialogs": 1
+   },
+   "contacted": [
+    "filebin.net"
+   ],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-tab",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "the AI chat (default endpoint is OpenAI and the key is empty by default)",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "DeepSeek",
+   "Alibaba Bailian"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.aiChatTab.apiEndpoint\", \"https://api.openai.com/v1/chat/completions\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "usage",
+   "quote": "必须是openai兼容格式，url需要完整的带上/chat/completions",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Code aiChatTab.js:4287 `if (!config2.apiKey) {` raises \"API Key not configured in preferences\" and default prefs have apiKey \"\", so a key is required. The README says any OpenAI-compatible URL may be entered but names only cloud providers (Deepseek, Alibaba); there is no mention of Ollama, LM Studio or localhost in the pack or code, so local use is not shown."
+}

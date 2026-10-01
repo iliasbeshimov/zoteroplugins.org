@@ -1,0 +1,360 @@
+{
+ "repo": "daeh/zotero-markdb-connect",
+ "slug": "zotero-markdb-connect",
+ "group": "top",
+ "rank": 31,
+ "name": "MarkDB-Connect",
+ "stars": 681,
+ "downloads": 289821,
+ "createdAt": "2021-12-27T21:15:59Z",
+ "tag": "v0.2.4",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "markdb-connect.xpi",
+    "url": "https://github.com/daeh/zotero-markdb-connect/releases/download/v0.2.4/markdb-connect.xpi",
+    "size": 57530,
+    "uploadedAt": "2026-08-19T20:24:32Z",
+    "sha256": "e51c6738627fffaef339baee3d185c381ddee2ca1cc6860d59077497ede4d2fc"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "daeda@mit.edu",
+    "name": "MarkDB-Connect",
+    "version": "0.2.4",
+    "description": "Zotero plugin that links your Markdown database to Zotero.",
+    "homepageUrl": "https://github.com/daeh/zotero-markdb-connect#readme",
+    "updateUrl": "https://raw.githubusercontent.com/daeh/zotero-markdb-connect/main/update.json",
+    "minVersion": "9.999",
+    "maxVersion": "10.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-markdb-connect",
+     "version": "0.2.4",
+     "sha256": "e51c6738627fffaef339baee3d185c381ddee2ca1cc6860d59077497ede4d2fc"
+    },
+    "coverage": {
+     "filesTotal": 10,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": "content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/preferences.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/mdbc-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/mdbc-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/mdbc.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/mdbc.js",
+         "line": 4999,
+         "column": 31,
+         "snippet": "const response = await Zotero.HTTP.request(\"GET\", url, {});",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/preferences.xhtml",
+         "line": 504,
+         "column": 39,
+         "snippet": "oncommand=\"Zotero.launchURL('https://github.com/daeh/zotero-markdb-connect/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc')\" />",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "raw.githubusercontent.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/mdbc.js",
+         "line": 3402,
+         "column": 16,
+         "snippet": "updateJSON: \"https://raw.githubusercontent.com/daeh/zotero-markdb-connect/main/update.json\"",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/mdbc.js",
+         "line": 6454,
+         "column": 51,
+         "snippet": "_ztoolkit.ProgressWindow.setIconURI(\"default\", `chrome://${config.addonRef}/content/icons/favicon.png`);",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "obsidian://open?<expr><expr><expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/mdbc.js",
+         "line": 3981,
+         "column": 20,
+         "snippet": "const uri = `obsidian://open?${vaultKey}${fileKey}${paneKey}`;",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 3,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 472,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 472,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 518,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 15,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 507,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 507,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 3907,
+        "column": 12,
+        "snippet": "await Zotero.File.putContentsAsync(filepathstr, data);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 3932,
+        "column": 12,
+        "snippet": "await Zotero.File.putContentsAsync(filepathstr, data);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 3936,
+        "column": 24,
+        "snippet": "const fileObj = Zotero.File.pathToFile(entry_res.path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 3963,
+        "column": 24,
+        "snippet": "const fileObj = Zotero.File.pathToFile(entry_res.path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 3990,
+        "column": 24,
+        "snippet": "const fileObj = Zotero.File.pathToFile(entry_res.path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 4260,
+        "column": 29,
+        "snippet": "const vaultpathObj = Zotero.File.pathToFile(vaultpath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 4525,
+        "column": 31,
+        "snippet": "const zfileSourcedir = Zotero.File.pathToFile(valueRaw);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/mdbc.js",
+        "line": 5410,
+        "column": 12,
+        "snippet": "await Zotero.File.iterateDirectory(dirpath, (item) => {",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "user-chosen",
+       "apis": [
+        "Zotero.File",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/daeh/zotero-markdb-connect/main/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/daeh/zotero-markdb-connect/main/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "unknown-endpoints",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

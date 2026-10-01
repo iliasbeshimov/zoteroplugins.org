@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "chat-with-paper",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "OpenAI API key for all chat features",
+  "worksWithout": "",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, How to use",
+   "quote": "Register your OpenAI API key and Enter!",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/chatwithpaper.js:4705",
+   "quote": "const apiUrl = \"https://api.openai.com/v1/chat/completions\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README says 'Register your OpenAI API key and Enter!'. The code hardcodes const apiUrl = \"https://api.openai.com/v1/chat/completions\" with no configurable base URL, and the README says 'Only supports gpt-4o'. So there is no local model."
+}

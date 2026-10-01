@@ -1,0 +1,42 @@
+{
+ "schemaVersion": 1,
+ "slug": "readwise2zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Readwise access token, needed for the main sync; AI enrichment keys are optional extras",
+  "worksWithout": "",
+  "services": [
+   "Readwise"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "readwise-sync.js:524",
+   "quote": "if (!this.getPref(\"token\")) {",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "preferences.xhtml:10",
+   "quote": "<html:a href=\"https://readwise.io/access_token\">readwise.io/access_token</html:a>.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Features",
+   "quote": "Bring your own AI**: Anthropic, OpenAI, Google Gemini, Ollama (local or\n  cloud), oMLX, or any OpenAI-compatible local server (LM Studio, MLX).",
+   "supports": "localModel"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.readwise2zotero.ollamaBaseUrl\", \"http://localhost:11434/v1\");",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Code has `if (!this.getPref(\"token\")) {` and README says \"Get your Readwise access token from <https://readwise.io/access_token>\". Local AI is confirmed by pref(\"extensions.readwise2zotero.ollamaBaseUrl\", \"http://localhost:11434/v1\") and the README row \"Ollama | Nothing (local)\"."
+}

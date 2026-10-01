@@ -1,0 +1,385 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-integration-agent",
+ "repo": "kalenjosifovski/zotero-integration-agent",
+ "version": "0.3.1",
+ "tag": "v0.3.1",
+ "releaseAuthor": "KalenJosifovski",
+ "publishedAt": "2026-08-02T13:47:40Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-integration-bridge.xpi",
+  "url": "https://github.com/KalenJosifovski/zotero-integration-agent/releases/download/v0.3.1/zotero-integration-bridge.xpi",
+  "size": 5633,
+  "sha256": "33d453f02531c15d9f3217c30e8c67eef2875dc87d7d2c4b5bbb9fae60f879fa",
+  "githubAssetId": 498939843,
+  "uploader": "KalenJosifovski",
+  "uploadedAt": "2026-08-02T13:47:39Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-integration-bridge@kalenjosifovski.com",
+  "name": "Zotero Integration Bridge",
+  "version": "0.3.1",
+  "description": "Local bridge for the Zotero Integration Agent.",
+  "homepageUrl": "https://github.com/KalenJosifovski/zotero-integration-agent",
+  "updateUrl": "https://github.com/KalenJosifovski/zotero-integration-agent/releases/latest/download/updates.json",
+  "strictMinVersion": "7.999",
+  "strictMaxVersion": "10.999.999"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1186,
+   "sha256": "7e29dad66d39ca80f1975b867b9740ab283afd0242b75df737ec8f1894ad90bb"
+  },
+  {
+   "path": "content/scripts/zotero-integration-bridge.js",
+   "size": 13286,
+   "sha256": "f61819a51ec5d669292ea4a7c14ce2803fad6bbcbefe6da1821371ff618490bb"
+  },
+  {
+   "path": "manifest.json",
+   "size": 576,
+   "sha256": "bc8cd68efec7c7aa66c62adbaecdf6ef1566d5293e78bae4b6ca6102aab4ca49"
+  },
+  {
+   "path": "prefs.js",
+   "size": 60,
+   "sha256": "11e09123ee968e0fbd2864c638ddc0cb558c0d3ec3cc675db25632443b6921a4"
+  },
+  {
+   "path": "updates.json",
+   "size": 475,
+   "sha256": "c2da93810469c154406ade54f206b7dc0d40155ae4ced7de3791d607d3476243"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-integration-agent",
+   "version": "0.3.1",
+   "sha256": "33d453f02531c15d9f3217c30e8c67eef2875dc87d7d2c4b5bbb9fae60f879fa"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "updates.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 14532,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/zotero-integration-bridge.js",
+      "line": 185,
+      "column": 25,
+      "snippet": "const existing = Zotero.Prefs.get(TOKEN_PREF);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/zotero-integration-bridge.js",
+      "line": 189,
+      "column": 8,
+      "snippet": "Zotero.Prefs.set(TOKEN_PREF, requireString(request, \"token\"));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/zotero-integration-bridge.js",
+      "line": 262,
+      "column": 22,
+      "snippet": "const token = Zotero.Prefs.get(TOKEN_PREF);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 1,
+      "column": 0,
+      "snippet": "pref(\"extensions.zoteroIntegrationBridge.bridgeToken\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zoteroIntegrationBridge.bridgeToken"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/zotero-integration-bridge.js",
+      "line": 331,
+      "column": 27,
+      "snippet": "const text = await Zotero.File.getContentsAsync(cachePath);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/zotero-integration-bridge.js",
+      "line": 179,
+      "column": 8,
+      "snippet": "Zotero.Server.Endpoints[path] = Endpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/KalenJosifovski/zotero-integration-agent/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/KalenJosifovski/zotero-integration-agent/releases/latest/download/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/zotero-integration-bridge.js",
+      "line": 25,
+      "column": 22,
+      "snippet": "this.register(\"/apply\", [\"POST\"], this.apply.bind(this));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/zotero-integration-bridge.js",
+      "line": 242,
+      "column": 14,
+      "snippet": "await Zotero.DB.executeTransaction(async () => {",
+      "inVendoredCode": false
+     }
+    ]
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the KalenJosifovski account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-integration-agent",
+   "version": "0.3.1",
+   "sha256": "33d453f02531c15d9f3217c30e8c67eef2875dc87d7d2c4b5bbb9fae60f879fa"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "c057f6efb2ea8d4d766b6938b7f090b68704da1734bbd3352dc91d3a2a27d9a2"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-02T13:47:40Z",
+    "lastCommitAt": "2026-08-02T13:47:21Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T06:27:51Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

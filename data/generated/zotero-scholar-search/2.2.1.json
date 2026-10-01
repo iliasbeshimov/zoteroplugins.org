@@ -1,0 +1,373 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-scholar-search",
+ "repo": "acatechnic/zotero-scholar-search",
+ "version": "2.2.1",
+ "tag": "v2.2.1",
+ "releaseAuthor": "Acatechnic",
+ "publishedAt": "2026-06-23T07:20:33Z",
+ "prerelease": false,
+ "asset": {
+  "name": "scholar-search.xpi",
+  "url": "https://github.com/Acatechnic/zotero-scholar-search/releases/download/v2.2.1/scholar-search.xpi",
+  "size": 8836,
+  "sha256": "bbc9962c93fd3a1a2c4ff5bae0e6c46f76a3a0869a431ae2a82333078f01917b",
+  "githubAssetId": 455381900,
+  "uploader": "Acatechnic",
+  "uploadedAt": "2026-06-23T07:20:32Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "scholar-search@acatechnic",
+  "name": "Scholar Search",
+  "version": "2.2.1",
+  "description": "Right-click selected text in the Zotero PDF reader to search Google Scholar, Google, PubMed or your own custom engines — in the browser of your choice, on macOS, Windows and Linux.",
+  "homepageUrl": "https://github.com/Acatechnic/zotero-scholar-search",
+  "updateUrl": "https://raw.githubusercontent.com/Acatechnic/zotero-scholar-search/main/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 13612,
+   "sha256": "9f920a9ab0ef323b7824a6e62704e32230c351474dc763449d7f291e428840e9"
+  },
+  {
+   "path": "icons/icon.svg",
+   "size": 511,
+   "sha256": "caa1cd6dcffbe04311229bda42e0b994a918e131b7efefbf5b7b43015a6558e2"
+  },
+  {
+   "path": "manifest.json",
+   "size": 717,
+   "sha256": "dd4537d6300706c927acec12b210fb1f3d761e6860af35894aad04335b6323a9"
+  },
+  {
+   "path": "preferences.js",
+   "size": 5824,
+   "sha256": "8b5e3befc0afff6d9acd82c25df52852732fbae934e32a07c0bf735aa6c2eeea"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 1994,
+   "sha256": "89dfec3d1abf4e7ed0fe9e7922b2d1adea97b8de502ea29f549746c9552fcdb9"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-scholar-search",
+   "version": "2.2.1",
+   "sha256": "bbc9962c93fd3a1a2c4ff5bae0e6c46f76a3a0869a431ae2a82333078f01917b"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 21430,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "pubmed.ncbi.nlm.nih.gov",
+     "category": "scholarly-api",
+     "provider": "PubMed",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 46,
+       "column": 9,
+       "snippet": "url: \"https://pubmed.ncbi.nlm.nih.gov/?term={q}\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "scholar.google.com",
+     "category": "scholarly-api",
+     "provider": "Google Scholar",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 34,
+       "column": 9,
+       "snippet": "url: \"https://scholar.google.com/scholar?q={q}\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.google.com",
+     "category": "integration",
+     "provider": "Google Search",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 40,
+       "column": 9,
+       "snippet": "url: \"https://www.google.com/search?q={q}\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 20,
+       "column": 31,
+       "snippet": "should go — for example: https://www.semanticscholar.org/search?q={q}",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 286,
+      "column": 6,
+      "snippet": "\"resource://gre/modules/Subprocess.sys.mjs\"",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 291,
+      "column": 8,
+      "snippet": "\"resource://gre/modules/Subprocess.jsm\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Acatechnic/zotero-scholar-search/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Acatechnic/zotero-scholar-search/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Acatechnic account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-scholar-search",
+   "version": "2.2.1",
+   "sha256": "bbc9962c93fd3a1a2c4ff5bae0e6c46f76a3a0869a431ae2a82333078f01917b"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "2ab056e1c5ab18724411e2a174b30a000ad2636fb2901e58810468eba047ff6d"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found; its code names known services",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-06-23T07:20:33Z",
+    "lastCommitAt": "2026-06-23T07:20:28Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T09:45:12Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

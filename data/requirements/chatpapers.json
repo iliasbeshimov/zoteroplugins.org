@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "chatpapers",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Cloud providers (OpenRouter, OpenAI, DeepSeek, SiliconFlow) and cloud TTS need a key",
+  "worksWithout": "Ollama or LM Studio running locally",
+  "services": [
+   "OpenRouter",
+   "OpenAI",
+   "DeepSeek",
+   "SiliconFlow"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README features",
+   "quote": "Provider 预设：**Ollama / LM Studio / OpenRouter / OpenAI / DeepSeek / 硅基流动 / 自定义**",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/chatpapers.js:4137",
+   "quote": "baseUrl: \"http://127.0.0.1:11434/v1\",",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, Usage",
+   "quote": "偏好设置 → ChatPapers：选择 Provider（如 Ollama）并填写模型",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "I checked the code in the release. The Ollama preset has baseUrl http://127.0.0.1:11434/v1 and needsKey: false, LM Studio likewise uses 127.0.0.1:1234 with needsKey: false, and the code enforces the key only when preset.needsKey is set. OpenRouter, OpenAI, DeepSeek and SiliconFlow are cloud providers that need a key."
+}

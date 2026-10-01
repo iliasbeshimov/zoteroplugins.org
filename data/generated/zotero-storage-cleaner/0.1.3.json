@@ -1,0 +1,356 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-storage-cleaner",
+ "repo": "grainrainandy/zotero-storage-cleaner",
+ "version": "0.1.3",
+ "tag": "v0.1.3",
+ "releaseAuthor": "GrainRainAndy",
+ "publishedAt": "2026-08-03T10:29:31Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-storage-cleaner.xpi",
+  "url": "https://github.com/GrainRainAndy/zotero-storage-cleaner/releases/download/v0.1.3/zotero-storage-cleaner.xpi",
+  "size": 6563,
+  "sha256": "ea2df940cffe100543423c0cbd829e89aa8fc7c759e62226e762ab8f100ad117",
+  "githubAssetId": 499923752,
+  "uploader": "GrainRainAndy",
+  "uploadedAt": "2026-08-03T10:29:30Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-storage-cleaner@grainrainandy.github.io",
+  "name": "Zotero Storage Cleaner",
+  "version": "0.1.3",
+  "description": "Finds storage folders no longer referenced by the Zotero database and moves them to a recoverable quarantine.",
+  "updateUrl": "https://raw.githubusercontent.com/GrainRainAndy/zotero-storage-cleaner/main/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1271,
+   "sha256": "6e20b726f43ea75daeed2765797d4111c87c8084477046cabaf4f109e9bff637"
+  },
+  {
+   "path": "content/cleaner.js",
+   "size": 12273,
+   "sha256": "31b3c1e1682e4efbe73085afe4ab3ef8391012e160c8799529e75806ebbefe7e"
+  },
+  {
+   "path": "locale/en-US/storage-cleaner.ftl",
+   "size": 283,
+   "sha256": "b055be3aa137bf96073dbabf8ee4fd7636104c894d26744107631950adb68206"
+  },
+  {
+   "path": "locale/zh-CN/storage-cleaner.ftl",
+   "size": 262,
+   "sha256": "9c09bf1d16541a99c0336e9b28f5eb0feca0aebf64a461a59593eeba77cec4ef"
+  },
+  {
+   "path": "manifest.json",
+   "size": 537,
+   "sha256": "a36cb63bf73db3ca6cc6fdf73fdd675ec9642323040611f6cc8d01bdab68896d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-storage-cleaner",
+   "version": "0.1.3",
+   "sha256": "ea2df940cffe100543423c0cbd829e89aa8fc7c759e62226e762ab8f100ad117"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/storage-cleaner.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/storage-cleaner.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 13544,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 16,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/cleaner.js",
+      "line": 172,
+      "column": 10,
+      "snippet": "await Zotero.File.reveal(result.storageDir);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/cleaner.js",
+      "line": 194,
+      "column": 25,
+      "snippet": "const children = await IOUtils.getChildren(storageDir);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/cleaner.js",
+      "line": 204,
+      "column": 17,
+      "snippet": "stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/cleaner.js",
+      "line": 237,
+      "column": 21,
+      "snippet": "children = await IOUtils.getChildren(directory);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/cleaner.js",
+      "line": 246,
+      "column": 24,
+      "snippet": "const stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/cleaner.js",
+      "line": 267,
+      "column": 8,
+      "snippet": "await IOUtils.makeDirectory(quarantineRoot, { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/cleaner.js",
+      "line": 283,
+      "column": 16,
+      "snippet": "if (!(await IOUtils.exists(candidate.path))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/cleaner.js",
+      "line": 289,
+      "column": 10,
+      "snippet": "await IOUtils.move(candidate.path, destination, { noOverwrite: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/cleaner.js",
+      "line": 306,
+      "column": 8,
+      "snippet": "await Zotero.File.putContentsAsync(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/cleaner.js",
+      "line": 324,
+      "column": 13,
+      "snippet": "if (await IOUtils.exists(batchDir)) continue;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/GrainRainAndy/zotero-storage-cleaner/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/GrainRainAndy/zotero-storage-cleaner/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the GrainRainAndy account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-storage-cleaner",
+   "version": "0.1.3",
+   "sha256": "ea2df940cffe100543423c0cbd829e89aa8fc7c759e62226e762ab8f100ad117"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "2b15969f33c3605cd2f29dd7b3094c845f1db82606d0898136c7b95bf3f6a11a"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-03T10:29:31Z",
+    "lastCommitAt": "2026-08-03T10:28:48Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:37:46Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 3,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

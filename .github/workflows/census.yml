@@ -1,0 +1,103 @@
+name: Census
+
+# Nightly: re-measure every known plugin (stars, downloads, contributors, releases, Zotero
+# compatibility) and append one row per plugin to data/census/history/YYYY-MM.csv, then refresh
+# every plugin's profile and scorecard (data/generated/). Only new release files are downloaded.
+# Weekly (Sunday): full discovery across every source, which also finds new plugins.
+on:
+  schedule:
+    - cron: "17 3 * * *"
+    - cron: "43 4 * * 0"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "refresh (known plugins) or full (discover new ones too)"
+        type: choice
+        options: [refresh, full]
+        default: refresh
+
+permissions:
+  contents: write
+
+# Shared with the submit workflow: both write data/census and data/generated.
+concurrency:
+  group: data
+  cancel-in-progress: false
+
+jobs:
+  census:
+    runs-on: ubuntu-latest
+    # The first profile run without a warm cache can wait on the built-in token's hourly limit.
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # ETags, GraphQL responses and parsed manifests: keeps reruns cheap and within rate limits.
+      - uses: actions/cache@v6
+        with:
+          path: |
+            .cache/http
+            .cache/manifests
+          key: census-${{ github.run_id }}
+          restore-keys: census-
+
+      - name: Pick mode
+        id: mode
+        run: |
+          mode="${{ inputs.mode }}"
+          if [ -z "$mode" ]; then
+            if [ "${{ github.event.schedule }}" = "43 4 * * 0" ]; then mode=full; else mode=refresh; fi
+          fi
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+
+      - name: Run census
+        env:
+          # A fine-grained PAT with public read-only access gets 5,000 requests/hour and code
+          # search; the built-in token works for refresh runs but is limited to 1,000/hour.
+          GITHUB_TOKEN: ${{ secrets.CENSUS_GITHUB_TOKEN || github.token }}
+          HAS_PAT: ${{ secrets.CENSUS_GITHUB_TOKEN != '' }}
+        run: |
+          if [ "$HAS_PAT" != "true" ]; then
+            echo "::warning::CENSUS_GITHUB_TOKEN is not set; using the built-in token (slower, no code search)."
+          fi
+          pnpm atlas census --mode "${{ steps.mode.outputs.mode }}"
+          pnpm atlas census-explorer
+
+      # Code scan, scorecard, compatibility and languages for every listed plugin. A failure here
+      # shouldn't lose the census snapshot, so the commit step runs regardless.
+      # Submissions still in the queue (a waiting submit run can be cancelled by GitHub): decide them
+      # now, so the profile step below grades the ones that are Zotero plugins.
+      - name: Process submissions
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.CENSUS_GITHUB_TOKEN || github.token }}
+        run: pnpm atlas submit process --cap 20
+
+      - name: Profile plugins
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.CENSUS_GITHUB_TOKEN || github.token }}
+        run: pnpm atlas profile
+
+      - name: Commit snapshot
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/census data/generated data/slugs.json data/submissions
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git commit -m "Census and profiles (${{ steps.mode.outputs.mode }}) $(date -u +%F)"
+          git pull --rebase origin main
+          git push origin HEAD:main

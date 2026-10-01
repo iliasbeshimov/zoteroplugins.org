@@ -1,0 +1,26 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotbox",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Extra data sources: PubMed, OpenAlex and Semantic Scholar API keys (empty by default); AI and translation services also take their own keys",
+  "worksWithout": "Metadata updates, journal rankings and citation counts from keyless sources",
+  "services": [
+   "PubMed",
+   "OpenAlex",
+   "Semantic Scholar"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zoterobox.api.pubmed_apikey\", \"\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Keys are empty by default (prefs.js: pref(\"extensions.zotero.zoterobox.api.pubmed_apikey\", \"\");), and the sandbox shows it reaching keyless hosts, so optional holds. In extensions.zotero/content/scripts/zoterobox.js the code has a built-in 'ollama' provider with 'http://localhost:11434' and a check `if(_0x35afb2==='ollama'||_0x35afb2==='lmstudio')return _0x496812;` that sends no auth header. So it can use a local model for its AI features, and 'unknown' was too cautious."
+}

@@ -1,0 +1,591 @@
+{
+ "schemaVersion": 1,
+ "slug": "lgfetcher",
+ "repo": "cavalloscuro/lgfetcher",
+ "version": "1.1.0",
+ "tag": "v.1.1.0",
+ "releaseAuthor": "CavalloScuro",
+ "publishedAt": "2026-07-29T18:39:33Z",
+ "prerelease": false,
+ "asset": {
+  "name": "lgfetcher-v1.1.0.xpi",
+  "url": "https://github.com/CavalloScuro/LGFetcher/releases/download/v.1.1.0/lgfetcher-v1.1.0.xpi",
+  "size": 26243,
+  "sha256": "857dbbd3385b424750a3191a0e185ae64f4afcd699f7212c87e6286d4faae306",
+  "githubAssetId": 494430431,
+  "uploader": "CavalloScuro",
+  "uploadedAt": "2026-07-29T19:16:27Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "lgfetcher@example.com",
+  "name": "LGFetcher",
+  "version": "1.1.0",
+  "description": "Fetch books and articles from LibGen directly into Zotero.",
+  "updateUrl": "https://example.com/lgfetcher/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 72759,
+   "sha256": "369f7ba12a7834027361190db8a917a6c0ccc82eb0cf7f706b8c2437f67b509b"
+  },
+  {
+   "path": "icon.svg",
+   "size": 1251,
+   "sha256": "05acbcdf0b56f583f68cd62dde7f2254b6e0bd648b7ba540f8c33ac0f9927b0b"
+  },
+  {
+   "path": "manifest.json",
+   "size": 481,
+   "sha256": "6733c8719cd6ee0448474b70bfb1e3e821a2738cb5323f317b52d6caeb7c7a07"
+  },
+  {
+   "path": "preferences-default.js",
+   "size": 486,
+   "sha256": "ae437688ad745b14584db08632037e9c0a9e335ad173d3cefd079e4d397490f0"
+  },
+  {
+   "path": "preferences-ui.js",
+   "size": 3282,
+   "sha256": "8d62caef0f2c0d7edc9fe6aaf65426293f7413192940e1d496a5bb48449d71f4"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 4052,
+   "sha256": "10b76e1b98fff1f4bb0650127b4fae8d23639c399f8f8834453058d00afe6845"
+  },
+  {
+   "path": "selection.js",
+   "size": 3424,
+   "sha256": "66dd4bebfe52a7fc0119eebf6e0bf5ef26250deaf6e78766e43b779dea2176f1"
+  },
+  {
+   "path": "selection.xhtml",
+   "size": 2316,
+   "sha256": "003ee6dc4d58e5d2b7cc1ec88e6788d0c67007e384a21957cc83bb3a66ba16a5"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "lgfetcher",
+   "version": "1.1.0",
+   "sha256": "857dbbd3385b424750a3191a0e185ae64f4afcd699f7212c87e6286d4faae306"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 86319,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1283,
+       "column": 31,
+       "snippet": "const response = await fetch(url, { ...options, signal: controller.signal });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1382,
+       "column": 31,
+       "snippet": "const response = await fetch(url, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 417,
+       "column": 24,
+       "snippet": "const req = await HTTP.request(\"GET\", normalized, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1267,
+       "column": 26,
+       "snippet": "const req = await HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "libgen.bz",
+     "category": "scholarly-api",
+     "provider": "Library Genesis",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1647,
+       "column": 38,
+       "snippet": "\"extensions.lgfetcher.mirrors\": \"https://libgen.li\\nhttps://libgen.la\\nhttps://libgen.gl\\nhttps://libgen.bz\\nhttps://libgen.vg\\nhttps://libgen.is\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences-default.js",
+       "line": 4,
+       "column": 34,
+       "snippet": "\"extensions.lgfetcher.mirrors\": \"https://libgen.li\\nhttps://libgen.la\\nhttps://libgen.gl\\nhttps://libgen.bz\\nhttps://libgen.vg\\nhttps://libgen.is\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 96,
+       "column": 0,
+       "snippet": "https://libgen.bz",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "libgen.gl",
+     "category": "scholarly-api",
+     "provider": "Library Genesis",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1647,
+       "column": 38,
+       "snippet": "\"extensions.lgfetcher.mirrors\": \"https://libgen.li\\nhttps://libgen.la\\nhttps://libgen.gl\\nhttps://libgen.bz\\nhttps://libgen.vg\\nhttps://libgen.is\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences-default.js",
+       "line": 4,
+       "column": 34,
+       "snippet": "\"extensions.lgfetcher.mirrors\": \"https://libgen.li\\nhttps://libgen.la\\nhttps://libgen.gl\\nhttps://libgen.bz\\nhttps://libgen.vg\\nhttps://libgen.is\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 95,
+       "column": 0,
+       "snippet": "https://libgen.gl",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "libgen.is",
+     "category": "scholarly-api",
+     "provider": "Library Genesis",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1647,
+       "column": 38,
+       "snippet": "\"extensions.lgfetcher.mirrors\": \"https://libgen.li\\nhttps://libgen.la\\nhttps://libgen.gl\\nhttps://libgen.bz\\nhttps://libgen.vg\\nhttps://libgen.is\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences-default.js",
+       "line": 4,
+       "column": 34,
+       "snippet": "\"extensions.lgfetcher.mirrors\": \"https://libgen.li\\nhttps://libgen.la\\nhttps://libgen.gl\\nhttps://libgen.bz\\nhttps://libgen.vg\\nhttps://libgen.is\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 98,
+       "column": 0,
+       "snippet": "https://libgen.is</html:textarea>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "libgen.la",
+     "category": "scholarly-api",
+     "provider": "Library Genesis",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1647,
+       "column": 38,
+       "snippet": "\"extensions.lgfetcher.mirrors\": \"https://libgen.li\\nhttps://libgen.la\\nhttps://libgen.gl\\nhttps://libgen.bz\\nhttps://libgen.vg\\nhttps://libgen.is\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences-default.js",
+       "line": 4,
+       "column": 34,
+       "snippet": "\"extensions.lgfetcher.mirrors\": \"https://libgen.li\\nhttps://libgen.la\\nhttps://libgen.gl\\nhttps://libgen.bz\\nhttps://libgen.vg\\nhttps://libgen.is\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 94,
+       "column": 0,
+       "snippet": "https://libgen.la",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "libgen.li",
+     "category": "scholarly-api",
+     "provider": "Library Genesis",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1647,
+       "column": 38,
+       "snippet": "\"extensions.lgfetcher.mirrors\": \"https://libgen.li\\nhttps://libgen.la\\nhttps://libgen.gl\\nhttps://libgen.bz\\nhttps://libgen.vg\\nhttps://libgen.is\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences-default.js",
+       "line": 4,
+       "column": 34,
+       "snippet": "\"extensions.lgfetcher.mirrors\": \"https://libgen.li\\nhttps://libgen.la\\nhttps://libgen.gl\\nhttps://libgen.bz\\nhttps://libgen.vg\\nhttps://libgen.is\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 93,
+       "column": 172,
+       "snippet": "://libgen.gl&#10;https://libgen.bz&#10;https://libgen.vg&#10;https://libgen.is\">https://libgen.li",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "libgen.vg",
+     "category": "scholarly-api",
+     "provider": "Library Genesis",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1647,
+       "column": 38,
+       "snippet": "\"extensions.lgfetcher.mirrors\": \"https://libgen.li\\nhttps://libgen.la\\nhttps://libgen.gl\\nhttps://libgen.bz\\nhttps://libgen.vg\\nhttps://libgen.is\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences-default.js",
+       "line": 4,
+       "column": 34,
+       "snippet": "\"extensions.lgfetcher.mirrors\": \"https://libgen.li\\nhttps://libgen.la\\nhttps://libgen.gl\\nhttps://libgen.bz\\nhttps://libgen.vg\\nhttps://libgen.is\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 97,
+       "column": 0,
+       "snippet": "https://libgen.vg",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1130,
+      "column": 20,
+      "snippet": "let file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1130,
+      "column": 64,
+      "snippet": "let file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://example.com/lgfetcher/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://example.com/lgfetcher/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the CavalloScuro account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "lgfetcher",
+   "version": "1.1.0",
+   "sha256": "857dbbd3385b424750a3191a0e185ae64f4afcd699f7212c87e6286d4faae306"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "5efd0a537622ba15155f178c23039105e2253c6826229170d16a4046ed6f1f24"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "libgen.bz",
+       "libgen.gl",
+       "libgen.is",
+       "libgen.la",
+       "libgen.li",
+       "libgen.vg"
+      ],
+      "unconfirmed": [
+       "libgen.bz",
+       "libgen.gl",
+       "libgen.is",
+       "libgen.la",
+       "libgen.li",
+       "libgen.vg"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": true,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-29T18:39:33Z",
+    "lastCommitAt": "2026-08-20T17:44:32Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T05:44:26Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 2,
+    "dialogs": 2
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

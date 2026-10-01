@@ -1,0 +1,34 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-tts-byok",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "the text-to-speech service (OpenAI, ElevenLabs, Azure, Gemini, Speechify or custom)",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "ElevenLabs",
+   "Azure",
+   "Google Gemini",
+   "Speechify"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "Bring your own text-to-speech key to Zotero 9's built-in Read Aloud",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.byokTTS.baseUrl\", \"https://api.openai.com/v1\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The README says \"Bring your own text-to-speech key\", and the default provider is openai with baseUrl \"https://api.openai.com/v1\" and an empty key. \"Self-hosted servers\" are mentioned, but nothing shows the endpoint is local, so localModel stays unknown."
+}

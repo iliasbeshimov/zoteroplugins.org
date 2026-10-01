@@ -1,0 +1,25 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-llm-wiki",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Wiki generation through the OpenAI-compatible API; the code throws if the key is empty",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "OpenAI-compatible provider"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "content/scripts/llmwiki.js ~line 3483",
+   "quote": "if (!endpoint || !apiKey) {",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Code: `if (!endpoint || !apiKey) {` throws, and the default apiKey is empty with the OpenAI endpoint. Nothing in the pack or README mentions Ollama or localhost. A custom endpoint is possible but a key is still demanded, so local is unknown."
+}

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "rulesVersion": "0.1.0",
+  "computedAt": "2026-09-24T12:05:00Z",
+  "appliesTo": {
+    "slug": "example-reader-ai",
+    "version": "2.1.0",
+    "sha256": "3f2a9c0d6b1e4f5a7c8d9e0f1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d"
+  },
+  "inputs": {
+    "analyzerVersion": "0.1.0",
+    "provenanceCheckerVersion": "0.1.0",
+    "hostsTableVersion": "2026.09.1",
+    "currentZotero": "10.0.3",
+    "inputHash": "c0ffee00d6b1e4f5a7c8d9e0f1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4"
+  },
+  "facets": {
+    "sourceTransparency": {
+      "provenance": "plausible",
+      "obfuscated": false,
+      "suspiciousUnicode": false,
+      "sourceMaps": false,
+      "assetReplaced": false,
+      "concern": "low",
+      "label": "Built from public source; we couldn't reproduce the build. No obfuscation found.",
+      "drivers": ["ST-PLAUSIBLE", "ST-NO-OBFUSCATION"]
+    },
+    "dataSharing": {
+      "value": "named-third-parties",
+      "hosts": [
+        {
+          "category": "llm-provider",
+          "hosts": ["api.openai.com"]
+        },
+        {
+          "category": "telemetry",
+          "hosts": ["plausible.io"]
+        }
+      ],
+      "concern": "medium",
+      "label": "Talks to named third parties, including an analytics service",
+      "drivers": ["DS-NAMED-THIRD-PARTIES", "DS-TELEMETRY"]
+    },
+    "capabilities": {
+      "badges": [
+        {
+          "id": "credential-storage",
+          "label": "Stores an API key in Zotero preferences",
+          "concern": "low"
+        }
+      ],
+      "concern": "low",
+      "drivers": ["CAP-CREDENTIALS"]
+    },
+    "requirements": {
+      "badges": [
+        {
+          "id": "api-key",
+          "label": "Needs your own API key",
+          "detail": "OpenAI or a compatible endpoint"
+        }
+      ],
+      "reviewed": false
+    },
+    "maintenance": {
+      "status": "active",
+      "lastReleaseAt": "2026-09-10T08:00:00Z",
+      "lastCommitAt": "2026-09-18T15:30:00Z",
+      "concern": "none"
+    },
+    "compatibility": {
+      "current": {
+        "zoteroVersion": "10.0.3",
+        "major": 10,
+        "status": "compatible"
+      },
+      "previous": {
+        "zoteroVersion": "9.0.6",
+        "major": 9,
+        "status": "compatible"
+      },
+      "next": {
+        "zoteroVersion": "11.0-dev.5",
+        "major": 11,
+        "status": "incompatible"
+      },
+      "blockedByZotero": null,
+      "concern": "none"
+    },
+    "reviewStatus": {
+      "state": "automated-only",
+      "stale": false
+    }
+  },
+  "overall": {
+    "label": "review-details",
+    "ruleId": "OV-REVIEW-TELEMETRY",
+    "drivers": ["dataSharing"]
+  }
+}

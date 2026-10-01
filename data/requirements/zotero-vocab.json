@@ -1,0 +1,28 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-vocab",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "none",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "description",
+   "where": "Manifest description",
+   "quote": "调用百度翻译免密接口（国内直连、免 Key）自动填入中文释义",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/translate.js:16",
+   "quote": "const SUG = \"https://fanyi.baidu.com/sug?kw=\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The manifest description says it calls the Baidu Translate keyless endpoint (\"免密接口（国内直连、免 Key）\"), and the pack's only service is fanyi.baidu.com/sug. No key storage was found, and a translation lookup is not a local AI model."
+}

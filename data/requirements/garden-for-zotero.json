@@ -1,0 +1,35 @@
+{
+ "schemaVersion": 1,
+ "slug": "garden-for-zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "your own keys are needed only for the third-party model providers it configures",
+  "worksWithout": "the built-in free model quota and CSL style downloads",
+  "services": [
+   "DeepSeek",
+   "OpenAI",
+   "Anthropic",
+   "Google AI Studio",
+   "SiliconFlow",
+   "other LLM providers"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README features",
+   "quote": "🎁 免费大模型，开箱即用，可作为免费翻译服务",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/garden-app/garden-app.js:47845",
+   "quote": "value: \"http://localhost:11434\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README quote 🎁 免费大模型，开箱即用 is real. garden-app.js:47845 has `value: \"http://localhost:11434\"`, which is Ollama's default port, shown as a provider base URL in its model configuration UI. The evidence is a bit indirect but supports yes."
+}

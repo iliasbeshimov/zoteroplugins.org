@@ -1,0 +1,29 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf-translate--reginalluna",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "AI and commercial services such as DeepL, OpenAI, Claude, Gemini, Azure, Baidu",
+  "worksWithout": "Google (googleapi) or CNKI, chosen as the default service",
+  "services": [
+   "DeepL",
+   "OpenAI",
+   "Anthropic",
+   "Google Gemini",
+   "Microsoft Translator",
+   "Baidu Translate"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/zoteropdftranslate.js:36663",
+   "quote": "setPref(\"translateSource\", isZhCN ? \"cnki\" : \"googleapi\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Code default sets translateSource to cnki/googleapi (prefs file leaves it empty); README says 'Some services require an API key'. No local-model evidence in pack."
+}

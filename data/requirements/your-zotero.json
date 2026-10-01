@@ -1,0 +1,28 @@
+{
+ "schemaVersion": 1,
+ "slug": "your-zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "content/scripts/your_zotero.js:1153 (provider presets)",
+   "quote": "baseURL: \"http://127.0.0.1:11434/v1\",",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/your_zotero.js:182",
+   "quote": "if (!config.apiKey && config.provider !== \"ollama\") {",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Code has an 'ollama' provider preset with baseURL http://127.0.0.1:11434/v1, and validateConfig skips the key check for ollama. The default provider is openai and needs a key, so key need is mixed. 'unknown' is the safer answer."
+}

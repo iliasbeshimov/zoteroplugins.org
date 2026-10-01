@@ -1,0 +1,38 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-vocab-flow",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Optional translation aids: OpenAI-compatible, Gemini or Claude/Anthropic providers need your own API key",
+  "worksWithout": "Core vocabulary candidate extraction and notes; translation is off by default and the google-free provider needs no key",
+  "services": [
+   "OpenAI",
+   "Google Gemini",
+   "Anthropic"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "Translation Aid",
+   "quote": "It is disabled by default.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "Translation Aid",
+   "quote": "Use this for OpenAI, OpenRouter, LiteLLM, local proxies, and other Chat Completions-compatible gateways.",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "Translation Aid",
+   "quote": "BYO API keys are stored in Zotero preferences on this machine.",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README: \"It is disabled by default.\" and the core features run without a key, so optional fits. The local-model claim rests only on the README phrase \"local proxies\". No Ollama, LM Studio or localhost appears in the code, so I can't confirm it is used with a local AI model. The configurable endpoint makes it plausible but unproven."
+}

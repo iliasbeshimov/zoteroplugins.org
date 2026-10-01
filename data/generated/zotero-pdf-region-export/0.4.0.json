@@ -1,0 +1,485 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf-region-export",
+ "repo": "nicrael/zotero-pdf-region-export",
+ "version": "0.4.0",
+ "tag": "v0.4.0",
+ "releaseAuthor": "Nicrael",
+ "publishedAt": "2026-06-02T10:27:32Z",
+ "prerelease": false,
+ "asset": {
+  "name": "pdf-region-export-0.4.0.xpi",
+  "url": "https://github.com/Nicrael/zotero-pdf-region-export/releases/download/v0.4.0/pdf-region-export-0.4.0.xpi",
+  "size": 616996,
+  "sha256": "9bf240a82fb598046e15bdf5a7d4698dcbdbd616465d319a6dcdd26fbf57036a",
+  "githubAssetId": 436121960,
+  "uploader": "Nicrael",
+  "uploadedAt": "2026-06-02T10:27:31Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "pdf-region-export@andreadamonte",
+  "name": "PDF Region Export",
+  "version": "0.4.0",
+  "description": "Export a selected region of a PDF as a high-resolution image, and copy text selections as LaTeX citations.",
+  "updateUrl": "https://raw.githubusercontent.com/Nicrael/zotero-pdf-region-export/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 7180,
+   "sha256": "3274aac0ce70b65648762f62095779b724cf9033272c318a2af84e1a2723fec4"
+  },
+  {
+   "path": "chrome/content/select-window.js",
+   "size": 17773,
+   "sha256": "e26a7d9375663d22f78307da8729f45a61642d9c4ded9c180a254f5bee421101"
+  },
+  {
+   "path": "chrome/content/select-window.xhtml",
+   "size": 268,
+   "sha256": "4265c1a930a60e163c3e227b669330b5c0fd9c47b07609c8e9ecf1c49e150086"
+  },
+  {
+   "path": "lib/LICENSE-pdfjs",
+   "size": 10173,
+   "sha256": "0cec06e0e55fbc3dc5cee4fca9b607f66cb8f4e4dbcf3b3c013594dd156732e9"
+  },
+  {
+   "path": "lib/pdf.mjs",
+   "size": 607436,
+   "sha256": "ecb12f031c292f4e8ed8c24c934cd7933f6f095ed38068533b38ddb1ecb4664b"
+  },
+  {
+   "path": "lib/pdf.worker.mjs",
+   "size": 2187066,
+   "sha256": "b78f1b7af95f384f1b5f965736d5d21ab78d247bbeff89d35f3c95c7c99c7747"
+  },
+  {
+   "path": "manifest.json",
+   "size": 509,
+   "sha256": "5c1b378a815802b15d1f2df6491e367c2566733e03bb58bf1bd302ce29c02056"
+  },
+  {
+   "path": "prefs.js",
+   "size": 226,
+   "sha256": "d3d6b8b6d16c761ed6c11681c316a2f74669f67ea531516fcb2f4af29443e831"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-pdf-region-export",
+   "version": "0.4.0",
+   "sha256": "9bf240a82fb598046e15bdf5a7d4698dcbdbd616465d319a6dcdd26fbf57036a"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "lib/LICENSE-pdfjs",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 2819949,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": true,
+    "files": [
+     "lib/pdf.mjs",
+     "lib/pdf.worker.mjs"
+    ]
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "pdf.js",
+     "files": [
+      "lib/pdf.mjs",
+      "lib/pdf.worker.mjs"
+     ],
+     "identifiedBy": "file-name"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 12,
+     "inVendoredCodeOnly": true,
+     "libraries": [
+      "pdf.js"
+     ],
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/pdf.mjs",
+       "line": 1320,
+       "column": 27,
+       "snippet": "const response = await fetch(url);",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "lib/pdf.mjs",
+       "line": 9478,
+       "column": 4,
+       "snippet": "fetch(url, createFetchOptions(this._headers, this._withCredentials, this._abortController)).then(response => {",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "lib/pdf.mjs",
+       "line": 9558,
+       "column": 4,
+       "snippet": "fetch(url, createFetchOptions(this._headers, this._withCredentials, this._abortController)).then(response => {",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "lib/pdf.worker.mjs",
+       "line": 7709,
+       "column": 8,
+       "snippet": "fetch(url, {",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "lib/pdf.worker.mjs",
+       "line": 30029,
+       "column": 29,
+       "snippet": "const response = await fetch(url);",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "lib/pdf.worker.mjs",
+       "line": 30060,
+       "column": 29,
+       "snippet": "const response = await fetch(url);",
+       "inVendoredCode": true
+      }
+     ]
+    },
+    {
+     "api": "xhr",
+     "occurrences": 4,
+     "inVendoredCodeOnly": true,
+     "libraries": [
+      "pdf.js"
+     ],
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/pdf.mjs",
+       "line": 1335,
+       "column": 20,
+       "snippet": "const request = new XMLHttpRequest();",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "lib/pdf.mjs",
+       "line": 9632,
+       "column": 16,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "lib/pdf.worker.mjs",
+       "line": 7694,
+       "column": 18,
+       "snippet": "var xhr = new XMLHttpRequest();",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "lib/pdf.worker.mjs",
+       "line": 7701,
+       "column": 20,
+       "snippet": "var xhr = new XMLHttpRequest();",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [
+    {
+     "pattern": "http://<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/pdf.worker.mjs",
+       "line": 377,
+       "column": 16,
+       "snippet": "url = `http://${url}`;",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 93,
+      "column": 9,
+      "snippet": "Cc[\"@mozilla.org/widget/clipboardhelper;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 94,
+      "column": 20,
+      "snippet": ".getService(Ci.nsIClipboardHelper)",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "pdf.js"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "lib/pdf.worker.mjs",
+      "line": 26960,
+      "column": 15,
+      "snippet": "return new Function(\"src\", \"srcOffset\", \"dest\", \"destOffset\", compiled);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "Function"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/select-window.js",
+      "line": 150,
+      "column": 25,
+      "snippet": "const data = await IOUtils.read(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/select-window.js",
+      "line": 407,
+      "column": 12,
+      "snippet": "await IOUtils.write(savePath, buf);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "user-chosen",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Nicrael/zotero-pdf-region-export/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Nicrael/zotero-pdf-region-export/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Nicrael account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-pdf-region-export",
+   "version": "0.4.0",
+   "sha256": "9bf240a82fb598046e15bdf5a7d4698dcbdbd616465d319a6dcdd26fbf57036a"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "87679e549f64342a1948dd60a76cb5c78da6b195784ea279a87fa03fd9856ab7"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": true,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "bundled-library-only",
+    "hosts": [],
+    "concern": "low",
+    "label": "Network code only in bundled libraries: pdf.js",
+    "legalRisk": false,
+    "drivers": [
+     "DS-LIBRARY-ONLY"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-06-02T10:27:32Z",
+    "lastCommitAt": "2026-06-02T10:27:39Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T06:28:29Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

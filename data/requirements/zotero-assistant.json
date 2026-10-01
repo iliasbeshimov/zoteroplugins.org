@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-assistant",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "the AI model endpoint; the assistant won't run without an API key",
+  "worksWithout": "",
+  "services": [
+   "OpenAI-compatible API provider"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "chrome/content/assistant-plugin-model.js (release file)",
+   "quote": "if (!apiKey) {\n      throw new Error(this.t(\"apiKeyMissing\"));",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "Configuration",
+   "quote": "API base URL\n- model name\n- API key",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Code quote is real: callModel does `if (!apiKey) { throw new Error(this.t(\"apiKeyMissing\"));` and the chat assistant is its purpose. Default base URL is api.openai.com. Nothing shows local-model use; the localhost check in the code is only a web-fetch block."
+}

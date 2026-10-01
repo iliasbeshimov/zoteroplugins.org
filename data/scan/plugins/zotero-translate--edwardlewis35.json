@@ -1,0 +1,437 @@
+{
+ "repo": "edwardlewis35/zotero-translate",
+ "slug": "zotero-translate--edwardlewis35",
+ "group": "sample-2026",
+ "rank": 826,
+ "name": "LexiFlow 词典翻译",
+ "stars": 1,
+ "downloads": 9,
+ "createdAt": "2026-08-26T12:28:11Z",
+ "tag": "v0.3.2",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "lexiflow-zotero9-translator.xpi",
+    "url": "https://github.com/edwardlewis35/zotero-translate/releases/download/v0.3.2/lexiflow-zotero9-translator.xpi",
+    "size": 88200,
+    "uploadedAt": "2026-08-28T12:02:16Z",
+    "sha256": "5d1827525f7a473a2312f3795bf4ca3ef98f9742586a8c60c91b66c51665f0a3"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "lexiflow-dict-translator@example.com",
+    "name": "LexiFlow 词典翻译",
+    "version": "0.3.2",
+    "description": "A Zotero 9 PDF translation plugin with multiple local MDX/MDD dictionaries and an OpenAI-compatible fallback.",
+    "homepageUrl": null,
+    "updateUrl": "https://github.com/edwardlewis35/zotero-translate/releases/latest/download/update.json",
+    "minVersion": "9.0",
+    "maxVersion": "9.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-translate--edwardlewis35",
+     "version": "0.3.2",
+     "sha256": "5d1827525f7a473a2312f3795bf4ca3ef98f9742586a8c60c91b66c51665f0a3"
+    },
+    "coverage": {
+     "filesTotal": 8,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": "chrome/content/icons/icon.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/content/preferences.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/content/reader.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "minified",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [
+      "chrome/content/scripts/lexiflowdicttranslator.js"
+     ],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "base64-js",
+       "files": [
+        "chrome/content/scripts/lexiflowdicttranslator.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "buffer",
+       "files": [
+        "chrome/content/scripts/lexiflowdicttranslator.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "ieee754",
+       "files": [
+        "chrome/content/scripts/lexiflowdicttranslator.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "js-mdict",
+       "files": [
+        "chrome/content/scripts/lexiflowdicttranslator.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "pako",
+       "files": [
+        "chrome/content/scripts/lexiflowdicttranslator.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+         "line": 9424,
+         "column": 18,
+         "snippet": "xhr = await Zotero.HTTP.request(\"POST\", endpoint, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+         "line": 1986,
+         "column": 20,
+         "snippet": "openaiEndpoint: \"https://api.openai.com/v1/chat/completions\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+         "line": 9692,
+         "column": 18,
+         "snippet": "endpoint: \"https://api.openai.com/v1/chat/completions\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 8,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.lexiflowDictTranslator.openaiEndpoint\", \"https://api.openai.com/v1/chat/completions\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 8,
+         "column": 64,
+         "snippet": "pref(\"extensions.zotero.lexiflowDictTranslator.openaiEndpoint\", \"https://api.openai.com/v1/chat/completions\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+         "line": 1867,
+         "column": 11,
+         "snippet": "url: \"https://github.com/edwardlewis35/zotero-translate.git\"",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.zotero.lexiflowDictTranslator.openaiEndpoint",
+       "defaultValue": "https://api.openai.com/v1/chat/completions",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 8,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.lexiflowDictTranslator.openaiEndpoint\", \"https://api.openai.com/v1/chat/completions\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "openaiEndpoint",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+         "line": 2012,
+         "column": 22,
+         "snippet": "openaiEndpoint: getPref(\"openaiEndpoint\"),",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+        "line": 10546,
+        "column": 16,
+        "snippet": "() => Zotero.Utilities.Internal.copyTextToClipboard(text)",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard"
+       ]
+      }
+     },
+     {
+      "id": "credential-storage",
+      "occurrences": 2,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+        "line": 2013,
+        "column": 20,
+        "snippet": "openaiApiKey: getPref(\"openaiApiKey\"),",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 9,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.lexiflowDictTranslator.openaiApiKey\", \"\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "extensions.zotero.lexiflowDictTranslator.openaiApiKey",
+        "openaiApiKey"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 17,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+        "line": 1962,
+        "column": 33,
+        "snippet": "for (const path of await IOUtils.getChildren(directory)) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+        "line": 3033,
+        "column": 20,
+        "snippet": "fileStream.init(Zotero.File.pathToFile(path), 1, 292, 0);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+        "line": 8881,
+        "column": 23,
+        "snippet": "const stat = await IOUtils.stat(path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+        "line": 8941,
+        "column": 17,
+        "snippet": "if (!await IOUtils.exists(config2.mdxPath)) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+        "line": 9059,
+        "column": 25,
+        "snippet": "if (!await IOUtils.exists(path)) continue;",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+        "line": 9177,
+        "column": 11,
+        "snippet": "return PathUtils.normalize(path).replace(/\\\\/gu, \"/\").toLocaleLowerCase();",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+        "line": 9180,
+        "column": 11,
+        "snippet": "return PathUtils.join(",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+        "line": 9193,
+        "column": 11,
+        "snippet": "return PathUtils.join(",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+        "line": 9201,
+        "column": 16,
+        "snippet": "if (await IOUtils.exists(path)) output.push(path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/lexiflowdicttranslator.js",
+        "line": 9218,
+        "column": 10,
+        "snippet": "await IOUtils.makeDirectory(getManagedDictionaryDirectory(), {",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "zotero-data-dir",
+       "apis": [
+        "IOUtils/PathUtils",
+        "Zotero.File",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 10,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/edwardlewis35/zotero-translate/releases/latest/download/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/edwardlewis35/zotero-translate/releases/latest/download/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.openai.com"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

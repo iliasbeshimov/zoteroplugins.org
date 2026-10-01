@@ -1,0 +1,34 @@
+{
+ "schemaVersion": 1,
+ "slug": "paperworm",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "cloud LLM providers (OpenAI, Anthropic, Gemini, DeepSeek, etc.) and the optional MinerU extraction token",
+  "worksWithout": "Ollama (local), no API key",
+  "services": [
+   "OpenAI",
+   "Anthropic",
+   "Google Gemini",
+   "DeepSeek",
+   "MinerU"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, models table",
+   "quote": "| Ollama                | any local model                       | No API key needed; set base URL (default: `http://localhost:11434`)                                                |",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, Requirements",
+   "quote": "An API key for at least one supported LLM provider (or a local Ollama instance)",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README models table: 'No API key needed; set base URL (default: http://localhost:11434)' for Ollama. Other providers and MinerU need keys. Default prefs include llm.ollama.baseUrl and model llama3.2."
+}

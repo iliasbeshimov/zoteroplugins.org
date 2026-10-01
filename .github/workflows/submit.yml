@@ -1,0 +1,101 @@
+name: Submit
+
+# A plugin someone submitted on the site. The site's function (site/functions/api/submit.ts)
+# starts this with the repository's owner/name. Two jobs:
+# - enqueue: writes data/submissions/queue/<owner>__<name>.json. The same repo always gives the same
+#   file, so a repeat commits nothing, and runs of different repos never touch the same file.
+# - process: one at a time, shared with the census ("data" group). It decides everything queued
+#   (in review, or rejected with the reason), deploys so plugins in review show, then builds their
+#   profiles and grades and deploys again. GitHub keeps only one waiting run per group, but every
+#   run processes the whole queue, so a cancelled waiting run loses nothing.
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: "owner/name of the submitted GitHub repository"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  enqueue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Queue it
+        env:
+          REPO: ${{ inputs.repo }}
+        run: pnpm atlas submit enqueue "$REPO"
+      - name: Commit
+        env:
+          REPO: ${{ inputs.repo }}
+        run: '.github/scripts/commit-push.sh "Submissions: queue $REPO" data/submissions/queue'
+
+  process:
+    needs: enqueue
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    concurrency:
+      group: data
+      cancel-in-progress: false
+    env:
+      GITHUB_TOKEN: ${{ secrets.CENSUS_GITHUB_TOKEN || github.token }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/cache@v6
+        with:
+          path: |
+            .cache/http
+            .cache/manifests
+          key: submit-${{ github.run_id }}
+          restore-keys: |
+            submit-
+            census-
+
+      - name: Decide what's queued
+        run: pnpm atlas submit process --cap 20
+
+      - name: Commit decisions
+        id: decided
+        run: '.github/scripts/commit-push.sh "Submissions: decided" data/submissions data/census/census.json data/slugs.json'
+
+      - name: Deploy (plugins in review)
+        if: steps.decided.outputs.changed == 'true' && env.CLOUDFLARE_API_TOKEN != ''
+        run: |
+          pnpm site:build
+          cd site && npx -y wrangler@4 pages deploy dist --project-name zoteroplugins --branch main --commit-hash "$(git rev-parse HEAD)" --commit-dirty=false
+
+      - name: Check and grade plugins in review
+        run: pnpm atlas submit check
+
+      - name: Commit profiles
+        id: checked
+        run: '.github/scripts/commit-push.sh "Submissions: profiles and grades" data/submissions data/generated data/slugs.json'
+
+      - name: Deploy (graded)
+        if: steps.checked.outputs.changed == 'true' && env.CLOUDFLARE_API_TOKEN != ''
+        run: |
+          pnpm site:build
+          cd site && npx -y wrangler@4 pages deploy dist --project-name zoteroplugins --branch main --commit-hash "$(git rev-parse HEAD)" --commit-dirty=false

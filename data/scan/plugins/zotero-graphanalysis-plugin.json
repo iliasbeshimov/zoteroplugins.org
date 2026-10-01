@@ -1,0 +1,429 @@
+{
+ "repo": "situkangsayur/zotero-graphanalysis-plugin",
+ "slug": "zotero-graphanalysis-plugin",
+ "group": "sample-2026",
+ "rank": 1071,
+ "name": "Zotero Citation Graph",
+ "stars": 0,
+ "downloads": 4,
+ "createdAt": "2026-09-13T08:22:04Z",
+ "tag": "v0.1.1",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-graph-analysis-0.1.1.xpi",
+    "url": "https://github.com/situkangsayur/zotero-graphanalysis-plugin/releases/download/v0.1.1/zotero-graph-analysis-0.1.1.xpi",
+    "size": 111293,
+    "uploadedAt": "2026-09-13T17:15:58Z",
+    "sha256": "270b180505e031f27650aee57fee183195309ecfc28eb415385a37280dac81e8"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero-graph-analysis@situkangsayur.github.io",
+    "name": "Zotero Citation Graph",
+    "version": "0.1.1",
+    "description": "Analyse the citation network of a collection -- clusters, central works, main path and shared references you don't have yet -- from OpenAlex data, with an interactive report. No AI involved.",
+    "homepageUrl": "https://github.com/situkangsayur/zotero-graphanalysis-plugin",
+    "updateUrl": "https://raw.githubusercontent.com/situkangsayur/zotero-graphanalysis-plugin/main/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "10.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-graphanalysis-plugin",
+     "version": "0.1.1",
+     "sha256": "270b180505e031f27650aee57fee183195309ecfc28eb415385a37280dac81e8"
+    },
+    "coverage": {
+     "filesTotal": 18,
+     "filesAnalyzed": 12,
+     "filesSkipped": [
+      {
+       "path": "content/icons/graph-16.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/icons/graph-48.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/preferences.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "LICENSE",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "README.md",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "src/openalex.js",
+         "line": 83,
+         "column": 21,
+         "snippet": "response = await fetch(url, { headers: { Accept: 'application/json' } });",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.openalex.org",
+       "category": "scholarly-api",
+       "provider": "OpenAlex",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "src/openalex.js",
+         "line": 23,
+         "column": 15,
+         "snippet": "static BASE = 'https://api.openalex.org';",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "arxiv.org",
+       "category": "scholarly-api",
+       "provider": "arXiv",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "src/report.js",
+         "line": 97,
+         "column": 9,
+         "snippet": "return `<!doctype html>",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "doi.org",
+       "category": "scholarly-api",
+       "provider": "DOI resolver",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "src/report.js",
+         "line": 222,
+         "column": 9,
+         "snippet": "SCRIPT: `",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "src/core.js",
+         "line": 60,
+         "column": 13,
+         "snippet": "helpURL: 'https://github.com/situkangsayur/zotero-graphanalysis-plugin#readme',",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "graphml.graphdrawing.org",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "src/report.js",
+         "line": 222,
+         "column": 9,
+         "snippet": "SCRIPT: `",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "openalex.org",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "src/report.js",
+         "line": 97,
+         "column": 9,
+         "snippet": "return `<!doctype html>",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "file://<expr><expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "src/report.js",
+         "line": 522,
+         "column": 46,
+         "snippet": "lines.push(`<p>Full report: <a href=\"${esc(`file://${reportPath.startsWith('/') ? '' : '/'}${reportPath.replace(/\\\\/g, '/')}`)}\">${esc(reportPath)}</a></p>`);",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 13,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "src/analysis.js",
+        "line": 17,
+        "column": 13,
+        "snippet": "this.dir = PathUtils.join(Zotero.Profile.dir, 'zotero-graph-analysis', 'cache');",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/analysis.js",
+        "line": 31,
+        "column": 9,
+        "snippet": "return PathUtils.join(this.dir, `${safe}.${hash.toString(16)}.json`);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/analysis.js",
+        "line": 40,
+        "column": 20,
+        "snippet": "let data = await IOUtils.readJSON(this._path(key));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/analysis.js",
+        "line": 54,
+        "column": 9,
+        "snippet": "await IOUtils.makeDirectory(this.dir, { ignoreExisting: true, createAncestors: true });",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/analysis.js",
+        "line": 55,
+        "column": 9,
+        "snippet": "await IOUtils.writeJSON(this._path(key), { at: Date.now(), value });",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/analysis.js",
+        "line": 65,
+        "column": 8,
+        "snippet": "await IOUtils.remove(this.dir, { recursive: true, ignoreAbsent: true });",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/analysis.js",
+        "line": 268,
+        "column": 12,
+        "snippet": "let dir = PathUtils.join(Zotero.Profile.dir, 'zotero-graph-analysis', 'reports');",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/analysis.js",
+        "line": 269,
+        "column": 8,
+        "snippet": "await IOUtils.makeDirectory(dir, { ignoreExisting: true, createAncestors: true });",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/analysis.js",
+        "line": 272,
+        "column": 13,
+        "snippet": "let path = PathUtils.join(dir, `${name}-${stamp}.html`);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/analysis.js",
+        "line": 273,
+        "column": 8,
+        "snippet": "await IOUtils.writeUTF8(path, ZoteroGraph.Report.render(result));",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "zotero-data-dir",
+       "apis": [
+        "IOUtils/PathUtils"
+       ]
+      }
+     },
+     {
+      "id": "login-manager",
+      "occurrences": 4,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "src/prefs.js",
+        "line": 50,
+        "column": 4,
+        "snippet": "Services.logins.removeLogin(existing);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/prefs.js",
+        "line": 58,
+        "column": 3,
+        "snippet": "Services.logins.modifyLogin(existing, info);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/prefs.js",
+        "line": 61,
+        "column": 9,
+        "snippet": "await Services.logins.addLoginAsync(info);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/prefs.js",
+        "line": 69,
+        "column": 22,
+        "snippet": "let logins = await Services.logins.searchLoginsAsync({ origin: this.LOGIN_ORIGIN, httpRealm: this.LOGIN_REALM });",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "nsILoginManager"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 14,
+        "column": 18,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/situkangsayur/zotero-graphanalysis-plugin/main/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/situkangsayur/zotero-graphanalysis-plugin/main/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "scholarly-api": [
+      "api.openalex.org",
+      "arxiv.org",
+      "doi.org"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "login-manager",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

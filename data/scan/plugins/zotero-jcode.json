@@ -1,0 +1,168 @@
+{
+ "repo": "myshevchuk/zotero-jcode",
+ "slug": "zotero-jcode",
+ "group": "sample-2026",
+ "rank": 1182,
+ "name": "Journal Code",
+ "stars": 0,
+ "downloads": 2,
+ "createdAt": "2026-05-20T21:16:46Z",
+ "tag": "v1.0.1",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-jcode.xpi",
+    "url": "https://github.com/myshevchuk/zotero-jcode/releases/download/v1.0.1/zotero-jcode.xpi",
+    "size": 17722,
+    "uploadedAt": "2026-06-13T23:12:11Z",
+    "sha256": "1257a25b37ccbf4240ab1976ba9e47eef939f874dab8bda86ed61a2eb5eff6bf"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "jcode@zotero-jcode.local",
+    "name": "Journal Code",
+    "version": "1.0.1",
+    "description": "Tag selected Zotero items with a `jcode:` line in the Extra field, looked up from a configurable journal-abbreviation TSV.",
+    "homepageUrl": null,
+    "updateUrl": "https://zotero-jcode.invalid/updates.json",
+    "minVersion": "7.0",
+    "maxVersion": "9.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-jcode",
+     "version": "1.0.1",
+     "sha256": "1257a25b37ccbf4240ab1976ba9e47eef939f874dab8bda86ed61a2eb5eff6bf"
+    },
+    "coverage": {
+     "filesTotal": 8,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": "content/icons/jcode.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "data/journal_titles.tsv",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/jcode.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 190,
+         "column": 25,
+         "snippet": "const response = await fetch(\"chrome://jcode/content/data/journal_titles.tsv\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 178,
+        "column": 19,
+        "snippet": "return await Zotero.File.getContentsAsync(overridePath);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 9,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://zotero-jcode.invalid/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://zotero-jcode.invalid/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "unknown-endpoints",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

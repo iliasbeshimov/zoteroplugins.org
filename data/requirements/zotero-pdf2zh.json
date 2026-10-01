@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf2zh",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Paid or other LLM translation services (OpenAI, DeepSeek, Zhipu, SiliconFlow paid models and similar) need your own API key and URL",
+  "worksWithout": "siliconflowfree (the default for pdf2zh_next), plus Bing and Google machine translation",
+  "services": [
+   "OpenAI",
+   "DeepSeek",
+   "SiliconFlow",
+   "Zhipu"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, translation services table",
+   "quote": "除了免费服务，您均需要配置自己的API Key和URL才可以使用翻译服务",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.pdf2zh.next_service\", \"siliconflowfree\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/llmApiEditor.xhtml:494",
+   "quote": "urls: [\"http://localhost:11434\"],",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Defaults are next_service siliconflowfree and bing, which the README calls free and needing no setup; the README says every non-free service needs your own key. Code has an Ollama preset, `urls: [\"http://localhost:11434\"],` in content/llmApiEditor.xhtml:494."
+}

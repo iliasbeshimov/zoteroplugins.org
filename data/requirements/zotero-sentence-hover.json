@@ -1,0 +1,28 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-sentence-hover",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "addon.js endpoint check",
+   "quote": "本机服务可以使用 HTTP。",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "addon.js",
+   "quote": "if (c.apiKey) headers.Authorization = 'Bearer ' + c.apiKey;",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The user must enter their own base URL, model and key. The code only sends Authorization `if (c.apiKey)`, so a key may not be needed for every endpoint, but no default service is named. core.js:131 allows plain HTTP only for localhost: `请使用 HTTPS 地址；本机服务可以使用 HTTP。` That supports a local OpenAI-compatible endpoint."
+}

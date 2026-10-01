@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-zotcloud",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Sync needs the user's own WebDAV password or a Google Drive, Dropbox or pCloud sign-in; no provider is set by default",
+  "worksWithout": "",
+  "services": [
+   "WebDAV server",
+   "Google Drive",
+   "Dropbox",
+   "pCloud"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "description",
+   "where": "GitHub description",
+   "quote": "Synchronize Zotero metadata, attachments, notes, and PDF annotations with WebDAV or supported cloud providers.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotcloud.provider\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "description",
+   "where": "Manifest description",
+   "quote": "Sync your Zotero library to cloud storage providers",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: \"synchronizes your Zotero library with your own WebDAV server or a supported cloud account\". Default pref(\"extensions.zotcloud.provider\", \"\") is empty and the code stores a WebDAV password and OAuth client secrets, so sync cannot run until the user supplies their own credentials or sign-in. No AI features."
+}

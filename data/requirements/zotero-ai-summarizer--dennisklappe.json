@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-summarizer--dennisklappe",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "OpenAI summaries (the only service it calls)",
+  "worksWithout": "",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "Configuration",
+   "quote": "Get an OpenAI API key from [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "src/summarizer.js:73",
+   "quote": "const url = 'https://api.openai.com/v1/chat/completions';",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: \"Get an OpenAI API key from https://platform.openai.com/api-keys\" and \"OpenAI API key\" under Requirements; default prefs key is empty. Code hardcodes `const url = 'https://api.openai.com/v1/chat/completions';` with no custom endpoint setting."
+}

@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-gemini",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Google Gemini API key",
+  "worksWithout": "",
+  "services": [
+   "Google AI Studio (Gemini API)"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Installation",
+   "quote": "Set API Key in **Edit** -> **Settings** -> **Zotero Gemini**.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zoterogemini.js:75",
+   "quote": "return `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README says to set an API key, and the default geminiApiKey is empty. The code only calls the fixed generativelanguage.googleapis.com endpoint, with no configurable base URL."
+}

@@ -1,0 +1,28 @@
+{
+ "schemaVersion": 1,
+ "slug": "deep-research",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "none",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "description",
+   "where": "manifest description",
+   "quote": "Constrained exact collection resolution and capability-bound local transactions for reviewed Zotero manifests.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:1162",
+   "quote": "endpoint: `http://127.0.0.1:${Zotero.Server.port}${ENDPOINT}`,",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Pack: 'Where its code keeps a key, token or password (static analysis) (none found)'; README: '工具 → 开发者 → 运行 JavaScript：无需 API key'. The only network address is Zotero's own server (bootstrap.js:1162), and the plugin is a bridge for external agents with no model calls of its own. The optional Zotero Web API key is a Zotero sign-in, which does not count."
+}

@@ -1,0 +1,35 @@
+---
+/** One plugin in a shared-ID list: name, how it relates to the most used one, grade, downloads, last release. */
+import { GRADES, type Plugin } from "../lib/atlas.ts";
+import GradeTag from "./GradeTag.astro";
+
+interface Props {
+  p: Plugin;
+  note?: string;
+  current?: boolean;
+}
+const { p, note = "", current = false } = Astro.props;
+const word = GRADES.find((x) => x.g === p.grade)?.word ?? "Not graded yet";
+---
+
+<div class="sid-row">
+  <span class="nm">
+    {current ? <strong>{p.name} <span class="sub">· this plugin</span></strong> : <a href={`/p/${p.slug}`}>{p.name}</a>}
+    <span class="sub">{note ? `${note} · ` : ""}{p.repo}</span>
+  </span>
+  <span class="gr"><GradeTag grade={p.grade} size="xs" />{word}</span>
+  <span class="dl">{p.downloads}</span>
+  <span class="rel">{p.released}</span>
+</div>
+
+<style>
+  .sid-row { display: grid; grid-template-columns: minmax(0, 1fr) 210px 110px 120px; gap: 12px; align-items: center; padding: 11px 0; border-top: 1px solid var(--line); }
+  .nm { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .nm a { font-weight: 650; text-decoration: none; }
+  .sub { font-size: 13px; opacity: 0.72; overflow-wrap: anywhere; font-weight: 400; }
+  .gr { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  @media (max-width: 720px) {
+    .sid-row { grid-template-columns: minmax(0, 1fr) auto; }
+    .dl, .rel { display: none; }
+  }
+</style>

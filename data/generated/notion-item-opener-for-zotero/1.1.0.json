@@ -1,0 +1,317 @@
+{
+ "schemaVersion": 1,
+ "slug": "notion-item-opener-for-zotero",
+ "repo": "yfengup/notion-item-opener-for-zotero",
+ "version": "1.1.0",
+ "tag": "v1.1.0",
+ "releaseAuthor": "yfengup",
+ "publishedAt": "2026-08-09T13:08:13Z",
+ "prerelease": false,
+ "asset": {
+  "name": "notion-item-opener-1.1.0.xpi",
+  "url": "https://github.com/yfengup/notion-item-opener-for-zotero/releases/download/v1.1.0/notion-item-opener-1.1.0.xpi",
+  "size": 3345,
+  "sha256": "9a63f235372fb05bee6a7419296007acaae9e55d89ce952bb8c5edb84e8c95ca",
+  "githubAssetId": 507521115,
+  "uploader": "yfengup",
+  "uploadedAt": "2026-08-09T13:08:15Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "notion-item-opener@yfeng.local",
+  "name": "Notion Item Opener",
+  "version": "1.1.0",
+  "description": "Opens Zotero items from trusted Notion links by native Item Key.",
+  "homepageUrl": "https://github.com/yfengup/notion-item-opener-for-zotero",
+  "updateUrl": "https://raw.githubusercontent.com/yfengup/notion-item-opener-for-zotero/main/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2905,
+   "sha256": "fe6b0990e1c4f082d967b6e1918d60626f621ed50565f214e02979f2a5dd6589"
+  },
+  {
+   "path": "icon.svg",
+   "size": 323,
+   "sha256": "28cb94561300943dd33de979d3bc2e38182b7bdd47e14ecfc9a9199474fabf21"
+  },
+  {
+   "path": "manifest.json",
+   "size": 604,
+   "sha256": "0361936d9ffe04da4b70c8ae076fbf253de87b0c3cf31fa3b85c7a408b12a92f"
+  },
+  {
+   "path": "README.md",
+   "size": 1551,
+   "sha256": "49b83c57feaa64ba1d5f10e0b55e6b59908478e622b12e95b54a86f8bebbdff2"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "notion-item-opener-for-zotero",
+   "version": "1.1.0",
+   "sha256": "9a63f235372fb05bee6a7419296007acaae9e55d89ce952bb8c5edb84e8c95ca"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 2905,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 59,
+      "column": 19,
+      "snippet": "let storedToken = Zotero.Prefs.get(TOKEN_PREF);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 61,
+      "column": 2,
+      "snippet": "Zotero.Prefs.set(TOKEN_PREF, requestToken);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.notion-item-opener.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 101,
+      "column": 1,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINT_PATH] = endpointConstructor;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/notion-item-opener/open"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/yfengup/notion-item-opener-for-zotero/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/yfengup/notion-item-opener-for-zotero/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the yfengup account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "notion-item-opener-for-zotero",
+   "version": "1.1.0",
+   "sha256": "9a63f235372fb05bee6a7419296007acaae9e55d89ce952bb8c5edb84e8c95ca"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "ec1d9922dcf81ad1324a3925c3775786afd4b979d1feceef22ae5ea00f764f41"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-09T13:08:13Z",
+    "lastCommitAt": "2026-08-09T12:59:30Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T05:59:16Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

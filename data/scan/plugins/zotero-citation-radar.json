@@ -1,0 +1,584 @@
+{
+ "repo": "shuyao998/zotero-citation-radar",
+ "slug": "zotero-citation-radar",
+ "group": "sample-2026",
+ "rank": 1010,
+ "name": "Zotero Citation Radar",
+ "stars": 1,
+ "downloads": 5,
+ "createdAt": "2026-04-30T02:24:42Z",
+ "tag": "v1.0.0",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-citation-radar.xpi",
+    "url": "https://github.com/shuyao998/zotero-citation-radar/releases/download/v1.0.0/zotero-citation-radar.xpi",
+    "size": 224831,
+    "uploadedAt": "2026-04-30T07:46:30Z",
+    "sha256": "e9b3e7f08ff46e9d5d4c462953e3a1b603ea8ec4534918fe14b515707d645ea2"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "citation-radar@shuyao998.github.io",
+    "name": "Zotero Citation Radar",
+    "version": "1.0.0",
+    "description": "Zotero plugin that turns each paper into a radar reading: citation-graph 'influence' assessment plus LLM-powered citation-faithfulness verification.",
+    "homepageUrl": "https://github.com/shuyao998/zotero-citation-radar#readme",
+    "updateUrl": "https://github.com/shuyao998/zotero-citation-radar/releases/download/release/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "8.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-citation-radar",
+     "version": "1.0.0",
+     "sha256": "e9b3e7f08ff46e9d5d4c462953e3a1b603ea8ec4534918fe14b515707d645ea2"
+    },
+    "coverage": {
+     "filesTotal": 16,
+     "filesAnalyzed": 6,
+     "filesSkipped": [
+      {
+       "path": "content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/zoteroPane.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/citation-radar-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/citation-radar-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/citation-radar-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/citation-radar-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/citation-radar-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/citation-radar-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [
+      {
+       "path": "content/graphWindow.xhtml",
+       "error": "Unexpected token (1:0)",
+       "fallback": "regex"
+      }
+     ],
+     "partial": true
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": true,
+      "files": [
+       "content/vendor/vis-network.min.js"
+      ]
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "vis-network",
+       "files": [
+        "content/vendor/vis-network.min.js"
+       ],
+       "identifiedBy": "path"
+      },
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/citation-radar.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 5,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/graphWindow.xhtml",
+         "line": 115,
+         "column": 27,
+         "snippet": "var resp = await fetch(url);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 3877,
+         "column": 25,
+         "snippet": "const resp = await fetch(url, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 3991,
+         "column": 25,
+         "snippet": "const resp = await fetch(url, { headers });",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 4115,
+         "column": 23,
+         "snippet": "const resp = await fetch(url);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 4572,
+         "column": 21,
+         "snippet": "resp = await fetch(ENDPOINT, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.deepseek.com",
+       "category": "llm-provider",
+       "provider": "DeepSeek",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 4549,
+         "column": 17,
+         "snippet": "var ENDPOINT = \"https://api.deepseek.com/v1/chat/completions\";",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.openalex.org",
+       "category": "scholarly-api",
+       "provider": "OpenAlex",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 3800,
+         "column": 17,
+         "snippet": "var BASE_URL = \"https://api.openalex.org\";",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.semanticscholar.org",
+       "category": "scholarly-api",
+       "provider": "Semantic Scholar",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 3933,
+         "column": 18,
+         "snippet": "var BASE_URL2 = \"https://api.semanticscholar.org/graph/v1\";",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "doi.org",
+       "category": "scholarly-api",
+       "provider": "DOI resolver",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 4263,
+         "column": 11,
+         "snippet": "return `<!DOCTYPE html>",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": true,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/vendor/vis-network.min.js",
+         "line": 26,
+         "column": 3800,
+         "snippet": "33.0\",mode:\"pure\",copyright:\"© 2014-2023 Denis Pushkarev (zloirock.ru)\",license:\"https://github.com/zloirock/core-js/blob/v3.33.0/LICENSE\",source:\"https://github.com/zloirock/core-js\"});var Ug=Gg.expo",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "content/vendor/vis-network.min.js",
+         "line": 26,
+         "column": 3866,
+         "snippet": ".ru)\",license:\"https://github.com/zloirock/core-js/blob/v3.33.0/LICENSE\",source:\"https://github.com/zloirock/core-js\"});var Ug=Gg.exports,_g=K,Kg=Object,Hg=function(g){return Kg(_g(g))},Xg=Hg,Jg=u({}.",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "content/vendor/vis-network.min.js",
+         "line": 33,
+         "column": 115816,
+         "snippet": "rypto.getRandomValues&&crypto.getRandomValues.bind(crypto),!eD))throw new Error(\"crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported\");return eD(CD",
+         "inVendoredCode": true
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "chrome://<expr>/content/graphWindow.xhtml",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 4033,
+         "column": 6,
+         "snippet": "`chrome://${config.addonRef}/content/graphWindow.xhtml`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 3792,
+         "column": 13,
+         "snippet": "image: `chrome://${config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon@0.5x.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 5180,
+         "column": 21,
+         "snippet": "const menuIcon = `chrome://${config.addonRef}/content/icons/favicon@0.5x.png`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/vendor/vis-network.min.js",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 4114,
+         "column": 16,
+         "snippet": "const url = `chrome://${config.addonRef}/content/vendor/vis-network.min.js`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "file://<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/citation-radar.js",
+         "line": 4041,
+         "column": 40,
+         "snippet": "return normalized.startsWith(\"/\") ? `file://${normalized}` : `file:///${normalized}`;",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 3,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/citation-radar.js",
+        "line": 490,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/citation-radar.js",
+        "line": 490,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/citation-radar.js",
+        "line": 536,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "credential-storage",
+      "occurrences": 6,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/citation-radar.js",
+        "line": 5218,
+        "column": 21,
+        "snippet": "const apiKey = getPref(\"openAlexApiKey\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/citation-radar.js",
+        "line": 5229,
+        "column": 22,
+        "snippet": "const llmApiKey = getPref(\"llmApiKey\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/citation-radar.js",
+        "line": 5415,
+        "column": 18,
+        "snippet": "const s2Key = getPref(\"semanticScholarApiKey\") || void 0;",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 1,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.citation-radar.openAlexApiKey\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 2,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.citation-radar.semanticScholarApiKey\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 5,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.citation-radar.llmApiKey\", \"\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "extensions.zotero.citation-radar.llmApiKey",
+        "extensions.zotero.citation-radar.openAlexApiKey",
+        "extensions.zotero.citation-radar.semanticScholarApiKey",
+        "llmApiKey",
+        "openAlexApiKey",
+        "semanticScholarApiKey"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 6,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/citation-radar.js",
+        "line": 525,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/citation-radar.js",
+        "line": 525,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/citation-radar.js",
+        "line": 4044,
+        "column": 20,
+        "snippet": "const tempDir = PathUtils.join(",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/citation-radar.js",
+        "line": 4048,
+        "column": 10,
+        "snippet": "await IOUtils.makeDirectory(tempDir, { ignoreExisting: true });",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/citation-radar.js",
+        "line": 4049,
+        "column": 20,
+        "snippet": "const outFile = PathUtils.join(tempDir, filename);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/citation-radar.js",
+        "line": 4050,
+        "column": 10,
+        "snippet": "await IOUtils.writeUTF8(outFile, html);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/shuyao998/zotero-citation-radar/releases/download/release/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/shuyao998/zotero-citation-radar/releases/download/release/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.deepseek.com"
+     ],
+     "scholarly-api": [
+      "api.openalex.org",
+      "api.semanticscholar.org",
+      "doi.org"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

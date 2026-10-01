@@ -1,0 +1,119 @@
+---
+import GradeLogList from "../components/GradeLogList.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Base from "../layouts/Base.astro";
+import { gradeLog } from "../lib/gradeLog.ts";
+
+const log = gradeLog();
+const months = [...new Set(log.map((c) => c.month))].map((m) => ({ month: m, items: log.filter((c) => c.month === m) }));
+const filters = [
+  ["", "All"],
+  ["up", "Up a rung"],
+  ["down", "Down a rung"],
+  ["new", "New"],
+];
+---
+
+<Base title="Grade log · Zotero Plugins Atlas" description="Every change to a Zotero plugin's Atlas grade, up or down, in public.">
+  <SiteHeader search />
+  <div class="wrap">
+    <div class="top"><h1>Grade log</h1><a href="/log.xml" class="rss">RSS</a></div>
+    <p class="lead">Every grade change, up or down. You can see whether an update made something worse, developers get credit when they move up, and it keeps us accountable.</p>
+    {
+      log.length > 0 && (
+        <div class="filters" role="group" aria-label="Show">
+          {filters.map(([k, t], i) => (
+            <button type="button" class="chip-btn" aria-pressed={i === 0 ? "true" : "false"} data-dir-filter={k}>
+              {t}
+            </button>
+          ))}
+        </div>
+      )
+    }
+    {
+      log.length === 0 ? (
+        <GradeLogList items={[]} />
+      ) : (
+        months.map((m) => (
+          <div class="month" data-month>
+            <span class="mh">{m.month}</span>
+            <GradeLogList items={m.items} />
+          </div>
+        ))
+      )
+    }
+  </div>
+  <SiteFooter />
+</Base>
+
+<script>
+  const btns = [...document.querySelectorAll<HTMLButtonElement>("[data-dir-filter]")];
+  for (const b of btns)
+    b.addEventListener("click", () => {
+      for (const x of btns) x.setAttribute("aria-pressed", String(x === b));
+      const k = b.dataset.dirFilter;
+      for (const row of document.querySelectorAll<HTMLElement>("[data-dir]")) row.hidden = !!k && row.dataset.dir !== k;
+      for (const m of document.querySelectorAll<HTMLElement>("[data-month]"))
+        m.hidden = ![...m.querySelectorAll<HTMLElement>("[data-dir]")].some((r) => !r.hidden);
+    });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 44px var(--gutter) 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 48px;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 760;
+  }
+  .rss {
+    font: 600 13px var(--font-mono);
+  }
+  .lead {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 62ch;
+  }
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .month {
+    display: flex;
+    flex-direction: column;
+  }
+  .month[hidden] {
+    display: none;
+  }
+  .mh {
+    font: 600 12px/1 var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding: 10px 0;
+    border-bottom: 2px solid var(--ink);
+  }
+  @media (max-width: 720px) {
+    h1 {
+      font-size: 36px;
+    }
+  }
+</style>

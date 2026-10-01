@@ -1,0 +1,15 @@
+---
+/**
+ * A label with an explanation that shows on hover, keyboard focus or tap. The explanation is
+ * linked with aria-describedby, so screen readers read it after the label.
+ */
+interface Props {
+  text: string;
+  class?: string;
+  style?: string;
+}
+const { text, class: cls, style } = Astro.props;
+const id = `tip-${Math.random().toString(36).slice(2, 10)}`;
+---
+
+<span class:list={["tip", cls]} style={style} tabindex="0" aria-describedby={id}><slot /><span role="tooltip" id={id} class="tt">{text}</span></span>

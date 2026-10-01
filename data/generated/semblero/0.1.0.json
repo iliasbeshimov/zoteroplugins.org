@@ -1,0 +1,398 @@
+{
+ "schemaVersion": 1,
+ "slug": "semblero",
+ "repo": "scarnecchia/semblero",
+ "version": "0.1.0",
+ "tag": "v0.1.0-beta.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-04-11T22:02:48Z",
+ "prerelease": false,
+ "asset": {
+  "name": "sembtero-0.1.0.xpi",
+  "url": "https://github.com/scarnecchia/semblero/releases/download/v0.1.0-beta.1/sembtero-0.1.0.xpi",
+  "size": 6162,
+  "sha256": "80ef044a21ac6cdbc1cd8421a4b22107cfe7e30e95a312465b63cd8cfc87a2e0",
+  "githubAssetId": 394304745,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-04-11T22:02:47Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "sembtero@semble.social",
+  "name": "Sembtero",
+  "version": "0.1.0",
+  "description": "Share Zotero items to Semble via AT Protocol",
+  "homepageUrl": "https://github.com/scarnecchia/sembtero",
+  "updateUrl": "https://raw.githubusercontent.com/scarnecchia/sembtero/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "7.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 707,
+   "sha256": "3ed532156d968cc0cbb2ee98013b509456f5abeb9e4f2c4de31b47c776c90ffe"
+  },
+  {
+   "path": "chrome.manifest",
+   "size": 42,
+   "sha256": "274ffb3e35489f2e9be2edc132d2371c06994a0865a6cc705cdf1902d7480ab0"
+  },
+  {
+   "path": "chrome/content/preferences.xhtml",
+   "size": 922,
+   "sha256": "d0aa39a843a5ed8ba68ea3415523e939e2b321654ac0b05c4ac9b56c41cf9241"
+  },
+  {
+   "path": "chrome/content/scripts/sembtero.js",
+   "size": 7831,
+   "sha256": "959453f87a69dcd1ff0355a72a959b9b14d1e7106c28ec2f12da0f318b892105"
+  },
+  {
+   "path": "locale/en-US/sembtero.ftl",
+   "size": 647,
+   "sha256": "c8bc1e9c3f8714674aa5be2bccc2a11137072f8ba44a59398cca1e948b3a7d57"
+  },
+  {
+   "path": "manifest.json",
+   "size": 482,
+   "sha256": "e0f881521f3c0920a10f69bc33bb33afb119155e44a9f07cd5012a4f96016d85"
+  },
+  {
+   "path": "prefs.js",
+   "size": 85,
+   "sha256": "bf24789b128f2f994be4eb2da618c0da03a564fa9c43c453965596a914e7cffe"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "semblero",
+   "version": "0.1.0",
+   "sha256": "80ef044a21ac6cdbc1cd8421a4b22107cfe7e30e95a312465b63cd8cfc87a2e0"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/sembtero.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 9545,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "minified",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [
+    "chrome/content/scripts/sembtero.js"
+   ],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 8,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/sembtero.js",
+       "line": 1,
+       "column": 377,
+       "snippet": "unction g(e,r){let t=`${y}/xrpc/com.atproto.server.createSession`,s;try{s=await fetch(t,{method:\"POST\",headers:{\"Content-Type\":\"application/json\"},body:JSON.stringify({identifier:e,password:r})})}catc",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/sembtero.js",
+       "line": 1,
+       "column": 1038,
+       "snippet": "nction h(e,r){let t=`${r}/xrpc/com.atproto.server.refreshSession`,s;try{s=await fetch(t,{method:\"POST\",headers:{Authorization:`Bearer ${e}`}})}catch(a){return{success:!1,error:{type:\"network_error\",me",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/sembtero.js",
+       "line": 1,
+       "column": 1838,
+       "snippet": "zation:`Bearer ${c.accessJwt}`,\"Content-Type\":\"application/json\"},u;try{u=await fetch(p,{method:n,headers:f,body:i?JSON.stringify(i):void 0})}catch(d){return{success:!1,error:`Network error: ${d insta",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/sembtero.js",
+       "line": 1,
+       "column": 2140,
+       "snippet": "rn{success:!1,error:\"Session expired and refresh failed\"};s(d.data);try{u=await fetch(p,{method:n,headers:{...f,Authorization:`Bearer ${d.data.accessJwt}`},body:i?JSON.stringify(i):void 0})}catch(P){r",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "bsky.social",
+     "category": "integration",
+     "provider": "Bluesky",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/sembtero.js",
+       "line": 1,
+       "column": 25,
+       "snippet": "\"use strict\";(()=>{var y=\"https://bsky.social\";function v(e){if(typeof e==\"object\"&&e!==null&&\"service\"in e&&Array.isArray(e.service)){let t=e.service.find(s=>(s.id===\"#atproto_pds\"||s.id.endsWith(\"#a",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/sembtero.js",
+       "line": 1,
+       "column": 318,
+       "snippet": "?.serviceEndpoint)return t.serviceEndpoint}return y}async function g(e,r){let t=`${y}/xrpc/com.atproto.server.createSession`,s;try{s=await fetch(t,{method:\"POST\",headers:{\"Content-Type\":\"application/j",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/sembtero.js",
+       "line": 1,
+       "column": 3314,
+       "snippet": "ion $(e){let r=e.getField(\"url\");if(r)return r;let t=e.getField(\"DOI\");return t?`https://doi.org/${t}`:null}function T(e){let r=e.filter(t=>t.creatorType===\"author\");if(r.length!==0)return r.map(t=>`$",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/sembtero.js",
+      "line": 1,
+      "column": 2832,
+      "snippet": "ll}async function o(){let n=Zotero.Prefs.get(\"extensions.sembtero.handle\",!0),l=Zotero.Prefs.get(\"extensions.sembtero.appPassword\",!0);if(!n||!l)return{success:!1,error:\"Handle and app password must b",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.sembtero.appPassword\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.sembtero.appPassword"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/scarnecchia/sembtero/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/scarnecchia/sembtero/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "semblero",
+   "version": "0.1.0",
+   "sha256": "80ef044a21ac6cdbc1cd8421a4b22107cfe7e30e95a312465b63cd8cfc87a2e0"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "b36f4b8b314a47a670918fed621d164ebb4ed17f8fb2b94a69f8767f087fdf0f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "other-repository",
+     "label": "Updates come from scarnecchia/sembtero on GitHub",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Minified (compressed) code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "bsky.social"
+      ],
+      "unconfirmed": [
+       "bsky.social"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-04-11T22:02:48Z",
+    "lastCommitAt": "2026-04-11T22:41:43Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

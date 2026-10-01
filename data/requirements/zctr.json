@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zctr",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "DeepSeek and OpenAI-compatible cloud providers need an API key",
+  "worksWithout": "Ollama provider (name + port + model, no key)",
+  "services": [
+   "DeepSeek"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Configuration",
+   "quote": "**Ollama**: name + port + model, with a **Test Connection** button that detects the local Ollama service and lists installed models",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README Configuration",
+   "quote": "**DeepSeek**: name + API key + model",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zctr.js:3933",
+   "quote": "return `http://localhost:${provider.port || 11434}/v1`;",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README lists an Ollama provider as \"name + port + model\" with no key, while DeepSeek and OpenAI-compatible providers need a key. Code builds \"http://localhost:${provider.port || 11434}/v1\"."
+}

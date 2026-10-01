@@ -1,0 +1,26 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-llm-assistant",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "cloud providers (Gemini, OpenAI, Anthropic, custom endpoint)",
+  "worksWithout": "Ollama running locally (the default provider)",
+  "services": [
+   "Google AI Studio",
+   "OpenAI",
+   "Anthropic"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zotero-llm-assistant.llm.provider\", \"ollama\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The default provider pref is \"ollama\" with endpoint http://localhost:11434, and the README says \"Ollama (local, default)\", so the main purpose works with no key. Cloud providers need keys."
+}

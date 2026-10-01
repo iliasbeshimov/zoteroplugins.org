@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-deepseek",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "DeepSeek API; every feature (summaries, Q&A, comparison, translation) calls it",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 环境要求",
+   "quote": "[DeepSeek API Key](https://platform.deepseek.com/api_keys)（新用户通常有免费额度）",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/windows/prefs.js test()",
+   "quote": "setStatus(\"❌ 请先填写 API Key\", true);",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The default apiKey is empty and the code says \"请先填写 API Key\"; the README links a DeepSeek key. The README says the API address is compatible with \"任何 OpenAI 格式服务/中转（如 https://api.deepseek.com、/v1 前缀、自建代理）\". It never names a local model server, so \"unknown\" is right."
+}

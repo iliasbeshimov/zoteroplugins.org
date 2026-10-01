@@ -1,0 +1,339 @@
+---
+import GradeTag from "../components/GradeTag.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Base from "../layouts/Base.astro";
+import { CURRENT_ZOTERO_MAJOR, GRADES, shownPlugins } from "../lib/atlas.ts";
+import { REPORT_URL, RESPOND_URL } from "../lib/links.ts";
+
+const cur = CURRENT_ZOTERO_MAJOR();
+const plugins = shownPlugins();
+const counts = Object.fromEntries(GRADES.map((g) => [g.g, plugins.filter((p) => p.grade === g.g).length]));
+const toc = [
+  ["ladder", "The ladder"],
+  ["checks", "What we check"],
+  ["live", "The live test"],
+  ["versions", "Versions"],
+  ["disagree", "Disagreeing"],
+];
+const checks = [
+  ["Code transparency", "Can the code be read, and was the release file built from the public source?"],
+  ["Where your data goes", "Which servers it contacts, and whether they're named services or the developer's own."],
+  ["Powerful capabilities", "Native code, launching programs, running code built at runtime, reading files, storing passwords."],
+  ["Works with", "Which Zotero versions it installs on and runs in.", true],
+  ["What you'll need", "API keys, accounts or other software.", true],
+  ["Maintenance", "How recently it was released, and by how many people.", true],
+  ["Languages", "Documentation and interface languages.", true],
+] as const;
+const live = [
+  `We install the exact release file in a fresh copy of Zotero ${cur}, with a small sample library.`,
+  "We select items, open the reader and the plugin's settings, and click its menu items.",
+  "We record every server it contacts and what it sends, including any of the sample library's text.",
+  "If it loaded, and everything it did is something its card already describes, an A becomes A+.",
+];
+---
+
+<Base title="How we grade · Zotero Plugins Atlas" description="How every Zotero plugin gets its grade: what we check in the code, the live test for A+, and how to disagree.">
+  <SiteHeader active="grade" />
+  <div class="wrap">
+    <nav aria-label="On this page" class="toc">
+      <span class="eyebrow">On this page</span>
+      {toc.map(([id, t]) => <a href={`#${id}`}>{t}</a>)}
+    </nav>
+    <article>
+      <div class="intro">
+        <h1>How we grade</h1>
+        <p>
+          We download every plugin's latest release, read its code, and give it one grade. The single worst finding sets it, so a plugin can't make up for a serious problem by doing well elsewhere.
+        </p>
+      </div>
+
+      <section id="ladder">
+        <h2>The ladder</h2>
+        <div class="ladder">
+          <GradeTag grade="–" variant="ladder" size="md" />
+          <div class="rungs">
+            {
+              GRADES.map((g) => (
+                <>
+                  <span class="rt">
+                    <GradeTag grade={g.g} size="sm" />
+                  </span>
+                  <span class="rd">
+                    <strong>{g.long}</strong>
+                    <span>
+                      {g.sub} · {counts[g.g]} plugins
+                    </span>
+                  </span>
+                </>
+              ))
+            }
+          </div>
+        </div>
+        <p class="prose">
+          An A doesn't mean we found nothing. Small findings, such as storing an API key in Zotero's settings, are rated low and listed on the card; an A means none of them is more than that. A B means at least one finding is worth reading before you install. A C means we found something serious, such as code deliberately scrambled so nobody can check it.
+        </p>
+      </section>
+
+      <section id="checks">
+        <h2>What we check in the code</h2>
+        <div class="checks">
+          {
+            checks.map(([t, d, fact]) => (
+              <div class="check">
+                <strong>{t}</strong>
+                <span class="cd">{d}</span>
+                <span class:list={["ctag", { fact }]}>{fact ? "Shown, not graded" : "Sets the grade"}</span>
+              </div>
+            ))
+          }
+        </div>
+        <p class="prose">
+          Every finding links to the file and line it came from. The rules are published with the code, and they're the same for every plugin: when we change one, every card is recomputed.
+        </p>
+      </section>
+
+      <section id="live">
+        <h2>The live test, for A+</h2>
+        <p class="prose">Reading code shows what a plugin could do. The live test shows what it actually does.</p>
+        <ol class="steps">
+          {
+            live.map((t, i) => (
+              <li>
+                <span class="n">{i + 1}</span>
+                <span>{t}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section id="versions" class="pair">
+        <div class="box">
+          <strong>Grades belong to versions</strong>
+          <span>
+            The grade applies to the release named on the card. Each new release is checked again; if it adds a problem, the grade drops for that version and the change appears in the <a href="/log">public log</a>.
+          </span>
+        </div>
+        <div class="box" id="disagree">
+          <strong>Think we got it wrong?</strong>
+          <span>Developers can respond to any card, and their response is published next to it with our reply. Anyone can report a problem we missed.</span>
+          <span class="links"><a href={RESPOND_URL}>Respond as the developer</a><a href={REPORT_URL}>Report a problem</a></span>
+        </div>
+      </section>
+    </article>
+  </div>
+  <SiteFooter />
+</Base>
+
+<style>
+  .wrap {
+    max-width: 1184px;
+    margin: 0 auto;
+    padding: 48px var(--gutter) 64px;
+    display: grid;
+    grid-template-columns: 220px minmax(0, 760px);
+    gap: 64px;
+  }
+  .toc {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 14.5px;
+    position: sticky;
+    top: 16px;
+    align-self: start;
+  }
+  .toc .eyebrow {
+    margin-bottom: 10px;
+  }
+  .toc a {
+    padding: 7px 0 7px 12px;
+    border-left: 2px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .toc a:hover {
+    border-left-color: var(--ink);
+  }
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+    min-width: 0;
+  }
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 52px;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    font-weight: 780;
+  }
+  .intro p {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-margin-top: 16px;
+  }
+  h2 {
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: -0.025em;
+    font-weight: 720;
+    border-top: 2px solid var(--ink);
+    padding-top: 14px;
+  }
+  .prose {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+  .ladder {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 40px;
+    align-items: center;
+  }
+  .rungs {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+  }
+  .rt {
+    display: flex;
+  }
+  .rd {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .rd strong {
+    font-size: 16px;
+  }
+  .rd span {
+    font-size: 14.5px;
+    color: var(--ink-2);
+  }
+  .check {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr) auto;
+    gap: 16px;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .check strong {
+    font-size: 16px;
+  }
+  .cd {
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+  .ctag {
+    font: 600 11.5px/1 var(--font-mono);
+    padding: 5px 8px;
+    border-radius: 6px;
+    background: var(--accent-soft);
+    color: var(--accent-fg);
+    white-space: nowrap;
+  }
+  .ctag.fact {
+    background: var(--surface-2);
+    color: var(--ink-2);
+  }
+  .steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 12px;
+    align-items: baseline;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .n {
+    font: 700 14px/1 var(--font-mono);
+    color: var(--accent-fg);
+  }
+  .pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    scroll-margin-top: 16px;
+  }
+  .box strong {
+    font-size: 18px;
+  }
+  .box span {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+  }
+  .links a {
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+  @media (max-width: 860px) {
+    .wrap {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding-top: 28px;
+    }
+    .toc {
+      position: static;
+    }
+    h1 {
+      font-size: 38px;
+    }
+    .ladder {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .check {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .ctag {
+      justify-self: start;
+    }
+    .pair {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

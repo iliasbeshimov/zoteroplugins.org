@@ -1,0 +1,515 @@
+{
+ "repo": "ICIRICECIECR/Zotero-Literature-Analizer",
+ "slug": "zotero-literature-analizer",
+ "group": "sample-2026",
+ "rank": 569,
+ "name": "LITIT",
+ "stars": 0,
+ "downloads": 37,
+ "createdAt": "2026-09-08T08:09:31Z",
+ "tag": "v1.1.6",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "trae-lit-interp-1.1.6.xpi",
+    "url": "https://github.com/ICIRICECIECR/Zotero-Literature-Analizer/releases/download/v1.1.6/trae-lit-interp-1.1.6.xpi",
+    "size": 75672,
+    "uploadedAt": "2026-09-10T04:01:43Z",
+    "sha256": "e1baaa256af6b37259aeb2c109b4ded888ebc81bf988ab5bbd2722664b50bace"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "trae-lit-interp@example.com",
+    "name": "LITIT",
+    "version": "1.1.6",
+    "description": "Generate structured literature interpretation HTML reports from PDF attachments",
+    "homepageUrl": null,
+    "updateUrl": "https://raw.githubusercontent.com/ICIRICECIECR/Zotero-Literature-Analizer/main/update.json",
+    "minVersion": "7.0",
+    "maxVersion": "100.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-literature-analizer",
+     "version": "1.1.6",
+     "sha256": "e1baaa256af6b37259aeb2c109b4ded888ebc81bf988ab5bbd2722664b50bace"
+    },
+    "coverage": {
+     "filesTotal": 15,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": ".gitignore",
+       "reason": "not-code"
+      },
+      {
+       "path": "CHANGELOG.md",
+       "reason": "not-code"
+      },
+      {
+       "path": "icons/icon-128.png",
+       "reason": "binary"
+      },
+      {
+       "path": "icons/icon-16.png",
+       "reason": "binary"
+      },
+      {
+       "path": "icons/icon-48.png",
+       "reason": "binary"
+      },
+      {
+       "path": "icons/icon-96.png",
+       "reason": "binary"
+      },
+      {
+       "path": "LICENSE",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "README.md",
+       "reason": "not-code"
+      },
+      {
+       "path": "scripts/lit_interp_engine.py",
+       "reason": "not-code"
+      },
+      {
+       "path": "update.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 76,
+         "column": 25,
+         "snippet": "var response = await fetch(scriptURL);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 86,
+         "column": 25,
+         "snippet": "var response = await fetch(updateURL);",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.anthropic.com",
+       "category": "llm-provider",
+       "provider": "Anthropic",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs-pane.js",
+         "line": 36,
+         "column": 24,
+         "snippet": "claude: { base: \"https://api.anthropic.com\", model: \"claude-sonnet-4-5\" },",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.deepseek.com",
+       "category": "llm-provider",
+       "provider": "DeepSeek",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 59,
+         "column": 17,
+         "snippet": "\"apiBase\": \"https://api.deepseek.com/v1\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs-pane.js",
+         "line": 34,
+         "column": 24,
+         "snippet": "deepseek: { base: \"https://api.deepseek.com/v1\", model: \"deepseek-chat\" },",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 3,
+         "column": 0,
+         "snippet": "pref(\"extensions.trae-lit-interp.apiBase\", \"https://api.deepseek.com/v1\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 3,
+         "column": 43,
+         "snippet": "pref(\"extensions.trae-lit-interp.apiBase\", \"https://api.deepseek.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs-pane.js",
+         "line": 35,
+         "column": 24,
+         "snippet": "openai: { base: \"https://api.openai.com/v1\", model: \"gpt-4o\" },",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "localhost",
+       "port": 11434,
+       "category": "localhost",
+       "provider": "This computer",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs-pane.js",
+         "line": 37,
+         "column": 24,
+         "snippet": "ollama: { base: \"http://localhost:11434/v1\", model: \"llama3\" }",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.trae-lit-interp.apiBase",
+       "defaultValue": "https://api.deepseek.com/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 485,
+         "column": 22,
+         "snippet": "\"--api-base\", Zotero.Prefs.get(\"extensions.trae-lit-interp.apiBase\", true),",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 552,
+         "column": 20,
+         "snippet": "\"--api-base\", Zotero.Prefs.get(\"extensions.trae-lit-interp.apiBase\", true),",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 3,
+         "column": 0,
+         "snippet": "pref(\"extensions.trae-lit-interp.apiBase\", \"https://api.deepseek.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "occurrences": 4,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 321,
+        "column": 17,
+        "snippet": "var apiKey = Zotero.Prefs.get(\"extensions.trae-lit-interp.apiKey\", true);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 371,
+        "column": 17,
+        "snippet": "var apiKey = Zotero.Prefs.get(\"extensions.trae-lit-interp.apiKey\", true);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 432,
+        "column": 17,
+        "snippet": "var apiKey = Zotero.Prefs.get(\"extensions.trae-lit-interp.apiKey\", true);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 2,
+        "column": 0,
+        "snippet": "pref(\"extensions.trae-lit-interp.apiKey\", \"\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "extensions.trae-lit-interp.apiKey"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 29,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 24,
+        "column": 22,
+        "snippet": "this._scriptDir = PathUtils.join(dataDir, \"trae-lit-interp\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 55,
+        "column": 28,
+        "snippet": "var defaultUpdatePath = PathUtils.join(dataDir, \"trae-lit-interp\", \"update.json\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 74,
+        "column": 10,
+        "snippet": "await IOUtils.makeDirectory(this._scriptDir, { createParent: true });",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 78,
+        "column": 21,
+        "snippet": "var scriptPath = PathUtils.join(this._scriptDir, \"lit_interp_engine.py\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 80,
+        "column": 10,
+        "snippet": "await IOUtils.write(scriptPath, encoded);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 84,
+        "column": 10,
+        "snippet": "await IOUtils.makeDirectory(this._scriptDir, { createParent: true });",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 88,
+        "column": 21,
+        "snippet": "var updatePath = PathUtils.join(this._scriptDir, \"update.json\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 90,
+        "column": 10,
+        "snippet": "await IOUtils.write(updatePath, encoded);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 448,
+        "column": 32,
+        "snippet": "if (!baseDir) baseDir = PathUtils.parent(pdfPath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 467,
+        "column": 27,
+        "snippet": "var papersJsonPath = PathUtils.join(this._scriptDir, \"compare_papers.json\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "zotero-data-dir",
+       "apis": [
+        "IOUtils/PathUtils",
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "process-launch",
+      "occurrences": 3,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 741,
+        "column": 6,
+        "snippet": "\"resource://gre/modules/Subprocess.sys.mjs\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 746,
+        "column": 26,
+        "snippet": "var where = await Subprocess.call({",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 759,
+        "column": 21,
+        "snippet": "var proc = await Subprocess.call({",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "Subprocess"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 16,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/ICIRICECIECR/Zotero-Literature-Analizer/main/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/ICIRICECIECR/Zotero-Literature-Analizer/main/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.anthropic.com",
+      "api.deepseek.com",
+      "api.openai.com"
+     ],
+     "localhost": [
+      "localhost"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "process-launch",
+      "concern": "medium"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-NAMED",
+     "CAP-PROCESS"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

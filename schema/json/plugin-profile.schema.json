@@ -1,0 +1,3282 @@
+{
+  "$id": "https://github.com/iliasacademia/zoteroatlas/schema/json/plugin-profile.schema.json",
+  "title": "plugin-profile",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "profilerVersion": {
+      "type": "string"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+      "description": "When this profile last changed, not when it was last checked"
+    },
+    "slug": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 100,
+      "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+    },
+    "repo": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+\\/[a-z0-9._-]+$",
+      "description": "Canonical GitHub repository key: lowercase owner/name"
+    },
+    "repoName": {
+      "type": "string",
+      "description": "owner/name with GitHub's casing"
+    },
+    "name": {
+      "type": "string"
+    },
+    "listing": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "plugin",
+            "legacy",
+            "no-release"
+          ]
+        },
+        "hiddenByDefault": {
+          "type": "boolean"
+        },
+        "hiddenReason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "fork",
+                "legacy",
+                "no-release"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "hiddenByDefault",
+        "hiddenReason"
+      ]
+    },
+    "links": {
+      "type": "object",
+      "properties": {
+        "repo": {
+          "type": "string",
+          "format": "uri"
+        },
+        "homepage": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "issues": {
+          "type": "string",
+          "format": "uri"
+        },
+        "releases": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "repo",
+        "homepage",
+        "issues",
+        "releases"
+      ]
+    },
+    "author": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "login",
+        "url"
+      ]
+    },
+    "license": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Where the census found it (curated lists, searches)"
+    },
+    "about": {
+      "type": "object",
+      "properties": {
+        "githubDescription": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "manifestDescription": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "categoryHint": {
+          "description": "The research sheet's Workflow Part, until enrichment assigns categories",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "githubDescription",
+        "manifestDescription",
+        "topics",
+        "categoryHint"
+      ]
+    },
+    "languages": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "en",
+              "zh",
+              "ja",
+              "ko",
+              "ru",
+              "latin"
+            ]
+          },
+          "description": "Languages the README is written in, by share of text"
+        },
+        "docsAlternates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Languages of other READMEs the README links to, e.g. 'en' for README_EN.md"
+        },
+        "ui": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Locale folders shipped in the .xpi (BCP 47 tags)"
+        },
+        "chineseOnlyDocs": {
+          "type": "boolean",
+          "description": "README in Chinese only, with no linked translation"
+        },
+        "chineseOnlyUi": {
+          "type": "boolean",
+          "description": "The only interface locales shipped are Chinese"
+        }
+      },
+      "required": [
+        "docs",
+        "docsAlternates",
+        "ui",
+        "chineseOnlyDocs",
+        "chineseOnlyUi"
+      ]
+    },
+    "popularity": {
+      "type": "object",
+      "properties": {
+        "stars": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "forks": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contributors": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "downloads": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "All-time GitHub .xpi downloads"
+        },
+        "latestDownloads": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "releaseCount": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "stars",
+        "forks",
+        "contributors",
+        "downloads",
+        "latestDownloads",
+        "releaseCount",
+        "createdAt"
+      ]
+    },
+    "maintenance": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "slowing",
+            "dormant",
+            "archived",
+            "unknown"
+          ]
+        },
+        "lastReleaseAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lastCommitAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lastActivityAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "lastReleaseAt",
+        "lastCommitAt",
+        "lastActivityAt"
+      ]
+    },
+    "compatibility": {
+      "type": "object",
+      "properties": {
+        "supports": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "description": "Zotero majors the manifest range covers; none for a file Zotero won't install"
+        },
+        "minVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "maxVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "current": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "major": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "zoteroVersion": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "compatible",
+                    "incompatible",
+                    "unknown"
+                  ],
+                  "description": "Whether Zotero at exactly zoteroVersion installs and runs one of the release's builds"
+                }
+              },
+              "required": [
+                "major",
+                "zoteroVersion",
+                "status"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "previous": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "major": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "zoteroVersion": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "compatible",
+                    "incompatible",
+                    "unknown"
+                  ],
+                  "description": "Whether Zotero at exactly zoteroVersion installs and runs one of the release's builds"
+                }
+              },
+              "required": [
+                "major",
+                "zoteroVersion",
+                "status"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "next": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "major": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "zoteroVersion": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "compatible",
+                    "incompatible",
+                    "unknown"
+                  ],
+                  "description": "Whether Zotero at exactly zoteroVersion installs and runs one of the release's builds"
+                }
+              },
+              "required": [
+                "major",
+                "zoteroVersion",
+                "status"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Next major on the beta/dev channel"
+        },
+        "blockedByZotero": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "reason",
+                "source"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This version is on Zotero's official plugin blocklist"
+        }
+      },
+      "required": [
+        "supports",
+        "minVersion",
+        "maxVersion",
+        "current",
+        "previous",
+        "next",
+        "blockedByZotero"
+      ]
+    },
+    "install": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "string"
+            },
+            "tag": {
+              "type": "string"
+            },
+            "publishedAt": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "prerelease": {
+              "type": "boolean"
+            },
+            "asset": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "size": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "sha256": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "name",
+                "url",
+                "size",
+                "sha256"
+              ]
+            },
+            "otherAssets": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                },
+                "required": [
+                  "name",
+                  "url"
+                ]
+              }
+            },
+            "autoUpdates": {
+              "type": "boolean",
+              "description": "The manifest has a working update address, so Zotero updates the plugin"
+            },
+            "builds": {
+              "description": "The release's other analysed builds, e.g. for older Zotero or another OS",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "asset": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "type": "string"
+                  },
+                  "supports": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "description": "Zotero majors this build declares"
+                  },
+                  "label": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "low-concern",
+                          "review-details",
+                          "high-concern",
+                          "insufficient-data"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "releaseFile": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "asset",
+                  "version",
+                  "supports",
+                  "label",
+                  "releaseFile"
+                ]
+              }
+            },
+            "updates": {
+              "description": "Where Zotero gets updates for this build, which replace the analysed file",
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "this-project",
+                    "other-listed-project",
+                    "other-repository",
+                    "unclaimed-namespace",
+                    "other-host",
+                    "none"
+                  ]
+                },
+                "url": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "repo": {
+                  "description": "owner/name when the address is on a code host",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "project": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 2,
+                      "maxLength": 100,
+                      "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "description": "The listed project updates come from"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "check": {
+                  "description": "The update address fetched and followed to the file it offers",
+                  "type": "object",
+                  "properties": {
+                    "checkedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991,
+                      "description": "HTTP status of the update address; 0 when unreachable"
+                    },
+                    "result": {
+                      "type": "string",
+                      "enum": [
+                        "same-file",
+                        "different-file",
+                        "not-analysed",
+                        "not-newer",
+                        "no-update-for-current",
+                        "not-listed",
+                        "unreachable"
+                      ],
+                      "description": "What Zotero would install from it today: this file, a different one, nothing"
+                    },
+                    "version": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "link": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "finalUrl": {
+                      "description": "Where the update address redirected, e.g. a renamed repository",
+                      "type": "string"
+                    },
+                    "ownerMissing": {
+                      "description": "The GitHub account or repository the address names doesn't exist or isn't public",
+                      "type": "boolean"
+                    },
+                    "missing": {
+                      "description": "account: nobody holds the name, so anyone could register it; repository: the account exists, so only its owner could publish there",
+                      "type": "string",
+                      "enum": [
+                        "account",
+                        "repository"
+                      ]
+                    },
+                    "zoteroVersion": {
+                      "description": "The Zotero version the address was checked for: current Zotero, or the newest one this build supports",
+                      "type": "string"
+                    },
+                    "sha256": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "description": "The file the update installs, once downloaded"
+                    },
+                    "statedHash": {
+                      "description": "The hash the update address gives for that file (update_hash), e.g. 'sha512:…'",
+                      "type": "string"
+                    },
+                    "hashMatches": {
+                      "description": "Whether the file behind the link has the stated hash; when it doesn't, Zotero refuses the update",
+                      "type": "boolean"
+                    },
+                    "manifestModifiedAt": {
+                      "description": "When the update address's file last changed (its Last-Modified), set when the hash doesn't match: a release file uploaded after it isn't the file it was written for",
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                    },
+                    "label": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "low-concern",
+                            "review-details",
+                            "high-concern",
+                            "insufficient-data"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "description": "Overall label of that file when it differs from this one"
+                    },
+                    "releaseFile": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "error": {
+                      "description": "Why the offered file couldn't be analysed",
+                      "type": "string"
+                    },
+                    "note": {
+                      "type": "string",
+                      "description": "One line for the card's update line"
+                    }
+                  },
+                  "required": [
+                    "checkedAt",
+                    "status",
+                    "result",
+                    "version",
+                    "link",
+                    "sha256",
+                    "label",
+                    "releaseFile",
+                    "note"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "url",
+                "repo",
+                "project",
+                "label"
+              ]
+            },
+            "releaseFile": {
+              "description": "Path of the per-version analysis document, relative to data/generated/",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "version",
+            "tag",
+            "publishedAt",
+            "prerelease",
+            "asset",
+            "otherAssets",
+            "autoUpdates",
+            "releaseFile"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "fork": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "of": {
+              "type": "string"
+            },
+            "ofSlug": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 100,
+                  "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "of",
+            "ofSlug"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Set when the repo is a GitHub fork of another listed plugin"
+    },
+    "forks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 100,
+        "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+      },
+      "description": "Listed forks of this plugin"
+    },
+    "addonId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "addonIdSharedWith": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 100,
+        "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+      },
+      "description": "Other listed plugins shipping the same add-on ID; Zotero can only install one"
+    },
+    "trust": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "rulesVersion": {
+              "type": "string"
+            },
+            "computedAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "appliesTo": {
+              "type": "object",
+              "properties": {
+                "slug": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 100,
+                  "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "slug",
+                "version",
+                "sha256"
+              ]
+            },
+            "inputs": {
+              "type": "object",
+              "properties": {
+                "analyzerVersion": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "provenanceCheckerVersion": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "hostsTableVersion": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "currentZotero": {
+                  "type": "string"
+                },
+                "inputHash": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$",
+                  "description": "Hash of every input above; unchanged hash means unchanged card"
+                }
+              },
+              "required": [
+                "analyzerVersion",
+                "provenanceCheckerVersion",
+                "hostsTableVersion",
+                "currentZotero",
+                "inputHash"
+              ]
+            },
+            "facets": {
+              "type": "object",
+              "properties": {
+                "sourceTransparency": {
+                  "type": "object",
+                  "properties": {
+                    "provenance": {
+                      "type": "string",
+                      "enum": [
+                        "reproduced",
+                        "matches-source",
+                        "plausible",
+                        "mismatch",
+                        "no-source",
+                        "not-checked"
+                      ]
+                    },
+                    "obfuscated": {
+                      "anyOf": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "string",
+                          "const": "unknown"
+                        }
+                      ]
+                    },
+                    "suspiciousUnicode": {
+                      "type": "boolean"
+                    },
+                    "sourceMaps": {
+                      "type": "boolean"
+                    },
+                    "assetReplaced": {
+                      "type": "boolean",
+                      "description": "The file behind this release tag changed after it was first published"
+                    },
+                    "assetReplacedDetail": {
+                      "description": "How we know it changed: our own earlier copy, or the fingerprint the project's own update manifest gives for this version",
+                      "type": "string"
+                    },
+                    "updates": {
+                      "description": "Where updates come from; a template namespace the developer doesn't control is a concern",
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "check": {
+                          "description": "What the update address offers today, e.g. a different file and its label",
+                          "type": "string"
+                        },
+                        "note": {
+                          "description": "What the plugin does to its own updates, e.g. turning Zotero's automatic updates on",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "label"
+                      ]
+                    },
+                    "partialAnalysis": {
+                      "description": "Set when part of the code was skipped or only scanned for known patterns",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "concern": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "low",
+                        "medium",
+                        "high",
+                        "unknown"
+                      ]
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "drivers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "IDs of the rules that fired (the rule table in pipeline/src/profile/score.ts)"
+                    }
+                  },
+                  "required": [
+                    "provenance",
+                    "obfuscated",
+                    "suspiciousUnicode",
+                    "sourceMaps",
+                    "assetReplaced",
+                    "concern",
+                    "label",
+                    "drivers"
+                  ]
+                },
+                "dataSharing": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string",
+                      "enum": [
+                        "no-network-found",
+                        "user-configured-only",
+                        "named-third-parties",
+                        "developer-servers",
+                        "unknown-endpoints",
+                        "bundled-library-only",
+                        "not-analyzed"
+                      ]
+                    },
+                    "hosts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "category": {
+                            "type": "string",
+                            "enum": [
+                              "llm-provider",
+                              "translation",
+                              "scholarly-api",
+                              "zotero",
+                              "code-hosting",
+                              "integration",
+                              "telemetry",
+                              "cloud-function",
+                              "developer-server",
+                              "localhost",
+                              "cdn",
+                              "documentation",
+                              "unknown"
+                            ]
+                          },
+                          "hosts": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "unconfirmed": {
+                            "description": "Hosts in this group we found in the code but didn't trace to a request (shown as 'named in its code')",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "unencrypted": {
+                            "description": "Hosts in this group a request reaches over plain http:// (shown as 'unencrypted'): anyone on the network in between can read or change what's sent",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "observed": {
+                            "description": "Hosts in this group the plugin contacted when we ran this exact file in Zotero (shown as 'seen when we ran it'), whether or not we found them in its code; they count as traced requests",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "category",
+                          "hosts"
+                        ]
+                      }
+                    },
+                    "concern": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "low",
+                        "medium",
+                        "high",
+                        "unknown"
+                      ]
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "legalRisk": {
+                      "description": "A destination is a shadow library such as Sci-Hub: shown as a neutral legal notice",
+                      "type": "boolean"
+                    },
+                    "drivers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "IDs of the rules that fired (the rule table in pipeline/src/profile/score.ts)"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "hosts",
+                    "concern",
+                    "label",
+                    "drivers"
+                  ]
+                },
+                "capabilities": {
+                  "type": "object",
+                  "properties": {
+                    "badges": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "enum": [
+                              "filesystem",
+                              "process-launch",
+                              "native-code",
+                              "db-write",
+                              "sqlite-direct",
+                              "remote-code",
+                              "dynamic-code",
+                              "credential-storage",
+                              "login-manager",
+                              "clipboard",
+                              "local-http-server",
+                              "network-intercept",
+                              "ui-injection",
+                              "self-update",
+                              "remote-script",
+                              "remote-script-output",
+                              "installs-addons",
+                              "download-exec",
+                              "borrowed-identity",
+                              "encrypted-code",
+                              "link-runs-code",
+                              "link-installs-addons",
+                              "disables-security",
+                              "own-server",
+                              "self-installs",
+                              "runs-bundled-binary",
+                              "package-run",
+                              "installs-translators",
+                              "own-database",
+                              "runs-sent-code",
+                              "enables-local-api",
+                              "server-edits-library",
+                              "browser-credentials",
+                              "reused-app-login",
+                              "changes-settings",
+                              "sends-unencrypted"
+                            ]
+                          },
+                          "label": {
+                            "type": "string",
+                            "description": "Plain language, e.g. 'Writes to the Zotero database directly'"
+                          },
+                          "concern": {
+                            "type": "string",
+                            "enum": [
+                              "none",
+                              "low",
+                              "medium",
+                              "high",
+                              "unknown"
+                            ]
+                          },
+                          "libraries": {
+                            "description": "Set when every use sits in bundled libraries: the card names them, e.g. 'from zotero-plugin-toolkit'",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "detail": {
+                            "description": "What, where from or which setting, e.g. 'From astral.sh; not checked against a fixed fingerprint'",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "label",
+                          "concern"
+                        ]
+                      }
+                    },
+                    "concern": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "low",
+                        "medium",
+                        "high",
+                        "unknown"
+                      ]
+                    },
+                    "drivers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "IDs of the rules that fired (the rule table in pipeline/src/profile/score.ts)"
+                    }
+                  },
+                  "required": [
+                    "badges",
+                    "concern",
+                    "drivers"
+                  ]
+                },
+                "requirements": {
+                  "type": "object",
+                  "properties": {
+                    "badges": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "enum": [
+                              "api-key",
+                              "account",
+                              "paid",
+                              "companion-app"
+                            ]
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "detail": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "label"
+                        ]
+                      }
+                    },
+                    "reviewed": {
+                      "type": "boolean",
+                      "description": "False while any requirement is still an unreviewed draft"
+                    }
+                  },
+                  "required": [
+                    "badges",
+                    "reviewed"
+                  ]
+                },
+                "maintenance": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "active",
+                        "slowing",
+                        "dormant",
+                        "archived"
+                      ]
+                    },
+                    "lastReleaseAt": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "lastCommitAt": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "concern": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "low",
+                        "medium",
+                        "high",
+                        "unknown"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "lastReleaseAt",
+                    "lastCommitAt",
+                    "concern"
+                  ]
+                },
+                "compatibility": {
+                  "type": "object",
+                  "properties": {
+                    "current": {
+                      "type": "object",
+                      "properties": {
+                        "zoteroVersion": {
+                          "type": "string",
+                          "description": "e.g. '10.0.3' or '11.0-dev.5'"
+                        },
+                        "major": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "compatible",
+                            "incompatible",
+                            "unknown"
+                          ],
+                          "description": "Whether Zotero at exactly zoteroVersion installs and runs it: every part of the version is compared, as Zotero does"
+                        }
+                      },
+                      "required": [
+                        "zoteroVersion",
+                        "major",
+                        "status"
+                      ]
+                    },
+                    "previous": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "zoteroVersion": {
+                              "type": "string",
+                              "description": "e.g. '10.0.3' or '11.0-dev.5'"
+                            },
+                            "major": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "compatible",
+                                "incompatible",
+                                "unknown"
+                              ],
+                              "description": "Whether Zotero at exactly zoteroVersion installs and runs it: every part of the version is compared, as Zotero does"
+                            }
+                          },
+                          "required": [
+                            "zoteroVersion",
+                            "major",
+                            "status"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "next": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "zoteroVersion": {
+                              "type": "string",
+                              "description": "e.g. '10.0.3' or '11.0-dev.5'"
+                            },
+                            "major": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "compatible",
+                                "incompatible",
+                                "unknown"
+                              ],
+                              "description": "Whether Zotero at exactly zoteroVersion installs and runs it: every part of the version is compared, as Zotero does"
+                            }
+                          },
+                          "required": [
+                            "zoteroVersion",
+                            "major",
+                            "status"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "description": "Next major on the beta/dev channel, if any"
+                    },
+                    "blockedByZotero": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "reason": {
+                              "type": "string"
+                            },
+                            "source": {
+                              "type": "string",
+                              "format": "uri"
+                            }
+                          },
+                          "required": [
+                            "reason",
+                            "source"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "description": "This version is on Zotero's official plugin blocklist"
+                    },
+                    "installProblem": {
+                      "description": "Zotero won't install this manifest.json file at all, so it works with no Zotero version: an add-on ID missing or not in the form Firefox accepts (a GUID in braces, or name@domain in letters, digits, - . _), no update address (applications.zotero.update_url) or no maximum version (strict_max_version)",
+                      "type": "string",
+                      "enum": [
+                        "invalid-id",
+                        "no-update-url",
+                        "no-max-version"
+                      ]
+                    },
+                    "label": {
+                      "description": "One line shown next to the overall label: whether it runs on current Zotero",
+                      "type": "string"
+                    },
+                    "concern": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "low",
+                        "medium",
+                        "high",
+                        "unknown"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "current",
+                    "previous",
+                    "next",
+                    "blockedByZotero",
+                    "concern"
+                  ]
+                },
+                "reviewStatus": {
+                  "type": "object",
+                  "properties": {
+                    "state": {
+                      "type": "string",
+                      "enum": [
+                        "automated-only",
+                        "human-reviewed"
+                      ]
+                    },
+                    "reviewer": {
+                      "type": "string"
+                    },
+                    "reviewedAt": {
+                      "type": "string",
+                      "format": "date",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                    },
+                    "reviewedVersion": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 64
+                    },
+                    "stale": {
+                      "type": "boolean",
+                      "description": "A newer version with material changes has appeared since the review"
+                    }
+                  },
+                  "required": [
+                    "state",
+                    "stale"
+                  ]
+                }
+              },
+              "required": [
+                "sourceTransparency",
+                "dataSharing",
+                "capabilities",
+                "requirements",
+                "maintenance",
+                "compatibility",
+                "reviewStatus"
+              ]
+            },
+            "overall": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "enum": [
+                    "low-concern",
+                    "review-details",
+                    "high-concern",
+                    "insufficient-data"
+                  ]
+                },
+                "ruleId": {
+                  "type": "string"
+                },
+                "drivers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "sourceTransparency",
+                      "dataSharing",
+                      "capabilities",
+                      "requirements",
+                      "maintenance",
+                      "compatibility",
+                      "reviewStatus"
+                    ]
+                  },
+                  "description": "Facets that determined the label, shown next to it"
+                },
+                "reasons": {
+                  "description": "The findings that set the label, most important first: the 'because' line",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "label",
+                "ruleId",
+                "drivers"
+              ]
+            },
+            "tested": {
+              "description": "What this exact file did when we ran it in a throwaway Zotero (data/sandbox/<slug>.json); absent when this file hasn't been tested",
+              "type": "object",
+              "properties": {
+                "zotero": {
+                  "type": "string",
+                  "description": "The Zotero version it ran in"
+                },
+                "testedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                },
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "as-described",
+                    "unexpected",
+                    "not-loaded",
+                    "incomplete"
+                  ],
+                  "description": "as-described: it loaded, and everything it did beyond what Zotero does by itself is something its card says; unexpected: something it did isn't (the reasons are listed); not-loaded: it didn't start; incomplete: the test didn't finish"
+                },
+                "exercised": {
+                  "type": "object",
+                  "properties": {
+                    "itemsSelected": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "readerOpened": {
+                      "type": "boolean",
+                      "description": "A PDF was opened in Zotero's reader"
+                    },
+                    "settingsPane": {
+                      "type": "boolean",
+                      "description": "Zotero's settings opened at the plugin's own pane"
+                    },
+                    "menuItems": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991,
+                      "description": "Menu items the plugin added that the test clicked"
+                    },
+                    "dialogs": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991,
+                      "description": "Dialogs and prompts the test answered"
+                    }
+                  },
+                  "required": [
+                    "itemsSelected",
+                    "readerOpened",
+                    "settingsPane",
+                    "menuItems",
+                    "dialogs"
+                  ],
+                  "description": "How much of the plugin the test reached"
+                },
+                "contacted": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Hosts it contacted during the test"
+                },
+                "sentTo": {
+                  "description": "Hosts that received the test library's own text during the test, and which kinds, e.g. api.crossref.org: identifiers, titles (the items' DOIs and titles); absent when none did, or when the record doesn't say",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "host": {
+                        "type": "string"
+                      },
+                      "sent": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "titles",
+                            "identifiers",
+                            "authors",
+                            "abstract",
+                            "notes",
+                            "pdf-text",
+                            "pdf-file",
+                            "tags",
+                            "collections"
+                          ],
+                          "description": "A kind of the test library's own text found in a request: its items' titles, identifiers (DOI, ISBN), authors, abstract, note, the PDF's text, the PDF file itself, tags or collection name"
+                        }
+                      }
+                    },
+                    "required": [
+                      "host",
+                      "sent"
+                    ]
+                  }
+                },
+                "fetched": {
+                  "description": "Hosts it only loaded pages from during the test (plain GET or HEAD requests, nothing sent): listed, but not counted as data sharing; absent when there were none, or when the record doesn't say",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "unexpected": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "What it did that its card didn't say before the test, in plain English"
+                }
+              },
+              "required": [
+                "zotero",
+                "testedAt",
+                "verdict",
+                "exercised",
+                "contacted",
+                "unexpected"
+              ]
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "rulesVersion",
+            "computedAt",
+            "appliesTo",
+            "inputs",
+            "facets",
+            "overall"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "provenance": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "level": {
+              "type": "string",
+              "enum": [
+                "reproduced",
+                "matches-source",
+                "plausible",
+                "mismatch",
+                "no-source",
+                "not-checked"
+              ]
+            },
+            "attestation": {
+              "type": "boolean"
+            },
+            "explanation": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "level",
+            "attestation",
+            "explanation"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Does the file match its public source? Full details in the release file."
+    },
+    "scan": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "analyzed",
+            "not-analyzed"
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ]
+    },
+    "requirementsHints": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "aiServices": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "AI providers the code contacts"
+            },
+            "otherServices": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Other named services the code contacts"
+            },
+            "storesCredentials": {
+              "type": "boolean",
+              "description": "Keeps an API key, token or password in settings"
+            },
+            "localModels": {
+              "type": "boolean",
+              "description": "Talks to a model or server on this computer"
+            },
+            "launchesPrograms": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "aiServices",
+            "otherServices",
+            "storesCredentials",
+            "localModels",
+            "launchesPrograms"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Detected from the code. Not reviewed: enrichment and review confirm them."
+    },
+    "integrityEvents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "asset-replaced",
+              "asset-added"
+            ],
+            "description": "asset-added: a new build appeared under a release tag we had already seen"
+          },
+          "tag": {
+            "type": "string"
+          },
+          "asset": {
+            "description": "The build's file name, for asset-added",
+            "type": "string"
+          },
+          "detectedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          },
+          "before": {
+            "type": "object",
+            "properties": {
+              "sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "uploadedAt": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "sha256",
+              "uploadedAt"
+            ]
+          },
+          "after": {
+            "type": "object",
+            "properties": {
+              "sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "uploadedAt": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "sha256",
+              "uploadedAt"
+            ]
+          }
+        },
+        "required": [
+          "kind",
+          "tag",
+          "detectedAt",
+          "before",
+          "after"
+        ]
+      }
+    },
+    "responses": {
+      "description": "Developers' responses to the card, with our replies (data/plugins/<slug>.yaml)",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+          },
+          "from": {
+            "type": "string",
+            "minLength": 1,
+            "description": "GitHub login of a maintainer of the plugin's repository"
+          },
+          "about": {
+            "type": "string",
+            "enum": [
+              "source-transparency",
+              "data-sharing",
+              "capabilities",
+              "compatibility",
+              "updates",
+              "other"
+            ]
+          },
+          "version": {
+            "description": "The version the response is about",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "description": "The developer's words, published as written"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "The public issue it came from"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "corrected",
+              "finding-stands",
+              "noted"
+            ],
+            "description": "open: we're checking; corrected: the analyzer or rules changed and the card with them; finding-stands: we kept the finding (see reply); noted: context, not a dispute"
+          },
+          "reply": {
+            "description": "What we checked and what changed, if anything",
+            "type": "string",
+            "maxLength": 2000
+          },
+          "repliedAt": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+          }
+        },
+        "required": [
+          "date",
+          "from",
+          "about",
+          "text",
+          "url",
+          "status"
+        ]
+      }
+    },
+    "notices": {
+      "description": "Notices we add to the page by hand",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "legal-risk",
+              "developer-reply",
+              "correction",
+              "info"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "kind",
+          "text",
+          "date"
+        ]
+      }
+    },
+    "content": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "oneLiner": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "maxLength": 160
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "approved",
+                    "edited",
+                    "rejected"
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "llm",
+                    "human",
+                    "analysis",
+                    "sheet"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "text"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "readme",
+                          "manifest",
+                          "release-notes",
+                          "sheet",
+                          "disclosure",
+                          "repo-metadata"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "verbatim": {
+                        "type": "boolean",
+                        "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "source",
+                      "quote",
+                      "verbatim"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "status",
+                "source",
+                "confidence",
+                "evidence"
+              ]
+            },
+            "whoFor": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "maxLength": 600
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "approved",
+                    "edited",
+                    "rejected"
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "llm",
+                    "human",
+                    "analysis",
+                    "sheet"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "text"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "readme",
+                          "manifest",
+                          "release-notes",
+                          "sheet",
+                          "disclosure",
+                          "repo-metadata"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "verbatim": {
+                        "type": "boolean",
+                        "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "source",
+                      "quote",
+                      "verbatim"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "status",
+                "source",
+                "confidence",
+                "evidence"
+              ]
+            },
+            "features": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "minItems": 1,
+                  "maxItems": 6,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "maxLength": 200
+                  }
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "approved",
+                    "edited",
+                    "rejected"
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "llm",
+                    "human",
+                    "analysis",
+                    "sheet"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "text"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "readme",
+                          "manifest",
+                          "release-notes",
+                          "sheet",
+                          "disclosure",
+                          "repo-metadata"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "verbatim": {
+                        "type": "boolean",
+                        "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "source",
+                      "quote",
+                      "verbatim"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "status",
+                "source",
+                "confidence",
+                "evidence"
+              ]
+            },
+            "notForYouIf": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "maxItems": 4,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "maxLength": 200
+                  }
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "approved",
+                    "edited",
+                    "rejected"
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "llm",
+                    "human",
+                    "analysis",
+                    "sheet"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "text"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "readme",
+                          "manifest",
+                          "release-notes",
+                          "sheet",
+                          "disclosure",
+                          "repo-metadata"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "verbatim": {
+                        "type": "boolean",
+                        "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "source",
+                      "quote",
+                      "verbatim"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "status",
+                "source",
+                "confidence",
+                "evidence"
+              ]
+            }
+          },
+          "required": [
+            "oneLiner",
+            "whoFor",
+            "features",
+            "notForYouIf"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "categories": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "primary": {
+              "type": "string",
+              "enum": [
+                "organization",
+                "ai-llm",
+                "pdf-annotation",
+                "citation-bibliography",
+                "import",
+                "export",
+                "search-discovery",
+                "writing-integration",
+                "sync",
+                "ui-customization",
+                "developer-tool",
+                "analytics"
+              ]
+            },
+            "secondary": {
+              "maxItems": 2,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "organization",
+                  "ai-llm",
+                  "pdf-annotation",
+                  "citation-bibliography",
+                  "import",
+                  "export",
+                  "search-discovery",
+                  "writing-integration",
+                  "sync",
+                  "ui-customization",
+                  "developer-tool",
+                  "analytics"
+                ]
+              }
+            }
+          },
+          "required": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "requirements": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "apiKey": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "object",
+                  "properties": {
+                    "need": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "optional",
+                        "required",
+                        "unknown"
+                      ]
+                    },
+                    "providers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "e.g. ['OpenAI', 'Anthropic', 'Ollama (local)']"
+                    },
+                    "mode": {
+                      "type": "string",
+                      "enum": [
+                        "byok",
+                        "developer-hosted",
+                        "both",
+                        "not-applicable",
+                        "unknown"
+                      ]
+                    },
+                    "freeTier": {
+                      "anyOf": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "string",
+                          "const": "unknown"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "need",
+                    "providers",
+                    "mode",
+                    "freeTier"
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "approved",
+                    "edited",
+                    "rejected"
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "llm",
+                    "human",
+                    "analysis",
+                    "sheet"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "text"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "readme",
+                          "manifest",
+                          "release-notes",
+                          "sheet",
+                          "disclosure",
+                          "repo-metadata"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "verbatim": {
+                        "type": "boolean",
+                        "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "source",
+                      "quote",
+                      "verbatim"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "status",
+                "source",
+                "confidence",
+                "evidence"
+              ]
+            },
+            "account": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "object",
+                  "properties": {
+                    "required": {
+                      "anyOf": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "string",
+                          "const": "unknown"
+                        }
+                      ]
+                    },
+                    "service": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "required"
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "approved",
+                    "edited",
+                    "rejected"
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "llm",
+                    "human",
+                    "analysis",
+                    "sheet"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "text"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "readme",
+                          "manifest",
+                          "release-notes",
+                          "sheet",
+                          "disclosure",
+                          "repo-metadata"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "verbatim": {
+                        "type": "boolean",
+                        "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "source",
+                      "quote",
+                      "verbatim"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "status",
+                "source",
+                "confidence",
+                "evidence"
+              ]
+            },
+            "pricing": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "object",
+                  "properties": {
+                    "model": {
+                      "type": "string",
+                      "enum": [
+                        "free",
+                        "freemium",
+                        "paid",
+                        "subscription",
+                        "unknown"
+                      ]
+                    },
+                    "proUnlocks": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "model"
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "approved",
+                    "edited",
+                    "rejected"
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "llm",
+                    "human",
+                    "analysis",
+                    "sheet"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "text"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "readme",
+                          "manifest",
+                          "release-notes",
+                          "sheet",
+                          "disclosure",
+                          "repo-metadata"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "verbatim": {
+                        "type": "boolean",
+                        "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "source",
+                      "quote",
+                      "verbatim"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "status",
+                "source",
+                "confidence",
+                "evidence"
+              ]
+            },
+            "companionApps": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "approved",
+                    "edited",
+                    "rejected"
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "llm",
+                    "human",
+                    "analysis",
+                    "sheet"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "text"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "readme",
+                          "manifest",
+                          "release-notes",
+                          "sheet",
+                          "disclosure",
+                          "repo-metadata"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "verbatim": {
+                        "type": "boolean",
+                        "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "source",
+                      "quote",
+                      "verbatim"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "status",
+                "source",
+                "confidence",
+                "evidence"
+              ]
+            },
+            "platforms": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "windows",
+                      "macos",
+                      "linux"
+                    ]
+                  }
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "approved",
+                    "edited",
+                    "rejected"
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "llm",
+                    "human",
+                    "analysis",
+                    "sheet"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "text"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "readme",
+                          "manifest",
+                          "release-notes",
+                          "sheet",
+                          "disclosure",
+                          "repo-metadata"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "verbatim": {
+                        "type": "boolean",
+                        "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "source",
+                      "quote",
+                      "verbatim"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "status",
+                "source",
+                "confidence",
+                "evidence"
+              ]
+            },
+            "uiLanguages": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "BCP 47 tags"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "approved",
+                    "edited",
+                    "rejected"
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "llm",
+                    "human",
+                    "analysis",
+                    "sheet"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "text"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "readme",
+                          "manifest",
+                          "release-notes",
+                          "sheet",
+                          "disclosure",
+                          "repo-metadata"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "verbatim": {
+                        "type": "boolean",
+                        "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "source",
+                      "quote",
+                      "verbatim"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "status",
+                "source",
+                "confidence",
+                "evidence"
+              ]
+            },
+            "networkRegion": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "object",
+                  "properties": {
+                    "blockedInMainlandChina": {
+                      "type": "string",
+                      "enum": [
+                        "yes",
+                        "partly",
+                        "no",
+                        "unknown"
+                      ]
+                    },
+                    "chinaOnlyServices": {
+                      "type": "string",
+                      "enum": [
+                        "yes",
+                        "partly",
+                        "no",
+                        "unknown"
+                      ]
+                    },
+                    "notes": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "blockedInMainlandChina",
+                    "chinaOnlyServices"
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "approved",
+                    "edited",
+                    "rejected"
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "llm",
+                    "human",
+                    "analysis",
+                    "sheet"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "text"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "readme",
+                          "manifest",
+                          "release-notes",
+                          "sheet",
+                          "disclosure",
+                          "repo-metadata"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "verbatim": {
+                        "type": "boolean",
+                        "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "source",
+                      "quote",
+                      "verbatim"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "status",
+                "source",
+                "confidence",
+                "evidence"
+              ]
+            }
+          },
+          "required": [
+            "apiKey",
+            "account",
+            "pricing",
+            "companionApps",
+            "platforms",
+            "uiLanguages",
+            "networkRegion"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "profilerVersion",
+    "generatedAt",
+    "slug",
+    "repo",
+    "repoName",
+    "name",
+    "listing",
+    "links",
+    "author",
+    "license",
+    "sources",
+    "about",
+    "languages",
+    "popularity",
+    "maintenance",
+    "compatibility",
+    "install",
+    "fork",
+    "forks",
+    "addonId",
+    "addonIdSharedWith",
+    "trust",
+    "provenance",
+    "scan",
+    "requirementsHints",
+    "integrityEvents",
+    "content",
+    "categories",
+    "requirements"
+  ]
+}

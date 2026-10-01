@@ -1,0 +1,115 @@
+---
+import type { GradeChange } from "../lib/gradeLog.ts";
+import GradeTag from "./GradeTag.astro";
+
+interface Props {
+  items: GradeChange[];
+  compact?: boolean;
+}
+const { items, compact = false } = Astro.props;
+const DIR = { new: ["New", "var(--ink-2)"], up: ["Up a rung", "var(--few-fg)"], down: ["Down a rung", "var(--ser-fg)"] } as const;
+---
+
+{
+  items.length === 0 ? (
+    <div class="dashed-note">
+      <strong style="color:var(--ink)">No grade changes yet.</strong> Grades belong to versions: from launch, every change up or down is listed here and in the RSS feed.
+    </div>
+  ) : (
+    <div class:list={["log", { compact }]}>
+      {items.map((c) => (
+        <div class="row" data-dir={c.dir}>
+          <span class="gs">
+            {c.from ? (
+              <>
+                <GradeTag grade={c.from} size="xs" />
+                <span aria-hidden="true" class="arrow">→</span>
+              </>
+            ) : (
+              <span class="new">New</span>
+            )}
+            <GradeTag grade={c.to} size="xs" />
+          </span>
+          <span class="mid">
+            <span class="nm">
+              <a href={`/p/${c.slug}`}>{c.name}</a>
+              <span class="mono-sm">
+                v{c.version}
+                {compact ? ` · ${c.date}` : ""}
+              </span>
+            </span>
+            <span class="why">{c.why}</span>
+          </span>
+          {!compact && <span class="dir" style={`color:${DIR[c.dir][1]}`}>{DIR[c.dir][0]}</span>}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+<style>
+  .row {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr) auto;
+    gap: 4px 18px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+  .row[hidden] {
+    display: none;
+  }
+  .compact .row {
+    grid-template-columns: 120px minmax(0, 1fr);
+    padding: 12px 0;
+  }
+  .gs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .arrow {
+    color: var(--ink-3);
+  }
+  .new {
+    font: 600 11px/1 var(--font-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-right: 4px;
+  }
+  .mid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .nm {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .nm a {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .compact .nm a {
+    font-size: 16px;
+  }
+  .why {
+    font-size: 14.5px;
+    line-height: 1.4;
+    color: var(--ink-2);
+  }
+  .dir {
+    font: 600 13px var(--font-sans);
+  }
+  @media (max-width: 600px) {
+    .row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

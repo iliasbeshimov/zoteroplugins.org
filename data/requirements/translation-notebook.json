@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "translation-notebook",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "AI translation of phrases and sentences needs an API key from the chosen provider (Ollama local can be left blank); Wordnik and Merriam-Webster dictionaries need keys",
+  "worksWithout": "Word lookup with the free Youdao dictionary (the default)",
+  "services": [
+   "OpenAI",
+   "DeepSeek",
+   "Wordnik",
+   "Merriam-Webster"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "Settings table",
+   "quote": "有道（免费默认）/ Free Dictionary API / Wordnik / Merriam-Webster / 自定义 HTTP JSON / 关闭",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "Settings table",
+   "quote": "**每个服务商分别记忆**，重复输入自动覆盖该服务商旧值（Ollama 本机可留空）",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:42",
+   "quote": "ollama: { label: 'Ollama（本机）', base: 'http://localhost:11434/v1', model: 'llama3' },",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Pack has the free Youdao default ('有道（免费默认）') with code 'key: false'. AI needs a key except local Ollama ('Ollama 本机可留空'). bootstrap.js has 'ollama: { label: 'Ollama（本机）', base: 'http://localhost:11434/v1'...'."
+}

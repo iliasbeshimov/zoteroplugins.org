@@ -1,0 +1,38 @@
+{
+ "schemaVersion": 1,
+ "slug": "translook",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Cloud LLM services (DeepSeek default, OpenAI, etc.) need an API key; Baidu Translate needs AppID and secret",
+  "worksWithout": "A local Ollama model (no key), or the opt-in free Youdao and Google channels",
+  "services": [
+   "DeepSeek",
+   "OpenAI",
+   "Baidu Translate"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "Channel table",
+   "quote": "需 API Key（本地 Ollama 免 Key）",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "Channel rules",
+   "quote": "Base URL 指向 `localhost` / `127.0.0.1`，即本地 Ollama",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/translook.js:81",
+   "quote": "base: \"http://127.0.0.1:11434/v1\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says '需 API Key（本地 Ollama 免 Key）', so the keyless Ollama route makes the plugin usable without a key. Code has 'base: \"http://127.0.0.1:11434/v1\"' and the README says a localhost Base URL means local Ollama."
+}

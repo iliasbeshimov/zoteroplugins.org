@@ -1,0 +1,340 @@
+{
+ "schemaVersion": 1,
+ "slug": "fred-zotero",
+ "repo": "annefou/fred_zotero",
+ "version": "test",
+ "tag": "vtest",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2025-10-22T13:15:02Z",
+ "prerelease": false,
+ "asset": {
+  "name": "replication-checker-vtest.xpi",
+  "url": "https://github.com/annefou/fred_zotero/releases/download/vtest/replication-checker-vtest.xpi",
+  "size": 428175,
+  "sha256": "8e237c914abeac0aedd61c9c0e26ad4ddd8b50dd7afb364069f071025ec21ca3",
+  "githubAssetId": 307316603,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2025-10-22T13:15:03Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "replication-checker@forrt.org",
+  "name": "Zotero Replication Checker",
+  "version": "test",
+  "description": "Privacy-first plugin to discover replications from FReD (FORRT Replication Database)",
+  "homepageUrl": "https://github.com/forrtproject/fred_zotero",
+  "updateUrl": "https://github.com/forrtproject/fred_zotero/releases/download/release/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "8.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1440,
+   "sha256": "56ea6945da7b5a6ceb1d9ae506cee34783246469f9bf05412377feef429ef67b"
+  },
+  {
+   "path": "content/scripts/batch-matcher.js",
+   "size": 3221,
+   "sha256": "f6aa329714eb4c3a8a1672357c6b4a471ef742f7625820ea28245ffc5dab298b"
+  },
+  {
+   "path": "content/scripts/crypto-js.min.js",
+   "size": 48316,
+   "sha256": "8e3b0117f4df4be452c0b6af5b8f0a0acf9d4ade23d08d55d7e312af22077762"
+  },
+  {
+   "path": "content/scripts/data-source.js",
+   "size": 3321,
+   "sha256": "2a3ce66b99155cbed65bd32d24534637fe0fe4b841376e17a95e69b2134fa297"
+  },
+  {
+   "path": "content/scripts/index.js",
+   "size": 4153,
+   "sha256": "807b24e8c109b843c4cdda73efea22ee1fee81382e9d292ad8dcf26686ef7035"
+  },
+  {
+   "path": "content/scripts/replication-checker.js",
+   "size": 7349,
+   "sha256": "386436a7d9348fb64d0d8074015cdcfc353310000d10711f07093ec22e340c8c"
+  },
+  {
+   "path": "content/scripts/zotero-integration.js",
+   "size": 1993,
+   "sha256": "60d53a2f42c3200b87bc6d3f43e0def43778dc2812990f9f9620938c01b77cfa"
+  },
+  {
+   "path": "data/fred_mini.csv",
+   "size": 2993793,
+   "sha256": "25195ad86bd60b3c182554f823a9c28cc2502901aac84f8980b293fccd61face"
+  },
+  {
+   "path": "locale/en-US/replication-checker.ftl",
+   "size": 1174,
+   "sha256": "7b09e94f7d8e8cb60f0040f5acaaa3ae0880a350cf562971a96908ebaacf2ee3"
+  },
+  {
+   "path": "manifest.json",
+   "size": 664,
+   "sha256": "c95b985df471b2766c6438502425f1263dcf8faf3bf4b3cebdaa92f29ade5b76"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "fred-zotero",
+   "version": "test",
+   "sha256": "8e237c914abeac0aedd61c9c0e26ad4ddd8b50dd7afb364069f071025ec21ca3"
+  },
+  "coverage": {
+   "filesTotal": 10,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "data/fred_mini.csv",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/replication-checker.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 69793,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "crypto-js",
+     "files": [
+      "content/scripts/crypto-js.min.js"
+     ],
+     "identifiedBy": "file-name"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/data-source.js",
+       "line": 53,
+       "column": 35,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", this.apiUrl, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/replication-checker.js",
+       "line": 167,
+       "column": 14,
+       "snippet": "html += `DOI: <a href=\"https://doi.org/${this._escapeHtml(rep.doi_r)}\">${this._escapeHtml(rep.doi_r)}</a><br>`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "ouj1xoiypb.execute-api.eu-central-1.amazonaws.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/data-source.js",
+       "line": 42,
+       "column": 22,
+       "snippet": "this.apiUrl = \"https://ouj1xoiypb.execute-api.eu-central-1.amazonaws.com/v1/prefix-lookup\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/forrtproject/fred_zotero/releases/download/release/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/forrtproject/fred_zotero/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "fred-zotero",
+   "version": "test",
+   "sha256": "8e237c914abeac0aedd61c9c0e26ad4ddd8b50dd7afb364069f071025ec21ca3"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "91fa39f9bb4e900288244b85eca98643c01e625c187db05e9acc8904d24550dc"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "other-repository",
+     "label": "Updates come from forrtproject/fred_zotero on GitHub",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "unknown",
+      "hosts": [
+       "ouj1xoiypb.execute-api.eu-central-1.amazonaws.com"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts a server we couldn't identify: ouj1xoiypb.execute-api.eu-central-1.amazonaws.com",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2025-10-22T13:15:02Z",
+    "lastCommitAt": "2025-10-22T12:46:50Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7–8",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Contacts a server we couldn't identify: ouj1xoiypb.execute-api.eu-central-1.amazonaws.com"
+   ]
+  }
+ }
+}

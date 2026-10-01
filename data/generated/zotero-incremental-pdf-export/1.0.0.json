@@ -1,0 +1,322 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-incremental-pdf-export",
+ "repo": "huanongfish/zotero-incremental-pdf-export",
+ "version": "1.0.0",
+ "tag": "v1.0.0",
+ "releaseAuthor": "huanongfish",
+ "publishedAt": "2026-07-20T09:50:20Z",
+ "prerelease": false,
+ "asset": {
+  "name": "incremental-pdf-export.xpi",
+  "url": "https://github.com/huanongfish/zotero-incremental-pdf-export/releases/download/v1.0.0/incremental-pdf-export.xpi",
+  "size": 5197,
+  "sha256": "d5ad3b04b29c005a5310850ea76d0317a77307b92c68e4980992209f6dbc962e",
+  "githubAssetId": 483313163,
+  "uploader": "huanongfish",
+  "uploadedAt": "2026-07-20T09:50:20Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "incremental-pdf-export@plugin.local",
+  "name": "Incremental PDF Export",
+  "version": "1.0.0",
+  "description": "分类右键增量导出 PDF：新增的补进目标文件夹、内容更新的替换、没变的跳过，绝不重复导出",
+  "homepageUrl": "https://github.com/huanongfish/zotero-incremental-pdf-export",
+  "updateUrl": "https://raw.githubusercontent.com/huanongfish/zotero-incremental-pdf-export/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 830,
+   "sha256": "44ea23b1e386789b354e569bff35771923517280591e606249d958b05d435583"
+  },
+  {
+   "path": "incremental-pdf-export.js",
+   "size": 10873,
+   "sha256": "702821626f813ec7b9b75b8bee53436a0be4188d9dbbb389ed5b416663e9c71c"
+  },
+  {
+   "path": "manifest.json",
+   "size": 619,
+   "sha256": "ec0bfd049a4afd92a63fa4f1f1478d4577db880255e31609aee2d036709e5715"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-incremental-pdf-export",
+   "version": "1.0.0",
+   "sha256": "d5ad3b04b29c005a5310850ea76d0317a77307b92c68e4980992209f6dbc962e"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 11703,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "incremental-pdf-export.js",
+      "line": 246,
+      "column": 9,
+      "snippet": "await IOUtils.makeDirectory(targetDir, { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "incremental-pdf-export.js",
+      "line": 275,
+      "column": 28,
+      "snippet": "if (!srcPath || !(await IOUtils.exists(srcPath))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "incremental-pdf-export.js",
+      "line": 279,
+      "column": 21,
+      "snippet": "let stat = await IOUtils.stat(srcPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "incremental-pdf-export.js",
+      "line": 284,
+      "column": 27,
+      "snippet": "let destExists = await IOUtils.exists(destPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "incremental-pdf-export.js",
+      "line": 303,
+      "column": 10,
+      "snippet": "await IOUtils.copy(srcPath, destPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "incremental-pdf-export.js",
+      "line": 326,
+      "column": 11,
+      "snippet": "await IOUtils.makeDirectory(prunedDir, { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "incremental-pdf-export.js",
+      "line": 330,
+      "column": 16,
+      "snippet": "if (await IOUtils.exists(from)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "incremental-pdf-export.js",
+      "line": 331,
+      "column": 13,
+      "snippet": "await IOUtils.move(from, PathUtils.join(prunedDir, e.fileName));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/huanongfish/zotero-incremental-pdf-export/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/huanongfish/zotero-incremental-pdf-export/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the huanongfish account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-incremental-pdf-export",
+   "version": "1.0.0",
+   "sha256": "d5ad3b04b29c005a5310850ea76d0317a77307b92c68e4980992209f6dbc962e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "5d00ed62291496664efbf1a9f9189af9e67c0f8dc71d6f8440029462befdc414"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-20T09:50:20Z",
+    "lastCommitAt": "2026-07-20T09:49:59Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:56:12Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 2,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

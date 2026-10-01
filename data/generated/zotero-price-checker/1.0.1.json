@@ -1,0 +1,284 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-price-checker",
+ "repo": "nbtkmy/zotero-price-checker",
+ "version": "1.0.1",
+ "tag": "v1.0.1",
+ "releaseAuthor": "NbtKmy",
+ "publishedAt": "2022-04-13T13:42:17Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zoteroaoijpreise-1.0.1.xpi",
+  "url": "https://github.com/NbtKmy/zotero-price-checker/releases/download/v1.0.1/zoteroaoijpreise-1.0.1.xpi",
+  "size": 257214,
+  "sha256": "73626bce264867c9402d686db97b61421104ca4719fea04404b1c7ee558a2d7f",
+  "githubAssetId": 62457998,
+  "uploader": "NbtKmy",
+  "uploadedAt": "2022-04-13T13:42:13Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "install.rdf",
+  "legacy": true,
+  "addonId": "nbtkmy_PreisChecker0@j-images.ch",
+  "name": "Preis-Checker mit OpenDB",
+  "version": "1.0.1",
+  "description": "Zotero-Plugin zum Preis-Checken",
+  "homepageUrl": "https://github.com/NbtKmy/zotero-price-checker",
+  "strictMinVersion": "5.0.0",
+  "strictMaxVersion": "6.*"
+ },
+ "files": [
+  {
+   "path": "chrome.manifest",
+   "size": 302,
+   "sha256": "1fb88391c0ddc6a9590ff752066578b78cec30a35b3036f380c90875fccef983"
+  },
+  {
+   "path": "chrome/content/overlay.xul",
+   "size": 976,
+   "sha256": "a200e1c1daff257dfebbe96665aa642677bfe41c806201e1cf3d21dab205f439"
+  },
+  {
+   "path": "chrome/content/scripts/zoteroaoijpreise.js",
+   "size": 3288,
+   "sha256": "962892af6fec2b58a111c479d30edb74db3a57958dc1842c457b9bcccd430fed"
+  },
+  {
+   "path": "chrome/locale/de/overlay.dtd",
+   "size": 137,
+   "sha256": "7ecd4b64d59a830ecc7696e7f0879831468ce7f376ac55a4da7b307686bfb3a3"
+  },
+  {
+   "path": "chrome/locale/en-US/overlay.dtd",
+   "size": 121,
+   "sha256": "842c9efa5c3801c6fbf666bf7cba1ca24aa90c92a53724d1357f1f171e2856de"
+  },
+  {
+   "path": "chrome/skin/default/image/coin_kinka.png",
+   "size": 253484,
+   "sha256": "5de1cec670f9ed641693829a5850eb043e8493e0a7760a7ec1e7f4a52dec71da"
+  },
+  {
+   "path": "install.rdf",
+   "size": 901,
+   "sha256": "51da587b475bfedb859b2fc0f1e47ab2d6fc598c023f8ded1c56db7ab6c87de1"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-price-checker",
+   "version": "1.0.1",
+   "sha256": "73626bce264867c9402d686db97b61421104ca4719fea04404b1c7ee558a2d7f"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "chrome/locale/de/overlay.dtd",
+     "reason": "not-code"
+    },
+    {
+     "path": "chrome/locale/en-US/overlay.dtd",
+     "reason": "not-code"
+    },
+    {
+     "path": "chrome/skin/default/image/coin_kinka.png",
+     "reason": "binary"
+    },
+    {
+     "path": "install.rdf",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 4264,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "xhr",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/zoteroaoijpreise.js",
+       "line": 18,
+       "column": 15,
+       "snippet": "let opendb = new XMLHttpRequest();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.openbd.jp",
+     "category": "scholarly-api",
+     "provider": "openBD (Japanese book data)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/zoteroaoijpreise.js",
+       "line": 15,
+       "column": 18,
+       "snippet": "var price_url = \"https://api.openbd.jp/v1/get?isbn=\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the NbtKmy account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-price-checker",
+   "version": "1.0.1",
+   "sha256": "73626bce264867c9402d686db97b61421104ca4719fea04404b1c7ee558a2d7f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "b015a9233c39cdfaa1f492059c51e9ac845b5638ea11ac6231c4c12ebf382155"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.openbd.jp"
+      ],
+      "unconfirmed": [
+       "api.openbd.jp"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "archived",
+    "lastReleaseAt": "2022-04-13T13:42:17Z",
+    "lastCommitAt": "2024-10-09T14:56:51Z",
+    "concern": "medium"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 6",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

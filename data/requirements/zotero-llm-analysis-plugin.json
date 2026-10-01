@@ -1,0 +1,28 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-llm-analysis-plugin",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "**Ollama** running on your own computer",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "src/providers.js:30",
+   "quote": "ollama: { kind: 'openai', label: 'Ollama (local)', baseURL: 'http://localhost:11434/v1', model: '', needsKey: false, contextChars: 40000 },",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The default provider is \"gemini\", which needs a key (needsKey: true). The Ollama preset has `needsKey: false`, so a keyless route exists but is not the default. The pack doesn't settle which counts as the main use, so unknown. The Ollama preset at localhost:11434 is clear evidence for local models."
+}

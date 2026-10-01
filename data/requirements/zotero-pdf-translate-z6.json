@@ -1,0 +1,27 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf-translate-z6",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Commercial engines such as Microsoft, Baidu, Tencent, DeepL, GPT",
+  "worksWithout": "Google (googleapi) or CNKI, chosen as the default service",
+  "services": [
+   "Microsoft Translator",
+   "Baidu Translate",
+   "Tencent",
+   "OpenAI"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/index.js:12946",
+   "quote": "setPref(\"translateSource\", isZhCN ? \"cnki\" : \"googleapi\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Same upstream default; README lists Google Translate(API) as needing no key. No local-model evidence."
+}

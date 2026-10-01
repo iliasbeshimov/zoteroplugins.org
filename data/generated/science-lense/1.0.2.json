@@ -1,0 +1,340 @@
+{
+ "schemaVersion": 1,
+ "slug": "science-lense",
+ "repo": "ariyanbe/science-lense",
+ "version": "1.0.2",
+ "tag": "v1.0.2",
+ "releaseAuthor": "AriyanBe",
+ "publishedAt": "2026-09-17T23:12:02Z",
+ "prerelease": false,
+ "asset": {
+  "name": "science-lens-1.0.2.xpi",
+  "url": "https://github.com/AriyanBe/Science-Lense/releases/download/v1.0.2/science-lens-1.0.2.xpi",
+  "size": 4887,
+  "sha256": "b07b14f1d2e3ad838dac39dde2c6287d79e38341c03ee9b5afc9d03fb8b475d3",
+  "githubAssetId": 575781748,
+  "uploader": "AriyanBe",
+  "uploadedAt": "2026-09-20T00:42:25Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "science-lens@local.invalid",
+  "name": "Science Lens — Wikipedia definitions",
+  "version": "1.0.2",
+  "description": "A concise Wikipedia definition and thumbnail for terms selected in the Zotero PDF reader.",
+  "updateUrl": "https://science-lens.invalid/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 6990,
+   "sha256": "04a9296c1b6ec109374584929bc682a77e6ffda9532205ebc740646800d516d6"
+  },
+  {
+   "path": "core.js",
+   "size": 3752,
+   "sha256": "4192741c257553b4602ebcbb3ae2411bc43f5e416f83bad377bda917d4626532"
+  },
+  {
+   "path": "manifest.json",
+   "size": 498,
+   "sha256": "fd3932489b6412c460bf79d44723ad124634c14322e4c0b81eb2b68a9a5adc8e"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "science-lense",
+   "version": "1.0.2",
+   "sha256": "b07b14f1d2e3ad838dac39dde2c6287d79e38341c03ee9b5afc9d03fb8b475d3"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 10742,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 11,
+       "column": 27,
+       "snippet": "const response = await Zotero.HTTP.request('GET', url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "creativecommons.org",
+     "category": "documentation",
+     "provider": "Creative Commons",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 81,
+       "column": 72,
+       "snippet": "footer.append('Source: Wikipedia contributors · ',link('CC BY-SA 4.0','https://creativecommons.org/licenses/by-sa/4.0/'),element(doc,'div','Only the lookup term is sent to Wikipedia. Images load fro",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "en.wikipedia.org",
+     "category": "scholarly-api",
+     "provider": "Wikipedia",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 6,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 90,
+       "column": 86,
+       "snippet": "dy.append(button(doc,'Retry',() => lookup(term)), ' ', link('Search Wikipedia', 'https://en.wikipedia.org/w/index.php?search=' + encodeURIComponent(term)));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 103,
+       "column": 42,
+       "snippet": "body.append(link('Search Wikipedia','https://en.wikipedia.org/w/index.php?search=' + encodeURIComponent(query)));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "core.js",
+       "line": 28,
+       "column": 38,
+       "snippet": "const data = await this.getJSON('https://en.wikipedia.org/w/api.php?' + new URLSearchParams({",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "core.js",
+       "line": 43,
+       "column": 31,
+       "snippet": "s = await this.getJSON('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(term.replace(/ /g, '_')));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "core.js",
+       "line": 61,
+       "column": 54,
+       "snippet": "url:safeURL(s.content_urls?.desktop?.page) || 'https://en.wikipedia.org/wiki/' + encodeURIComponent(s.title.replace(/ /g, '_')),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "core.js",
+       "line": 63,
+       "column": 25,
+       "snippet": "imagePage:file ? 'https://en.wikipedia.org/wiki/File:' + encodeURIComponent(file) : null};",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://science-lens.invalid/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://science-lens.invalid/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the AriyanBe account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "science-lense",
+   "version": "1.0.2",
+   "sha256": "b07b14f1d2e3ad838dac39dde2c6287d79e38341c03ee9b5afc9d03fb8b475d3"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "44a0ba962d934e2d24ac64aa3b450802a16b9fb70dfeec00a61bb9a102afbc7f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "en.wikipedia.org"
+      ],
+      "unconfirmed": [
+       "en.wikipedia.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-17T23:12:02Z",
+    "lastCommitAt": "2026-09-20T00:46:13Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T10:12:23Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

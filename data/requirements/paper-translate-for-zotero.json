@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "paper-translate-for-zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Sign-in to OpenAI via Codex CLI (codex login), or an API key for an OpenAI-compatible service",
+  "worksWithout": "",
+  "services": [
+   "OpenAI (Codex sign-in)",
+   "OpenAI-compatible API provider"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 安装前准备",
+   "quote": "至少配置一种模型认证方式：",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, 安装前准备",
+   "quote": "`OpenAI Compatible`：准备支持 `/chat/completions` 的 HTTPS API Base、API Key 和模型 ID。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.PaperTranslateForZotero.paper.codexApiUrl\", \"https://chatgpt.com/backend-api/codex/responses\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The README says at least one auth method must be set up: Codex CLI login, or an OpenAI-compatible HTTPS API Base plus API Key. The default is the Codex ChatGPT backend. The README never mentions a local server, and it asks for an HTTPS base, so unknown is right for local models."
+}

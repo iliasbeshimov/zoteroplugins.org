@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-bibfix",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Claude AI features (short title generation and Claude-based optimization) need an Anthropic API key",
+  "worksWithout": "K10plus, DNB and CrossRef metadata searches (enabled by default, no key)",
+  "services": [
+   "Anthropic"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.bibfix.claudeApiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/bibfix.js:155",
+   "quote": "if (!apiKey) return null;",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/bibfix.js:151",
+   "quote": "API_URL: \"https://api.anthropic.com/v1/messages\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The pack has prefs.js with claudeApiKey empty and searchK10plus, searchDNB and searchCrossRef all true. I checked the code: bibfix.js:155 has 'if (!apiKey) return null;' and API_URL is fixed to api.anthropic.com. The key is needed only for Claude features. There is no local endpoint option in the code."
+}

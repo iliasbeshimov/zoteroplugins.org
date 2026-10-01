@@ -1,0 +1,294 @@
+{
+ "schemaVersion": 1,
+ "slug": "citepulse",
+ "repo": "lilynaux/citepulse",
+ "version": "1.0.0",
+ "tag": "v1.0.0",
+ "releaseAuthor": "Lilynaux",
+ "publishedAt": "2026-06-01T16:10:45Z",
+ "prerelease": false,
+ "asset": {
+  "name": "CitePulse_v1.xpi",
+  "url": "https://github.com/Lilynaux/CitePulse/releases/download/v1.0.0/CitePulse_v1.xpi",
+  "size": 3380,
+  "sha256": "bb3e8f21cde3403ecbf31ca75ad150f49abe78698230480ef75f41aca16f97d5",
+  "githubAssetId": 435399728,
+  "uploader": "Lilynaux",
+  "uploadedAt": "2026-06-01T16:08:50Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "citepulse@lilynaux",
+  "name": "CitePulse",
+  "version": "1.0.0",
+  "description": "Fetch and display citation counts from OpenAlex in Zotero",
+  "homepageUrl": "https://github.com/Lilynaux/CitePulse",
+  "updateUrl": "https://github.com/Lilynaux/CitePulse/releases/latest/download/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 588,
+   "sha256": "f3f60eb21fde477c6af369a4994a319cf3b759eade8681815f1e3fc6c5ee4f82"
+  },
+  {
+   "path": "content/main.js",
+   "size": 6434,
+   "sha256": "f4b1a9ff1b4408473a74b661d314cfd0e63325ae947af73404c112a02d70aae8"
+  },
+  {
+   "path": "manifest.json",
+   "size": 484,
+   "sha256": "6a41b2fc1a43c425841bf4b7afd2d2be06b834bf03adc0692ef88f99c9dba870"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "citepulse",
+   "version": "1.0.0",
+   "sha256": "bb3e8f21cde3403ecbf31ca75ad150f49abe78698230480ef75f41aca16f97d5"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 7022,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 85,
+       "column": 31,
+       "snippet": "const response = await fetch(url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.openalex.org",
+     "category": "scholarly-api",
+     "provider": "OpenAlex",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 82,
+       "column": 16,
+       "snippet": "const url = `https://api.openalex.org/works/https://doi.org/${encodeURIComponent(doi)}`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/Lilynaux/CitePulse/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/Lilynaux/CitePulse/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Lilynaux account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "citepulse",
+   "version": "1.0.0",
+   "sha256": "bb3e8f21cde3403ecbf31ca75ad150f49abe78698230480ef75f41aca16f97d5"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "2652cdaef92997f5c47b4513ff538c8d1fdeafb36b0162a59b21a36ec6e83d7f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.openalex.org"
+      ],
+      "observed": [
+       "api.openalex.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED",
+     "DS-OBSERVED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-06-01T16:10:45Z",
+    "lastCommitAt": "2026-06-01T15:41:38Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T06:33:02Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 2,
+    "dialogs": 1
+   },
+   "contacted": [
+    "api.openalex.org"
+   ],
+   "sentTo": [
+    {
+     "host": "api.openalex.org",
+     "sent": [
+      "identifiers"
+     ]
+    }
+   ],
+   "unexpected": []
+  }
+ }
+}

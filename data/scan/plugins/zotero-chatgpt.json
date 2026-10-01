@@ -1,0 +1,386 @@
+{
+ "repo": "kazgu/zotero-chatgpt",
+ "slug": "zotero-chatgpt",
+ "group": "top",
+ "rank": 73,
+ "name": "Zotero ChatGPT",
+ "stars": 301,
+ "downloads": 41383,
+ "createdAt": "2023-04-11T09:47:07Z",
+ "tag": "v1.5",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-chat-gpt.xpi",
+    "url": "https://github.com/kazgu/zotero-chatgpt/releases/download/v1.5/zotero-chat-gpt.xpi",
+    "size": 50806,
+    "uploadedAt": "2025-12-03T13:56:14Z",
+    "sha256": "4db4245c190e2b0ad13809f27106db59b410f59d8dc4e3ca0e63e65389d8d744"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zoterochatbot@foxmail.com",
+    "name": "Zotero ChatGPT",
+    "version": "1.5",
+    "description": "ChatGPT in Zotero",
+    "homepageUrl": "https://github.com/kazgu/zotero-chatgpt#readme",
+    "updateUrl": "https://github.com/kazgu/zotero-chatgpt/releases/download/release/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "7.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-chatgpt",
+     "version": "1.5",
+     "sha256": "4db4245c190e2b0ad13809f27106db59b410f59d8dc4e3ca0e63e65389d8d744"
+    },
+    "coverage": {
+     "filesTotal": 14,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": "chrome/content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/content/icons/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/content/zoteroPane.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zoterochatbot-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zoterochatbot-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zoterochatbot-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/zoterochatbot-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/zoterochatbot-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/zoterochatbot-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "chrome/content/scripts/zoterochatbot.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterochatbot.js",
+         "line": 4485,
+         "column": 37,
+         "snippet": "const response = await fetch(`${apiUrl}/chat/completions`, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterochatbot.js",
+         "line": 4646,
+         "column": 29,
+         "snippet": "var response = await fetch(`${apiUrl}/chat/completions`, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 3,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.addontemplate.base\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 3,
+         "column": 45,
+         "snippet": "pref(\"extensions.zotero.addontemplate.base\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterochatbot.js",
+         "line": 4780,
+         "column": 8,
+         "snippet": "\"![Plugin Template](https://github.com/windingwind/zotero-plugin-template)\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterochatbot.js",
+         "line": 4783,
+         "column": 8,
+         "snippet": "'<a href=\"https://github.com/windingwind/zotero-plugin-template\">Plugin Template</a>',",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "<expr>/chat/completions",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterochatbot.js",
+         "line": 4485,
+         "column": 37,
+         "snippet": "const response = await fetch(`${apiUrl}/chat/completions`, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterochatbot.js",
+         "line": 4646,
+         "column": 29,
+         "snippet": "var response = await fetch(`${apiUrl}/chat/completions`, {",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterochatbot.js",
+         "line": 4941,
+         "column": 6,
+         "snippet": "`chrome://${config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon@0.5x.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterochatbot.js",
+         "line": 4209,
+         "column": 16,
+         "snippet": "icon: `chrome://${config.addonRef}/content/icons/favicon@0.5x.png`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/zoteroPane.css",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterochatbot.js",
+         "line": 4122,
+         "column": 16,
+         "snippet": "href: `chrome://${config.addonRef}/content/zoteroPane.css`",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.zotero.addontemplate.base",
+       "defaultValue": "https://api.openai.com/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 3,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.addontemplate.base\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 3,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/zoterochatbot.js",
+        "line": 576,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/zoterochatbot.js",
+        "line": 576,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/zoterochatbot.js",
+        "line": 628,
+        "column": 10,
+        "snippet": "Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 2,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/zoterochatbot.js",
+        "line": 616,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/zoterochatbot.js",
+        "line": 616,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "fsScope": "user-chosen",
+       "apis": [
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/kazgu/zotero-chatgpt/releases/download/release/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/kazgu/zotero-chatgpt/releases/download/release/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.openai.com"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

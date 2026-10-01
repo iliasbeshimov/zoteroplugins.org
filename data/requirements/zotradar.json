@@ -1,0 +1,41 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotradar",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Cloud model providers (Anthropic, OpenAI, DeepSeek, Gemini, Qwen) need an API key; journal ranking needs an easyScholar key",
+  "worksWithout": "Local Ollama (the default model provider)",
+  "services": [
+   "OpenAI",
+   "Anthropic",
+   "DeepSeek",
+   "Google Gemini",
+   "Alibaba Qwen (DashScope)",
+   "EasyScholar"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotradar.modelProvider\", \"ollama\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotradar.ollamaBaseURL\", \"http://127.0.0.1:11434\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/journal.js:29",
+   "quote": "if(!key)return{ok:false,error:'easyScholar key is not configured'}",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Defaults: pref(\"extensions.zotradar.modelProvider\", \"ollama\") and ollamaBaseURL http://127.0.0.1:11434, so the default is keyless and local. Cloud providers and easyScholar ('easyScholar key is not configured') need keys."
+}

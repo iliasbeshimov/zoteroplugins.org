@@ -1,0 +1,24 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotcard",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Image compression through TinyPNG (Tinify) needs the user's Tinify API key",
+  "worksWithout": "Card templates, card management, reading and reports",
+  "services": [
+   "TinyPNG"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "chrome/content/cardimagecompression/card-image-compression.js:98",
+   "quote": "let tinifyApiKey = Zotero.ZotCard.Prefs.get('imagemgr.tinify_api_key');",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The TinyPNG key is used only for image compression (card-image-compression.js:98), and the pack shows no other key. Cards work without it. The pack shows no AI features or local-model code, so 'no' is the right answer."
+}

@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-format-metadata",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Semantic Scholar token, only for faster lookups",
+  "worksWithout": "All linting and metadata formatting; Semantic Scholar is used without a token at a slower rate",
+  "services": [
+   "Semantic Scholar"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "content/scripts/linter.js:10788",
+   "quote": "return getPref(\"semanticScholarToken\") ? 1e3 : 3e3;",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js:71",
+   "quote": "pref(\"extensions.zotero.formatmetadata.semanticScholarToken\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "description",
+   "where": "Manifest description",
+   "quote": "An addon for Zotero to format item metadata.",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The Semantic Scholar token only changes the request rate (linter.js:10788), and its default is an empty string. The plugin formats metadata and has no AI features."
+}

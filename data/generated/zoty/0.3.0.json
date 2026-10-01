@@ -1,0 +1,347 @@
+{
+ "schemaVersion": 1,
+ "slug": "zoty",
+ "repo": "eric-tramel/zoty",
+ "version": "0.3.0",
+ "tag": "v0.3.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-05-16T04:43:17Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zoty-bridge.xpi",
+  "url": "https://github.com/eric-tramel/zoty/releases/download/v0.3.0/zoty-bridge.xpi",
+  "size": 2369,
+  "sha256": "5045e1154c8b8055aef813bbc09194a169d4fa19ac12a826201e976780db48f2",
+  "githubAssetId": 421583714,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-05-16T04:43:17Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zoty-bridge@zoty.dev",
+  "name": "Zoty Bridge",
+  "version": "0.3.0",
+  "description": "Activates the Gecko DevTools Server for remote JavaScript execution via RDP.",
+  "updateUrl": "https://github.com/eric-tramel/zoty/releases/latest/download/zoty-bridge-updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 5253,
+   "sha256": "2ea4f9faf2550a7a29fce90464831e8094cc0110eaaf64f180be4e68c45c7458"
+  },
+  {
+   "path": "manifest.json",
+   "size": 453,
+   "sha256": "a3fcd319185512a4c324e7d1a282feae731e4f08bc200d0d2838350531daf2c1"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zoty",
+   "version": "0.3.0",
+   "sha256": "5045e1154c8b8055aef813bbc09194a169d4fa19ac12a826201e976780db48f2"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 5253,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 88,
+      "column": 17,
+      "snippet": "var fn = new Function(\"Zotero\", \"return (async () => { \" + code + \" })();\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Function"
+     ]
+    }
+   },
+   {
+    "id": "own-server",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 88,
+      "column": 17,
+      "snippet": "var fn = new Function(\"Zotero\", \"return (async () => { \" + code + \" })();\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 123,
+      "column": 22,
+      "snippet": "serverSocket = Cc[\"@mozilla.org/network/server-socket;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 124,
+      "column": 22,
+      "snippet": ".createInstance(Ci.nsIServerSocket);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 127,
+      "column": 4,
+      "snippet": "serverSocket.asyncListen({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIServerSocket"
+     ],
+     "web": "any",
+     "serverActions": [
+      "runs-code"
+     ]
+    }
+   },
+   {
+    "id": "runs-sent-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 88,
+      "column": 17,
+      "snippet": "var fn = new Function(\"Zotero\", \"return (async () => { \" + code + \" })();\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "local endpoint",
+      "web pages"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/eric-tramel/zoty/releases/latest/download/zoty-bridge-updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/eric-tramel/zoty/releases/latest/download/zoty-bridge-updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zoty",
+   "version": "0.3.0",
+   "sha256": "5045e1154c8b8055aef813bbc09194a169d4fa19ac12a826201e976780db48f2"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "f9ca9040015a786f740e1102a0b05bfa182e634fa8bc9460866f8efcb1d92de7"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "own-server",
+      "label": "Any website you visit can make it act through its local server: it doesn't check where requests come from",
+      "concern": "high",
+      "detail": "A website can make it run code the site sends"
+     },
+     {
+      "id": "runs-sent-code",
+      "label": "Runs code web pages send it",
+      "concern": "high"
+     },
+     {
+      "id": "dynamic-code",
+      "label": "Runs code it assembles while running",
+      "concern": "low"
+     }
+    ],
+    "concern": "high",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-OWN-SERVER-WEB",
+     "CAP-SENT-CODE-WEB"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-05-16T04:43:17Z",
+    "lastCommitAt": "2026-05-16T04:42:34Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "high-concern",
+   "ruleId": "OV-HIGH",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Any website you visit can make it act through its local server: it doesn't check where requests come from",
+    "Runs code web pages send it"
+   ]
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T08:16:33Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

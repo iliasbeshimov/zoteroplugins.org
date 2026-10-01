@@ -1,0 +1,407 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-agent--alex-roc",
+ "repo": "alex-roc/zotero-agent",
+ "version": "0.8.5",
+ "tag": "v0.8.5",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-08-24T15:20:34Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-agent-bridge-0.8.5.xpi",
+  "url": "https://github.com/alex-roc/zotero-agent/releases/download/v0.8.5/zotero-agent-bridge-0.8.5.xpi",
+  "size": 3241,
+  "sha256": "91692f46969befe08c3893dc96a00bc42b858b02bbcb86482ced6ed4ad992414",
+  "githubAssetId": 527786786,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-08-24T15:20:34Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-agent-bridge@zotero-agent",
+  "name": "Zotero Agent Bridge",
+  "version": "0.8.5",
+  "description": "Local write endpoint for Zotero: POST /zotero-agent runs privileged JS, token-protected. The write path for the zotero-agent CLI, MCP server and agent skill.",
+  "homepageUrl": "https://github.com/alex-roc/zotero-agent",
+  "updateUrl": "https://raw.githubusercontent.com/alex-roc/zotero-agent/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 7740,
+   "sha256": "bb29bc7e0b06dc221aa744ab68d2d2ac1df97e08ae2d38d4dc39ff2bc55eb669"
+  },
+  {
+   "path": "manifest.json",
+   "size": 562,
+   "sha256": "96b5ed5105e4bad156b0a538376ef42cf670b3402d18388126b201d50d48c2e0"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-agent--alex-roc",
+   "version": "0.8.5",
+   "sha256": "91692f46969befe08c3893dc96a00bc42b858b02bbcb86482ced6ed4ad992414"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 7740,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 50,
+      "column": 15,
+      "snippet": "var pref = Zotero.Prefs.get(BRIDGE.tokenPref, true);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero-agent.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 111,
+      "column": 13,
+      "snippet": "var fn = new BRIDGE.AsyncFunction(\"Zotero\", \"ZoteroPane\", \"window\", code);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 123,
+      "column": 19,
+      "snippet": "return await Components.utils.evalInSandbox(wrapped, sandbox);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "BRIDGE.AsyncFunction",
+      "Components.utils.evalInSandbox"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 56,
+      "column": 43,
+      "snippet": "var home = Services.dirsvc.get(\"Home\", Components.interfaces.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 58,
+      "column": 20,
+      "snippet": "var txt = await Zotero.File.getContentsAsync(cfgPath);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 186,
+      "column": 25,
+      "snippet": "if (!Zotero.Server || !Zotero.Server.Endpoints) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 190,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[BRIDGE.endpointPath] = ExecEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 196,
+      "column": 25,
+      "snippet": "if (Zotero.Server && Zotero.Server.Endpoints) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zotero-agent"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "runs-sent-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 111,
+      "column": 13,
+      "snippet": "var fn = new BRIDGE.AsyncFunction(\"Zotero\", \"ZoteroPane\", \"window\", code);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "local endpoint"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 18,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/alex-roc/zotero-agent/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/alex-roc/zotero-agent/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-agent--alex-roc",
+   "version": "0.8.5",
+   "sha256": "91692f46969befe08c3893dc96a00bc42b858b02bbcb86482ced6ed4ad992414"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "5c66f494573f0b326b452ca3a5090a9c428c3a3308c7d7110370d785163a39bc"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "runs-sent-code",
+      "label": "Runs code other programs on this computer send it",
+      "concern": "medium"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "dynamic-code",
+      "label": "Runs code it assembles while running",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-SENT-CODE"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-24T15:20:34Z",
+    "lastCommitAt": "2026-08-25T02:31:00Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Runs code other programs on this computer send it"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T09:26:36Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

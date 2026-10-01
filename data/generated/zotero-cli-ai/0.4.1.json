@@ -1,0 +1,398 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-cli-ai",
+ "repo": "agents365-ai/zotero-cli-ai",
+ "version": "0.4.1",
+ "tag": "bridge",
+ "releaseAuthor": "Agents365-ai",
+ "publishedAt": "2026-08-19T01:40:41Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zot-cli-bridge.xpi",
+  "url": "https://github.com/Agents365-ai/zotero-cli-ai/releases/download/bridge/zot-cli-bridge.xpi",
+  "size": 5441,
+  "sha256": "707a7b0a97b0953bbeaeacb8a295f64b56dfc72117673b5b6e219ba2ac3aaf4c",
+  "githubAssetId": 520226491,
+  "uploader": "Agents365-ai",
+  "uploadedAt": "2026-08-19T01:40:40Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zot-cli-bridge@zotero-cli-cc.org",
+  "name": "Zot CLI Bridge",
+  "version": "0.4.1",
+  "description": "Exposes Zotero Find Full Text, attachment rename, and local file import over the local HTTP server for the zot CLI.",
+  "homepageUrl": "https://github.com/Agents365-ai/zotero-cli-ai",
+  "updateUrl": "https://github.com/Agents365-ai/zotero-cli-ai/releases/download/bridge/update.json",
+  "strictMinVersion": "7.999",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 12865,
+   "sha256": "0e53d594caa5c2320f4127617e8e1322ca5b87f061d7748cca57877e5720bfb9"
+  },
+  {
+   "path": "icon.png",
+   "size": 1261,
+   "sha256": "662444a5838616a66c779e506f1e7e3800bc35f5194b25f6738635c274eec735"
+  },
+  {
+   "path": "manifest.json",
+   "size": 645,
+   "sha256": "42f1f85c09a8c1ae440d1d2a755e08a61ca27bad4116ed179126c372a4bd2374"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-cli-ai",
+   "version": "0.4.1",
+   "sha256": "707a7b0a97b0953bbeaeacb8a295f64b56dfc72117673b5b6e219ba2ac3aaf4c"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 12865,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 291,
+      "column": 17,
+      "snippet": "fileExists = Zotero.File.pathToFile(path).exists();",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 13,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 381,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/zot-cli/ping\"] = PING_ENDPOINT;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 382,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/zot-cli/find-pdf\"] = FIND_PDF_ENDPOINT;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 383,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/zot-cli/rename\"] = RENAME_ENDPOINT;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 384,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/zot-cli/import-file\"] = IMPORT_FILE_ENDPOINT;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 389,
+      "column": 33,
+      "snippet": "if (Zotero && Zotero.Server && Zotero.Server.Endpoints) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 390,
+      "column": 11,
+      "snippet": "delete Zotero.Server.Endpoints[\"/zot-cli/ping\"];",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 391,
+      "column": 11,
+      "snippet": "delete Zotero.Server.Endpoints[\"/zot-cli/find-pdf\"];",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 392,
+      "column": 11,
+      "snippet": "delete Zotero.Server.Endpoints[\"/zot-cli/rename\"];",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 393,
+      "column": 11,
+      "snippet": "delete Zotero.Server.Endpoints[\"/zot-cli/import-file\"];",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zot-cli/find-pdf",
+      "/zot-cli/import-file",
+      "/zot-cli/ping",
+      "/zot-cli/rename"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/Agents365-ai/zotero-cli-ai/releases/download/bridge/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/Agents365-ai/zotero-cli-ai/releases/download/bridge/update.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 247,
+      "column": 15,
+      "snippet": "await att.saveTx();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 383,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/zot-cli/rename\"] = RENAME_ENDPOINT;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zot-cli/rename"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Agents365-ai account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-cli-ai",
+   "version": "0.4.1",
+   "sha256": "707a7b0a97b0953bbeaeacb8a295f64b56dfc72117673b5b6e219ba2ac3aaf4c"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "26b83ad5ef48800ffd827b16b55030fb994fa762831103b4f808ea063d558885"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-19T01:40:41Z",
+    "lastCommitAt": "2026-09-07T05:07:27Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T05:59:34Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

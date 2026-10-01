@@ -1,0 +1,476 @@
+{
+ "schemaVersion": 1,
+ "slug": "pdf2zh-desktop",
+ "repo": "aarongig/pdf2zh-desktop",
+ "version": "1.0.21",
+ "tag": "v2.3.33",
+ "releaseAuthor": "AaronGIG",
+ "publishedAt": "2026-09-18T17:02:37Z",
+ "prerelease": false,
+ "asset": {
+  "name": "pdf2zh-connector-v1.0.21.xpi",
+  "url": "https://github.com/AaronGIG/pdf2zh-desktop/releases/download/v2.3.33/pdf2zh-connector-v1.0.21.xpi",
+  "size": 8201,
+  "sha256": "b836d594fe59d2539578040e5b2178cf104a72b33822c4287bc0940146b4642b",
+  "githubAssetId": 573060978,
+  "uploader": "AaronGIG",
+  "uploadedAt": "2026-09-18T17:02:04Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "pdf2zh-connector@aarongig.com",
+  "name": "pdf2zh-desktop Connector",
+  "version": "1.0.21",
+  "description": "Enables pdf2zh-desktop app to add translated PDFs as Zotero attachments + right-click translate menu. (Not the original pdf2zh)",
+  "updateUrl": "https://raw.githubusercontent.com/AaronGIG/pdf2zh-desktop/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 24188,
+   "sha256": "3b2ed335f1cc9f4f22b3e26d130cbe98b64e2322f3c7db411f52fb46d923e067"
+  },
+  {
+   "path": "manifest.json",
+   "size": 524,
+   "sha256": "c1a08477934038287bad01fda87feb5fca817da2c38c04261e20299b0b68971a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "pdf2zh-desktop",
+   "version": "1.0.21",
+   "sha256": "b836d594fe59d2539578040e5b2178cf104a72b33822c4287bc0940146b4642b"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 24188,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 295,
+       "column": 16,
+       "snippet": "'下载：https://github.com/AaronGIG/pdf2zh-desktop/releases');",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "pdf2zh",
+     "provider": "Google Translate, or the translator it's set up with",
+     "category": "translation",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 193,
+       "column": 20,
+       "snippet": "var macs = ['/Applications/pdf2zh.app', _pathJoin(home, 'Applications/pdf2zh.app')];",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 128,
+      "column": 17,
+      "snippet": "if (p && Zotero.File.pathToFile(p).exists()) return p;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 167,
+      "column": 57,
+      "snippet": "try { sub = entries.getNext().QueryInterface(Components.interfaces.nsIFile); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 243,
+      "column": 12,
+      "snippet": "IOUtils.write('/tmp/pdf2zh-xpi-debug.log',",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 552,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints['/pdf2zh/attach'] = _makeAttachEndpoint();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 553,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints['/pdf2zh/ping'] = _makePingEndpoint();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 564,
+      "column": 11,
+      "snippet": "delete Zotero.Server.Endpoints['/pdf2zh/attach'];",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 565,
+      "column": 11,
+      "snippet": "delete Zotero.Server.Endpoints['/pdf2zh/ping'];",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/pdf2zh/attach",
+      "/pdf2zh/ping"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 253,
+      "column": 42,
+      "snippet": "return ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\").Subprocess;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 256,
+      "column": 38,
+      "snippet": "return ChromeUtils.import(\"resource://gre/modules/Subprocess.jsm\").Subprocess;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 354,
+      "column": 18,
+      "snippet": "await Subprocess.call(_callOpts);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 365,
+      "column": 38,
+      "snippet": "var proc = Components.classes[\"@mozilla.org/process/util;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 366,
+      "column": 28,
+      "snippet": ".createInstance(Components.interfaces.nsIProcess);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess",
+      "nsIProcess"
+     ],
+     "programs": [
+      "open"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/AaronGIG/pdf2zh-desktop/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/AaronGIG/pdf2zh-desktop/main/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 57,
+      "column": 39,
+      "snippet": "var attachment = await Zotero.Attachments.importFromFile({",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 552,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints['/pdf2zh/attach'] = _makeAttachEndpoint();",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/pdf2zh/attach"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the AaronGIG account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "pdf2zh-desktop",
+   "version": "1.0.21",
+   "sha256": "b836d594fe59d2539578040e5b2178cf104a72b33822c4287bc0940146b4642b"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "ac2d10825509fa75903d55f4b765772d1275b1331b33777e96b001d21b09f976"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers version 1.0.21, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "translation",
+      "hosts": [
+       "pdf2zh (Google Translate, or the translator it's set up with)"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include open"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-18T17:02:37Z",
+    "lastCommitAt": "2026-09-18T17:07:41Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T09:03:56Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 7,
+    "dialogs": 12
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

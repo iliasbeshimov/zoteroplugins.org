@@ -1,0 +1,353 @@
+{
+ "repo": "UB-Mannheim/zotero-ocr",
+ "slug": "zotero-ocr",
+ "group": "top",
+ "rank": 27,
+ "name": "Zotero OCR",
+ "stars": 828,
+ "downloads": 533797,
+ "createdAt": "2018-10-25T19:27:45Z",
+ "tag": "0.9.6",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-ocr-0.9.6.xpi",
+    "url": "https://github.com/UB-Mannheim/zotero-ocr/releases/download/0.9.6/zotero-ocr-0.9.6.xpi",
+    "size": 19991,
+    "uploadedAt": "2026-09-06T09:20:21Z",
+    "sha256": "9362734df35f4d53a60c8ec63a4134a3579bbc223a5d97d8488eca6dc8c9e0bf"
+   },
+   "manifest": {
+    "format": "install.rdf",
+    "target": "zotero",
+    "addonId": "zotero-ocr@bib.uni-mannheim.de",
+    "name": "Zotero OCR",
+    "version": "0.9.6",
+    "description": "Zotero Plugin for OCR",
+    "homepageUrl": "https://github.com/UB-Mannheim/zotero-ocr",
+    "updateUrl": "https://raw.githubusercontent.com/UB-Mannheim/zotero-ocr/master/update.rdf",
+    "minVersion": "6.0",
+    "maxVersion": "6.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-ocr",
+     "version": "0.9.6",
+     "sha256": "9362734df35f4d53a60c8ec63a4134a3579bbc223a5d97d8488eca6dc8c9e0bf"
+    },
+    "coverage": {
+     "filesTotal": 16,
+     "filesAnalyzed": 8,
+     "filesSkipped": [
+      {
+       "path": "chrome.manifest",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/en-US/zoteroocr.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/en-US/zoteroocr.properties",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/skin/default/zoteroocr/ocr-symbol.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "install.rdf",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zotero-ocr.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/fr-FR/zotero-ocr.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [],
+     "hosts": [
+      {
+       "host": "unpkg.com",
+       "category": "cdn",
+       "provider": "unpkg",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/zoteroocr.js",
+         "line": 444,
+         "column": 90,
+         "snippet": "let pagecontent = preamble + \"<div class='ocr_page'\" + parts[i] + '<script src=\"https://unpkg.com/hocrjs\"></script>\\n</body>\\n</html>';",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "zotero-ocr.js",
+         "line": 492,
+         "column": 90,
+         "snippet": "let pagecontent = preamble + \"<div class='ocr_page'\" + parts[i] + '<script src=\"https://unpkg.com/hocrjs\"></script>\\n</body>\\n</html>';",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 58,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 5,
+        "column": 24,
+        "snippet": "Components.utils.import(\"resource://gre/modules/osfile.jsm\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 135,
+        "column": 49,
+        "snippet": "externalCmdFound = yield OS.File.exists(externalCmd);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 164,
+        "column": 24,
+        "snippet": "if (!(yield OS.File.exists(pdftoppm))) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 171,
+        "column": 24,
+        "snippet": "if (!(yield OS.File.exists(ocrEngine))) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 179,
+        "column": 23,
+        "snippet": "let zdir = FileUtils.getDir('GreBinD', []);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 186,
+        "column": 24,
+        "snippet": "if (!(yield OS.File.exists(pdfinfo))) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 224,
+        "column": 26,
+        "snippet": "let dir = OS.Path.dirname(pdf);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 225,
+        "column": 31,
+        "snippet": "let infofile = OS.Path.join(dir, 'pdfinfo.txt');",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 226,
+        "column": 35,
+        "snippet": "let baseFilename = OS.Path.basename(pdf).replace(/\\.pdf$/, '')",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 251,
+        "column": 32,
+        "snippet": "let imageList = OS.Path.join(dir, baseKey + '-list.txt');",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "FileUtils",
+        "IOUtils/PathUtils",
+        "OS.File",
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "process-launch",
+      "occurrences": 8,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 6,
+        "column": 24,
+        "snippet": "Components.utils.import(\"resource://gre/modules/Subprocess.jsm\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 259,
+        "column": 42,
+        "snippet": "let proc1 = yield Subprocess.call({",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 278,
+        "column": 42,
+        "snippet": "let proc2 = yield Subprocess.call({",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/zoteroocr.js",
+        "line": 351,
+        "column": 33,
+        "snippet": "let proc = yield Subprocess.call({",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "zotero-ocr.js",
+        "line": 7,
+        "column": 20,
+        "snippet": "Subprocess: \"resource://gre/modules/Subprocess.sys.mjs\",",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "zotero-ocr.js",
+        "line": 13,
+        "column": 20,
+        "snippet": "Subprocess: \"resource://gre/modules/Subprocess.sys.mjs\",",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "zotero-ocr.js",
+        "line": 295,
+        "column": 37,
+        "snippet": "let proc = await Subprocess.call({",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "zotero-ocr.js",
+        "line": 395,
+        "column": 33,
+        "snippet": "let proc = await Subprocess.call({",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "Subprocess"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 1,
+        "column": 0,
+        "snippet": "{",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/UB-Mannheim/zotero-ocr/master/update.rdf"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "no-network-found",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "process-launch",
+      "concern": "medium"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-NONE",
+     "CAP-PROCESS"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

@@ -1,0 +1,190 @@
+{
+ "repo": "utf8-coding/zotero-theme-switcher",
+ "slug": "zotero-theme-switcher",
+ "group": "sample-2026",
+ "rank": 1017,
+ "name": "Zotero Theme Switcher",
+ "stars": 0,
+ "downloads": 5,
+ "createdAt": "2026-04-07T11:35:08Z",
+ "tag": "v1",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-theme-switcher.xpi",
+    "url": "https://github.com/utf8-coding/zotero-theme-switcher/releases/download/v1/zotero-theme-switcher.xpi",
+    "size": 28151,
+    "uploadedAt": "2026-04-07T11:42:06Z",
+    "sha256": "69a47f27cc594f5db5b8967febc26e90ccbce55d3d1d10d9adba8819ad2a8e1e"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "theme-switcher@weave.local",
+    "name": "Zotero Theme Switcher",
+    "version": "1.0.4",
+    "description": "Adds a toolbar button to quickly toggle dark mode.",
+    "homepageUrl": null,
+    "updateUrl": "https://example.com/updates.json",
+    "minVersion": "7.0",
+    "maxVersion": "9.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-theme-switcher",
+     "version": "1.0.4",
+     "sha256": "69a47f27cc594f5db5b8967febc26e90ccbce55d3d1d10d9adba8819ad2a8e1e"
+    },
+    "coverage": {
+     "filesTotal": 2,
+     "filesAnalyzed": 1,
+     "filesSkipped": [
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "bootstrap.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [],
+     "hosts": [],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 3,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 501,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 501,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 547,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 2,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 536,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 536,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 10,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://example.com/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://example.com/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "no-network-found",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NONE"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

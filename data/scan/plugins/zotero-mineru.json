@@ -1,0 +1,467 @@
+{
+ "repo": "lisontowind/zotero-mineru",
+ "slug": "zotero-mineru",
+ "group": "sample-2026",
+ "rank": 164,
+ "name": "Zotero MinerU Parser",
+ "stars": 21,
+ "downloads": 2657,
+ "createdAt": "2026-02-28T12:00:23Z",
+ "tag": "v0.1.70",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-mineru.xpi",
+    "url": "https://github.com/lisontowind/zotero-mineru/releases/download/v0.1.70/zotero-mineru.xpi",
+    "size": 119872,
+    "uploadedAt": "2026-09-12T19:29:17Z",
+    "sha256": "0a4e5f8f475b40ff874f4fc961cbd9548442c4bb38ad96db78134d5c36706184"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero-mineru@example.com",
+    "name": "Zotero MinerU Parser",
+    "version": "0.1.70",
+    "description": "Parse PDF attachments with MinerU API and save results as Markdown",
+    "homepageUrl": "https://github.com/lisontowind/zotero-mineru",
+    "updateUrl": "https://raw.githubusercontent.com/lisontowind/zotero-mineru/main/updates.json",
+    "minVersion": "8.0",
+    "maxVersion": "10.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-mineru",
+     "version": "0.1.70",
+     "sha256": "0a4e5f8f475b40ff874f4fc961cbd9548442c4bb38ad96db78134d5c36706184"
+    },
+    "coverage": {
+     "filesTotal": 14,
+     "filesAnalyzed": 6,
+     "filesSkipped": [
+      {
+       "path": "icon.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "icon16.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zotero-mineru.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/zotero-mineru.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "preferences.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "vendor/katex/LICENSE",
+       "reason": "not-code"
+      },
+      {
+       "path": "vendor/katex/README.md",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "katex",
+       "files": [
+        "vendor/katex/katex.min.js"
+       ],
+       "identifiedBy": "path"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 7,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "mineru.js",
+         "line": 613,
+         "column": 30,
+         "snippet": "let uploadResponse = await fetch(uploadURL, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "mineru.js",
+         "line": 709,
+         "column": 15,
+         "snippet": "return await fetch(url, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "mineru.js",
+         "line": 788,
+         "column": 23,
+         "snippet": "let response = await fetch(url, requestOptions);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "mineru.js",
+         "line": 3038,
+         "column": 24,
+         "snippet": "let response = await fetch(url, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "mineru.js",
+         "line": 3451,
+         "column": 24,
+         "snippet": "let response = await fetch(url, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "preferences.js",
+         "line": 210,
+         "column": 24,
+         "snippet": "let response = await fetch(endpoint, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "preferences.js",
+         "line": 278,
+         "column": 24,
+         "snippet": "let response = await fetch(endpoint, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.deepseek.com",
+       "category": "llm-provider",
+       "provider": "DeepSeek",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "preferences.xhtml",
+         "line": 59,
+         "column": 68,
+         "snippet": "<html:input id=\"mineru-llm-api-base-url\" type=\"url\" placeholder=\"https://api.deepseek.com/v1\" />",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "mineru.net",
+       "category": "llm-provider",
+       "provider": "MinerU",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 5,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "mineru.js",
+         "line": 248,
+         "column": 16,
+         "snippet": "apiBaseURL = \"https://mineru.net/api/v4\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "preferences.js",
+         "line": 158,
+         "column": 16,
+         "snippet": "apiBaseURL = \"https://mineru.net/api/v4\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "preferences.xhtml",
+         "line": 12,
+         "column": 64,
+         "snippet": "<html:input id=\"mineru-api-base-url\" type=\"url\" placeholder=\"https://mineru.net/api/v4\" />",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 1,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero-mineru.apiBaseURL\", \"https://mineru.net/api/v4\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 1,
+         "column": 44,
+         "snippet": "pref(\"extensions.zotero-mineru.apiBaseURL\", \"https://mineru.net/api/v4\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "https://<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "mineru.js",
+         "line": 732,
+         "column": 18,
+         "snippet": "let httpsURL = `https://${normalizedURL.slice(\"http://\".length)}`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "zotero-mineru-image://<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "mineru.js",
+         "line": 2246,
+         "column": 16,
+         "snippet": "let marker = `zotero-mineru-image://${id}`",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.zotero-mineru.apiBaseURL",
+       "defaultValue": "https://mineru.net/api/v4",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 1,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero-mineru.apiBaseURL\", \"https://mineru.net/api/v4\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "occurrences": 2,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 2,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero-mineru.apiToken\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 9,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero-mineru.llmApiKey\", \"\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "extensions.zotero-mineru.apiToken",
+        "extensions.zotero-mineru.llmApiKey"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 34,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "mineru.js",
+        "line": 575,
+        "column": 25,
+        "snippet": "let fileBytes = await IOUtils.read(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "mineru.js",
+        "line": 837,
+        "column": 16,
+        "snippet": "let tempDir = PathUtils.join(PathUtils.tempDir, `zotero-mineru-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "mineru.js",
+        "line": 837,
+        "column": 31,
+        "snippet": "let tempDir = PathUtils.join(PathUtils.tempDir, `zotero-mineru-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "mineru.js",
+        "line": 838,
+        "column": 16,
+        "snippet": "let zipPath = PathUtils.join(tempDir, \"result.zip\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "mineru.js",
+        "line": 840,
+        "column": 8,
+        "snippet": "await IOUtils.makeDirectory(tempDir, { createAncestors: true });",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "mineru.js",
+        "line": 841,
+        "column": 8,
+        "snippet": "await IOUtils.write(zipPath, zipBytes);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "mineru.js",
+        "line": 884,
+        "column": 9,
+        "snippet": "await IOUtils.remove(zipPath).catch(() => {});",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "mineru.js",
+        "line": 885,
+        "column": 9,
+        "snippet": "await IOUtils.remove(tempDir).catch(() => {});",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "mineru.js",
+        "line": 904,
+        "column": 19,
+        "snippet": "let outputPath = PathUtils.join(",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "mineru.js",
+        "line": 911,
+        "column": 31,
+        "snippet": "return new Uint8Array(await IOUtils.read(outputPath));",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 16,
+        "column": 18,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/lisontowind/zotero-mineru/main/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/lisontowind/zotero-mineru/main/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.deepseek.com",
+      "mineru.net"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

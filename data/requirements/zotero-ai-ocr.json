@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-ocr",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "PaddleOCR (default engine) and MinerU tokens, and the cloud AI vision providers",
+  "worksWithout": "Ollama, a local model, needs no key",
+  "services": [
+   "Baidu AI Studio (PaddleOCR)",
+   "MinerU",
+   "OpenAI",
+   "Google Gemini"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, engine table",
+   "quote": "| Ollama     | 本地部署   | `qwen2.5vl:7b`                                  | 无需 Key                                        |",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, PaddleOCR engine setup",
+   "quote": "Token：在 [AI Studio](https://aistudio.baidu.com/) 获取的 API Token",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/aiocr.js:23244",
+   "quote": "apiBase: \"http://localhost:11434/api\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README engine table lists Ollama (local) with \"无需 Key\", while the default engine PP-OCRv6 (PaddleOCR) needs an AI Studio token (\"Token：在 [AI Studio](https://aistudio.baidu.com/) 获取的 API Token\"); the cloud AI engines need keys."
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotfile--grayxu",
+  "version": "5.1.2",
+  "sha256": "be62552ea360c5b23a784dd3a83289b3fbbf05d7a66a0d9a0037f2f0bf3d60a7",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "high",
+  "rule": "CAP-DOWNLOAD-EXEC-HTTP",
+  "summary": "A button in its settings (Intel Macs only) downloads ZotFile's Poppler tool from zotfile.com over unencrypted http and runs it without any check, so someone on your network could swap in their own program. The file is no longer on the server, so today the button fails.",
+  "facts": {
+    "what": "A small PDF text-extraction helper program (ExtractPDFAnnotations, built on the Poppler PDF library) for macOS, downloaded as a zip from the original ZotFile author's site, unzipped into the Zotero data folder, made executable, and later run to extract PDF annotations.",
+    "urls": [
+      "http://www.zotfile.com/PDFTools/ExtractPDFAnnotations-MacIntel.zip",
+      "http://www.zotfile.com/PDFTools/ExtractPDFAnnotations-MacIntel.version"
+    ],
+    "source": "third-party",
+    "transport": "http",
+    "integrity": "none",
+    "trigger": "user-clicks-install",
+    "toldInReadme": "no",
+    "readmeQuote": "",
+    "triggerQuote": {
+      "file": "chrome/locale/en-US/options.properties",
+      "text": "installPoppler=Download & Install Poppler Tool"
+    },
+    "integrityQuote": {
+      "file": "chrome/content/zotfile/options.js",
+      "text": "var download = Downloads.createDownload({source: url, target: file});"
+    },
+    "notes": "This fork (grayxu) has the same code and URLs as the original: options.js, options.xul and pdfAnnotations.js lines match the original. The URL points at www.zotfile.com, the original author's site, not the fork author's, so sourceKind is third-party relative to this fork. Button-triggered from the options pane (oncommand=downloadPDFTool()), macOS (MacIntel) only, plain http, no hash or signature check. README never mentions Poppler or the download. I did not download the zip, so its contents are unverified. On 2026-09-30 http://www.zotfile.com/PDFTools/ExtractPDFAnnotations-MacIntel.zip redirected to zotfile.com and returned 404."
+  },
+  "alsoAppliesTo": [
+    {
+      "version": "5.1.1",
+      "sha256": "b2eada12f1f6b442f610680b5f3dd9e9790a709690fced49c367d71a183cb540",
+      "how": "Same download code (http://www.zotfile.com/PDFTools/, no check) as 5.1.2, compared by hand."
+    }
+  ]
+}

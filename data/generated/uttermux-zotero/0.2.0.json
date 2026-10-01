@@ -1,0 +1,356 @@
+{
+ "schemaVersion": 1,
+ "slug": "uttermux-zotero",
+ "repo": "anaxonda/uttermux-zotero",
+ "version": "0.2.0",
+ "tag": "v0.2.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-09-03T13:27:55Z",
+ "prerelease": false,
+ "asset": {
+  "name": "uttermux-zotero-0.2.0.xpi",
+  "url": "https://github.com/anaxonda/uttermux-zotero/releases/download/v0.2.0/uttermux-zotero-0.2.0.xpi",
+  "size": 3860,
+  "sha256": "fbca4b899bccb99c5330373b9fa059b8ff7ed8dd7279a9cad9f06f4ea706a7a2",
+  "githubAssetId": 542818023,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-09-03T13:27:55Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "uttermux-zotero@anaxonda.local",
+  "name": "UtterMux for Zotero",
+  "version": "0.2.0",
+  "description": "Use UtterMux voices with Zotero Read Aloud prefetch and highlighting.",
+  "homepageUrl": "https://github.com/anaxonda/uttermux-zotero",
+  "updateUrl": "https://github.com/anaxonda/uttermux-zotero/releases/latest/download/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 8416,
+   "sha256": "44dba0620ab6880db0b1f1e6a52bb0139ebfbb0385474d89944813406e394519"
+  },
+  {
+   "path": "LICENSE",
+   "size": 531,
+   "sha256": "87a414ccfa05ac460f3c31846d52af9a7020092a51f900a29c5835c19c15d572"
+  },
+  {
+   "path": "manifest.json",
+   "size": 545,
+   "sha256": "1b4bb2e666f7459abe7cb8b21085734479807c0df9e8e5d644c90c7dfa539eac"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "uttermux-zotero",
+   "version": "0.2.0",
+   "sha256": "fbca4b899bccb99c5330373b9fa059b8ff7ed8dd7279a9cad9f06f4ea706a7a2"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 8416,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 37,
+       "column": 17,
+       "snippet": "return await Zotero.HTTP.request(method, `${BRIDGE}${path}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 8766,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 8,
+       "column": 15,
+       "snippet": "const BRIDGE = \"http://127.0.0.1:8766\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 37,
+       "column": 17,
+       "snippet": "return await Zotero.HTTP.request(method, `${BRIDGE}${path}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "UtterMux",
+     "provider": "",
+     "category": "unknown",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 8,
+       "column": 15,
+       "snippet": "const BRIDGE = \"http://127.0.0.1:8766\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 29,
+      "column": 23,
+      "snippet": "const value = (await IOUtils.readUTF8(runtimeTokenPath())).trim();",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/anaxonda/uttermux-zotero/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/anaxonda/uttermux-zotero/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "uttermux-zotero",
+   "version": "0.2.0",
+   "sha256": "fbca4b899bccb99c5330373b9fa059b8ff7ed8dd7279a9cad9f06f4ea706a7a2"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "6bb8e17c2ed769a548f91a629392ed2bc6e72508b506c68af90cc3aa6edc8430"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version, but Zotero won't install it as an update: the file doesn't match the fingerprint the update address gives"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "unknown",
+      "hosts": [
+       "UtterMux"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Hands your data to UtterMux; we can't check where it goes from there",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN-HANDOFF"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-03T13:27:55Z",
+    "lastCommitAt": "2026-09-03T13:24:41Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Hands your data to UtterMux; we can't check where it goes from there"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T11:01:45Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

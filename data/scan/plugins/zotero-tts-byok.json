@@ -1,0 +1,704 @@
+{
+ "repo": "GeneralPawz/zotero-tts-byok",
+ "slug": "zotero-tts-byok",
+ "group": "sample-2026",
+ "rank": 552,
+ "name": "Read Aloud BYOK",
+ "stars": 2,
+ "downloads": 42,
+ "createdAt": "2026-08-14T07:07:47Z",
+ "tag": "v1.15.1",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "read-aloud-byok.xpi",
+    "url": "https://github.com/GeneralPawz/zotero-tts-byok/releases/download/v1.15.1/read-aloud-byok.xpi",
+    "size": 66966,
+    "uploadedAt": "2026-08-14T13:54:13Z",
+    "sha256": "4a93263c2cbcf83b6b2cbc77e54744102bc7396b0e6e34851d108d91545b63aa"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "byok-tts@local",
+    "name": "Read Aloud BYOK",
+    "version": "1.15.1",
+    "description": "Route Zotero's built-in Read Aloud through your own text-to-speech API key (OpenAI-compatible, ElevenLabs, Azure, Gemini, or any custom endpoint).",
+    "homepageUrl": "https://github.com/GeneralPawz/zotero-tts-byok",
+    "updateUrl": "https://raw.githubusercontent.com/GeneralPawz/zotero-tts-byok/main/update.json",
+    "minVersion": "7.999",
+    "maxVersion": "10.999.999"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-tts-byok",
+     "version": "1.15.1",
+     "sha256": "4a93263c2cbcf83b6b2cbc77e54744102bc7396b0e6e34851d108d91545b63aa"
+    },
+    "coverage": {
+     "filesTotal": 16,
+     "filesAnalyzed": 10,
+     "filesSkipped": [
+      {
+       "path": "icon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "LICENSE",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/de/read-aloud-byok.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/read-aloud-byok.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "prefs/pane.css",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "byok-tts",
+       "files": [
+        "lib/byok-tts.js"
+       ],
+       "identifiedBy": "path"
+      },
+      {
+       "name": "cast",
+       "files": [
+        "lib/cast.js"
+       ],
+       "identifiedBy": "path"
+      },
+      {
+       "name": "docprefs",
+       "files": [
+        "lib/docprefs.js"
+       ],
+       "identifiedBy": "path"
+      },
+      {
+       "name": "log",
+       "files": [
+        "lib/log.js"
+       ],
+       "identifiedBy": "path"
+      },
+      {
+       "name": "readerUI",
+       "files": [
+        "lib/readerUI.js"
+       ],
+       "identifiedBy": "path"
+      },
+      {
+       "name": "skip",
+       "files": [
+        "lib/skip.js"
+       ],
+       "identifiedBy": "path"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 560,
+         "column": 9,
+         "snippet": "return Zotero.HTTP.request(method, url, {",
+         "inVendoredCode": true
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.elevenlabs.io",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 440,
+         "column": 41,
+         "snippet": "let base = (this.getPref('baseUrl') || 'https://api.elevenlabs.io/v1').replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 683,
+         "column": 42,
+         "snippet": "let base = (this.getPref('baseUrl') || 'https://api.elevenlabs.io/v1').replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "prefs/pane.js",
+         "line": 28,
+         "column": 12,
+         "snippet": "baseUrl: 'https://api.elevenlabs.io/v1',",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 408,
+         "column": 41,
+         "snippet": "let base = (this.getPref('baseUrl') || 'https://api.openai.com/v1').replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 5,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.byokTTS.baseUrl\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 5,
+         "column": 42,
+         "snippet": "pref(\"extensions.zotero.byokTTS.baseUrl\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs/pane.js",
+         "line": 12,
+         "column": 12,
+         "snippet": "baseUrl: 'https://api.openai.com/v1',",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.speechify.ai",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 457,
+         "column": 41,
+         "snippet": "let base = (this.getPref('baseUrl') || 'https://api.speechify.ai/v1').replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 693,
+         "column": 42,
+         "snippet": "let base = (this.getPref('baseUrl') || 'https://api.speechify.ai/v1').replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "prefs/pane.js",
+         "line": 33,
+         "column": 12,
+         "snippet": "baseUrl: 'https://api.speechify.ai/v1',",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "generativelanguage.googleapis.com",
+       "category": "llm-provider",
+       "provider": "Google Gemini",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 498,
+         "column": 41,
+         "snippet": "let base = (this.getPref('baseUrl') || 'https://generativelanguage.googleapis.com/v1beta')",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "prefs/pane.js",
+         "line": 47,
+         "column": 12,
+         "snippet": "baseUrl: 'https://generativelanguage.googleapis.com/v1beta',",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "openrouter.ai",
+       "category": "llm-provider",
+       "provider": "OpenRouter",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs/pane.js",
+         "line": 23,
+         "column": 12,
+         "snippet": "baseUrl: 'https://openrouter.ai/api/v1',",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "https://<expr>.tts.speech.microsoft.com/cognitiveservices/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 483,
+         "column": 5,
+         "snippet": ": `https://${base || 'westeurope'}.tts.speech.microsoft.com/cognitiveservices/v1`;",
+         "inVendoredCode": true
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [
+      {
+       "prefKey": "baseUrl",
+       "defaultValue": "https://api.speechify.ai/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 408,
+         "column": 14,
+         "snippet": "let base = (this.getPref('baseUrl') || 'https://api.openai.com/v1').replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 440,
+         "column": 14,
+         "snippet": "let base = (this.getPref('baseUrl') || 'https://api.elevenlabs.io/v1').replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 457,
+         "column": 14,
+         "snippet": "let base = (this.getPref('baseUrl') || 'https://api.speechify.ai/v1').replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 480,
+         "column": 14,
+         "snippet": "let base = (this.getPref('baseUrl') || '').trim().replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 498,
+         "column": 14,
+         "snippet": "let base = (this.getPref('baseUrl') || 'https://generativelanguage.googleapis.com/v1beta')",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 683,
+         "column": 15,
+         "snippet": "let base = (this.getPref('baseUrl') || 'https://api.elevenlabs.io/v1').replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 693,
+         "column": 15,
+         "snippet": "let base = (this.getPref('baseUrl') || 'https://api.speechify.ai/v1').replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 723,
+         "column": 15,
+         "snippet": "let base = (this.getPref('baseUrl') || '').replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 813,
+         "column": 14,
+         "snippet": "let base = (this.getPref('baseUrl') || '').replace(/\\/+$/, '');",
+         "inVendoredCode": true
+        }
+       ]
+      },
+      {
+       "prefKey": "custom.url",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "lib/byok-tts.js",
+         "line": 522,
+         "column": 13,
+         "snippet": "let url = (this.getPref('custom.url') || '').trim();",
+         "inVendoredCode": true
+        }
+       ]
+      },
+      {
+       "prefKey": "extensions.zotero.byokTTS.baseUrl",
+       "defaultValue": "https://api.openai.com/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 5,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.byokTTS.baseUrl\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "prefs/pane.js",
+        "line": 190,
+        "column": 2,
+        "snippet": "Zotero.Utilities.Internal.copyTextToClipboard(text);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard"
+       ]
+      }
+     },
+     {
+      "id": "credential-storage",
+      "occurrences": 10,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "lib/byok-tts.js",
+        "line": 425,
+        "column": 12,
+        "snippet": "let key = this.getPref('apiKey');",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/byok-tts.js",
+        "line": 444,
+        "column": 17,
+        "snippet": "'xi-api-key': this.getPref('apiKey') || ''",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/byok-tts.js",
+        "line": 460,
+        "column": 31,
+        "snippet": "Authorization: 'Bearer ' + (this.getPref('apiKey') || '')",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/byok-tts.js",
+        "line": 487,
+        "column": 32,
+        "snippet": "'Ocp-Apim-Subscription-Key': this.getPref('apiKey') || ''",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/byok-tts.js",
+        "line": 504,
+        "column": 21,
+        "snippet": "'x-goog-api-key': this.getPref('apiKey') || ''",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/byok-tts.js",
+        "line": 652,
+        "column": 32,
+        "snippet": ".replace(/\\{\\{key\\}\\}/g, esc(this.getPref('apiKey') || ''));",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/byok-tts.js",
+        "line": 663,
+        "column": 29,
+        "snippet": ".replace(/\\{\\{key\\}\\}/g, this.getPref('apiKey') || '');",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/byok-tts.js",
+        "line": 680,
+        "column": 12,
+        "snippet": "let key = this.getPref('apiKey');",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/byok-tts.js",
+        "line": 812,
+        "column": 12,
+        "snippet": "let key = this.getPref('apiKey');",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 6,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.byokTTS.apiKey\", \"\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "apiKey",
+        "extensions.zotero.byokTTS.apiKey"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 15,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "lib/byok-tts.js",
+        "line": 15,
+        "column": 29,
+        "snippet": "const ENABLED_VOICES_PATH = PathUtils.join(Zotero.Profile.dir, 'readAloudEnabledVoices.json');",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/byok-tts.js",
+        "line": 155,
+        "column": 20,
+        "snippet": "existing = await IOUtils.readJSON(ENABLED_VOICES_PATH);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/byok-tts.js",
+        "line": 176,
+        "column": 9,
+        "snippet": "await IOUtils.writeJSON(ENABLED_VOICES_PATH, existing);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/log.js",
+        "line": 36,
+        "column": 12,
+        "snippet": "this.dir = PathUtils.join(ROOT, DIR);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/log.js",
+        "line": 37,
+        "column": 13,
+        "snippet": "this.path = PathUtils.join(this.dir, FILE);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/log.js",
+        "line": 39,
+        "column": 19,
+        "snippet": "this.legacyPath = PathUtils.join(Zotero.Profile.dir, FILE);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/log.js",
+        "line": 46,
+        "column": 8,
+        "snippet": "await IOUtils.makeDirectory(this.dir, { ignoreExisting: true, createAncestors: true });",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/log.js",
+        "line": 50,
+        "column": 14,
+        "snippet": "if (await IOUtils.exists(this.legacyPath)) {",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/log.js",
+        "line": 51,
+        "column": 11,
+        "snippet": "await IOUtils.move(this.legacyPath, this.path, { noOverwrite: true });",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "lib/log.js",
+        "line": 94,
+        "column": 23,
+        "snippet": "let stat = await IOUtils.stat(this.path);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "fsScope": "zotero-data-dir",
+       "apis": [
+        "IOUtils/PathUtils",
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 13,
+        "column": 18,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/GeneralPawz/zotero-tts-byok/main/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/GeneralPawz/zotero-tts-byok/main/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.openai.com",
+      "generativelanguage.googleapis.com",
+      "openrouter.ai"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

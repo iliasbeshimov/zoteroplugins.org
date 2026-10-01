@@ -1,0 +1,46 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-research-bridge",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Embedding providers other than Ollama (OpenAI, SiliconFlow, Voyage, etc.) need an API key",
+  "worksWithout": "The local MCP bridge to Zotero (uses an auto-generated local token) and Ollama embeddings",
+  "services": [
+   "OpenAI",
+   "SiliconFlow",
+   "Voyage AI",
+   "Google Gemini",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-research-bridge.js:21290",
+   "quote": "displayName: \"Ollama (Local)\",",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-research-bridge.js:21293",
+   "quote": "apiBase: \"http://localhost:11434/v1\",",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-research-bridge.js:21295",
+   "quote": "needsApiKey: false",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "The bundled Codex workflow discovers it read-only from the local Zotero profile.",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Code has preset 'displayName: \"Ollama (Local)\"', apiBase http://localhost:11434/v1, needsApiKey: false, while OpenAI/Voyage presets have needsApiKey: true; the MCP bridge itself uses an auto token, so the key is only for cloud embedding providers."
+}

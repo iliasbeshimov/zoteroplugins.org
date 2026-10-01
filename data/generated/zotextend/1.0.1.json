@@ -1,0 +1,346 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotextend",
+ "repo": "tim-vdl/zotextend",
+ "version": "1.0.1",
+ "tag": "v1.0.1",
+ "releaseAuthor": "tim-vdl",
+ "publishedAt": "2026-06-10T12:07:07Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotextend-1.0.1.xpi",
+  "url": "https://github.com/tim-vdl/ZotExtend/releases/download/v1.0.1/zotextend-1.0.1.xpi",
+  "size": 216527,
+  "sha256": "8aff4c9a71d65b13e6c47f20902ba5feb96be3ec39533859c33b6293715543a2",
+  "githubAssetId": 443673287,
+  "uploader": "tim-vdl",
+  "uploadedAt": "2026-06-10T12:07:07Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotextend@timvdl.dev",
+  "name": "ZotExtend",
+  "version": "1.0.1",
+  "description": "Widens PDF pages to add blank margin space for handwritten annotation on iPad. Runs automatically on import, or manually via the right-click menu.",
+  "homepageUrl": "https://github.com/tim-vdl/ZotExtend",
+  "updateUrl": "https://raw.githubusercontent.com/tim-vdl/ZotExtend/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 4153,
+   "sha256": "e6ca7bb8a9819b16799338576d1db05fc366222be3201a067e5c9660cb1774cc"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 2616,
+   "sha256": "49e813290f72b7a0a13acc2cce5b38414bf1e590ce6b405f9010dff26e8f6fd2"
+  },
+  {
+   "path": "manifest.json",
+   "size": 561,
+   "sha256": "bed1ce6cd6be8628f05f3d54052143ba429f7d4e6938754d5deab82a73bd364d"
+  },
+  {
+   "path": "prefs.js",
+   "size": 973,
+   "sha256": "7dec4dbc2c9d38bb02be9ef5eb9bffe8eab59cb9d578bb6c55cda93321c1c8f6"
+  },
+  {
+   "path": "src/zotextend.js",
+   "size": 17137,
+   "sha256": "aeb2b39ac691466a198733ddf4d8b3f0dc57b21573d763a7b5beeec6fb3234fe"
+  },
+  {
+   "path": "vendor/pdf-lib.min.js",
+   "size": 525099,
+   "sha256": "0f9a5cad07941f0826586c94e089d89b918c46e5c17cf2d5a3c6f666e3bc694f"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotextend",
+   "version": "1.0.1",
+   "sha256": "8aff4c9a71d65b13e6c47f20902ba5feb96be3ec39533859c33b6293715543a2"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 549978,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": true,
+    "files": [
+     "vendor/pdf-lib.min.js"
+    ]
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "pdf-lib",
+     "files": [
+      "vendor/pdf-lib.min.js"
+     ],
+     "identifiedBy": "file-name"
+    }
+   ]
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": true,
+     "libraries": [
+      "pdf-lib"
+     ],
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "vendor/pdf-lib.min.js",
+       "line": 15,
+       "column": 496707,
+       "snippet": "e++,[3,1];case 4:return[2]}}))}))},e.prototype.updateInfoDict=function(){var t=\"pdf-lib (https://github.com/Hopding/pdf-lib)\",e=new Date,n=this.getInfoDict();this.setProducer(t),this.setModificationD",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "src/zotextend.js",
+      "line": 142,
+      "column": 23,
+      "snippet": "const info = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotextend.js",
+      "line": 257,
+      "column": 25,
+      "snippet": "originalBytes = await IOUtils.read(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotextend.js",
+      "line": 276,
+      "column": 9,
+      "snippet": "await IOUtils.write(path, newBytes, { tmpPath: path + \".zotextend.tmp\" });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotextend.js",
+      "line": 471,
+      "column": 17,
+      "snippet": "bytes = await IOUtils.read(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotextend.js",
+      "line": 488,
+      "column": 9,
+      "snippet": "await IOUtils.write(path, newBytes, { tmpPath: path + \".zotextend.tmp\" });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 18,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/tim-vdl/ZotExtend/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/tim-vdl/ZotExtend/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the tim-vdl account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotextend",
+   "version": "1.0.1",
+   "sha256": "8aff4c9a71d65b13e6c47f20902ba5feb96be3ec39533859c33b6293715543a2"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "0d96f2c848ae1175a6c89b45cd97776f29331ecf1ad76e7b55f4501e4fff1aa8"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": true,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-06-10T12:07:07Z",
+    "lastCommitAt": "2026-06-10T12:06:14Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T06:53:22Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 1,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-enterscholar",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Translation needs either an EnterScholar forum sign-in or your own LLM endpoint and API key; both must be supplied by the user",
+  "worksWithout": "",
+  "services": [
+   "EnterScholar",
+   "OpenAI-compatible provider"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "Authenticate with [EnterScholar](https://enterscholar.com/) to get LLM configurations, or configure your own API keys locally.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/config.js:55-56",
+   "quote": "let apiKey = Zotero.EnterScholar.Auth.userApiKey;\n\t\tif (!apiKey) {",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.enterscholar.userApiKey\", \"\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README: 'Authenticate with EnterScholar ... or configure your own API keys locally'; prefs ship with empty userApiKey and empty local endpoint/apiKey, so either a sign-in or own key is needed. Local endpoint is user-set ('any OpenAI-compatible API') but no Ollama/localhost evidence, so unknown."
+}

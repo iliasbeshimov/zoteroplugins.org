@@ -1,0 +1,25 @@
+# A throwaway Zotero for running one plugin under observation. Built per Zotero version by
+# sandbox/run.sh, which puts the Zotero tarball and the proxy's CA certificate in the context.
+FROM docker.io/library/debian:bookworm-slim
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    ca-certificates xvfb xauth libgtk-3-0 libdbus-glib-1-2 libasound2 libxtst6 libx11-xcb1 \
+    libnss3-tools python3 sqlite3 procps iproute2 tcpdump fonts-dejavu-core xz-utils \
+    libpci3 libegl1 dbus-x11 \
+  && rm -rf /var/lib/apt/lists/*
+
+ARG ZOTERO_TARBALL
+COPY ${ZOTERO_TARBALL} /tmp/zotero.tar.xz
+RUN mkdir -p /opt/zotero && tar -xJf /tmp/zotero.tar.xz -C /opt/zotero --strip-components=1 \
+  && rm /tmp/zotero.tar.xz
+
+COPY proxy-ca.pem /sandbox/proxy-ca.pem
+COPY entrypoint.sh monitor.sh addon_id.py make_pdf.py /sandbox/
+COPY harness /sandbox/harness
+RUN python3 /sandbox/make_pdf.py /sandbox/test.pdf && chmod 755 /sandbox/*.sh \
+  && useradd --create-home --uid 1000 zotero
+
+USER zotero
+WORKDIR /home/zotero
+ENTRYPOINT ["/sandbox/entrypoint.sh"]

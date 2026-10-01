@@ -1,0 +1,314 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotfile-recovery",
+ "repo": "jlegewie/zotfile-recovery",
+ "version": "0.2.0",
+ "tag": "v0.2.0",
+ "releaseAuthor": "jlegewie",
+ "publishedAt": "2023-08-05T20:17:48Z",
+ "prerelease": false,
+ "asset": {
+  "name": "ZotFileRecovery-0.2.0-fx.xpi",
+  "url": "https://github.com/jlegewie/ZotFile-Recovery/releases/download/v0.2.0/ZotFileRecovery-0.2.0-fx.xpi",
+  "size": 5617,
+  "sha256": "fc0c71a230f8bc8d4f777986070e3ece287669196e140c76ce3e4f0539c46a03",
+  "githubAssetId": 120254252,
+  "uploader": "jlegewie",
+  "uploadedAt": "2023-08-05T20:22:54Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "ZotFileRecovery@jlegewie.com",
+  "name": "ZotFileRecovery",
+  "version": "0.2.0",
+  "description": "Recover tablet files from Zotfile in Zotero 7",
+  "updateUrl": "https://raw.githubusercontent.com/jlegewie/ZotFile-Recovery/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "7.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 854,
+   "sha256": "c4e9a271db67d66d9f21324a88960e2abc257b0884e050997176f628e739ee6b"
+  },
+  {
+   "path": "locale/en-US/ZotFileRecovery.ftl",
+   "size": 79,
+   "sha256": "5aed718cf8a0725ccd2c9e1571c44fdd70c02f1f68eb2e7e532b82e4099b3347"
+  },
+  {
+   "path": "manifest.json",
+   "size": 439,
+   "sha256": "3efbcfdcb9d39b54e69ace0d5217b640c9e47cd0ce80dd29c642c57b728eed5c"
+  },
+  {
+   "path": "ZotFileRecovery_menus.js",
+   "size": 3476,
+   "sha256": "0ea5c161c9f29e6b50d0d8e4c14a4f82189cb03a64d2c226af939e769bee0e97"
+  },
+  {
+   "path": "ZotFileRecovery.js",
+   "size": 10198,
+   "sha256": "79e2f92f4d8485b366796b0e8a90ae6bfce32704cf403eeb7c9c82c907a231c4"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotfile-recovery",
+   "version": "0.2.0",
+   "sha256": "fc0c71a230f8bc8d4f777986070e3ece287669196e140c76ce3e4f0539c46a03"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/ZotFileRecovery.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 14528,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 7,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "ZotFileRecovery.js",
+      "line": 159,
+      "column": 39,
+      "snippet": "var path_tablet_exists = await IOUtils.exists(path_tablet);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "ZotFileRecovery.js",
+      "line": 170,
+      "column": 17,
+      "snippet": "if(await IOUtils.exists(path_tablet)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "ZotFileRecovery.js",
+      "line": 171,
+      "column": 41,
+      "snippet": "let tablet_file_stat = await IOUtils.stat(path_tablet);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "ZotFileRecovery.js",
+      "line": 175,
+      "column": 17,
+      "snippet": "if(await IOUtils.exists(path_zotero)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "ZotFileRecovery.js",
+      "line": 176,
+      "column": 41,
+      "snippet": "let zotero_file_stat = await IOUtils.stat(path_zotero);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "ZotFileRecovery.js",
+      "line": 206,
+      "column": 18,
+      "snippet": "await IOUtils.move(path_tablet, path_zotero);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "ZotFileRecovery.js",
+      "line": 209,
+      "column": 18,
+      "snippet": "await Zotero.File.removeIfExists(path_tablet);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/jlegewie/ZotFile-Recovery/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/jlegewie/ZotFile-Recovery/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the jlegewie account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotfile-recovery",
+   "version": "0.2.0",
+   "sha256": "fc0c71a230f8bc8d4f777986070e3ece287669196e140c76ce3e4f0539c46a03"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "e40c19237b9fcd90c6c4efa020cf850c906ca483ce60853de37e0cf7eb69cd8f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "dormant",
+    "lastReleaseAt": "2023-08-05T20:17:48Z",
+    "lastCommitAt": "2023-08-05T20:22:02Z",
+    "concern": "medium"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

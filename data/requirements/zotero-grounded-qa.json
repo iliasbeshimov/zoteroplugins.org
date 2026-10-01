@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-grounded-qa",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Hosted AI providers (Anthropic, OpenAI, DeepSeek, xAI) need an API key for the AI Q&A",
+  "worksWithout": "Annotation browser and idea layer; AI Q&A with local Ollama needs no key",
+  "services": [
+   "Anthropic",
+   "OpenAI",
+   "DeepSeek",
+   "xAI"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "content/scripts/groundedqa.js:3679",
+   "quote": "defaultBaseUrl: \"http://localhost:11434\"",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README badge",
+   "quote": "Anthropic · OpenAI · Ollama · DeepSeek · Grok",
+   "supports": "localModel"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.groundedqa.apiKey\", \"\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The annotation browser and idea layer need no key, and the AI Q&A needs one only for hosted providers. Ollama is supported: \"defaultBaseUrl: \\\"http://localhost:11434\\\"\" and the README badge \"Anthropic · OpenAI · Ollama · DeepSeek · Grok\"."
+}

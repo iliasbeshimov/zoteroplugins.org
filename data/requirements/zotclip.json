@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotclip",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "AI tagging with DeepSeek, OpenRouter or a custom endpoint needs a key",
+  "worksWithout": "Copying attachments to the clipboard; AI tagging through local Ollama or LM Studio",
+  "services": [
+   "DeepSeek",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zotclip.aiEndpointOllama\", \"http://localhost:11434\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, features",
+   "quote": "Built-in providers include DeepSeek, OpenRouter,\n  Ollama, and LM Studio, plus a custom URL for other endpoints.",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, features",
+   "quote": "copy attachment\n  files to the system clipboard.",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "prefs.js has pref(\"extensions.zotero.zotclip.aiEndpointOllama\", \"http://localhost:11434\"); and the LM Studio endpoint http://localhost:1234. The README lists \"Ollama, and LM Studio\" as built-in providers, and its main feature, copying attachments to the clipboard, needs no key."
+}

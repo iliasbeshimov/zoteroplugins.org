@@ -1,0 +1,34 @@
+{
+ "schemaVersion": 1,
+ "slug": "evidenceguide",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "none",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Optional AI scoring assist",
+   "quote": "This requires no API key.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, optional local Ollama",
+   "quote": "The plugin connects only to http://127.0.0.1:11434, the default local Ollama service",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:118",
+   "quote": "const res = await Zotero.HTTP.request(\"POST\", \"http://127.0.0.1:11434/api/chat\", {",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README says \"This requires no API key.\" about the ChatGPT browser handoff, and manual scoring works offline. Code at bootstrap.js:118 posts to http://127.0.0.1:11434/api/chat, and the README says \"The plugin connects only to http://127.0.0.1:11434, the default local Ollama service\". Local Ollama is therefore supported, though the README calls it experimental."
+}

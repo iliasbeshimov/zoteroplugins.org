@@ -1,0 +1,298 @@
+{
+ "repo": "retorquere/zotero-folder-import",
+ "slug": "zotero-folder-import",
+ "group": "top",
+ "rank": 52,
+ "name": "Folder Import for Zotero",
+ "stars": 491,
+ "downloads": 94172,
+ "createdAt": "2020-02-13T21:35:58Z",
+ "tag": "v1.0.2",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-folder-import-1.0.2.xpi",
+    "url": "https://github.com/retorquere/zotero-folder-import/releases/download/v1.0.2/zotero-folder-import-1.0.2.xpi",
+    "size": 35500,
+    "uploadedAt": "2026-09-07T07:55:05Z",
+    "sha256": "fd1d270580807dba8bff386052f2a98648c34d644beb09e5da6d70d7f8185e1b"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero-folder-import@iris-advies.com",
+    "name": "Folder Import for Zotero",
+    "version": "1.0.2",
+    "description": "Import folder of attachments into a collection hierarchy",
+    "homepageUrl": null,
+    "updateUrl": "https://github.com/retorquere/zotero-folder-import/releases/download/release/updates.json",
+    "minVersion": "8.0.1",
+    "maxVersion": "10.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-folder-import",
+     "version": "1.0.2",
+     "sha256": "fd1d270580807dba8bff386052f2a98648c34d644beb09e5da6d70d7f8185e1b"
+    },
+    "coverage": {
+     "filesTotal": 6,
+     "filesAnalyzed": 5,
+     "filesSkipped": [
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "jose",
+       "files": [
+        "content/folder-import.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "uzip",
+       "files": [
+        "content/folder-import.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "zotero-plugin",
+       "files": [
+        "bootstrap.js",
+        "content/folder-import.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/folder-import.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/folder-import.js",
+         "line": 2771,
+         "column": 29,
+         "snippet": "const response = await fetch(`https://filebin.net/${this.key}/${this.name}`, {",
+         "inVendoredCode": true
+        }
+       ]
+      }
+     ],
+     "hosts": [],
+     "dynamicUrls": [
+      {
+       "pattern": "https://filebin.net/<expr>/<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/folder-import.js",
+         "line": 2771,
+         "column": 29,
+         "snippet": "const response = await fetch(`https://filebin.net/${this.key}/${this.name}`, {",
+         "inVendoredCode": true
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 9,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/folder-import.js",
+        "line": 2998,
+        "column": 32,
+        "snippet": "this.name = isRoot ? \"\" : PathUtils.filename(path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/folder-import.js",
+        "line": 3001,
+        "column": 32,
+        "snippet": "for (const entry of await IOUtils.getChildren(this.path)) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/folder-import.js",
+        "line": 3002,
+        "column": 27,
+        "snippet": "const info = await IOUtils.stat(entry);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/folder-import.js",
+        "line": 3087,
+        "column": 19,
+        "snippet": "const name = PathUtils.filename(path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/folder-import.js",
+        "line": 3146,
+        "column": 17,
+        "snippet": "if (!await IOUtils.exists(rmlint)) return [];",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/folder-import.js",
+        "line": 3147,
+        "column": 25,
+        "snippet": "const duplicates = PathUtils.join(Zotero.getTempDirectory().path, `rmlint${Zotero.Utilities.randomString()}.json`);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/folder-import.js",
+        "line": 3149,
+        "column": 20,
+        "snippet": "const cmd = Zotero.File.pathToFile(rmlint);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/folder-import.js",
+        "line": 3168,
+        "column": 26,
+        "snippet": "return JSON.parse(Zotero.File.getContents(duplicates)).filter((d) => d.type === \"duplicate_file\").map((d) => d.path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/folder-import.js",
+        "line": 3174,
+        "column": 16,
+        "snippet": "await IOUtils.remove(duplicates);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "user-chosen",
+       "apis": [
+        "IOUtils/PathUtils",
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "process-launch",
+      "occurrences": 2,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/folder-import.js",
+        "line": 3151,
+        "column": 40,
+        "snippet": "const proc = Components.classes[\"@mozilla.org/process/util;1\"].createInstance(Components.interfaces.nsIProcess);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/folder-import.js",
+        "line": 3151,
+        "column": 86,
+        "snippet": "const proc = Components.classes[\"@mozilla.org/process/util;1\"].createInstance(Components.interfaces.nsIProcess);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "nsIProcess"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 9,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/retorquere/zotero-folder-import/releases/download/release/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/retorquere/zotero-folder-import/releases/download/release/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "unknown-endpoints",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "process-launch",
+      "concern": "medium"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION",
+     "CAP-PROCESS"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

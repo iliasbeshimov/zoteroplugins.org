@@ -1,0 +1,233 @@
+{
+ "repo": "jwow-schneider/zotero-shortdoi",
+ "slug": "zotero-shortdoi",
+ "group": "sample-2026",
+ "rank": 653,
+ "name": "DOI Manager",
+ "stars": 1,
+ "downloads": 22,
+ "createdAt": "2026-04-11T19:09:50Z",
+ "tag": "v1.6.0",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-doi-manager-1.6.0.xpi",
+    "url": "https://github.com/jwow-schneider/zotero-shortdoi/releases/download/v1.6.0/zotero-doi-manager-1.6.0.xpi",
+    "size": 28295,
+    "uploadedAt": "2026-04-11T19:13:44Z",
+    "sha256": "d07c6c21b0581a64f6120f0a8c31053a2d21af8efb85e116bb66837376c449e2"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zoteroshortdoi@wiernik.org",
+    "name": "DOI Manager",
+    "version": "1.6.0",
+    "description": "Plugin for fetching and validating DOI and shortDOI names",
+    "homepageUrl": null,
+    "updateUrl": "https://raw.githubusercontent.com/bwiernik/zotero-shortdoi/master/updates.json",
+    "minVersion": "7.0",
+    "maxVersion": "9.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-shortdoi",
+     "version": "1.6.0",
+     "sha256": "d07c6c21b0581a64f6120f0a8c31053a2d21af8efb85e116bb66837376c449e2"
+    },
+    "coverage": {
+     "filesTotal": 13,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": "locale/de/zoteroshortdoi.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/de/zoteroshortdoi.properties",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zoteroshortdoi.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zoteroshortdoi.properties",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "skin/doi.png",
+       "reason": "binary"
+      },
+      {
+       "path": "skin/doi@2x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "skin/icon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "skin/icon@2x.png",
+       "reason": "binary"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "xhr",
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "zoteroshortdoi.js",
+         "line": 643,
+         "column": 16,
+         "snippet": "const req = new XMLHttpRequest();",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "zoteroshortdoi.js",
+         "line": 776,
+         "column": 16,
+         "snippet": "const req = new XMLHttpRequest();",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "doi.org",
+       "category": "scholarly-api",
+       "provider": "DOI resolver",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "zoteroshortdoi.js",
+         "line": 6,
+         "column": 11,
+         "snippet": "DOI_API: \"https://doi.org/api/handles/\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "shortdoi.org",
+       "category": "scholarly-api",
+       "provider": "shortDOI",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "zoteroshortdoi.js",
+         "line": 5,
+         "column": 13,
+         "snippet": "SHORT_DOI: \"https://shortdoi.org/\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "www.crossref.org",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "zoteroshortdoi.js",
+         "line": 7,
+         "column": 12,
+         "snippet": "CROSSREF: \"https://www.crossref.org/openurl?pid=zoteroDOI@wiernik.org&\",",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 14,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/bwiernik/zotero-shortdoi/master/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/bwiernik/zotero-shortdoi/master/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "scholarly-api": [
+      "doi.org",
+      "shortdoi.org"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

@@ -1,0 +1,350 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-tray",
+ "repo": "jaehho/zotero-tray",
+ "version": "0.1.1",
+ "tag": "v0.1.1",
+ "releaseAuthor": "jaehho",
+ "publishedAt": "2026-09-23T05:41:47Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-tray-0.1.1.xpi",
+  "url": "https://github.com/jaehho/zotero-tray/releases/download/v0.1.1/zotero-tray-0.1.1.xpi",
+  "size": 7710,
+  "sha256": "08f41654e16b272bbf07f23ca620261df013bfa8a946c6bcc325521df0de9821",
+  "githubAssetId": 583071026,
+  "uploader": "jaehho",
+  "uploadedAt": "2026-09-23T05:41:47Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-tray@jaeho.dev",
+  "name": "Zotero Tray",
+  "version": "0.1.1",
+  "description": "Close Zotero to a tray icon instead of quitting (Linux)",
+  "homepageUrl": "https://github.com/jaehho/zotero-tray",
+  "updateUrl": "https://github.com/jaehho/zotero-tray/releases/latest/download/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 9291,
+   "sha256": "1e62a5f30f5d0244b108c551efad0599e2984b99230aea408e1cfc03ab8bebae"
+  },
+  {
+   "path": "helper/zotero-tray-helper.py",
+   "size": 12585,
+   "sha256": "a216bd7b9aa906f8e03088f17143898e6c06a47ccf13b4b7c0f251ff7ac14b76"
+  },
+  {
+   "path": "manifest.json",
+   "size": 488,
+   "sha256": "3aeb8c35fb9ecc3ef537c8b5b0cc9e5c8d08ef833c0ac647f896116077b70320"
+  },
+  {
+   "path": "prefs.js",
+   "size": 122,
+   "sha256": "aedbe0326af8f57975296d20d809f8b9d6875cf45381dab638a1010609de3ff3"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-tray",
+   "version": "0.1.1",
+   "sha256": "08f41654e16b272bbf07f23ca620261df013bfa8a946c6bcc325521df0de9821"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "helper/zotero-tray-helper.py",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 9413,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 202,
+      "column": 10,
+      "snippet": "await IOUtils.makeDirectory(dir, { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 204,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(script, src);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 18,
+      "column": 2,
+      "snippet": "\"resource://gre/modules/Subprocess.sys.mjs\"",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 34,
+      "column": 21,
+      "snippet": "const proc = await Subprocess.call({",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 35,
+      "column": 19,
+      "snippet": "command: await Subprocess.pathSearch(command),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 193,
+      "column": 21,
+      "snippet": "python = await Subprocess.pathSearch(\"python3\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 206,
+      "column": 23,
+      "snippet": "const proc = await Subprocess.call({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ],
+     "programs": [
+      "python3"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/jaehho/zotero-tray/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/jaehho/zotero-tray/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the jaehho account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-tray",
+   "version": "0.1.1",
+   "sha256": "08f41654e16b272bbf07f23ca620261df013bfa8a946c6bcc325521df0de9821"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "2e9783fbc71b05a947a84a0d7d6b3b66b686f66bac42b242a2989329527d40b2"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include python3"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-23T05:41:47Z",
+    "lastCommitAt": "2026-09-24T18:50:11Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T10:48:33Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

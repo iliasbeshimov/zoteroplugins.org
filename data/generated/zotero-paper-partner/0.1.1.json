@@ -1,0 +1,361 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paper-partner",
+ "repo": "qinsihan/zotero-paper-partner",
+ "version": "0.1.1",
+ "tag": "v0.1.1",
+ "releaseAuthor": "QinSihan",
+ "publishedAt": "2026-05-15T19:17:54Z",
+ "prerelease": false,
+ "asset": {
+  "name": "paper-partner.xpi",
+  "url": "https://github.com/QinSihan/zotero-paper-partner/releases/download/v0.1.1/paper-partner.xpi",
+  "size": 15155,
+  "sha256": "5f22a08499eb3b68fd944d2539b5ec3112b6c0ba5ebcd4a5a07284a52f5c0745",
+  "githubAssetId": 421247416,
+  "uploader": "QinSihan",
+  "uploadedAt": "2026-05-15T19:16:28Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "paper-partner@qinsihan.github.io",
+  "name": "Zotero Paper Partner",
+  "version": "0.1.1",
+  "description": "Async Q&A for Zotero notes — quietly answers your reading questions in the background.",
+  "updateUrl": "https://qinsihan.github.io/zotero-paper-partner/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 21641,
+   "sha256": "ace5d5fb4fc8ada078312483fb13b83eaa82f07283f7a7d3997e5e440633ef9f"
+  },
+  {
+   "path": "icon.png",
+   "size": 2044,
+   "sha256": "99b21e5ef0a6658bdf2ebf38069d5b4bfebe31b6e966a34eff99a7b2fe79c4a2"
+  },
+  {
+   "path": "icon@2x.png",
+   "size": 5036,
+   "sha256": "1f56ebee1d68e6f4c9322b104f48a022f3a1679f0411a93b1dc7cd294bb0c8a4"
+  },
+  {
+   "path": "manifest.json",
+   "size": 588,
+   "sha256": "71675c3ca6131ffa72918d3abb8219b8868970e089945708333ef4186d47da56"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 2256,
+   "sha256": "46a91bb92f7a460f2867d2398bb10ad3f32a1f050b69760170f7f86c597070e9"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-paper-partner",
+   "version": "0.1.1",
+   "sha256": "5f22a08499eb3b68fd944d2539b5ec3112b6c0ba5ebcd4a5a07284a52f5c0745"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icon@2x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 23897,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 294,
+       "column": 31,
+       "snippet": "const response = await fetch(endpoint, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 21,
+       "column": 17,
+       "snippet": "apiEndpoint: \"https://api.deepseek.com/v1/chat/completions\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 5,
+       "column": 18,
+       "snippet": "apiEndpoint: 'https://api.deepseek.com/v1/chat/completions',",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "apiEndpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 280,
+       "column": 25,
+       "snippet": "const endpoint = getPref(\"apiEndpoint\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 298,
+      "column": 43,
+      "snippet": "\"Authorization\": `Bearer ${getPref(\"apiKey\")}`,",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 429,
+      "column": 9,
+      "snippet": "if (!getPref(\"apiKey\")) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 27,
+      "snippet": "\"update_url\": \"https://qinsihan.github.io/zotero-paper-partner/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://qinsihan.github.io/zotero-paper-partner/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the QinSihan account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-paper-partner",
+   "version": "0.1.1",
+   "sha256": "5f22a08499eb3b68fd944d2539b5ec3112b6c0ba5ebcd4a5a07284a52f5c0745"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "33a9892aa246358d15edcfe5b9e48487c7b567315bc0bb06fe40f190d5a3c5b9"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com"
+      ],
+      "unconfirmed": [
+       "api.deepseek.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-05-15T19:17:54Z",
+    "lastCommitAt": "2026-05-27T11:39:15Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T05:12:21Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

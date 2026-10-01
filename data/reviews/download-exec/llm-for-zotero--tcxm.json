@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "slug": "llm-for-zotero--tcxm",
+  "version": "3.8.31",
+  "sha256": "c8e4fdee7e2aa8e6d9908534c8297fbfdcc7303f0a54d76b8c82599aa1cfa49f",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
+  "summary": "The first time you ask about a figure, it downloads a 265–491 MB bundle of Python and the Poppler PDF tools from the original llm-for-zotero developer's (not this fork's) GitHub release and runs it, without asking. The README doesn't mention it, and the download isn't checked against a fingerprint. We checked the macOS (Apple silicon) bundle: every file is standard software from conda-forge.",
+  "facts": {
+    "what": "A 'PDF figure runtime' zip (Python 3.11, Poppler, scientific libraries), 265-491 MB, from the upstream developer's GitHub release; its Python then runs the plugin's pdf_figure_extract.py",
+    "urls": [
+      "https://github.com/yilewang/llm-for-zotero/releases/download/pdf-figure-runtime-v${PDF_FIGURE_RUNTIME_VERSION}/llm-for-zotero-pdf-figure-runtime-v${PDF_FIGURE_RUNTIME_VERSION}-${platformKey}.zip"
+    ],
+    "source": "third-party",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "automatic-on-feature-use",
+    "toldInReadme": "no",
+    "readmeQuote": "",
+    "triggerQuote": {
+      "file": "content/scripts/llmforzotero.js",
+      "text": "await resolvePdfFigureExtractionRuntime();"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/llmforzotero.js",
+      "text": "const zipBytes = await downloadRuntimePackageBytes(packageUrl);"
+    },
+    "notes": "Version 3.8.31 (UI Edition), code around the download matches the jackwpp fork. Points at the original author's release, not the fork owner's. README is short and only points to upstream docs; no mention of the download. No locale string about it."
+  },
+  "contentChecked": "macOS Apple-silicon bundle (pdf-figure-runtime-v1, sha256 d2ea2815…): all 72 packages are from conda-forge and every file matches conda-forge's published hashes; the one extra file is a 22-byte anonymous usage token Anaconda's tools write. Other platforms not checked."
+}

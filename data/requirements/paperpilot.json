@@ -1,0 +1,40 @@
+{
+ "schemaVersion": 1,
+ "slug": "paperpilot",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Cloud model providers (OpenAI, Anthropic, Gemini and others); MinerU and Semantic Scholar keys for extra features",
+  "worksWithout": "Local OpenAI-Compatible provider (Ollama) needs no key",
+  "services": [
+   "OpenAI",
+   "Anthropic",
+   "Google Gemini",
+   "MinerU",
+   "Semantic Scholar"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, providers",
+   "quote": "API keys are optional for local servers.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, providers",
+   "quote": "- **Local OpenAI-Compatible**: a configurable local provider for Ollama,",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/paperpilot.js:1548",
+   "quote": "defaultApiBase: \"http://127.0.0.1:11434/v1\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README says 'API keys are optional for local servers' and gives a Local OpenAI-Compatible provider for Ollama at http://127.0.0.1:11434/v1 with the API key left empty. Cloud providers, MinerU and Semantic Scholar need keys. No provider is preconfigured by default, but the keyless local route means the main purpose does not require a key."
+}

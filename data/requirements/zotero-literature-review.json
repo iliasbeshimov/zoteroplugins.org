@@ -1,0 +1,22 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-literature-review",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Features",
+   "quote": "支持 OpenAI、DeepSeek、Ollama 等任意兼容 OpenAI Chat API 的服务。",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The code at content/scripts/litreview.js:3642 is `if (!apiUrl || !apiKey || !model) {` and the default llmApiKey is \"\". So every provider, including Ollama, needs a non-empty key, and the main feature is blocked until the user sets one. The README says \"支持 OpenAI、DeepSeek、Ollama 等任意兼容 OpenAI Chat API 的服务\", so local models work with a placeholder key."
+}

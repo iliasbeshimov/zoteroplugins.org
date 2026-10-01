@@ -1,0 +1,34 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-voice",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "none",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "description",
+   "where": "Manifest description",
+   "quote": "Pronounce selected text in the Zotero PDF reader with a local OpenAI-compatible TTS endpoint.",
+   "supports": "localModel"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero-pronounce.endpoint\", \"http://127.0.0.1:8880/v1/audio/speech\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "Where its code keeps a key",
+   "quote": "(none found)",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Default endpoint prefs.js: \"http://127.0.0.1:8880/v1/audio/speech\". The README sets up a local Kokoro-FastAPI TTS model, and no key storage was found in the code."
+}

@@ -1,0 +1,344 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-txt-md-to-epub",
+ "repo": "exhilarating0411/zotero-txt-md-to-epub",
+ "version": "0.3.5",
+ "tag": "v0.3.5",
+ "releaseAuthor": "exhilarating0411",
+ "publishedAt": "2026-06-21T08:40:59Z",
+ "prerelease": false,
+ "asset": {
+  "name": "txt-md-to-epub-for-zotero-0.3.5.xpi",
+  "url": "https://github.com/exhilarating0411/zotero-txt-md-to-epub/releases/download/v0.3.5/txt-md-to-epub-for-zotero-0.3.5.xpi",
+  "size": 6010,
+  "sha256": "c2bd3c93f0915c6f07c8469f6c4dc7797dba61bda7e0c525e3cd5be7a150381f",
+  "githubAssetId": 453581923,
+  "uploader": "exhilarating0411",
+  "uploadedAt": "2026-06-21T08:39:43Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "txt-md-to-epub@local.codex",
+  "name": "TXT/Markdown to EPUB for Zotero",
+  "version": "0.3.5",
+  "description": "Convert selected TXT and Markdown attachments into EPUB attachments in Zotero.",
+  "homepageUrl": "https://www.zotero.org/",
+  "updateUrl": "https://example.com/txt-md-to-epub-for-zotero/update.json",
+  "strictMinVersion": "9.0.0",
+  "strictMaxVersion": "9.99.99"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 12975,
+   "sha256": "5d86cd6e0852ae01d1222e7468e65c9869104d6304ef2e632ce65dd5f2337211"
+  },
+  {
+   "path": "locale/en-US/txt-md-to-epub.ftl",
+   "size": 72,
+   "sha256": "396e212f0876a2547341162605cb02584390cf1bb5c59d0ebeaaeb86069c1e14"
+  },
+  {
+   "path": "locale/zh-CN/txt-md-to-epub.ftl",
+   "size": 72,
+   "sha256": "37cbfa0fe060e56200655984af79340f9cc13e4014f39a743e4729aacd6e2559"
+  },
+  {
+   "path": "manifest.json",
+   "size": 505,
+   "sha256": "51a3221ba9ffc548eef9f8709a252a6ca43e8c09bd9522ef08dbdb01b9fce236"
+  },
+  {
+   "path": "README.md",
+   "size": 2134,
+   "sha256": "49f82eff6aef18c11901b789ee1fbaada347f790db30ec3cfcfa329161f28144"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-txt-md-to-epub",
+   "version": "0.3.5",
+   "sha256": "c2bd3c93f0915c6f07c8469f6c4dc7797dba61bda7e0c525e3cd5be7a150381f"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/txt-md-to-epub.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/txt-md-to-epub.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 12975,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 126,
+      "column": 21,
+      "snippet": "const text = await Zotero.File.getContentsAsync(sourcePath, \"utf-8\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 184,
+      "column": 8,
+      "snippet": "await Zotero.File.putContentsAsync(pathJoin(workDir.path, \"mimetype\"), \"application/epub+zip\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 185,
+      "column": 8,
+      "snippet": "await Zotero.File.putContentsAsync(pathJoin(metaInf.path, \"container.xml\"), containerXML());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 186,
+      "column": 8,
+      "snippet": "await Zotero.File.putContentsAsync(pathJoin(epubDir.path, \"content.opf\"), contentOPF(title));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 187,
+      "column": 8,
+      "snippet": "await Zotero.File.putContentsAsync(pathJoin(epubDir.path, \"nav.xhtml\"), navXHTML(title));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 188,
+      "column": 8,
+      "snippet": "await Zotero.File.putContentsAsync(pathJoin(epubDir.path, \"chapter.xhtml\"), chapterXHTML);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 189,
+      "column": 8,
+      "snippet": "await Zotero.File.putContentsAsync(pathJoin(epubDir.path, \"style.css\"), styleCSS());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 414,
+      "column": 47,
+      "snippet": "const dir = getServices().dirsvc.get(\"TmpD\", Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://example.com/txt-md-to-epub-for-zotero/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://example.com/txt-md-to-epub-for-zotero/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the exhilarating0411 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-txt-md-to-epub",
+   "version": "0.3.5",
+   "sha256": "c2bd3c93f0915c6f07c8469f6c4dc7797dba61bda7e0c525e3cd5be7a150381f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "324eb83ed6412fbbbbbc6980343a0173343711eb3454cbf36a005fb81c31d18f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-06-21T08:40:59Z",
+    "lastCommitAt": "2026-06-21T08:35:09Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T08:00:15Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

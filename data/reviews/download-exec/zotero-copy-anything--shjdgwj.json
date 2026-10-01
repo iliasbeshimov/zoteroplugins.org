@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-copy-anything--shjdgwj",
+  "version": "1.0.9",
+  "sha256": "090d1eeee0020854ee57f4d8237d5c32ac3b6b16924cd5e9f7a058279f855178",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
+  "summary": "On first start it downloads a small helper program from the original developer's gitee.com page, then runs it when you copy attachments. The README says so, but the file isn't checked, and we can't read the program itself.",
+  "facts": {
+    "what": "A small helper program (copyfiles.exe on Windows, copyfiles-mac on macOS, copyfiles-linux on Linux) that the plugin uses to copy attachment files to the clipboard. Size not established.",
+    "urls": [
+      "https://gitee.com/windheartyolo/zotero-copy-anything/releases/download/binary/copyfiles.exe",
+      "https://gitee.com/windheartyolo/zotero-copy-anything/releases/download/binary/copyfiles-mac",
+      "https://gitee.com/windheartyolo/zotero-copy-anything/releases/download/binary/copyfiles-linux"
+    ],
+    "source": "third-party",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "automatic",
+    "toldInReadme": "yes",
+    "readmeQuote": "The plugin requires binary files to run, which need to be downloaded from the internet.",
+    "triggerQuote": {
+      "file": "content/scripts/zoterocopyanything.js",
+      "text": "if (await downloadBinaryFile()) {"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/zoterocopyanything.js",
+      "text": "if (bytes.length === 0) {"
+    },
+    "notes": "Fork (shjdgwj) that downloads the original author's (windheartyolo) Gitee binaries; the README is an unchanged copy of the original (its download links point to windfollowingheart/windheartyolo). Runs automatically on every main window load, skipped if file exists. Only check before running is that the download is non-empty (bytes.length === 0 throws); no hash or checksum. Writes via a .tmp path, then chmod 777 on macOS/Linux, then exec when the user copies. Error messages are in Chinese; shows a progress-window error if the download fails. No locale strings announce the download. Binary not inspected; size not obtained."
+  }
+}

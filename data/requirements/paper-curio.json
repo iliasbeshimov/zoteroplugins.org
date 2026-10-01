@@ -1,0 +1,38 @@
+{
+ "schemaVersion": 1,
+ "slug": "paper-curio",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "A key for the chosen AI provider (Anthropic by default; OpenAI or Google if selected) to generate reviews",
+  "worksWithout": "",
+  "services": [
+   "Anthropic",
+   "OpenAI",
+   "Google Gemini"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README top paragraph",
+   "quote": "**선택한 제공자의 키 하나**를 OS 키 저장소에 저장합니다. 기본은 Anthropic Sonnet 5이며 OpenAI·Google을 명시적으로 선택할 수 있습니다.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.papercurio.REVIEW_PROVIDER\", \"anthropic\")",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README module paragraph",
+   "quote": "요약·질의는 로컬 Ollama `qwen3.8:27b-mlx`도 지원하며",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: \"LLM API 키(Anthropic / OpenAI / Gemini 중 하나)만 있으면 AI Chat은 설치 직후 바로 동작합니다\" and default REVIEW_PROVIDER is anthropic; README also says \"요약·질의는 로컬 Ollama `qwen3.8:27b-mlx`도 지원하며\"."
+}

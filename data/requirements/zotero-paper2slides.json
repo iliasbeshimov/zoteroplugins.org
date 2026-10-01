@@ -1,0 +1,43 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paper2slides",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "API key for the chosen LLM provider (default DeepSeek)",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek",
+   "OpenAI",
+   "Google Gemini",
+   "SiliconFlow",
+   "OpenRouter",
+   "Moonshot (Kimi)",
+   "Zhipu",
+   "Volcano Engine"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.paper2slide.provider\", \"deepseek\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.paper2slide.apiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, FAQ",
+   "quote": "选择 \"自定义 (OpenAI 兼容)\" 作为提供商，设置 Base URL (如 Ollama 使用 `http://localhost:11434`)，并指定模型名称。",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Default provider is \"deepseek\" with apiKey \"\"; README: \"| API Key | 填入对应平台的 API 密钥 |\". README FAQ: \"设置 Base URL (如 Ollama 使用 `http://localhost:11434`)\" confirms local models."
+}

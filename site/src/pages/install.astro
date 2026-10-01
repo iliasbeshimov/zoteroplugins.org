@@ -1,0 +1,629 @@
+---
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Base from "../layouts/Base.astro";
+import { CURRENT_ZOTERO_MAJOR } from "../lib/atlas.ts";
+
+/**
+ * How to install a plugin, with drawn pictures of each step. The pictures are simplified sketches
+ * of Zotero's windows in HTML and CSS, so they follow the theme and stay sharp.
+ */
+const cur = CURRENT_ZOTERO_MAJOR();
+const toc = [
+  ["version", "Check your Zotero version"],
+  ["download", "Download the plugin file"],
+  ["open", "Open Tools › Plugins"],
+  ["install", "Install from the file"],
+  ["done", "Check it's installed"],
+  ["later", "Updating and removing"],
+  ["trouble", "If something goes wrong"],
+];
+---
+
+<Base title="How to install a Zotero plugin · Zotero Plugins Atlas" description="Install a Zotero plugin in five steps, with pictures: download the .xpi file, then install it from Tools › Plugins.">
+  <SiteHeader active="install" />
+  <div class="wrap">
+    <nav aria-label="On this page" class="toc">
+      <span class="eyebrow">On this page</span>
+      {toc.map(([id, t]) => <a href={`#${id}`}>{t}</a>)}
+    </nav>
+    <article>
+      <div class="intro">
+        <h1>How to install a plugin</h1>
+        <p>A Zotero plugin is a single file ending in <code>.xpi</code>. You download it, then point Zotero at it. It takes about a minute.</p>
+      </div>
+
+      <section id="version" class="step">
+        <div class="txt">
+          <span class="n">1</span>
+          <h2>Check your Zotero version</h2>
+          <p>In Zotero, open <strong>Help › About Zotero</strong> (on a Mac, <strong>Zotero › About Zotero</strong>). The first number is the one that matters: 7, 8, 9 or {cur}.</p>
+          <p class="tipbox"><strong>Don't have Zotero yet?</strong> <a href="https://www.zotero.org/download/">Download it free from zotero.org</a>, then come back here.</p>
+          <p class="muted">Every plugin page lists the versions it works with. Pick yours in the "Your Zotero" filter when you browse and you'll only see plugins that work with it.</p>
+        </div>
+        <figure class="pic" aria-label="Sketch: the About Zotero window showing the version number">
+          <div class="win small">
+            <div class="bar"><span></span><span></span><span></span><em>About Zotero</em></div>
+            <div class="about">
+              <span class="logo" aria-hidden="true">Z</span>
+              <strong>Zotero</strong>
+              <span class="ver">Version <mark>{cur}</mark>.0.4</span>
+            </div>
+          </div>
+        </figure>
+      </section>
+
+      <section id="download" class="step">
+        <div class="txt">
+          <span class="n">2</span>
+          <h2>Download the plugin file</h2>
+          <p>On the plugin's page here, click <strong>Install</strong>, then <strong>Download</strong>. You get one <code>.xpi</code> file, usually in your Downloads folder.</p>
+          <p class="tipbox"><strong>Using Firefox?</strong> Firefox tries to install <code>.xpi</code> files as its own add-ons. Right-click the Download button and choose <strong>Save Link As…</strong> instead.</p>
+          <p class="muted">On GitHub, don't download "Source code (zip)": that's the code, not the plugin.</p>
+        </div>
+        <figure class="pic" aria-label="Sketch: the Download button and the downloaded .xpi file">
+          <div class="dl">
+            <span class="dlbtn">Download v2.4.7 <em>.xpi · 0.8 MB</em></span>
+            <span class="arrow" aria-hidden="true">↓</span>
+            <span class="file"><span class="fi" aria-hidden="true">XPI</span>translate-for-zotero.xpi</span>
+            <span class="cap">In your Downloads folder</span>
+          </div>
+        </figure>
+      </section>
+
+      <section id="open" class="step">
+        <div class="txt">
+          <span class="n">3</span>
+          <h2>Open Tools › Plugins</h2>
+          <p>In Zotero's menu bar, click <strong>Tools</strong>, then <strong>Plugins</strong>. The Plugins window opens.</p>
+          <p class="muted">In Zotero 6 this was called Tools › Add-ons.</p>
+        </div>
+        <figure class="pic" aria-label="Sketch: the Tools menu with Plugins highlighted">
+          <div class="win">
+            <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span class="on">Tools</span><span>Help</span></div>
+            <div class="menu-wrap">
+              <div class="menu">
+                <span>Add Note</span>
+                <span>Manage Attachments</span>
+                <hr />
+                <span class="hl">Plugins</span>
+                <span>Developer</span>
+              </div>
+              <div class="lib" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+        </figure>
+      </section>
+
+      <section id="install" class="step">
+        <div class="txt">
+          <span class="n">4</span>
+          <h2>Install from the file</h2>
+          <p>In the Plugins window, click the <strong>gear</strong> button at the top right and choose <strong>Install Plugin From File…</strong>. Pick the <code>.xpi</code> file you downloaded and click <strong>Open</strong>.</p>
+          <p class="muted">Or drag the <code>.xpi</code> file onto the Plugins window.</p>
+        </div>
+        <figure class="pic" aria-label="Sketch: the Plugins window's gear menu with Install Plugin From File highlighted">
+          <div class="win">
+            <div class="bar"><span></span><span></span><span></span><em>Plugins Manager</em></div>
+            <div class="pm">
+              <div class="pmtop"><span class="search">Search plugins</span><span class="gear on" aria-hidden="true">⚙</span></div>
+              <div class="gmenu">
+                <span>Check for Updates</span>
+                <hr />
+                <span class="hl">Install Plugin From File…</span>
+              </div>
+              <div class="row"><i class="pi"></i><span><b></b><small></small></span></div>
+              <div class="row"><i class="pi"></i><span><b></b><small></small></span></div>
+            </div>
+          </div>
+        </figure>
+      </section>
+
+      <section id="done" class="step">
+        <div class="txt">
+          <span class="n">5</span>
+          <h2>Check it's installed</h2>
+          <p>The plugin now appears in the list. Some plugins ask you to restart Zotero: if you see a "Restart now" link, click it.</p>
+          <p class="muted">Most plugins add their own menu items, a pane in Zotero's Settings, or a panel in the reader.</p>
+        </div>
+        <figure class="pic" aria-label="Sketch: the new plugin listed in the Plugins window">
+          <div class="win">
+            <div class="bar"><span></span><span></span><span></span><em>Plugins Manager</em></div>
+            <div class="pm">
+              <div class="pmtop"><span class="search">Search plugins</span><span class="gear" aria-hidden="true">⚙</span></div>
+              <div class="row new"><i class="pi">T</i><span><strong>Translate for Zotero</strong><small>2.4.7</small></span><span class="ok">Installed ✓</span></div>
+              <div class="row"><i class="pi"></i><span><b></b><small></small></span></div>
+            </div>
+          </div>
+        </figure>
+      </section>
+
+      <section id="later" class="pair">
+        <div class="box">
+          <strong>Updates</strong>
+          <span>Most plugins update themselves: the plugin page says "Updates automatically" when it does. To check now, open Tools › Plugins, click the gear and choose <strong>Check for Updates</strong>.</span>
+        </div>
+        <div class="box">
+          <strong>Turning off or removing</strong>
+          <span>In Tools › Plugins, click the <strong>…</strong> button next to the plugin and choose <strong>Disable</strong> to turn it off, or <strong>Remove</strong> to uninstall it.</span>
+        </div>
+      </section>
+
+      <section id="trouble">
+        <h2 class="plainh">If something goes wrong</h2>
+        <dl class="faq">
+          <dt>"…is not compatible with Zotero"</dt>
+          <dd>The plugin doesn't support your Zotero version. Check the versions on its page here, and look for another plugin for the same job.</dd>
+          <dt>"…could not be installed because it appears to be corrupt"</dt>
+          <dd>The file isn't a plugin: often a web page saved by mistake, or GitHub's "Source code (zip)". Download it again from the plugin's page here.</dd>
+          <dt>Nothing happens, or you don't see the plugin anywhere</dt>
+          <dd>Restart Zotero. If it still doesn't show, open Tools › Plugins and check it isn't disabled.</dd>
+          <dt>Zotero won't install it at all</dt>
+          <dd>Some plugins are on Zotero's blocklist or fail Zotero's own checks. Their pages here say so and have no Install button.</dd>
+        </dl>
+      </section>
+    </article>
+  </div>
+  <SiteFooter />
+</Base>
+
+<style>
+  .wrap {
+    max-width: 1184px;
+    margin: 0 auto;
+    padding: 48px var(--gutter) 64px;
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 64px;
+  }
+  .toc {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 14.5px;
+    position: sticky;
+    top: 16px;
+    align-self: start;
+  }
+  .toc .eyebrow {
+    margin-bottom: 10px;
+  }
+  .toc a {
+    padding: 7px 0 7px 12px;
+    border-left: 2px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .toc a:hover {
+    border-left-color: var(--ink);
+  }
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    min-width: 0;
+  }
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 52px;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    font-weight: 780;
+  }
+  .intro p {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    max-width: 60ch;
+  }
+  code {
+    font: 500 0.88em var(--font-mono);
+    padding: 1px 5px;
+    border-radius: 5px;
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+  }
+  section {
+    scroll-margin-top: 16px;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+    gap: 32px;
+    align-items: center;
+    border-top: 2px solid var(--ink);
+    padding-top: 20px;
+  }
+  .txt {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .n {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-ink);
+    display: grid;
+    place-items: center;
+    font: 700 15px/1 var(--font-mono);
+  }
+  h2 {
+    margin: 0;
+    font-size: 26px;
+    letter-spacing: -0.025em;
+    font-weight: 720;
+  }
+  .plainh {
+    border-top: 2px solid var(--ink);
+    padding-top: 14px;
+    margin-bottom: 8px;
+  }
+  .txt p {
+    margin: 0;
+    font-size: 16.5px;
+    line-height: 1.55;
+  }
+  .txt p.muted,
+  .muted {
+    color: var(--ink-2);
+    font-size: 15px;
+  }
+  .txt p.tipbox {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    font-size: 15px;
+  }
+  /* Drawn pictures */
+  .pic {
+    margin: 0;
+  }
+  .win {
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--shadow-2);
+    overflow: hidden;
+    font-size: 13.5px;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 12px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--line-strong);
+  }
+  .bar em {
+    font-style: normal;
+    font-weight: 650;
+    margin-left: 8px;
+    color: var(--ink-2);
+    font-size: 12.5px;
+  }
+  .about {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--ink);
+    color: var(--surface);
+    display: grid;
+    place-items: center;
+    font: 800 22px var(--font-sans);
+  }
+  .about strong {
+    font-size: 17px;
+  }
+  .ver {
+    font-family: var(--font-mono);
+    color: var(--ink-2);
+  }
+  mark {
+    background: var(--accent-soft);
+    color: var(--ink);
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 4px;
+    outline: 2px solid var(--accent);
+  }
+  .dl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 24px;
+    border: 1px dashed var(--line-strong);
+    border-radius: 12px;
+  }
+  .dlbtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 12px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 650;
+  }
+  .dlbtn em {
+    font: 500 12px var(--font-mono);
+    font-style: normal;
+    opacity: 0.85;
+  }
+  .arrow {
+    font-size: 22px;
+    color: var(--ink-3);
+  }
+  .file {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    font: 500 13px var(--font-mono);
+  }
+  .fi {
+    width: 30px;
+    height: 36px;
+    border-radius: 4px;
+    background: var(--few-bg);
+    color: var(--few-fg);
+    border: 1px solid var(--few-line);
+    display: grid;
+    place-items: center;
+    font: 700 9px var(--font-mono);
+  }
+  .cap {
+    font-size: 12.5px;
+    color: var(--ink-2);
+  }
+  .menubar {
+    display: flex;
+    gap: 2px;
+    padding: 6px 8px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .menubar span {
+    padding: 3px 9px;
+    border-radius: 5px;
+  }
+  .menubar .on {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .menu-wrap {
+    position: relative;
+    height: 190px;
+  }
+  .menu {
+    position: absolute;
+    z-index: 1;
+    left: 118px;
+    top: 4px;
+    width: 190px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--shadow-2);
+  }
+  .menu span,
+  .gmenu span {
+    padding: 6px 10px;
+    border-radius: 5px;
+    position: relative;
+  }
+  .menu hr,
+  .gmenu hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 4px 0;
+  }
+  .hl {
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 650;
+  }
+  .lib {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .lib i {
+    height: 10px;
+    border-radius: 5px;
+    background: var(--surface-2);
+  }
+  .pm {
+    position: relative;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 190px;
+  }
+  .pmtop {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .search {
+    flex: 1;
+    padding: 6px 10px;
+    border-radius: 7px;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-3);
+    font-size: 12.5px;
+  }
+  .gear {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid var(--line-strong);
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+  }
+  .gear.on {
+    outline: 2px solid var(--accent);
+    background: var(--accent-soft);
+  }
+  .gmenu {
+    position: absolute;
+    z-index: 1;
+    right: 12px;
+    top: 48px;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--shadow-2);
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+  }
+  .row .pi {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: var(--surface-2);
+    display: grid;
+    place-items: center;
+    font: 700 13px var(--font-sans);
+    font-style: normal;
+  }
+  .row > span {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .row b {
+    display: block;
+    width: 55%;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--surface-2);
+  }
+  .row small {
+    display: block;
+    width: 30%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--surface-2);
+  }
+  .row.new {
+    border-color: var(--few-line);
+    background: var(--few-bg);
+  }
+  .row.new .pi {
+    background: var(--few-fg);
+    color: var(--surface);
+  }
+  .row.new small {
+    width: auto;
+    height: auto;
+    background: none;
+    font: 500 12px var(--font-mono);
+    color: var(--ink-2);
+  }
+  .row.new > .ok {
+    flex: none;
+    font-weight: 650;
+    color: var(--few-fg);
+    font-size: 12.5px;
+  }
+  .pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+  .box > strong {
+    font-size: 18px;
+  }
+  .box span {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .faq {
+    margin: 0;
+  }
+  .faq dt {
+    font-weight: 700;
+    font-size: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .faq dd {
+    margin: 4px 0 14px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  @media (max-width: 860px) {
+    .wrap {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding-top: 28px;
+    }
+    .toc {
+      position: static;
+    }
+    h1 {
+      font-size: 38px;
+    }
+    .step,
+    .pair {
+      grid-template-columns: 1fr;
+    }
+    .menu {
+      left: 60px;
+    }
+  }
+</style>

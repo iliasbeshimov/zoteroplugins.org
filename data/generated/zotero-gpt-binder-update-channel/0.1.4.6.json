@@ -1,0 +1,354 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-gpt-binder-update-channel",
+ "repo": "hdusiaocbawa/zotero-gpt-binder-update-channel",
+ "version": "0.1.4.6",
+ "tag": "v0.1.4.6",
+ "releaseAuthor": "hdusiaocbawa",
+ "publishedAt": "2026-07-30T09:29:27Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-gpt-binder@local.invalid-0.1.4.6.xpi",
+  "url": "https://github.com/hdusiaocbawa/zotero-gpt-binder-update-channel/releases/download/v0.1.4.6/zotero-gpt-binder%40local.invalid-0.1.4.6.xpi",
+  "size": 29068,
+  "sha256": "eb2ecb819b3c46681ec6627e6c406b4c7c4d3128914a8c87c73caa398aa96107",
+  "githubAssetId": 495174365,
+  "uploader": "hdusiaocbawa",
+  "uploadedAt": "2026-07-30T09:29:26Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-gpt-binder@local.invalid",
+  "name": "Zotero GPT Binder",
+  "version": "0.1.4.6",
+  "description": "Safe local bridge for engineering evidence Markdown and attachments",
+  "updateUrl": "https://raw.githubusercontent.com/hdusiaocbawa/zotero-gpt-binder-update-channel/main/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "binder.js",
+   "size": 42737,
+   "sha256": "ecaf0bb8d12ca31b8f9f47c832969f1017cf51ec00e151d13ba2d8a01151ba5d"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 1164,
+   "sha256": "538567f51b25e2dd58bc6f45aeb94497a863fa02cc53b4741ad8db28b0e07f0b"
+  },
+  {
+   "path": "manifest.json",
+   "size": 457,
+   "sha256": "b8eeb94b13946d2a4ef0f569d5754d23c4f5dc23db1447643bea1a7cb1feee30"
+  },
+  {
+   "path": "prefs.js",
+   "size": 394,
+   "sha256": "c07b1e6516b2eb6fb41681f56887af296533b97b964ce862a06408f05a38a17c"
+  },
+  {
+   "path": "security.js",
+   "size": 35236,
+   "sha256": "0676644913460155cf0cc21b73be4e382f946e79d8738c5b65afa4d394487a7d"
+  },
+  {
+   "path": "zotero-adapter.js",
+   "size": 58666,
+   "sha256": "bb58d84cd9c143297b9ae72b13c265b738952efaaa16c1171db88b7dd5920a30"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-gpt-binder-update-channel",
+   "version": "0.1.4.6",
+   "sha256": "eb2ecb819b3c46681ec6627e6c406b4c7c4d3128914a8c87c73caa398aa96107"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 138197,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 39,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "binder.js",
+      "line": 58,
+      "column": 13,
+      "snippet": "if (await IOUtils.exists(path)) return path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "binder.js",
+      "line": 66,
+      "column": 23,
+      "snippet": "let children = await IOUtils.getChildren(processing);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "binder.js",
+      "line": 72,
+      "column": 22,
+      "snippet": "JSON.parse(await Zotero.File.getContentsAsync(processingPath)),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "binder.js",
+      "line": 78,
+      "column": 11,
+      "snippet": "await IOUtils.move(processingPath, PathUtils.join(queue, \"archive\", fileName + \".replay\"), { noOverwrite: false });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "binder.js",
+      "line": 92,
+      "column": 11,
+      "snippet": "await IOUtils.move(processingPath, PathUtils.join(queue, \"archive\", fileName + \".outcome-unknown\"), { noOverwrite: false });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "binder.js",
+      "line": 95,
+      "column": 11,
+      "snippet": "await IOUtils.move(processingPath, PathUtils.join(queue, \"inbox\", fileName), { noOverwrite: false });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "binder.js",
+      "line": 104,
+      "column": 16,
+      "snippet": "try { await IOUtils.move(processingPath, PathUtils.join(queue, \"archive\", fileName + \".invalid-processing\"), { noOverwrite: false }); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "binder.js",
+      "line": 114,
+      "column": 9,
+      "snippet": "await IOUtils.makeDirectory(PathUtils.join(queue, name), { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "binder.js",
+      "line": 134,
+      "column": 24,
+      "snippet": "let children = await IOUtils.getChildren(inbox);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "binder.js",
+      "line": 149,
+      "column": 9,
+      "snippet": "await IOUtils.move(sourcePath, processingPath, { noOverwrite: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/hdusiaocbawa/zotero-gpt-binder-update-channel/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/hdusiaocbawa/zotero-gpt-binder-update-channel/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the hdusiaocbawa account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-gpt-binder-update-channel",
+   "version": "0.1.4.6",
+   "sha256": "eb2ecb819b3c46681ec6627e6c406b4c7c4d3128914a8c87c73caa398aa96107"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "f18e444fd63557fde7590dc485b65ab9fe7f50722c3a9fd1ee56fe9ef6de1fab"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-30T09:29:27Z",
+    "lastCommitAt": "2026-07-30T09:29:22Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T06:49:48Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,356 @@
+{
+ "schemaVersion": 1,
+ "slug": "refdetect",
+ "repo": "sorinhostiuc/refdetect",
+ "version": "1.0.1",
+ "tag": "v1.0.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-08-23T04:08:57Z",
+ "prerelease": false,
+ "asset": {
+  "name": "refdetect-1.0.1.xpi",
+  "url": "https://github.com/sorinhostiuc/refdetect/releases/download/v1.0.1/refdetect-1.0.1.xpi",
+  "size": 39331,
+  "sha256": "b760a1460cf95728f42a84054a6fb40d554a283f415d4ede528c88c63f2b5508",
+  "githubAssetId": 525805591,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-08-23T04:08:57Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "refdetect@hostiuc.com",
+  "name": "RefDetect",
+  "version": "1.0.1",
+  "description": "Detect which reference manager was used to create citations in a Word document",
+  "homepageUrl": "https://github.com/sorinhostiuc/refdetect",
+  "updateUrl": "https://github.com/sorinhostiuc/refdetect/releases/latest/download/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1134,
+   "sha256": "cb37cfd84bde5f75c7b3d65a00f41e612753fbd143a82229c0ea902051185889"
+  },
+  {
+   "path": "content/detector.js",
+   "size": 14701,
+   "sha256": "ce91a78ab737b87658bf0691ea88572cac6c7df6cca94277545223736c958ca6"
+  },
+  {
+   "path": "content/lib/jszip.min.js",
+   "size": 97630,
+   "sha256": "acc7e41455a80765b5fd9c7ee1b8078a6d160bbbca455aeae854de65c947d59e"
+  },
+  {
+   "path": "content/refdetect.js",
+   "size": 2175,
+   "sha256": "42c42db99bfc0e42186a42d220a463909157d73c0849ec4fa1e47faced02f640"
+  },
+  {
+   "path": "content/ui/dialog.css",
+   "size": 2283,
+   "sha256": "19b4596573ad749d536183539a46498f206aaa15f4925ba25036a1807094a16b"
+  },
+  {
+   "path": "content/ui/dialog.js",
+   "size": 9303,
+   "sha256": "42f9f1140120bddcde989ecf56e29f76505c13019997ffd57751133e52b4b945"
+  },
+  {
+   "path": "content/ui/dialog.xhtml",
+   "size": 4358,
+   "sha256": "0ceeacf408860df0a484e485bf6c53d89dc60fe014990bfb0aecc5f9c8ec7999"
+  },
+  {
+   "path": "manifest.json",
+   "size": 521,
+   "sha256": "2418382999051c2aa73737b887bb309f0fbc6cc5860a65c40086dafcbf6c4b32"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "refdetect",
+   "version": "1.0.1",
+   "sha256": "b760a1460cf95728f42a84054a6fb40d554a283f415d4ede528c88c63f2b5508"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "content/ui/dialog.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 129301,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "jszip",
+     "files": [
+      "content/lib/jszip.min.js"
+     ],
+     "identifiedBy": "file-name"
+    }
+   ]
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "stuk.github.io",
+     "category": "code-hosting",
+     "provider": "GitHub Pages",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": true,
+     "libraries": [
+      "jszip"
+     ],
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/lib/jszip.min.js",
+       "line": 13,
+       "column": 38894,
+       "snippet": "L_DIRECTORY_END);if(e<0)throw!this.isSignature(0,s.LOCAL_FILE_HEADER)?new Error(\"Can't find end of central directory : is this a zip file ? If it is, see https://stuk.github.io/jszip/documentation/how",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/ui/dialog.js",
+      "line": 225,
+      "column": 24,
+      "snippet": "var clipHelper = Cc[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Ci.nsIClipboardHelper);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/ui/dialog.js",
+      "line": 225,
+      "column": 76,
+      "snippet": "var clipHelper = Cc[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Ci.nsIClipboardHelper);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "jszip"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/lib/jszip.min.js",
+      "line": 13,
+      "column": 96497,
+      "snippet": "ction(e){setTimeout(c,0,e)},e.setImmediate=function(e){\"function\"!=typeof e&&(e=new Function(\"\"+e));for(var t=new Array(arguments.length-1),r=0;r<t.length;r++)t[r]=arguments[r+1];var n={callback:e,arg",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "Function"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/sorinhostiuc/refdetect/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/sorinhostiuc/refdetect/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "refdetect",
+   "version": "1.0.1",
+   "sha256": "b760a1460cf95728f42a84054a6fb40d554a283f415d4ede528c88c63f2b5508"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "1f69c31ca15ccc48021803ed784e3a50dc30b219fc71b366cfff8a00a9896290"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "Zotero will update it on Zotero 9 to version 1.0.2 from sorinhostiuc/refdetect on GitHub (rated: Few concerns found)"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-23T04:08:57Z",
+    "lastCommitAt": "2026-08-23T04:38:32Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:25:04Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 1,
+    "dialogs": 1
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

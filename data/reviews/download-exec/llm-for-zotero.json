@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "slug": "llm-for-zotero",
+  "version": "3.9.9",
+  "sha256": "d1e702c7a9bac088b1c06e3c3d65a7258667fafe3f3ef1fcf5bbd2efc4075a69",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
+  "summary": "The first time you ask about a figure, it downloads a 265–491 MB bundle of Python and the Poppler PDF tools from the developer's GitHub release and runs it, without asking. The README doesn't mention it, and the download isn't checked against a fingerprint. We checked the macOS (Apple silicon) bundle: every file is standard software from conda-forge.",
+  "facts": {
+    "what": "A 'PDF figure runtime' zip (Python 3.11, Poppler, numpy, scipy, pillow from conda-forge), 265-491 MB depending on platform, unpacked into a Zotero data folder; its Python then runs the plugin's pdf_figure_extract.py",
+    "urls": [
+      "https://github.com/yilewang/llm-for-zotero/releases/download/pdf-figure-runtime-v${PDF_FIGURE_RUNTIME_VERSION}/llm-for-zotero-pdf-figure-runtime-v${PDF_FIGURE_RUNTIME_VERSION}-${platformKey}.zip"
+    ],
+    "source": "developer-own",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "automatic-on-feature-use",
+    "toldInReadme": "no",
+    "readmeQuote": "",
+    "triggerQuote": {
+      "file": "content/scripts/llmforzotero.js",
+      "text": "await resolvePdfFigureExtractionRuntime();"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/llmforzotero.js",
+      "text": "const zipBytes = await downloadRuntimePackageBytes(packageUrl);"
+    },
+    "notes": "Download starts the first time figure extraction runs (chat figure question on an image-capable model, or the agent figure tool) when no installed runtime exists. No confirmation prompt, no hash check; validateManagedRuntime only checks runtime.json kind/version/platform and that the files exist. Release assets verified via gh api: macos-arm64 264976195 B, macos-x64 308167232, linux-x64 491361590, linux-arm64 336633041, windows-x64/arm64 318226342 each. README and locale files do not mention it."
+  },
+  "contentChecked": "macOS Apple-silicon bundle (pdf-figure-runtime-v1, sha256 d2ea2815…): all 72 packages are from conda-forge and every file matches conda-forge's published hashes; the one extra file is a 22-byte anonymous usage token Anaconda's tools write. Other platforms not checked."
+}

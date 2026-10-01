@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-topic-explorer",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "API key for the user's own OpenAI-compatible model service; no default provider is configured",
+  "worksWithout": "",
+  "services": [
+   "OpenAI-compatible service of the user's choice"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 模型与费用",
+   "quote": "手动填写 `baseURL`、模型名、API key",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zotero-topic-explorer.providers\", '{\"models\":[],\"bindings\":{}}');",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-topic-explorer.js:5200",
+   "quote": "var LOCAL_HOSTS = /* @__PURE__ */ new Set([\"127.0.0.1\", \"localhost\", \"[::1]\"]);",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: '手动填写 `baseURL`、模型名、API key'. The default providers pref is empty. Code rejects a blank key ('!key.trim()') and sends 'Authorization: Bearer'. The LOCAL_HOSTS set ('127.0.0.1','localhost','[::1]') with an allowLocal http option shows a local OpenAI-compatible endpoint is allowed."
+}

@@ -1,0 +1,397 @@
+{
+ "repo": "dvanoni/notero",
+ "slug": "notero",
+ "group": "top",
+ "rank": 15,
+ "name": "Notero",
+ "stars": 3228,
+ "downloads": 1044921,
+ "createdAt": "2021-09-26T23:54:44Z",
+ "tag": "v2.1.0",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "notero-2.1.0.xpi",
+    "url": "https://github.com/dvanoni/notero/releases/download/v2.1.0/notero-2.1.0.xpi",
+    "size": 136567,
+    "uploadedAt": "2026-08-19T05:54:13Z",
+    "sha256": "500deadc340efafe382747521fe6b05ac2e4a79f8e5a903c979d80f90d6da594"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "notero@vanoni.dev",
+    "name": "Notero",
+    "version": "2.1.0",
+    "description": "Sync Zotero items and notes into Notion",
+    "homepageUrl": "https://github.com/dvanoni/notero",
+    "updateUrl": "https://github.com/dvanoni/notero/releases/download/release/updates.json",
+    "minVersion": "10.0",
+    "maxVersion": "10.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "notero",
+     "version": "2.1.0",
+     "sha256": "500deadc340efafe382747521fe6b05ac2e4a79f8e5a903c979d80f90d6da594"
+    },
+    "coverage": {
+     "filesTotal": 11,
+     "filesAnalyzed": 5,
+     "filesSkipped": [
+      {
+       "path": "content/style/notero-48.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/style/notero-96.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/style/preferences.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/notero.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/notero.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "@notionhq/client",
+       "files": [
+        "content/notero.js",
+        "content/prefs/preferences.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "eventemitter3",
+       "files": [
+        "content/notero.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "zod",
+       "files": [
+        "content/notero.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [],
+     "hosts": [
+      {
+       "host": "api.notion.com",
+       "category": "integration",
+       "provider": "Notion",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": true,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/notero.js",
+         "line": 1176,
+         "column": 167,
+         "snippet": "options === void 0 ? void 0 : options.baseUrl) !== null && _c !== void 0 ? _c : \"https://api.notion.com\"}/v1/`, \"f\");",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "content/prefs/preferences.js",
+         "line": 1016,
+         "column": 167,
+         "snippet": "options === void 0 ? void 0 : options.baseUrl) !== null && _c !== void 0 ? _c : \"https://api.notion.com\"}/v1/`, \"f\");",
+         "inVendoredCode": true
+        }
+       ]
+      },
+      {
+       "host": "auth.notero.vanoni.dev",
+       "category": "developer-server",
+       "provider": "Plugin developer (name match)",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/notero.js",
+         "line": 16329,
+         "column": 24,
+         "snippet": "var OAUTH_LOGIN_URL = \"https://auth.notero.vanoni.dev/login\";",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "developers.notion.com",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": true,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/notero.js",
+         "line": 711,
+         "column": 18,
+         "snippet": "homepage: \"https://developers.notion.com/docs/getting-started\",",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "content/prefs/preferences.js",
+         "line": 551,
+         "column": 18,
+         "snippet": "homepage: \"https://developers.notion.com/docs/getting-started\",",
+         "inVendoredCode": true
+        }
+       ]
+      },
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 6,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/notero.js",
+         "line": 713,
+         "column": 15,
+         "snippet": "url: \"https://github.com/makenotion/notion-sdk-js/issues\"",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "content/notero.js",
+         "line": 717,
+         "column": 15,
+         "snippet": "url: \"https://github.com/makenotion/notion-sdk-js/\"",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "content/notero.js",
+         "line": 16501,
+         "column": 17,
+         "snippet": "helpURL: \"https://github.com/dvanoni/notero#readme\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/notero.js",
+         "line": 16771,
+         "column": 15,
+         "snippet": "let note = `",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/prefs/preferences.js",
+         "line": 553,
+         "column": 15,
+         "snippet": "url: \"https://github.com/makenotion/notion-sdk-js/issues\"",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "content/prefs/preferences.js",
+         "line": 557,
+         "column": 15,
+         "snippet": "url: \"https://github.com/makenotion/notion-sdk-js/\"",
+         "inVendoredCode": true
+        }
+       ]
+      },
+      {
+       "host": "www.zotero.org",
+       "category": "zotero",
+       "provider": "Zotero",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/notero.js",
+         "line": 16579,
+         "column": 18,
+         "snippet": "var APA_STYLE = \"bibliography=http://www.zotero.org/styles/apa\";",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "http://[<expr>]",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/notero.js",
+         "line": 4339,
+         "column": 16,
+         "snippet": "new URL(`http://[${address}]`);",
+         "inVendoredCode": true
+        }
+       ]
+      },
+      {
+       "pattern": "https://<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/notero.js",
+         "line": 16257,
+         "column": 26,
+         "snippet": "var NOTION_API_ORIGIN = `https://${NOTION_API_DOMAIN}`;",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "login-manager",
+      "occurrences": 5,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/notero.js",
+        "line": 16284,
+        "column": 25,
+        "snippet": "const logins = await Services.logins.searchLoginsAsync({",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/notero.js",
+        "line": 16291,
+        "column": 25,
+        "snippet": "const logins = await Services.logins.searchLoginsAsync({",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/notero.js",
+        "line": 16312,
+        "column": 6,
+        "snippet": "Services.logins.modifyLogin(existingLogin, loginInfo);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/notero.js",
+        "line": 16315,
+        "column": 12,
+        "snippet": "await Services.logins.addLoginAsync(loginInfo);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/notero.js",
+        "line": 16322,
+        "column": 6,
+        "snippet": "Services.logins.removeLogin(login);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "nsILoginManager"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/dvanoni/notero/releases/download/release/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/dvanoni/notero/releases/download/release/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "zotero": [
+      "www.zotero.org"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "login-manager",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

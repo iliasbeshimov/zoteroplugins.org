@@ -1,0 +1,518 @@
+{
+ "repo": "max3925vats/zotero-docling",
+ "slug": "zotero-docling",
+ "group": "sample-2026",
+ "rank": 249,
+ "name": "zotero-docling",
+ "stars": 15,
+ "downloads": 778,
+ "createdAt": "2026-05-19T05:33:59Z",
+ "tag": "v0.3.3",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-docling.xpi",
+    "url": "https://github.com/max3925vats/zotero-docling/releases/download/v0.3.3/zotero-docling.xpi",
+    "size": 93283,
+    "uploadedAt": "2026-06-19T14:11:40Z",
+    "sha256": "3233a9918b1aff78a05671d381e7aee5be8457dacbc83618dc1ebed43d78dcb7"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero-docling@max3925vats",
+    "name": "zotero-docling",
+    "version": "0.3.3",
+    "description": "Convert Zotero PDF attachments to structured markdown via Docling",
+    "homepageUrl": "https://github.com/max3925vats/zotero-docling#readme",
+    "updateUrl": "https://github.com/max3925vats/zotero-docling/releases/download/release/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-docling",
+     "version": "0.3.3",
+     "sha256": "3233a9918b1aff78a05671d381e7aee5be8457dacbc83618dc1ebed43d78dcb7"
+    },
+    "coverage": {
+     "filesTotal": 14,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": "content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/zoteroPane.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zoteroDocling-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zoteroDocling-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zoteroDocling-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/zoteroDocling-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/zoteroDocling-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/zoteroDocling-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "jszip",
+       "files": [
+        "content/scripts/zoteroDocling.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/zoteroDocling.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [],
+     "hosts": [
+      {
+       "host": "localhost",
+       "port": 5001,
+       "category": "localhost",
+       "provider": "This computer",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zoteroDocling.js",
+         "line": 8023,
+         "column": 63,
+         "snippet": "const serverUrl = (getPref(\"serverUrl\") ?? \"\").trim() || \"http://localhost:5001\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 1,
+         "column": 0,
+         "snippet": "pref(\"extensions.zoteroDocling.serverUrl\", \"http://localhost:5001\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 1,
+         "column": 43,
+         "snippet": "pref(\"extensions.zoteroDocling.serverUrl\", \"http://localhost:5001\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "stuk.github.io",
+       "category": "code-hosting",
+       "provider": "GitHub Pages",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": true,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zoteroDocling.js",
+         "line": 983,
+         "column": 84,
+         "snippet": "if (e2 < 0) throw !this.isSignature(0, s.LOCAL_FILE_HEADER) ? new Error(\"Can't find end of central directory : is this a zip file ? If it is, see https://stuk.github.io/jszip/documentation/how",
+         "inVendoredCode": true
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zoteroDocling.js",
+         "line": 8205,
+         "column": 13,
+         "snippet": "image: `chrome://${addon.data.config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "Invalid URL — missing scheme? Try http://<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zoteroDocling.js",
+         "line": 6821,
+         "column": 17,
+         "snippet": "message: `Invalid URL \\u2014 missing scheme? Try http://${url}`",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.zoteroDocling.serverUrl",
+       "defaultValue": "http://localhost:5001",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 1,
+         "column": 0,
+         "snippet": "pref(\"extensions.zoteroDocling.serverUrl\", \"http://localhost:5001\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "serverUrl",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zoteroDocling.js",
+         "line": 6675,
+         "column": 23,
+         "snippet": "const serverUrl = (getPref(\"serverUrl\") ?? \"\").replace(/\\/+$/, \"\").trim();",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zoteroDocling.js",
+         "line": 6807,
+         "column": 23,
+         "snippet": "const serverUrl = (getPref(\"serverUrl\") ?? \"\").replace(/\\/+$/, \"\").trim();",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zoteroDocling.js",
+         "line": 8023,
+         "column": 25,
+         "snippet": "const serverUrl = (getPref(\"serverUrl\") ?? \"\").trim() || \"http://localhost:5001\";",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "useAsyncEndpoint",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zoteroDocling.js",
+         "line": 6633,
+         "column": 21,
+         "snippet": "const useAsync = getPref(\"useAsyncEndpoint\") ?? false;",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 3,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 2897,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 2897,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 2943,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "credential-storage",
+      "occurrences": 4,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 6345,
+        "column": 21,
+        "snippet": "const token = (getPref(\"authSecret\") ?? \"\").trim();",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 6351,
+        "column": 19,
+        "snippet": "const pass = getPref(\"authSecret\") ?? \"\";",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 6358,
+        "column": 21,
+        "snippet": "const value = (getPref(\"authSecret\") ?? \"\").trim();",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 6,
+        "column": 0,
+        "snippet": "pref(\"extensions.zoteroDocling.authSecret\", \"\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "authSecret",
+        "extensions.zoteroDocling.authSecret"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "dynamic-code",
+      "occurrences": 1,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 2354,
+        "column": 51,
+        "snippet": "\"function\" != typeof e4 && (e4 = new Function(\"\" + e4));",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "Function"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 25,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 2932,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 2932,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 6107,
+        "column": 27,
+        "snippet": "const exists = await IOUtils.exists(path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 6661,
+        "column": 21,
+        "snippet": "const filename = PathUtils.filename(pdfPath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 6668,
+        "column": 23,
+        "snippet": "pdfBytes = await IOUtils.read(pdfPath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 6724,
+        "column": 19,
+        "snippet": "const tmpDir = PathUtils.join(PathUtils.tempDir, `zd-${item.key}`);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 6724,
+        "column": 34,
+        "snippet": "const tmpDir = PathUtils.join(PathUtils.tempDir, `zd-${item.key}`);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 6725,
+        "column": 20,
+        "snippet": "const tmpPath = PathUtils.join(tmpDir, mdName);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 6727,
+        "column": 12,
+        "snippet": "await IOUtils.makeDirectory(tmpDir, { ignoreExisting: true });",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zoteroDocling.js",
+        "line": 6728,
+        "column": 12,
+        "snippet": "await IOUtils.writeUTF8(tmpPath, markdown);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "user-chosen",
+       "apis": [
+        "IOUtils/PathUtils",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/max3925vats/zotero-docling/releases/download/release/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/max3925vats/zotero-docling/releases/download/release/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "user-configured-only",
+    "hostsByCategory": {
+     "localhost": [
+      "localhost"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

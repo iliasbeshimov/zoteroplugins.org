@@ -1,0 +1,397 @@
+{
+ "schemaVersion": 1,
+ "slug": "fusion-reader-for-zotero",
+ "repo": "thalloerupt/fusion_reader_for_zotero",
+ "version": "1.1.1",
+ "tag": "v1.1.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-08-28T07:35:53Z",
+ "prerelease": false,
+ "asset": {
+  "name": "fusion-reader-for-zotero.xpi",
+  "url": "https://github.com/thalloerupt/fusion_reader_for_zotero/releases/download/v1.1.1/fusion-reader-for-zotero.xpi",
+  "size": 4181,
+  "sha256": "24167f66bd8cbfe35db5001330117a60b7e7b03851698e82798d0b1e139b5e09",
+  "githubAssetId": 533443503,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-08-28T07:35:53Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "fusion-reader@thalluo.com",
+  "name": "Fusion Reader for Zotero",
+  "version": "1.1.1",
+  "description": "Open the selected Zotero PDF in Fusion Reader.",
+  "updateUrl": "https://raw.githubusercontent.com/thalluo/fusion_reader_for_zotero/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 636,
+   "sha256": "5dc5baadda75fce6b50d8799ad6230d0e67988da20dc03f4231b24692007b449"
+  },
+  {
+   "path": "fusion-reader.js",
+   "size": 7225,
+   "sha256": "1b4ef897f902aff9942ebf47c7de35d53189e531b2623d34046955b4333bb44f"
+  },
+  {
+   "path": "icons/icon.svg",
+   "size": 424,
+   "sha256": "c97a9118014a85148a13b943c44373fe487f9067ace5f9197a0ad456ce1cd39d"
+  },
+  {
+   "path": "manifest.json",
+   "size": 525,
+   "sha256": "15908e6cc8c22f06b53ae00e447d2570070e15eefd60ceb78ef80f4d7992b3ed"
+  },
+  {
+   "path": "prefs.js",
+   "size": 53,
+   "sha256": "eccf27c70709ab102a4ecd2a5c99c2c25dd5197987ddc5102e038d2dbe6c54e2"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "fusion-reader-for-zotero",
+   "version": "1.1.1",
+   "sha256": "24167f66bd8cbfe35db5001330117a60b7e7b03851698e82798d0b1e139b5e09"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 7914,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "fusion-reader.js",
+       "line": 139,
+       "column": 26,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", this.serverURL, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 23120,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "fusion-reader.js",
+       "line": 6,
+       "column": 12,
+       "snippet": "serverURL: \"http://127.0.0.1:23120/open\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "fusion-reader.js",
+      "line": 173,
+      "column": 44,
+      "snippet": "const home = Services.dirsvc.get(\"Home\", Ci.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "fusion-reader.js",
+      "line": 181,
+      "column": 19,
+      "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "fusion-reader.js",
+      "line": 181,
+      "column": 63,
+      "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "fusion-reader.js",
+      "line": 209,
+      "column": 24,
+      "snippet": "const executable = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "fusion-reader.js",
+      "line": 209,
+      "column": 68,
+      "snippet": "const executable = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "fusion-reader.js",
+      "line": 213,
+      "column": 21,
+      "snippet": "const process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "fusion-reader.js",
+      "line": 213,
+      "column": 67,
+      "snippet": "const process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIProcess"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/thalluo/fusion_reader_for_zotero/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/thalluo/fusion_reader_for_zotero/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "fusion-reader-for-zotero",
+   "version": "1.1.1",
+   "sha256": "24167f66bd8cbfe35db5001330117a60b7e7b03851698e82798d0b1e139b5e09"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "272fae5572fcdab11edf525a823dfb7e8bb1ca8e10495ac78776eba39d935228"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "unclaimed-namespace",
+     "label": "Updates are set to come from \"thalluo\" on GitHub, an account that doesn't exist: anyone who registers that name could publish an update Zotero would install",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "medium",
+    "label": "Updates are set to come from an address someone else could control",
+    "drivers": [
+     "ST-UPDATE-UNCLAIMED",
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts programs on this computer",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-28T07:35:53Z",
+    "lastCommitAt": "2026-08-28T07:35:29Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "sourceTransparency",
+    "capabilities"
+   ],
+   "reasons": [
+    "Updates are set to come from an address someone else could control",
+    "Launches programs on your computer"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T09:54:03Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 3,
+    "dialogs": 2
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

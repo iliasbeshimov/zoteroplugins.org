@@ -1,0 +1,389 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-remarkable--fbkarsdorp",
+ "repo": "fbkarsdorp/zotero-remarkable",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "fbkarsdorp",
+ "publishedAt": "2026-08-17T11:35:24Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zot2rm.xpi",
+  "url": "https://github.com/fbkarsdorp/zotero-remarkable/releases/download/v0.1.0/zot2rm.xpi",
+  "size": 19978,
+  "sha256": "f62103bf62fa80a7fdbdfee3cd427ef38ddcad564ebb1c3749f17c3f35a7c865",
+  "githubAssetId": 518032081,
+  "uploader": "fbkarsdorp",
+  "uploadedAt": "2026-08-17T11:34:50Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zot2rm@fbkarsdorp.github.io",
+  "name": "reMarkable Sync",
+  "version": "0.1.0",
+  "description": "Push PDF attachments to a reMarkable tablet over its USB web interface and pull annotated versions back as sibling attachments.",
+  "homepageUrl": "https://github.com/fbkarsdorp/zotero-remarkable",
+  "updateUrl": "https://github.com/fbkarsdorp/zotero-remarkable/releases/download/release/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1714,
+   "sha256": "fa87f75a70d7ef1b8e40abadd9689d811f47c80c90ab09aae6c8b644f1b21238"
+  },
+  {
+   "path": "lib/client.js",
+   "size": 9365,
+   "sha256": "66c64f79081090969ba94a77602cec99e50f34c0f5fc85d6eefa298c90516419"
+  },
+  {
+   "path": "lib/inbound.js",
+   "size": 4878,
+   "sha256": "8c1d080ccadc56a05d7190053edf2278c65ead9f13f3f8dc0abdc92cf24c249b"
+  },
+  {
+   "path": "lib/outbound.js",
+   "size": 7085,
+   "sha256": "8e3660ffcff278ab48a0482ab5543f5bfd508d2194659ee9e8fbcff65c52b238"
+  },
+  {
+   "path": "lib/rmsync.js",
+   "size": 22744,
+   "sha256": "e1b15f095d87a722234dbdd15ea9ae5b5a0ed11dd51fe8eb0f49259cef94ff79"
+  },
+  {
+   "path": "lib/store.js",
+   "size": 5691,
+   "sha256": "4578ea09de08676f12c7ab1531fac123faef71bf43b60e743d2ac682be5cff05"
+  },
+  {
+   "path": "manifest.json",
+   "size": 598,
+   "sha256": "e5bd784e3576104d72d1fa2e0c5fa9688a081922a54236a3eeaf89e225203b70"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 2755,
+   "sha256": "ac531cdb44e76aecc52d9d36d85158e860ffbfcfc1054d77e636bafd1ba26ef6"
+  },
+  {
+   "path": "prefs.js",
+   "size": 328,
+   "sha256": "0c8eca87890958d5186770eb3b57540ae356948c26a28669d6753ccf54f343c3"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-remarkable--fbkarsdorp",
+   "version": "0.1.0",
+   "sha256": "f62103bf62fa80a7fdbdfee3cd427ef38ddcad564ebb1c3749f17c3f35a7c865"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 8,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 54560,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/client.js",
+       "line": 206,
+       "column": 20,
+       "snippet": "res = await fetch(url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zot2rm.host",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 8,
+       "column": 18,
+       "snippet": "preference=\"extensions.zot2rm.host\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "host",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/rmsync.js",
+       "line": 43,
+       "column": 12,
+       "snippet": "host: this.getPref(\"host\"),",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 7,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "lib/rmsync.js",
+      "line": 53,
+      "column": 28,
+      "snippet": "readText: (path) => IOUtils.readUTF8(path),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "lib/rmsync.js",
+      "line": 54,
+      "column": 35,
+      "snippet": "writeText: (path, text) => IOUtils.writeUTF8(path, text),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "lib/rmsync.js",
+      "line": 55,
+      "column": 26,
+      "snippet": "exists: (path) => IOUtils.exists(path),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "lib/rmsync.js",
+      "line": 56,
+      "column": 27,
+      "snippet": "makeDir: (path) => IOUtils.makeDirectory(path, { ignoreExisting: true }),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "lib/rmsync.js",
+      "line": 415,
+      "column": 24,
+      "snippet": "getBytes: () => IOUtils.read(path),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "lib/rmsync.js",
+      "line": 639,
+      "column": 12,
+      "snippet": "await IOUtils.write(tmpPath, new Uint8Array(bytes));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "lib/rmsync.js",
+      "line": 656,
+      "column": 12,
+      "snippet": "await IOUtils.remove(tmpPath, { ignoreAbsent: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/fbkarsdorp/zotero-remarkable/releases/download/release/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/fbkarsdorp/zotero-remarkable/releases/download/release/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the fbkarsdorp account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-remarkable--fbkarsdorp",
+   "version": "0.1.0",
+   "sha256": "f62103bf62fa80a7fdbdfee3cd427ef38ddcad564ebb1c3749f17c3f35a7c865"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "70100aab96f21ce2fae6e3ad71220a65c1fca68427e5f2fbc6d86db88c3cbb57"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-17T11:35:24Z",
+    "lastCommitAt": "2026-08-17T11:29:32Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:06:58Z",
+   "verdict": "unexpected",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 1,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": [
+    "tried to reach a local or private address: 10.11.99.1 (10.11.99.1)"
+   ]
+  }
+ }
+}

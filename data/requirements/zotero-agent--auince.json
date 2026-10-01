@@ -1,0 +1,33 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-agent--auince",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "chat-model provider key (DeepSeek, SiliconFlow, ModelScope, Zhipu or custom); Brave and GitHub keys are optional extras",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek",
+   "SiliconFlow",
+   "ModelScope",
+   "Zhipu GLM"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "src/agent.js (release file)",
+   "quote": "if (!apiKey) throw new Error(\"请先在 Zotero 设置 → Research Agent 中填写对话模型 API 密钥。\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, requirements table",
+   "quote": "| Chat model agent | DeepSeek, SiliconFlow, ModelScope, Zhipu GLM, or a custom OpenAI-compatible provider | required |",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The README requirements table marks the chat model as 'required', and agent.js throws when no key is set. A 'custom OpenAI-compatible provider' is mentioned but nothing says it can be a local model, so local stays unknown."
+}

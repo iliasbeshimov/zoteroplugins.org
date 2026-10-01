@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotfile",
+  "version": "5.1.2",
+  "sha256": "be62552ea360c5b23a784dd3a83289b3fbbf05d7a66a0d9a0037f2f0bf3d60a7",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "high",
+  "rule": "CAP-DOWNLOAD-EXEC-HTTP",
+  "summary": "A button in its settings (Intel Macs only) downloads ZotFile's Poppler tool from zotfile.com over unencrypted http and runs it without any check, so someone on your network could swap in their own program. The file is no longer on the server, so today the button fails.",
+  "facts": {
+    "what": "A small PDF text-extraction helper program (ExtractPDFAnnotations, built on the Poppler PDF library) for macOS, downloaded as a zip, unzipped with /usr/bin/unzip into the Zotero data folder, made executable, and later run to extract PDF annotations.",
+    "urls": [
+      "http://www.zotfile.com/PDFTools/ExtractPDFAnnotations-MacIntel.zip",
+      "http://www.zotfile.com/PDFTools/ExtractPDFAnnotations-MacIntel.version"
+    ],
+    "source": "developer-own",
+    "transport": "http",
+    "integrity": "none",
+    "trigger": "user-clicks-install",
+    "toldInReadme": "no",
+    "readmeQuote": "",
+    "triggerQuote": {
+      "file": "chrome/locale/en-US/options.properties",
+      "text": "installPoppler=Download & Install Poppler Tool"
+    },
+    "integrityQuote": {
+      "file": "chrome/content/zotfile/options.js",
+      "text": "var download = Downloads.createDownload({source: url, target: file});"
+    },
+    "notes": "Runs only when the user presses the button in ZotFile's options pane, labelled 'Download & Install Poppler Tool' (later 'Update Poppler Tool'); button wired by oncommand=downloadPDFTool() in options.xul. Supported platform list is only ['MacIntel'], button disabled elsewhere. URL is plain http on www.zotfile.com (a commented-out https GitHub URL sits just above it), so it could be altered in transit. No hash or signature check anywhere; after unzip and chmod the binary is run via Zotero.Utilities.Internal.exec(this.popplerExtractorPath,...). README never mentions Poppler or this download; the default extraction is the built-in pdf.js. I did not download the zip, so its contents are unverified. A version-check GET of the .version file happens when the options pane opens, only if the tool is already installed. On 2026-09-30 http://www.zotfile.com/PDFTools/ExtractPDFAnnotations-MacIntel.zip redirected to zotfile.com and returned 404."
+  }
+}

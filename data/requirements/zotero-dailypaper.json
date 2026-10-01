@@ -1,0 +1,43 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-dailypaper",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "the AI service (default DeepSeek); the main scoring, classifying and analysis features call it",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek",
+   "OpenAI"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 初始配置",
+   "quote": "安装后进入 `编辑 → 设置 → Daily Paper Digest`，至少填写以下内容：",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.dailypaper.apiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, 常见问题",
+   "quote": "支持 DeepSeek、OpenAI，以及其他兼容 OpenAI Chat Completions API 格式的服务。不同服务的 Base URL 和模型名需要按服务商说明填写。",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/dailypaper.js:167",
+   "quote": "const apiBase = Zotero.Prefs.get(\"extensions.dailypaper.apiBase\", true) || \"https://api.deepseek.com/v1\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The default apiKey is empty and the README says to fill in the API Key, so a key is required. The pack only says it supports \"DeepSeek、OpenAI，以及其他兼容 OpenAI Chat Completions API 格式的服务\" with a configurable Base URL. Nothing in the pack names Ollama, LM Studio or a local endpoint, so \"yes\" is a guess."
+}

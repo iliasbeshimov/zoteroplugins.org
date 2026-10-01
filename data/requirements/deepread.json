@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "deepread",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Google Gemini API key needed for all AI features",
+  "worksWithout": "",
+  "services": [
+   "Google AI Studio (Gemini)"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Quick Start, Configure AI Engine",
+   "quote": "Visit [Google AI Studio](https://aistudio.google.com/) to get your **Gemini API Key**.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "providers/GeminiProvider.js:8",
+   "quote": "this.baseURL = \"https://generativelanguage.googleapis.com/v1beta\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: 'Visit Google AI Studio to get your Gemini API Key'. The code's only service is Gemini ('this.baseURL = \"https://generativelanguage.googleapis.com/v1beta\";'), and the release has only a Gemini provider with no Ollama or OpenAI code, so no local model."
+}

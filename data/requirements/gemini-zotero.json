@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "gemini-zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Gemini analysis and chat need a Google Gemini API key (or a proxy key); the key setting ships empty and the only default service is Google Gemini",
+  "worksWithout": "",
+  "services": [
+   "Google AI Studio (Gemini API)"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.geminizotero.apiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, preferences table",
+   "quote": "Google Gemini API Key，或同时支持 Gemini 文本接口和所选图片接口的代理密钥",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Quotes are in the pack: prefs.js ships apiKey empty and apiBaseUrl empty, which means the official Gemini API. The README describes the proxy as needing both Gemini /v1beta and OpenAI-compatible /v1. That does not settle whether a local model such as Ollama would work, so unknown."
+}

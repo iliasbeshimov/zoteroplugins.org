@@ -1,0 +1,490 @@
+{
+ "schemaVersion": 1,
+ "slug": "pdferret",
+ "repo": "urschrei/pdferret",
+ "version": "1.1.3",
+ "tag": "v1.1.3",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-08-22T19:17:22Z",
+ "prerelease": false,
+ "asset": {
+  "name": "pdferret.xpi",
+  "url": "https://github.com/urschrei/pdferret/releases/download/v1.1.3/pdferret.xpi",
+  "size": 25504,
+  "sha256": "564930c5e091cc578edc2b0f883acb7bcf2874eec0296184d80ba1ce47d24dc5",
+  "githubAssetId": 525363955,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-08-22T19:17:22Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "pdferret@example.com",
+  "name": "PDFerret for Zotero",
+  "version": "1.1.3",
+  "description": "Download papers and books by DOI from various providers",
+  "homepageUrl": "https://github.com/urschrei/pdferret",
+  "updateUrl": "https://github.com/urschrei/pdferret/releases/download/release/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "12.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 4012,
+   "sha256": "a0954157c02af41f161081e1a48101c537e719960427e33f020e96d8350b2774"
+  },
+  {
+   "path": "chrome.manifest",
+   "size": 98,
+   "sha256": "8cc309438623052eec1d3c81912d43ac8b2182caf9b62c0cf09a781f50c074e1"
+  },
+  {
+   "path": "content/pdferret.js",
+   "size": 56285,
+   "sha256": "d59f91c28e7dc4143deb377eaad4bef8f341e77b02f92192db3c8cb9a7c5040c"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 3768,
+   "sha256": "c2513534b272b68a375cdcf765ce03b03a94d1421534fa16c9b8dca6e17dc26f"
+  },
+  {
+   "path": "locale/en-US/pdferret.ftl",
+   "size": 2386,
+   "sha256": "a79b0ea4436e69620191c7456f985d97b03cb5b016f8a86b9627388ccbf5156a"
+  },
+  {
+   "path": "manifest.json",
+   "size": 592,
+   "sha256": "cb63617cf715425936823e095e0722e1060c826faec9a6b65a4f8abeaea731b9"
+  },
+  {
+   "path": "skin/default/pdferret-logo.svg",
+   "size": 15314,
+   "sha256": "0dec7635d4c322d5e83e11fb8eacbf27b1a3d7c59d9e67395e0eaa9c31cbda9b"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "pdferret",
+   "version": "1.1.3",
+   "sha256": "564930c5e091cc578edc2b0f883acb7bcf2874eec0296184d80ba1ce47d24dc5"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/pdferret.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "skin/default/pdferret-logo.svg",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 64065,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "content/pdferret.js"
+     ],
+     "identifiedBy": "package-json"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/pdferret.js",
+       "line": 1370,
+       "column": 31,
+       "snippet": "const result = await Zotero.Attachments.addFileFromURLs(item, resolvers);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/pdferret.js",
+       "line": 1369,
+       "column": 28,
+       "snippet": "const resolvers = Zotero.Attachments.getFileResolvers(item);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "annas-archive.gl",
+     "category": "scholarly-api",
+     "provider": "Anna's Archive",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/pdferret.js",
+       "line": 997,
+       "column": 17,
+       "snippet": "urlTemplate: \"https://annas-archive.gl/scidb/{DOI}/\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "sci-hub.ru",
+     "category": "scholarly-api",
+     "provider": "Sci-Hub",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/pdferret.js",
+       "line": 988,
+       "column": 17,
+       "snippet": "urlTemplate: \"https://sci-hub.ru/{DOI}\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "new-provider-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 51,
+       "column": 8,
+       "snippet": "<html:input type=\"text\" id=\"new-provider-url\" placeholder=\"https://example.com/{DOI}\" style=\"flex: 1;\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "pdferret.scihub_url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/pdferret.js",
+       "line": 1034,
+       "column": 24,
+       "snippet": "const legacyUrl = Zotero.Prefs.get(PREF_LEGACY_SCIHUB_URL);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "changes-settings",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/pdferret.js",
+      "line": 1274,
+      "column": 6,
+      "snippet": "Zotero.Prefs.set(RESOLVER_PREF, JSON.stringify(allResolvers), true);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "settings": [
+      {
+       "change": "find-pdf",
+       "asks": "click",
+       "whileInstalled": true
+      },
+      {
+       "change": "find-pdf",
+       "asks": "none",
+       "auto": true,
+       "whileInstalled": true
+      }
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/pdferret.js",
+      "line": 78,
+      "column": 13,
+      "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/pdferret.js",
+      "line": 81,
+      "column": 6,
+      "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v, true);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.debug-bridge.password"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/pdferret.js",
+      "line": 114,
+      "column": 24,
+      "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "AsyncFunction"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/urschrei/pdferret/releases/download/release/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/urschrei/pdferret/releases/download/release/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "pdferret",
+   "version": "1.1.3",
+   "sha256": "564930c5e091cc578edc2b0f883acb7bcf2874eec0296184d80ba1ce47d24dc5"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "952e142f4a36d01644f893499139dd967841579d8cd236e219883c0ec84ff860"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "annas-archive.gl",
+       "sci-hub.ru"
+      ],
+      "unconfirmed": [
+       "annas-archive.gl",
+       "sci-hub.ru"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": true,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "changes-settings",
+      "label": "Changes Zotero settings that aren't its own",
+      "concern": "low",
+      "detail": "Adds sources to Zotero's Find Available PDF, at startup, without asking, only while it's running"
+     }
+    ],
+    "concern": "low",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-22T19:17:22Z",
+    "lastCommitAt": "2026-08-22T19:16:05Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T05:07:06Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 3,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

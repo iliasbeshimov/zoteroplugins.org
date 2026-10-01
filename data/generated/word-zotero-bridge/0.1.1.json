@@ -1,0 +1,276 @@
+{
+ "schemaVersion": 1,
+ "slug": "word-zotero-bridge",
+ "repo": "bjtupupil/word-zotero-bridge",
+ "version": "0.1.1",
+ "tag": "v0.1.6",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-09-06T01:01:04Z",
+ "prerelease": false,
+ "asset": {
+  "name": "word-zotero-bridge-0.1.1.xpi",
+  "url": "https://github.com/BJTUpupil/word-zotero-bridge/releases/download/v0.1.6/word-zotero-bridge-0.1.1.xpi",
+  "size": 6812,
+  "sha256": "2df48b02d32bba20cc25a289b50361b83000f9b2c7c96a8af889b6e5ebe2e51d",
+  "githubAssetId": 546539368,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-09-06T01:01:04Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "word-zotero-bridge@bjtupupil.github.io",
+  "name": "Word Zotero Bridge",
+  "version": "0.1.1",
+  "description": "Local, fail-closed batch bridge for inserting native Zotero citations into verified Word document copies.",
+  "homepageUrl": "https://github.com/BJTUpupil/word-zotero-bridge",
+  "updateUrl": "https://raw.githubusercontent.com/BJTUpupil/word-zotero-bridge/main/updates.json",
+  "strictMinVersion": "9.0.6",
+  "strictMaxVersion": "9.0.6"
+ },
+ "files": [
+  {
+   "path": "batch-policy.js",
+   "size": 2882,
+   "sha256": "87dd27ec69ffeadaae12cf00ab5c38bc450506e1b9f960de0031f0b86778b881"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 8982,
+   "sha256": "e5252d27bac26e4862e77e290b933dfda47217025fe3843e7839e65d2a92669f"
+  },
+  {
+   "path": "bridge.js",
+   "size": 7001,
+   "sha256": "1cd53a9ef00f9eb9760af08d40b5a6ca65e6a01d53b466aaf3b2b4de8ed47370"
+  },
+  {
+   "path": "manifest.json",
+   "size": 580,
+   "sha256": "868890260e0c0bdbc187c51d15e9d8e332d239d84cb415c12c626e46a05a022c"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "word-zotero-bridge",
+   "version": "0.1.1",
+   "sha256": "2df48b02d32bba20cc25a289b50361b83000f9b2c7c96a8af889b6e5ebe2e51d"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 18865,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "local-http-server",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 50,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[HEALTH_ENDPOINT_PATH] = healthEndpointConstructor;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 183,
+      "column": 27,
+      "snippet": "if (!Zotero.Server || !Zotero.Server.Endpoints) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 233,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINT_PATH] = endpointConstructor;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/word-zotero-bridge/v1/command",
+      "/word-zotero-bridge/v1/health"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/BJTUpupil/word-zotero-bridge/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/BJTUpupil/word-zotero-bridge/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "word-zotero-bridge",
+   "version": "0.1.1",
+   "sha256": "2df48b02d32bba20cc25a289b50361b83000f9b2c7c96a8af889b6e5ebe2e51d"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "cfa65161f3c6f35b1098b0d1274abce33ee7c22e6184c77938d02d08c74d89cc"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "none",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-06T01:01:04Z",
+    "lastCommitAt": "2026-09-06T01:00:15Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "slug": "paperpilot",
+  "version": "1.1.0",
+  "sha256": "84d1295bf766da79a94981151dd4def1bf03bf4206394dac47b20bb42fe9c34d",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
+  "summary": "The first time it extracts a figure, it would download a Python and Poppler bundle from the developer's GitHub release and run it, without asking and without a check; the README doesn't mention it. That file doesn't exist today (the address returns 404), so nothing is downloaded yet.",
+  "facts": {
+    "what": "A Python environment bundled with the Poppler PDF tools (pdftoppm, pdftohtml, pdfinfo), delivered as a zip per platform. It is unpacked into the Zotero data directory. The plugin marks its Python and Poppler programs executable and runs Python on the plugin's own pdf_figure_extract.py script to pull figures out of PDFs.",
+    "urls": [
+      "https://github.com/zjysnow/paperpilot/releases/download/pdf-figure-runtime-v${PDF_FIGURE_RUNTIME_VERSION}/paperpilot-pdf-figure-runtime-v${PDF_FIGURE_RUNTIME_VERSION}-${platformKey}.zip"
+    ],
+    "source": "developer-own",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "automatic-on-feature-use",
+    "toldInReadme": "no",
+    "readmeQuote": "",
+    "triggerQuote": {
+      "file": "content/scripts/paperpilot.js",
+      "text": "const runtime2 = await resolvePdfFigureExtractionRuntime();"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/paperpilot.js",
+      "text": "const zipBytes = await downloadRuntimePackageBytes(packageUrl);\n    const extracted = extractRuntimeZipEntries(zipBytes);"
+    },
+    "notes": "Trigger chain: the raw source-PDF figure extraction function calls resolvePdfFigureExtractionRuntime, then resolveManagedPdfFigureExtractionRuntime. That installs the runtime silently if none is installed, with no prompt or button. Only the system Poppler paths (/opt/homebrew/bin/pdftoppm and similar) are used as a preference in other helpers; the extraction path uses the managed runtime only. No en-US or zh-CN locale string announces the download. The README mentions optional MinerU for figures and a user-configured Python venv for replication, but not this runtime. No hash or checksum check on the zip. The only checks are that the zip has a runtime.json with the expected kind, version and platform, that entry paths stay inside the install folder, and that the Python and Poppler files exist. Zip entry paths are sanitized against path traversal. Platforms from the build script: macos-arm64, macos-x64, linux-arm64, linux-x64, windows-x64. As of review, the release tag pdf-figure-runtime-v1 does not exist on GitHub: the releases list has only v1.0.0 to v1.4.0, the tag lookup returns 404, and the macos-arm64 asset URL returns HTTP 404. In v1.1.0 the download therefore fails at present, and nothing is executed. The developer could publish that asset at any time, and the plugin would then run it unchecked. A build script, build_pdf_figure_runtime.py, ships inside the xpi (under locale/zh-CN) and describes the zip as a packaged conda/micromamba environment. The zip's contents were not inspected because the asset does not exist. On 2026-09-30 the runtime address returned 404: the repo has no pdf-figure-runtime release."
+  },
+  "alsoAppliesTo": [
+    {
+      "version": "1.0.4",
+      "sha256": "3f335f31624b9f17712c22838c144675647ec37f963ce2d1b21f9fb445acff38",
+      "how": "Same download code (address, trigger and no check) as 1.1.0, compared by hand."
+    }
+  ]
+}

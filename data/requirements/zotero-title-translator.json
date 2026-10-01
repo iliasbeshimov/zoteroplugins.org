@@ -1,0 +1,44 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-title-translator",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "DeepL, Google, Microsoft, Qwen, SiliconFlow, Volcengine, DeepSeek, Gemini, OpenAI and custom providers need a key",
+  "worksWithout": "MyMemory (the default on new installs)",
+  "services": [
+   "DeepL",
+   "Google Cloud Translation",
+   "Microsoft Translator",
+   "OpenAI",
+   "DeepSeek",
+   "Google Gemini",
+   "Alibaba Qwen",
+   "SiliconFlow",
+   "Volcengine"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.titleTranslator.provider\", \"mymemory\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "sandbox",
+   "where": "Sandbox test",
+   "quote": "hosts contacted with no key entered: {\"api.mymemory.translated.net\"",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.titleTranslator.ollamaURL\", \"http://localhost:11434\");",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The default provider is mymemory and the sandbox reached api.mymemory.translated.net with no key, while many providers have empty key prefs. The default ollamaURL is http://localhost:11434 with ollamaModel translategemma:4b."
+}

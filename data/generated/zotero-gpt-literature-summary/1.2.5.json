@@ -1,0 +1,378 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-gpt-literature-summary",
+ "repo": "wilhenry777/zotero-gpt-literature-summary",
+ "version": "1.2.5",
+ "tag": "v1.2.5",
+ "releaseAuthor": "Wilhenry777",
+ "publishedAt": "2026-07-28T14:45:44Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-gpt-literature-summary-v1.2.5.xpi",
+  "url": "https://github.com/Wilhenry777/zotero-gpt-literature-summary/releases/download/v1.2.5/zotero-gpt-literature-summary-v1.2.5.xpi",
+  "size": 16254,
+  "sha256": "ac029d84efcd627d122be53a157c06f67e2ed933fd8dac078fc12e063aebadb4",
+  "githubAssetId": 492827694,
+  "uploader": "Wilhenry777",
+  "uploadedAt": "2026-07-28T14:45:44Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "gpt-literature-summary@wilhenry.com",
+  "name": "GPT 文献总结助手",
+  "version": "1.2.5",
+  "description": "从 Zotero 阅读器一键把当前 PDF 附加到 ChatGPT，并生成基于原文证据的结构化总结提示词。",
+  "homepageUrl": "https://github.com/Wilhenry777/zotero-gpt-literature-summary",
+  "updateUrl": "https://raw.githubusercontent.com/Wilhenry777/zotero-gpt-literature-summary/main/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 34148,
+   "sha256": "13a00d64bc1fa5b0b03cce51b941fde8e0e70b56fce4a74077cee7fe5224fc5f"
+  },
+  {
+   "path": "chrome/content/icons/menu-icon.svg",
+   "size": 2673,
+   "sha256": "2d36e1c78fd114f5439743ff93807ffdb6e2faef0d3346e603a5a423e05f7280"
+  },
+  {
+   "path": "icon.svg",
+   "size": 2673,
+   "sha256": "2d36e1c78fd114f5439743ff93807ffdb6e2faef0d3346e603a5a423e05f7280"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1065,
+   "sha256": "240ac5e167f2159f48a8653d64eee3f30951ce4d5e3bee882f56edfd8a6dcdb7"
+  },
+  {
+   "path": "manifest.json",
+   "size": 675,
+   "sha256": "15f52aad882a57f35fdcb63b7b3156fefa707deab026256b20f3714170b0fa22"
+  },
+  {
+   "path": "menu-icon.svg",
+   "size": 2673,
+   "sha256": "2d36e1c78fd114f5439743ff93807ffdb6e2faef0d3346e603a5a423e05f7280"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-gpt-literature-summary",
+   "version": "1.2.5",
+   "sha256": "ac029d84efcd627d122be53a157c06f67e2ed933fd8dac078fc12e063aebadb4"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "chrome/content/icons/menu-icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "menu-icon.svg",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 34148,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "chatgpt.com",
+     "category": "llm-provider",
+     "provider": "OpenAI ChatGPT",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 5,
+       "column": 26,
+       "snippet": "const CHATGPT_QUERY_URL = \"https://chatgpt.com/?q=\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 162,
+      "column": 6,
+      "snippet": "Zotero.Utilities.Internal.copyTextToClipboard(prompt);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 508,
+      "column": 10,
+      "snippet": "Zotero.File.pathToFile(filePath).exists()",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 713,
+      "column": 35,
+      "snippet": "const binaryContents = await Zotero.File.getBinaryContentsAsync(",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 605,
+      "column": 6,
+      "snippet": "Zotero.Server.Endpoints[PDF_ENDPOINT_PATH] = Endpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/gpt-literature-summary/pdf"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Wilhenry777/zotero-gpt-literature-summary/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Wilhenry777/zotero-gpt-literature-summary/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Wilhenry777 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-gpt-literature-summary",
+   "version": "1.2.5",
+   "sha256": "ac029d84efcd627d122be53a157c06f67e2ed933fd8dac078fc12e063aebadb4"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "1c4b3ce937c0d46f27ca5de8220f674704124d81f5c2c227ca64f00e4935876a"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found; its code names known services",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-28T14:45:44Z",
+    "lastCommitAt": "2026-07-28T14:45:29Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T06:44:21Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 1,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

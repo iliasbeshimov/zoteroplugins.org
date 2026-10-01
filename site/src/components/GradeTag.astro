@@ -1,0 +1,125 @@
+---
+/** The Atlas grade: an arrow tag (A+ A B C, a dashed box for "not graded"), the ladder, or the README badge. */
+interface Props {
+  grade: string;
+  variant?: "tag" | "ladder" | "readme";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  brand?: string;
+}
+const { grade: raw, variant = "tag", size = "sm", brand = "Plugins Atlas" } = Astro.props;
+const TOK: Record<string, string> = { "A+": "ap", A: "a", B: "b", C: "c" };
+const WORD: Record<string, string> = { "A+": "Recommended, tested in Zotero", A: "Recommended", B: "Use with care", C: "Not recommended", "–": "Not graded yet" };
+const SZ: Record<string, [number, number, number]> = { xs: [20, 12, 7], sm: [26, 14, 9], md: [34, 17, 11], lg: [48, 24, 14], xl: [72, 38, 20] };
+const LAD: Record<string, [number, number, number, number, number]> = { xs: [18, 11, 48, 3, 6], sm: [18, 11, 48, 3, 6], md: [28, 14, 80, 5, 8], lg: [38, 19, 120, 6, 10], xl: [38, 19, 120, 6, 10] };
+const arrowR = (n: number) => `polygon(0 0,calc(100% - ${n}px) 0,100% 50%,calc(100% - ${n}px) 100%,0 100%)`;
+const arrowL = (n: number) => `polygon(${n}px 0,100% 0,100% 100%,${n}px 100%,0 50%)`;
+const grade = TOK[raw] ? raw : "–";
+const t = TOK[grade];
+const none = !t;
+const aria = none ? "Atlas grade: not graded yet" : `Atlas grade ${grade}: ${WORD[grade]}`;
+const [h, fs, n] = SZ[size] ?? SZ.sm;
+const tagStyle = none
+  ? `height:${h}px;min-width:${Math.round(h * 1.3)}px;padding:0 ${Math.round(h * 0.3)}px;font-size:${fs}px`
+  : `height:${h}px;min-width:${Math.round(h * 1.55)}px;padding:0 ${Math.round(h * 0.3) + n}px 0 ${Math.round(h * 0.3)}px;font-size:${fs}px;background:var(--g-${t});color:var(--g-${t}-on);clip-path:${arrowR(n)}`;
+const [lh, lfs, w0, gap, ln] = LAD[size] ?? LAD.md;
+const rungs = ["A+", "A", "B", "C"].map((g, i) => ({
+  g,
+  style: `height:${lh}px;width:${Math.round(w0 * (1 + i / 3))}px;padding-left:${Math.round(lh * 0.32)}px;background:var(--g-${TOK[g]});color:var(--g-${TOK[g]}-on);font-size:${lfs}px;clip-path:${arrowR(ln)}`,
+  cur: g === grade,
+}));
+const pointer = `height:${lh + 6}px;padding:0 ${Math.round(lh * 0.4)}px 0 ${ln + 10}px;font-size:${lfs + 4}px;clip-path:${arrowL(ln + 2)}`;
+---
+
+{
+  variant === "tag" && (
+    <span role="img" aria-label={aria} class:list={["tag", { none }]} style={tagStyle}>
+      {none ? "–" : grade}
+    </span>
+  )
+}
+{
+  variant === "ladder" && (
+    <div role="img" aria-label={aria} class="ladder" style={`gap:${gap}px ${gap + 4}px`}>
+      {rungs.map((r) => (
+        <>
+          <span class="rung" style={r.style}>{r.g}</span>
+          <span class="slot" style={`min-width:${Math.round(lh * 1.6)}px`}>
+            {r.cur && <span class="pointer" style={pointer}>{r.g}</span>}
+          </span>
+        </>
+      ))}
+    </div>
+  )
+}
+{
+  variant === "readme" && (
+    <span role="img" aria-label={aria} class="readme">
+      <span class="brand">{brand}</span>
+      <span class="g" style={none ? "background:var(--nd-fg);color:var(--surface)" : `background:var(--g-${t});color:var(--g-${t}-on)`}>{grade}</span>
+    </span>
+  )
+}
+
+<style>
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    flex: none;
+    font-family: var(--font-sans);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .tag.none {
+    border: 1.5px dashed var(--nd-line);
+    color: var(--nd-fg);
+  }
+  .ladder {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+  }
+  .rung,
+  .pointer {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    font-family: var(--font-sans);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .slot {
+    display: flex;
+  }
+  .pointer {
+    background: var(--ink);
+    color: var(--surface);
+  }
+  .readme {
+    display: inline-flex;
+    height: 22px;
+    border-radius: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    font: 650 12px/1 var(--font-sans);
+  }
+  .readme .brand {
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .readme .g {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 9px;
+    min-width: 30px;
+    font-weight: 800;
+  }
+</style>

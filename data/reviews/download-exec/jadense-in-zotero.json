@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "slug": "jadense-in-zotero",
+  "version": "0.6.3",
+  "sha256": "28eee02c2e4673dc584b6bda2f74b33d4d991c4ff96c279046d7ce9d7e437790",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "low",
+  "rule": "CAP-DOWNLOAD-EXEC-TOLD",
+  "summary": "When you press Enable local OCR, or prepare PDF translation, in its settings, it downloads uv from Astral's GitHub releases, as its README says, and uses it to install Python packages. uv is checked only against a checksum from the same place.",
+  "facts": {
+    "what": "uv (the open-source Python package manager from Astral, v0.9.3) as a tar.gz from its GitHub release, only if no suitable uv is already on the computer. It is then used to install a private Python 3.12 and locked Python packages (Docling, RapidOCR, onnxruntime, or BabelDOC/PyMuPDF) for optional local OCR and PDF-translation engines. On Windows x64 the PDF engine may come as a prebuilt ZIP from the developer's GitHub release (sha256 pinned in bundles.json).",
+    "urls": [
+      "https://github.com/astral-sh/uv/releases/download/0.9.3/uv-$target.tar.gz",
+      "https://github.com/astral-sh/uv/releases/download/0.9.3/uv-$target.tar.gz.sha256"
+    ],
+    "source": "official",
+    "transport": "https",
+    "integrity": "same-source-checksum",
+    "trigger": "user-clicks-install",
+    "toldInReadme": "yes",
+    "readmeQuote": "首次需联网下载 Python、依赖和模型，预留数 GB 空间，无需预装 Python 或配置 CUDA。",
+    "triggerQuote": {
+      "file": "content/preferences.js",
+      "text": "make(\"button\", uiText(\"启用本机 OCR\", \"Enable local OCR\"))"
+    },
+    "integrityQuote": {
+      "file": "content/ocr/install.sh",
+      "text": "[ \"$expected\" = \"$actual\" ] || { echo 'uv checksum mismatch' >&2; exit 1; }"
+    },
+    "notes": "Mac/Linux uv download: both ocr/install.sh and pdf-translation/install.sh fetch uv 0.9.3 from astral-sh GitHub releases, and compare its SHA-256 to a .sha256 file fetched from the same release URL (same-source checksum, not a hash pinned in the plugin). Skipped if a uv >= 0.9.3 is already found on PATH or common locations. Download is not automatic: the installer runs only from buttons in Settings (\"Enable local OCR\" / \"Continue setup\" / \"Repair\", and \"Prepare PDF translation engine\", English UI text from uiText in content/preferences.js); startup/check calls pass --check, which downloads nothing. After uv, `uv sync --frozen` installs Python 3.12 and packages from uv.lock, which pins sha256 hashes for PyPI packages (uv.lock contains hash = \"sha256:...\" entries), then runs an import test python -c. Models are also downloaded (README: first run downloads Python, dependencies and models, several GB). Windows install.ps1 uses the same pattern (Invoke-WebRequest of $url.sha256 plus SHA256 compare). Windows x64 prebuilt PDF engine ZIP is verified against a sha256 pinned in content/pdf-translation/bundles.json (line 9), hosted on the developer's own GitHub release. README also states the plugin runs PowerShell with -ExecutionPolicy Bypass. Scanner's other findings (process-launch, package-run, self-update, dynamic-code) not examined here. I did not verify the pdf-engine README anchor text for Mac/Linux beyond the OCR section. The README explicitly calls out the install path in sections 'OCR 依赖安装' and '版面解析引擎安装'."
+  }
+}

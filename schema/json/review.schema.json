@@ -1,0 +1,75 @@
+{
+  "$id": "https://github.com/iliasacademia/zoteroatlas/schema/json/review.schema.json",
+  "title": "review",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "reviewer": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "github": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "reviewedAt": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "analysisSha256": {
+      "description": "SHA-256 of the analysis document the reviewer saw.",
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "fields": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Dotted field path, e.g. 'requirements.apiKey' or 'content.oneLiner'"
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "approved",
+              "edited",
+              "rejected"
+            ]
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "decision"
+        ]
+      }
+    },
+    "summary": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "reviewer",
+    "reviewedAt",
+    "version",
+    "fields"
+  ]
+}

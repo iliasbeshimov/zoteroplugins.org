@@ -1,0 +1,42 @@
+{
+ "schemaVersion": 1,
+ "slug": "llm-papaerassistance-for-zotero8",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "the OpenAI provider needs an OpenAI API key",
+  "worksWithout": "Ollama on the user's own computer, which is the default provider",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.llmPaperAssistant.provider\", \"ollama\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Provider Setup, OpenAI",
+   "quote": "Create an API key for the OpenAI API.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.llmPaperAssistant.ollamaBaseURL\", \"http://127.0.0.1:11434\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, Provider Setup, Ollama",
+   "quote": "Install and run Ollama locally.",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The default provider pref is 'ollama' with base URL http://127.0.0.1:11434, so it works without a key. OpenAI is an optional provider that needs a key."
+}

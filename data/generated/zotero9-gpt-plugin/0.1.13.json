@@ -1,0 +1,437 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero9-gpt-plugin",
+ "repo": "zhstark/zotero9_gpt_plugin",
+ "version": "0.1.13",
+ "tag": "0.1.1",
+ "releaseAuthor": "zhstark",
+ "publishedAt": "2026-06-16T03:22:09Z",
+ "prerelease": false,
+ "asset": {
+  "name": "paper-translation-popup.xpi",
+  "url": "https://github.com/zhstark/zotero9_gpt_plugin/releases/download/0.1.1/paper-translation-popup.xpi",
+  "size": 13904,
+  "sha256": "d912a68a14f6c4aac9febaa6d8ca0cc876ff7629894d7b33293bcb6b69ca9cd2",
+  "githubAssetId": 448805896,
+  "uploader": "zhstark",
+  "uploadedAt": "2026-06-16T03:21:57Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "paper-translation-popup@lobster.local",
+  "name": "ScholarMate",
+  "version": "0.1.13",
+  "description": "Use OpenAI from Zotero to translate and assist with academic reading.",
+  "homepageUrl": "https://github.com/zhstark/zotero9_gpt_plugin",
+  "updateUrl": "https://example.com/paper-translation-popup/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 25378,
+   "sha256": "32584024872fc04643589692d2f7c60cbc7b0e97af4c5543a16799505b2dceaf"
+  },
+  {
+   "path": "content/popup.js",
+   "size": 7389,
+   "sha256": "236087fad0a9807ac4a84c1e5449efb8a5141156c27ed8f0aa043c2d1c300a3d"
+  },
+  {
+   "path": "content/popup.xhtml",
+   "size": 887,
+   "sha256": "08b9a10a6bf64f03654894f631337f48cf5f36b5ef27d0a9899c3c23810c9118"
+  },
+  {
+   "path": "content/preferences.js",
+   "size": 1362,
+   "sha256": "943d008118e8fcdd39f8d7645e29d10267b8b306999a3568fcc8a7da4fb9a7c7"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 932,
+   "sha256": "a775d9a7f997096094b6618db2ad784727ed2d649546f00a3ba236cb76f8d043"
+  },
+  {
+   "path": "content/styles.css",
+   "size": 929,
+   "sha256": "12c627df9f02a42cc338fab3eee32189a87180330b54b2eac60f8c0578c72672"
+  },
+  {
+   "path": "content/translator.js",
+   "size": 3140,
+   "sha256": "581c365642720ddb9393f49e807497d3df3fc6eea804e7aedb2682870f99c5bc"
+  },
+  {
+   "path": "manifest.json",
+   "size": 509,
+   "sha256": "6a42c4f9567abb2ea50637e9ea789322b30b39e29bba30cae143ae9f22ddeed0"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero9-gpt-plugin",
+   "version": "0.1.13",
+   "sha256": "d912a68a14f6c4aac9febaa6d8ca0cc876ff7629894d7b33293bcb6b69ca9cd2"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "content/styles.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 39088,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 454,
+       "column": 6,
+       "snippet": "fetchImpl: createFetchImpl(),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/translator.js",
+       "line": 79,
+       "column": 27,
+       "snippet": "const response = await request(OPENAI_CHAT_COMPLETIONS_URL, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 810,
+       "column": 20,
+       "snippet": "const xhr = await Zotero.HTTP.request(requestOptions.method || \"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.openai.com",
+     "category": "llm-provider",
+     "provider": "OpenAI",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 754,
+       "column": 33,
+       "snippet": "const response = await request(\"https://api.openai.com/v1/chat/completions\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/translator.js",
+       "line": 10,
+       "column": 38,
+       "snippet": "const OPENAI_CHAT_COMPLETIONS_URL = \"https://api.openai.com/v1/chat/completions\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 719,
+      "column": 41,
+      "snippet": "const clipboard = Components.classes[\"@mozilla.org/widget/clipboard;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 720,
+      "column": 18,
+      "snippet": ".getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 744,
+      "column": 41,
+      "snippet": "const clipboard = Components.classes[\"@mozilla.org/widget/clipboard;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 745,
+      "column": 18,
+      "snippet": ".getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 437,
+      "column": 16,
+      "snippet": "const token = Zotero.Prefs.get(PREF_TOKEN) || \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/popup.js",
+      "line": 33,
+      "column": 13,
+      "snippet": "token: openerWindow.Zotero.Prefs.get(\"extensions.paperTranslationPopup.openaiToken\") || \"\",",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/preferences.js",
+      "line": 32,
+      "column": 4,
+      "snippet": "Zotero.Prefs.set(PREF_TOKEN, token);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.paperTranslationPopup.openaiToken"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://example.com/paper-translation-popup/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://example.com/paper-translation-popup/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the zhstark account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero9-gpt-plugin",
+   "version": "0.1.13",
+   "sha256": "d912a68a14f6c4aac9febaa6d8ca0cc876ff7629894d7b33293bcb6b69ca9cd2"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "4968ee3aa6eed37fccbd0b319d890cd9a1d0a61aeeb5b8d3d2c38980abbcd875"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.openai.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-06-16T03:22:09Z",
+    "lastCommitAt": "2026-06-23T07:38:31Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T06:32:24Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 1,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

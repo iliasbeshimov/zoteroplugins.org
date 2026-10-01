@@ -1,0 +1,302 @@
+{
+ "repo": "Rafael-Silva-Oliveira/NZBridge",
+ "slug": "nzbridge",
+ "group": "sample-2026",
+ "rank": 126,
+ "name": "NZBridge",
+ "stars": 102,
+ "downloads": 6489,
+ "createdAt": "2026-04-06T12:07:14Z",
+ "tag": "v0.5.1",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "nz-bridge.xpi",
+    "url": "https://github.com/Rafael-Silva-Oliveira/NZBridge/releases/download/v0.5.1/nz-bridge.xpi",
+    "size": 41957,
+    "uploadedAt": "2026-09-04T12:28:45Z",
+    "sha256": "35db80c0985f06463df343f76b324cf4e6c84030e93f5cdb4591d0a58a877edd"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "nzbridge@notebooklm-bridge.dev",
+    "name": "NZBridge",
+    "version": "0.5.1",
+    "description": "NZBridge — Bidirectional sync between Zotero and Google NotebookLM",
+    "homepageUrl": "https://github.com/Rafael-Silva-Oliveira/NZBridge",
+    "updateUrl": "https://github.com/Rafael-Silva-Oliveira/NZBridge/releases/latest/download/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "10.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "nzbridge",
+     "version": "0.5.1",
+     "sha256": "35db80c0985f06463df343f76b324cf4e6c84030e93f5cdb4591d0a58a877edd"
+    },
+    "coverage": {
+     "filesTotal": 11,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": "content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/zoteroPane.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/n2z-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/n2z-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/n2z-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/n2z.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [],
+     "hosts": [],
+     "dynamicUrls": [
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/n2z.js",
+         "line": 4582,
+         "column": 13,
+         "snippet": "image: `chrome://${addon.data.config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon@0.5x.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/n2z.js",
+         "line": 4513,
+         "column": 21,
+         "snippet": "const menuIcon = `chrome://${addon.data.config.addonRef}/content/icons/favicon@0.5x.png`;",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 3,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/n2z.js",
+        "line": 490,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/n2z.js",
+        "line": 490,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/n2z.js",
+        "line": 536,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 6,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/n2z.js",
+        "line": 525,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/n2z.js",
+        "line": 525,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/n2z.js",
+        "line": 3721,
+        "column": 31,
+        "snippet": "fileExists = await IOUtils.exists(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/n2z.js",
+        "line": 3969,
+        "column": 27,
+        "snippet": "fileExists = await IOUtils.exists(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/n2z.js",
+        "line": 3971,
+        "column": 29,
+        "snippet": "const stat = await IOUtils.stat(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/n2z.js",
+        "line": 4061,
+        "column": 23,
+        "snippet": "const data = await IOUtils.read(filePath);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "local-http-server",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/n2z.js",
+        "line": 4500,
+        "column": 6,
+        "snippet": "Zotero.Server.Endpoints[path] = EndpointClass;",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "Zotero.Server.Endpoints"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/Rafael-Silva-Oliveira/NZBridge/releases/latest/download/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/Rafael-Silva-Oliveira/NZBridge/releases/latest/download/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "no-network-found",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "concern": "none"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NONE"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

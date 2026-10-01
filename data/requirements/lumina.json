@@ -1,0 +1,41 @@
+{
+ "schemaVersion": 1,
+ "slug": "lumina",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Cloud providers (Claude, OpenAI, Gemini, DeepSeek, GLM, Qwen, Mistral, Grok, OpenRouter) need their own key; the default provider is Claude",
+  "worksWithout": "Local Ollama or vLLM servers need no key",
+  "services": [
+   "Anthropic",
+   "OpenAI",
+   "Google Gemini",
+   "DeepSeek",
+   "Zhipu",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Setup",
+   "quote": "For local models (Ollama / vLLM), make sure the server is running at the configured URL (defaults: Ollama `http://localhost:11434`, vLLM `http://localhost:8000/v1`).",
+   "supports": "localModel"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.lumina.ollamaBaseUrl\", \"http://localhost:11434\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README Setup",
+   "quote": "Click **Settings** to enter your API key for the LLM provider you want to use.",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The README line \"For local models (Ollama / vLLM), make sure the server is running at the configured URL (defaults: Ollama `http://localhost:11434`...\" and the pref ollamaBaseUrl are both in the pack. Cloud providers need keys (all key prefs are empty, default provider is claude), while the Ollama provider is built in and has no key pref."
+}

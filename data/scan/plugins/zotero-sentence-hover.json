@@ -1,0 +1,212 @@
+{
+ "repo": "Nova-Meteor/zotero-sentence-hover",
+ "slug": "zotero-sentence-hover",
+ "group": "sample-2026",
+ "rank": 1263,
+ "name": "句译随行 Sentence Hover",
+ "stars": 2,
+ "downloads": 1,
+ "createdAt": "2026-09-23T10:27:48Z",
+ "tag": "v1.0.1",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "sentence-hover-1.0.1.xpi",
+    "url": "https://github.com/Nova-Meteor/zotero-sentence-hover/releases/download/v1.0.1/sentence-hover-1.0.1.xpi",
+    "size": 20662,
+    "uploadedAt": "2026-09-24T03:09:49Z",
+    "sha256": "91d37e0b37d012d53f6c862667581ff2b8f4f283440248ef1c684befc7154071"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "sentence-hover@local",
+    "name": "句译随行 Sentence Hover",
+    "version": "1.0.1",
+    "description": "悬停翻译 PDF 英文整句，并联动高亮中文对应词语。",
+    "homepageUrl": "https://github.com/Nova-Meteor/zotero-sentence-hover",
+    "updateUrl": "https://github.com/Nova-Meteor/zotero-sentence-hover/releases/latest/download/updates.json",
+    "minVersion": "10.0",
+    "maxVersion": "10.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-sentence-hover",
+     "version": "1.0.1",
+     "sha256": "91d37e0b37d012d53f6c862667581ff2b8f4f283440248ef1c684befc7154071"
+    },
+    "coverage": {
+     "filesTotal": 9,
+     "filesAnalyzed": 6,
+     "filesSkipped": [
+      {
+       "path": "LICENSE",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "prefs.css",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "addon.js",
+         "line": 132,
+         "column": 31,
+         "snippet": "const response = await Zotero.HTTP.request('POST', url, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 7,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "addon.js",
+        "line": 14,
+        "column": 26,
+        "snippet": "if (file && await IOUtils.exists(file)) cachePath = PathUtils.join(PathUtils.parent(file), 'sentence-hover-cache.json');",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "addon.js",
+        "line": 14,
+        "column": 60,
+        "snippet": "if (file && await IOUtils.exists(file)) cachePath = PathUtils.join(PathUtils.parent(file), 'sentence-hover-cache.json');",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "addon.js",
+        "line": 14,
+        "column": 75,
+        "snippet": "if (file && await IOUtils.exists(file)) cachePath = PathUtils.join(PathUtils.parent(file), 'sentence-hover-cache.json');",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "addon.js",
+        "line": 23,
+        "column": 22,
+        "snippet": "if (!(await IOUtils.exists(cachePath))) return null;",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "addon.js",
+        "line": 24,
+        "column": 21,
+        "snippet": "if ((await IOUtils.stat(cachePath)).size > 8000000) throw new Error('Cache too large');",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "addon.js",
+        "line": 25,
+        "column": 17,
+        "snippet": "return IOUtils.readJSON(cachePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "addon.js",
+        "line": 27,
+        "column": 23,
+        "snippet": "write: data => IOUtils.writeJSON(cachePath, data, { tmpPath: cachePath + '.tmp' })",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 8,
+        "column": 75,
+        "snippet": "\"applications\": {\"zotero\": {\"id\": \"sentence-hover@local\", \"update_url\": \"https://github.com/Nova-Meteor/zotero-sentence-hover/releases/latest/download/updates.json\", \"strict_min_version\": \"10.0\", \"s",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/Nova-Meteor/zotero-sentence-hover/releases/latest/download/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "unknown-endpoints",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

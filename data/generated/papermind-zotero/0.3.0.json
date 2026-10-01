@@ -1,0 +1,435 @@
+{
+ "schemaVersion": 1,
+ "slug": "papermind-zotero",
+ "repo": "lvyrana/papermind-zotero",
+ "version": "0.3.0",
+ "tag": "v0.3.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-08-01T09:56:00Z",
+ "prerelease": false,
+ "asset": {
+  "name": "papermind-connector.xpi",
+  "url": "https://github.com/lvyrana/papermind-zotero/releases/download/v0.3.0/papermind-connector.xpi",
+  "size": 17007,
+  "sha256": "dd79dd8ccac2b3fcb6bbf904530070bf5dca9d1d0eaa690b70fe56fcffd58d9f",
+  "githubAssetId": 497786991,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-08-01T09:56:00Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "papermind-connector@papermind.local",
+  "name": "PaperMind Connector",
+  "version": "0.3.0",
+  "description": "把 Zotero 论文与 PDF 一键送入 PaperMind，继续结构化精读、卡片沉淀、自测与汇报",
+  "homepageUrl": "https://papermindapp.com",
+  "updateUrl": "https://papermindapp.com/api/zotero-plugin/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 11177,
+   "sha256": "5f340b1319f755efb0a0463f40c0d812f0f501c7433bf62c588503c12ab5ddc0"
+  },
+  {
+   "path": "icon.svg",
+   "size": 624,
+   "sha256": "d8c0f00b42e6d091f06cafca2264ad95ff99d01d3140cabd20bf8c89007466b4"
+  },
+  {
+   "path": "LICENSE",
+   "size": 34523,
+   "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+  },
+  {
+   "path": "manifest.json",
+   "size": 584,
+   "sha256": "d6e56096c691986ae21c8e75aa9dbb7c52f88b6ae8cfbf509ff4f2776716ba3f"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "papermind-zotero",
+   "version": "0.3.0",
+   "sha256": "dd79dd8ccac2b3fcb6bbf904530070bf5dca9d1d0eaa690b70fe56fcffd58d9f"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 11177,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 6,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 170,
+       "column": 25,
+       "snippet": "const resp = await win.fetch(parsed.base + '/api/settings', {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 230,
+       "column": 29,
+       "snippet": "const saveResp = await win.fetch(base + '/api/library/save', {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 249,
+       "column": 33,
+       "snippet": "const upResp = await win.fetch(`${base}/api/library/${saved.id}/pdf`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 204,
+       "column": 43,
+       "snippet": "link: item.getField('url') || (doi ? 'https://doi.org/' + doi : ''),",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "papermindapp.com",
+     "category": "developer-server",
+     "provider": "PaperMind (papermind-zotero)",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 28,
+       "column": 16,
+       "snippet": "DEFAULT_BASE: 'https://papermindapp.com',",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/api/library/<expr>/pdf",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 249,
+       "column": 33,
+       "snippet": "const upResp = await win.fetch(`${base}/api/library/${saved.id}/pdf`, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr>/api/library/save",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 230,
+       "column": 29,
+       "snippet": "const saveResp = await win.fetch(base + '/api/library/save', {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr>/api/settings",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 170,
+       "column": 25,
+       "snippet": "const resp = await win.fetch(parsed.base + '/api/settings', {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.papermind.baseURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 36,
+       "column": 14,
+       "snippet": "try { v = Zotero.Prefs.get(this.PREF_BASE, true) } catch (e) { /* unset */ }",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 72,
+      "column": 4,
+      "snippet": "Zotero.Prefs.set(this.LEGACY_PREF_PASSWORD, '', true)",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 166,
+      "column": 4,
+      "snippet": "Zotero.Prefs.set(this.LEGACY_PREF_PASSWORD, '', true)",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.papermind.password"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://papermindapp.com/api/zotero-plugin/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://papermindapp.com/api/zotero-plugin/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "papermind-zotero",
+   "version": "0.3.0",
+   "sha256": "dd79dd8ccac2b3fcb6bbf904530070bf5dca9d1d0eaa690b70fe56fcffd58d9f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "16252a8dee22c309b9510e494a23806e3619473c3f4c3a13bce92581e57eafc3"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "other-host",
+     "label": "Updates come from papermindapp.com",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "developer-servers",
+    "hosts": [
+     {
+      "category": "developer-server",
+      "hosts": [
+       "papermindapp.com"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts a developer's server: papermindapp.com",
+    "legalRisk": false,
+    "drivers": [
+     "DS-DEVELOPER"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-01T09:56:00Z",
+    "lastCommitAt": "2026-08-01T09:58:32Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Contacts a developer's server: papermindapp.com"
+   ]
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T10:53:06Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 2,
+    "dialogs": 4
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

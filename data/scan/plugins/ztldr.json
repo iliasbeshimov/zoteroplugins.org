@@ -1,0 +1,328 @@
+{
+ "repo": "aguvener/zTLDR",
+ "slug": "ztldr",
+ "group": "sample-2026",
+ "rank": 659,
+ "name": "zTLDR",
+ "stars": 2,
+ "downloads": 21,
+ "createdAt": "2026-01-02T20:46:11Z",
+ "tag": "v1.0.0",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "z-tldr.xpi",
+    "url": "https://github.com/aguvener/zTLDR/releases/download/v1.0.0/z-tldr.xpi",
+    "size": 42705,
+    "uploadedAt": "2026-01-03T02:53:05Z",
+    "sha256": "58a03391cdeaf8bccb0d9acc27292d90287619101f2aa4b204f57a4aead22614"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "ztldr@aguvener",
+    "name": "zTLDR",
+    "version": "1.0.0",
+    "description": "Fetch and display TL;DR summaries from Semantic Scholar in Zotero",
+    "homepageUrl": "https://github.com/aguvener/zTLDR#readme",
+    "updateUrl": "https://github.com/aguvener/zTLDR/releases/download/release/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "8.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "ztldr",
+     "version": "1.0.0",
+     "sha256": "58a03391cdeaf8bccb0d9acc27292d90287619101f2aa4b204f57a4aead22614"
+    },
+    "coverage": {
+     "filesTotal": 13,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": "content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/zoteroPane.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/ztldr-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/ztldr-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/ztldr-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/ztldr-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/ztldr-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/ztldr-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/ztldr.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/ztldr.js",
+         "line": 3728,
+         "column": 29,
+         "snippet": "const response = await fetch(url, { signal: controller.signal });",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/ztldr.js",
+         "line": 3770,
+         "column": 29,
+         "snippet": "const response = await fetch(url, { signal: controller.signal });",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.semanticscholar.org",
+       "category": "scholarly-api",
+       "provider": "Semantic Scholar",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/ztldr.js",
+         "line": 3657,
+         "column": 30,
+         "snippet": "var SEMANTIC_SCHOLAR_BASE = \"https://api.semanticscholar.org/graph/v1\";",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "www.semanticscholar.org",
+       "category": "scholarly-api",
+       "provider": "Semantic Scholar",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/ztldr.js",
+         "line": 3659,
+         "column": 35,
+         "snippet": "var SEMANTIC_SCHOLAR_PAPER_URL = \"https://www.semanticscholar.org/paper/\";",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/ztldr.js",
+         "line": 4385,
+         "column": 14,
+         "snippet": "icon: `chrome://${addon.data.config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon@0.5x.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/ztldr.js",
+         "line": 4228,
+         "column": 21,
+         "snippet": "const menuIcon = `chrome://${addon.data.config.addonRef}/content/icons/favicon@0.5x.png`;",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 4,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/ztldr.js",
+        "line": 490,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/ztldr.js",
+        "line": 490,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/ztldr.js",
+        "line": 536,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/ztldr.js",
+        "line": 4068,
+        "column": 4,
+        "snippet": "Zotero.Utilities.Internal.copyTextToClipboard(tldr);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 2,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/ztldr.js",
+        "line": 525,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/ztldr.js",
+        "line": 525,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/aguvener/zTLDR/releases/download/release/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/aguvener/zTLDR/releases/download/release/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "scholarly-api": [
+      "api.semanticscholar.org",
+      "www.semanticscholar.org"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

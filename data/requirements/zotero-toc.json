@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-toc",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Only the optional Mistral (or OpenAI-compatible) model provider needs an API key",
+  "worksWithout": "Typographic detection of the table of contents, and Ollama/local model (no key)",
+  "services": [
+   "Mistral"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.ztoc.provider\", \"off\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "description",
+   "where": "Manifest description",
+   "quote": "Détection typographique, avec appui facultatif d'un modèle local ou distant.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.ztoc.ollamaEndpoint\", \"http://localhost:11434/v1/chat/completions\");",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The default provider is \"off\", so the typographic detection works without a key, and the README table lists Ollama as needing no key. The Mistral or OpenAI-compatible provider needs one. The default ollamaEndpoint is http://localhost:11434/v1/chat/completions."
+}

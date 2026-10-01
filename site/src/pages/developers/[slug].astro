@@ -1,0 +1,295 @@
+---
+import GradeTag from "../../components/GradeTag.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import StatusIcon from "../../components/StatusIcon.astro";
+import Base from "../../layouts/Base.astro";
+import { allPlugins, type Plugin } from "../../lib/atlas.ts";
+import { RESPOND_URL, SITE } from "../../lib/links.ts";
+
+/**
+ * Where the grade works as an incentive: the checklist for the next rung, each item pointing to the
+ * line it came from, and the README badge. Public, from the same data as the plugin page; signing
+ * in and the private preview of new releases need a server and come later.
+ */
+export function getStaticPaths() {
+  return allPlugins().map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props as { p: Plugin };
+const target = p.grade === "C" ? "B" : p.grade === "B" ? "A" : p.grade === "A" ? "A+" : null;
+const badgeMd = `[![Plugins Atlas grade](${SITE}/badge/${p.slug}.svg)](${SITE}/p/${p.slug})`;
+const kind = (l: string) => (l === "high" ? "serious" : l === "medium" ? "review" : "nodata");
+---
+
+<Base title={`${p.name}: developer checklist · Zotero Plugins Atlas`} description={`What ${p.name} needs to reach the next Atlas grade, with the file and line for each finding.`}>
+  <SiteHeader active="dev" />
+  <div class="wrap">
+    <div class="h">
+      <span class="mono-sm"><a href="/developers">For developers</a> / {p.author}</span>
+      <h1>{p.name}</h1>
+      <span class="mono-sm">github.com/{p.repo}</span>
+    </div>
+    <div class="cols">
+      <div class="panel">
+        <div class="ph">
+          <div class="pg">
+            <span class="eyebrow">Public grade{p.version ? ` · v${p.version}` : ""}</span>
+            <span class="gw"><GradeTag grade={p.grade} size="lg" /><span>{p.gradeLong}</span></span>
+          </div>
+          <GradeTag grade={p.grade} variant="ladder" size="sm" />
+        </div>
+        <div class="pb">
+          {
+            target && target !== "A+" && (
+              <>
+                <strong class="st">To reach {target}</strong>
+                {p.toFix.map((x) => (
+                  <div class="todo">
+                    <StatusIcon kind={kind(x.level)} size={20} />
+                    <span class="tb">
+                      <strong>{x.t}</strong>
+                      {x.evidence && (
+                        <>
+                          <span class="mono-sm">{x.evidence.loc}</span>
+                          <code>{x.evidence.code}</code>
+                        </>
+                      )}
+                    </span>
+                    <a href={RESPOND_URL} class="btn small">
+                      Reply
+                    </a>
+                  </div>
+                ))}
+              </>
+            )
+          }
+          {
+            p.passing.map((x) => (
+              <div class="ok">
+                <span class="tick">✓</span>
+                <span>{x}</span>
+              </div>
+            ))
+          }
+          {
+            p.grade !== "A+" && p.grade !== "–" && (
+              <>
+                <strong class="st then">{target === "A+" ? "To reach A+" : "Then A+"}</strong>
+                <div class="todo">
+                  <span class="dash" />
+                  <span class="tb">
+                    <strong>Pass the live test in Zotero {p.currentMajor}</strong>
+                    <span class="muted">
+                      {p.liveTest?.verdict === "unexpected"
+                        ? `In our test on ${p.liveTest.date} it did something its card didn't describe. See the plugin page for what.`
+                        : p.liveTest?.verdict === "not-loaded"
+                          ? `It didn't load when we installed it in Zotero ${p.liveTest.zotero}.`
+                          : "We install it in a fresh Zotero and record what it does. Every plugin at A is tested."}
+                    </span>
+                  </span>
+                </div>
+              </>
+            )
+          }
+          {p.grade === "A+" && <p class="muted">Top of the ladder. The A+ lapses if a later release fails a check or the live test.</p>}
+          {p.grade === "–" && <p class="muted">We'll grade it once we can check it. {p.notices.find((n) => n.kind === "analysis")?.sub ?? ""}</p>}
+        </div>
+      </div>
+      <div class="side">
+        <div class="box" id="badge">
+          <strong>README badge</strong>
+          <img src={`/badge/${p.slug}.svg`} alt={`Plugins Atlas grade ${p.grade}`} height="20" />
+          <code>{badgeMd}</code>
+          <span class="muted small">Updates itself when the grade changes.</span>
+        </div>
+        <div class="box">
+          <strong>Disagree with a finding?</strong>
+          <span class="muted small">Respond on GitHub from an account that maintains the repository. Your response is published next to the card, with our reply.</span>
+          <a href={RESPOND_URL} class="btn">Respond to the card</a>
+        </div>
+        <a href={`/p/${p.slug}`} class="back">See the public plugin page</a>
+      </div>
+    </div>
+  </div>
+  <SiteFooter />
+</Base>
+
+<style>
+  .wrap {
+    max-width: 1184px;
+    margin: 0 auto;
+    padding: 40px var(--gutter) 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .h {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 40px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 760;
+    overflow-wrap: anywhere;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 24px;
+    align-items: start;
+  }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow-2);
+    overflow: hidden;
+  }
+  .ph {
+    padding: 22px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .pg {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .gw {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 26px;
+    font-weight: 720;
+    letter-spacing: -0.02em;
+  }
+  .pb {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .st {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .st.then {
+    margin-top: 18px;
+  }
+  .todo {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    gap: 4px 12px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .tb {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .tb strong {
+    font-size: 16px;
+  }
+  code {
+    font: 500 12.5px/1.5 var(--font-mono);
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+  .small {
+    font-size: 14px;
+  }
+  .btn.small {
+    min-height: 36px;
+    padding: 0 12px;
+    border-radius: 10px;
+  }
+  .ok {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    align-items: center;
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+  .tick {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--few-fg);
+    color: var(--surface);
+    display: grid;
+    place-items: center;
+    font: 800 12px/1 var(--font-sans);
+  }
+  .dash {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px dashed var(--line-strong);
+  }
+  .muted {
+    color: var(--ink-2);
+  }
+  p {
+    margin: 0;
+  }
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .box {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .box strong {
+    font-size: 17px;
+  }
+  .box code {
+    font-size: 12px;
+    padding: 10px;
+    align-self: stretch;
+  }
+  .back {
+    font-weight: 600;
+    font-size: 14.5px;
+  }
+  @media (max-width: 860px) {
+    .cols {
+      grid-template-columns: 1fr;
+    }
+    h1 {
+      font-size: 32px;
+    }
+    .todo {
+      grid-template-columns: 28px minmax(0, 1fr);
+    }
+    .todo .btn {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+</style>

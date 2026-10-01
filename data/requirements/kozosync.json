@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "kozosync",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "WebDAV server sign-in (username and app password) needed to read the highlight files",
+  "worksWithout": "",
+  "services": [
+   "WebDAV server (Koofr, Nextcloud)"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Set up table",
+   "quote": "| Password | a WebDAV **app password** |",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.kozosync.serverURL\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "description",
+   "where": "manifest description",
+   "quote": "Sync KOReader highlights from a WebDAV server (Koofr, Nextcloud, ...) into Zotero as native annotations.",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README table line '| Password | a WebDAV **app password** |' is in the pack and the server URL default is empty, so a WebDAV sign-in is needed before it can read anything. The plugin only reads highlight files and has no AI features."
+}

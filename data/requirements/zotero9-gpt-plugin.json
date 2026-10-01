@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero9-gpt-plugin",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "OpenAI access token needed for translation",
+  "worksWithout": "",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README 配置",
+   "quote": "OpenAI access token",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:754",
+   "quote": "const response = await request(\"https://api.openai.com/v1/chat/completions\", {",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says to fill in 'OpenAI access token' and there is no default, and the only service is the hardcoded 'https://api.openai.com/v1/chat/completions'. The code shows no configurable endpoint, so a local model is not supported."
+}

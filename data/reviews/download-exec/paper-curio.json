@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "slug": "paper-curio",
+  "version": "0.11.0",
+  "sha256": "a0ee0934c2377f592f5e2da87ded14b5ed616a6c72a1207aeebaf5195eb02cf7",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "low",
+  "rule": "CAP-DOWNLOAD-EXEC-TOLD",
+  "summary": "The first time you process a collection on a Mac without Python 3.12, it downloads a standalone Python from Astral's python-build-standalone releases and runs it, as its README says. The download isn't checked against a fingerprint.",
+  "facts": {
+    "what": "A standalone Python 3.12 build (python-build-standalone, macOS only, install_only tar.gz for the Mac's chip) fetched from the latest astral-sh/python-build-standalone GitHub release, unpacked into the Zotero profile, then executed. It is only fetched if no Python 3.12 is already found. The plugin then also runs pip install -r requirements.txt (from the user's own paper-curation clone) into a venv built from that Python.",
+    "urls": [
+      "https://api.github.com/repos/astral-sh/python-build-standalone/releases/latest"
+    ],
+    "source": "official",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "automatic-on-feature-use",
+    "toldInReadme": "yes",
+    "readmeQuote": "관리형 venv 생성·relocatable Python 다운로드는 컬렉션 전체 처리에서만 실행합니다.",
+    "triggerQuote": {
+      "file": "locale/en-US/papercurio-addon.ftl",
+      "text": "papercurio-toast-runfull-env = Preparing py312 env: { $topic } … (first run may install for a few minutes)"
+    },
+    "integrityQuote": {
+      "file": "chrome/content/scripts/papercurio.js",
+      "text": "urllib.request.urlretrieve(url, tgz)"
+    },
+    "notes": "Scanner hit is the embedded BRIDGE_PY Python string (papercurio.js line 7256); the download is in its _download_standalone function (about line 7360), reached via _ensure_py312 / ensure_env. Real trigger: right-click a collection, then 'Process this collection (review · classify · timelines)' (onRunFullCommand at about line 39743 calls runFullViaBridge then ensurePy312). Before that it asks only for a topic alias if the collection is new; no confirmation dialog names the download, and the toast text says only 'Preparing py312 env ... may install for a few minutes' (no explicit mention of downloading Python). Download happens only when no Python 3.12 is found among Homebrew/miniconda/miniforge paths, PC_PYTHON_PATH pref, or python3.12 on PATH; code refuses non-macOS ('auto-download supports macOS only'). The release asset is chosen by name match from the GitHub API listing; no hash or signature compared; extracted with tarfile.extractall. The extracted python is run immediately (version probe), then used for venv and pip install -r requirements.txt of the user's paper-curation checkout, which pulls PyPI packages (also unchecked by the plugin, no hashes seen). README declares the download in Korean (in the 'Optional dependency: paper-curation' section) and says the minimal review does not run it. Source is the Python tool's official builder (Astral's python-build-standalone), not the plugin developer. Plugin's own xpi asset sha256 verified True per pack, unrelated to this download. Nothing was downloaded or run in this review."
+  }
+}

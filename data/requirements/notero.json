@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "notero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Connecting to the user's own Notion workspace (Notion sign-in/authorization, or a connection token)",
+  "worksWithout": "",
+  "services": [
+   "Notion"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Connect to Notion",
+   "quote": "Start the Notion connection process by clicking the **Connect to Notion**\n   button in the Notero preferences.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref('extensions.notero.notionDatabaseID', '');",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "Notero is a [Zotero plugin](https://www.zotero.org/support/plugins) for syncing\nitems and notes into [Notion]",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README \"Connect to Notion\" section says to start the Notion connection, and the default notionDatabaseID is empty. The code stores logins via Services.logins and calls api.notion.com, so a Notion connection is needed before anything syncs. There are no AI features."
+}

@@ -1,0 +1,249 @@
+{
+  "$id": "https://github.com/iliasacademia/zoteroatlas/schema/json/sandbox-record.schema.json",
+  "title": "sandbox-record",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "sandboxVersion": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 100,
+      "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "The exact release file tested"
+    },
+    "addonId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "zotero": {
+      "type": "string",
+      "description": "The Zotero version it ran in, e.g. '10.0.3'"
+    },
+    "testedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+    },
+    "seconds": {
+      "anyOf": [
+        {
+          "type": "number",
+          "minimum": 0
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "as-described",
+        "unexpected",
+        "not-loaded",
+        "incomplete"
+      ],
+      "description": "as-described: it loaded, and everything it did beyond what Zotero does by itself is something its card says; unexpected: something it did isn't (the reasons are listed); not-loaded: it didn't start; incomplete: the test didn't finish"
+    },
+    "loaded": {
+      "type": "boolean"
+    },
+    "cutShort": {
+      "type": "boolean",
+      "description": "The run hit its time limit"
+    },
+    "exercised": {
+      "type": "object",
+      "properties": {
+        "itemsSelected": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "readerOpened": {
+          "type": "boolean",
+          "description": "A PDF was opened in Zotero's reader"
+        },
+        "settingsPane": {
+          "type": "boolean",
+          "description": "Zotero's settings opened at the plugin's own pane"
+        },
+        "menuItems": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991,
+          "description": "Menu items the plugin added that the test clicked"
+        },
+        "dialogs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991,
+          "description": "Dialogs and prompts the test answered"
+        }
+      },
+      "required": [
+        "itemsSelected",
+        "readerOpened",
+        "settingsPane",
+        "menuItems",
+        "dialogs"
+      ],
+      "description": "How much of the plugin the test reached"
+    },
+    "contacted": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Hosts it reached through the proxy, beyond those Zotero reaches by itself"
+    },
+    "hostUsage": {
+      "description": "Per contacted host, what its requests carried (sandboxVersion 1.1.0); absent from older records, which can't tell a page load from a request that sends data",
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "usage": {
+            "type": "string",
+            "enum": [
+              "sends-library-data",
+              "sends-data",
+              "fetches"
+            ],
+            "description": "sends-library-data: a request carried the test library's own text; sends-data: a request body or query string without it; fetches: only plain page loads (GET or HEAD, no query string or body)"
+          },
+          "sent": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "titles",
+                "identifiers",
+                "authors",
+                "abstract",
+                "notes",
+                "pdf-text",
+                "pdf-file",
+                "tags",
+                "collections"
+              ],
+              "description": "A kind of the test library's own text found in a request: its items' titles, identifiers (DOI, ISBN), authors, abstract, note, the PDF's text, the PDF file itself, tags or collection name"
+            },
+            "description": "The kinds of library text found; empty unless sends-library-data"
+          }
+        },
+        "required": [
+          "usage",
+          "sent"
+        ],
+        "description": "What the plugin's requests to one host carried"
+      }
+    },
+    "requests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string"
+          },
+          "host": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "method",
+          "host",
+          "path"
+        ]
+      }
+    },
+    "refused": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Addresses on this computer or a private network it tried to reach, which the proxy refused"
+    },
+    "programs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Programs started while it ran"
+    },
+    "servers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Sockets it opened for listening"
+    },
+    "settings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Settings it changed that aren't its own"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Files it wrote or removed outside Zotero's folders"
+    },
+    "databaseStructureChanged": {
+      "type": "boolean"
+    },
+    "unexpected": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "What it did that its card didn't say, in plain English; empty when as-described"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "sandboxVersion",
+    "slug",
+    "sha256",
+    "addonId",
+    "zotero",
+    "testedAt",
+    "seconds",
+    "verdict",
+    "loaded",
+    "cutShort",
+    "exercised",
+    "contacted",
+    "requests",
+    "refused",
+    "programs",
+    "servers",
+    "settings",
+    "files",
+    "databaseStructureChanged",
+    "unexpected"
+  ]
+}

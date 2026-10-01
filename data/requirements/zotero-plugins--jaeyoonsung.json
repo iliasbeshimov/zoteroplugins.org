@@ -1,0 +1,33 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-plugins--jaeyoonsung",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "OpenAlex key (higher allowance), AI endpoint key (translation, summaries, paper comparison in Style Custom), easyScholar key and USPTO key (extra journal grades, patents)",
+  "worksWithout": "ZotPoP search/import and Style Custom panel, columns and metrics work without any key",
+  "services": [
+   "OpenAlex",
+   "easyScholar",
+   "USPTO",
+   "An OpenAI-compatible AI endpoint"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 'Worth entering at the start (all optional)'",
+   "quote": "Everything works without these.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "src/settings-schema.js:1098",
+   "quote": "로컬 Ollama는 http://localhost:11434/v1/chat/completions",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: 'Everything works without these.' (OpenAlex, easyScholar and USPTO keys, AI endpoint). Code src/settings-schema.js:1098 names a local Ollama endpoint for the OpenAI-compatible AI URL: '로컬 Ollama는 http://localhost:11434/v1/chat/completions'."
+}

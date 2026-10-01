@@ -1,0 +1,32 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-hover-translate-eudic",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Syncing words to Eudic, Maimemo or Shanbay (each needs its own token)",
+  "worksWithout": "Hover translation via dictionary engine, plus local wordbook and Zotero-note saving",
+  "services": [
+   "Eudic",
+   "Maimemo",
+   "Shanbay"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.hovertranslateeudic.translateEngine\", \"dict\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Eudic sync section",
+   "quote": "插件通过欧路 OpenAPI 同步生词本，需要一个 **NIS Token**：",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Default prefs have translateEngine \"dict\" and tokens default to \"\"; README says the Eudic sync needs a NIS Token while the local wordbook and Zotero-note saving need no token. The xpi has no Ollama or localhost AI references, but it reuses Translate for Zotero engines, so unknown is right."
+}

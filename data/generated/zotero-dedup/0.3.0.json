@@ -1,0 +1,384 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-dedup",
+ "repo": "37-yami/zotero-dedup",
+ "version": "0.3.0",
+ "tag": "v0.2.0",
+ "releaseAuthor": "37-yami",
+ "publishedAt": "2026-08-03T08:11:40Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-dedup.xpi",
+  "url": "https://github.com/37-yami/zotero-dedup/releases/download/v0.2.0/zotero-dedup.xpi",
+  "size": 17833,
+  "sha256": "b6fe25f2b8d3513908ab8c05305067590d359a22b628638e4cbf6b9019af60a7",
+  "githubAssetId": 499798571,
+  "uploader": "37-yami",
+  "uploadedAt": "2026-08-03T08:11:41Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-dedup@example.com",
+  "name": "Zotero Dedup",
+  "version": "0.3.0",
+  "description": "在当前收藏夹或选中条目所在分类中扫描重复文章，并移入回收站。",
+  "homepageUrl": "https://github.com/37-yami/zotero-dedup",
+  "updateUrl": "https://github.com/37-yami/zotero-dedup/raw/main/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 25275,
+   "sha256": "39b267664341c51e50e5f72a261e0f4fb3a8a9511aa2acf00b4f45cf89e5268f"
+  },
+  {
+   "path": "chrome.manifest",
+   "size": 23,
+   "sha256": "3c0f190dc1b9a7fefb4bb2fd0431732b53d317d0a2f95366594a3815ffc509ce"
+  },
+  {
+   "path": "content/dedupDialog.xhtml",
+   "size": 20119,
+   "sha256": "5307af51700f5021bc9dd60d3feaa7e54240484f999ed14a47beaca595a60f0f"
+  },
+  {
+   "path": "content/options.xhtml",
+   "size": 5202,
+   "sha256": "f52ddcb9548507551b9e4ab0f2ef74952da132c9294b4665f7e776cfd7cf8c58"
+  },
+  {
+   "path": "content/progress.xhtml",
+   "size": 2317,
+   "sha256": "364fe52ddd6b19d6f19c19ccd5c1b778c8dda21d7b4d1f6fe5580617fef4ac83"
+  },
+  {
+   "path": "manifest.json",
+   "size": 488,
+   "sha256": "2c9ee96560cc1818fed47bdbce6410cc3aabf30a31c6b4d0ee0a80e0d88b2c85"
+  },
+  {
+   "path": "prefs.js",
+   "size": 162,
+   "sha256": "820b35f8295f993d831c16abc17bca97bed863e13f3249233fd51a60ea812f1d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-dedup",
+   "version": "0.3.0",
+   "sha256": "b6fe25f2b8d3513908ab8c05305067590d359a22b628638e4cbf6b9019af60a7"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 53075,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 46,
+       "column": 17,
+       "snippet": "helpURL: 'https://github.com/37-yami/zotero-dedup#readme'",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 14,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 325,
+      "column": 30,
+      "snippet": "if (Zotero.File && typeof Zotero.File.md5 === 'function') {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 326,
+      "column": 20,
+      "snippet": "return (await Zotero.File.md5(filePath)).toLowerCase();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 328,
+      "column": 30,
+      "snippet": "if (Zotero.File && typeof Zotero.File.hash === 'function') {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 329,
+      "column": 20,
+      "snippet": "return (await Zotero.File.hash(filePath, 'md5')).toLowerCase();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 332,
+      "column": 42,
+      "snippet": "if (typeof IOUtils !== 'undefined' && IOUtils.read &&",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 335,
+      "column": 27,
+      "snippet": "const data = await IOUtils.read(filePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 344,
+      "column": 42,
+      "snippet": "if (typeof IOUtils !== 'undefined' && IOUtils.read) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 345,
+      "column": 25,
+      "snippet": "const data = await IOUtils.read(filePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 349,
+      "column": 48,
+      "snippet": "if (typeof OS !== 'undefined' && OS.File && OS.File.read) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 350,
+      "column": 25,
+      "snippet": "const data = await OS.File.read(filePath);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "OS.File",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/37-yami/zotero-dedup/raw/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/37-yami/zotero-dedup/raw/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the 37-yami account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-dedup",
+   "version": "0.3.0",
+   "sha256": "b6fe25f2b8d3513908ab8c05305067590d359a22b628638e4cbf6b9019af60a7"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "f49a505530a5b24303f8a3ee41f74d38c595546ae86f089e7d349c59ad9a3d76"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-03T08:11:40Z",
+    "lastCommitAt": "2026-08-03T08:02:48Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:29:17Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 1,
+    "dialogs": 1
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

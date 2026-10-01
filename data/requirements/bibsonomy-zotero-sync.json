@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "bibsonomy-zotero-sync",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "BibSonomy username and API token needed for every sync request",
+  "worksWithout": "",
+  "services": [
+   "BibSonomy"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.bibsonomy.apiToken\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/bibsonomy.js",
+   "quote": "let t=y(\"username\"),o=y(\"apiToken\"),r=y(\"defaultGroup\");if(!t||!o||!r||typeof t!=\"string\"||typeof o!=\"string\"||typeof r!=\"string\")throw ztoolkit.getGlobal(\"alert\")(\"Error: Please fill",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The code check is real, though it is in the release file and not in the pack: 'Error: Please fill in your BibSonomy credentials in the preferences.' The plugin has no AI features."
+}

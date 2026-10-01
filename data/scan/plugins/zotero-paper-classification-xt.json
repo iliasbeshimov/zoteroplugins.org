@@ -1,0 +1,310 @@
+{
+ "repo": "peekabooXT/Zotero_Paper_Classification_XT",
+ "slug": "zotero-paper-classification-xt",
+ "group": "sample-2026",
+ "rank": 348,
+ "name": "XT Zotero Auto Classifier",
+ "stars": 12,
+ "downloads": 264,
+ "createdAt": "2026-07-29T15:35:26Z",
+ "tag": "v1.3.22",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "xt-zotero-auto-classifier-1.3.22.xpi",
+    "url": "https://github.com/peekabooXT/Zotero_Paper_Classification_XT/releases/download/v1.3.22/xt-zotero-auto-classifier-1.3.22.xpi",
+    "size": 20563,
+    "uploadedAt": "2026-08-22T13:25:27Z",
+    "sha256": "1c3ca601dd5f4296a92c71cdd6fc838bd57bd5ec78020604fe69b3d3c61bb42c"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "xt-zotero-auto-classifier@xutao",
+    "name": "XT Zotero Auto Classifier",
+    "version": "1.3.22",
+    "description": "Classify papers with an OpenAI-compatible model and create Zotero tags and collections.",
+    "homepageUrl": "https://github.com/peekabooXT/Zotero_Paper_Classification_XT",
+    "updateUrl": "https://raw.githubusercontent.com/peekabooXT/Zotero_Paper_Classification_XT/main/update.json",
+    "minVersion": "8.0",
+    "maxVersion": "10.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-paper-classification-xt",
+     "version": "1.3.22",
+     "sha256": "1c3ca601dd5f4296a92c71cdd6fc838bd57bd5ec78020604fe69b3d3c61bb42c"
+    },
+    "coverage": {
+     "filesTotal": 8,
+     "filesAnalyzed": 3,
+     "filesSkipped": [
+      {
+       "path": "content/icons/icon.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "LICENSE",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/xt-zotero-auto-classifier.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/xt-zotero-auto-classifier.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/xt-auto-classifier.js",
+         "line": 922,
+         "column": 22,
+         "snippet": "const xhr = await Zotero.HTTP.request(\"POST\", settings.endpoint, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.deepseek.com",
+       "category": "llm-provider",
+       "provider": "DeepSeek",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/xt-auto-classifier.js",
+         "line": 23,
+         "column": 16,
+         "snippet": "endpoint: \"https://api.deepseek.com/chat/completions\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 2,
+         "column": 0,
+         "snippet": "pref(\"extensions.xt-zotero-auto-classifier.endpoint\", \"https://api.deepseek.com/chat/completions\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 2,
+         "column": 54,
+         "snippet": "pref(\"extensions.xt-zotero-auto-classifier.endpoint\", \"https://api.deepseek.com/chat/completions\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "dashscope.aliyuncs.com",
+       "category": "llm-provider",
+       "provider": "Alibaba Qwen (DashScope)",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/xt-auto-classifier.js",
+         "line": 28,
+         "column": 8,
+         "snippet": "\"https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions\",",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.xt-zotero-auto-classifier.endpoint",
+       "defaultValue": "https://api.deepseek.com/chat/completions",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 2,
+         "column": 0,
+         "snippet": "pref(\"extensions.xt-zotero-auto-classifier.endpoint\", \"https://api.deepseek.com/chat/completions\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "login-manager",
+      "occurrences": 9,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/xt-auto-classifier.js",
+        "line": 525,
+        "column": 8,
+        "snippet": "if (Services.logins.searchLoginsAsync) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/xt-auto-classifier.js",
+        "line": 526,
+        "column": 13,
+        "snippet": "return Services.logins.searchLoginsAsync({",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/xt-auto-classifier.js",
+        "line": 531,
+        "column": 11,
+        "snippet": "return Services.logins.findLogins(",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/xt-auto-classifier.js",
+        "line": 548,
+        "column": 10,
+        "snippet": "if (Services.logins.removeLoginAsync) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/xt-auto-classifier.js",
+        "line": 549,
+        "column": 14,
+        "snippet": "await Services.logins.removeLoginAsync(login);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/xt-auto-classifier.js",
+        "line": 551,
+        "column": 8,
+        "snippet": "Services.logins.removeLogin(login);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/xt-auto-classifier.js",
+        "line": 567,
+        "column": 8,
+        "snippet": "if (Services.logins.addLoginAsync) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/xt-auto-classifier.js",
+        "line": 568,
+        "column": 12,
+        "snippet": "await Services.logins.addLoginAsync(login);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/xt-auto-classifier.js",
+        "line": 570,
+        "column": 6,
+        "snippet": "Services.logins.addLogin(login);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "nsILoginManager"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/peekabooXT/Zotero_Paper_Classification_XT/main/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/peekabooXT/Zotero_Paper_Classification_XT/main/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.deepseek.com",
+      "dashscope.aliyuncs.com"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "login-manager",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

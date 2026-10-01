@@ -1,0 +1,355 @@
+{
+ "schemaVersion": 1,
+ "slug": "survey-papers-to-zotero",
+ "repo": "vincent929-cyber/survey-papers-to-zotero",
+ "version": "0.2.0",
+ "tag": "v0.2.0",
+ "releaseAuthor": "vincent929-cyber",
+ "publishedAt": "2026-08-24T07:49:57Z",
+ "prerelease": false,
+ "asset": {
+  "name": "survey-papers-to-zotero-companion-0.2.0.xpi",
+  "url": "https://github.com/vincent929-cyber/survey-papers-to-zotero/releases/download/v0.2.0/survey-papers-to-zotero-companion-0.2.0.xpi",
+  "size": 2432,
+  "sha256": "ab58dfa1d1166e92ec7269594c1d74d34c959bf50522e6a6505a3043a4587f79",
+  "githubAssetId": 527265440,
+  "uploader": "vincent929-cyber",
+  "uploadedAt": "2026-08-24T07:49:56Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "survey-papers-to-zotero-companion@vincent929-cyber.github.io",
+  "name": "Survey Papers to Zotero Companion",
+  "version": "0.2.0",
+  "description": "Adds validated local PDF files to existing Zotero items through a localhost-only endpoint.",
+  "updateUrl": "https://raw.githubusercontent.com/vincent929-cyber/survey-papers-to-zotero/main/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 5736,
+   "sha256": "4d38ce907138ff0ff9e3a197ab06691122feaa19305b670d1e8069c194ade9aa"
+  },
+  {
+   "path": "manifest.json",
+   "size": 554,
+   "sha256": "c2bb62c4a871b15b345c744b6e6815625df452dff6ec5ab55a9d2be8cabaaa67"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "survey-papers-to-zotero",
+   "version": "0.2.0",
+   "sha256": "ab58dfa1d1166e92ec7269594c1d74d34c959bf50522e6a6505a3043a4587f79"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 5736,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 54,
+      "column": 13,
+      "snippet": "if (!(await IOUtils.exists(filePath))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 57,
+      "column": 20,
+      "snippet": "const stat = await IOUtils.stat(filePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 61,
+      "column": 22,
+      "snippet": "const header = await IOUtils.read(filePath, { maxBytes: 5 });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 168,
+      "column": 1,
+      "snippet": "Zotero.Server.Endpoints[`${ENDPOINT_PREFIX}/status`] = StatusEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 169,
+      "column": 1,
+      "snippet": "Zotero.Server.Endpoints[`${ENDPOINT_PREFIX}/attach`] = AttachEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 170,
+      "column": 1,
+      "snippet": "Zotero.Server.Endpoints[`${ENDPOINT_PREFIX}/audit`] = AuditEndpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/survey-papers-to-zotero/attach",
+      "/survey-papers-to-zotero/audit",
+      "/survey-papers-to-zotero/status"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/vincent929-cyber/survey-papers-to-zotero/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/vincent929-cyber/survey-papers-to-zotero/main/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 110,
+      "column": 29,
+      "snippet": "const attachment = await Zotero.Attachments.importFromFile({",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 169,
+      "column": 1,
+      "snippet": "Zotero.Server.Endpoints[`${ENDPOINT_PREFIX}/attach`] = AttachEndpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/survey-papers-to-zotero/attach"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the vincent929-cyber account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "survey-papers-to-zotero",
+   "version": "0.2.0",
+   "sha256": "ab58dfa1d1166e92ec7269594c1d74d34c959bf50522e6a6505a3043a4587f79"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "37f071b7ca8df2b78597cfd6f0c81a9ea91b5819bb66614d26ab247b9fe148d3"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-24T07:49:57Z",
+    "lastCommitAt": "2026-08-24T07:49:24Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T05:58:04Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

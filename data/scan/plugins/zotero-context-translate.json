@@ -1,0 +1,771 @@
+{
+ "repo": "maverickzyc/zotero-context-translate",
+ "slug": "zotero-context-translate",
+ "group": "sample-2026",
+ "rank": 357,
+ "name": "Zotero Context Translate",
+ "stars": 4,
+ "downloads": 236,
+ "createdAt": "2026-07-26T12:32:19Z",
+ "tag": "v0.3.6",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-context-translate.xpi",
+    "url": "https://github.com/maverickzyc/zotero-context-translate/releases/download/v0.3.6/zotero-context-translate.xpi",
+    "size": 1596344,
+    "uploadedAt": "2026-08-02T02:50:47Z",
+    "sha256": "d6f46a641972812ba4c711529c31330b259bde22d4d8acabb6e854e61eaf6756"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero-context-translate@maverickzyc.github.io",
+    "name": "Zotero Context Translate",
+    "version": "0.3.6",
+    "description": "Context-aware translation plugin for Zotero with LLM support",
+    "homepageUrl": "https://github.com/maverickzyc/zotero-context-translate#readme",
+    "updateUrl": "https://github.com/maverickzyc/zotero-context-translate/releases/download/release/update.json",
+    "minVersion": "8.0",
+    "maxVersion": "9.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-context-translate",
+     "version": "0.3.6",
+     "sha256": "d6f46a641972812ba4c711529c31330b259bde22d4d8acabb6e854e61eaf6756"
+    },
+    "coverage": {
+     "filesTotal": 21,
+     "filesAnalyzed": 7,
+     "filesSkipped": [
+      {
+       "path": "content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/icon.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/icons/workbench.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/paper-default-glossary.tsv",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/zoteroPane.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "dict/ecdict-subset.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/context-translate-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/context-translate-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/context-translate-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/context-translate-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/context-translate-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/context-translate-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "fflate",
+       "files": [
+        "content/scripts/context-translate.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "uuid",
+       "files": [
+        "content/scripts/context-translate.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/context-translate.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 3777,
+         "column": 33,
+         "snippet": "const response = await fetch(dictUrl);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 3829,
+         "column": 24,
+         "snippet": "const r = await fetch(url);",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.anthropic.com",
+       "category": "llm-provider",
+       "provider": "Anthropic",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 4329,
+         "column": 15,
+         "snippet": "baseUrl: \"https://api.anthropic.com/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.deepseek.com",
+       "category": "llm-provider",
+       "provider": "DeepSeek",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 4305,
+         "column": 15,
+         "snippet": "baseUrl: \"https://api.deepseek.com\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 6,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 4311,
+         "column": 15,
+         "snippet": "baseUrl: \"https://api.openai.com/v1\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 4364,
+         "column": 70,
+         "snippet": "baseUrl: Zotero.Prefs.get(`${prefix}.llm.baseUrl`, true) || \"https://api.openai.com/v1\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 4376,
+         "column": 35,
+         "snippet": "baseUrl: preset.baseUrl || \"https://api.openai.com/v1\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 4384,
+         "column": 66,
+         "snippet": "baseUrl: Zotero.Prefs.get(`${prefix}.llm.baseUrl`, true) || \"https://api.openai.com/v1\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 1,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.contextTranslate.llm.baseUrl\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 1,
+         "column": 55,
+         "snippet": "pref(\"extensions.zotero.contextTranslate.llm.baseUrl\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "fastly.jsdelivr.net",
+       "category": "cdn",
+       "provider": "jsDelivr",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 3737,
+         "column": 4,
+         "snippet": "\"https://fastly.jsdelivr.net/gh/skywind3000/ECDICT@master/ecdict.csv\"",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "localhost",
+       "port": 11434,
+       "category": "localhost",
+       "provider": "This computer",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 4323,
+         "column": 15,
+         "snippet": "baseUrl: \"http://localhost:11434/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "mineru.net",
+       "category": "llm-provider",
+       "provider": "MinerU",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 6,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 5161,
+         "column": 45,
+         "snippet": "return stringPref(\"paper.mineruBaseURL\", \"https://mineru.net/api/v4\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 6819,
+         "column": 46,
+         "snippet": "const baseURL = (this.config.baseURL || \"https://mineru.net/api/v4\").replace(/\\/+$/, \"\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 8862,
+         "column": 66,
+         "snippet": "Zotero.Prefs.get(`${prefix3}.paper.mineruBaseURL`, true) || \"https://mineru.net/api/v4\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 8932,
+         "column": 64,
+         "snippet": "getField(win, \"context-translate-paper-mineruBaseURL\") || \"https://mineru.net/api/v4\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 17,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.contextTranslate.paper.mineruBaseURL\", \"https://mineru.net/api/v4\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 17,
+         "column": 63,
+         "snippet": "pref(\"extensions.zotero.contextTranslate.paper.mineruBaseURL\", \"https://mineru.net/api/v4\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "openrouter.ai",
+       "category": "llm-provider",
+       "provider": "OpenRouter",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 4317,
+         "column": 15,
+         "snippet": "baseUrl: \"https://openrouter.ai/api/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "raw.githubusercontent.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 3736,
+         "column": 4,
+         "snippet": "\"https://raw.githubusercontent.com/skywind3000/ECDICT/master/ecdict.csv\",",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/context-translate.js",
+         "line": 3459,
+         "column": 6,
+         "snippet": "`chrome://${config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.zotero.contextTranslate.llm.baseUrl",
+       "defaultValue": "https://api.openai.com/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 1,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.contextTranslate.llm.baseUrl\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "extensions.zotero.contextTranslate.paper.mineruBaseURL",
+       "defaultValue": "https://mineru.net/api/v4",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 17,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.contextTranslate.paper.mineruBaseURL\", \"https://mineru.net/api/v4\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 9,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 472,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 472,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 518,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 7930,
+        "column": 40,
+        "snippet": "const helper = Components.classes[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Components.interfaces.nsIClipboardHelper);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 7930,
+        "column": 92,
+        "snippet": "helper = Components.classes[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Components.interfaces.nsIClipboardHelper);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 7933,
+        "column": 11,
+        "snippet": "void navigator.clipboard?.writeText(value);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 9361,
+        "column": 44,
+        "snippet": "const clipHelper = Components.classes[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Components.interfaces.nsIClipboardHelper);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 9361,
+        "column": 96,
+        "snippet": "Helper = Components.classes[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Components.interfaces.nsIClipboardHelper);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 9364,
+        "column": 11,
+        "snippet": "void navigator.clipboard?.writeText(value);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "credential-storage",
+      "occurrences": 4,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 2,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.contextTranslate.llm.apiKey\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 5,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.contextTranslate.llm.maxTokens\", 1024);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 16,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.contextTranslate.paper.mineruToken\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 22,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.contextTranslate.paper.maxOutputTokens\", 8192);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "extensions.zotero.contextTranslate.llm.apiKey",
+        "extensions.zotero.contextTranslate.llm.maxTokens",
+        "extensions.zotero.contextTranslate.paper.maxOutputTokens",
+        "extensions.zotero.contextTranslate.paper.mineruToken"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "dynamic-code",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 3651,
+        "column": 31,
+        "snippet": "const jsonResult = await iframeWin.eval(`",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "iframeWin.eval"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 53,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 507,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 507,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 3751,
+        "column": 28,
+        "snippet": "const bytes = await IOUtils.read(profilePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 3772,
+        "column": 14,
+        "snippet": "raw = Zotero.File.getContentsFromURL(dictUrl);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 3786,
+        "column": 30,
+        "snippet": "const bytes = await IOUtils.read(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 3874,
+        "column": 10,
+        "snippet": "await IOUtils.write(profilePath, new TextEncoder().encode(jsonStr));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 4036,
+        "column": 17,
+        "snippet": "const path = PathUtils.join(profileDir, `glossary-${libraryId}.json`);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 4038,
+        "column": 24,
+        "snippet": "const raw = await Zotero.File.getContentsAsync(path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 4045,
+        "column": 17,
+        "snippet": "const path = PathUtils.join(profileDir, `glossary-${libraryId}.json`);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/context-translate.js",
+        "line": 4046,
+        "column": 10,
+        "snippet": "await Zotero.File.putContentsAsync(path, JSON.stringify(data, null, 2));",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "zotero-data-dir",
+       "apis": [
+        "IOUtils/PathUtils",
+        "Zotero.File",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/maverickzyc/zotero-context-translate/releases/download/release/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/maverickzyc/zotero-context-translate/releases/download/release/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.anthropic.com",
+      "api.deepseek.com",
+      "api.openai.com",
+      "mineru.net",
+      "openrouter.ai"
+     ],
+     "localhost": [
+      "localhost"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "dynamic-code",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

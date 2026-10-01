@@ -1,0 +1,34 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero10-scholar",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "none",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "内置 CCF、JCR 和中科院指标表",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "src/plugin.js:350 (Crossref lookup, no key)",
+   "quote": "const response = await Zotero.HTTP.request(\"GET\", \"https://api.crossref.org/works/\" + encodeURIComponent(doi),",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README intro (journal ranking tables, no AI)",
+   "quote": "内置 CCF、JCR 和中科院指标表",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Its only service is Crossref, called with no key (src/plugin.js:350). The rankings are built in, and the pack shows no key storage and no AI."
+}

@@ -1,0 +1,33 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-guided-reader",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "MinerU token (PDF parsing) and an LLM provider key (or a logged-in local Codex/Claude CLI)",
+  "worksWithout": "",
+  "services": [
+   "MinerU",
+   "DeepSeek",
+   "OpenAI",
+   "Anthropic"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, intro",
+   "quote": "插件用用户自己的 MinerU Token 解析 PDF，再通过用户选择的云端 LLM 或本地 CLI 生成结构化导读。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, key setup",
+   "quote": "MinerU：单独填写 `mineru.net/apiManage` 申请的精准解析 Token",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README: \"MinerU：单独填写 `mineru.net/apiManage` 申请的精准解析 Token\" is needed for parsing in every setup. Ollama (127.0.0.1:11434) appears only for the optional, default-off semantic embeddings, not the guided-reading LLM, so unknown."
+}

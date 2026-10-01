@@ -1,0 +1,34 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-llm-summerize",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.llmsummarizer.apiBaseUrl\", \"https://api.deepseek.com/v1\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README provider table",
+   "quote": "| Ollama（本地） | `http://localhost:11434/v1` | `qwen2.5:14b` |",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "Base URL 命中 `localhost` / `127.0.0.1` / `0.0.0.0` / `[::1]` 时视为本地服务，**不要求填 API Key**。",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Default is DeepSeek with empty key (needs one), but the README says localhost/127.0.0.1 Base URLs do not require a key and lists Ollama at `http://localhost:11434/v1`. So the main purpose does not strictly need a key (not 'required'), yet it does not work keyless out of the box (not 'optional'); the evidence does not settle it cleanly. Local model is yes by the Ollama table row."
+}

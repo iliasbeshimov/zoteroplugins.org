@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-chat",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "AI chat; the code refuses to create the agent without an API key",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "DeepSeek"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "release content script, getOrCreateAgent",
+   "quote": "if (!apiKey || apiKey.trim() === \"\") {",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zoterochat.apikey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "多 API 兼容",
+   "quote": "**本地部署**: `http://localhost:8080/v1`",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says \"OPENAI_API_KEY - API 密钥（必需）\", the prefs default the API key to empty, and the code refuses to create the agent without one. The README lists \"**本地部署**: `http://localhost:8080/v1`\" as a supported OpenAI-compatible endpoint, so a local model is possible."
+}

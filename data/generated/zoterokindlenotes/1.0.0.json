@@ -1,0 +1,319 @@
+{
+ "schemaVersion": 1,
+ "slug": "zoterokindlenotes",
+ "repo": "meekflyer/zoterokindlenotes",
+ "version": "1.0.0",
+ "tag": "v1.0.0",
+ "releaseAuthor": "meekflyer",
+ "publishedAt": "2026-03-08T20:43:09Z",
+ "prerelease": false,
+ "asset": {
+  "name": "kindle-importer.xpi",
+  "url": "https://github.com/meekflyer/ZoteroKindleNotes/releases/download/v1.0.0/kindle-importer.xpi",
+  "size": 29535,
+  "sha256": "50edb168b308ac60a379e37623a623d783b9a9390dbcc402b150138d1f8a4de8",
+  "githubAssetId": 369624848,
+  "uploader": "meekflyer",
+  "uploadedAt": "2026-03-08T20:43:09Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "kindle-importer@zotero.plugin",
+  "name": "Kindle Highlights Importer",
+  "version": "1.0.0",
+  "description": "Import Kindle highlights from My Clippings.txt into Zotero as formatted notes.",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "8.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 3091,
+   "sha256": "ed3bf9e4837cdeb656031597d50fc0cbb4a6430d8cabe05fe5aa1b199db5d463"
+  },
+  {
+   "path": "chrome/content/dialog.js",
+   "size": 23994,
+   "sha256": "dc9b9a23287e7415e58dcc51bc1167b15ee6db9d366c7ed270f3b668a856917d"
+  },
+  {
+   "path": "chrome/content/dialog.xhtml",
+   "size": 18672,
+   "sha256": "c07ce54e775ebac9c8344f7ff34a22b65ed8f63aca58624d41a2874cd18f0c1e"
+  },
+  {
+   "path": "manifest.json",
+   "size": 375,
+   "sha256": "39983c64f9cf334499a23848bff6bf6ab1a7189610dd69c7013eaec7c39c0d40"
+  },
+  {
+   "path": "src/bookLookup.js",
+   "size": 11531,
+   "sha256": "9da519207068f4498fec860c11e7e34804707e0a1ca3c7a5965d6003b8b469b0"
+  },
+  {
+   "path": "src/importer.js",
+   "size": 18093,
+   "sha256": "593e9834d56c105fd884a5e7d24110ef5c07838258cb8129929c3ff3c40dc096"
+  },
+  {
+   "path": "src/matcher.js",
+   "size": 10919,
+   "sha256": "7bbf9ce46d0dd1d8877496d31655645ebd5179c64f1e0e0dcf4f4dad636dfea0"
+  },
+  {
+   "path": "src/parser.js",
+   "size": 11212,
+   "sha256": "1e12279b562e5f26896914c513bdb7abc56cdbcea8e000fdcf1f3c4ae92b2464"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zoterokindlenotes",
+   "version": "1.0.0",
+   "sha256": "50edb168b308ac60a379e37623a623d783b9a9390dbcc402b150138d1f8a4de8"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 97512,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/bookLookup.js",
+       "line": 141,
+       "column": 23,
+       "snippet": "const res = await http(url);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/bookLookup.js",
+       "line": 191,
+       "column": 23,
+       "snippet": "const res = await http(url);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "openlibrary.org",
+     "category": "scholarly-api",
+     "provider": "Open Library",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/bookLookup.js",
+       "line": 35,
+       "column": 27,
+       "snippet": "const OPEN_LIBRARY_API = \"https://openlibrary.org/search.json\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/bookLookup.js",
+       "line": 188,
+       "column": 14,
+       "snippet": "let url = `${OPEN_LIBRARY_API}?title=${encodeURIComponent(title)}&limit=5`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.googleapis.com",
+     "category": "integration",
+     "provider": "Google APIs",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/bookLookup.js",
+       "line": 34,
+       "column": 27,
+       "snippet": "const GOOGLE_BOOKS_API = \"https://www.googleapis.com/books/v1/volumes\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/bookLookup.js",
+       "line": 140,
+       "column": 16,
+       "snippet": "const url = `${GOOGLE_BOOKS_API}?q=${query}&maxResults=5&printType=books&langRestrict=en`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the meekflyer account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zoterokindlenotes",
+   "version": "1.0.0",
+   "sha256": "50edb168b308ac60a379e37623a623d783b9a9390dbcc402b150138d1f8a4de8"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "a74e93ca0fc846a67d86d5647a58848d242fe682ad3b43e4653748aa273e2cd6"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "www.googleapis.com"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "openlibrary.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2026-03-08T20:43:09Z",
+    "lastCommitAt": "2026-03-08T20:44:22Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "installProblem": "no-update-url",
+    "label": "Zotero won't install this file: its manifest has no update address, which Zotero requires",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

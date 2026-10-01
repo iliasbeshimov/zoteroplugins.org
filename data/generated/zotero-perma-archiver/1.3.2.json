@@ -1,0 +1,438 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-perma-archiver",
+ "repo": "kirinccchang/zotero-perma-archiver",
+ "version": "1.3.2",
+ "tag": "v1.3.2",
+ "releaseAuthor": "kirinccchang",
+ "publishedAt": "2026-04-10T15:36:16Z",
+ "prerelease": false,
+ "asset": {
+  "name": "perma-archiver_v1.3.2.xpi",
+  "url": "https://github.com/kirinccchang/zotero-perma-archiver/releases/download/v1.3.2/perma-archiver_v1.3.2.xpi",
+  "size": 11524,
+  "sha256": "9b748ce32dc7a49b7bd16c1296d9f7bc4dac142780e1a70a9394c862f69d7540",
+  "githubAssetId": 393352150,
+  "uploader": "kirinccchang",
+  "uploadedAt": "2026-04-10T15:36:17Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "perma-archiver@kirinchang.law",
+  "name": "Perma Archiver",
+  "version": "1.3.2",
+  "description": "Automatically archives webpages to perma.cc when you save them in Zotero, and adds the [perma.cc/...] link to your Word citations automatically. Bluebook 22nd ed. Rule 18.2.1(d) compliance with no extra steps.",
+  "updateUrl": "https://raw.githubusercontent.com/kirinccchang/zotero-perma-archiver/main/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "8.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 8327,
+   "sha256": "e4a1b7a15d106c2bad9d5f5dc7c79a813fdf658ec74b9f16aaa4637824cc054a"
+  },
+  {
+   "path": "content.js",
+   "size": 11300,
+   "sha256": "b5e43a33b776edc354fbcba57e5b50e77c01c8fdf4818a7d2777f841bd7f71da"
+  },
+  {
+   "path": "icon48.png",
+   "size": 1712,
+   "sha256": "d68167f820620b8e834503a4f021f3d5f407dec8afa38d6e4aab2e3a4725e48e"
+  },
+  {
+   "path": "icon96.png",
+   "size": 3376,
+   "sha256": "e996e57167b6e3b51cd6b6cc72c5f8d576c83b7c88a9468e4d8089bb79da7c20"
+  },
+  {
+   "path": "manifest.json",
+   "size": 699,
+   "sha256": "84c634f5d28e58a57e41c79888780301f1aa14c708d32bbf1bf8b399db2ce276"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-perma-archiver",
+   "version": "1.3.2",
+   "sha256": "9b748ce32dc7a49b7bd16c1296d9f7bc4dac142780e1a70a9394c862f69d7540"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "icon48.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icon96.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 19627,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content.js",
+       "line": 171,
+       "column": 21,
+       "snippet": "resp = await fetch(this.PERMA_API, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content.js",
+       "line": 201,
+       "column": 27,
+       "snippet": "const resp = await fetch(this.PERMA_FOLDERS + \"?limit=300\", {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.perma.cc",
+     "category": "integration",
+     "provider": "Perma.cc",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content.js",
+       "line": 20,
+       "column": 19,
+       "snippet": "PERMA_API : \"https://api.perma.cc/v1/archives/\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content.js",
+       "line": 21,
+       "column": 19,
+       "snippet": "PERMA_FOLDERS: \"https://api.perma.cc/v1/folders/\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "kirinchang.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 134,
+       "column": 23,
+       "snippet": "Zotero.launchURL(\"https://kirinchang.com/\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "perma.cc",
+     "category": "scholarly-api",
+     "provider": "Perma.cc",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 187,
+       "column": 4,
+       "snippet": "\"Free key: https://perma.cc/settings/tools\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 197,
+       "column": 4,
+       "snippet": "\"Get your key at: https://perma.cc/settings/tools\\n\" +",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content.js",
+       "line": 185,
+       "column": 15,
+       "snippet": "return \"https://perma.cc/\" + data.guid;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content.js",
+       "line": 222,
+       "column": 10,
+       "snippet": "\"To get or view your key:\\n https://perma.cc/settings/tools\\n (click \\u201cGenerate an API key\\u201d if you have not already)\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>?limit=300",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content.js",
+       "line": 201,
+       "column": 27,
+       "snippet": "const resp = await fetch(this.PERMA_FOLDERS + \"?limit=300\", {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 219,
+      "column": 15,
+      "snippet": "try { return Services.prefs.getStringPref(PREF_APIKEY, \"\"); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 223,
+      "column": 8,
+      "snippet": "try { Services.prefs.setStringPref(PREF_APIKEY, v); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content.js",
+      "line": 274,
+      "column": 19,
+      "snippet": "try { return Services.prefs.getStringPref(this.PREF_APIKEY, \"\"); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content.js",
+      "line": 278,
+      "column": 12,
+      "snippet": "try { Services.prefs.setStringPref(this.PREF_APIKEY, v); }",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.perma-archiver.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 16,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/kirinccchang/zotero-perma-archiver/main/update.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/kirinccchang/zotero-perma-archiver/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the kirinccchang account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-perma-archiver",
+   "version": "1.3.2",
+   "sha256": "9b748ce32dc7a49b7bd16c1296d9f7bc4dac142780e1a70a9394c862f69d7540"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "2f29eccb8c2d2fba3cbf1621a5e22170481a37f25bfedc2afc18385adc79f195"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "api.perma.cc"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "perma.cc"
+      ],
+      "unconfirmed": [
+       "perma.cc"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-04-10T15:36:16Z",
+    "lastCommitAt": "2026-04-24T04:49:44Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7–8",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

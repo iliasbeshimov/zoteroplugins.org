@@ -1,0 +1,322 @@
+---
+import { fmtCount, GRADES, type Plugin } from "../lib/atlas.ts";
+import GradeTag from "./GradeTag.astro";
+
+/**
+ * "What we found": the headline numbers across every listed plugin, the split by grade, and the
+ * most-downloaded plugins we don't recommend. Every number is computed from the profiles at build.
+ */
+interface Props {
+  plugins: Plugin[];
+  currentMajor: number;
+}
+const { plugins, currentMajor } = Astro.props;
+const n = plugins.length;
+const pct = (k: number) => `${Math.round((k / n) * 100)}%`;
+const notRec = plugins.filter((p) => p.grade === "C");
+const allDl = plugins.reduce((s, p) => s + p.downloadsN, 0);
+const notRecDl = notRec.reduce((s, p) => s + p.downloadsN, 0);
+const linkInstall = plugins.filter((p) => p.capIds.includes("link-installs-addons")).length;
+const notCurrent = plugins.filter((p) => !p.currentOk).length;
+const tested = plugins.filter((p) => p.liveTest).length;
+const unexpected = plugins.filter((p) => p.liveTest?.verdict === "unexpected").length;
+const unknownHosts = plugins.filter((p) => p.dataValue === "unknown-endpoints").length;
+
+const split = GRADES.map((g) => ({ ...g, count: plugins.filter((p) => p.grade === g.g).length })).filter((g) => g.count > 0);
+const TOK: Record<string, string> = { "A+": "ap", A: "a", B: "b", C: "c" };
+
+const tiles = [
+  {
+    big: String(notRec.length),
+    t: "not recommended",
+    sub: `${fmtCount(notRecDl)} downloads between them, ${Math.round((notRecDl / allDl) * 100)}% of all downloads`,
+    href: "/browse?grade=C",
+    tone: "ser",
+  },
+  {
+    big: pct(linkInstall),
+    t: "can be made to install other add-ons by a link you click",
+    sub: `${linkInstall} plugins, all through the same shared library (zotero-plugin-toolkit)`,
+    href: "/how-we-grade#checks",
+    tone: "rev",
+  },
+  {
+    big: pct(notCurrent),
+    t: `don't work with Zotero ${currentMajor}`,
+    sub: `${notCurrent} plugins. Pick your version when you browse`,
+    href: `/browse?zotero=${currentMajor}`,
+    tone: "nd",
+  },
+  {
+    big: String(unexpected),
+    t: "did something their card didn't describe when we ran them",
+    sub: `of ${tested} we tested installed in a live Zotero. ${unknownHosts} more contact servers we couldn't identify`,
+    href: "/how-we-grade#live",
+    tone: "rev",
+  },
+];
+const worst = notRec.slice(0, 5);
+---
+
+<section class="findings" aria-labelledby="findings-h">
+  <div class="head">
+    <h2 id="findings-h">What we found in {n.toLocaleString("en-GB")} plugins</h2>
+    <p>We read the code of every listed plugin, and ran {tested} of them in a test copy of Zotero.</p>
+  </div>
+
+  <div class="split" role="img" aria-label={`Grades: ${split.map((g) => `${g.g} ${g.count}`).join(", ")}`}>
+    <div class="bar">
+      {
+        split.map((g) => (
+          <a
+            href={`/browse?grade=${encodeURIComponent(g.g)}`}
+            class:list={["seg", { none: !TOK[g.g] }]}
+            style={`flex:${g.count};${TOK[g.g] ? `background:var(--g-${TOK[g.g]})` : ""}`}
+            aria-label={`${g.count} graded ${g.g}`}
+          />
+        ))
+      }
+    </div>
+    <div class="legend">
+      {
+        split.map((g) => (
+          <a href={`/browse?grade=${encodeURIComponent(g.g)}`} class="li">
+            <GradeTag grade={g.g} size="xs" />
+            <span class="lc">{g.count}</span>
+            <span class="lt">{g.long}</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="tiles">
+    {
+      tiles.map((t) => (
+        <a href={t.href} class="tile" style={`--tone:var(--${t.tone}-fg)`}>
+          <span class="big">{t.big}</span>
+          <span class="tt">{t.t}</span>
+          <span class="ts">{t.sub}</span>
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="worst">
+    <div class="rule-head">
+      <h3>Not recommended, most downloaded</h3>
+      <a href="/browse?grade=C">All {notRec.length}</a>
+    </div>
+    <ul>
+      {
+        worst.map((p) => (
+          <li>
+            <span class="wg">
+              <GradeTag grade={p.grade} size="sm" />
+            </span>
+            <span class="wm">
+              <a href={`/p/${p.slug}`}>{p.name}</a>
+              <span class="wd">{p.downloads} downloads</span>
+            </span>
+            <span class="wb">
+              <span class="muted">because </span>
+              {p.because}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .findings {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px var(--gutter) 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .head {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  h2 {
+    margin: 0;
+    font-size: 36px;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-weight: 760;
+  }
+  .head p {
+    margin: 0;
+    font-size: 17px;
+    color: var(--ink-2);
+  }
+  .split {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .bar {
+    display: flex;
+    gap: 2px;
+    height: 14px;
+  }
+  .seg {
+    min-width: 4px;
+    border-radius: 4px;
+  }
+  .seg.none {
+    border: 1.5px dashed var(--nd-line);
+  }
+  .seg:hover {
+    filter: brightness(1.1);
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+  }
+  .li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .li:hover .lt {
+    text-decoration: underline;
+  }
+  .lc {
+    font: 600 14px var(--font-mono);
+  }
+  .lt {
+    color: var(--ink-2);
+  }
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 18px 16px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--tone);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .tile:hover {
+    border-color: var(--ink);
+    border-top-color: var(--tone);
+    color: var(--ink);
+  }
+  .big {
+    font-size: 44px;
+    line-height: 1;
+    font-weight: 780;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .tt {
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 650;
+    text-wrap: pretty;
+  }
+  .ts {
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .worst {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 10px;
+  }
+  .worst :global(.rule-head a) {
+    white-space: nowrap;
+  }
+  h3 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    font-weight: 720;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: grid;
+    grid-template-columns: 52px minmax(180px, 280px) minmax(0, 1fr);
+    gap: 4px 16px;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .wg {
+    display: flex;
+    align-self: center;
+  }
+  .wm {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .wm a {
+    font-size: 16.5px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .wm a:hover {
+    text-decoration: underline;
+  }
+  .wd {
+    font: 500 12.5px var(--font-mono);
+    color: var(--ink-2);
+  }
+  .wb {
+    font-size: 14.5px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+  .muted {
+    color: var(--ink-2);
+  }
+  @media (max-width: 960px) {
+    .tiles {
+      grid-template-columns: 1fr 1fr;
+    }
+    li {
+      grid-template-columns: 52px minmax(0, 1fr);
+    }
+    .wb {
+      grid-column: 2;
+    }
+  }
+  @media (max-width: 520px) {
+    h2 {
+      font-size: 28px;
+    }
+    .tiles {
+      grid-template-columns: 1fr;
+    }
+    .big {
+      font-size: 38px;
+    }
+  }
+</style>

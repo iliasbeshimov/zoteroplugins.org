@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-smart-translate",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "the AI translation/summarization engine (user's own API key for an OpenAI-compatible service, default endpoint Zhipu GLM)",
+  "worksWithout": "",
+  "services": [
+   "Zhipu (GLM)"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "Translation section",
+   "quote": "With no API key configured, an \"打开设置\" (Open Preferences) button appears next to the error in the selection popup and the bilingual sidebar",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/panel.js:113",
+   "quote": "endPoint: \"https://open.bigmodel.cn/api/paas/v4/chat/completions\",",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README quote verified: 'With no API key configured...' shows an error and a prompt to open settings. The only default endpoint is Zhipu (panel.js:113), and prefs defaults are empty. The endpoint is OpenAI-compatible and may be editable, but nothing in the pack mentions a local model, so unknown."
+}

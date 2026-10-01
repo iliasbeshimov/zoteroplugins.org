@@ -1,0 +1,242 @@
+---
+import { GRADES, type Plugin, testedText } from "../lib/atlas.ts";
+import GradeTag from "./GradeTag.astro";
+import Tip from "./Tip.astro";
+
+/**
+ * One plugin in a list. Facts every plugin has (Zotero versions, downloads, last update) are a
+ * plain line; pills appear only when something applies: a heads-up (dormant, Chinese-only docs) or
+ * something that sets it apart (needs an API key, can use a local model, a fork). When no Zotero
+ * version is picked in the list's filter, versions that leave out the current Zotero are marked.
+ */
+interface Props {
+  p: Plugin;
+}
+const { p } = Astro.props;
+type Pill = { t: string; tip: string; tone: "rev" | "ser" | "nd" | "accent" | "few" | "plain"; lang?: boolean };
+const pills: Pill[] = [];
+if (p.banner) pills.push({ t: "Blocked by Zotero", tip: "On Zotero's official blocklist: Zotero won't install it.", tone: "ser" });
+if (p.legacy) pills.push({ t: "Zotero 6 only", tip: "Uses the old plugin format, which Zotero 7 and later can't load.", tone: "rev" });
+else if (!p.installUrl && !p.banner) pills.push({ t: "Nothing to install", tip: "We couldn't find a release file that current Zotero can install.", tone: "rev" });
+if (p.maintStatus === "archived") pills.push({ t: "Archived", tip: p.maintTip, tone: "rev" });
+else if (p.maintStatus === "dormant" || p.maintStatus === "unknown") pills.push({ t: p.maintStatus === "dormant" ? "Dormant" : "Activity unknown", tip: p.maintTip, tone: "nd" });
+else if (p.maintStatus === "slowing") pills.push({ t: "Slowing down", tip: p.maintTip, tone: "nd" });
+if (p.chineseDocs) pills.push({ t: "Docs in Chinese only", tip: "The plugin's README and support are in Chinese. Our summary is in English.", tone: "accent", lang: true });
+if (p.needsShort) pills.push({ t: p.needsShort, tip: p.keyTip, tone: "plain" });
+if (p.localModel) pills.push({ t: "Can use a local model", tip: "It can use a model running on your own computer, such as Ollama, so your text needn't leave it.", tone: "few" });
+if (p.forkOf) pills.push({ t: `Fork of ${p.forkOf.name}`, tip: "A copy of another listed plugin, changed by someone else.", tone: "plain" });
+
+const tone = p.gradeTone;
+const gradeSub = GRADES.find((g) => g.g === p.grade)?.sub ?? "";
+const notCurrent = !p.currentOk && p.worksWith.length > 0;
+const compatTip = p.worksWith.length
+  ? `Installs and runs in Zotero ${p.worksRange}${notCurrent ? `, but not in the current Zotero (${p.currentMajor})` : ""}.`
+  : "We don't know a Zotero version it works with.";
+const testTip = p.liveTest
+  ? `We installed this exact release in a fresh Zotero ${p.liveTest.zotero} and recorded what it did, as well as checking its code.`
+  : "We checked its code but haven't run it in a live Zotero yet.";
+---
+
+<article class="card">
+  <div class="main">
+    <div class="title">
+      <a href={`/p/${p.slug}`}>{p.name}</a>
+      <span class="repo">{p.repo}</span>
+    </div>
+    <p class="one">{p.oneLiner}</p>
+    {
+      pills.length > 0 && (
+        <div class="pills">
+          {pills.map((f) => (
+            <Tip text={f.tip} class={`pill plain t-${f.tone}`}>
+              {f.lang && <span aria-hidden="true" class="wen">文</span>}
+              {f.t}
+            </Tip>
+          ))}
+        </div>
+      )
+    }
+    <div class="meta">
+      <Tip text={compatTip} class={`compat tip-start${notCurrent ? " not-cur" : ""}`}>
+        {p.worksWith.length ? `Zotero ${p.worksRange}` : "No Zotero version"}{notCurrent && <span class="warn"> · not {p.currentMajor}</span>}
+      </Tip>
+      <span aria-hidden="true">·</span>
+      <Tip text="All-time downloads of its release files from GitHub. Installs from elsewhere aren't counted.">{p.downloads} downloads</Tip>
+      {
+        p.maintStatus === "active" && (
+          <>
+            <span aria-hidden="true">·</span>
+            <Tip text={p.maintTip}>Updated {p.lastActivity}</Tip>
+          </>
+        )
+      }
+    </div>
+  </div>
+  <div class="verdict" style={`background:var(--${tone}-bg);border-color:var(--${tone}-line)`}>
+    <Tip text={`Atlas grade ${p.grade}: ${gradeSub}.`} class="vhead plain tip-start">
+      <GradeTag grade={p.grade} size="sm" />
+      <strong style={`color:var(--${tone}-fg)`}>{p.gradeWord}</strong>
+    </Tip>
+    <span class="why"><span class="muted">because </span>{p.because}</span>
+    <span class="ver">{p.version ? `v${p.version} · ` : ""}<Tip text={testTip} class="tip-start">{testedText(p, true)}</Tip></span>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 28px;
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow-1);
+    color: var(--ink);
+    min-width: 0;
+  }
+  .main {
+    flex: 1 1 360px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 10px;
+  }
+  .title a {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    text-decoration: none;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+  .title a:hover {
+    text-decoration: underline;
+  }
+  .repo {
+    font: 500 12px/1.3 var(--font-mono);
+    color: var(--ink-3);
+    overflow-wrap: anywhere;
+  }
+  .one {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+  }
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-top: 2px;
+  }
+  .pills :global(.pill) {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.3;
+    border: 1px solid;
+  }
+  .pills :global(.t-plain) {
+    background: var(--surface);
+    color: var(--ink);
+    border-color: var(--line-strong);
+  }
+  .pills :global(.t-few) {
+    background: var(--few-bg);
+    color: var(--few-fg);
+    border-color: var(--few-line);
+  }
+  .pills :global(.t-rev) {
+    background: var(--rev-bg);
+    color: var(--rev-fg);
+    border-color: var(--rev-line);
+  }
+  .pills :global(.t-ser) {
+    background: var(--ser-bg);
+    color: var(--ser-fg);
+    border-color: var(--ser-line);
+  }
+  .pills :global(.t-nd) {
+    background: var(--nd-bg);
+    color: var(--nd-fg);
+    border-color: var(--nd-line);
+  }
+  .pills :global(.t-accent) {
+    background: var(--accent-soft);
+    color: var(--ink);
+    border-color: var(--accent);
+  }
+  .wen {
+    font-weight: 700;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 8px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  /* The "not 10" warning only matters when no Zotero version is picked in the filter. */
+  :global([data-zv]) .meta :global(.warn) {
+    display: none;
+  }
+  .meta :global(.warn) {
+    color: var(--rev-fg);
+    font-weight: 650;
+  }
+  .verdict {
+    flex: 0 1 280px;
+    min-width: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid;
+  }
+  .verdict :global(.vhead) {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .verdict strong {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .why {
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+  .muted {
+    color: var(--ink-2);
+  }
+  .ver {
+    font: 500 11.5px/1.3 var(--font-mono);
+    color: var(--ink-2);
+  }
+  @media (max-width: 520px) {
+    .verdict {
+      flex-basis: 100%;
+      min-width: 0;
+    }
+  }
+</style>

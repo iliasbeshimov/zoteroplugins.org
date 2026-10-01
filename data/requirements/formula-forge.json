@@ -1,0 +1,25 @@
+{
+ "schemaVersion": 1,
+ "slug": "formula-forge",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "only the optional formula LaTeX recognition (OCR) needs your own provider API key",
+  "worksWithout": "figure, table and formula extraction runs locally with the bundled model",
+  "services": [
+   "OpenAI-compatible provider",
+   "Anthropic"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Requirements",
+   "quote": "Formula OCR only: network access, a compatible model endpoint, and your own provider API key (BYOK).",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The README quote is real, and core extraction runs locally with the bundled model. In formulaforge.js:4727 the endpoint check allows plain http for loopback: `endpoint.protocol === \"http:\" && isLoopbackHost(endpoint.hostname)`. So a local OpenAI-compatible endpoint can be used for formula OCR."
+}

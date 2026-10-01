@@ -1,0 +1,31 @@
+{
+ "schemaVersion": 1,
+ "slug": "reta-ai-chat",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "an API key for an OpenAI-compatible chat service (default DeepSeek)",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek",
+   "OpenAI-compatible service"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, configuration",
+   "quote": "API Key 需要使用你自己的服务商 Key。本插件不会提供内置 API Key。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.retaAIChat.apiKey\", \"\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README says 'API Key 需要使用你自己的服务商 Key。本插件不会提供内置 API Key。' and the default apiKey pref is empty with DeepSeek as the default base. A custom OpenAI-compatible address and '自部署兼容服务' are mentioned, but nothing names a local model or Ollama, so local use stays unknown."
+}

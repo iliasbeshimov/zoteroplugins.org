@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-babeldoc",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "The OpenAI-compatible translation service (API key, base URL and model must be filled in; default service is OpenAI)",
+  "worksWithout": "",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "content/scripts/babeldoctranslator.js:3702",
+   "quote": "if (!settings.apiKey) {",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README 配置与使用",
+   "quote": "填写 OpenAI-compatible API 的 Base URL、API Key 和模型。",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Code has `if (!settings.apiKey) {`, the default key is empty, and the README says to fill in Base URL, API Key and model. The base URL is configurable, but nothing in the pack or code mentions a local server, so local model is unknown."
+}

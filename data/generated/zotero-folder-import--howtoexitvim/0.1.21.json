@@ -1,0 +1,318 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-folder-import--howtoexitvim",
+ "repo": "howtoexitvim/zotero-folder-import",
+ "version": "0.1.21",
+ "tag": "v0.1.21",
+ "releaseAuthor": "howtoexitvim",
+ "publishedAt": "2026-09-11T15:49:49Z",
+ "prerelease": false,
+ "asset": {
+  "name": "folder-import-0.1.21.xpi",
+  "url": "https://github.com/howtoexitvim/zotero-folder-import/releases/download/v0.1.21/folder-import-0.1.21.xpi",
+  "size": 15902,
+  "sha256": "64928a61689e5e233cbb33c1f9d134c74223b07e8465bff42f85d6c74183519e",
+  "githubAssetId": 557538394,
+  "uploader": "howtoexitvim",
+  "uploadedAt": "2026-09-11T15:49:48Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "folder-import@shuqi.local",
+  "name": "Folder Import",
+  "version": "0.1.21",
+  "description": "Import PDF and EPUB folders into Zotero collections without metadata renaming.",
+  "updateUrl": "https://folder-import.shuqi.invalid/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 25343,
+   "sha256": "d81bd50ed48618884a0a56c6e39eab72366bf350ce2c0b4ba4304c66704bd037"
+  },
+  {
+   "path": "content/dialog.css",
+   "size": 3432,
+   "sha256": "9c4b5d96fb6c846161979c8528c86c1a9ad65ca01acd4fdcb71b0aeb5248e030"
+  },
+  {
+   "path": "content/dialog.js",
+   "size": 17399,
+   "sha256": "ff69b47380db0fa6ec1ae23fe103ca9f499b207e3aec2f664065995c4a306cc5"
+  },
+  {
+   "path": "content/dialog.xhtml",
+   "size": 5152,
+   "sha256": "c7c71bbdb383dd1ef4d78f540fbfc354d430bd7ce7eeb89c89c731898bfb056d"
+  },
+  {
+   "path": "icon.svg",
+   "size": 238,
+   "sha256": "7a9dfeb169c34ba8f5b8d5b5ebe6f490c5001ea1df9f3a9e6a86c16751ea04de"
+  },
+  {
+   "path": "manifest.json",
+   "size": 492,
+   "sha256": "f85169bb8fcf3874a7b14fd4b415dc4c927d6187a40eb946246958c4a980c639"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-folder-import--howtoexitvim",
+   "version": "0.1.21",
+   "sha256": "64928a61689e5e233cbb33c1f9d134c74223b07e8465bff42f85d6c74183519e"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "content/dialog.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 47894,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [
+    {
+     "pattern": "chrome://<expr>/content/dialog.xhtml",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 628,
+       "column": 8,
+       "snippet": "`chrome://${CHROME_PACKAGE}/content/dialog.xhtml`,",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 296,
+      "column": 12,
+      "snippet": "await Zotero.File.iterateDirectory(path, (entry) => {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 307,
+      "column": 25,
+      "snippet": "const stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 331,
+      "column": 24,
+      "snippet": "const extension = Zotero.File.getExtension(path).toLowerCase();",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "user-chosen",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://folder-import.shuqi.invalid/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://folder-import.shuqi.invalid/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the howtoexitvim account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-folder-import--howtoexitvim",
+   "version": "0.1.21",
+   "sha256": "64928a61689e5e233cbb33c1f9d134c74223b07e8465bff42f85d6c74183519e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "8095eea2010da673e826b069b1052c557ad24767cfecedbb73082a11b77f2bc6"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-11T15:49:49Z",
+    "lastCommitAt": "2026-09-11T16:30:38Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T06:56:50Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 1,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

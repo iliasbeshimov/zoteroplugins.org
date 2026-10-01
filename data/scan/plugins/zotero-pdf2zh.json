@@ -1,0 +1,1075 @@
+{
+ "repo": "guaguastandup/zotero-pdf2zh",
+ "slug": "zotero-pdf2zh",
+ "group": "top",
+ "rank": 23,
+ "name": "Zotero PDF2zh",
+ "stars": 6881,
+ "downloads": 605775,
+ "createdAt": "2025-01-14T06:48:13Z",
+ "tag": "v4.1.7",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-pdf-2-zh.xpi",
+    "url": "https://github.com/guaguastandup/zotero-pdf2zh/releases/download/v4.1.7/zotero-pdf-2-zh.xpi",
+    "size": 118457,
+    "uploadedAt": "2026-08-23T15:15:43Z",
+    "sha256": "e793d3ad169d0d5afaecfa6e6c936afd0f479f91fab99a92cafbf9f3bb89afec"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "pdf2zh@guaguastandup.com",
+    "name": "Zotero PDF2zh",
+    "version": "4.1.7",
+    "description": "PDF translation for Zotero with PDF2zh/PDF2zh_next, bilingual layouts, batch processing, and DeepSeek V4 support.",
+    "homepageUrl": "https://github.com/guaguastandup/zotero-pdf2zh#readme",
+    "updateUrl": "https://github.com/guaguastandup/zotero-pdf2zh/releases/download/release/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "10.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-pdf2zh",
+     "version": "4.1.7",
+     "sha256": "e793d3ad169d0d5afaecfa6e6c936afd0f479f91fab99a92cafbf9f3bb89afec"
+    },
+    "coverage": {
+     "filesTotal": 16,
+     "filesAnalyzed": 6,
+     "filesSkipped": [
+      {
+       "path": "content/icons/favicon.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/icons/favicon@0.5x.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/zoteroPane.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/pdf2zh-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/pdf2zh-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/pdf2zh-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/pdf2zh-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/pdf2zh-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/pdf2zh-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "axios",
+       "files": [
+        "content/scripts/pdf2zh.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/pdf2zh.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 5,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditorEnhancements.js",
+         "line": 133,
+         "column": 31,
+         "snippet": "const response = await fetch(url, { method: \"GET\", headers });",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 7509,
+         "column": 31,
+         "snippet": "const response = await fetch(`${config2.serverUrl}/${endpoint}`, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 7616,
+         "column": 31,
+         "snippet": "const tasksRes = await fetch(`${base}/api/tasks`, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 7627,
+         "column": 33,
+         "snippet": "const historyRes = await fetch(`${base}/api/history`, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 7821,
+         "column": 29,
+         "snippet": "const response = await fetch(url, { method: \"GET\" });",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "api": "xhr",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 5467,
+         "column": 20,
+         "snippet": "let request = new XMLHttpRequest();",
+         "inVendoredCode": true
+        }
+       ]
+      },
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditorEnhancements.js",
+         "line": 118,
+         "column": 30,
+         "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "...",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 278,
+         "column": 37,
+         "snippet": "placeholder=\"https://...\"",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "127.0.0.1",
+       "port": 9997,
+       "category": "localhost",
+       "provider": "This computer",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 516,
+         "column": 27,
+         "snippet": "urls: [\"http://127.0.0.1:9997\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 516,
+         "column": 28,
+         "snippet": "urls: [\"http://127.0.0.1:9997\"],",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.deepseek.com",
+       "category": "llm-provider",
+       "provider": "DeepSeek",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 478,
+         "column": 27,
+         "snippet": "urls: [\"https://api.deepseek.com/v1\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 478,
+         "column": 28,
+         "snippet": "urls: [\"https://api.deepseek.com/v1\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditorEnhancements.js",
+         "line": 81,
+         "column": 21,
+         "snippet": "url: \"https://api.deepseek.com/models\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.modelscope.com",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 503,
+         "column": 27,
+         "snippet": "urls: [\"https://api.modelscope.com/v1\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 503,
+         "column": 28,
+         "snippet": "urls: [\"https://api.modelscope.com/v1\"],",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 410,
+         "column": 27,
+         "snippet": "urls: [\"https://api.openai.com/v1\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 410,
+         "column": 28,
+         "snippet": "urls: [\"https://api.openai.com/v1\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditorEnhancements.js",
+         "line": 89,
+         "column": 32,
+         "snippet": "url: `${base || \"https://api.openai.com/v1\"}/models`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.siliconflow.cn",
+       "category": "llm-provider",
+       "provider": "SiliconFlow",
+       "flags": [
+        "china-only"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 441,
+         "column": 27,
+         "snippet": "urls: [\"https://api.siliconflow.cn/v1\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 441,
+         "column": 28,
+         "snippet": "urls: [\"https://api.siliconflow.cn/v1\"],",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.zhipu.com",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 473,
+         "column": 27,
+         "snippet": "urls: [\"https://api.zhipu.com/v1\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 473,
+         "column": 28,
+         "snippet": "urls: [\"https://api.zhipu.com/v1\"],",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "ark.cn-beijing.volces.com",
+       "category": "llm-provider",
+       "provider": "ByteDance Doubao (Volcano Engine)",
+       "flags": [
+        "china-only"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 395,
+         "column": 27,
+         "snippet": "urls: [\"https://ark.cn-beijing.volces.com/api/v3\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 395,
+         "column": 28,
+         "snippet": "urls: [\"https://ark.cn-beijing.volces.com/api/v3\"],",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "cloud.siliconflow.cn",
+       "category": "llm-provider",
+       "provider": "SiliconFlow",
+       "flags": [
+        "china-only"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 442,
+         "column": 34,
+         "snippet": "modelListUrl: \"https://cloud.siliconflow.cn/me/models\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 442,
+         "column": 35,
+         "snippet": "modelListUrl: \"https://cloud.siliconflow.cn/me/models\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "console.volcengine.com",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 397,
+         "column": 24,
+         "snippet": "\"https://console.volcengine.com/ark/region:ark+cn-beijing/openManagement?LLM=%7B%7D&advancedActiveKey=model\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 397,
+         "column": 25,
+         "snippet": "\"https://console.volcengine.com/ark/region:ark+cn-beijing/openManagement?LLM=%7B%7D&advancedActiveKey=model\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "dashscope.aliyuncs.com",
+       "category": "llm-provider",
+       "provider": "Alibaba Qwen (DashScope)",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 425,
+         "column": 27,
+         "snippet": "urls: [\"https://dashscope.aliyuncs.com/compatible-mode/v1\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 425,
+         "column": 28,
+         "snippet": "urls: [\"https://dashscope.aliyuncs.com/compatible-mode/v1\"],",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "generativelanguage.googleapis.com",
+       "category": "llm-provider",
+       "provider": "Google Gemini",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditorEnhancements.js",
+         "line": 97,
+         "column": 24,
+         "snippet": "base || \"https://generativelanguage.googleapis.com/v1beta\";",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "gitee.com",
+       "category": "code-hosting",
+       "provider": "Gitee",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/preferences.xhtml",
+         "line": 697,
+         "column": 12,
+         "snippet": "https://gitee.com/guaguastandup/zotero-pdf2zh",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/preferences.xhtml",
+         "line": 693,
+         "column": 12,
+         "snippet": "https://github.com/guaguastandup/zotero-pdf2zh",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "localhost",
+       "port": 11434,
+       "category": "localhost",
+       "provider": "This computer",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 6,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 494,
+         "column": 27,
+         "snippet": "urls: [\"http://localhost:11434\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 494,
+         "column": 28,
+         "snippet": "urls: [\"http://localhost:11434\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditorEnhancements.js",
+         "line": 105,
+         "column": 39,
+         "snippet": "const ollamaBase = base || \"http://localhost:11434\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 4658,
+         "column": 56,
+         "snippet": "var origin = hasBrowserEnv && window.location.href || \"http://localhost\";",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 1,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.pdf2zh.new_serverip\", \"http://localhost:8890\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 1,
+         "column": 46,
+         "snippet": "pref(\"extensions.zotero.pdf2zh.new_serverip\", \"http://localhost:8890\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "ollama.com",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 495,
+         "column": 34,
+         "snippet": "modelListUrl: \"https://ollama.com/library\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 495,
+         "column": 35,
+         "snippet": "modelListUrl: \"https://ollama.com/library\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "platform.deepseek.com",
+       "category": "llm-provider",
+       "provider": "DeepSeek",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 479,
+         "column": 34,
+         "snippet": "modelListUrl: \"https://platform.deepseek.com/\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 479,
+         "column": 35,
+         "snippet": "modelListUrl: \"https://platform.deepseek.com/\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "platform.openai.com",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 411,
+         "column": 34,
+         "snippet": "modelListUrl: \"https://platform.openai.com/docs/models\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 411,
+         "column": 35,
+         "snippet": "modelListUrl: \"https://platform.openai.com/docs/models\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "tencent.com",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 507,
+         "column": 27,
+         "snippet": "urls: [\"https://tencent.com\"],",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/llmApiEditor.xhtml",
+         "line": 507,
+         "column": 28,
+         "snippet": "urls: [\"https://tencent.com\"],",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "zotero-pdf2zh.github.io",
+       "category": "code-hosting",
+       "provider": "GitHub Pages",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/preferences.xhtml",
+         "line": 703,
+         "column": 35,
+         "snippet": "<p align=\"center\">🌷 项目文档: https://zotero-pdf2zh.github.io/</p>",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "<expr>/<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 7509,
+         "column": 31,
+         "snippet": "const response = await fetch(`${config2.serverUrl}/${endpoint}`, {",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "<expr>/api/history",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 7627,
+         "column": 33,
+         "snippet": "const historyRes = await fetch(`${base}/api/history`, {",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "<expr>/api/tasks",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 7616,
+         "column": 31,
+         "snippet": "const tasksRes = await fetch(`${base}/api/tasks`, {",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 8303,
+         "column": 6,
+         "snippet": "`chrome://${config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.svg",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 3641,
+         "column": 15,
+         "snippet": "image: `chrome://${addon.data.config.addonRef}/content/icons/favicon.svg`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon@0.5x.svg",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 3647,
+         "column": 23,
+         "snippet": "const menuIcon = `chrome://${addon.data.config.addonRef}/content/icons/favicon@0.5x.svg`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/llmApiEditor.xhtml",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 6832,
+         "column": 6,
+         "snippet": "`chrome://${config.addonRef}/content/llmApiEditor.xhtml`,",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.zotero.pdf2zh.new_serverip",
+       "defaultValue": "http://localhost:8890",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 1,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.pdf2zh.new_serverip\", \"http://localhost:8890\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "new_serverip",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 7169,
+         "column": 22,
+         "snippet": "const serverUrl = getPref(\"new_serverip\")?.toString() || \"\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/pdf2zh.js",
+         "line": 8016,
+         "column": 19,
+         "snippet": "serverUrl: getPref(\"new_serverip\")?.toString() || \"\",",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 3,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 496,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 496,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 542,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 14,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 531,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 531,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 7283,
+        "column": 27,
+        "snippet": "const fileName = PathUtils.filename(filepath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 7477,
+        "column": 23,
+        "snippet": "const fileName = PathUtils.filename(filepath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 7753,
+        "column": 21,
+        "snippet": "return await IOUtils.exists(path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 7781,
+        "column": 31,
+        "snippet": "const contentRaw = await IOUtils.read(filepath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 7843,
+        "column": 13,
+        "snippet": "return Zotero.File.getValidFileName(leaf) || \"translated.pdf\";",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 7847,
+        "column": 23,
+        "snippet": "const tempPath = PathUtils.join(PathUtils.tempDir, tempName);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 7847,
+        "column": 38,
+        "snippet": "const tempPath = PathUtils.join(PathUtils.tempDir, tempName);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/pdf2zh.js",
+        "line": 7848,
+        "column": 12,
+        "snippet": "await IOUtils.write(tempPath, bytes);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "Zotero.File",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/guaguastandup/zotero-pdf2zh/releases/download/release/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/guaguastandup/zotero-pdf2zh/releases/download/release/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "localhost": [
+      "127.0.0.1",
+      "localhost"
+     ],
+     "llm-provider": [
+      "api.deepseek.com",
+      "api.openai.com",
+      "api.siliconflow.cn",
+      "ark.cn-beijing.volces.com",
+      "cloud.siliconflow.cn",
+      "dashscope.aliyuncs.com",
+      "generativelanguage.googleapis.com",
+      "platform.deepseek.com"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

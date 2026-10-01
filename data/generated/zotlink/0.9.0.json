@@ -1,0 +1,282 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotlink",
+ "repo": "mugpeng/zotlink",
+ "version": "0.9.0",
+ "tag": "v0.9.0",
+ "releaseAuthor": "mugpeng",
+ "publishedAt": "2024-02-19T02:29:02Z",
+ "prerelease": false,
+ "asset": {
+  "name": "Zotlink_stable.xpi",
+  "url": "https://github.com/mugpeng/zotlink/releases/download/v0.9.0/Zotlink_stable.xpi",
+  "size": 3773,
+  "sha256": "3e26c53dc6dab6ed1d82f0d25898c7309abd873b9e2c4c398290ce70f3241527",
+  "githubAssetId": 152328437,
+  "uploader": "mugpeng",
+  "uploadedAt": "2024-02-19T02:30:01Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "install.rdf",
+  "legacy": true,
+  "addonId": "mugpeng@foxmail.com",
+  "name": "Zotero Link Supplementary",
+  "version": "0.9.0",
+  "description": "Supplementary management for Zotero in cooperation with ZotFile.",
+  "homepageUrl": "https://github.com/mugpeng/zotlink#readme",
+  "strictMinVersion": "5.0",
+  "strictMaxVersion": "*"
+ },
+ "files": [
+  {
+   "path": "chrome.manifest",
+   "size": 227,
+   "sha256": "5ca6ed2ca0f6f7335a188aba2c425ee04bb1e45e1089cdb9b1d97278027096f7"
+  },
+  {
+   "path": "chrome/content/overlay.xul",
+   "size": 1114,
+   "sha256": "1bd323bfa605d3bc0c97077a09c99064632fcba7430c00e65ed8516d066666ae"
+  },
+  {
+   "path": "chrome/content/scripts/zotlink.js",
+   "size": 2647,
+   "sha256": "4b973de4bfecd27b35be4b512a176e4681c58a90f8f55fd409ced6ea2efdcc04"
+  },
+  {
+   "path": "chrome/locale/en-US/overlay.dtd",
+   "size": 267,
+   "sha256": "f546cf57b6d80cdfd06e48bae805af48f056b7f7e5d8d5c16d5183a1048dbe32"
+  },
+  {
+   "path": "install.rdf",
+   "size": 1233,
+   "sha256": "a0a821ce32fed2009f2542e952d2c2025ea26794fbd9ea8cd36572a92c7f57e5"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotlink",
+   "version": "0.9.0",
+   "sha256": "3e26c53dc6dab6ed1d82f0d25898c7309abd873b9e2c4c398290ce70f3241527"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "chrome/locale/en-US/overlay.dtd",
+     "reason": "not-code"
+    },
+    {
+     "path": "install.rdf",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 3761,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/zotlink.js",
+      "line": 18,
+      "column": 23,
+      "snippet": "old_filepath = OS.Path.normalize(old_filepath)",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/zotlink.js",
+      "line": 27,
+      "column": 24,
+      "snippet": "target_folder = OS.Path.dirname(filepath)",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/zotlink.js",
+      "line": 30,
+      "column": 19,
+      "snippet": "filename = OS.Path.basename(old_filepath)",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/zotlink.js",
+      "line": 34,
+      "column": 26,
+      "snippet": "target_filepath = OS.Path.normalize(target_filepath)",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/zotlink.js",
+      "line": 37,
+      "column": 8,
+      "snippet": "OS.File.move(old_filepath, target_filepath)",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "OS.File"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the mugpeng account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotlink",
+   "version": "0.9.0",
+   "sha256": "3e26c53dc6dab6ed1d82f0d25898c7309abd873b9e2c4c398290ce70f3241527"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "065cfd078fa062496fd6cbd769a0931eecfe351137cc56bda0c3cb7f4f98908b"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "dormant",
+    "lastReleaseAt": "2024-02-19T02:29:02Z",
+    "lastCommitAt": "2024-02-19T02:37:52Z",
+    "concern": "medium"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 6",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

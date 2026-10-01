@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "deepseek-copilot-for-zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "DeepSeek API key needed for the assistant",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README setup",
+   "quote": "填写你的 `DeepSeek API Key` 并验证连接",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-ai-assistant.js:57656",
+   "quote": "var DEEPSEEK_BASE_URL = \"https://api.deepseek.com\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: '填写你的 `DeepSeek API Key` 并验证连接', and code: 'if (!settings.apiKey.trim()) { return { valid: false, error: \"API key is required\" }; }'. getSettings hardcodes 'baseURL: DEEPSEEK_BASE_URL' (https://api.deepseek.com), with no user-editable endpoint and no ollama in the code, so no local model."
+}

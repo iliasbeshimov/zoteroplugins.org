@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-mcp",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Semantic search embeddings via a hosted provider such as OpenAI",
+  "worksWithout": "The MCP server for AI clients (search, read, write) runs locally with no key",
+  "services": [
+   "OpenAI",
+   "SiliconFlow",
+   "Voyage AI",
+   "Google Gemini"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README feature list",
+   "quote": "Supports OpenAI and Ollama embedding APIs (auto-detection)",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-mcp-plugin.js:18711",
+   "quote": "apiBase: \"http://localhost:11434/v1\",",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README security feature",
+   "quote": "**Security**: Local-only operation ensuring complete data privacy",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The MCP server works with no key; keys are only for hosted embedding providers (api.openai.com, etc. in the pack's service list). Code line 18711 `apiBase: \"http://localhost:11434/v1\",` and the README quote \"Supports OpenAI and Ollama embedding APIs (auto-detection)\" show Ollama is supported for embeddings."
+}

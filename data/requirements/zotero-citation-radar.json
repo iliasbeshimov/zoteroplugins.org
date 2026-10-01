@@ -1,0 +1,38 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-citation-radar",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "OpenAlex key and a DeepSeek LLM key are both required",
+  "worksWithout": "",
+  "services": [
+   "OpenAlex",
+   "DeepSeek",
+   "Semantic Scholar"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README config table",
+   "quote": "| OpenAlex API Key | 必填 | 拉引用图。免费，[这里申请](https://openalex.org/settings/api)，30 秒 |",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README config table",
+   "quote": "| LLM API Key | 必填 | 你的 DeepSeek key",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "citation-radar.js:4549",
+   "quote": "var ENDPOINT = \"https://api.deepseek.com/v1/chat/completions\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README config table marks both the OpenAlex key and the LLM key 必填 (required). The settings menu lists only DeepSeek, OpenAI, Anthropic and Gemini as providers. The DeepSeek code uses a fixed https://api.deepseek.com endpoint. There is no local endpoint."
+}

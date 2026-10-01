@@ -1,0 +1,226 @@
+{
+ "repo": "ashwin-pothen/zocitally",
+ "slug": "zocitally",
+ "group": "sample-2026",
+ "rank": 1031,
+ "name": "Zocitally",
+ "stars": 0,
+ "downloads": 4,
+ "createdAt": "2026-08-02T15:50:03Z",
+ "tag": "v0.3.0",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zocitally-0.3.0.xpi",
+    "url": "https://github.com/ashwin-pothen/zocitally/releases/download/v0.3.0/zocitally-0.3.0.xpi",
+    "size": 54549,
+    "uploadedAt": "2026-08-03T18:38:54Z",
+    "sha256": "3ae03449457903c5b645deddf950a918e66e144988f36afc201de37e475b6034"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zocitally@ashwin-pothen",
+    "name": "Zocitally",
+    "version": "0.3.0",
+    "description": "Citation counts for Zotero, powered by OpenAlex.",
+    "homepageUrl": null,
+    "updateUrl": "https://raw.githubusercontent.com/ashwin-pothen/zocitally/main/updates.json",
+    "minVersion": "9.0",
+    "maxVersion": "9.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zocitally",
+     "version": "0.3.0",
+     "sha256": "3ae03449457903c5b645deddf950a918e66e144988f36afc201de37e475b6034"
+    },
+    "coverage": {
+     "filesTotal": 11,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": "icons/.DS_Store",
+       "reason": "not-code"
+      },
+      {
+       "path": "icons/icon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "icons/icon48.png",
+       "reason": "binary"
+      },
+      {
+       "path": "icons/icon96.png",
+       "reason": "binary"
+      },
+      {
+       "path": "locale/en-US/zocitally.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "prefs.css",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "minified",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [
+      "bootstrap.js"
+     ],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 30,
+         "column": 5268,
+         "snippet": "ero items were not modified.`},openSettings:e}}async function ne(t){let e=await Zotero.HTTP.request(\"GET\",t,{timeout:3e4,successCodes:!1,responseType:\"text\",headers:{\"User-Agent\":\"Zocitally/0.3.0 (Zot",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.openalex.org",
+       "category": "scholarly-api",
+       "provider": "OpenAlex",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 27,
+         "column": 1653,
+         "snippet": "ion O(t,e,r){return Math.min(e!==null?e:r.baseDelayMs*2**t,r.maxDelayMs)}var ge=\"https://api.openalex.org\",c=class extends Error{constructor(r,n,i=null){super(r);this.code=n;this.status=i;this.name=\"O",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "openalex.org",
+       "category": "unknown",
+       "flags": [],
+       "usage": "link",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "preferences.js",
+         "line": 1,
+         "column": 824,
+         "snippet": "yId(\"zocitally-clear-cache\");t?.addEventListener(\"command\",()=>Zotero.launchURL(\"https://openalex.org/settings/api\")),e?.addEventListener(\"command\",()=>void this.testConnection()),n?.addEventListener(",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 1,
+        "column": 0,
+        "snippet": "pref(\"extensions.zocitally.apiKey\", \"\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "extensions.zocitally.apiKey"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 14,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/ashwin-pothen/zocitally/main/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/ashwin-pothen/zocitally/main/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "scholarly-api": [
+      "api.openalex.org"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

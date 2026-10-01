@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-immersivetranslate",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Immersive Translate Zotero authorization code (for Pro members)",
+  "worksWithout": "",
+  "services": [
+   "Immersive Translate"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Usage step 3",
+   "quote": "在插件的设置页面，粘贴你的 Zotero 授权码，点击 `测试` 按钮，如果显示 `测试成功`，则说明配置成功",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.immersivetranslate.authkey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "description",
+   "where": "GitHub description",
+   "quote": "Zotero BabelDOC plugin, for Immersive Translate Pro members.",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README steps tell the user to paste their Zotero authorization code, and the code sends it as \"Authorization: Bearer ${getPref(\"authkey\")}\". The default authkey is empty. It is a Pro-member service (BabelDOC) with no local model support."
+}

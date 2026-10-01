@@ -1,0 +1,571 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paper-translator",
+ "repo": "lubinxtu/zotero-paper-translator",
+ "version": "0.1.8",
+ "tag": "v0.1.8",
+ "releaseAuthor": "lubinxtu",
+ "publishedAt": "2026-08-10T04:33:00Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-paper-translator.xpi",
+  "url": "https://github.com/lubinxtu/zotero-paper-translator/releases/download/v0.1.8/zotero-paper-translator.xpi",
+  "size": 560235,
+  "sha256": "02809cb243fe1d6f2e1eec6adba8bc8190ca7eb220e7c693caa229e530e3d9da",
+  "githubAssetId": 508288477,
+  "uploader": "lubinxtu",
+  "uploadedAt": "2026-08-10T04:33:03Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-paper-translator@lubinxtu.github.io",
+  "name": "论文翻译 (Paper Translator)",
+  "version": "0.1.8",
+  "description": "将选中的英文 PDF 论文通过 LLM 翻译为中文，保留公式与表格结构，并生成可导入 Zotero 的中译 HTML / PDF 附件。基于 paper-translator 技能。",
+  "homepageUrl": "https://github.com/lubinxtu/zotero-paper-translator",
+  "updateUrl": "https://github.com/lubinxtu/zotero-paper-translator/releases/latest/download/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 6310,
+   "sha256": "6e1cfa8f9d8ba6d30f8cf49cd14b33cbcbcf27bf7987181e423344055ac09025"
+  },
+  {
+   "path": "index.js",
+   "size": 2141050,
+   "sha256": "3b6bfaba7f8d2da0e50038af4524a66ff50dad98d527e2951ce2b6f8bb4582d7"
+  },
+  {
+   "path": "manifest.json",
+   "size": 689,
+   "sha256": "e426beef50a872d4a98273d2db50bd195b8f5461778b4c787ee80aea096df7ef"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 2686,
+   "sha256": "722c3772a632b41c7b75c280c12092f0915c25b283aa6f376a27e86a6bc949d5"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-paper-translator",
+   "version": "0.1.8",
+   "sha256": "02809cb243fe1d6f2e1eec6adba8bc8190ca7eb220e7c693caa229e530e3d9da"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 2150046,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "minified",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [
+    "index.js"
+   ],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "pdfjs-dist",
+     "files": [
+      "index.js"
+     ],
+     "identifiedBy": "package-json"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 6,
+     "inVendoredCodeOnly": false,
+     "libraries": [
+      "pdfjs-dist"
+     ],
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 1109,
+       "column": 27,
+       "snippet": "const response = await fetch(url);",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 13120,
+       "column": 9,
+       "snippet": "return fetch(url, {",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 27685,
+       "column": 16,
+       "snippet": "res = await fetch(url, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "xhr",
+     "occurrences": 2,
+     "inVendoredCodeOnly": true,
+     "libraries": [
+      "pdfjs-dist"
+     ],
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 1124,
+       "column": 20,
+       "snippet": "const request = new XMLHttpRequest();",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 13485,
+       "column": 16,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 28090,
+       "column": 18,
+       "snippet": "const urlHint = \"\\u63A8\\u8350\\uFF1A\\n\\u2022 OpenAI: https://api.openai.com/v1\\n\\u2022 DeepSeek: https://api.deepseek.com\\n\\u2022 \\u5176\\u4ED6\\u517C\\u5BB9\\u63A5\\u53E3\\u5730\\u5740\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openai.com",
+     "category": "llm-provider",
+     "provider": "OpenAI",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 27673,
+       "column": 31,
+       "snippet": "const url = (opts.baseURL || \"https://api.openai.com/v1\").replace(/\\/+$/, \"\") + \"/chat/completions\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 27845,
+       "column": 11,
+       "snippet": "baseURL: \"https://api.openai.com/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 28090,
+       "column": 18,
+       "snippet": "const urlHint = \"\\u63A8\\u8350\\uFF1A\\n\\u2022 OpenAI: https://api.openai.com/v1\\n\\u2022 DeepSeek: https://api.deepseek.com\\n\\u2022 \\u5176\\u4ED6\\u517C\\u5BB9\\u63A5\\u53E3\\u5730\\u5740\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "cdn.jsdelivr.net",
+     "category": "cdn",
+     "provider": "jsDelivr",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 27749,
+       "column": 18,
+       "snippet": "var MATHJAX_CDN = \"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "foo.bar",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": true,
+     "libraries": [
+      "pdfjs-dist"
+     ],
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 1188,
+       "column": 32,
+       "snippet": "return new URL(urlString, \"https://foo.bar\");",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 1192,
+       "column": 52,
+       "snippet": "return new URL(decodeURIComponent(urlString), \"https://foo.bar\");",
+       "inVendoredCode": true
+      }
+     ]
+    },
+    {
+     "host": "www.apache.org",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 27503,
+       "column": 29,
+       "snippet": "var pdf_worker_raw_default = '/**\\n * @licstart The following is the entire license notice for the\\n * JavaScript code in this page\\n *\\n * Copyright 2024 Mozilla Foundation\\n *\\n * Licensed under the",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.xfa.org",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 8,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 27503,
+       "column": 29,
+       "snippet": "var pdf_worker_raw_default = '/**\\n * @licstart The following is the entire license notice for the\\n * JavaScript code in this page\\n *\\n * Copyright 2024 Mozilla Foundation\\n *\\n * Licensed under the",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "http://<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "index.js",
+       "line": 272,
+       "column": 14,
+       "snippet": "url = `http://${url}`;",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "p-baseURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 23,
+       "column": 15,
+       "snippet": "<textbox preference=\"p-baseURL\" flex=\"1\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 7,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "index.js",
+      "line": 27981,
+      "column": 40,
+      "snippet": "if (typeof IOUtils !== \"undefined\" && IOUtils.read) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "index.js",
+      "line": 27982,
+      "column": 17,
+      "snippet": "return await IOUtils.read(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "index.js",
+      "line": 27988,
+      "column": 40,
+      "snippet": "if (typeof IOUtils !== \"undefined\" && IOUtils.write) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "index.js",
+      "line": 27989,
+      "column": 10,
+      "snippet": "await IOUtils.write(path, encoder.encode(text));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "index.js",
+      "line": 28000,
+      "column": 34,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "index.js",
+      "line": 28000,
+      "column": 78,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "index.js",
+      "line": 28039,
+      "column": 10,
+      "snippet": "await IOUtils.remove(tmpPath, { ignoreAbsent: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 1,
+      "column": 377,
+      "snippet": "{\"zotero\": {\"id\": \"zotero-paper-translator@lubinxtu.github.io\", \"update_url\": \"https://github.com/lubinxtu/zotero-paper-translator/releases/latest/download/update.json\", \"strict_min_version\": \"7.0\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/lubinxtu/zotero-paper-translator/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the lubinxtu account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-paper-translator",
+   "version": "0.1.8",
+   "sha256": "02809cb243fe1d6f2e1eec6adba8bc8190ca7eb220e7c693caa229e530e3d9da"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "ab06993daf91f4eda16957e1618a152d33449dc8ab4abc2fb73ef0dc741272bc"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Minified (compressed) code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com",
+       "api.openai.com"
+      ],
+      "unconfirmed": [
+       "api.deepseek.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-10T04:33:00Z",
+    "lastCommitAt": "2026-08-11T03:13:43Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T06:39:40Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

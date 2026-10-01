@@ -1,0 +1,41 @@
+{
+ "schemaVersion": 1,
+ "slug": "z-search",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Extra web-search providers (Brave, Tavily, Exa, etc.), some scholarly APIs, paid translation engines, and cloud AI providers",
+  "worksWithout": "Academic search, DuckDuckGo web search, Google free translate endpoint, local embeddings",
+  "services": [
+   "Brave Search",
+   "Tavily",
+   "Exa",
+   "Semantic Scholar",
+   "DeepL",
+   "OpenAI"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zsearch.search.web.defaultProvider\", \"duckduckgo\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README features",
+   "quote": "(no key needed)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zsearch.js:763",
+   "quote": "baseUrl: \"http://localhost:11434/v1\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Default web provider is duckduckgo (prefs.js) and README says \"(no key needed)\"; code has a preset {id: \"ollama\", baseUrl: \"http://localhost:11434/v1\"} at zsearch.js:763."
+}

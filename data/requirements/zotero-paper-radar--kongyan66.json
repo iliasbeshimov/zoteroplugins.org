@@ -1,0 +1,38 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paper-radar--kongyan66",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Embedding service (needed to build profiles and rank recommendations); the default is OpenAI with an empty key",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "Volcano Engine Ark",
+   "SiliconFlow"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 模型配置",
+   "quote": "配置并测试 Embedding 服务。Embedding 是生成画像和推荐排序的必需项。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zoteroArxivDaily.embeddingAPIKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-arxiv-daily.js:5736",
+   "quote": "if (!allowInsecureLocalhost) {",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: \"Embedding 是生成画像和推荐排序的必需项\"; default embeddingBaseURL is api.openai.com with embeddingAPIKey \"\" and all presets are hosted services. Code (zotero-arxiv-daily.js:5736-5738) permits http loopback model services (\"localhost-confirmation-required\", pref allowInsecureLocalhost), and the key header is only sent if non-empty, so a local endpoint works."
+}

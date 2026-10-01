@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "slug": "local-immersive-translate",
+  "version": "0.0.27",
+  "sha256": "0f2c5c08a2507d0f839b0ab80aade7d445ac2ff302442b38298db329e9ea1713",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
+  "summary": "When you press Install / Repair Local Backend, it downloads a setup script from the developer's GitHub repository and runs it, as the README says. The script comes from the current main branch, isn't checked, and installs more software itself.",
+  "facts": {
+    "what": "A setup script (install-local-backend.sh on macOS/Linux, install-local-backend.ps1 on Windows) fetched from the developer's GitHub repo main branch and run in a hidden shell. The script, in turn, fetches the project source, BabelDOC (pinned v0.6.4) and uv (from astral.sh), and installs Python dependencies into ~/Local-Immersive-Translate.",
+    "urls": [
+      "https://raw.githubusercontent.com/MARS-ROBOTICS-star/Local-Immersive-Translate/main/scripts/install-local-backend.sh",
+      "https://raw.githubusercontent.com/MARS-ROBOTICS-star/Local-Immersive-Translate/main/scripts/install-local-backend.ps1",
+      "https://astral.sh/uv/install.sh",
+      "https://github.com/funstory-ai/BabelDOC.git"
+    ],
+    "source": "developer-own",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "user-clicks-install",
+    "toldInReadme": "yes",
+    "readmeQuote": "打开插件偏好设置，点击 `安装/修复本地后端`。插件会自动检查并安装本地后端所需环境和依赖。",
+    "triggerQuote": {
+      "file": "locale/en-US/localimmersivetranslate-preferences.ftl",
+      "text": "localimmersivetranslate-pref-install-button = Install / Repair Local Backend"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/localimmersivetranslate.js",
+      "text": "curl -fsSL '${scriptUrl}' -o \"$install_script\""
+    },
+    "notes": "Real, but only runs when the user clicks the Install / Repair Local Backend button in preferences (installOrRepairLocalBackend). The UI strings say it is installing the local BabelDOC backend and may take a few minutes; the button label alone does not mention a download, but the preference description says it will 'deploy the local environment and BabelDOC automatically'. README states the click authorizes the installer. The script URL points at the mutable main branch (not pinned to a commit or release) and no hash or checksum is compared before it runs (bash with ASSUME_YES=1, or PowerShell with -ExecutionPolicy Bypass). Installer script, fetched live from the repo, itself downloads uv via curl from astral.sh and clones BabelDOC from funstory-ai on GitHub; the installed program is standard open-source tooling (BabelDOC, uv). I did not run the installer, and the plugin's own xpi hash was verified per the pack, which is unrelated to this download."
+  }
+}

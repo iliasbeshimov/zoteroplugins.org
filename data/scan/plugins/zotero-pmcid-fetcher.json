@@ -1,0 +1,195 @@
+{
+ "repo": "retorquere/zotero-pmcid-fetcher",
+ "slug": "zotero-pmcid-fetcher",
+ "group": "top",
+ "rank": 56,
+ "name": "PMCID fetcher for Zotero",
+ "stars": 143,
+ "downloads": 88882,
+ "createdAt": "2020-08-29T01:05:35Z",
+ "tag": "v1.0.3",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-pmcid-fetcher-1.0.3.xpi",
+    "url": "https://github.com/retorquere/zotero-pmcid-fetcher/releases/download/v1.0.3/zotero-pmcid-fetcher-1.0.3.xpi",
+    "size": 29025,
+    "uploadedAt": "2026-08-24T15:02:39Z",
+    "sha256": "01b30c1a5aa38b0591e61e41775592b9e383eb67b429cb3afa3a79c7f7766164"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero-pmcid-fetcher@iris-advies.com",
+    "name": "PMCID fetcher for Zotero",
+    "version": "1.0.3",
+    "description": "PMCID fetcher",
+    "homepageUrl": null,
+    "updateUrl": "https://github.com/retorquere/zotero-pmcid-fetcher/releases/download/release/updates.json",
+    "minVersion": "8.0.1",
+    "maxVersion": "10.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-pmcid-fetcher",
+     "version": "1.0.3",
+     "sha256": "01b30c1a5aa38b0591e61e41775592b9e383eb67b429cb3afa3a79c7f7766164"
+    },
+    "coverage": {
+     "filesTotal": 5,
+     "filesAnalyzed": 3,
+     "filesSkipped": [
+      {
+       "path": "logo.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "jose",
+       "files": [
+        "bootstrap.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "uzip",
+       "files": [
+        "bootstrap.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "zotero-plugin",
+       "files": [
+        "bootstrap.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 2311,
+         "column": 29,
+         "snippet": "const response = await fetch(`https://filebin.net/${this.key}/${this.name}`, {",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib.js",
+         "line": 284,
+         "column": 33,
+         "snippet": "const response = await fetch(url);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "lib.js",
+         "line": 319,
+         "column": 33,
+         "snippet": "const response = await fetch(url);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "lib.js",
+         "line": 354,
+         "column": 38,
+         "snippet": "const text = await (await fetch(url)).text();",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [],
+     "dynamicUrls": [
+      {
+       "pattern": "https://filebin.net/<expr>/<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 2311,
+         "column": 29,
+         "snippet": "const response = await fetch(`https://filebin.net/${this.key}/${this.name}`, {",
+         "inVendoredCode": true
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 9,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/retorquere/zotero-pmcid-fetcher/releases/download/release/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/retorquere/zotero-pmcid-fetcher/releases/download/release/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "unknown-endpoints",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

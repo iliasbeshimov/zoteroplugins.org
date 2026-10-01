@@ -1,0 +1,346 @@
+{
+ "schemaVersion": 1,
+ "slug": "paper-library-zotero",
+ "repo": "wqytommy666/paper-library-zotero",
+ "version": "0.2.1",
+ "tag": "v0.2.1",
+ "releaseAuthor": "wqytommy666",
+ "publishedAt": "2026-07-31T12:00:16Z",
+ "prerelease": false,
+ "asset": {
+  "name": "paperlibrary-companion.xpi",
+  "url": "https://github.com/wqytommy666/paper-library-zotero/releases/download/v0.2.1/paperlibrary-companion.xpi",
+  "size": 9628,
+  "sha256": "0d5688b6965579165247b7afe3baedde3bfc8ecd39dd8e415239ff3062058648",
+  "githubAssetId": 496648060,
+  "uploader": "wqytommy666",
+  "uploadedAt": "2026-07-31T12:00:15Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "paperlibrary-companion@avc2-669.originquest.org",
+  "name": "Paper Library Companion",
+  "version": "0.2.1",
+  "description": "把 Zotero 条目上传到 Paper Library(经 Ingestion API):右键选中上传 + 可选自动增量同步;PDF 分块上传/秒传/断点续传。",
+  "updateUrl": "https://avc2-669.originquest.org/zotero/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "8.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2384,
+   "sha256": "e461189fbdc371f45cb48d8498410d0d4723613ab7ce46e487fb5e0185c06308"
+  },
+  {
+   "path": "manifest.json",
+   "size": 539,
+   "sha256": "cb48c8aa6f5abf3ebaacf15d1bd528c05fe345b6b936ee0c1ed32edd6b7db1f8"
+  },
+  {
+   "path": "src/paperlibrary.js",
+   "size": 22452,
+   "sha256": "8d2f12c26b6efecc15067742006b9662523ecc1b7719c77d36b2b30762c2b9cf"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "paper-library-zotero",
+   "version": "0.2.1",
+   "sha256": "0d5688b6965579165247b7afe3baedde3bfc8ecd39dd8e415239ff3062058648"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 24836,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/paperlibrary.js",
+       "line": 183,
+       "column": 27,
+       "snippet": "const resp = await f(url, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/paperlibrary.js",
+       "line": 193,
+       "column": 24,
+       "snippet": "const xhr = await Zotero.HTTP.request(method, url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "avc2-669.originquest.org",
+     "category": "developer-server",
+     "provider": "Plugin developer (name match)",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/paperlibrary.js",
+       "line": 42,
+       "column": 14,
+       "snippet": "\"https://avc2-669.originquest.org\").replace(/\\/+$/, \"\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/paperlibrary.js",
+       "line": 183,
+       "column": 27,
+       "snippet": "const resp = await f(url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/paperlibrary.js",
+       "line": 193,
+       "column": 24,
+       "snippet": "const xhr = await Zotero.HTTP.request(method, url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "src/paperlibrary.js",
+      "line": 83,
+      "column": 26,
+      "snippet": "const bytes = await IOUtils.read(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/paperlibrary.js",
+      "line": 102,
+      "column": 27,
+      "snippet": "const stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/paperlibrary.js",
+      "line": 234,
+      "column": 26,
+      "snippet": "const bytes = await IOUtils.read(file._path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://avc2-669.originquest.org/zotero/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://avc2-669.originquest.org/zotero/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the wqytommy666 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "paper-library-zotero",
+   "version": "0.2.1",
+   "sha256": "0d5688b6965579165247b7afe3baedde3bfc8ecd39dd8e415239ff3062058648"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "71c94554e9d8a7f8d35a6ac2618fce5a537f9f57e5d6b603db235c45cf1997fe"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "other-host",
+     "label": "Updates come from avc2-669.originquest.org",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "developer-servers",
+    "hosts": [
+     {
+      "category": "developer-server",
+      "hosts": [
+       "avc2-669.originquest.org"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts the developer's server: avc2-669.originquest.org",
+    "legalRisk": false,
+    "drivers": [
+     "DS-DEVELOPER"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-31T12:00:16Z",
+    "lastCommitAt": "2026-08-02T15:08:09Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7–8",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Contacts the developer's server: avc2-669.originquest.org"
+   ]
+  }
+ }
+}

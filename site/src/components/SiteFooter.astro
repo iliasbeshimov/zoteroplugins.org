@@ -1,0 +1,73 @@
+---
+import { REPO, REPORT_URL, RESPOND_URL } from "../lib/links.ts";
+
+const cols = [
+  {
+    t: "Find",
+    l: [["Browse", "/browse"], ["How to install a plugin", "/install"], ["Grade log", "/log"], ["Submit a plugin", "/submit"]],
+  },
+  { t: "Trust", l: [["How we grade", "/how-we-grade"], ["Report a problem", REPORT_URL]] },
+  {
+    t: "Developers",
+    l: [["Your plugin's checklist", "/developers"], ["Respond to a card", RESPOND_URL], ["Badges", "/developers#badge"], ["Plugin data (JSON)", "/api/plugins.json"]],
+  },
+  { t: "About", l: [["About this site", "/about"], ["Source code", REPO], ["RSS", "/log.xml"]] },
+];
+---
+
+<footer class="site-footer">
+  {
+    cols.map((c) => (
+        <div class="col">
+          <strong>{c.t}</strong>
+          {c.l.map(([t, href]) => (
+            <a href={href}>{t}</a>
+          ))}
+        </div>
+      ))
+  }
+  <span class="disclaimer">
+    zoteroplugins.org is an independent project, not affiliated with Zotero or the Corporation for Digital Scholarship.
+  </span>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    color: var(--ink-2);
+    background: var(--surface);
+    padding: 32px var(--gutter);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    font-size: 14px;
+  }
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .col strong {
+    font: 600 13px var(--font-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .col a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .col a:hover {
+    text-decoration: underline;
+  }
+  .disclaimer {
+    grid-column: 1 / -1;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 720px) {
+    .site-footer {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

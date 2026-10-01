@@ -1,0 +1,43 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-academic-translator",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "DeepSeek and Gemini engines (the default is DeepSeek) need the user's own API key",
+  "worksWithout": "Local Ollama or local agy CLI engines need no key",
+  "services": [
+   "DeepSeek",
+   "Google Gemini"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, translation engines table",
+   "quote": "| 本机 Ollama | OpenAI 兼容的 Ollama 地址 | Base URL、已下载的模型名 |",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:23711",
+   "quote": "const base = cleanBaseUrl(config.apiBaseUrl, \"http://127.0.0.1:11434/v1\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, translation engines table",
+   "quote": "| DeepSeek | DeepSeek OpenAI 兼容接口 | API 地址、DeepSeek API Key、模型名 |",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, data and privacy",
+   "quote": "切换到 Agy、Ollama 等本地端点时不会携带旧的云端 Key",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README table lists 本机 Ollama and 本机模型（agy） engines that need only a Base URL/executable and model name, while the DeepSeek default needs a key. The Ollama table row and the 127.0.0.1:11434 code snippet are both in the pack."
+}

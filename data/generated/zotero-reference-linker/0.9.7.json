@@ -1,0 +1,316 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-reference-linker",
+ "repo": "ottersem/zotero-reference-linker",
+ "version": "0.9.7",
+ "tag": "v0.9.7",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-09-05T05:08:54Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-reference-linker-0.9.7.xpi",
+  "url": "https://github.com/ottersem/zotero-reference-linker/releases/download/v0.9.7/zotero-reference-linker-0.9.7.xpi",
+  "size": 57550,
+  "sha256": "163a4fb5114a6f9727b7d5f91715ecbf9484fd62fb367fa6bc99ae7a5501c123",
+  "githubAssetId": 545393835,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-09-05T05:08:54Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-reference-linker@ottersem.github.io",
+  "name": "Reference Linker",
+  "version": "0.9.7",
+  "description": "Highlights PDF references and links papers already in your Zotero library.",
+  "updateUrl": "https://raw.githubusercontent.com/ottersem/zotero-reference-linker/main/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "10.99.99"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 573,
+   "sha256": "7e496723342870e9fa87599b476db5c72915f4980df0602168858223af8e0daf"
+  },
+  {
+   "path": "content/reference-linker.js",
+   "size": 71877,
+   "sha256": "b289910871133af5f784da912274a799b738af9baba4452502558f2ce1a37307"
+  },
+  {
+   "path": "content/reference-linker.js.map",
+   "size": 124793,
+   "sha256": "acf1b812282984bb9e574d07aba8cef7c0776dcbb8a200654701a1af3cf2fa32"
+  },
+  {
+   "path": "icon.png",
+   "size": 3386,
+   "sha256": "38b9d722f9b528b30e643ef8064b864d3b1ebcf7ecc10f7e6983762be607a2d3"
+  },
+  {
+   "path": "icon@2x.png",
+   "size": 3386,
+   "sha256": "38b9d722f9b528b30e643ef8064b864d3b1ebcf7ecc10f7e6983762be607a2d3"
+  },
+  {
+   "path": "manifest.json",
+   "size": 550,
+   "sha256": "535b994c34640b8f1861829e08306f6f4041510244de7dfaf4ac8348348bf72d"
+  },
+  {
+   "path": "README.md",
+   "size": 4023,
+   "sha256": "96a35eb340cf6b4f22d1c99bdae3b5f479584aac50176aabdd51658801a6397e"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-reference-linker",
+   "version": "0.9.7",
+   "sha256": "163a4fb5114a6f9727b7d5f91715ecbf9484fd62fb367fa6bc99ae7a5501c123"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "content/reference-linker.js.map",
+     "reason": "not-code"
+    },
+    {
+     "path": "icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icon@2x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 72450,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": true,
+    "files": [
+     "content/reference-linker.js",
+     "content/reference-linker.js.map"
+    ]
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/reference-linker.js",
+       "line": 837,
+       "column": 77,
+       "snippet": "if (citation.doi) actions.push({ kind: \"open\", label: \"Open DOI\", value: `https://doi.org/${citation.doi}` });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "scholar.google.com",
+     "category": "scholarly-api",
+     "provider": "Google Scholar",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/reference-linker.js",
+       "line": 842,
+       "column": 15,
+       "snippet": "value: `https://scholar.google.com/scholar?q=${encodeURIComponent(citation.title)}`",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/ottersem/zotero-reference-linker/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/ottersem/zotero-reference-linker/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-reference-linker",
+   "version": "0.9.7",
+   "sha256": "163a4fb5114a6f9727b7d5f91715ecbf9484fd62fb367fa6bc99ae7a5501c123"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "4b3a348cee7e761d20788aa889252babc4f8b1f3b50d25e3815e2ee3ee861d97"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": true,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found; its code names known services",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-05T05:08:54Z",
+    "lastCommitAt": "2026-09-05T05:21:56Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T05:10:09Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

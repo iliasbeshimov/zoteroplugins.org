@@ -1,0 +1,277 @@
+---
+import { capFirst, type Plugin } from "../lib/atlas.ts";
+import GradeTag from "./GradeTag.astro";
+
+/**
+ * Downloading is the moment of decision, so the grade shows again here. A and A+ go straight to
+ * the steps, B asks you to read the reason first, C offers better-graded plugins before the
+ * download. Nothing is ever blocked: the user decides.
+ */
+interface Props {
+  p: Plugin;
+  better: Plugin[];
+}
+const { p, better } = Astro.props;
+const pause = p.grade === "B" || p.grade === "C";
+const why = capFirst(p.because);
+const job = p.jobs[0];
+---
+
+<dialog class="sheet" data-install aria-label={`Install ${p.name}`}>
+  <div class="head">
+    <span class="tr">
+      <strong>Install {p.name}</strong>
+      <form method="dialog"><button class="x" aria-label="Close">×</button></form>
+    </span>
+    <span class="g"><GradeTag grade={p.grade} size="sm" /><span>{p.gradeLong}</span></span>
+  </div>
+
+  {
+    p.grade === "B" && (
+      <div class="pause" data-pause>
+        <div class="box rev">
+          <strong>Before you install: {why}.</strong>
+          <a href="#scorecard" data-close>
+            Read the finding
+          </a>
+        </div>
+        <div class="acts">
+          <button type="button" class="btn" style="border:1.5px solid var(--ink)" data-reveal>
+            I understand, show install steps
+          </button>
+          {job && (
+            <a href={`/c/${job}`} class="btn quiet">
+              Compare with similar plugins
+            </a>
+          )}
+        </div>
+      </div>
+    )
+  }
+  {
+    p.grade === "C" && (
+      <div class="pause" data-pause>
+        <div class="box ser">
+          <strong>We don't recommend it</strong>
+          <span>{why}.</span>
+        </div>
+        <div class="alts">
+          <span class="eyebrow">Better-graded plugins for the same job</span>
+          {better.length ? (
+            better.map((a) => (
+              <a href={`/p/${a.slug}`} class="alt">
+                <GradeTag grade={a.grade} size="xs" />
+                {a.name}
+              </a>
+            ))
+          ) : (
+            <div class="none">We don't know one yet.</div>
+          )}
+        </div>
+        <div class="acts">
+          <a href="#scorecard" class="btn btn-dark" data-close>
+            Read what we found
+          </a>
+          <button type="button" class="linkish" data-reveal>
+            Download anyway
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  <div class="steps-wrap" data-steps hidden={pause}>
+    <ol class="steps">
+      <li>
+        <span class="n">1</span>
+        <span class="c">
+          <span>Download the plugin file</span>
+          <a href={p.installUrl ?? undefined} class="btn btn-primary" download>
+            Download v{p.version}<span class="sz">.xpi · {p.size}</span>
+          </a>
+        </span>
+      </li>
+      <li><span class="n">2</span><span>In Zotero, open <strong>Tools › Plugins</strong></span></li>
+      <li>
+        <span class="n">3</span><span>Click the gear, choose <strong>Install Plugin From File…</strong> and pick the file</span>
+      </li>
+    </ol>
+    <a href="/install" class="guide">Step-by-step guide with pictures</a>
+  </div>
+</dialog>
+
+<script>
+  for (const dlg of document.querySelectorAll<HTMLDialogElement>("dialog[data-install]")) {
+    for (const b of document.querySelectorAll<HTMLElement>("[data-open-install]"))
+      b.addEventListener("click", () => dlg.showModal());
+    dlg.addEventListener("click", (e) => {
+      if (e.target === dlg) dlg.close();
+    });
+    for (const r of dlg.querySelectorAll<HTMLElement>("[data-reveal]"))
+      r.addEventListener("click", () => {
+        dlg.querySelector<HTMLElement>("[data-pause]")?.setAttribute("hidden", "");
+        dlg.querySelector<HTMLElement>("[data-steps]")!.hidden = false;
+      });
+    for (const c of dlg.querySelectorAll<HTMLElement>("[data-close]")) c.addEventListener("click", () => dlg.close());
+  }
+</script>
+
+<style>
+  .sheet {
+    margin: auto;
+    max-height: calc(100dvh - 32px);
+    width: min(460px, calc(100vw - 32px));
+    padding: 0;
+    border: 0;
+    border-radius: 18px;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: var(--shadow-2);
+  }
+  .sheet::backdrop {
+    background: oklch(0.2 0.02 265 / 0.55);
+  }
+  .head {
+    padding: 22px 24px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .tr {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .tr strong {
+    font-size: 20px;
+    letter-spacing: -0.015em;
+  }
+  .x {
+    all: unset;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--ink-2);
+    padding: 0 4px;
+  }
+  .g {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 650;
+  }
+  .pause[hidden],
+  .steps-wrap[hidden] {
+    display: none;
+  }
+  .box {
+    margin: 18px 24px 0;
+    padding: 16px 18px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14.5px;
+    line-height: 1.45;
+    border: 1px solid;
+  }
+  .box strong {
+    font-size: 16px;
+  }
+  .box a {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .rev {
+    background: var(--rev-bg);
+    border-color: var(--rev-line);
+  }
+  .ser {
+    background: var(--ser-bg);
+    border-color: var(--ser-line);
+  }
+  .acts {
+    padding: 18px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .quiet {
+    border-color: transparent;
+    color: var(--accent-fg);
+  }
+  .linkish {
+    all: unset;
+    align-self: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--ink-2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .alts {
+    padding: 18px 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .alt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-weight: 620;
+    text-decoration: none;
+  }
+  .alt:hover {
+    text-decoration: underline;
+  }
+  .none {
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1.5px dashed var(--line-strong);
+    font-size: 14.5px;
+    color: var(--ink-2);
+  }
+  .steps {
+    margin: 0;
+    padding: 18px 24px 24px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 10px;
+    font-size: 15.5px;
+    line-height: 1.45;
+  }
+  .n {
+    font: 700 14px/1.5 var(--font-mono);
+    color: var(--accent-fg);
+  }
+  .c {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .c .btn {
+    align-self: flex-start;
+  }
+  .guide {
+    display: block;
+    margin: -8px 24px 22px 62px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .sz {
+    font: 500 12.5px var(--font-mono);
+    opacity: 0.85;
+  }
+</style>

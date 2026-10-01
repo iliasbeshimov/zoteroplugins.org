@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-kindle-sync",
+  "version": "0.5.1",
+  "sha256": "78e21a8ceb6ad3149b6d60b5dd3ac1ab034c4fb56369192b8af97df5dbf7ba4b",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "low",
+  "rule": "CAP-DOWNLOAD-EXEC-TOLD",
+  "summary": "The first time you sync, it downloads the sync2kindle tool (12–14 MB) from that project's GitHub releases and runs it, as its README says. It takes whatever the latest release is and doesn't check it against a fingerprint.",
+  "facts": {
+    "what": "The s2k program (sync2kindle, an open-source Kindle file-transfer tool, about 12-14 MB zip) for the user's operating system, unpacked into the Zotero profile folder and then run to copy PDFs to a Kindle over USB",
+    "urls": [
+      "https://github.com/${this.S2K_REPO}/releases/latest/download/${asset}",
+      "S2K_REPO: \"rupor-github/sync2kindle\""
+    ],
+    "source": "official",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "automatic-on-feature-use",
+    "toldInReadme": "yes",
+    "readmeQuote": "The plugin downloads the matching build from the\n  sync2kindle releases on first use and keeps it in the Zotero profile folder.",
+    "triggerQuote": {
+      "file": "src/zoterokindle.js",
+      "text": "const s2kPath = await this.ensureS2K(ui);"
+    },
+    "integrityQuote": {
+      "file": "src/zoterokindle.js",
+      "text": "await Zotero.HTTP.download(url, zipPath);"
+    },
+    "notes": "No hash or checksum comparison anywhere in the plugin; zip is extracted, chmod 755, then run via Subprocess.call. URL uses releases/latest, so whatever the sync2kindle maintainer publishes next is fetched (not pinned to a version). Download happens silently on first sync or auto-sync when no s2k path is set and no binary exists in the profile; a UI message says 'Downloading ... from sync2kindle releases'. The prefs pane also has a 'Download latest' button and text saying the plugin downloads s2k on first use. Asset names: s2k-darwin-arm64/amd64, linux-amd64, windows-amd64 zips (about 12-14 MB each; latest v1.7.2). Source is a third-party project (rupor-github), not the plugin author's own repo, but the README links and names it. User can instead set their own s2k path. Not run or downloaded by me."
+  }
+}

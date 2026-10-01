@@ -1,0 +1,280 @@
+{
+ "repo": "retorquere/zotero-open-pdf",
+ "slug": "zotero-open-pdf",
+ "group": "top",
+ "rank": 30,
+ "name": "Open PDF for Zotero",
+ "stars": 266,
+ "downloads": 350644,
+ "createdAt": "2022-06-23T13:32:25Z",
+ "tag": "v1.0.14",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-open-pdf-1.0.14.xpi",
+    "url": "https://github.com/retorquere/zotero-open-pdf/releases/download/v1.0.14/zotero-open-pdf-1.0.14.xpi",
+    "size": 34941,
+    "uploadedAt": "2026-08-21T08:16:03Z",
+    "sha256": "57c28fbef1cf8f510e8c96923939a36aea68adcc72b152ee5b0865de305ff5b1"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero-open-pdf@iris-advies.com",
+    "name": "Open PDF for Zotero",
+    "version": "1.0.14",
+    "description": "Open PDF",
+    "homepageUrl": null,
+    "updateUrl": "https://github.com/retorquere/zotero-open-pdf/releases/download/release/updates.json",
+    "minVersion": "8.0.1",
+    "maxVersion": "10.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-open-pdf",
+     "version": "1.0.14",
+     "sha256": "57c28fbef1cf8f510e8c96923939a36aea68adcc72b152ee5b0865de305ff5b1"
+    },
+    "coverage": {
+     "filesTotal": 6,
+     "filesAnalyzed": 2,
+     "filesSkipped": [
+      {
+       "path": "icons/epub.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "icons/pdf.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "icons/snapshot.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "jose",
+       "files": [
+        "lib.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "shell-quote",
+       "files": [
+        "lib.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "uzip",
+       "files": [
+        "lib.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "zotero-plugin",
+       "files": [
+        "lib.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "lib.js",
+         "line": 2737,
+         "column": 29,
+         "snippet": "const response = await fetch(`https://filebin.net/${this.key}/${this.name}`, {",
+         "inVendoredCode": true
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": true,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "lib.js",
+         "line": 2557,
+         "column": 16,
+         "snippet": "\"homepage\": \"https://github.com/retorquere/zotero-plugin/wiki\",",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib.js",
+         "line": 2664,
+         "column": 13,
+         "snippet": "\"url\": \"git+https://github.com/retorquere/zotero-plugin.git\"",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "lib.js",
+         "line": 2686,
+         "column": 13,
+         "snippet": "\"url\": \"https://github.com/retorquere/zotero-plugin/issues\"",
+         "inVendoredCode": true
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "https://filebin.net/<expr>/<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "lib.js",
+         "line": 2737,
+         "column": 29,
+         "snippet": "const response = await fetch(`https://filebin.net/${this.key}/${this.name}`, {",
+         "inVendoredCode": true
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "lib.js",
+        "line": 2995,
+        "column": 16,
+        "snippet": "const cmd = Zotero.File.pathToFile(exe);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "process-launch",
+      "occurrences": 2,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "lib.js",
+        "line": 3004,
+        "column": 36,
+        "snippet": "const proc = Components.classes[\"@mozilla.org/process/util;1\"].createInstance(Components.interfaces.nsIProcess);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "lib.js",
+        "line": 3004,
+        "column": 82,
+        "snippet": "const proc = Components.classes[\"@mozilla.org/process/util;1\"].createInstance(Components.interfaces.nsIProcess);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "nsIProcess"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 9,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/retorquere/zotero-open-pdf/releases/download/release/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/retorquere/zotero-open-pdf/releases/download/release/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "unknown-endpoints",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "process-launch",
+      "concern": "medium"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION",
+     "CAP-PROCESS"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

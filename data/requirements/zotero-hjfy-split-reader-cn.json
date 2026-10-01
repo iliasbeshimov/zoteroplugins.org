@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-hjfy-split-reader-cn",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "HJFY login cookie, only for translation tasks that need a signed-in session",
+  "worksWithout": "Fetching HJFY translations and split-view reading with the cookie left empty",
+  "services": [
+   "hjfy.top"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README main features",
+   "quote": "支持在设置中填写 HJFY Cookie，用于需要登录态的翻译任务。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.hjfySplitReaderCN.hjfyCookie\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "description",
+   "where": "Manifest description",
+   "quote": "Fetch HJFY translations for papers and open them in a split-view reader",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Empty default hjfyCookie pref. README says '如果 HJFY 创建翻译任务时提示需要登录，可以在 Zotero 插件设置中填写 HJFY Cookie'. The cookie is only needed when login is prompted, so optional is right."
+}

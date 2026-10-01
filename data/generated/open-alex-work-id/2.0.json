@@ -1,0 +1,311 @@
+{
+ "schemaVersion": 1,
+ "slug": "open-alex-work-id",
+ "repo": "mtillman14/open-alex-work-id",
+ "version": "2.0",
+ "tag": "1.1.0",
+ "releaseAuthor": "mtillman14",
+ "publishedAt": "2025-09-17T23:47:30Z",
+ "prerelease": false,
+ "asset": {
+  "name": "open-alex-work-id-2.0.xpi",
+  "url": "https://github.com/mtillman14/open-alex-work-id/releases/download/1.1.0/open-alex-work-id-2.0.xpi",
+  "size": 3996,
+  "sha256": "a7b3364e8eda08f21008cbb3a1601c1fb7af24c781dccb2eb85665ef3ec2e1d6",
+  "githubAssetId": 294431444,
+  "uploader": "mtillman14",
+  "uploadedAt": "2025-09-17T23:46:44Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "open-alex-work-id@example.com",
+  "name": "OpenAlex Work ID",
+  "version": "2.0",
+  "description": "Set the OpenAlex Work ID",
+  "homepageUrl": "https://github.com/mtillman14/open-alex-work-id",
+  "updateUrl": "https://zotero-download.s3.amazonaws.com/tmp/open-alex-work-id/updates-2.0.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "7.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 583,
+   "sha256": "2f23a9a90abcedda663071c09bdf377278660da2d445b3bf9b34d9ec9c7fc815"
+  },
+  {
+   "path": "locale/en-US/make-it-red.ftl",
+   "size": 69,
+   "sha256": "794e74c52cde9b0d08b4ad4bfe1d627d0f0f16bdcbacb35be69acb5179c2519f"
+  },
+  {
+   "path": "manifest.json",
+   "size": 437,
+   "sha256": "927f05cecfaf316c6fba6e528bf27225c7c2155d77c39cd4812b1a0e741bc63a"
+  },
+  {
+   "path": "open-alex-work-id.js",
+   "size": 7411,
+   "sha256": "54c3c2295ebfb2c242a82c36d85105acadd1caca2887e0ddf3939fdb88fb909c"
+  },
+  {
+   "path": "prefs.js",
+   "size": 53,
+   "sha256": "0aa5d04f5969218710bfa52294820e92464e222839ab205fa46c35392249074e"
+  },
+  {
+   "path": "style.css",
+   "size": 74,
+   "sha256": "c7ca53cd269238908cafb2458c1d73ad1b8967769c9cbcbf4ca81c08e6323506"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "open-alex-work-id",
+   "version": "2.0",
+   "sha256": "a7b3364e8eda08f21008cbb3a1601c1fb7af24c781dccb2eb85665ef3ec2e1d6"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/make-it-red.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "style.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 8047,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "open-alex-work-id.js",
+       "line": 210,
+       "column": 25,
+       "snippet": "let response = await fetch(full_api_url);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.openalex.org",
+     "category": "scholarly-api",
+     "provider": "OpenAlex",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "open-alex-work-id.js",
+       "line": 206,
+       "column": 19,
+       "snippet": "full_api_url = `https://api.openalex.org/works/${doi}`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "open-alex-work-id.js",
+       "line": 201,
+       "column": 14,
+       "snippet": "doi = `https://doi.org/${doi}`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 18,
+      "snippet": "\"update_url\": \"https://zotero-download.s3.amazonaws.com/tmp/open-alex-work-id/updates-2.0.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://zotero-download.s3.amazonaws.com/tmp/open-alex-work-id/updates-2.0.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the mtillman14 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "open-alex-work-id",
+   "version": "2.0",
+   "sha256": "a7b3364e8eda08f21008cbb3a1601c1fb7af24c781dccb2eb85665ef3ec2e1d6"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "af2bf852f42eb1f8ee06dc20e0b2eb6271dc049d6b243aee2adeb7cdd8dbf98b"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is copied from Zotero's sample plugin"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.openalex.org",
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2025-09-17T23:47:30Z",
+    "lastCommitAt": "2026-07-02T18:32:02Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

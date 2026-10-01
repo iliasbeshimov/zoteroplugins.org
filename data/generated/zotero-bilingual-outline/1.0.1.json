@@ -1,0 +1,362 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-bilingual-outline",
+ "repo": "lllateron/zotero-bilingual-outline",
+ "version": "1.0.1",
+ "tag": "v1.0.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-09-25T03:41:48Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-bilingual-outline-1.0.1.xpi",
+  "url": "https://github.com/lllaterOn/zotero-bilingual-outline/releases/download/v1.0.1/zotero-bilingual-outline-1.0.1.xpi",
+  "size": 19659,
+  "sha256": "cf32f03284ef9628200b5005f1133dfc85c44e949729422c61b5d9b3ec24d5b2",
+  "githubAssetId": 587444213,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-09-25T03:40:46Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "bilingual-outline@lllateron",
+  "name": "Zotero Bilingual Outline",
+  "version": "1.0.1",
+  "description": "为 PDF 目录添加中文对照，支持手动翻译、修订与笔记同步。",
+  "updateUrl": "https://raw.githubusercontent.com/lllaterOn/zotero-bilingual-outline/main/updates.json",
+  "strictMinVersion": "10.0.1",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1326,
+   "sha256": "f40de52b3bbd30e0992b7f681309d7718fbd39199cd58f2f8afc1f3087e4e156"
+  },
+  {
+   "path": "icon.svg",
+   "size": 359,
+   "sha256": "b38025bec1aa238f117547ed4f96da3259a27c216f68a5dbf51fba185b743550"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1066,
+   "sha256": "5398b2acb1664b2d559d18f48ac1475ecbc8053f5f671742ff0f16d7773f1e6a"
+  },
+  {
+   "path": "manifest.json",
+   "size": 614,
+   "sha256": "2fcb83992f015404dbeb7ac0c81312389d293b54eb086708b6b2b2e1adc88d57"
+  },
+  {
+   "path": "preferences.js",
+   "size": 485,
+   "sha256": "ebf1586df30f9aae236e29290187d319926f359d613758cbbc1cd72835c3816e"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 3257,
+   "sha256": "6e26046981ff0fbffd2fc0994f7e90bb8edcdde643e208ae742ca772300af0d9"
+  },
+  {
+   "path": "runtime.js",
+   "size": 53829,
+   "sha256": "3654ceede8cad31fd6017888e55fb7dee736c6a025dcc77aa2233b65f8c81628"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-bilingual-outline",
+   "version": "1.0.1",
+   "sha256": "cf32f03284ef9628200b5005f1133dfc85c44e949729422c61b5d9b3ec24d5b2"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 58897,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 564,
+       "column": 23,
+       "snippet": "result = await this.Z.HTTP.request(\"POST\", API_URL, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 482,
+       "column": 16,
+       "snippet": "var API_URL = \"https://api.deepseek.com/chat/completions\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 546,
+      "column": 18,
+      "snippet": "const key = this.prefs.get(\"apiKey\", \"\").trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 1010,
+      "column": 27,
+      "snippet": "const configured = !!prefs.get(\"apiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 1060,
+      "column": 6,
+      "snippet": "prefs.set(\"apiKey\", key);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 1064,
+      "column": 6,
+      "snippet": "prefs.set(\"apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 16,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/lllaterOn/zotero-bilingual-outline/main/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/lllaterOn/zotero-bilingual-outline/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-bilingual-outline",
+   "version": "1.0.1",
+   "sha256": "cf32f03284ef9628200b5005f1133dfc85c44e949729422c61b5d9b3ec24d5b2"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "40ac0a7d6cf49ed9fd835c626a94f2198210d6f9d250dd4a38be44dca66ced5d"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-25T03:41:48Z",
+    "lastCommitAt": "2026-09-25T03:41:55Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T06:43:07Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

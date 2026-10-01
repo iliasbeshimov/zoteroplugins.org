@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-geyi-translator",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "A Geyi account sign-in (browser login that issues an API key) for its cloud translation",
+  "worksWithout": "",
+  "services": [
+   "Geyi (geyi.net)"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "由[格译 Geyi](https://www.geyi.net) 云端翻译，复用你在网页端的账号、积分与术语表。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/geyi.js:22",
+   "quote": "authApiBase: \"https://translator-backend-78085454326.asia-southeast1.run.app/api/v1\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README says translation is done in Geyi's cloud and 'reuse your web account, credits and glossary'. Sign-in in the browser issues an API key that is stored as apiKeyEnc, and the backend uses Bearer Key auth. There is no local-model setting."
+}

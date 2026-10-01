@@ -1,0 +1,324 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-clavicularius",
+ "repo": "mcburton/zotero-clavicularius",
+ "version": "0.3.4",
+ "tag": "v0.3.4",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-03-24T20:19:22Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-clavicularius.xpi",
+  "url": "https://github.com/mcburton/zotero-clavicularius/releases/download/v0.3.4/zotero-clavicularius.xpi",
+  "size": 6394,
+  "sha256": "d076aff7cff179624bee960fbfa7d42474b057ac5bdf7afa11da37d063cda732",
+  "githubAssetId": 380694181,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-03-24T20:19:23Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "clavicularius@mcburton.net",
+  "name": "Zotero Clavicularius",
+  "version": "0.3.4",
+  "description": "Generates and manages citation keys (clavis citationum) for Zotero items",
+  "updateUrl": "https://github.com/mcburton/zotero-clavicularius/releases/latest/download/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 13432,
+   "sha256": "2c0a9fc89afb6e59b44e8d9413e64afb38f6aea750c27a8b6fb8b462f6792ac1"
+  },
+  {
+   "path": "defaults/preferences/prefs.js",
+   "size": 157,
+   "sha256": "fcdf1bcd6e7651de0868a80247a9b52ae4bdfb1a84cdac18ebbc81f3499b2e60"
+  },
+  {
+   "path": "manifest.json",
+   "size": 443,
+   "sha256": "5ec3db3442d261292031fe4f54161eb1bf6e19117a03b50d72858b76616349f3"
+  },
+  {
+   "path": "pandoc-citekey.js",
+   "size": 496,
+   "sha256": "13fb87e12930c18af3e3d28d3e43fa4c854cf28c401b734417cb04115c225bda"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 1947,
+   "sha256": "63fae9ebdfc6cecc52513b4c90a43ab05f5729e35bd2651a197af07be23269e2"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-clavicularius",
+   "version": "0.3.4",
+   "sha256": "d076aff7cff179624bee960fbfa7d42474b057ac5bdf7afa11da37d063cda732"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 16032,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 276,
+      "column": 8,
+      "snippet": "await IOUtils.writeUTF8(destPath, text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 282,
+      "column": 8,
+      "snippet": "await IOUtils.remove(destPath, { ignoreAbsent: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "installs-translators",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 275,
+      "column": 34,
+      "snippet": "const destPath = PathUtils.join(Zotero.getTranslatorsDirectory().path, 'pandoc-citekey.js');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 277,
+      "column": 8,
+      "snippet": "await Zotero.Translators.reinit();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 281,
+      "column": 34,
+      "snippet": "const destPath = PathUtils.join(Zotero.getTranslatorsDirectory().path, 'pandoc-citekey.js');",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "bundled"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/mcburton/zotero-clavicularius/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/mcburton/zotero-clavicularius/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-clavicularius",
+   "version": "0.3.4",
+   "sha256": "d076aff7cff179624bee960fbfa7d42474b057ac5bdf7afa11da37d063cda732"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "c2f8b3fe0c53b560c4ea963b38bb6874a9b4ed1408d0d40ed23b5fe96a5a0fa1"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "installs-translators",
+      "label": "Adds Zotero translators it ships",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2026-03-24T20:19:22Z",
+    "lastCommitAt": "2026-03-24T20:19:06Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T06:48:55Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 1,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,216 @@
+---
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Base from "../layouts/Base.astro";
+import { REPO, REPORT_URL } from "../lib/links.ts";
+
+const toc = [
+  ["who", "Who made this"],
+  ["why", "Why it exists"],
+  ["checks", "How the checks work"],
+  ["ai", "Where AI is used"],
+  ["money", "Not commercial"],
+  ["contact", "Get in touch"],
+];
+const checks = [
+  "Every grade comes from the same written rules, applied to the code of the plugin's latest release. Each finding links to the file and line it came from.",
+  "For an A+, the plugin is installed in a fresh copy of Zotero and every server it contacts is recorded, along with what it sends.",
+  "When a rule changes, every card is recomputed, and grade changes appear in the public log.",
+  "I will get things wrong. Developers can respond to any card, and their response is published next to it.",
+];
+---
+
+<Base title="About · Zotero Plugins Atlas" description="Who made zoteroplugins.org, why, how the checks work and where AI is used. A non-commercial hobby project by Ilias Beshimov.">
+  <SiteHeader active="about" />
+  <div class="wrap">
+    <nav aria-label="On this page" class="toc">
+      <span class="eyebrow">On this page</span>
+      {toc.map(([id, t]) => <a href={`#${id}`}>{t}</a>)}
+    </nav>
+    <article>
+      <div class="intro">
+        <h1>About this site</h1>
+        <p>A free, independent catalog of Zotero plugins, with each one's code checked so you know what it does with your library before you install it.</p>
+      </div>
+
+      <section id="who">
+        <h2>Who made this</h2>
+        <p class="prose">
+          Hi, I'm Ilias Beshimov. I've used Zotero since college to keep track of papers I want to read for my own learning. I founded an edtech startup, and I now work as a product manager at Academia.edu. This site is a personal hobby project, separate from my job and not affiliated with Academia.edu.
+        </p>
+      </section>
+
+      <section id="why">
+        <h2>Why it exists</h2>
+        <p class="prose">
+          I've always enjoyed finding new Zotero plugins, but it was a chore. They're spread across GitHub, forum threads and blog posts, and it's hard to tell which ones still work or what they do with your library.
+        </p>
+        <p class="prose">
+          I pay for Claude's Max plan and often have usage left over, so I started using it to build a list of every Zotero plugin I could find. Along the way I found that some plugins do things you'd want to know about before installing: sending your library's text to servers you've never heard of, downloading and running programs at startup, or shipping code scrambled so nobody can read it. So the list became a set of checks, and I decided to put in the time to make them useful to everyone.
+        </p>
+      </section>
+
+      <section id="checks">
+        <h2>How the checks work</h2>
+        <ul class="points">
+          {checks.map((t) => <li>{t}</li>)}
+        </ul>
+        <p class="prose">The full method, with what each grade means, is on <a href="/how-we-grade">How we grade</a>.</p>
+      </section>
+
+      <section id="ai">
+        <h2>Where AI is used</h2>
+        <p class="prose">
+          <strong>AI doesn't set grades.</strong> Grades come from the written rules and the live test. AI is used for two things:
+        </p>
+        <ul class="points">
+          <li>The plain-English "What it does" descriptions, written from each plugin's README. They're labelled on every card.</li>
+          <li>
+            The "What you'll need" answers, such as whether a plugin needs an API key or can use a local model. Each answer is checked by a second, independent run, and has to quote the plugin's own documentation or code. If the two disagree, or there's no quote, the card leaves it out rather than guessing.
+          </li>
+        </ul>
+        <p class="prose">The site's code and its rules were also written with Claude's help.</p>
+      </section>
+
+      <section id="money">
+        <h2>Not commercial</h2>
+        <p class="prose">
+          In the spirit of Zotero: no ads, no paid listings, and no one can pay for a better grade. The code is under the MIT license and the data (grades, findings and descriptions) under CC BY 4.0, so anyone can reuse it. Everything, including every rule, is <a href={REPO}>public on GitHub</a>.
+        </p>
+        <p class="prose">This is an independent project, not affiliated with Zotero or the Corporation for Digital Scholarship.</p>
+      </section>
+
+      <section id="contact" class="box">
+        <strong>Tell me what you think</strong>
+        <span>I'd like to hear what's wrong, missing or confusing, or which plugin I should look at next.</span>
+        <span class="mail">ilias [at] zoteroplugins.org</span>
+        <span class="links"><a href={REPORT_URL}>Report a problem on GitHub</a></span>
+      </section>
+    </article>
+  </div>
+  <SiteFooter />
+</Base>
+
+<style>
+  .wrap {
+    max-width: 1184px;
+    margin: 0 auto;
+    padding: 48px var(--gutter) 64px;
+    display: grid;
+    grid-template-columns: 220px minmax(0, 760px);
+    gap: 64px;
+  }
+  .toc {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 14.5px;
+    position: sticky;
+    top: 16px;
+    align-self: start;
+  }
+  .toc .eyebrow {
+    margin-bottom: 10px;
+  }
+  .toc a {
+    padding: 7px 0 7px 12px;
+    border-left: 2px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .toc a:hover {
+    border-left-color: var(--ink);
+  }
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+    min-width: 0;
+  }
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 52px;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    font-weight: 780;
+  }
+  .intro p {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-margin-top: 16px;
+  }
+  h2 {
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: -0.025em;
+    font-weight: 720;
+    border-top: 2px solid var(--ink);
+    padding-top: 14px;
+  }
+  .prose {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+  .points {
+    margin: 0;
+    padding-left: 20px;
+    list-style: disc;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  .box {
+    gap: 8px;
+    padding: 20px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+  .box strong {
+    font-size: 18px;
+  }
+  .box span {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .box .mail {
+    font: 600 16px var(--font-mono);
+    color: var(--ink);
+  }
+  .links a {
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+  @media (max-width: 860px) {
+    .wrap {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding-top: 28px;
+    }
+    .toc {
+      position: static;
+    }
+    h1 {
+      font-size: 38px;
+    }
+  }
+</style>

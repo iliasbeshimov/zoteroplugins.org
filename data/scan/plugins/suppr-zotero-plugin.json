@@ -1,0 +1,612 @@
+{
+ "repo": "WildDataX/suppr-zotero-plugin",
+ "slug": "suppr-zotero-plugin",
+ "group": "top",
+ "rank": 79,
+ "name": "超能文献",
+ "stars": 2015,
+ "downloads": 33147,
+ "createdAt": "2025-07-19T13:17:38Z",
+ "tag": "0.4.0",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "suppr.xpi",
+    "url": "https://github.com/WildDataX/suppr-zotero-plugin/releases/download/0.4.0/suppr.xpi",
+    "size": 67422,
+    "uploadedAt": "2026-08-25T01:18:57Z",
+    "sha256": "e1ab699a4b312f0fd5f3e25617e60e6cbe6820dfe2537e0af72280c18b5c2cb5"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero@wilddata.cn",
+    "name": "超能文献",
+    "version": "0.4.0",
+    "description": "Zotero Suppr",
+    "homepageUrl": "https://suppr.wilddata.cn/",
+    "updateUrl": "https://suppr-wilddatapublic-1320403996.cos.ap-shanghai.myqcloud.com/zotero/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "10.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "suppr-zotero-plugin",
+     "version": "0.4.0",
+     "sha256": "e1ab699a4b312f0fd5f3e25617e60e6cbe6820dfe2537e0af72280c18b5c2cb5"
+    },
+    "coverage": {
+     "filesTotal": 17,
+     "filesAnalyzed": 6,
+     "filesSkipped": [
+      {
+       "path": "content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/icon.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/zoteroPane.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/suppr-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/suppr-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/suppr-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/suppr-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/suppr-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/suppr-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/suppr.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 4218,
+         "column": 30,
+         "snippet": "retryResponse = await fetch(requestUrl, retryOptions);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 4264,
+         "column": 31,
+         "snippet": "const response = await fetch(_url, requestOptions);",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "player.bilibili.com",
+       "category": "unknown",
+       "flags": [],
+       "usage": "link",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 5673,
+         "column": 10,
+         "snippet": "\"https://player.bilibili.com/player.html?isOutside=true&aid=114880577273944&bvid=BV1t4udzyEqo&cid=31153718008&p=1\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/taskManager.xhtml",
+         "line": 456,
+         "column": 22,
+         "snippet": "href=\"https://player.bilibili.com/player.html?isOutside=true&amp;aid=114880577273944&amp;bvid=BV1t4udzyEqo&amp;cid=31153718008&amp;p=1\"",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "suppr-wilddatapublic-1320403996.cos.ap-shanghai.myqcloud.com",
+       "category": "developer-server",
+       "provider": "Plugin developer (name match)",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/taskManager.xhtml",
+         "line": 447,
+         "column": 21,
+         "snippet": "src=\"https://suppr-wilddatapublic-1320403996.cos.ap-shanghai.myqcloud.com/zotero/using_sample.gif\"",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "suppr.wilddata.cn",
+       "category": "developer-server",
+       "provider": "Plugin developer (name match)",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 6,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 4952,
+         "column": 51,
+         "snippet": "ztoolkit.getGlobal(\"Zotero\").launchURL(\"https://suppr.wilddata.cn\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 5015,
+         "column": 49,
+         "snippet": "ztoolkit.getGlobal(\"Zotero\").launchURL(\"https://suppr.wilddata.cn/pricing\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 5021,
+         "column": 40,
+         "snippet": "const url = user.membership ? \"https://suppr.wilddata.cn/pricing?panel=%E7%A7%AF%E5%88%86%E5%8C%85\" : \"https://suppr.wilddata.cn/pricing\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 5021,
+         "column": 112,
+         "snippet": "rship ? \"https://suppr.wilddata.cn/pricing?panel=%E7%A7%AF%E5%88%86%E5%8C%85\" : \"https://suppr.wilddata.cn/pricing\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/taskManager.xhtml",
+         "line": 562,
+         "column": 30,
+         "snippet": "data-url=\"https://suppr.wilddata.cn\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/taskManager.xhtml",
+         "line": 576,
+         "column": 30,
+         "snippet": "data-url=\"https://suppr.wilddata.cn/deep-research\"",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 6461,
+         "column": 13,
+         "snippet": "image: `chrome://${addon.data.config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon@0.5x.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 6445,
+         "column": 21,
+         "snippet": "const menuIcon = `chrome://${addon.data.config.addonRef}/content/icons/favicon@0.5x.png`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/icon.svg",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 6419,
+         "column": 24,
+         "snippet": "const toolbarIcon = `chrome://${addon.data.config.addonRef}/content/icons/icon.svg`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/taskManager.xhtml",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 5509,
+         "column": 8,
+         "snippet": "`chrome://${addon.data.config.addonRef}/content/taskManager.xhtml`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/translateDialog.xhtml",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 4820,
+         "column": 8,
+         "snippet": "`chrome://${addon.data.config.addonRef}/content/translateDialog.xhtml`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "https://<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 4056,
+         "column": 23,
+         "snippet": "var SUPPR_BASE_URL = `https://${HOST_NAME}`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "https://<expr>/suppr-backend",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 4058,
+         "column": 17,
+         "snippet": "var BASE_URL = `https://${HOST_NAME}/suppr-backend`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "https://test.<expr>/suppr-backend",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/suppr.js",
+         "line": 4057,
+         "column": 22,
+         "snippet": "var BASE_URL_TEST = `https://test.${HOST_NAME}/suppr-backend`;",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 3,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 576,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 576,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 628,
+        "column": 10,
+        "snippet": "Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "credential-storage",
+      "occurrences": 12,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 4204,
+        "column": 6,
+        "snippet": "setPref(\"authToken\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 4213,
+        "column": 29,
+        "snippet": "\"X-Auth-Token\": `${getPref(\"authToken\")}`",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 4255,
+        "column": 33,
+        "snippet": "\"X-Auth-Token\": `${getPref(\"authToken\")}`,",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 5098,
+        "column": 18,
+        "snippet": "const token = getPref(\"authToken\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 5494,
+        "column": 18,
+        "snippet": "const token = getPref(\"authToken\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 5942,
+        "column": 12,
+        "snippet": "setPref(\"authToken\", res.token);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 5965,
+        "column": 20,
+        "snippet": "const token = getPref(\"authToken\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 6336,
+        "column": 20,
+        "snippet": "const token = getPref(\"authToken\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 6367,
+        "column": 10,
+        "snippet": "if (getPref(\"authToken\") !== \"\") {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 6381,
+        "column": 10,
+        "snippet": "if (getPref(\"authToken\")) {",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "authToken",
+        "extensions.zotero.suppr.authToken"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 7,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 616,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 616,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 4770,
+        "column": 20,
+        "snippet": "const tempDir = PathUtils.tempDir || Zotero.getTempDirectory().path;",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 4771,
+        "column": 21,
+        "snippet": "const tempPath = PathUtils.join(tempDir, fileName);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 4773,
+        "column": 10,
+        "snippet": "await IOUtils.write(tempPath, new Uint8Array(fileBuffer));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 4792,
+        "column": 12,
+        "snippet": "await IOUtils.remove(tempPath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/suppr.js",
+        "line": 5168,
+        "column": 33,
+        "snippet": "const fileContents = await IOUtils.read(filePath);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://suppr-wilddatapublic-1320403996.cos.ap-shanghai.myqcloud.com/zotero/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://suppr-wilddatapublic-1320403996.cos.ap-shanghai.myqcloud.com/zotero/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "developer-servers",
+    "hostsByCategory": {
+     "developer-server": [
+      "suppr-wilddatapublic-1320403996.cos.ap-shanghai.myqcloud.com"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-DEVELOPER"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

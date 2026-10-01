@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "suppr-zotero-plugin",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "A free Suppr (超能文献) account sign-in (WeChat registration); translation runs on the developer's server",
+  "worksWithout": "",
+  "services": [
+   "超能文献 (suppr.wilddata.cn)"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, system requirements",
+   "quote": "超能文献账户（可免费注册）",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/suppr.js:4213",
+   "quote": "\"X-Auth-Token\": `${getPref(\"authToken\")}`",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/suppr.js:4056",
+   "quote": "var SUPPR_BASE_URL = `https://${HOST_NAME}`;",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README lists '超能文献账户（可免费注册）' as a requirement and the code sends X-Auth-Token from the authToken pref, which defaults to empty. Translation goes to suppr.wilddata.cn, so the plugin uses a hosted service, not a local model."
+}

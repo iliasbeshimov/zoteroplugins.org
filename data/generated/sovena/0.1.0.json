@@ -1,0 +1,353 @@
+{
+ "schemaVersion": 1,
+ "slug": "sovena",
+ "repo": "sfk8815-create/sovena",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "sfk8815-create",
+ "publishedAt": "2026-08-27T04:20:49Z",
+ "prerelease": false,
+ "asset": {
+  "name": "sovena-plugin-0.1.0.xpi",
+  "url": "https://github.com/sfk8815-create/sovena/releases/download/v0.1.0/sovena-plugin-0.1.0.xpi",
+  "size": 4652,
+  "sha256": "78ca4bbd05bb426d007df0c0c2a9c25be0924547775ceae4c13a09eb9fec18f0",
+  "githubAssetId": 531734335,
+  "uploader": "sfk8815-create",
+  "uploadedAt": "2026-08-27T04:20:49Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "sovena@sovena.local",
+  "name": "缙云文采 Sovena",
+  "version": "0.1.0",
+  "description": "缙云文采：把 Zotero 分类/条目交给 sovena 服务端，一键生成可检索语义包（OCR + 向量索引）。远程电脑亦可：填写服务端地址即可。",
+  "strictMinVersion": "7.0.0"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 10953,
+   "sha256": "f56d476616a45e33f0f87bcba6cb84f3a3aff5a8b82ee61e3f94a9bd5e11e490"
+  },
+  {
+   "path": "manifest.json",
+   "size": 445,
+   "sha256": "7982f75ea34164f8ffea2ed75d0ec6860f5d0e881ddc248f9077cc1f7bc1bec2"
+  },
+  {
+   "path": "prefs.js",
+   "size": 106,
+   "sha256": "761bf3978716af4fe2f427284f7185fc4c5a5a46436660e76be57b9f7e8fe003"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "sovena",
+   "version": "0.1.0",
+   "sha256": "78ca4bbd05bb426d007df0c0c2a9c25be0924547775ceae4c13a09eb9fec18f0"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 11059,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 53,
+       "column": 22,
+       "snippet": "const req = await Zotero.HTTP.request(method, url, options);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "192.168.1.10",
+     "port": 8765,
+     "category": "localhost",
+     "provider": "Local network",
+     "flags": [
+      "ip-literal"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 178,
+       "column": 4,
+       "snippet": "\"sovena 服务端地址（本机或远程机器，如 http://192.168.1.10:8765）：\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "localhost",
+     "port": 8765,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 29,
+       "column": 53,
+       "snippet": "let url = Services.prefs.getStringPref(serverPref, \"http://localhost:8765\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 0,
+       "snippet": "pref(\"extensions.sovena.serverUrl\", \"http://localhost:8765\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 36,
+       "snippet": "pref(\"extensions.sovena.serverUrl\", \"http://localhost:8765\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.sovena.serverUrl",
+     "defaultValue": "http://localhost:8765",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 29,
+       "column": 12,
+       "snippet": "let url = Services.prefs.getStringPref(serverPref, \"http://localhost:8765\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 0,
+       "snippet": "pref(\"extensions.sovena.serverUrl\", \"http://localhost:8765\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 193,
+      "column": 10,
+      "snippet": "await Zotero.Utilities.Internal.copyTextToClipboard(text);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the sfk8815-create account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "sovena",
+   "version": "0.1.0",
+   "sha256": "78ca4bbd05bb426d007df0c0c2a9c25be0924547775ceae4c13a09eb9fec18f0"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "ee2b8d16b5ac57908e9f5e8b2597cd5d71e499437e94977d20966267b3dcedf5"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "192.168.1.10",
+       "localhost"
+      ],
+      "unconfirmed": [
+       "192.168.1.10"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-27T04:20:49Z",
+    "lastCommitAt": "2026-08-27T04:15:26Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "installProblem": "no-update-url",
+    "label": "Zotero won't install this file: its manifest has no update address, which Zotero requires",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:53:44Z",
+   "verdict": "not-loaded",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

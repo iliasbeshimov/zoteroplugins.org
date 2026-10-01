@@ -1,0 +1,493 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-getcitation",
+ "repo": "sciencemaverick/zotero-getcitation",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "sciencemaverick",
+ "publishedAt": "2026-04-03T07:18:27Z",
+ "prerelease": false,
+ "asset": {
+  "name": "getcitation-0.1.0.xpi",
+  "url": "https://github.com/sciencemaverick/zotero-getcitation/releases/download/v0.1.0/getcitation-0.1.0.xpi",
+  "size": 16136,
+  "sha256": "f563e4b19c60b1e24b41bf62934971bf29badea90506b800862c2c4b3b125a2b",
+  "githubAssetId": 387695379,
+  "uploader": "sciencemaverick",
+  "uploadedAt": "2026-04-03T07:56:28Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "getcitation@example.com",
+  "name": "Get Citation",
+  "version": "0.1.0",
+  "description": "Retrieve citation counts for Zotero items from Semantic Scholar, Crossref, and INSPIRE-HEP.",
+  "homepageUrl": "https://github.com/sciencemaverick/zotero-getcitation",
+  "updateUrl": "https://raw.githubusercontent.com/sciencemaverick/zotero-getcitation/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "assets/icon-48.png",
+   "size": 1699,
+   "sha256": "f435c55926f23fe06357f312a21b2dbe625a38de40df0d85796cc7c688053aef"
+  },
+  {
+   "path": "assets/icon-96.png",
+   "size": 2925,
+   "sha256": "8bb610289c0e6aff59f496bfc5a7e95eb5255dbd52959d22bbcdf16bf9ac5479"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 30019,
+   "sha256": "eb01b59a37f402a66ac8416a0c3302011fb16d7c8ec7a2ca9c40139a550df2a5"
+  },
+  {
+   "path": "manifest.json",
+   "size": 631,
+   "sha256": "0ba8ac9fb0b6e2162254e4a0c9d40dbeaca926208f419aad53f96a377a7888ee"
+  },
+  {
+   "path": "preferences.js",
+   "size": 8987,
+   "sha256": "6a0e710334337b6ce2c77152f5e45afee971416435b24934bd47f271d73a1e4f"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 1201,
+   "sha256": "233a907c8132ccea84240c727ac480ddc09fa847caa397ff9b82abce6fa6d97a"
+  },
+  {
+   "path": "prefs.js",
+   "size": 138,
+   "sha256": "74b49839c997c7f54b3e917e0623e2bcdcafd53a7ca514bf05b78b568b8ce759"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-getcitation",
+   "version": "0.1.0",
+   "sha256": "f563e4b19c60b1e24b41bf62934971bf29badea90506b800862c2c4b3b125a2b"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "assets/icon-48.png",
+     "reason": "binary"
+    },
+    {
+     "path": "assets/icon-96.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 40345,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 967,
+       "column": 20,
+       "snippet": "const req = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 53,
+       "column": 17,
+       "snippet": "crossrefWorks: \"https://api.crossref.org/works\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 52,
+       "column": 24,
+       "snippet": "semanticscholarGraph: \"https://api.semanticscholar.org/graph/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 54,
+       "column": 15,
+       "snippet": "doiResolver: \"https://doi.org\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "inspirehep.net",
+     "category": "scholarly-api",
+     "provider": "INSPIRE-HEP",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 55,
+       "column": 11,
+       "snippet": "inspire: \"https://inspirehep.net/api\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 532,
+      "column": 9,
+      "snippet": "return Services.prefs.getStringPref(PREF_SEMANTIC_SCHOLAR_API_KEY, \"\").trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "preferences.js",
+      "line": 26,
+      "column": 6,
+      "snippet": "Zotero.Prefs.get(this.apiKeyPref, true) || this.defaultApiKey;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "preferences.js",
+      "line": 93,
+      "column": 4,
+      "snippet": "Zotero.Prefs.set(this.apiKeyPref, apiKey, true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "preferences.js",
+      "line": 101,
+      "column": 4,
+      "snippet": "Zotero.Prefs.set(this.apiKeyPref, this.defaultApiKey, true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "preferences.js",
+      "line": 186,
+      "column": 19,
+      "snippet": "const apiKey = Zotero.Prefs.get(this.apiKeyPref, true) || this.defaultApiKey;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.getcitation.semanticScholarApiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.getcitation.semanticScholarApiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "preferences.js",
+      "line": 136,
+      "column": 12,
+      "snippet": "await Zotero.File.putContentsAsync(outputPath, exportText);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "preferences.js",
+      "line": 276,
+      "column": 56,
+      "snippet": "return PathUtils.join(Services.dirsvc.get(\"Desk\", Ci.nsIFile).path, fileName);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/sciencemaverick/zotero-getcitation/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/sciencemaverick/zotero-getcitation/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the sciencemaverick account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-getcitation",
+   "version": "0.1.0",
+   "sha256": "f563e4b19c60b1e24b41bf62934971bf29badea90506b800862c2c4b3b125a2b"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "ec48d7d03c7d612f9bdd612bbb0e5fb1e28ff1e31f43317210d5881ae433a393"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version, but Zotero won't install it as an update: the file doesn't match the fingerprint the update address gives"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "api.semanticscholar.org",
+       "doi.org",
+       "inspirehep.net"
+      ],
+      "unconfirmed": [
+       "api.semanticscholar.org",
+       "doi.org",
+       "inspirehep.net"
+      ],
+      "observed": [
+       "api.crossref.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED",
+     "DS-OBSERVED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-04-03T07:18:27Z",
+    "lastCommitAt": "2026-04-03T07:56:22Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T06:57:03Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 4,
+    "dialogs": 2
+   },
+   "contacted": [
+    "api.crossref.org"
+   ],
+   "sentTo": [
+    {
+     "host": "api.crossref.org",
+     "sent": [
+      "identifiers"
+     ]
+    }
+   ],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-tag-recommender",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "AI tag suggestions (the main purpose); only the tag autocomplete works without a key",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "Anthropic",
+   "Google Gemini",
+   "DeepSeek"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Quick start",
+   "quote": "An API key from [OpenAI](https://platform.openai.com/), [Anthropic](https://platform.claude.com/), [Google](https://aistudio.google.com/), or [DeepSeek](https://platform.deepseek.com/)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.tagrecommender.apiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "Services its code calls",
+   "quote": "api.deepseek.com (DeepSeek; llm-provider; request)",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says 'You only need: ... An API key from OpenAI, Anthropic, Google, or DeepSeek'. Default provider is openai with an empty apiKey pref, and AI suggestion is the main purpose. Code calls only those four providers. My grep of the code for ollama, localhost, 127.0 and baseurl found nothing, so no local endpoint."
+}

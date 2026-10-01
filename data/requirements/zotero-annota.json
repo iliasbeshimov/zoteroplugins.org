@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-annota",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "The default provider (Mistral or another remote OpenAI-compatible endpoint) needs an API key",
+  "worksWithout": "Ollama (local), Apple Intelligence and Claude Code CLI providers need no key, but the default setup is Mistral, which does",
+  "services": [
+   "Mistral"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "// Ollama (local, aucune clé requise).",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "provider table",
+   "quote": "A model running on your own machine — no API key, no per-token cost, nothing leaves the computer.",
+   "supports": "localModel"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.annota.ollamaEndpoint\", \"http://localhost:11434/v1/chat/completions\");",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Quotes are in the pack. prefs.js has 'Ollama (local, aucune clé requise)' and a localhost:11434 endpoint. The default provider is Mistral with an empty apiKey, but the Ollama provider needs no key, so the key is optional. Local model is yes."
+}

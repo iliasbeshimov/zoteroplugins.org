@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-research-copilot--chrislucy838-colla",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Hosted OpenAI-compatible gateways need a key; an unauthenticated local endpoint does not",
+  "worksWithout": "A local OpenAI-compatible endpoint such as Ollama, with the key left empty",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README settings table",
+   "quote": "| API Key        | Depends on the endpoint | Leave empty for an unauthenticated local endpoint.          |",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README settings table",
+   "quote": "`https://api.openai.com/v1` or `http://127.0.0.1:11434/v1`",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README settings table",
+   "quote": "`gpt-4.1-mini` or `llama3.1:8b`",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README table quotes 'Leave empty for an unauthenticated local endpoint.' and lists 'http://127.0.0.1:11434/v1' as an API Base URL example with 'llama3.1:8b'; hosted gateways need a key."
+}

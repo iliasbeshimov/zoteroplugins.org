@@ -1,0 +1,922 @@
+{
+ "repo": "4965898/Zotero-AI-OCR",
+ "slug": "zotero-ai-ocr",
+ "group": "sample-2026",
+ "rank": 322,
+ "name": "AI OCR",
+ "stars": 1,
+ "downloads": 354,
+ "createdAt": "2026-04-25T19:40:41Z",
+ "tag": "v1.9.7",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "ai-ocr.xpi",
+    "url": "https://github.com/4965898/Zotero-AI-OCR/releases/download/v1.9.7/ai-ocr.xpi",
+    "size": 292416,
+    "uploadedAt": "2026-09-07T15:32:52Z",
+    "sha256": "d00539b157bec0267515a370516ff7e6e89da20f5ef8ce1eb2d8e14c854cb66a"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "aiocr@zotero-plugin.com",
+    "name": "AI OCR",
+    "version": "1.9.7",
+    "description": "AI OCR plugin for Zotero - AI-powered OCR recognition with PaddleOCR and MinerU",
+    "homepageUrl": "https://github.com/4965898/Zotero-AI-OCR#readme",
+    "updateUrl": "https://github.com/4965898/Zotero-AI-OCR/releases/download/release/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "9.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-ai-ocr",
+     "version": "1.9.7",
+     "sha256": "d00539b157bec0267515a370516ff7e6e89da20f5ef8ce1eb2d8e14c854cb66a"
+    },
+    "coverage": {
+     "filesTotal": 14,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": "content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/zoteroPane.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/aiocr-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/aiocr-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/aiocr-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/aiocr-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/aiocr-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/aiocr-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "minified",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [
+      "content/scripts/aiocr.js"
+     ],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "@pdf-lib/standard-fonts",
+       "files": [
+        "content/scripts/aiocr.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "@pdf-lib/upng",
+       "files": [
+        "content/scripts/aiocr.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "pako",
+       "files": [
+        "content/scripts/aiocr.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "pdf-lib",
+       "files": [
+        "content/scripts/aiocr.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "tslib",
+       "files": [
+        "content/scripts/aiocr.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/aiocr.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23980,
+         "column": 33,
+         "snippet": "const uploadResponse = await fetch(fileUrls[0], {",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "api": "zotero-http",
+       "occurrences": 17,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23718,
+         "column": 27,
+         "snippet": "const response = await Zotero.HTTP.request(\"POST\", url, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23796,
+         "column": 33,
+         "snippet": "const submitResponse = await Zotero.HTTP.request(\"POST\", ASYNC_JOB_URL, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23812,
+         "column": 33,
+         "snippet": "const pollResponse = await Zotero.HTTP.request(",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23841,
+         "column": 36,
+         "snippet": "const jsonlResponse = await Zotero.HTTP.request(\"GET\", jsonUrl, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23958,
+         "column": 33,
+         "snippet": "const submitResponse = await Zotero.HTTP.request(",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23993,
+         "column": 33,
+         "snippet": "const pollResponse = await Zotero.HTTP.request(",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 24025,
+         "column": 34,
+         "snippet": "const zipResponse = await Zotero.HTTP.request(\"GET\", zipUrl, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 24883,
+         "column": 29,
+         "snippet": "const response = await Zotero.HTTP.request(\"POST\", url, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 24937,
+         "column": 31,
+         "snippet": "const response = await Zotero.HTTP.request(\"POST\", url, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 25064,
+         "column": 29,
+         "snippet": "const response = await Zotero.HTTP.request(\"POST\", fullUrl, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api-inference.modelscope.cn",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23273,
+         "column": 15,
+         "snippet": "apiBase: \"https://api-inference.modelscope.cn/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.groq.com",
+       "category": "llm-provider",
+       "provider": "Groq",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23250,
+         "column": 15,
+         "snippet": "apiBase: \"https://api.groq.com/openai/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.mistral.ai",
+       "category": "llm-provider",
+       "provider": "Mistral",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23265,
+         "column": 15,
+         "snippet": "apiBase: \"https://api.mistral.ai/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23194,
+         "column": 15,
+         "snippet": "apiBase: \"https://api.openai.com/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.siliconflow.cn",
+       "category": "llm-provider",
+       "provider": "SiliconFlow",
+       "flags": [
+        "china-only"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23218,
+         "column": 15,
+         "snippet": "apiBase: \"https://api.siliconflow.cn/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.x.ai",
+       "category": "llm-provider",
+       "provider": "xAI",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23206,
+         "column": 15,
+         "snippet": "apiBase: \"https://api.x.ai/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.xiaomimimo.com",
+       "category": "llm-provider",
+       "provider": "Xiaomi MiMo",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23285,
+         "column": 15,
+         "snippet": "apiBase: \"https://api.xiaomimimo.com/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "ark.cn-beijing.volces.com",
+       "category": "llm-provider",
+       "provider": "ByteDance Doubao (Volcano Engine)",
+       "flags": [
+        "china-only"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23225,
+         "column": 15,
+         "snippet": "apiBase: \"https://ark.cn-beijing.volces.com/api/v3\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "chat.intern-ai.org.cn",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23279,
+         "column": 15,
+         "snippet": "apiBase: \"https://chat.intern-ai.org.cn/api/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "cloud.infini-ai.com",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23259,
+         "column": 15,
+         "snippet": "apiBase: \"https://cloud.infini-ai.com/maas/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "dashscope.aliyuncs.com",
+       "category": "llm-provider",
+       "provider": "Alibaba Qwen (DashScope)",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23238,
+         "column": 15,
+         "snippet": "apiBase: \"https://dashscope.aliyuncs.com/compatible-mode/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "generativelanguage.googleapis.com",
+       "category": "llm-provider",
+       "provider": "Google Gemini",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23200,
+         "column": 15,
+         "snippet": "apiBase: \"https://generativelanguage.googleapis.com/v1beta\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/preferences.xhtml",
+         "line": 259,
+         "column": 59,
+         "snippet": "<html:a id=\"aiocr-github-link\" class=\"text-link\" href=\"https://github.com/4965898/Zotero-AI-OCR\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 22394,
+         "column": 21,
+         "snippet": "var pdfLib = \"pdf-lib (https://github.com/Hopding/pdf-lib)\";",
+         "inVendoredCode": true
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 27097,
+         "column": 10,
+         "snippet": "\"https://github.com/4965898/Zotero-AI-OCR\"",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "integrate.api.nvidia.com",
+       "category": "llm-provider",
+       "provider": "NVIDIA NIM",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23294,
+         "column": 15,
+         "snippet": "apiBase: \"https://integrate.api.nvidia.com/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "localhost",
+       "port": 11434,
+       "category": "localhost",
+       "provider": "This computer",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23244,
+         "column": 15,
+         "snippet": "apiBase: \"http://localhost:11434/api\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "mineru.net",
+       "category": "llm-provider",
+       "provider": "MinerU",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/preferences.xhtml",
+         "line": 131,
+         "column": 82,
+         "snippet": "placeholder=\"PaddleOCR: https://paddleocr.aistudio-app.com MinerU: https://mineru.net\" />",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "open.bigmodel.cn",
+       "category": "llm-provider",
+       "provider": "Zhipu (GLM)",
+       "flags": [
+        "china-only"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23232,
+         "column": 15,
+         "snippet": "apiBase: \"https://open.bigmodel.cn/api/paas/v4\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "openrouter.ai",
+       "category": "llm-provider",
+       "provider": "OpenRouter",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23212,
+         "column": 15,
+         "snippet": "apiBase: \"https://openrouter.ai/api/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "paddleocr.aistudio-app.com",
+       "category": "llm-provider",
+       "provider": "Baidu PaddleOCR",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/preferences.xhtml",
+         "line": 131,
+         "column": 38,
+         "snippet": "placeholder=\"PaddleOCR: https://paddleocr.aistudio-app.com MinerU: https://mineru.net\" />",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23734,
+         "column": 22,
+         "snippet": "var ASYNC_JOB_URL = \"https://paddleocr.aistudio-app.com/api/v2/ocr/jobs\";",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "<expr>/<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23812,
+         "column": 33,
+         "snippet": "const pollResponse = await Zotero.HTTP.request(",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "<expr>/api/v4/extract-results/batch/<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23993,
+         "column": 33,
+         "snippet": "const pollResponse = await Zotero.HTTP.request(",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "<expr>/api/v4/file-urls/batch",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 23958,
+         "column": 33,
+         "snippet": "const submitResponse = await Zotero.HTTP.request(",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 25326,
+         "column": 35,
+         "snippet": "const testResponse = await Zotero.HTTP.request(",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 27639,
+         "column": 13,
+         "snippet": "image: `chrome://${addon.data.config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [
+      {
+       "prefKey": "endpoints",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/aiocr.js",
+         "line": 7655,
+         "column": 18,
+         "snippet": "const raw = getPref(\"endpoints\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 3,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 4714,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 4714,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 4760,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 43,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 4749,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 4749,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 23597,
+        "column": 24,
+        "snippet": "const bytes = await IOUtils.read(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 23601,
+        "column": 24,
+        "snippet": "const bytes = await IOUtils.read(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 23617,
+        "column": 20,
+        "snippet": "const tempDir = PathUtils.join(PathUtils.tempDir, \"aiocr-pagerange\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 23617,
+        "column": 35,
+        "snippet": "const tempDir = PathUtils.join(PathUtils.tempDir, \"aiocr-pagerange\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 23618,
+        "column": 10,
+        "snippet": "await IOUtils.makeDirectory(tempDir, { ignoreExisting: true });",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 23619,
+        "column": 21,
+        "snippet": "const tempPath = PathUtils.join(",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 23623,
+        "column": 10,
+        "snippet": "await IOUtils.write(tempPath, outBytes);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/aiocr.js",
+        "line": 23784,
+        "column": 28,
+        "snippet": "const fileBytes = await IOUtils.read(filePath);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/4965898/Zotero-AI-OCR/releases/download/release/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/4965898/Zotero-AI-OCR/releases/download/release/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.groq.com",
+      "api.mistral.ai",
+      "api.openai.com",
+      "api.siliconflow.cn",
+      "api.x.ai",
+      "api.xiaomimimo.com",
+      "ark.cn-beijing.volces.com",
+      "dashscope.aliyuncs.com",
+      "generativelanguage.googleapis.com",
+      "integrate.api.nvidia.com",
+      "mineru.net",
+      "open.bigmodel.cn",
+      "openrouter.ai",
+      "paddleocr.aistudio-app.com"
+     ],
+     "localhost": [
+      "localhost"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

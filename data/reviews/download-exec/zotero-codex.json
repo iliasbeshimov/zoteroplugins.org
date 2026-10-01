@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-codex",
+  "version": "0.8.1",
+  "sha256": "c5bee1540255c669fa4ebd73a7142a3658d9377ca230d34e3a5c3bd75fef73d3",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
+  "summary": "When Zotero starts (a setting, on by default), it downloads its own server (25–72 MB, with Node.js if you don't have it) from the project's GitHub release and runs it, as the README says. The file is checked only against a checksum from the same place.",
+  "facts": {
+    "what": "A zip of the plugin's own MCP server (compiled JavaScript plus PDF native dependencies), about 25-28 MB. If no usable Node.js is found on the computer, it instead downloads a full bundle that includes a Node.js runtime, about 63-72 MB. The plugin then runs the server with Node.js.",
+    "urls": [
+      "${repository}/releases/download/v${version}/${name}",
+      "https://github.com/renhao12356578/zotero-codex"
+    ],
+    "source": "developer-own",
+    "transport": "https",
+    "integrity": "same-source-checksum",
+    "trigger": "automatic",
+    "toldInReadme": "yes",
+    "readmeQuote": "打开「设置 → Zotero MCP」，插件会自动下载并检查运行组件。",
+    "triggerQuote": {
+      "file": "content/runtime.js",
+      "text": "if(state().automatic) void ensure().catch(()=>{});"
+    },
+    "integrityQuote": {
+      "file": "content/runtime.js",
+      "text": "if((await IOUtils.stat(archive)).size!==asset.size || await hash(archive)!==asset.sha256) throw new Error("
+    },
+    "notes": "The expected size and SHA-256 come from runtime-manifest.json, which is fetched from the same GitHub release (releaseURL(version,'runtime-manifest.json')). No hash is written into the plugin, so this is not a pinned hash. Download is on by default: autoInstall is on unless the pref is false, and start() calls ensure() at plugin startup. The settings page has an on/off checkbox 'zc-auto-install' labelled '自动下载和更新运行组件', and its text says '组件来自本项目 GitHub Release'. The README (中文) also says: '本机 Node 验证通过时只下载服务包，否则自动准备包含 Node 的完整运行包'. Extra checks: the progress is shown to the user in the settings panel ('正在下载服务与依赖', '正在校验下载文件…'); a download over the declared size is cancelled; on a hash mismatch nothing is installed. Release assets listed via gh api for v0.8.1: service zips 25.7-28.3 MB and runtime zips 63.2-71.8 MB for darwin-arm64, darwin-x64, linux-arm64, linux-x64 and win32-x64. I did not download them or inspect their contents. After download the plugin runs 'verify.mjs' from the zip with Node, and runs server.mjs once Codex is connected. The Node it uses may be the user's own system Node (preferred) or the bundled one. The plugin also edits the Codex user config and turns on Zotero's local API when the user clicks Connect Codex (outside this question)."
+  }
+}

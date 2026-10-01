@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "wenxianbianhao",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "DeepSeek title translation needs a DeepSeek API key",
+  "worksWithout": "Batch numbering of items in a collection",
+  "services": [
+   "DeepSeek"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 使用流程",
+   "quote": "填写 `API Key / Model / Endpoint`",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Features",
+   "quote": "Assigns sequential numbers to items in a selected collection",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Numbering works without a key. bootstrap.js only asks for a key before translation (\"if (!apiSettings.apiKey)\"), and the README says to fill in \"API Key / Model / Endpoint\" for DeepSeek translation. The endpoint can be changed and defaults to api.deepseek.com, but nothing says a local model is supported."
+}

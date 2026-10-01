@@ -1,0 +1,42 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-translate--edwardlewis35",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Sentence/paragraph translation through the default OpenAI endpoint needs an API key; word lookup in local MDX dictionaries does not",
+  "worksWithout": "Local MDX/MDD dictionary lookup",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 配置 OpenAI-compatible API",
+   "quote": "本地兼容服务不需要鉴权时，API Key 可以留空。",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, 配置 OpenAI-compatible API",
+   "quote": "http://127.0.0.1:8000/v1/chat/completions",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, intro",
+   "quote": "单词优先查询本机的多部 MDX/MDD 词典；",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.lexiflowDictTranslator.openaiEndpoint\", \"https://api.openai.com/v1/chat/completions\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README: '单词优先查询本机的多部 MDX/MDD 词典' gives keyless local dictionary lookup. LLM translation defaults to 'https://api.openai.com/v1/chat/completions' with an empty openaiApiKey. README: '本地兼容服务不需要鉴权时，API Key 可以留空。' with example 'http://127.0.0.1:8000/v1/chat/completions' supports a local OpenAI-compatible model."
+}

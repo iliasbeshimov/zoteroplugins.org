@@ -1,0 +1,638 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-js-bridge",
+ "repo": "sum-su/zotero-js-bridge",
+ "version": "1.14",
+ "tag": "v1.14",
+ "releaseAuthor": "Sum-su",
+ "publishedAt": "2026-09-13T12:45:21Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-js-bridge.xpi",
+  "url": "https://github.com/Sum-su/zotero-js-bridge/releases/download/v1.14/zotero-js-bridge.xpi",
+  "size": 55207,
+  "sha256": "c79311da187c39e80470f5c2007a264386abf154dd5aa7ab55c3242c4be3964d",
+  "githubAssetId": 561203087,
+  "uploader": "Sum-su",
+  "uploadedAt": "2026-09-13T12:45:20Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zoterojs-bridge@local",
+  "name": "Zotero JS Bridge",
+  "version": "1.14",
+  "description": "Local-only endpoints for executing JavaScript inside Zotero. Rides on Zotero's own 127.0.0.1 server; every call needs X-ZoteroJS-Token.",
+  "updateUrl": "https://raw.githubusercontent.com/Sum-su/zotero-js-bridge/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.99.99"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 116087,
+   "sha256": "67dc6efd2ff2714feb90b24817b13820ea900be6a5e4a77c36e62c427cab01dd"
+  },
+  {
+   "path": "icons/favicon.png",
+   "size": 6649,
+   "sha256": "f4264ffd6d8acf6bca7ead54e0d8792a76aa74e2f10fa271add14a766fe3934b"
+  },
+  {
+   "path": "icons/favicon@0.5x.png",
+   "size": 3090,
+   "sha256": "d8ccb4c0c97c217162678087579cec0e3603ce284d73bd7ed075e931417f8147"
+  },
+  {
+   "path": "manifest.json",
+   "size": 600,
+   "sha256": "b0092a84cfdebfe54ff9df3f642c4162754db65bf7e136afe376778672eeb627"
+  },
+  {
+   "path": "prefs.js",
+   "size": 1177,
+   "sha256": "fac575ac72bdfccb981956c8a2e79cc7b01e3ad939b77e4b2125a4687e939c27"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 6943,
+   "sha256": "393e0eb336d83de11d5f8a496ed339cdb09b0a49e4c6756ee6fba5dd52b5608c"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-js-bridge",
+   "version": "1.14",
+   "sha256": "c79311da187c39e80470f5c2007a264386abf154dd5aa7ab55c3242c4be3964d"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "icons/favicon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icons/favicon@0.5x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 124207,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1225,
+       "column": 20,
+       "snippet": "const r = await Zotero.HTTP.request(\"GET\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.zotero.org",
+     "category": "zotero",
+     "provider": "Zotero Web API",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1226,
+       "column": 6,
+       "snippet": "`https://api.zotero.org/users/${uid}/items?limit=1&format=json`,",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://api.zotero.org/users/<expr>/items?limit=1&format=json",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1225,
+       "column": 20,
+       "snippet": "const r = await Zotero.HTTP.request(\"GET\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2167,
+      "column": 26,
+      "snippet": "const helper = Cc[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Ci.nsIClipboardHelper);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2167,
+      "column": 78,
+      "snippet": "const helper = Cc[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Ci.nsIClipboardHelper);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 120,
+      "column": 16,
+      "snippet": "try { token = Zotero.Prefs.get(PREF_TOKEN) || \"\"; } catch (e) { token = \"\"; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 123,
+      "column": 10,
+      "snippet": "try { Zotero.Prefs.set(PREF_TOKEN, token); } catch (e) { logErr(e); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2184,
+      "column": 12,
+      "snippet": "try { Zotero.Prefs.set(PREF_TOKEN, token); } catch (e) { logErr(e); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 1,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.jsbridge.token\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.jsbridge.token",
+      "jsbridge.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 298,
+      "column": 9,
+      "snippet": "fn = new AsyncFunction(...ARG_NAMES, '\"use strict\";\\n' + code);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 319,
+      "column": 24,
+      "snippet": "const value = await Cu.evalInSandbox(`(async () => {\\n${code}\\n})()`, sb);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "AsyncFunction",
+      "Cu.evalInSandbox"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 26,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 103,
+      "column": 42,
+      "snippet": "if (typeof IOUtils !== \"undefined\" && IOUtils.writeUTF8) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 104,
+      "column": 12,
+      "snippet": "await IOUtils.writeUTF8(p, token);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 106,
+      "column": 13,
+      "snippet": "else if (Zotero.File.putContentsAsync) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 107,
+      "column": 12,
+      "snippet": "await Zotero.File.putContentsAsync(p, token);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 110,
+      "column": 6,
+      "snippet": "Zotero.File.putContents(p, token);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 630,
+      "column": 23,
+      "snippet": "const kids = await IOUtils.getChildren(backupDirPath());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 643,
+      "column": 12,
+      "snippet": "await IOUtils.remove(PathUtils.join(backupDirPath(), n));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 657,
+      "column": 25,
+      "snippet": "try { exists = await IOUtils.exists(p); } catch (e) { /* 查不到就试写 */ }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 665,
+      "column": 8,
+      "snippet": "await IOUtils.makeDirectory(dir, { ignoreExisting: true, createAncestors: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 671,
+      "column": 23,
+      "snippet": "try { bytes = (await IOUtils.stat(dest)).size; } catch (e) { logErr(e); }",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2531,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[path] = epTable[path];",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2549,
+      "column": 30,
+      "snippet": "if (savedEndpoints[path]) Zotero.Server.Endpoints[path] = savedEndpoints[path];",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zoterojs/ping"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "runs-sent-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 298,
+      "column": 9,
+      "snippet": "fn = new AsyncFunction(...ARG_NAMES, '\"use strict\";\\n' + code);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "local endpoint"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Sum-su/zotero-js-bridge/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Sum-su/zotero-js-bridge/main/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 364,
+      "column": 34,
+      "snippet": "mergeItems = (m, others) => Zotero.Items.merge(m, others);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2531,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[path] = epTable[path];",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zoterojs/ping"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Sum-su account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-js-bridge",
+   "version": "1.14",
+   "sha256": "c79311da187c39e80470f5c2007a264386abf154dd5aa7ab55c3242c4be3964d"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "f003890c8bc4bbee255780fce7fa30e45cfe832f6a42e3768c1a2ada92acb619"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "zotero",
+      "hosts": [
+       "api.zotero.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "runs-sent-code",
+      "label": "Runs code other programs on this computer send it",
+      "concern": "medium"
+     },
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "dynamic-code",
+      "label": "Runs code it assembles while running",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-SENT-CODE"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-13T12:45:21Z",
+    "lastCommitAt": "2026-09-13T12:44:20Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Runs code other programs on this computer send it"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T09:33:42Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

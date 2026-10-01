@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "mineru-html-parser-zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "MinerU precise parsing API token (free to apply for)",
+  "worksWithout": "",
+  "services": [
+   "MinerU"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "bootstrap.js in release xpi, English strings",
+   "quote": "tokenRequired: \"请先填写或保存 MinerU API Token。\"",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "Submit a Zotero PDF attachment to the MinerU precise parsing API, import the generated HTML back into Zotero",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "I checked bootstrap.js in the xpi. It has tokenRequired: \"请先填写或保存 MinerU API Token。\" (the first, Chinese set of strings; the English set says 'Please enter or save a MinerU API token first.'), thrown at line 236. The plugin only calls the cloud MinerU API, so no local model."
+}

@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-metasync",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Google Books lookups can use a Google API key",
+  "worksWithout": "Crossref, Open Library, DNB and Semantic Scholar lookups",
+  "services": [
+   "Google Books API"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.metasync.googleApiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/metasync.js:3794",
+   "quote": "const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(normalized)}${keyParam}`;",
+   "supports": "apiKey"
+  },
+  {
+   "source": "description",
+   "where": "manifest description",
+   "quote": "MetaSync – Anreicherung und Korrektur von Zotero-Metadaten aus Online-Bibliotheksquellen",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The only key is the optional Google Books key: prefs.js has 'googleApiKey' empty, and the code builds the URL with `${keyParam}`. The other sources (Crossref, Open Library, DNB, Semantic Scholar) need no key. No AI features."
+}

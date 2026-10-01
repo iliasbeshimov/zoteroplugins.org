@@ -1,0 +1,573 @@
+{
+ "schemaVersion": 1,
+ "slug": "zoterocitationcountsagent",
+ "repo": "flychen50/zoterocitationcountsagent",
+ "version": "2.0",
+ "tag": "main",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2025-05-20T02:21:30Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zoterocitationcountsmanager-20250520.xpi",
+  "url": "https://github.com/flychen50/ZoteroCitationCountsAgent/releases/download/main/zoterocitationcountsmanager-20250520.xpi",
+  "size": 18714,
+  "sha256": "24c7e17b88336fe891cc7a2ff127326602b1c60d516756565c6cb333b1962db8",
+  "githubAssetId": 256311640,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2025-05-20T09:32:54Z",
+  "fetchedAt": "2026-09-25T06:53:24.564Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "flychen50@github.com",
+  "name": "Zotero Citation Counts Manager(Crossref, INSPIRE-HEP, Semantic Scholar, and NASA ADS",
+  "version": "2.0",
+  "description": "Enhanced Citation Counts Manager for Zotero 7",
+  "homepageUrl": "https://github.com/flychen50/ZoteroCitationCountsManager",
+  "updateUrl": "https://www.zotero.org/download/plugins/make-it-red/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "7.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1668,
+   "sha256": "f2f17bf4751ef4c6a9e7e796c6f8e9eafb485cfbc777d800b308bd91b341d418"
+  },
+  {
+   "path": "locale/en-US/citation-counts.ftl",
+   "size": 2018,
+   "sha256": "642430e1f73e3d8188b0dfa25c8964efae76b1cba009a6ddbabfc6e3929536ab"
+  },
+  {
+   "path": "manifest.json",
+   "size": 627,
+   "sha256": "5f8ed5a8d7c1818effb41bd55a618c4b1005afa688a7c40169a9251147ecd9b0"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 851,
+   "sha256": "f7f00a90f7e673536800da8f5cb16a034fd5949341012d1a1707caadbe71b41d"
+  },
+  {
+   "path": "src/preferences.js",
+   "size": 1830,
+   "sha256": "8a9f1169eb99fd29b3ca236351efae38168a79c8e30438d55bf801d13a9e953f"
+  },
+  {
+   "path": "src/prefs.js",
+   "size": 109,
+   "sha256": "d7855ef13d968fb7dfab1ce5f8a01fa1c55856ef60b7ace9b366c834646be77e"
+  },
+  {
+   "path": "src/zoterocitationcounts.js",
+   "size": 28624,
+   "sha256": "e2ab07baea76d07e3b93e4d586ce7613144bd9dde14664e8f1d78a1db056561b"
+  },
+  {
+   "path": "test/integration/nasaads.integration.test.js",
+   "size": 21860,
+   "sha256": "6a63ec47a2ccc878f0cd5c7e9ee558dbfafa5a42439c883fc33490a493b17d64"
+  },
+  {
+   "path": "test/unit/zoterocitationcounts.test.js",
+   "size": 12965,
+   "sha256": "d4ad9cf87f17de3a0ce3746185b048619d352697e1add2aa3cfc16d4f02ea3f4"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zoterocitationcountsagent",
+   "version": "2.0",
+   "sha256": "24c7e17b88336fe891cc7a2ff127326602b1c60d516756565c6cb333b1962db8"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/citation-counts.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 67907,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/zoterocitationcounts.js",
+       "line": 496,
+       "column": 23,
+       "snippet": "response = await fetch(url, { headers });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.adsabs.harvard.edu",
+     "category": "scholarly-api",
+     "provider": "NASA ADS",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 10,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/zoterocitationcounts.js",
+       "line": 741,
+       "column": 13,
+       "snippet": "return `https://api.adsabs.harvard.edu/v1/search/query?q=${type}:${id}&fl=citation_count`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/zoterocitationcounts.js",
+       "line": 754,
+       "column": 13,
+       "snippet": "return `https://api.adsabs.harvard.edu/v1/search/query?q=${queryString}&fl=citation_count`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "test/integration/nasaads.integration.test.js",
+       "line": 160,
+       "column": 43,
+       "snippet": "expect(fetchCall.args[0]).to.include('https://api.adsabs.harvard.edu/v1/search/query');",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "test/integration/nasaads.integration.test.js",
+       "line": 185,
+       "column": 26,
+       "snippet": "const expectedUrl = 'https://api.adsabs.harvard.edu/v1/search/query?q=doi:10.1234%2Fanother.doi&fl=citation_count';",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "test/integration/nasaads.integration.test.js",
+       "line": 261,
+       "column": 43,
+       "snippet": "expect(fetchCall.args[0]).to.include('https://api.adsabs.harvard.edu/v1/search/query');",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "test/unit/zoterocitationcounts.test.js",
+       "line": 69,
+       "column": 26,
+       "snippet": "const expectedUrl = `https://api.adsabs.harvard.edu/v1/search/query?q=doi:${id}&fl=citation_count`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "test/unit/zoterocitationcounts.test.js",
+       "line": 79,
+       "column": 26,
+       "snippet": "const expectedUrl = `https://api.adsabs.harvard.edu/v1/search/query?q=arxiv:${id}&fl=citation_count`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "test/unit/zoterocitationcounts.test.js",
+       "line": 89,
+       "column": 26,
+       "snippet": "const expectedUrl = `https://api.adsabs.harvard.edu/v1/search/query?q=doi:${id}&fl=citation_count`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "test/unit/zoterocitationcounts.test.js",
+       "line": 109,
+       "column": 23,
+       "snippet": "const nasaAdsUrl = 'https://api.adsabs.harvard.edu/v1/search/query?q=doi:anything&api_key=SOMEKEY';",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "test/unit/zoterocitationcounts.test.js",
+       "line": 278,
+       "column": 28,
+       "snippet": "const nasaUrl = 'https://api.adsabs.harvard.edu/v1/search/query?q=doi:10.1000/xyz123&fl=citation_count';",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.anotherexample.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "test/unit/zoterocitationcounts.test.js",
+       "line": 110,
+       "column": 24,
+       "snippet": "const otherApiUrl = 'https://api.anotherexample.com/data';",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/zoterocitationcounts.js",
+       "line": 709,
+       "column": 11,
+       "snippet": "return `https://api.crossref.org/works/${id}/transform/application/vnd.citationstyles.csl+json`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "test/unit/zoterocitationcounts.test.js",
+       "line": 299,
+       "column": 24,
+       "snippet": "const url = 'https://api.crossref.org/works/10.1000/xyz123';",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/zoterocitationcounts.js",
+       "line": 726,
+       "column": 11,
+       "snippet": "return `https://api.semanticscholar.org/graph/v1/paper/${prefix}${id}?fields=citationCount`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "test/integration/nasaads.integration.test.js",
+       "line": 12,
+       "column": 28,
+       "snippet": "_url: url || (arxivId ? `https://arxiv.org/abs/${arxivId}` : null),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "test/integration/nasaads.integration.test.js",
+       "line": 338,
+       "column": 62,
+       "snippet": "const mockItem = createMockItem(null, \"\", \"2301.00001\", `https://arxiv.org/abs/2301.00001`, { // arXiv ID, no DOI",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "test/integration/nasaads.integration.test.js",
+       "line": 395,
+       "column": 62,
+       "snippet": "const mockItem = createMockItem(null, \"\", \"2301.99999\", \"https://arxiv.org/abs/2301.99999\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "inspirehep.net",
+     "category": "scholarly-api",
+     "provider": "INSPIRE-HEP",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/zoterocitationcounts.js",
+       "line": 717,
+       "column": 11,
+       "snippet": "return `https://inspirehep.net/api/${type}/${id}`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "src/prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.citationcounts.nasaadsApiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zoterocitationcounts.js",
+      "line": 492,
+      "column": 21,
+      "snippet": "const apiKey = this.getPref(\"nasaadsApiKey\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.citationcounts.nasaadsApiKey",
+      "nasaadsApiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "test/integration/nasaads.integration.test.js",
+      "line": 103,
+      "column": 4,
+      "snippet": "new Function('Zotero', zccCode)(global.Zotero);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "test/unit/zoterocitationcounts.test.js",
+      "line": 34,
+      "column": 4,
+      "snippet": "new Function('Zotero', zccCode)(global.Zotero);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Function"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://www.zotero.org/download/plugins/make-it-red/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://www.zotero.org/download/plugins/make-it-red/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zoterocitationcountsagent",
+   "version": "2.0",
+   "sha256": "24c7e17b88336fe891cc7a2ff127326602b1c60d516756565c6cb333b1962db8"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "75b54650bfd1ddfc0384a2461b83abf303cd6bc1b0f5a60dc970b87ee19cdd42"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address points at zotero.org"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.adsabs.harvard.edu",
+       "api.crossref.org",
+       "api.semanticscholar.org",
+       "arxiv.org",
+       "inspirehep.net"
+      ],
+      "unconfirmed": [
+       "api.adsabs.harvard.edu",
+       "api.crossref.org",
+       "api.semanticscholar.org",
+       "arxiv.org",
+       "inspirehep.net"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "dynamic-code",
+      "label": "Runs code it assembles while running",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2025-05-20T02:21:30Z",
+    "lastCommitAt": "2025-08-22T23:03:33Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

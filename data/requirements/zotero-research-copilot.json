@@ -1,0 +1,32 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-research-copilot",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Its AI chat features need a provider API key (Gemini, DeepSeek, Doubao or OpenAI-compatible)",
+  "worksWithout": "",
+  "services": [
+   "Google Gemini",
+   "DeepSeek",
+   "ByteDance Doubao"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README overview",
+   "quote": "You configure an API provider and key in preferences; supported setups include Google Gemini, DeepSeek, and Doubao (Volcengine)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.researchCopilot.apiKey\", \"\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README 'You configure an API provider and key in preferences' with default apiKey empty and built-in providers all cloud; OpenAI-style endpoints via custom base URL are mentioned but no local or Ollama evidence in the pack or code (grep found none)."
+}

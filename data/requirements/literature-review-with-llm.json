@@ -1,0 +1,40 @@
+{
+ "schemaVersion": 1,
+ "slug": "literature-review-with-llm",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zoteroMarkdownSummary.baseURL\", \"https://api.minimaxi.com/v1\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README features",
+   "quote": "**Bring-your-own-key**: the plugin is free and open source; remote model providers require your own API keys.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, provider-flexible setup",
+   "quote": "SiliconFlow, Ollama, LM Studio, and other profiles from one settings page",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/bootstrap-settings.js:129",
+   "quote": "baseURL: \"http://127.0.0.1:1234/v1\"",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The default MiniMax profile has an empty key, but the README offers Ollama and LM Studio profiles from the same settings page, with a local default of http://127.0.0.1:1234/v1 in the code. The summary feature works keyless with a local model, and only remote providers 'require your own API keys'."
+}

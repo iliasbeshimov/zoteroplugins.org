@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zoturead",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Tinify image compression key for the image manager feature",
+  "worksWithout": "Book search, classification and lookup through uread.today and bookstore searches",
+  "services": [
+   "Tinify"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "chrome/content/preferences/preferences.js:31",
+   "quote": "imagemgr_tinify_api_key: Zotero.ZotURead.Prefs.get('imagemgr.tinify_api_key'),",
+   "supports": "apiKey"
+  },
+  {
+   "source": "description",
+   "where": "Manifest description",
+   "quote": "今日优读（http://uread.today/），主要搭建一个知识平台以及读书辅助工具，提供书籍搜索，中图分类和学科搜索。",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Code stores `imagemgr_tinify_api_key` for the image manager only. Book search calls keyless sites (api.uread.today, dangdang, jd). The plugin has no AI features, so local model is no."
+}

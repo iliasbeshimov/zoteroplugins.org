@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-med-impact",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Clarivate WoS/JCR metrics need a Clarivate API key; Scopus metrics need an Elsevier API key (InstToken optional)",
+  "worksWithout": "Citation counts via OpenAlex/Crossref and the local CSV quartile fallback",
+  "services": [
+   "Clarivate Web of Science JCR",
+   "Elsevier Scopus"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README provider priority",
+   "quote": "1. Clarivate WoS/JCR API, if configured",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README features",
+   "quote": "Fetches DOI-based citation counts via OpenAlex/Crossref",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README features",
+   "quote": "Keeps local CSV quartile mapping as a fallback",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: \"Fetches DOI-based citation counts via OpenAlex/Crossref\" and the sandbox contacted those two hosts with no key entered. Clarivate and Scopus keys are optional extras. No AI features."
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-file--sigmoid-bar",
+  "version": "0.2.6",
+  "sha256": "3539f356bfab33d33e05e68675c9451071cca796046bf6e4c6ea7bd7b10e56a2",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "high",
+  "rule": "CAP-DOWNLOAD-EXEC-HTTP",
+  "summary": "A button in its settings (Intel Macs only) downloads ZotFile's Poppler tool from zotfile.com over unencrypted http and runs it without any check, so someone on your network could swap in their own program. The file is no longer on the server, so today the button fails.",
+  "facts": {
+    "what": "A small helper program (ExtractPDFAnnotations, a Poppler-based PDF annotation extractor) for Intel Macs, downloaded as a zip, unzipped with /usr/bin/unzip into the Zotero data folder, marked executable, and later run on the user's PDFs when the optional 'Poppler' extraction method is used.",
+    "urls": [
+      "http://www.zotfile.com/PDFTools/"
+    ],
+    "source": "third-party",
+    "transport": "http",
+    "integrity": "none",
+    "trigger": "user-clicks-install",
+    "toldInReadme": "no",
+    "readmeQuote": "",
+    "triggerQuote": {
+      "file": "chrome/content/zotfile/options.xul",
+      "text": "<button id=\"pdf-annotations-extractor-update-button\" oncommand=\"downloadPDFTool()\" flex=\"1\"/>"
+    },
+    "integrityQuote": {
+      "file": "chrome/content/zotfile/options.js",
+      "text": ""
+    },
+    "notes": "Identical download code, URL and options.xul to zotero-file (zhang-dut); only bootstrap.js differs. Original ZotFile feature; Intel Mac only (popplerSupportedPlatforms = [\"MacIntel\"]); default pref pdfExtraction.UsePDFJS is true so the pdf.js extractor is used unless the user opts in. Plain http, no hash/checksum check in plugin code (digest/verify matches are only in bundled pdf.js). README (a ZotFile Zotero 7 port description) does not mention Poppler, downloading or ExtractPDFAnnotations. Button label strings (installPoppler/updatePoppler in options.properties) are not in the packaged xpi, so on-screen wording is unconfirmed. Live check: the zotfile.com URL redirects (301) then returns 404, so the download no longer works. The downloaded executable is run later via Zotero.Utilities.Internal.exec in pdfAnnotations.js, not right after download. On 2026-09-30 http://www.zotfile.com/PDFTools/ExtractPDFAnnotations-MacIntel.zip redirected to zotfile.com and returned 404."
+  }
+}

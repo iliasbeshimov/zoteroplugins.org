@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "slug": "iris-zotero",
+  "version": "3.4.18",
+  "sha256": "79f740371728681b00207433b25c7be71a56266023a17384cfc115efba87d573",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "low",
+  "rule": "CAP-DOWNLOAD-EXEC-TOLD",
+  "summary": "When you choose to install voice input (the button says about 700 MB), it downloads uv from Astral's GitHub releases and uses it to install Python and speech packages. uv is checked only against a checksum from the same place.",
+  "facts": {
+    "what": "For voice input only: the uv Python package manager (pinned release 0.11.30 from astral-sh's GitHub releases, checked against a .sha256 file fetched from the same release), which then installs a local Python 3.12 and speech packages (faster-whisper, sounddevice, huggingface-hub) and downloads a Whisper speech model (about 700 MB). Separately, the inherited full-document translation installer (Miniconda / uv install script piped into a shell) exists in the code but its Translate tab is hidden and unreachable.",
+    "urls": [
+      "https://github.com/astral-sh/uv/releases/download/0.11.30",
+      "https://github.com/astral-sh/uv/releases/download/0.11.30/",
+      "https://astral.sh/uv/install.sh",
+      "https://astral.sh/uv/install.ps1",
+      "https://repo.anaconda.com/miniconda/Miniconda3-latest-${arch}-${ARCH}.sh"
+    ],
+    "source": "official",
+    "transport": "https",
+    "integrity": "same-source-checksum",
+    "trigger": "user-clicks-install",
+    "toldInReadme": "partly",
+    "readmeQuote": "Voice input needs a one-time runtime/model download and microphone permission.",
+    "triggerQuote": {
+      "file": "content/scripts/iris-local-voice.js",
+      "text": "Install local voice input (about 700 MB)"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/iris-speech-setup.sh",
+      "text": "[ \"$actual\" = \"$expected\" ] || { echo 'uv download checksum mismatch' >&2; exit 1; }"
+    },
+    "notes": "Voice path: clicking the mic button while runtime is missing calls beginInstallation, which runs iris-speech-setup.sh (macOS; /bin/sh) or iris-speech-setup.ps1 (Windows). The mic label reads 'Install local voice input (about 700 MB)' (message in iris-local-voice.js, runtimeLabel) and progress stages say 'Downloading speech components'. The script supports only macOS and Windows. The checksum is fetched from the same GitHub release as the archive (same-source), so it detects corruption not a swapped release. uv then installs Python and pinned package versions (faster-whisper==1.2.1, sounddevice==0.5.3, huggingface-hub==1.30.0) with no hash pinning; the model is fetched by iris-speech.py setup. README says a one-time runtime/model download is needed but does not name uv, Python, or the size. The scanner's aidea.js evidence (uv install script piped to shell, Miniconda) is inherited AIdea code: installEnvironment is only reachable from the Translate tab button (#llm-tr-install-env), and the tab button is created but never appended to the tab nav (unlike aidea-zotero, which does tabNav.append(..., tabTranslateBtn, ...)) and zoteroPane.css sets display: none !important on #llm-tab-btn-translate and #llm-tab-panel-translate; IRIS-NOTICES.md says 'The original full-document translation UI is not exposed by Iris, although inherited implementation remains in the source.' So that part is dormant, not a real trigger. The Whisper model download source URL was not checked in iris-speech.py."
+  }
+}

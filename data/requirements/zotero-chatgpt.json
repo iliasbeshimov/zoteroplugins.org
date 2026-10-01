@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-chatgpt",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "OpenAI API key (default base is api.openai.com)",
+  "worksWithout": "",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Features > Configuration",
+   "quote": "Set OpenAI API key and model preferences",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "release file, chatbot script",
+   "quote": "\"Authorization\": `Bearer ${OPENAI_API_KEY}`,",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.addontemplate.base\", \"https://api.openai.com/v1\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Code in the release file: `if (!OPENAI_API_KEY || !apiUrl` guards the request and `\"Authorization\": `Bearer ${OPENAI_API_KEY}`` is sent; default base is api.openai.com. The base URL is editable, but no local model is mentioned, so unknown."
+}

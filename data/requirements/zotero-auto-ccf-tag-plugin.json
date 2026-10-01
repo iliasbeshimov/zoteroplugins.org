@@ -1,0 +1,32 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-auto-ccf-tag-plugin",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "The AI check (suggesting missing fields and tags) needs a key for an AI provider such as OpenAI, Anthropic or Gemini",
+  "worksWithout": "Automatic CCF tagging from the bundled CCF list (AI is off by default)",
+  "services": [
+   "OpenAI",
+   "Anthropic",
+   "Google Gemini"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.autoccftag.aiEnabled\", false);",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README 功能",
+   "quote": "读取 `public/ccf.json` 中的 CCF 会议/期刊映射数据。",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "aiEnabled defaults to false and CCF tagging uses bundled ccf.json, so a key is optional. A custom provider with a base URL exists, but the code requires https://, so local Ollama/LM Studio is not shown; unknown."
+}

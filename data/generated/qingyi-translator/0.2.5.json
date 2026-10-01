@@ -1,0 +1,317 @@
+{
+ "schemaVersion": 1,
+ "slug": "qingyi-translator",
+ "repo": "ruali-dev/qingyi-translator",
+ "version": "0.2.5",
+ "tag": "v0.2.5",
+ "releaseAuthor": "ruali-dev",
+ "publishedAt": "2026-09-06T07:30:42Z",
+ "prerelease": false,
+ "asset": {
+  "name": "qingyi-zotero.xpi",
+  "url": "https://github.com/ruali-dev/qingyi-translator/releases/download/v0.2.5/qingyi-zotero.xpi",
+  "size": 5774,
+  "sha256": "eec48051603d89d6db828de653af7ce29b8a94787663a3878e62a0f5ec9a9341",
+  "githubAssetId": 546881263,
+  "uploader": "ruali-dev",
+  "uploadedAt": "2026-09-06T07:30:04Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "paper-translator-connector@local",
+  "name": "轻译 · Qingyi 连接器",
+  "version": "0.2.5",
+  "description": "把 Zotero PDF 选区发送到本机轻译桌面端",
+  "updateUrl": "https://raw.githubusercontent.com/ruali-dev/qingyi-translator/main/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 395,
+   "sha256": "37b40e5e2d066179a6f8a40ec57a5f164f8852e05b1a2ada601871a2b30f757b"
+  },
+  {
+   "path": "content/connector.js",
+   "size": 2109,
+   "sha256": "80de0887aad23aae7b5766ce09c6cdc9d23f3c5331bd7aa15fe83a86b295cec7"
+  },
+  {
+   "path": "LICENSE",
+   "size": 11325,
+   "sha256": "e53028e2e0ac2e31d95f9c66409ba27e0caaff80abe45cc0a0288895ff027dc1"
+  },
+  {
+   "path": "manifest.json",
+   "size": 468,
+   "sha256": "7b5afa9df5056006e6600f2d100bee8295e7b564a870e6cf35c34b8198fff970"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "qingyi-translator",
+   "version": "0.2.5",
+   "sha256": "eec48051603d89d6db828de653af7ce29b8a94787663a3878e62a0f5ec9a9341"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 2504,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/connector.js",
+       "line": 38,
+       "column": 12,
+       "snippet": "await Zotero.HTTP.request(\"POST\", ENDPOINT, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 8765,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/connector.js",
+       "line": 6,
+       "column": 19,
+       "snippet": "const ENDPOINT = \"http://127.0.0.1:8765/translate\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "a program on this computer",
+     "provider": "",
+     "category": "unknown",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/connector.js",
+       "line": 6,
+       "column": 19,
+       "snippet": "const ENDPOINT = \"http://127.0.0.1:8765/translate\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/ruali-dev/qingyi-translator/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/ruali-dev/qingyi-translator/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the ruali-dev account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "qingyi-translator",
+   "version": "0.2.5",
+   "sha256": "eec48051603d89d6db828de653af7ce29b8a94787663a3878e62a0f5ec9a9341"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "551b6eeb5a629759a52c1fd1df6eb44708c11e49e229a8cf53650f72a31f35da"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "unknown",
+      "hosts": [
+       "a program on this computer"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Hands your data to a program on this computer; we can't check where it goes from there",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN-HANDOFF"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-06T07:30:42Z",
+    "lastCommitAt": "2026-09-06T07:29:11Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Hands your data to a program on this computer; we can't check where it goes from there"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T10:40:13Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

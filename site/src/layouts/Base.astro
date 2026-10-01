@@ -1,0 +1,55 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="alternate" type="application/rss+xml" title="Grade log" href="/log.xml" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+  </head>
+  <body class="min-h-screen antialiased">
+    <slot />
+    <script>
+      // Keep an open tooltip inside the window: shift it sideways if it would spill over an edge.
+      const fit = (e: Event) => {
+        const tt = (e.target as Element | null)?.closest?.(".tip")?.querySelector<HTMLElement>(":scope > .tt");
+        if (!tt) return;
+        // Hover and focus styles apply a frame later on touch screens, so measure after two frames.
+        // The shift is worked out from the unshifted position, so running twice gives the same result.
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            const r = tt.getBoundingClientRect();
+            if (!r.width) return;
+            const cur = Number.parseFloat(tt.style.getPropertyValue("--dx")) || 0;
+            const left = r.left - cur;
+            const right = r.right - cur;
+            const dx = left < 8 ? 8 - left : right > innerWidth - 8 ? innerWidth - 8 - right : 0;
+            tt.style.setProperty("--dx", `${dx}px`);
+          }),
+        );
+      };
+      document.addEventListener("mouseover", fit);
+      document.addEventListener("focusin", fit);
+    </script>
+  </body>
+</html>

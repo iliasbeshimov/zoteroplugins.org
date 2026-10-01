@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-reading-assistant",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "the AI model service (default DashScope/Qwen); the sidebar chat and all AI features need the user's own API key",
+  "worksWithout": "",
+  "services": [
+   "Alibaba DashScope (Qwen)",
+   "OpenAI",
+   "DeepSeek",
+   "SiliconFlow"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 配置模型 table",
+   "quote": "| **API Key** | 模型服务密钥 | 空 |",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.readingassistant.secretKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.readingassistant.api\", \"https://dashscope.aliyuncs.com/compatible-mode\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README table has '| **API Key** | 模型服务密钥 | 空 |', and prefs.js defaults to the DashScope URL with an empty secretKey, so the AI features need a user key. The README says any OpenAI Chat Completions-compatible endpoint works, but it never names Ollama or localhost, and my grep of the release found none, so unknown is right."
+}

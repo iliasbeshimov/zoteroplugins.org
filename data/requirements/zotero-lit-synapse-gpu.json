@@ -1,0 +1,45 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-lit-synapse-gpu",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "cloud embedding providers, cloud MinerU PDF parsing, MCP auth token when remote access is on",
+  "worksWithout": "the built-in MCP server and keyword search over your library",
+  "services": [
+   "OpenAI",
+   "MinerU",
+   "Google Gemini",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Semantic Search",
+   "quote": "using any OpenAI-compatible embedding endpoint (OpenAI, Ollama, or a self-hosted equivalent)",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-lit-synapse.js:62651",
+   "quote": "apiBase: \"http://localhost:11434/v1\",",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, MinerU",
+   "quote": "**cloud** (the official `mineru.net` API — requires your own API token and consumes your quota)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zotero-lit-synapse.mcp.server.requireAuth\", false);",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The MCP server and search work by default: requireAuth is false and embedding.apiBase is empty. MinerU is described as \"an optional parsing backend\". The README says semantic search accepts \"any OpenAI-compatible embedding endpoint (OpenAI, Ollama, or a self-hosted equivalent)\", and the code has apiBase \"http://localhost:11434/v1\"."
+}

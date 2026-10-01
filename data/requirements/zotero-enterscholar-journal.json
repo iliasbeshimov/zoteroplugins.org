@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-enterscholar-journal",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Journal info lookups need a sign-in to an EnterScholar account",
+  "worksWithout": "",
+  "services": [
+   "EnterScholar"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README 使用",
+   "quote": "登录恩特学术账号",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:107-108",
+   "quote": "let apiKey = Zotero.EnterscholarJournal.Auth.userApiKey;\n\tif (!apiKey) return null;",
+   "supports": "apiKey"
+  },
+  {
+   "source": "description",
+   "where": "manifest description",
+   "quote": "在 Zotero 中查询期刊详细信息，由恩特学术提供支持。",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README usage step says to log in to the EnterScholar account; code returns null without userApiKey. It is a journal-info lookup, not an AI feature."
+}

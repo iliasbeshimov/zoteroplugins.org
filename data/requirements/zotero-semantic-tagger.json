@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-semantic-tagger",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Anthropic Claude API key, needed to tag anything",
+  "worksWithout": "",
+  "services": [
+   "Anthropic"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "Requirements",
+   "quote": "A Claude API key from [console.anthropic.com](https://console.anthropic.com)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.semantictagger.apiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/semantictagger.js:3768",
+   "quote": "req.open(\"POST\", \"https://api.anthropic.com/v1/messages\");",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README lists the requirement `A Claude API key from [console.anthropic.com]`. The default key pref is empty. The only service called is `https://api.anthropic.com/v1/messages`, and grepping the code found no Ollama, localhost or base-URL setting."
+}

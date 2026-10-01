@@ -1,0 +1,263 @@
+{
+ "repo": "core-hn/hypothesis2zotero",
+ "slug": "hypothesis2zotero",
+ "group": "sample-2026",
+ "rank": 1091,
+ "name": "Hypothesis2Zotero",
+ "stars": 0,
+ "downloads": 3,
+ "createdAt": "2026-09-04T07:08:34Z",
+ "tag": "v0.1.1",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "hypothesis2zotero.xpi",
+    "url": "https://github.com/core-hn/hypothesis2zotero/releases/download/v0.1.1/hypothesis2zotero.xpi",
+    "size": 6568,
+    "uploadedAt": "2026-09-04T07:11:55Z",
+    "sha256": "8b79820a40f9f2c5685b31a818e1746dfe6a07f6e84305f2e8ed7045431acba1"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "hypothesis-import@zotero-plugin",
+    "name": "Hypothesis2Zotero",
+    "version": "0.1.1",
+    "description": "Importe les annotations Hypothesis (privées de votre compte et publiques) dans Zotero",
+    "homepageUrl": null,
+    "updateUrl": "https://raw.githubusercontent.com/core-hn/hypothesis2zotero/main/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "9.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "hypothesis2zotero",
+     "version": "0.1.1",
+     "sha256": "8b79820a40f9f2c5685b31a818e1746dfe6a07f6e84305f2e8ed7045431acba1"
+    },
+    "coverage": {
+     "filesTotal": 5,
+     "filesAnalyzed": 3,
+     "filesSkipped": [
+      {
+       "path": "hypothesis.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "xhr",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 129,
+         "column": 14,
+         "snippet": "var xhr = new XMLHttpRequest();",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "doi.org",
+       "category": "scholarly-api",
+       "provider": "DOI resolver",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 327,
+         "column": 22,
+         "snippet": "if (doi) return \"https://doi.org/\" + doi;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "hypothes.is",
+       "category": "integration",
+       "provider": "Hypothesis",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 6,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 5,
+         "column": 23,
+         "snippet": "var DEFAULT_API_BASE = \"https://hypothes.is/api\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "bootstrap.js",
+         "line": 240,
+         "column": 16,
+         "snippet": "(\"https://hypothes.is/a/\" + ann.id);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 2,
+         "column": 0,
+         "snippet": "pref(\"extensions.hypothesis-import.apiBase\", \"https://hypothes.is/api\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 2,
+         "column": 45,
+         "snippet": "pref(\"extensions.hypothesis-import.apiBase\", \"https://hypothes.is/api\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.xhtml",
+         "line": 30,
+         "column": 24,
+         "snippet": "placeholder=\"https://hypothes.is/api\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.xhtml",
+         "line": 41,
+         "column": 40,
+         "snippet": "hypothes.is → Profil → Developer (https://hypothes.is/account/developer).",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.hypothesis-import.apiBase",
+       "defaultValue": "https://hypothes.is/api",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 2,
+         "column": 0,
+         "snippet": "pref(\"extensions.hypothesis-import.apiBase\", \"https://hypothes.is/api\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 3,
+        "column": 0,
+        "snippet": "pref(\"extensions.hypothesis-import.apiToken\", \"\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "extensions.hypothesis-import.apiToken"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 14,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/core-hn/hypothesis2zotero/main/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/core-hn/hypothesis2zotero/main/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "scholarly-api": [
+      "doi.org"
+     ],
+     "integration": [
+      "hypothes.is"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

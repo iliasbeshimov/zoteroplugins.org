@@ -1,0 +1,31 @@
+{
+ "schemaVersion": 1,
+ "slug": "sovena",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Only remote commercial embedding platforms (e.g. Bailian, OpenRouter) would need a key",
+  "worksWithout": "Local embedding and OCR models, and Zotero's local API",
+  "services": [
+   "Bailian",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 架构",
+   "quote": "（本地 mlx-lm / Ollama，或百炼 / OpenRouter 等远程平台）",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, 核心能力",
+   "quote": "LanceDB + 任意 OpenAI 兼容 embedding 服务（本地或远程商用平台）",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README supports local mlx-lm or Ollama embedding and OCR as the default, with remote platforms optional. A stronger quote for the key is the README line saying SOVENA_EMBED_API_KEY is required for remote commercial platforms. The plugin did not load in the sandbox, so that result is not counted as evidence."
+}

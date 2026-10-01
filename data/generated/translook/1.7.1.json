@@ -1,0 +1,673 @@
+{
+ "schemaVersion": 1,
+ "slug": "translook",
+ "repo": "eiskola/translook",
+ "version": "1.7.1",
+ "tag": "v1.7.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-09-13T01:40:35Z",
+ "prerelease": false,
+ "asset": {
+  "name": "translook-v1.7.1.xpi",
+  "url": "https://github.com/Eiskola/translook/releases/download/v1.7.1/translook-v1.7.1.xpi",
+  "size": 45622,
+  "sha256": "1729404a9359f3770ab4664a909b2e9775b006ca960ed71fb35bd283e41cc36e",
+  "githubAssetId": 560333878,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-09-13T01:40:35Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "translook@eiskola.github.io",
+  "name": "TransLook",
+  "version": "1.7.1",
+  "description": "在 Zotero 阅读器中选中文本即可智能查词或翻译 / Look up words and translate text right inside the Zotero reader. 选中单词给出词典式释义，选中句子给出流畅译文；可接入任意 OpenAI 兼容大模型 API（DeepSeek / OpenAI / 智谱 / 通义 / Kimi / 本地 Ollama 等），提示词与服务通道均可自定义。",
+  "homepageUrl": "https://github.com/eiskola/translook",
+  "updateUrl": "https://raw.githubusercontent.com/eiskola/translook/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2632,
+   "sha256": "13413ca1a7143649ef044b9f584e45676af8213e88667666cd66f69704282014"
+  },
+  {
+   "path": "content/icons/favicon.png",
+   "size": 2242,
+   "sha256": "b3ab4b7a241b2cb8c4dbd9f71e786e3b5871bcbb2666df56b68febdb5e7ff1bf"
+  },
+  {
+   "path": "content/icons/favicon@0.5x.png",
+   "size": 1141,
+   "sha256": "b85f553ebe48071115668ea9dced87f1fe127614cc6e276edba2fd3da664fa58"
+  },
+  {
+   "path": "content/preferences.css",
+   "size": 4631,
+   "sha256": "6b32fdd2da001a949e0628c39cb513f2097bfb7b908489bce7ddd43ca1f32190"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 9020,
+   "sha256": "dd6e18f30a457a7dfdb0a4cfbda4ccbc0a88628dccc4b808660ed2a9c0f2a3cb"
+  },
+  {
+   "path": "content/scripts/translook.js",
+   "size": 118379,
+   "sha256": "ebc7bd2b8e9a69339a1c92f530d80d849f38463813d2cc148957bea725dd139e"
+  },
+  {
+   "path": "manifest.json",
+   "size": 883,
+   "sha256": "056edd7183771431114f1dc174354b143e7680cde02e374204f0dabb70e9afc7"
+  },
+  {
+   "path": "prefs.js",
+   "size": 1129,
+   "sha256": "501e5819853abe5d25e96bc825fdbffad03a0b6bb55baa43439b501d8216c7b7"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "translook",
+   "version": "1.7.1",
+   "sha256": "1729404a9359f3770ab4664a909b2e9775b006ca960ed71fb35bd283e41cc36e"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "content/icons/favicon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/icons/favicon@0.5x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/preferences.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 131160,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 325,
+       "column": 24,
+       "snippet": "const res = await fetch(url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 2195,
+       "column": 24,
+       "snippet": "const res = await fetch(url, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 304,
+       "column": 26,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"POST\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 2179,
+       "column": 26,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 81,
+       "column": 12,
+       "snippet": "base: \"http://127.0.0.1:11434/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 51,
+       "column": 12,
+       "snippet": "base: \"https://api.deepseek.com/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 4,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.translook.baseURL\", \"https://api.deepseek.com/v1\")",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 4,
+       "column": 44,
+       "snippet": "pref(\"extensions.zotero.translook.baseURL\", \"https://api.deepseek.com/v1\")",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.moonshot.cn",
+     "category": "llm-provider",
+     "provider": "Moonshot (Kimi)",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 75,
+       "column": 12,
+       "snippet": "base: \"https://api.moonshot.cn/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openai.com",
+     "category": "llm-provider",
+     "provider": "OpenAI",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 57,
+       "column": 12,
+       "snippet": "base: \"https://api.openai.com/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dashscope.aliyuncs.com",
+     "category": "llm-provider",
+     "provider": "Alibaba Qwen (DashScope)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 69,
+       "column": 12,
+       "snippet": "base: \"https://dashscope.aliyuncs.com/compatible-mode/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dict.youdao.com",
+     "category": "translation",
+     "provider": "Youdao",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 2286,
+       "column": 6,
+       "snippet": "\"https://dict.youdao.com/jsonapi?le=eng&q=\" + encodeURIComponent(word);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "fanyi-api.baidu.com",
+     "category": "translation",
+     "provider": "Baidu Translate",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 2360,
+       "column": 6,
+       "snippet": "\"https://fanyi-api.baidu.com/api/trans/vip/translate\" +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "open.bigmodel.cn",
+     "category": "llm-provider",
+     "provider": "Zhipu (GLM)",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 63,
+       "column": 12,
+       "snippet": "base: \"https://open.bigmodel.cn/api/paas/v4\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "translate.googleapis.com",
+     "category": "translation",
+     "provider": "Google Translate",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 2315,
+       "column": 6,
+       "snippet": "\"https://translate.googleapis.com/translate_a/single?client=gtx\" +",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "baseURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 343,
+       "column": 24,
+       "snippet": "const base = String(getPref(\"baseURL\", \"\") || \"\")",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 1760,
+       "column": 24,
+       "snippet": "const base = String(getPref(\"baseURL\", \"\") || \"\").trim();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/translook.js",
+       "line": 2963,
+       "column": 29,
+       "snippet": "setVal(\"baseURL\", String(getPref(\"baseURL\", \"\") || \"\"));",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero.translook.baseURL",
+     "defaultValue": "https://api.deepseek.com/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 4,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.translook.baseURL\", \"https://api.deepseek.com/v1\")",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "translook-baseURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 21,
+       "column": 8,
+       "snippet": "<html:input type=\"text\" id=\"translook-baseURL\" placeholder=\"https://api.deepseek.com/v1\" spellcheck=\"false\"></html:input>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/translook.js",
+      "line": 346,
+      "column": 26,
+      "snippet": "const apiKey = String(getPref(\"apiKey\", \"\") || \"\").trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/translook.js",
+      "line": 1764,
+      "column": 26,
+      "snippet": "const apiKey = String(getPref(\"apiKey\", \"\") || \"\").trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/translook.js",
+      "line": 2964,
+      "column": 28,
+      "snippet": "setVal(\"apiKey\", String(getPref(\"apiKey\", \"\") || \"\"));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/translook.js",
+      "line": 3171,
+      "column": 8,
+      "snippet": "setPref(\"apiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 5,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.translook.apiKey\", \"\")",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "apiKey",
+      "extensions.zotero.translook.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/eiskola/translook/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/eiskola/translook/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "translook",
+   "version": "1.7.1",
+   "sha256": "1729404a9359f3770ab4664a909b2e9775b006ca960ed71fb35bd283e41cc36e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "fac63ad218a87f30650e8dd6f384cfdc2a2e86c7a2d1e3ae8e3a9c89da5a5d20"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com",
+       "api.moonshot.cn",
+       "api.openai.com",
+       "dashscope.aliyuncs.com",
+       "open.bigmodel.cn"
+      ],
+      "unconfirmed": [
+       "api.moonshot.cn",
+       "api.openai.com",
+       "dashscope.aliyuncs.com",
+       "open.bigmodel.cn"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ],
+      "unconfirmed": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "translation",
+      "hosts": [
+       "dict.youdao.com",
+       "fanyi-api.baidu.com",
+       "translate.googleapis.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-13T01:40:35Z",
+    "lastCommitAt": "2026-09-13T01:39:35Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:26:15Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,437 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-vocab-flow",
+ "repo": "moonweave-research/zotero-vocab-flow",
+ "version": "0.1.5",
+ "tag": "v0.1.5",
+ "releaseAuthor": "moonweave",
+ "publishedAt": "2026-07-26T09:03:22Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-vocab-flow.xpi",
+  "url": "https://github.com/Moonweave-Research/zotero-vocab-flow/releases/download/v0.1.5/zotero-vocab-flow.xpi",
+  "size": 111310,
+  "sha256": "7220c70903bc1a3fd2977ca91ad3b0c0d2b84d1baa70e30bdb61b60a80366395",
+  "githubAssetId": 490210399,
+  "uploader": "moonweave",
+  "uploadedAt": "2026-07-26T09:03:21Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "vocabflow@moon.com",
+  "name": "Zotero Vocab Flow",
+  "version": "0.1.5",
+  "description": "Build reviewable vocabulary candidates from Zotero PDF underlines.",
+  "updateUrl": "https://raw.githubusercontent.com/Moonweave-Research/zotero-vocab-flow/main/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 102532,
+   "sha256": "80d92b63a0a993ac92599d0d597dbfc1a279d5ecaa1cea2d78e9672037923b82"
+  },
+  {
+   "path": "icon.png",
+   "size": 1980,
+   "sha256": "588ac4c27570afed0b561bbeb74a1d4f5d6d795c236a4d0bd3964691761c2ce3"
+  },
+  {
+   "path": "icon.svg",
+   "size": 2333,
+   "sha256": "21f3ba1bf4255ee332dd117df6cefa469197c73fc5f9ea8768bcc2b57194053a"
+  },
+  {
+   "path": "locale/en-US/vocab-flow.ftl",
+   "size": 1454,
+   "sha256": "8834f713b33054afca238a8a04061f351b575c4b57a47add5d2dfb9e9aac785c"
+  },
+  {
+   "path": "locale/ko-KR/vocab-flow.ftl",
+   "size": 1551,
+   "sha256": "7a013001949f51be267ec4c6f0b5126ccdf720caae7e5e865200be2390e5e6d2"
+  },
+  {
+   "path": "manifest.json",
+   "size": 498,
+   "sha256": "77e1d0e8567ba724561648b54983fd5d123aeb0d7404663e439bf1ffd5567fea"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-vocab-flow",
+   "version": "0.1.5",
+   "sha256": "7220c70903bc1a3fd2977ca91ad3b0c0d2b84d1baa70e30bdb61b60a80366395"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/vocab-flow.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/ko-KR/vocab-flow.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 102532,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1335,
+       "column": 19,
+       "snippet": "return await fetch(url, controller ? { ...init, signal: controller.signal } : init);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.anthropic.com",
+     "category": "llm-provider",
+     "provider": "Anthropic",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1020,
+       "column": 35,
+       "snippet": "var DEFAULT_ANTHROPIC_ENDPOINT = \"https://api.anthropic.com/v1/messages\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openai.com",
+     "category": "llm-provider",
+     "provider": "OpenAI",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1018,
+       "column": 32,
+       "snippet": "var DEFAULT_OPENAI_ENDPOINT = \"https://api.openai.com/v1/chat/completions\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "generativelanguage.googleapis.com",
+     "category": "llm-provider",
+     "provider": "Google Gemini",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1019,
+       "column": 32,
+       "snippet": "var DEFAULT_GEMINI_ENDPOINT = \"https://generativelanguage.googleapis.com/v1beta/models\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "translate.googleapis.com",
+     "category": "translation",
+     "provider": "Google Translate",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1292,
+       "column": 42,
+       "snippet": "const response = await fetchWithRetry(`https://translate.googleapis.com/translate_a/single?${params.toString()}`);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1028,
+      "column": 4,
+      "snippet": "Zotero.Prefs?.set?.(OPENAI_API_KEY_PREF, settings.apiKey.trim());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1035,
+      "column": 4,
+      "snippet": "Zotero.Prefs?.set?.(GEMINI_API_KEY_PREF, settings.apiKey.trim());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1042,
+      "column": 4,
+      "snippet": "Zotero.Prefs?.set?.(ANTHROPIC_API_KEY_PREF, settings.apiKey.trim());",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.vocabflow.translation.anthropic.apiKey",
+      "extensions.vocabflow.translation.gemini.apiKey",
+      "extensions.vocabflow.translation.openai.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Moonweave-Research/zotero-vocab-flow/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Moonweave-Research/zotero-vocab-flow/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the moonweave account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-vocab-flow",
+   "version": "0.1.5",
+   "sha256": "7220c70903bc1a3fd2977ca91ad3b0c0d2b84d1baa70e30bdb61b60a80366395"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "eb0abb9beb483ad21a9f4208c1631f892d5e9b134121ab38b142753e41022d78"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.anthropic.com",
+       "api.openai.com",
+       "generativelanguage.googleapis.com"
+      ],
+      "unconfirmed": [
+       "api.anthropic.com",
+       "api.openai.com",
+       "generativelanguage.googleapis.com"
+      ]
+     },
+     {
+      "category": "translation",
+      "hosts": [
+       "translate.googleapis.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-26T09:03:22Z",
+    "lastCommitAt": "2026-07-26T09:03:54Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T06:06:15Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

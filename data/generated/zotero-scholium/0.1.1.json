@@ -1,0 +1,356 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-scholium",
+ "repo": "weilr/zotero-scholium",
+ "version": "0.1.1",
+ "tag": "v0.1.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-09-02T17:07:06Z",
+ "prerelease": false,
+ "asset": {
+  "name": "scholium-bridge.xpi",
+  "url": "https://github.com/weilr/zotero-scholium/releases/download/v0.1.1/scholium-bridge.xpi",
+  "size": 3621,
+  "sha256": "47c604e2407a966df24c7145e868f7702216ebb43f4aa1aa8a0ff6ae97b01edd",
+  "githubAssetId": 541498350,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-09-02T17:07:05Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "scholium-bridge@zotero-scholium",
+  "name": "Scholium Bridge",
+  "version": "0.1.1",
+  "description": "Token-protected local HTTP endpoints through which a script can create highlight and text annotations and child notes in Zotero 7 to 9. Not required on Zotero 10 or later, which provides an official write API. Accepts data only; no code is executed.",
+  "homepageUrl": "https://github.com/weilr/zotero-scholium",
+  "updateUrl": "https://github.com/weilr/zotero-scholium/releases/latest/download/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9999.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 8868,
+   "sha256": "b02bf89b126c9063d906da68525241e7bb59538c157da6236245bc8aba958fcc"
+  },
+  {
+   "path": "manifest.json",
+   "size": 724,
+   "sha256": "34a847a17e9ae8e7f1cf18022e4dcbfa0df4af5c5d4615c51c79e587a3d100a0"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-scholium",
+   "version": "0.1.1",
+   "sha256": "47c604e2407a966df24c7145e868f7702216ebb43f4aa1aa8a0ff6ae97b01edd"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 8868,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 20,
+      "column": 16,
+      "snippet": "if (await IOUtils.exists(path)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 21,
+      "column": 25,
+      "snippet": "const t = (await IOUtils.readUTF8(path)).trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 26,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(path, t);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 176,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[\"/scholium-bridge/ping\"] = Ping;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 177,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[\"/scholium-bridge/list\"] = List;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 178,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[\"/scholium-bridge/apply\"] = Apply;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/scholium-bridge/apply",
+      "/scholium-bridge/list",
+      "/scholium-bridge/ping"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/weilr/zotero-scholium/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/weilr/zotero-scholium/releases/latest/download/update.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 91,
+      "column": 27,
+      "snippet": "if (mine) { await a.eraseTx(); removed++; } else { kept++; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 178,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[\"/scholium-bridge/apply\"] = Apply;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/scholium-bridge/apply"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-scholium",
+   "version": "0.1.1",
+   "sha256": "47c604e2407a966df24c7145e868f7702216ebb43f4aa1aa8a0ff6ae97b01edd"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "4ba8a2f67552c9c60f033534ebe04c59d7cd3ed4a87aa89f40e15b834e88f22c"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-02T17:07:06Z",
+    "lastCommitAt": "2026-09-07T04:06:14Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:58:21Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

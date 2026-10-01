@@ -1,0 +1,602 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-attachment-hub",
+ "repo": "lwmlw004/zotero-attachment-hub",
+ "version": "0.4.4",
+ "tag": "v0.4.4",
+ "releaseAuthor": "lwmlw004",
+ "publishedAt": "2026-07-16T02:18:04Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-attachment-hub-0.4.4.xpi",
+  "url": "https://github.com/lwmlw004/zotero-attachment-hub/releases/download/v0.4.4/zotero-attachment-hub-0.4.4.xpi",
+  "size": 12219,
+  "sha256": "a34f41cae049c14a080bf832585489f3805bc6dfc9d08f82d187d468c2bc9ee9",
+  "githubAssetId": 478648729,
+  "uploader": "lwmlw004",
+  "uploadedAt": "2026-07-16T02:16:06Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-attachment-hub@codex.local",
+  "name": "Zotero Attachment Hub",
+  "version": "0.4.4",
+  "description": "Poll a persistent Zotero attachment queue, attach official SI PDFs, fill missing PDFs, and list missing-PDF DOIs.",
+  "updateUrl": "https://raw.githubusercontent.com/lwmlw004/zotero-attachment-hub/main/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 52204,
+   "sha256": "31adb83e53c8396e8e2ffd0b0f0c04f6d3f0d94f379994890f3139641dea312b"
+  },
+  {
+   "path": "config.json",
+   "size": 714,
+   "sha256": "3f5a234baade7ec785da5606d77f730cc35ed763da37a0a7cffc1a749f1fc0bf"
+  },
+  {
+   "path": "manifest.json",
+   "size": 492,
+   "sha256": "cf7fd91822c09dd5e7926227df090f158baec8465cdf7bbc86f6bc150612e41b"
+  },
+  {
+   "path": "queue.json",
+   "size": 75,
+   "sha256": "bdee51b5dc87a2baa1301460b8700084b7a3cf36ae4b0a1a12d0f89ee0137da4"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-attachment-hub",
+   "version": "0.4.4",
+   "sha256": "a34f41cae049c14a080bf832585489f3805bc6dfc9d08f82d187d468c2bc9ee9"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "config.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "queue.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 52204,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 54,
+       "column": 29,
+       "snippet": "const response = await fetch(new URL(\"config.json\", this.rootURI).href);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 130,
+       "column": 29,
+       "snippet": "const response = await fetch(new URL(\"queue.json\", this.rootURI).href);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 6,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1315,
+       "column": 22,
+       "snippet": "const req = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1351,
+       "column": 22,
+       "snippet": "const req = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1376,
+       "column": 22,
+       "snippet": "const req = await Zotero.HTTP.request(\"GET\", doiURL, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1417,
+       "column": 22,
+       "snippet": "const req = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1437,
+       "column": 22,
+       "snippet": "const req = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1558,
+       "column": 22,
+       "snippet": "const req = await Zotero.HTTP.request(\"GET\", candidate.url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1350,
+       "column": 16,
+       "snippet": "const url = `https://api.crossref.org/works/${encodeURIComponent(doi)}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openalex.org",
+     "category": "scholarly-api",
+     "provider": "OpenAlex",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1436,
+       "column": 16,
+       "snippet": "const url = `https://api.openalex.org/works/https://doi.org/${encodeURIComponent(doi)}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.unpaywall.org",
+     "category": "scholarly-api",
+     "provider": "Unpaywall",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1416,
+       "column": 16,
+       "snippet": "const url = `https://api.unpaywall.org/v2/${encodeURIComponent(doi)}?email=${encodeURIComponent(this.config.unpaywallEmail)}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1375,
+       "column": 19,
+       "snippet": "const doiURL = `https://doi.org/${encodeURIComponent(doi)}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "onlinelibrary.wiley.com",
+     "category": "scholarly-api",
+     "provider": "Wiley Online Library",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1477,
+       "column": 11,
+       "snippet": "url: `https://onlinelibrary.wiley.com/action/downloadSupplement?doi=${encodeURIComponent(doi)}&file=${encodeURIComponent(filename)}`,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "pubs.acs.org",
+     "category": "scholarly-api",
+     "provider": "ACS Publications",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1494,
+       "column": 11,
+       "snippet": "url: `https://pubs.acs.org/doi/suppl/${doi}/suppl_file/${filename}`,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "static-content.springer.com",
+     "category": "scholarly-api",
+     "provider": "Springer Nature",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1509,
+       "column": 11,
+       "snippet": "url: `https://static-content.springer.com/esm/art%3A${encodeURIComponent(doi)}/MediaObjects/${filename}`,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.ebi.ac.uk",
+     "category": "scholarly-api",
+     "provider": "Europe PMC",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1314,
+       "column": 16,
+       "snippet": "const url = `https://www.ebi.ac.uk/europepmc/webservices/rest/article/DOI/${encodeURIComponent(doi)}?format=json`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 15,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 124,
+      "column": 10,
+      "snippet": "await IOUtils.makeDirectory(queueDir, { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 125,
+      "column": 14,
+      "snippet": "if (await IOUtils.exists(queuePath)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 145,
+      "column": 24,
+      "snippet": "const raw = await Zotero.File.getContentsAsync(this.getQueuePath());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 156,
+      "column": 10,
+      "snippet": "await Zotero.File.putContentsAsync(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1037,
+      "column": 11,
+      "snippet": "return Zotero.File.getValidFileName(this.ensurePDFExtension(leaf));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1049,
+      "column": 16,
+      "snippet": "if (!(await IOUtils.exists(localPath))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1052,
+      "column": 23,
+      "snippet": "const stat = await IOUtils.stat(localPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1056,
+      "column": 24,
+      "snippet": "const bytes = await IOUtils.read(localPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1130,
+      "column": 48,
+      "snippet": "if (existingPath && fileSha256 && await IOUtils.exists(existingPath)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1131,
+      "column": 30,
+      "snippet": "const bytes = await IOUtils.read(existingPath);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/lwmlw004/zotero-attachment-hub/main/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/lwmlw004/zotero-attachment-hub/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the lwmlw004 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-attachment-hub",
+   "version": "0.4.4",
+   "sha256": "a34f41cae049c14a080bf832585489f3805bc6dfc9d08f82d187d468c2bc9ee9"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "61007b76c25571e3e3d4f1d462eabdb8901dfbeb374675511966e229855905cd"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "api.openalex.org",
+       "api.unpaywall.org",
+       "doi.org",
+       "onlinelibrary.wiley.com",
+       "pubs.acs.org",
+       "static-content.springer.com",
+       "www.ebi.ac.uk"
+      ],
+      "unconfirmed": [
+       "onlinelibrary.wiley.com",
+       "pubs.acs.org",
+       "static-content.springer.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-16T02:18:04Z",
+    "lastCommitAt": "2026-07-16T02:05:48Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:27:45Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 4,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "schemaVersion": 1,
+ "slug": "translator-for-zotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Qwen, DeepSeek and Gemini providers need an API key",
+  "worksWithout": "Bing, Tencent Transmart and CNKI providers need no key",
+  "services": [
+   "Alibaba Qwen (DashScope)",
+   "DeepSeek",
+   "Google Gemini"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "Provider table",
+   "quote": "| 🔷 Bing | `bing-edge` | 免密 | 网页/内部接口，可能受到限流、地区网络和接口变化影响 |",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "API Key section",
+   "quote": "Qwen、DeepSeek、Gemini 的 Key 由 Zotero/Firefox Login Manager 管理",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "features",
+   "quote": "支持 6 个 Provider",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Provider table shows Bing, Transmart and CNKI as '免密' and Qwen, DeepSeek and Gemini with 'API Key'. The pack lists exactly six cloud providers and calls no localhost address, so 'no' is supported, though the cited quote is weak."
+}

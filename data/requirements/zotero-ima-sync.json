@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ima-sync",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Tencent ima account: Client ID and API key (or bearer token)",
+  "worksWithout": "",
+  "services": [
+   "Tencent ima"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "content/prefs.js",
+   "quote": "请先在「IMA Skills API Key」区填写 Client ID 与 Api Key（或高级区填写 Bearer token）。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Configuration",
+   "quote": "Copy both: **Client ID** and **Api Key** (format `ima_sk_xxxxxxxx`)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "syncs your Zotero items and their **PDF attachments** to the [Tencent ima knowledge base](https://ima.qq.com)",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Sync aborts with the alert \"请先在「IMA Skills API Key」区填写 Client ID 与 Api Key（或高级区填写 Bearer token）。\" when no credentials are set, and the README tells the user to generate a Client ID and API key. It is a sync tool with no AI model features."
+}

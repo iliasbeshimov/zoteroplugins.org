@@ -1,0 +1,46 @@
+{
+ "schemaVersion": 1,
+ "slug": "kernai",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "An AI model provider key (default is OpenAI with an empty key); the chat assistant does not work until one is supplied",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "Anthropic",
+   "Google Gemini",
+   "DeepSeek",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.kern.apiURL\", \"https://api.openai.com/v1/\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.kern.apiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README Configuration",
+   "quote": "There you can configure models, API key.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/kern.js:47322",
+   "quote": "{ name: \"OpenAI Compatible\", apiURL: \"http://seerai.com:1234/v1/\", model: \"local-model\", placeholder: \"(optional)\" }",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Defaults are pref(\"extensions.zotero.kern.apiURL\", \"https://api.openai.com/v1/\") with pref(\"extensions.zotero.kern.apiKey\", \"\"), so the default setup needs the user's own key. I agree with 'required' but the reviewer's keyFor overstates it, because keyless local models are also possible. The code has the preset `{ name: \"Ollama (Local)\", apiURL: \"http://localhost:11434/v1/\", ... placeholder: \"(optional)\" }` at kern.js:47321, which settles local = yes. The seerai.com quote the reviewer cited is not local, so the Ollama line is the right evidence."
+}

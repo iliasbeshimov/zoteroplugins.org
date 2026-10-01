@@ -1,0 +1,658 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-annota",
+ "repo": "liotou/zotero-annota",
+ "version": "2.25.0",
+ "tag": "v2.25.0",
+ "releaseAuthor": "Liotou",
+ "publishedAt": "2026-08-25T13:59:47Z",
+ "prerelease": false,
+ "asset": {
+  "name": "annota.xpi",
+  "url": "https://github.com/Liotou/zotero-annota/releases/download/v2.25.0/annota.xpi",
+  "size": 48158,
+  "sha256": "1305c6314ba477734ee0e737f01defa6c015ffdb6403102dc07b4b96a45d810b",
+  "githubAssetId": 529282744,
+  "uploader": "Liotou",
+  "uploadedAt": "2026-08-25T13:59:46Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "annota@equiriconi",
+  "name": "Annota",
+  "version": "2.25.0",
+  "description": "Runs a configurable AI prompt on every highlight you create in the PDF reader, and writes the reply into the annotation's comment. Works with Mistral or any OpenAI-compatible endpoint.",
+  "updateUrl": "https://raw.githubusercontent.com/Liotou/zotero-annota/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 97794,
+   "sha256": "0205cdeb9c17c31add99ecce316a65f800fe989245646b559f1377ae66f13a6c"
+  },
+  {
+   "path": "icon32.png",
+   "size": 462,
+   "sha256": "443ceb8df71e424f83f326ecab485b433df7e8db278db6cf860c002be7bdc2cd"
+  },
+  {
+   "path": "icon48.png",
+   "size": 631,
+   "sha256": "0bda956a78fc4191742ca017fcd24bf58a7f7de5dd9f1f44c38bcbf551bff343"
+  },
+  {
+   "path": "icon96.png",
+   "size": 1159,
+   "sha256": "9e3adf9f33a12bb2a9137e34c19fe2bbabc8607aae10fa23bc47c4437bbf33d6"
+  },
+  {
+   "path": "manifest.json",
+   "size": 642,
+   "sha256": "3829178d11260e58cdaf9db5f66bc4662c4bfeab35860aca7537ba60b4f6f17e"
+  },
+  {
+   "path": "preferences.css",
+   "size": 4532,
+   "sha256": "656e9568a86b39153f28e80dc5a4b8ba4c4c8bbce4ec80a9ef0ff102027043ab"
+  },
+  {
+   "path": "preferences.js",
+   "size": 15247,
+   "sha256": "c75df2d32f3f30b5e6bbebd86f691691eb351da9cb027218570963dbe7e181fd"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 18934,
+   "sha256": "fe64d251a84e6702783b3ea8a2da503ec6e33e3e841625742879c7d61348645b"
+  },
+  {
+   "path": "prefs.js",
+   "size": 2725,
+   "sha256": "d1d6ebb3c58e2ce1556c344ee76118dfb85bd4e2849810fa8a868a70c63cb301"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-annota",
+   "version": "2.25.0",
+   "sha256": "1305c6314ba477734ee0e737f01defa6c015ffdb6403102dc07b4b96a45d810b"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "icon32.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icon48.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icon96.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "preferences.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 134700,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1770,
+       "column": 16,
+       "snippet": "return await Zotero.HTTP.request(\"POST\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences.js",
+       "line": 206,
+       "column": 21,
+       "snippet": "let resp = await Zotero.HTTP.request(\"GET\", tagsURL(),",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.mistral.ai",
+     "category": "llm-provider",
+     "provider": "Mistral",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 472,
+       "column": 4,
+       "snippet": "\"https://api.mistral.ai/v1/chat/completions\")).trim(),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 12,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.annota.endpoint\", \"https://api.mistral.ai/v1/chat/completions\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 12,
+       "column": 42,
+       "snippet": "pref(\"extensions.zotero.annota.endpoint\", \"https://api.mistral.ai/v1/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "localhost",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 5,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 464,
+       "column": 5,
+       "snippet": "\"http://localhost:11434/v1/chat/completions\")).trim(),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences.js",
+       "line": 176,
+       "column": 19,
+       "snippet": "if (!ep) return \"http://localhost:11434/api/tags\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences.js",
+       "line": 206,
+       "column": 21,
+       "snippet": "let resp = await Zotero.HTTP.request(\"GET\", tagsURL(),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 15,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.annota.ollamaEndpoint\", \"http://localhost:11434/v1/chat/completions\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 15,
+       "column": 48,
+       "snippet": "pref(\"extensions.zotero.annota.ollamaEndpoint\", \"http://localhost:11434/v1/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "annota.ollamaEndpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.js",
+       "line": 175,
+       "column": 19,
+       "snippet": "let ep = String(Zotero.Prefs.get(PREF_ENDPOINT) || \"\").trim();",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "endpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 471,
+       "column": 20,
+       "snippet": "endpoint: String(getPref(\"endpoint\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero.annota.endpoint",
+     "defaultValue": "https://api.mistral.ai/v1/chat/completions",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 172,
+       "column": 24,
+       "snippet": "preference=\"extensions.zotero.annota.endpoint\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 12,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.annota.endpoint\", \"https://api.mistral.ai/v1/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero.annota.ollamaEndpoint",
+     "defaultValue": "http://localhost:11434/v1/chat/completions",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 196,
+       "column": 24,
+       "snippet": "preference=\"extensions.zotero.annota.ollamaEndpoint\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 15,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.annota.ollamaEndpoint\", \"http://localhost:11434/v1/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "ollamaEndpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 463,
+       "column": 21,
+       "snippet": "endpoint: String(getPref(\"ollamaEndpoint\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "programs": [
+    {
+     "program": "Claude Code",
+     "provider": "Anthropic",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1687,
+       "column": 59,
+       "snippet": "let cmd = String(getPref(\"cliPath\", \"claude\")).trim() || \"claude\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 475,
+      "column": 18,
+      "snippet": "apiKey: String(getPref(\"apiKey\", \"\")).trim(),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 10,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.annota.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "apiKey",
+      "extensions.zotero.annota.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1605,
+      "column": 12,
+      "snippet": "if (await IOUtils.exists(bin)) return bin;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1608,
+      "column": 8,
+      "snippet": "await IOUtils.writeUTF8(srcPath, this.APPLE_SWIFT_SOURCE);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1626,
+      "column": 32,
+      "snippet": "if (exitCode !== 0 || !(await IOUtils.exists(bin))) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1613,
+      "column": 16,
+      "snippet": "proc = await Subprocess.call({",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1638,
+      "column": 4,
+      "snippet": "\"resource://gre/modules/Subprocess.sys.mjs\"));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1645,
+      "column": 19,
+      "snippet": "let proc = await Subprocess.call({",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1681,
+      "column": 4,
+      "snippet": "\"resource://gre/modules/Subprocess.sys.mjs\"));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1699,
+      "column": 16,
+      "snippet": "proc = await Subprocess.call({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ],
+     "programs": [
+      "claude",
+      "swiftc"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Liotou/zotero-annota/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Liotou/zotero-annota/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Liotou account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-annota",
+   "version": "2.25.0",
+   "sha256": "1305c6314ba477734ee0e737f01defa6c015ffdb6403102dc07b4b96a45d810b"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "9ed26a23da8b642426a909e85bc29ac8c2e82411ab69c4e44742f70497ba5207"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "Claude Code (Anthropic)",
+       "api.mistral.ai"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include claude, swiftc"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-25T13:59:47Z",
+    "lastCommitAt": "2026-08-25T13:59:42Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T09:39:12Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 3,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,43 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-agent",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Web of Science Starter search needs the user's own Clarivate key; cloud embedding providers (OpenAI, Google, etc.) need keys",
+  "worksWithout": "The built-in MCP server for AI clients works with its own local token; Ollama embeddings need no key",
+  "services": [
+   "Clarivate Web of Science",
+   "OpenAI",
+   "Google Gemini",
+   "Voyage AI",
+   "OpenRouter",
+   "SiliconFlow",
+   "Alibaba DashScope",
+   "Zhipu"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Web of Science Starter API",
+   "quote": "It uses your own API Key, stays off by default",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "zotero-agent.js EMBEDDING_PROVIDER_PRESETS",
+   "quote": "apiBase: \"http://localhost:11434/v1\",\n      modelPlaceholder: \"nomic-embed-text\",\n      needsApiKey: false",
+   "supports": "localModel"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zotero-agent.wos.enabled\", false);",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README says the Web of Science tool 'uses your own API Key, stays off by default', and the core MCP server uses a local token. The Ollama embedding preset with needsApiKey: false is confirmed in zotero-agent.js around line 23791. Its use for semantic embeddings is a narrower local-model use than chat."
+}

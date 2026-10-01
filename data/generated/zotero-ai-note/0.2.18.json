@@ -1,0 +1,720 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-note",
+ "repo": "nkbaim/zotero-ai-note",
+ "version": "0.2.18",
+ "tag": "v0.2.18",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-09-23T02:59:19Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-ai-note-0.2.18.xpi",
+  "url": "https://github.com/nkbaim/zotero-ai-note/releases/download/v0.2.18/zotero-ai-note-0.2.18.xpi",
+  "size": 14007,
+  "sha256": "a8f157622bbcd31ea8b44b251e4104a138d776301da8061e92165c43ce222025",
+  "githubAssetId": 582821713,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-09-23T02:59:19Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-ai-note@duyang.dev",
+  "name": "Zotero AI Note",
+  "version": "0.2.18",
+  "description": "Summarize selected PDF papers with Qwen, DeepSeek, Zhipu GLM, or Xiaomi MiMo and save the result as a Zotero child note.",
+  "homepageUrl": "https://github.com/nkbaim/zotero-ai-note",
+  "updateUrl": "https://raw.githubusercontent.com/nkbaim/zotero-ai-note/main/updates.json",
+  "strictMinVersion": "8.999",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1115,
+   "sha256": "0ae5fef6715c47556b9f0377d183afb7f4e811d424f140f21a73da4201c70b8a"
+  },
+  {
+   "path": "content/preferences.js",
+   "size": 2850,
+   "sha256": "e3fbe0415c5663b77f2ac2d29d73a5572faa8b6c68685c029665e73178068cf1"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 14080,
+   "sha256": "629a2d041d767017a53cf4b15f3521ac70aab923792b197286556434d0572a7e"
+  },
+  {
+   "path": "content/zotero-ai-note.js",
+   "size": 22658,
+   "sha256": "6bff0a11c62b6bf539607f79654cd45bbbc398067a4111e027abbf1609f7974b"
+  },
+  {
+   "path": "icon.svg",
+   "size": 561,
+   "sha256": "5b938d699f06ba33a58e3deacadb83bbab42e03fe0ff66cd275da99d67dab36d"
+  },
+  {
+   "path": "manifest.json",
+   "size": 623,
+   "sha256": "bbb6499643418c076b0fe8698e62b4248ad6a8deb23a39b0edcff0ffc841fc1f"
+  },
+  {
+   "path": "prefs.js",
+   "size": 1513,
+   "sha256": "bd3ac7c8ef83c946fd0892b1bdf6f5e6dff8a2ef63f6e79a85965d549acce58f"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-ai-note",
+   "version": "0.2.18",
+   "sha256": "a8f157622bbcd31ea8b44b251e4104a138d776301da8061e92165c43ce222025"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 42216,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/zotero-ai-note.js",
+       "line": 386,
+       "column": 23,
+       "snippet": "response = await Zotero.HTTP.request(\"POST\", endpoint, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/zotero-ai-note.js",
+       "line": 517,
+       "column": 17,
+       "snippet": "baseURL: \"https://api.deepseek.com\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 3,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-ai-note.deepseek.baseURL\", \"https://api.deepseek.com\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 3,
+       "column": 51,
+       "snippet": "pref(\"extensions.zotero-ai-note.deepseek.baseURL\", \"https://api.deepseek.com\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.xiaomimimo.com",
+     "category": "llm-provider",
+     "provider": "Xiaomi MiMo",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/zotero-ai-note.js",
+       "line": 535,
+       "column": 17,
+       "snippet": "baseURL: \"https://api.xiaomimimo.com/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 12,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-ai-note.mimo.baseURL\", \"https://api.xiaomimimo.com/v1\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 12,
+       "column": 47,
+       "snippet": "pref(\"extensions.zotero-ai-note.mimo.baseURL\", \"https://api.xiaomimimo.com/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dashscope.aliyuncs.com",
+     "category": "llm-provider",
+     "provider": "Alibaba Qwen (DashScope)",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/zotero-ai-note.js",
+       "line": 523,
+       "column": 17,
+       "snippet": "baseURL: \"https://dashscope.aliyuncs.com/compatible-mode/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 6,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-ai-note.qwen.baseURL\", \"https://dashscope.aliyuncs.com/compatible-mode/v1\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 6,
+       "column": 47,
+       "snippet": "pref(\"extensions.zotero-ai-note.qwen.baseURL\", \"https://dashscope.aliyuncs.com/compatible-mode/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 284,
+       "column": 31,
+       "snippet": "<html:p>项目仓库：<html:a href=\"https://github.com/nkbaim/zotero-ai-note\" target=\"_blank\" onclick=\"ZoteroAINotePreferences.openExternalLink(event);\">github.com/nkbaim/zotero-ai-note</html:a></html:p>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 286,
+       "column": 20,
+       "snippet": "<html:a href=\"https://github.com/nkbaim/zotero-ai-note/releases\" target=\"_blank\" onclick=\"ZoteroAINotePreferences.openExternalLink(event);\">版本发布</html:a>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 287,
+       "column": 22,
+       "snippet": "· <html:a href=\"https://github.com/nkbaim/zotero-ai-note/issues\" target=\"_blank\" onclick=\"ZoteroAINotePreferences.openExternalLink(event);\">问题反馈</html:a>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 288,
+       "column": 22,
+       "snippet": "· <html:a href=\"https://github.com/nkbaim/zotero-ai-note/blob/main/LICENSE\" target=\"_blank\" onclick=\"ZoteroAINotePreferences.openExternalLink(event);\">MIT License</html:a>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "open.bigmodel.cn",
+     "category": "llm-provider",
+     "provider": "Zhipu (GLM)",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/zotero-ai-note.js",
+       "line": 529,
+       "column": 17,
+       "snippet": "baseURL: \"https://open.bigmodel.cn/api/paas/v4\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 9,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-ai-note.zhipu.baseURL\", \"https://open.bigmodel.cn/api/paas/v4\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 9,
+       "column": 48,
+       "snippet": "pref(\"extensions.zotero-ai-note.zhipu.baseURL\", \"https://open.bigmodel.cn/api/paas/v4\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero-ai-note.deepseek.baseURL",
+     "defaultValue": "https://api.deepseek.com",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 143,
+       "column": 31,
+       "snippet": "type=\"url\" preference=\"extensions.zotero-ai-note.deepseek.baseURL\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 3,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-ai-note.deepseek.baseURL\", \"https://api.deepseek.com\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero-ai-note.mimo.baseURL",
+     "defaultValue": "https://api.xiaomimimo.com/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 213,
+       "column": 31,
+       "snippet": "type=\"url\" preference=\"extensions.zotero-ai-note.mimo.baseURL\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 12,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-ai-note.mimo.baseURL\", \"https://api.xiaomimimo.com/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero-ai-note.qwen.baseURL",
+     "defaultValue": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 166,
+       "column": 31,
+       "snippet": "type=\"url\" preference=\"extensions.zotero-ai-note.qwen.baseURL\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 6,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-ai-note.qwen.baseURL\", \"https://dashscope.aliyuncs.com/compatible-mode/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero-ai-note.zhipu.baseURL",
+     "defaultValue": "https://open.bigmodel.cn/api/paas/v4",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 190,
+       "column": 31,
+       "snippet": "type=\"url\" preference=\"extensions.zotero-ai-note.zhipu.baseURL\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 9,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-ai-note.zhipu.baseURL\", \"https://open.bigmodel.cn/api/paas/v4\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "x.baseURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/zotero-ai-note.js",
+       "line": 545,
+       "column": 22,
+       "snippet": "baseURL: String(Zotero.Prefs.get(`${prefix}.baseURL`, true) || defaults.baseURL).trim(),",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "zotero-ai-note-deepseek-base-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 142,
+       "column": 8,
+       "snippet": "<html:input id=\"zotero-ai-note-deepseek-base-url\" class=\"zotero-ai-note-input zotero-ai-note-url\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "zotero-ai-note-mimo-base-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 212,
+       "column": 8,
+       "snippet": "<html:input id=\"zotero-ai-note-mimo-base-url\" class=\"zotero-ai-note-input zotero-ai-note-url\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "zotero-ai-note-qwen-base-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 165,
+       "column": 8,
+       "snippet": "<html:input id=\"zotero-ai-note-qwen-base-url\" class=\"zotero-ai-note-input zotero-ai-note-url\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "zotero-ai-note-zhipu-base-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 189,
+       "column": 8,
+       "snippet": "<html:input id=\"zotero-ai-note-zhipu-base-url\" class=\"zotero-ai-note-input zotero-ai-note-url\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/zotero-ai-note.js",
+      "line": 544,
+      "column": 39,
+      "snippet": "apiKey: String(environmentKey || Zotero.Prefs.get(`${prefix}.apiKey`, true) || \"\").trim(),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-ai-note.deepseek.apiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 5,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-ai-note.qwen.apiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 8,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-ai-note.zhipu.apiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 11,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-ai-note.mimo.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero-ai-note.deepseek.apiKey",
+      "extensions.zotero-ai-note.mimo.apiKey",
+      "extensions.zotero-ai-note.qwen.apiKey",
+      "extensions.zotero-ai-note.zhipu.apiKey",
+      "x.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/zotero-ai-note.js",
+      "line": 210,
+      "column": 19,
+      "snippet": "return await Zotero.File.getContentsAsync(cacheFile, \"utf-8\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/nkbaim/zotero-ai-note/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/nkbaim/zotero-ai-note/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-ai-note",
+   "version": "0.2.18",
+   "sha256": "a8f157622bbcd31ea8b44b251e4104a138d776301da8061e92165c43ce222025"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "292d22b703d1bd148db7135ceb62ba9eacf4cef5e01410ddbe0ecd11625321cd"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com",
+       "api.xiaomimimo.com",
+       "dashscope.aliyuncs.com",
+       "open.bigmodel.cn"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-23T02:59:19Z",
+    "lastCommitAt": "2026-09-23T02:58:51Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T06:29:41Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

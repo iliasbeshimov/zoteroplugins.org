@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "paperflow",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Gemini API key for translation and chat",
+  "worksWithout": "",
+  "services": [
+   "Google AI Studio (Gemini)"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "번역과 대화에는 Gemini API 접근 권한이 필요합니다.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.paper-translator.geminiApiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/preferences.js:51",
+   "quote": "const url = \"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README says translation and chat need Gemini API access, the geminiApiKey pref defaults to empty, and the only service called is generativelanguage.googleapis.com. No local endpoint is configurable in the pack."
+}

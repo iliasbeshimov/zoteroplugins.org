@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-author-profiles",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "generating the profiles: it reads the API URL, key and model from the AIdea plugin's settings",
+  "worksWithout": "",
+  "services": [
+   "AIdea/GMN-compatible API provider"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "content/author-profiles.js (release file)",
+   "quote": "if (!config.apiBase || !config.apiKey || !config.model) {",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "reads the existing AIdea GMN-compatible preferences at runtime for API base URL, key, and model",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Code has `if (!config.apiBase || !config.apiKey || !config.model) {` and sends `Authorization: Bearer ${config.apiKey}`. The README says key, URL and model come from AIdea's settings. Whether the AIdea endpoint can be a local model is not shown."
+}

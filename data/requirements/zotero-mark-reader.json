@@ -1,0 +1,22 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-mark-reader",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-mark-reader.js parseWithCloudPrecision (default mode is cloud)",
+   "quote": "throw new Error(\"请先在插件设置中填写 MinerU API Token。\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Default MinerU mode is \"cloud\" and code throws \"请先在插件设置中填写 MinerU API Token。\", but README offers a local mineru-api mode (no token), so required vs optional is unsettled. The translation LLM also throws without an API Key even though its baseURL is configurable, so local-model use is not shown."
+}

@@ -1,0 +1,169 @@
+{
+ "repo": "juniorxxue/zotero-copypath",
+ "slug": "zotero-copypath",
+ "group": "sample-2026",
+ "rank": 1244,
+ "name": "Markdown PDF Link",
+ "stars": 0,
+ "downloads": 1,
+ "createdAt": "2026-07-29T06:46:38Z",
+ "tag": "v1.0.2",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "markdown-pdf-link-1.0.2.xpi",
+    "url": "https://github.com/juniorxxue/zotero-copypath/releases/download/v1.0.2/markdown-pdf-link-1.0.2.xpi",
+    "size": 4915,
+    "uploadedAt": "2026-07-29T06:46:55Z",
+    "sha256": "c10be4e4f7e93a702ed3bebc07b6cb60664f372a0edaa6cd0bb2aa2084e3da87"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "markdown-pdf-link@codex.local",
+    "name": "Markdown PDF Link",
+    "version": "1.0.2",
+    "description": "Copies a Zotero item's local PDF as a Markdown file link.",
+    "homepageUrl": null,
+    "updateUrl": "https://127.0.0.1:65535/markdown-pdf-link/updates.json",
+    "minVersion": "7.0.10",
+    "maxVersion": "9.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-copypath",
+     "version": "1.0.2",
+     "sha256": "c10be4e4f7e93a702ed3bebc07b6cb60664f372a0edaa6cd0bb2aa2084e3da87"
+    },
+    "coverage": {
+     "filesTotal": 5,
+     "filesAnalyzed": 3,
+     "filesSkipped": [
+      {
+       "path": "icons/copy.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [],
+     "hosts": [],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "src/plugin.js",
+        "line": 191,
+        "column": 13,
+        "snippet": "return Zotero.Utilities.Internal.copyTextToClipboard(text);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "src/plugin.js",
+        "line": 184,
+        "column": 13,
+        "snippet": "return Zotero.File.pathToFileURI(path);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 9,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://127.0.0.1:65535/markdown-pdf-link/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://127.0.0.1:65535/markdown-pdf-link/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "no-network-found",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NONE"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

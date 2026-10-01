@@ -1,0 +1,27 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf-translate-thinking-level",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "AI services such as DeepSeek, GLM, Kimi, OpenAI, Gemini and commercial translators",
+  "worksWithout": "Google (googleapi) or CNKI, chosen as the default service",
+  "services": [
+   "DeepSeek",
+   "OpenAI",
+   "Google Gemini",
+   "DeepL"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "chrome/content/scripts (release file) line 36947",
+   "quote": "setPref(\"translateSource\", isZhCN ? \"cnki\" : \"googleapi\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Same upstream default (googleapi/cnki); README only discusses DeepSeek/GLM/Kimi cloud models, nothing local."
+}

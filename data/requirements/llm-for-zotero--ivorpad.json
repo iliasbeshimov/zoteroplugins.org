@@ -1,0 +1,38 @@
+{
+ "schemaVersion": 1,
+ "slug": "llm-for-zotero--ivorpad",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "standard API providers need your own API key",
+  "worksWithout": "local OpenAI-compatible models, WebChat (ChatGPT web sync) and Codex App Server, which use no provider API key",
+  "services": [
+   "OpenAI",
+   "Anthropic",
+   "DeepSeek"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, introduction",
+   "quote": "It works with standard API\nproviders, local OpenAI-compatible models, WebChat, Codex App-Server,",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, quick start",
+   "quote": "If you do not want to use a provider API key, start with",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/llmforzotero.js:4036",
+   "quote": "defaultApiBase: \"http://localhost:11434\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "This is the same README as llm-for-zotero, with keyless options offered and an Ollama base of http://localhost:11434 in the code."
+}

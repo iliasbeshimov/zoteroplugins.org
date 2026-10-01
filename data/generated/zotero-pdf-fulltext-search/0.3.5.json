@@ -1,0 +1,299 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf-fulltext-search",
+ "repo": "liuning12921/zotero-pdf-fulltext-search",
+ "version": "0.3.5",
+ "tag": "v0.3.5",
+ "releaseAuthor": "LiuNing12921",
+ "publishedAt": "2026-06-24T03:38:11Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-pdf-fulltext-search-v0.3.5.xpi",
+  "url": "https://github.com/LiuNing12921/zotero-pdf-fulltext-search/releases/download/v0.3.5/zotero-pdf-fulltext-search-v0.3.5.xpi",
+  "size": 11632,
+  "sha256": "d80d948f86921f31392b21784c58aef08c381f011c2aeaa99325d74ac61d2219",
+  "githubAssetId": 456244836,
+  "uploader": "LiuNing12921",
+  "uploadedAt": "2026-06-24T03:38:01Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "install.rdf",
+  "legacy": true,
+  "addonId": "zotero-pdf-fulltext-search@seven.chatgpt",
+  "name": "Zotero PDF Fulltext Search",
+  "version": "0.3.5",
+  "description": "Adds a toolbar-left inline Mendeley-like search panel with refined centered toolbar controls, highlighted indexed PDF full-text snippets, and previous/next navigation in the results row for Zotero 6.",
+  "homepageUrl": "https://www.zotero.org/",
+  "strictMinVersion": "6.0",
+  "strictMaxVersion": "6.*"
+ },
+ "files": [
+  {
+   "path": "chrome.manifest",
+   "size": 136,
+   "sha256": "79250f5eeea3b9d766e30d63e562ca303e8ceb21a194b628fe7b7c0865865c75"
+  },
+  {
+   "path": "chrome/content/overlay.xul",
+   "size": 283,
+   "sha256": "ef911e6eb2f66c92c2c09a3728573b96c6b7258eb801e9a84f539c35a96baf4d"
+  },
+  {
+   "path": "chrome/content/pdfFulltextSearch.js",
+   "size": 41424,
+   "sha256": "6d96ce4f350e9db85af24cb36b732b6130790c13dee01d79aee2b61a8c2303da"
+  },
+  {
+   "path": "install.rdf",
+   "size": 953,
+   "sha256": "ea92e19af3eb3aa6288912020205d8dba8eb7b6ecbb6b55d27f976efda5cf76e"
+  },
+  {
+   "path": "README.md",
+   "size": 1128,
+   "sha256": "bb635d9eba0f84bad7730d99901f6167432184b4b4a17ba459574be798e01243"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-pdf-fulltext-search",
+   "version": "0.3.5",
+   "sha256": "d80d948f86921f31392b21784c58aef08c381f011c2aeaa99325d74ac61d2219"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "install.rdf",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 41707,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/pdfFulltextSearch.js",
+      "line": 894,
+      "column": 35,
+      "snippet": "Components.classes[\"@mozilla.org/widget/clipboardhelper;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/pdfFulltextSearch.js",
+      "line": 895,
+      "column": 32,
+      "snippet": ".getService(Components.interfaces.nsIClipboardHelper)",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/pdfFulltextSearch.js",
+      "line": 807,
+      "column": 44,
+      "snippet": "Components.utils.import(\"resource://gre/modules/osfile.jsm\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/pdfFulltextSearch.js",
+      "line": 809,
+      "column": 28,
+      "snippet": "if (!(await OS.File.exists(path))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/pdfFulltextSearch.js",
+      "line": 812,
+      "column": 36,
+      "snippet": "var content = await OS.File.read(path, { encoding: \"utf-8\" });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "OS.File"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the LiuNing12921 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-pdf-fulltext-search",
+   "version": "0.3.5",
+   "sha256": "d80d948f86921f31392b21784c58aef08c381f011c2aeaa99325d74ac61d2219"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "8827e90cfa28e74f20f0f216d98977f105163623b68b822a2cf715baaf22b48a"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-06-24T03:38:11Z",
+    "lastCommitAt": "2026-06-24T07:35:18Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 6",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

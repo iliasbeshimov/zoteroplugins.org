@@ -1,0 +1,108 @@
+---
+import PluginList from "../../components/PluginList.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import Base from "../../layouts/Base.astro";
+import { CURRENT_ZOTERO_MAJOR, shownPlugins } from "../../lib/atlas.ts";
+import { JOBS, type Job } from "../../lib/jobs.ts";
+
+export function getStaticPaths() {
+  return JOBS.map((job) => ({ params: { job: job.slug }, props: { job } }));
+}
+const { job } = Astro.props as { job: Job };
+const plugins = shownPlugins().filter((p) => p.jobs.includes(job.slug));
+---
+
+<Base title={`${job.title} · Zotero Plugins Atlas`} description={`${job.lead} ${plugins.length} plugins, each graded from a check of its code.`}>
+  <SiteHeader active="browse" search />
+  <div class="wrap">
+    <nav aria-label="Breadcrumb" class="crumb"><a href="/">Home</a><span>›</span><span>{job.title}</span></nav>
+    <div class="top">
+      <div class="tl">
+        <h1>{job.title}</h1>
+        <p>{job.lead} {plugins.length} plugins.</p>
+        <p class="hint">Tick up to three plugins to compare them.</p>
+      </div>
+      <aside class="watch">
+        <strong>What to watch for</strong>
+        <span set:html={job.watch} />
+      </aside>
+    </div>
+    <PluginList plugins={plugins} currentMajor={CURRENT_ZOTERO_MAJOR()} compare />
+    <p class="fine">Categories are matched from each plugin's name, description and topics until we've written a summary for every plugin, so a few may be missing or misplaced.</p>
+  </div>
+  <SiteFooter />
+</Base>
+
+<style>
+  .wrap {
+    max-width: 1184px;
+    margin: 0 auto;
+    padding: 36px var(--gutter) 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .crumb {
+    font-size: 14px;
+    color: var(--ink-2);
+    display: flex;
+    gap: 8px;
+  }
+  .top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 400px;
+    gap: 40px;
+    align-items: start;
+  }
+  .tl {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 48px;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 760;
+  }
+  .tl p {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 56ch;
+  }
+  .tl .hint {
+    font-size: 14.5px;
+  }
+  .watch {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px 20px;
+    border-radius: 14px;
+    background: var(--rev-bg);
+    border: 1px solid var(--rev-line);
+    font-size: 14.5px;
+    line-height: 1.45;
+  }
+  .watch strong {
+    font-size: 16px;
+  }
+  .fine {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--ink-2);
+  }
+  @media (max-width: 860px) {
+    .top {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    h1 {
+      font-size: 36px;
+    }
+  }
+</style>

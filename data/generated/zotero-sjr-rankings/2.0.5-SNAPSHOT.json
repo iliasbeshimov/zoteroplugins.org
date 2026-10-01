@@ -1,0 +1,308 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-sjr-rankings",
+ "repo": "jacse/zotero-sjr-rankings",
+ "version": "2.0.5-SNAPSHOT",
+ "tag": "v1.0.0",
+ "releaseAuthor": "Jacse",
+ "publishedAt": "2020-03-05T08:37:11Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-sjr-rank-1.0.0.xpi",
+  "url": "https://github.com/Jacse/zotero-sjr-rankings/releases/download/v1.0.0/zotero-sjr-rank-1.0.0.xpi",
+  "size": 4451,
+  "sha256": "a0a3963c619971f57d6672be7f9fff9bcb1ebac2f92ac6b5c8567f46da48121f",
+  "githubAssetId": 18487537,
+  "uploader": "Jacse",
+  "uploadedAt": "2020-03-05T08:37:08Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "install.rdf",
+  "legacy": true,
+  "addonId": "zoterosjrrankings@jacoblauritzen.com",
+  "name": "Zotero SJR Rankings",
+  "version": "2.0.5-SNAPSHOT",
+  "description": "Zotero plugin for auto-fetching SJR rankings",
+  "homepageUrl": "https://github.com/Jacse/zotero-sjr-rankings",
+  "strictMinVersion": "5.0.66",
+  "strictMaxVersion": "5.0.*"
+ },
+ "files": [
+  {
+   "path": "chrome.manifest",
+   "size": 194,
+   "sha256": "9a9e7f3876e3b674c33388e4db6c32827a11fad1023228cb66ed86b34dbd290b"
+  },
+  {
+   "path": "chrome/content/overlay.xul",
+   "size": 849,
+   "sha256": "e6bf40503661ce5c6d41fee5916504df6d023e43af954f414be8fb4ac9757fd9"
+  },
+  {
+   "path": "chrome/content/sjr.js",
+   "size": 6086,
+   "sha256": "4613f660a001068c1efe0321d13e3e7c98103ae4d9ef051da2e1697e333102ba"
+  },
+  {
+   "path": "chrome/locale/en-US/overlay.dtd",
+   "size": 133,
+   "sha256": "7c5f8a7b535fa4e62ad0ef0874ecd1b000bec6917591b75877e465a4223e4698"
+  },
+  {
+   "path": "install.rdf",
+   "size": 1151,
+   "sha256": "ac604fd3f1ee73bb4989416870dc784b5add91877a62b41156e8a267accb5d0b"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-sjr-rankings",
+   "version": "2.0.5-SNAPSHOT",
+   "sha256": "a0a3963c619971f57d6672be7f9fff9bcb1ebac2f92ac6b5c8567f46da48121f"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "chrome/locale/en-US/overlay.dtd",
+     "reason": "not-code"
+    },
+    {
+     "path": "install.rdf",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 6935,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/sjr.js",
+       "line": 64,
+       "column": 2,
+       "snippet": "SJR.fetch(searchUrl, function(text) {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/sjr.js",
+       "line": 77,
+       "column": 4,
+       "snippet": "SJR.fetch(",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "xhr",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/sjr.js",
+       "line": 22,
+       "column": 12,
+       "snippet": "let xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "www.scimagojr.com",
+     "category": "scholarly-api",
+     "provider": "SCImago",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/sjr.js",
+       "line": 63,
+       "column": 18,
+       "snippet": "let searchUrl = 'https://www.scimagojr.com/journalsearch.php?q=' + encodeURIComponent(prepForComp(journal));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/sjr.js",
+       "line": 78,
+       "column": 6,
+       "snippet": "'https://www.scimagojr.com/journalsearch.php?q=' + encodeURIComponent(found[1]) + '&tip=sid&clean=0',",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://www.scimagojr.com/journalsearch.php?q=<expr>&tip=sid&clean=0",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/sjr.js",
+       "line": 77,
+       "column": 4,
+       "snippet": "SJR.fetch(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Jacse account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-sjr-rankings",
+   "version": "2.0.5-SNAPSHOT",
+   "sha256": "a0a3963c619971f57d6672be7f9fff9bcb1ebac2f92ac6b5c8567f46da48121f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "694994bb77173540dcc269a3b1df16ce5c7c9020cb6d3196fd4070f2dd482fae"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "www.scimagojr.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "dormant",
+    "lastReleaseAt": "2020-03-05T08:37:11Z",
+    "lastCommitAt": "2020-12-18T11:08:24Z",
+    "concern": "medium"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for older Zotero versions",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

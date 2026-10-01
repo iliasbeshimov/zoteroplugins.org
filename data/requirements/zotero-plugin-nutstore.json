@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-plugin-nutstore",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "A Nutstore (Jianguoyun) account sign-in, needed for its sync setup",
+  "worksWithout": "",
+  "services": [
+   "Nutstore (Jianguoyun)"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "User Manual",
+   "quote": "In the popped-up web page, log in to Nutstore account.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-plugin-nutstore.js:4555",
+   "quote": "const nutstoreToken = getPref(\"nutstore-sso-token\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "description",
+   "where": "Manifest description",
+   "quote": "Nutstore plugin for Zotero.",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: 'In the popped-up web page, log in to Nutstore account.' plus pref 'nutstore-sso-token' defaulting to empty; its purpose (Nutstore sync setup) needs a Nutstore sign-in. No AI features."
+}

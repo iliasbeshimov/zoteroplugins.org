@@ -1,0 +1,326 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-deduplicator",
+ "repo": "heimi98/zotero-deduplicator",
+ "version": "1.2.0",
+ "tag": "v1.2.0",
+ "releaseAuthor": "heimi98",
+ "publishedAt": "2026-07-14T11:53:40Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-pdf-deduplicator.xpi",
+  "url": "https://github.com/heimi98/zotero-deduplicator/releases/download/v1.2.0/zotero-pdf-deduplicator.xpi",
+  "size": 12225,
+  "sha256": "63fb078cb497f38a0d79e06f96f9b4d4ba7676dd4d749e3628b24a339d9b989d",
+  "githubAssetId": 476646909,
+  "uploader": "heimi98",
+  "uploadedAt": "2026-07-14T11:53:40Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-pdf-deduplicator@xuan.dev",
+  "name": "PDF Deduplicator",
+  "version": "1.2.0",
+  "description": "Detect duplicate Zotero PDF attachments by SHA-256 and remove them after confirmation.",
+  "updateUrl": "https://raw.githubusercontent.com/heimi98/zotero-deduplicator/main/update.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 29825,
+   "sha256": "e84bf9dc830a8283dace53b687f2e543f34b70c63424ba15c79ca5006c4f901a"
+  },
+  {
+   "path": "content/duplicate-dialog.css",
+   "size": 3163,
+   "sha256": "b5953027e7e6d8c4a41bb4337882256fc3c48ef1f69d8e36ece4d309f0d42fcc"
+  },
+  {
+   "path": "content/duplicate-dialog.js",
+   "size": 2276,
+   "sha256": "280a08cb3226cfb821e67210803abffa5dad130de0bd674fb9101c51ae788117"
+  },
+  {
+   "path": "content/duplicate-dialog.xhtml",
+   "size": 2558,
+   "sha256": "b6e4ac75455b3f8aac26dcacd48e89b8b6b5bbbf339e1249dd534b7853a7e534"
+  },
+  {
+   "path": "content/icons/icon.svg",
+   "size": 719,
+   "sha256": "bfa9c00bda2b552ca0bf5f76188a0b2a9d43bebe56b3b1655e3241051c87cd3e"
+  },
+  {
+   "path": "manifest.json",
+   "size": 562,
+   "sha256": "41073932e79ca53f370b02688480fcf124c4ae1ae78697a5b90b3bc44afa4551"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-deduplicator",
+   "version": "1.2.0",
+   "sha256": "63fb078cb497f38a0d79e06f96f9b4d4ba7676dd4d749e3628b24a339d9b989d"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "content/duplicate-dialog.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 34659,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [
+    {
+     "pattern": "chrome://<expr>/content/duplicate-dialog.xhtml",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 748,
+       "column": 6,
+       "snippet": "`chrome://${CHROME_NAME}/content/duplicate-dialog.xhtml`,",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 538,
+      "column": 19,
+      "snippet": "stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 891,
+      "column": 21,
+      "snippet": "const stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 911,
+      "column": 21,
+      "snippet": "children = await IOUtils.getChildren(storageDirectory);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1008,
+      "column": 6,
+      "snippet": "IOUtils.read(path, { offset, maxBytes }),",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/heimi98/zotero-deduplicator/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/heimi98/zotero-deduplicator/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the heimi98 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-deduplicator",
+   "version": "1.2.0",
+   "sha256": "63fb078cb497f38a0d79e06f96f9b4d4ba7676dd4d749e3628b24a339d9b989d"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "f218cc2f84e7f227b2da076687f2b1a77728673ccff6d9177b1deba50f6cbc55"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-14T11:53:40Z",
+    "lastCommitAt": "2026-07-14T11:53:17Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T05:29:10Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 1,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "schemaVersion": 1,
+ "slug": "embeddingzotero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "semantic search embeddings via cloud providers (OpenAI, Google, etc.); the MCP server needs none",
+  "worksWithout": "The built-in MCP server, and embeddings through local Ollama",
+  "services": [
+   "OpenAI",
+   "Google Gemini",
+   "Alibaba DashScope",
+   "Zhipu",
+   "OpenRouter",
+   "SiliconFlow",
+   "Voyage AI"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-mcp-plugin.js:~19177",
+   "quote": "apiBase: \"http://localhost:11434/v1\",\n      modelPlaceholder: \"nomic-embed-text\",\n      needsApiKey: false",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-mcp-plugin.js EMBEDDING_PROVIDER_PRESETS",
+   "quote": "apiBase: \"https://api.openai.com/v1\",\n      modelPlaceholder: \"text-embedding-3-small\",\n      needsApiKey: true",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zotero-mcp-plugin.mcp.server.enabled\", true);",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "I checked the code in the release file. The ollama preset has apiBase http://localhost:11434/v1 with needsApiKey: false, and the openai and voyage presets have needsApiKey: true. The MCP server is enabled by default in prefs.js."
+}

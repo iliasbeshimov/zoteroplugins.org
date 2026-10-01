@@ -1,0 +1,623 @@
+{
+ "schemaVersion": 1,
+ "slug": "retainpdf-zotero",
+ "repo": "l41036406-del/retainpdf-zotero",
+ "version": "1.0.1",
+ "tag": "v1.0.1",
+ "releaseAuthor": "l41036406-del",
+ "publishedAt": "2026-08-07T04:47:57Z",
+ "prerelease": false,
+ "asset": {
+  "name": "retain-pdf-for-zotero.xpi",
+  "url": "https://github.com/l41036406-del/RetainPDF-Zotero/releases/download/v1.0.1/retain-pdf-for-zotero.xpi",
+  "size": 226467,
+  "sha256": "1ff8928d2f1a31305e2831ece3c4383f1b978080fefafa771374263173425be2",
+  "githubAssetId": 504664541,
+  "uploader": "l41036406-del",
+  "uploadedAt": "2026-08-07T04:47:57Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "retainpdf-zotero@local",
+  "name": "RetainPDF for Zotero",
+  "version": "1.0.1",
+  "description": "Translate PDF attachments through a local RetainPDF service.",
+  "updateUrl": "https://github.com/l41036406-del/RetainPDF-Zotero/releases/download/v1.0.1/update.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1252,
+   "sha256": "b6e515b031c57f5eeb0de5c8d57735e7438ad16f3f74af6a4224d21a4b802c8b"
+  },
+  {
+   "path": "content/scripts/retainpdfzotero.js",
+   "size": 889354,
+   "sha256": "551c73f7e493d5cd8c53bba891b99ee5cf4b4a96c46c812d554c4de229905270"
+  },
+  {
+   "path": "manifest.json",
+   "size": 429,
+   "sha256": "dcc82f32ef3e2b70a5e259b1c4f0b54761777a52dc6ff465a174736b053ea41b"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "retainpdf-zotero",
+   "version": "1.0.1",
+   "sha256": "1ff8928d2f1a31305e2831ece3c4383f1b978080fefafa771374263173425be2"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 890606,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "@pdf-lib/standard-fonts",
+     "files": [
+      "content/scripts/retainpdfzotero.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "@pdf-lib/upng",
+     "files": [
+      "content/scripts/retainpdfzotero.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "pako",
+     "files": [
+      "content/scripts/retainpdfzotero.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "pdf-lib",
+     "files": [
+      "content/scripts/retainpdfzotero.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "tslib",
+     "files": [
+      "content/scripts/retainpdfzotero.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "content/scripts/retainpdfzotero.js"
+     ],
+     "identifiedBy": "package-json"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 8,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/retainpdfzotero.js",
+       "line": 20158,
+       "column": 31,
+       "snippet": "const response = await fetch(`${this.baseURL}/health`, { headers: this.headers(false) });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/retainpdfzotero.js",
+       "line": 20185,
+       "column": 29,
+       "snippet": "const response = await fetch(`${this.baseURL}/api/v1${path}`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/retainpdfzotero.js",
+       "line": 20212,
+       "column": 29,
+       "snippet": "const response = await fetch(`${this.baseURL}/api/v1/uploads`, { method: \"POST\", headers: this.headers(false), body: form });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/retainpdfzotero.js",
+       "line": 20227,
+       "column": 29,
+       "snippet": "const response = await fetch(`${this.baseURL}/api/v1${path}`, { headers: this.headers(false) });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 41000,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/retainpdfzotero.js",
+       "line": 20119,
+       "column": 13,
+       "snippet": "baseURL: \"http://127.0.0.1:41000\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": true,
+     "libraries": [
+      "pdf-lib"
+     ],
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/retainpdfzotero.js",
+       "line": 19321,
+       "column": 21,
+       "snippet": "var pdfLib = \"pdf-lib (https://github.com/Hopding/pdf-lib)\";",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/api/v1/uploads",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/retainpdfzotero.js",
+       "line": 20212,
+       "column": 29,
+       "snippet": "const response = await fetch(`${this.baseURL}/api/v1/uploads`, { method: \"POST\", headers: this.headers(false), body: form });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr>/api/v1<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/retainpdfzotero.js",
+       "line": 20185,
+       "column": 29,
+       "snippet": "const response = await fetch(`${this.baseURL}/api/v1${path}`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/retainpdfzotero.js",
+       "line": 20227,
+       "column": 29,
+       "snippet": "const response = await fetch(`${this.baseURL}/api/v1${path}`, { headers: this.headers(false) });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr>/health",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/retainpdfzotero.js",
+       "line": 20158,
+       "column": 31,
+       "snippet": "const response = await fetch(`${this.baseURL}/health`, { headers: this.headers(false) });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "RetainPDF",
+     "provider": "Baidu PaddleOCR and the AI provider it's set up with",
+     "documents": true,
+     "automatic": true,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/retainpdfzotero.js",
+       "line": 20119,
+       "column": 13,
+       "snippet": "baseURL: \"http://127.0.0.1:41000\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 4277,
+      "column": 13,
+      "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 4280,
+      "column": 6,
+      "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v, true);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.debug-bridge.password"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 4313,
+      "column": 24,
+      "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "AsyncFunction"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 20165,
+      "column": 41,
+      "snippet": "if (!this.desktopExePath || !await IOUtils.exists(this.desktopExePath)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 20169,
+      "column": 33,
+      "snippet": "const executable = classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 20169,
+      "column": 77,
+      "snippet": "const executable = classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 20197,
+      "column": 26,
+      "snippet": "if (!path || !await IOUtils.exists(path)) throw new Error(\"PDF \\u9644\\u4EF6\\u6587\\u4EF6\\u4E0D\\u5B58\\u5728\\u4E8E\\u672C\\u5730\\u3002\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 20203,
+      "column": 26,
+      "snippet": "const bytes = await IOUtils.read(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 20260,
+      "column": 12,
+      "snippet": "await IOUtils.write(file, bytes);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 20265,
+      "column": 14,
+      "snippet": "await IOUtils.remove(file);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 20281,
+      "column": 29,
+      "snippet": "const source = await IOUtils.read(sourcePath);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 20171,
+      "column": 30,
+      "snippet": "const process = classes[\"@mozilla.org/process/util;1\"].createInstance(Components.interfaces.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/retainpdfzotero.js",
+      "line": 20171,
+      "column": 76,
+      "snippet": "const process = classes[\"@mozilla.org/process/util;1\"].createInstance(Components.interfaces.nsIProcess);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIProcess"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/l41036406-del/RetainPDF-Zotero/releases/download/v1.0.1/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/l41036406-del/RetainPDF-Zotero/releases/download/v1.0.1/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the l41036406-del account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "retainpdf-zotero",
+   "version": "1.0.1",
+   "sha256": "1ff8928d2f1a31305e2831ece3c4383f1b978080fefafa771374263173425be2"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "f55fdd2e3f89ac184dfddff051d2b963b785ab706fd427b1bdf49dc0b8787bde"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "RetainPDF (Baidu PaddleOCR and the AI provider it's set up with)"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-07T04:47:57Z",
+    "lastCommitAt": "2026-08-06T14:00:46Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T10:22:02Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 2,
+    "dialogs": 2
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

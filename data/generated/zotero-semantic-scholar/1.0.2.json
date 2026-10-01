@@ -1,0 +1,344 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-semantic-scholar",
+ "repo": "stilljosh/zotero-semantic-scholar",
+ "version": "1.0.2",
+ "tag": "v1.0.2",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2025-12-05T10:35:34Z",
+ "prerelease": false,
+ "asset": {
+  "name": "semantic-scholar-fetcher-1.0.2.xpi",
+  "url": "https://github.com/StillJosh/zotero-semantic-scholar/releases/download/v1.0.2/semantic-scholar-fetcher-1.0.2.xpi",
+  "size": 14400,
+  "sha256": "db387fdb9ece3dd2677d45f925e7de02b85e4dcfee124225cf16062a273f6842",
+  "githubAssetId": 324709019,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2025-12-05T10:35:35Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "semantic-scholar-fetcher@zotero-plugins.org",
+  "name": "Semantic Scholar Fetcher",
+  "version": "1.0.2",
+  "description": "Fetch citation counts and metadata from Semantic Scholar",
+  "homepageUrl": "https://github.com/StillJosh/semantic-scholar-fetcher",
+  "updateUrl": "https://github.com/StillJosh/semantic-scholar-fetcher/releases/download/release/updates.json",
+  "strictMinVersion": "7.0.0",
+  "strictMaxVersion": "7.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1099,
+   "sha256": "84e95dc39b9547501c56abcc3898e212a250a796d7352e28ead219bedd105e0f"
+  },
+  {
+   "path": "lib/api.js",
+   "size": 11255,
+   "sha256": "add94bd01249495f731f3d6e4d08689efeee6927593f738a01eda7179db583f2"
+  },
+  {
+   "path": "lib/item-utils.js",
+   "size": 8590,
+   "sha256": "54bfb2a260c044d99b2986e9b2d186ecb51c84189f5c1c3ee9d0d9ca00eb2441"
+  },
+  {
+   "path": "locale/en-US/semantic-scholar.ftl",
+   "size": 322,
+   "sha256": "1182dcabeb651fca326bde6a79852786fe1476e79b919c12650076eb4365bd02"
+  },
+  {
+   "path": "manifest.json",
+   "size": 510,
+   "sha256": "1e15a7d01e8cc340218696c4e6cb4ba9a828d9304e2f7a89b1d7881d678f83c5"
+  },
+  {
+   "path": "plugin.js",
+   "size": 22284,
+   "sha256": "81c76221d61e39c898367a83420887d6a4ed70f11f451cf3926634f36212ea2d"
+  },
+  {
+   "path": "prefs.js",
+   "size": 1205,
+   "sha256": "eadb17d69c21aa32f9316fcdeeca9f1b894a4c614120bed87e675a5b45fb9dea"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 3814,
+   "sha256": "6571b3b6ed0640fd479d05c75ab10c5bfa6120bb0a709a0ef4266a0a1688fa47"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-semantic-scholar",
+   "version": "1.0.2",
+   "sha256": "db387fdb9ece3dd2677d45f925e7de02b85e4dcfee124225cf16062a273f6842"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/semantic-scholar.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 48247,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/api.js",
+       "line": 78,
+       "column": 26,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lib/api.js",
+       "line": 165,
+       "column": 26,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lib/api.js",
+       "line": 230,
+       "column": 27,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/api.js",
+       "line": 8,
+       "column": 11,
+       "snippet": "BASE_URL: \"https://api.semanticscholar.org/graph/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "plugin.js",
+       "line": 228,
+       "column": 24,
+       "snippet": "Zotero.launchURL(`https://www.semanticscholar.org/paper/${scholarId}`);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/paper/batch?fields=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/api.js",
+       "line": 230,
+       "column": 27,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 18,
+      "snippet": "\"update_url\": \"https://github.com/StillJosh/semantic-scholar-fetcher/releases/download/release/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/StillJosh/semantic-scholar-fetcher/releases/download/release/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-semantic-scholar",
+   "version": "1.0.2",
+   "sha256": "db387fdb9ece3dd2677d45f925e7de02b85e4dcfee124225cf16062a273f6842"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "76b6413b73b1ee28893d38413a31b759fc18e7588840309ff969de38e3881e32"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository (under its old name)",
+     "check": "The update address offers version 1.0.2, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.semanticscholar.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2025-12-05T10:35:34Z",
+    "lastCommitAt": "2026-03-09T19:30:52Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

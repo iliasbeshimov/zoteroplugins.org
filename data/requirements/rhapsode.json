@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "rhapsode",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "only the optional Modal serverless TTS backend, which uses the user's own Modal account",
+  "worksWithout": "local Kokoro text-to-speech, fully local by default",
+  "services": [
+   "Modal"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, LLM extractor (optional)",
+   "quote": "It needs **no API key**: it drives a local Gemma model via Ollama",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, Compute backends",
+   "quote": "Synthesis runs locally by default (GPU strongly recommended, CPU works).",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Compute backends",
+   "quote": "Deploy `modal_app.py` to your own [Modal](https://modal.com)",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Default TTS is local Kokoro ('Synthesis runs locally by default'); the README says the optional LLM extractor 'needs **no API key**: it drives a local Gemma model via Ollama'; the Modal backend runs on the user's own Modal account and is optional."
+}

@@ -1,0 +1,31 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-toolkit",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "all five AI tools (summarize, categorize, further reading, folders, chat); the journal rank and citations columns need no key",
+  "worksWithout": "",
+  "services": [
+   "Anthropic",
+   "OpenAI"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "intro",
+   "quote": "It works with **Anthropic Claude** or **OpenAI ChatGPT** — you bring your own API key and pay the provider directly.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "src/expand-ai.js:79",
+   "quote": "const url = \"https://api.anthropic.com/v1/messages\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: \"you bring your own API key and pay the provider directly\"; default keys are empty. Code comment in the release: \"API endpoints are hard-coded HTTPS URLs; there is deliberately no \\\"custom base URL\\\" setting\", so no local model."
+}

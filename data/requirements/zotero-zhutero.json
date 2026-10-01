@@ -1,0 +1,43 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-zhutero",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Anthropic or OpenAI (or a custom OpenAI-compatible endpoint); generation refuses to run without a key",
+  "worksWithout": "",
+  "services": [
+   "Anthropic",
+   "OpenAI"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Setup",
+   "quote": "3. Paste your API key.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "src/llm.js:68",
+   "quote": "if (!apiKey) throw new Error(\"No API key configured.\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Setup",
+   "quote": "Pick a provider: **Anthropic** (Claude), **OpenAI** (GPT), or a custom OpenAI-compatible endpoint.",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "src/llm.js:25",
+   "quote": "name: \"Custom (OpenAI-compatible)\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Default provider is Anthropic (prefs.js: pref(\"extensions.zhutero.provider\", \"anthropic\")) and src/llm.js has `if (!apiKey) throw new Error(\"No API key configured.\");` before any provider call. The custom provider takes a user-set baseUrl (`if (provider === \"custom\") return baseUrl;`) for OpenAI chat completions, so a local endpoint works. A key string must still be entered, but it can be any value."
+}

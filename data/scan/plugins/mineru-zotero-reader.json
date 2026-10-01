@@ -1,0 +1,610 @@
+{
+ "repo": "zxc-heu/mineru-zotero-reader",
+ "slug": "mineru-zotero-reader",
+ "group": "sample-2026",
+ "rank": 1132,
+ "name": "Codex Zotero Bridge",
+ "stars": 4,
+ "downloads": 3,
+ "createdAt": "2026-06-22T04:38:40Z",
+ "tag": "v0.3.16",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "codexzoterobridge-0.3.16@polygon.org.xpi",
+    "url": "https://github.com/zxc-heu/mineru-zotero-reader/releases/download/v0.3.16/codexzoterobridge-0.3.16%40polygon.org.xpi",
+    "size": 18889,
+    "uploadedAt": "2026-06-22T04:43:10Z",
+    "sha256": "0de680979a8a0aff3c0d94800388f070988ffbb28eacf238c8485c982eea721c"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "codexzoterobridge@polygon.org",
+    "name": "Codex Zotero Bridge",
+    "version": "0.3.16",
+    "description": "Local bridge for Codex to read Zotero PDFs and attach linked Markdown files to existing Zotero items.",
+    "homepageUrl": "https://github.com/zxc-heu/mineru-zotero-reader",
+    "updateUrl": "https://github.com/zxc-heu/mineru-zotero-reader/releases/latest/download/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "9.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "mineru-zotero-reader",
+     "version": "0.3.16",
+     "sha256": "0de680979a8a0aff3c0d94800388f070988ffbb28eacf238c8485c982eea721c"
+    },
+    "coverage": {
+     "filesTotal": 5,
+     "filesAnalyzed": 2,
+     "filesSkipped": [
+      {
+       "path": "chrome.manifest",
+       "reason": "not-code"
+      },
+      {
+       "path": "content\\icons\\bridge.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [],
+     "hosts": [],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 19,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 87,
+        "column": 50,
+        "snippet": "attachment.setField(\"title\", title || PathUtils.filename(file));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 122,
+        "column": 28,
+        "snippet": "title: title || PathUtils.filename(file),",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 359,
+        "column": 12,
+        "snippet": "await IOUtils.writeUTF8(promptPath, prompt);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 381,
+        "column": 14,
+        "snippet": "await IOUtils.writeUTF8(status.noteMdPath, noteBody.replace(/\\s+$/, \"\") + \"\\n\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1130,
+        "column": 45,
+        "snippet": "const file = Services.dirsvc.get(\"Home\", Ci.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1141,
+        "column": 36,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"]",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1142,
+        "column": 22,
+        "snippet": ".createInstance(Ci.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1206,
+        "column": 16,
+        "snippet": "const raw = Zotero.File.getContents(cachePath) || \"\";",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1220,
+        "column": 16,
+        "snippet": "const raw = Zotero.File.getContents(sourceMdPath) || \"\";",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1335,
+        "column": 10,
+        "snippet": "await IOUtils.writeUTF8(statusPath, \"\\uFEFF\" + safeJsonStringify(payload || {}) + \"\\n\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "Zotero.File",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "local-http-server",
+      "occurrences": 2,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 144,
+        "column": 4,
+        "snippet": "Zotero.Server.Endpoints[this.endpoint] = BridgeEndpoint;",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 952,
+        "column": 6,
+        "snippet": "Zotero.Server.Endpoints[this.endpoint] = this.previousEndpoint;",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "Zotero.Server.Endpoints"
+       ]
+      }
+     },
+     {
+      "id": "process-launch",
+      "occurrences": 5,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 374,
+        "column": 12,
+        "snippet": "await Zotero.Utilities.Internal.exec(invocation.path, invocation.args);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 443,
+        "column": 12,
+        "snippet": "await Zotero.Utilities.Internal.exec(invocation.path, invocation.args);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1379,
+        "column": 10,
+        "snippet": "await Zotero.Utilities.Internal.exec(invocation.path, invocation.args);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1433,
+        "column": 10,
+        "snippet": "await Zotero.Utilities.Internal.exec(\"C:\\\\Windows\\\\System32\\\\cmd.exe\", [",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1442,
+        "column": 8,
+        "snippet": "await Zotero.Utilities.Internal.exec(codexPath, [\"login\", \"--device-auth\"]);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "Zotero.Utilities.Internal.exec"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/zxc-heu/mineru-zotero-reader/releases/latest/download/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/zxc-heu/mineru-zotero-reader/releases/latest/download/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "no-network-found",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "concern": "none"
+     },
+     {
+      "id": "process-launch",
+      "concern": "medium"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-NONE",
+     "CAP-PROCESS"
+    ]
+   }
+  },
+  {
+   "asset": {
+    "name": "codexzoterobridge-installable@polygon.org.xpi",
+    "url": "https://github.com/zxc-heu/mineru-zotero-reader/releases/download/v0.3.16/codexzoterobridge-installable%40polygon.org.xpi",
+    "size": 18889,
+    "uploadedAt": "2026-06-22T04:43:10Z",
+    "sha256": "0de680979a8a0aff3c0d94800388f070988ffbb28eacf238c8485c982eea721c"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "codexzoterobridge@polygon.org",
+    "name": "Codex Zotero Bridge",
+    "version": "0.3.16",
+    "description": "Local bridge for Codex to read Zotero PDFs and attach linked Markdown files to existing Zotero items.",
+    "homepageUrl": "https://github.com/zxc-heu/mineru-zotero-reader",
+    "updateUrl": "https://github.com/zxc-heu/mineru-zotero-reader/releases/latest/download/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "9.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "mineru-zotero-reader",
+     "version": "0.3.16",
+     "sha256": "0de680979a8a0aff3c0d94800388f070988ffbb28eacf238c8485c982eea721c"
+    },
+    "coverage": {
+     "filesTotal": 5,
+     "filesAnalyzed": 2,
+     "filesSkipped": [
+      {
+       "path": "chrome.manifest",
+       "reason": "not-code"
+      },
+      {
+       "path": "content\\icons\\bridge.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [],
+     "hosts": [],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 19,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 87,
+        "column": 50,
+        "snippet": "attachment.setField(\"title\", title || PathUtils.filename(file));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 122,
+        "column": 28,
+        "snippet": "title: title || PathUtils.filename(file),",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 359,
+        "column": 12,
+        "snippet": "await IOUtils.writeUTF8(promptPath, prompt);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 381,
+        "column": 14,
+        "snippet": "await IOUtils.writeUTF8(status.noteMdPath, noteBody.replace(/\\s+$/, \"\") + \"\\n\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1130,
+        "column": 45,
+        "snippet": "const file = Services.dirsvc.get(\"Home\", Ci.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1141,
+        "column": 36,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"]",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1142,
+        "column": 22,
+        "snippet": ".createInstance(Ci.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1206,
+        "column": 16,
+        "snippet": "const raw = Zotero.File.getContents(cachePath) || \"\";",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1220,
+        "column": 16,
+        "snippet": "const raw = Zotero.File.getContents(sourceMdPath) || \"\";",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1335,
+        "column": 10,
+        "snippet": "await IOUtils.writeUTF8(statusPath, \"\\uFEFF\" + safeJsonStringify(payload || {}) + \"\\n\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "Zotero.File",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "local-http-server",
+      "occurrences": 2,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 144,
+        "column": 4,
+        "snippet": "Zotero.Server.Endpoints[this.endpoint] = BridgeEndpoint;",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 952,
+        "column": 6,
+        "snippet": "Zotero.Server.Endpoints[this.endpoint] = this.previousEndpoint;",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "Zotero.Server.Endpoints"
+       ]
+      }
+     },
+     {
+      "id": "process-launch",
+      "occurrences": 5,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 374,
+        "column": 12,
+        "snippet": "await Zotero.Utilities.Internal.exec(invocation.path, invocation.args);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 443,
+        "column": 12,
+        "snippet": "await Zotero.Utilities.Internal.exec(invocation.path, invocation.args);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1379,
+        "column": 10,
+        "snippet": "await Zotero.Utilities.Internal.exec(invocation.path, invocation.args);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1433,
+        "column": 10,
+        "snippet": "await Zotero.Utilities.Internal.exec(\"C:\\\\Windows\\\\System32\\\\cmd.exe\", [",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "bootstrap.js",
+        "line": 1442,
+        "column": 8,
+        "snippet": "await Zotero.Utilities.Internal.exec(codexPath, [\"login\", \"--device-auth\"]);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "Zotero.Utilities.Internal.exec"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/zxc-heu/mineru-zotero-reader/releases/latest/download/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/zxc-heu/mineru-zotero-reader/releases/latest/download/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "no-network-found",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "concern": "none"
+     },
+     {
+      "id": "process-launch",
+      "concern": "medium"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-NONE",
+     "CAP-PROCESS"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

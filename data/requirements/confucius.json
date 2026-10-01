@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "confucius",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "OpenAlex literature search needs an OpenAlex API key; OpenAI-compatible endpoints need an API key",
+  "worksWithout": "Native runtime with a local Ollama endpoint (usually no key)",
+  "services": [
+   "OpenAlex",
+   "OpenAI or other OpenAI-compatible provider"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Install",
+   "quote": "A local Ollama endpoint usually does not need an API key.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Find literature with OpenAlex",
+   "quote": "Add an **OpenAlex API Key** in Confucius Settings → Runtimes",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Runtimes table",
+   "quote": "| Native  | OpenAI-compatible API or Ollama   |",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README quote \"A local Ollama endpoint usually does not need an API key.\" and the Runtimes table row \"| Native  | OpenAI-compatible API or Ollama   |\" are both in the pack. OpenAlex search needs a key (\"Add an **OpenAlex API Key**\"), so a key is needed only for some features or providers."
+}

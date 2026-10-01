@@ -1,0 +1,319 @@
+{
+ "schemaVersion": 1,
+ "slug": "zoteroquicklookng-z7",
+ "repo": "canyi-chen/zoteroquicklookng-z7",
+ "version": "2.2.0",
+ "tag": "v2.2.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2025-08-13T18:13:16Z",
+ "prerelease": false,
+ "asset": {
+  "name": "ZoteroQuickLookNG-z7-2.2.0.xpi",
+  "url": "https://github.com/canyi-chen/ZoteroQuickLookNG-z7/releases/download/v2.2.0/ZoteroQuickLookNG-z7-2.2.0.xpi",
+  "size": 3270,
+  "sha256": "60fe683e621727c3fa64baa0d5dfe056c222f62997ea3e958b56035d29194a50",
+  "githubAssetId": 282225046,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2025-08-13T18:13:17Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "cychen.stats@outlook.com",
+  "name": "ZoteroQuickLookNG-z7",
+  "version": "2.2.0",
+  "description": "Quick Look for Zotero 7.",
+  "updateUrl": "https://github.com/canyi-chen/ZoteroQuickLookNG-z7/releases/download/release/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "8.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 5895,
+   "sha256": "6d592af06c15ce1ec9a9bb2e9db69438cdfd81dd43d6be74752d2c7858660396"
+  },
+  {
+   "path": "content/icon-96.png",
+   "size": 578,
+   "sha256": "19a62aca507657f0c06cb99939bb2cea068adeb1e2b503d7665aa99676af821e"
+  },
+  {
+   "path": "manifest.json",
+   "size": 476,
+   "sha256": "4935019c93262988442333b1bbb047cb9f04b23437356af1d3cbf3b700a53c42"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zoteroquicklookng-z7",
+   "version": "2.2.0",
+   "sha256": "60fe683e621727c3fa64baa0d5dfe056c222f62997ea3e958b56035d29194a50"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "content/icon-96.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 5895,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 43,
+      "column": 85,
+      "snippet": "function exists(path) { try { if (typeof IOUtils !== \"undefined\") return await IOUtils.exists(path); } catch(e){} return false; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 90,
+      "column": 12,
+      "snippet": "try { if (Zotero.File?.open) { await Zotero.File.open(path); return true; } } catch(e){}",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 90,
+      "column": 39,
+      "snippet": "try { if (Zotero.File?.open) { await Zotero.File.open(path); return true; } } catch(e){}",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 74,
+      "column": 54,
+      "snippet": "let exec = Zotero.Utilities?.Internal?.execAsync || Zotero.Utilities?.Internal?.exec;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 79,
+      "column": 54,
+      "snippet": "let exec = Zotero.Utilities?.Internal?.execAsync || Zotero.Utilities?.Internal?.exec;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 84,
+      "column": 54,
+      "snippet": "let exec = Zotero.Utilities?.Internal?.execAsync || Zotero.Utilities?.Internal?.exec;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Zotero.Utilities.Internal.exec",
+      "system openers only"
+     ],
+     "programs": [
+      "open",
+      "qlmanage"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/canyi-chen/ZoteroQuickLookNG-z7/releases/download/release/update.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/canyi-chen/ZoteroQuickLookNG-z7/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zoteroquicklookng-z7",
+   "version": "2.2.0",
+   "sha256": "60fe683e621727c3fa64baa0d5dfe056c222f62997ea3e958b56035d29194a50"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "941e4c276b295ccccb8655a5884f2ba10aadc044b0bada776cb56b2f77ff5c66"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "process-launch",
+      "label": "Opens files or links with your system's own apps",
+      "concern": "low",
+      "detail": "Programs it names include open, qlmanage"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2025-08-13T18:13:16Z",
+    "lastCommitAt": "2025-08-13T18:13:05Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7–8",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

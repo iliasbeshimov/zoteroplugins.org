@@ -1,0 +1,41 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paperpilot",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "the AI features (Q&A, digest, AI translation) need a key for hosted providers",
+  "worksWithout": "selection translation with MyMemory (the default translation service)",
+  "services": [
+   "DeepSeek",
+   "OpenAI",
+   "Zhipu",
+   "Moonshot",
+   "Alibaba Qwen",
+   "SiliconFlow"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "addon/index.js:130",
+   "quote": "translationService: \"mymemory\",",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, AI 服务配置",
+   "quote": "Ollama（本地模型端点）",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "addon/index.js:114",
+   "quote": "baseUrl: \"http://127.0.0.1:11434/v1\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The code has `translationService: \"mymemory\"` as the default, which needs no key. The AI providers need one, and the default AI provider `selectedAIProvider: \"zhipu\"` has `apiKey: \"\"`. The code for the local Ollama preset is `baseUrl: \"http://127.0.0.1:11434/v1\"` with `apiKey: \"ollama\"`, and the README lists \"Ollama（本地模型端点）\"."
+}

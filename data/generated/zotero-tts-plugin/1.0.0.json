@@ -1,0 +1,331 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-tts-plugin",
+ "repo": "echo-lian/zotero-tts-plugin",
+ "version": "1.0.0",
+ "tag": "v1.0.2",
+ "releaseAuthor": "Echo-Lian",
+ "publishedAt": "2026-05-30T09:03:12Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-local-speech-plugin.xpi",
+  "url": "https://github.com/Echo-Lian/Zotero-TTS-Plugin/releases/download/v1.0.2/zotero-local-speech-plugin.xpi",
+  "size": 9055,
+  "sha256": "b0bf44d50fbc30e16c0c689647971b8b879c691b1ed82383d6ec46d2b2833eac",
+  "githubAssetId": 433696504,
+  "uploader": "Echo-Lian",
+  "uploadedAt": "2026-05-30T09:03:08Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-local-speech@Echo-Lian",
+  "name": "Zotero Local Speech Mode",
+  "version": "1.0.0",
+  "description": "Local speech synthesis for Zotero 7+ reader with Microsoft Edge neural voices. Read PDFs aloud with natural, expressive speech.",
+  "homepageUrl": "https://github.com/Echo-Lian/Zotero-TTS-Plugin",
+  "updateUrl": "https://raw.githubusercontent.com/Echo-Lian/Zotero-TTS-Plugin/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "19.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1847,
+   "sha256": "a6d99325ac49a593c4d400c32862745e5334e0773ba40f50f58636f0de43a050"
+  },
+  {
+   "path": "manifest.json",
+   "size": 673,
+   "sha256": "49c4ded8375d82ae8b55c0bc9bd90efa7fce1a14cb17c5c394258fd6d88668cc"
+  },
+  {
+   "path": "scripts/icon.svg",
+   "size": 248,
+   "sha256": "e2bdfc43e5b43593fc64d8124744ac270daafff43135f9c3dfe5e264e860dbc2"
+  },
+  {
+   "path": "scripts/readerUI.js",
+   "size": 6819,
+   "sha256": "b3fed6f5f27e6cc3018a5417ec835dd077b395855e170169becf19bda727a220"
+  },
+  {
+   "path": "scripts/speechController.js",
+   "size": 9967,
+   "sha256": "163f6da53cc5b2350328a8b45396dfe87898056af233b5efc57952c23979dde3"
+  },
+  {
+   "path": "scripts/ttsEngine.js",
+   "size": 9290,
+   "sha256": "74df2d6e0ece41c34c9c64ef362487d0b56c2d2cd3c32a459142e298786afcb9"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-tts-plugin",
+   "version": "1.0.0",
+   "sha256": "b0bf44d50fbc30e16c0c689647971b8b879c691b1ed82383d6ec46d2b2833eac"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "scripts/icon.svg",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 27923,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "xhr",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "scripts/ttsEngine.js",
+       "line": 40,
+       "column": 22,
+       "snippet": "let xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "scripts/ttsEngine.js",
+       "line": 92,
+       "column": 26,
+       "snippet": "let xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "localhost",
+     "port": 5000,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "scripts/ttsEngine.js",
+       "line": 6,
+       "column": 17,
+       "snippet": "localAPIUrl: 'http://localhost:5000/v1/audio/speech',",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "edge-tts",
+     "provider": "Microsoft",
+     "category": "translation",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "scripts/ttsEngine.js",
+       "line": 6,
+       "column": 17,
+       "snippet": "localAPIUrl: 'http://localhost:5000/v1/audio/speech',",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 13,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Echo-Lian/Zotero-TTS-Plugin/main/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Echo-Lian/Zotero-TTS-Plugin/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Echo-Lian account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-tts-plugin",
+   "version": "1.0.0",
+   "sha256": "b0bf44d50fbc30e16c0c689647971b8b879c691b1ed82383d6ec46d2b2833eac"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "484c1002b92c7994e59e26a42d4b2ce6a89471aa7ac3c097109e683e4962b4cd"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ]
+     },
+     {
+      "category": "translation",
+      "hosts": [
+       "edge-tts (Microsoft)"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-05-30T09:03:12Z",
+    "lastCommitAt": "2026-06-02T22:41:30Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:06:59Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

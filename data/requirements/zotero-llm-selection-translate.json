@@ -1,0 +1,24 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-llm-selection-translate",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Translation through the user's OpenAI-compatible endpoint; the code refuses to run without a token",
+  "worksWithout": "",
+  "services": [
+   "OpenAI-compatible LLM provider"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/llmselectiontranslate.js ~line 4108",
+   "quote": "if (!settings.apiToken) {",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Code line 4056 has `if (!settings.apiToken) {` and the default apiToken is empty, so no translation without a token. The endpoint is user-set with no local AI mention in the pack or code (no localhost/ollama), so local is unknown."
+}

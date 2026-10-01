@@ -1,0 +1,22 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-summarizer",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "Features",
+   "quote": "with a local LLM endpoint you can keep Zotero running overnight and get summaries for your entire library",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Code in content/scripts/zoteroaisummarizer.js: `if (!apiKey) {` followed by `throw new Error(\"未配置 API Key，请在偏好设置中填写。\")` blocks every call, and the default apiKey pref is \"\", so a user-supplied key is needed (even for a local endpoint). Local model: README says \"with a local LLM endpoint you can keep Zotero running overnight\" and API Base is user-configurable."
+}

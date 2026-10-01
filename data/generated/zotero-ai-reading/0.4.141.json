@@ -1,0 +1,843 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-reading",
+ "repo": "zhonghaoyi/zotero-ai-reading",
+ "version": "0.4.141",
+ "tag": "v0.4.141",
+ "releaseAuthor": "zhonghaoyi",
+ "publishedAt": "2026-07-15T12:19:34Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-ai-reading-0.4.141.xpi",
+  "url": "https://github.com/zhonghaoyi/zotero-ai-reading/releases/download/v0.4.141/zotero-ai-reading-0.4.141.xpi",
+  "size": 47243,
+  "sha256": "dfc03dd9d3114a634b653cd488c938ef07a37f347f57032121a733ce4049e1c2",
+  "githubAssetId": 477902236,
+  "uploader": "zhonghaoyi",
+  "uploadedAt": "2026-07-15T12:19:35Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zoteroaireading@zhonghaoyi.dev",
+  "name": "Zotero AI Reading (Windows)",
+  "version": "0.4.141",
+  "description": "Send the selected Zotero item's PDF and a saved prompt to a configurable web AI chat.",
+  "homepageUrl": "https://github.com/zhonghaoyi/zotero-ai-reading",
+  "updateUrl": "https://raw.githubusercontent.com/zhonghaoyi/zotero-ai-reading/windows/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1399,
+   "sha256": "09b104f77a872ef700966ed507799789c51b4ab0f0aabb1725543a510ebe0c5a"
+  },
+  {
+   "path": "icons/icon.png",
+   "size": 1811,
+   "sha256": "d4f1c1bcdce4f32ce587ba0e57455c34c2f071d85099a07182deefe61b545237"
+  },
+  {
+   "path": "manifest.json",
+   "size": 628,
+   "sha256": "2b068c7a3631d53f5c1889d39c248a3b7310cc8b2a6261a5b34edfd20eb80de6"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 5692,
+   "sha256": "e86fa07689e73f40d6335f296504f1d495fa07801a6333cac8ad1d9da15f3195"
+  },
+  {
+   "path": "prefs.js",
+   "size": 828,
+   "sha256": "ef5de3fac50814b91c3823e3d9cf41f888dd25dfc1eef40dd529a16a5d8d39e7"
+  },
+  {
+   "path": "zotero-ai-reading.js",
+   "size": 233003,
+   "sha256": "67de6a2155740413c459ede2b52b5bf30831dafc48040d06e9e4520d311d3861"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-ai-reading",
+   "version": "0.4.141",
+   "sha256": "dfc03dd9d3114a634b653cd488c938ef07a37f347f57032121a733ce4049e1c2"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "icons/icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 240922,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "remote-page",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 1617,
+       "column": 12,
+       "snippet": "webView.loadURI(uri, { triggeringPrincipal: principal });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 1620,
+       "column": 12,
+       "snippet": "webView.loadURI(uri);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 1627,
+       "column": 12,
+       "snippet": "webView.loadURI(aiURL);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "chat.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek (web chat)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 41,
+       "column": 53,
+       "snippet": "<menuitem value=\"deepseek\" label=\"DeepSeek（https://chat.deepseek.com）\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 27,
+       "column": 14,
+       "snippet": "deepseek: \"https://chat.deepseek.com\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "chatglm.cn",
+     "category": "llm-provider",
+     "provider": "Zhipu ChatGLM (web chat)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 40,
+       "column": 51,
+       "snippet": "<menuitem value=\"chatglm\" label=\"ChatGLM（https://chatglm.cn）\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 26,
+       "column": 13,
+       "snippet": "chatglm: \"https://chatglm.cn\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "chatgpt.com",
+     "category": "llm-provider",
+     "provider": "OpenAI ChatGPT",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 5,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 36,
+       "column": 51,
+       "snippet": "<menuitem value=\"chatgpt\" label=\"ChatGPT（https://chatgpt.com）\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-ai-reading.aiURL\", \"https://chatgpt.com\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 43,
+       "snippet": "pref(\"extensions.zotero-ai-reading.aiURL\", \"https://chatgpt.com\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 22,
+       "column": 13,
+       "snippet": "chatgpt: \"https://chatgpt.com\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 30,
+       "column": 11,
+       "snippet": "aiURL: \"https://chatgpt.com\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "claude.ai",
+     "category": "llm-provider",
+     "provider": "Anthropic Claude (web chat)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 37,
+       "column": 49,
+       "snippet": "<menuitem value=\"claude\" label=\"Claude（https://claude.ai）\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 23,
+       "column": 12,
+       "snippet": "claude: \"https://claude.ai\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "drive.google.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 2215,
+       "column": 22,
+       "snippet": "let viewURL = \"https://drive.google.com/file/d/\" + encodeURIComponent(fileID) + \"/view\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 2350,
+       "column": 11,
+       "snippet": "return \"https://drive.google.com/drive/search?q=\" + encodeURIComponent(fileName);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "gemini.google.com",
+     "category": "llm-provider",
+     "provider": "Google Gemini (web app)",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 39,
+       "column": 49,
+       "snippet": "<menuitem value=\"gemini\" label=\"Gemini（https://gemini.google.com/app）\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 25,
+       "column": 12,
+       "snippet": "gemini: \"https://gemini.google.com/app\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "grok.com",
+     "category": "llm-provider",
+     "provider": "xAI Grok (web chat)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 38,
+       "column": 45,
+       "snippet": "<menuitem value=\"grok\" label=\"Grok（https://grok.com）\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 24,
+       "column": 10,
+       "snippet": "grok: \"https://grok.com\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "aiURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 6940,
+       "column": 18,
+       "snippet": "return String(this.getPref(\"aiURL\") || this.DEFAULTS.aiURL).trim();",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero-ai-reading.aiURL",
+     "defaultValue": "https://chatgpt.com",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 50,
+       "column": 8,
+       "snippet": "preference=\"extensions.zotero-ai-reading.aiURL\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-ai-reading.aiURL\", \"https://chatgpt.com\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 79,
+       "column": 27,
+       "snippet": "let aiURL = String(Zotero.Prefs.get(this.PREF_PREFIX + \"aiURL\", true) || this.DEFAULTS.aiURL);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "zotero-ai-reading.js",
+       "line": 86,
+       "column": 35,
+       "snippet": "let configuredAIURL = String(Zotero.Prefs.get(this.PREF_PREFIX + \"aiURL\", true) || \"\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 6867,
+      "column": 7,
+      "snippet": "Cc[\"@mozilla.org/widget/clipboardhelper;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 6868,
+      "column": 18,
+      "snippet": ".getService(Ci.nsIClipboardHelper)",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 27,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2253,
+      "column": 25,
+      "snippet": "let value = (await Zotero.File.getContentsAsync(outputFile.path)).trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2278,
+      "column": 38,
+      "snippet": "let file = dirService.get(\"TmpD\", Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2286,
+      "column": 38,
+      "snippet": "let file = dirService.get(\"TmpD\", Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2311,
+      "column": 18,
+      "snippet": "let file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2311,
+      "column": 62,
+      "snippet": "let file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2336,
+      "column": 24,
+      "snippet": "let executable = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2336,
+      "column": 68,
+      "snippet": "let executable = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2410,
+      "column": 42,
+      "snippet": "let home = dirService.get(\"Home\", Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2414,
+      "column": 42,
+      "snippet": "let home = dirService.get(\"Home\", Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2426,
+      "column": 55,
+      "snippet": "let entry = entries.getNext().QueryInterface(Ci.nsIFile);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "own-database",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2449,
+      "column": 11,
+      "snippet": "db = storage.openDatabase(dbFile);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "mozIStorageService"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 12,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2338,
+      "column": 21,
+      "snippet": "let process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2338,
+      "column": 67,
+      "snippet": "let process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2634,
+      "column": 23,
+      "snippet": "let process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 2634,
+      "column": 69,
+      "snippet": "let process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 6652,
+      "column": 21,
+      "snippet": "let process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 6652,
+      "column": 67,
+      "snippet": "let process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 6670,
+      "column": 23,
+      "snippet": "let process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 6670,
+      "column": 69,
+      "snippet": "let process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 6803,
+      "column": 21,
+      "snippet": "let process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-ai-reading.js",
+      "line": 6803,
+      "column": 67,
+      "snippet": "let process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIProcess"
+     ],
+     "programs": [
+      "ln",
+      "osascript",
+      "sh"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/zhonghaoyi/zotero-ai-reading/windows/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/zhonghaoyi/zotero-ai-reading/windows/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the zhonghaoyi account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-ai-reading",
+   "version": "0.4.141",
+   "sha256": "dfc03dd9d3114a634b653cd488c938ef07a37f347f57032121a733ce4049e1c2"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "67d30b6cc8a9b0b3de7d6524e86342b73a636da2f1054e4e783f9806772ea2d3"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "chat.deepseek.com",
+       "chatglm.cn",
+       "chatgpt.com",
+       "claude.ai",
+       "gemini.google.com",
+       "grok.com"
+      ],
+      "unconfirmed": [
+       "chat.deepseek.com",
+       "chatglm.cn",
+       "claude.ai",
+       "gemini.google.com",
+       "grok.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include ln, osascript, sh"
+     },
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "own-database",
+      "label": "Keeps its own database file",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-15T12:19:34Z",
+    "lastCommitAt": "2026-06-28T04:59:14Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T09:48:08Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,493 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-project-manager",
+ "repo": "sbilmis/zotero-project-manager",
+ "version": "1.3.1",
+ "tag": "v1.3.1",
+ "releaseAuthor": "sbilmis",
+ "publishedAt": "2026-09-15T07:35:07Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zpm-zotero-1.3.1.xpi",
+  "url": "https://github.com/sbilmis/zotero-project-manager/releases/download/v1.3.1/zpm-zotero-1.3.1.xpi",
+  "size": 23734,
+  "sha256": "e69b5592ff6e7a4282b045894e0c20134caa8627e0b06f7d49192a8cf2e95c9d",
+  "githubAssetId": 565173938,
+  "uploader": "sbilmis",
+  "uploadedAt": "2026-09-15T07:35:07Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zpm@zotero-project-manager",
+  "name": "ZPM — Zotero Project Manager",
+  "version": "1.3.1",
+  "description": "Copy Org, Markdown, and Zotero links, and export collections to managed research workspaces.",
+  "homepageUrl": "https://github.com/sbilmis/zotero-project-manager",
+  "updateUrl": "https://raw.githubusercontent.com/sbilmis/zotero-project-manager/main/zotero-plugin/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 759,
+   "sha256": "d3672845bd0c67a4fccd2f18703b41499e0103dddd76b9f0442efb2cceef8fe3"
+  },
+  {
+   "path": "links.js",
+   "size": 12365,
+   "sha256": "c2748f110b105571b498a872d8325c7d0d69498a4e6b80280e5ccc61a805d15c"
+  },
+  {
+   "path": "locale/en-US/zpm.ftl",
+   "size": 519,
+   "sha256": "f875b30c32491eb953cdce6a2a0d57a6f1c4a95f26621eb4a07370b6abd34352"
+  },
+  {
+   "path": "manifest.json",
+   "size": 607,
+   "sha256": "18029171243c812ed09ff2e80c9cd4a27fd974e47be30b9026a019c7866cc038"
+  },
+  {
+   "path": "native-exporter.js",
+   "size": 39739,
+   "sha256": "a3d6c1bae91352efc739ef0db49a0b55f5de33781817b7a2c29b6f124c18fb97"
+  },
+  {
+   "path": "picker.js",
+   "size": 3569,
+   "sha256": "fab950b933520555ff729c96be6c689272c7aba25c3b88b4f5bfc67efc8a6c87"
+  },
+  {
+   "path": "preferences.css",
+   "size": 1882,
+   "sha256": "ab60859006f0e5dff3763a826a01831a0a494895d00dc6641c124bf407d859e9"
+  },
+  {
+   "path": "preferences.js",
+   "size": 4335,
+   "sha256": "173ede156049fa303fbbca6f01dacedbc36d103532fb95f57f8259f1311fd903"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 4794,
+   "sha256": "51ed7095cf35998a7bfe987173498d090e61242a72bac04fbe8494514d87ba5c"
+  },
+  {
+   "path": "prefs.js",
+   "size": 198,
+   "sha256": "b3164b3ad210c5e53ae310ab97a781f0e67833a5ee40b98f203708acac7c60dc"
+  },
+  {
+   "path": "zpm.js",
+   "size": 14166,
+   "sha256": "524835728c6f047d8ace3f297bd000c7e5b24b6bca866f1abd4d372fe4af423c"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-project-manager",
+   "version": "1.3.1",
+   "sha256": "e69b5592ff6e7a4282b045894e0c20134caa8627e0b06f7d49192a8cf2e95c9d"
+  },
+  "coverage": {
+   "filesTotal": 11,
+   "filesAnalyzed": 8,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/zpm.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "preferences.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 79925,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "native-exporter.js",
+       "line": 656,
+       "column": 12,
+       "snippet": "? `[${cell(entry.doi)}](https://doi.org/${quotePath(entry.doi)})`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "zpm.js",
+       "line": 180,
+       "column": 15,
+       "snippet": "helpURL: \"https://github.com/sbilmis/zotero-project-manager#zotero-9-companion-plugin\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "zotero://<expr>/<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "links.js",
+       "line": 115,
+       "column": 16,
+       "snippet": "const uri = `zotero://${path}/${key}${suffix}`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "links.js",
+      "line": 235,
+      "column": 6,
+      "snippet": "Zotero.Utilities.Internal.copyTextToClipboard(text);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 24,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "preferences.js",
+      "line": 78,
+      "column": 21,
+      "snippet": "if ((await IOUtils.stat(currentPath)).type === \"directory\") {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zpm.js",
+      "line": 34,
+      "column": 11,
+      "snippet": "return IOUtils.exists(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zpm.js",
+      "line": 38,
+      "column": 24,
+      "snippet": "const value = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zpm.js",
+      "line": 48,
+      "column": 20,
+      "snippet": "return (await IOUtils.stat(path)).type === \"regular\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zpm.js",
+      "line": 55,
+      "column": 10,
+      "snippet": "await IOUtils.makeDirectory(path, { createAncestors: true, ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zpm.js",
+      "line": 59,
+      "column": 11,
+      "snippet": "return IOUtils.readUTF8(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zpm.js",
+      "line": 70,
+      "column": 12,
+      "snippet": "await IOUtils.writeUTF8(temporary, content);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zpm.js",
+      "line": 71,
+      "column": 12,
+      "snippet": "await IOUtils.move(temporary, path, { noOverwrite: false });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zpm.js",
+      "line": 73,
+      "column": 12,
+      "snippet": "await IOUtils.remove(temporary, { ignoreAbsent: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zpm.js",
+      "line": 85,
+      "column": 12,
+      "snippet": "await IOUtils.copy(source, temporary, { noOverwrite: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "picker.js",
+      "line": 15,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[this.path] = this.endpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zpm/papers"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/sbilmis/zotero-project-manager/main/zotero-plugin/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/sbilmis/zotero-project-manager/main/zotero-plugin/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the sbilmis account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-project-manager",
+   "version": "1.3.1",
+   "sha256": "e69b5592ff6e7a4282b045894e0c20134caa8627e0b06f7d49192a8cf2e95c9d"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "da46335865d2a8cd4a2384dcdd8255c2b0b4cb4b87d20758f520594fd8c073f4"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found; its code names known services",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-15T07:35:07Z",
+    "lastCommitAt": "2026-09-15T07:34:59Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T05:38:53Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,711 @@
+{
+  "$id": "https://github.com/iliasacademia/zoteroatlas/schema/json/requirements.schema.json",
+  "title": "requirements",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "apiKey": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "object",
+          "properties": {
+            "need": {
+              "type": "string",
+              "enum": [
+                "none",
+                "optional",
+                "required",
+                "unknown"
+              ]
+            },
+            "providers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "e.g. ['OpenAI', 'Anthropic', 'Ollama (local)']"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "byok",
+                "developer-hosted",
+                "both",
+                "not-applicable",
+                "unknown"
+              ]
+            },
+            "freeTier": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "string",
+                  "const": "unknown"
+                }
+              ]
+            }
+          },
+          "required": [
+            "need",
+            "providers",
+            "mode",
+            "freeTier"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "approved",
+            "edited",
+            "rejected"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "llm",
+            "human",
+            "analysis",
+            "sheet"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "const": "text"
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "readme",
+                  "manifest",
+                  "release-notes",
+                  "sheet",
+                  "disclosure",
+                  "repo-metadata"
+                ]
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "verbatim": {
+                "type": "boolean",
+                "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+              }
+            },
+            "required": [
+              "kind",
+              "source",
+              "quote",
+              "verbatim"
+            ]
+          }
+        }
+      },
+      "required": [
+        "value",
+        "status",
+        "source",
+        "confidence",
+        "evidence"
+      ]
+    },
+    "account": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "object",
+          "properties": {
+            "required": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "string",
+                  "const": "unknown"
+                }
+              ]
+            },
+            "service": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "required"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "approved",
+            "edited",
+            "rejected"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "llm",
+            "human",
+            "analysis",
+            "sheet"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "const": "text"
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "readme",
+                  "manifest",
+                  "release-notes",
+                  "sheet",
+                  "disclosure",
+                  "repo-metadata"
+                ]
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "verbatim": {
+                "type": "boolean",
+                "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+              }
+            },
+            "required": [
+              "kind",
+              "source",
+              "quote",
+              "verbatim"
+            ]
+          }
+        }
+      },
+      "required": [
+        "value",
+        "status",
+        "source",
+        "confidence",
+        "evidence"
+      ]
+    },
+    "pricing": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "enum": [
+                "free",
+                "freemium",
+                "paid",
+                "subscription",
+                "unknown"
+              ]
+            },
+            "proUnlocks": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "model"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "approved",
+            "edited",
+            "rejected"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "llm",
+            "human",
+            "analysis",
+            "sheet"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "const": "text"
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "readme",
+                  "manifest",
+                  "release-notes",
+                  "sheet",
+                  "disclosure",
+                  "repo-metadata"
+                ]
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "verbatim": {
+                "type": "boolean",
+                "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+              }
+            },
+            "required": [
+              "kind",
+              "source",
+              "quote",
+              "verbatim"
+            ]
+          }
+        }
+      },
+      "required": [
+        "value",
+        "status",
+        "source",
+        "confidence",
+        "evidence"
+      ]
+    },
+    "companionApps": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "approved",
+            "edited",
+            "rejected"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "llm",
+            "human",
+            "analysis",
+            "sheet"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "const": "text"
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "readme",
+                  "manifest",
+                  "release-notes",
+                  "sheet",
+                  "disclosure",
+                  "repo-metadata"
+                ]
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "verbatim": {
+                "type": "boolean",
+                "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+              }
+            },
+            "required": [
+              "kind",
+              "source",
+              "quote",
+              "verbatim"
+            ]
+          }
+        }
+      },
+      "required": [
+        "value",
+        "status",
+        "source",
+        "confidence",
+        "evidence"
+      ]
+    },
+    "platforms": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "windows",
+              "macos",
+              "linux"
+            ]
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "approved",
+            "edited",
+            "rejected"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "llm",
+            "human",
+            "analysis",
+            "sheet"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "const": "text"
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "readme",
+                  "manifest",
+                  "release-notes",
+                  "sheet",
+                  "disclosure",
+                  "repo-metadata"
+                ]
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "verbatim": {
+                "type": "boolean",
+                "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+              }
+            },
+            "required": [
+              "kind",
+              "source",
+              "quote",
+              "verbatim"
+            ]
+          }
+        }
+      },
+      "required": [
+        "value",
+        "status",
+        "source",
+        "confidence",
+        "evidence"
+      ]
+    },
+    "uiLanguages": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "BCP 47 tags"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "approved",
+            "edited",
+            "rejected"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "llm",
+            "human",
+            "analysis",
+            "sheet"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "const": "text"
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "readme",
+                  "manifest",
+                  "release-notes",
+                  "sheet",
+                  "disclosure",
+                  "repo-metadata"
+                ]
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "verbatim": {
+                "type": "boolean",
+                "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+              }
+            },
+            "required": [
+              "kind",
+              "source",
+              "quote",
+              "verbatim"
+            ]
+          }
+        }
+      },
+      "required": [
+        "value",
+        "status",
+        "source",
+        "confidence",
+        "evidence"
+      ]
+    },
+    "networkRegion": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "object",
+          "properties": {
+            "blockedInMainlandChina": {
+              "type": "string",
+              "enum": [
+                "yes",
+                "partly",
+                "no",
+                "unknown"
+              ]
+            },
+            "chinaOnlyServices": {
+              "type": "string",
+              "enum": [
+                "yes",
+                "partly",
+                "no",
+                "unknown"
+              ]
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "blockedInMainlandChina",
+            "chinaOnlyServices"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "approved",
+            "edited",
+            "rejected"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "llm",
+            "human",
+            "analysis",
+            "sheet"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = guess, 1 = certain. LLM-reported confidence is capped when evidence fails verification."
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "const": "text"
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "readme",
+                  "manifest",
+                  "release-notes",
+                  "sheet",
+                  "disclosure",
+                  "repo-metadata"
+                ]
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "verbatim": {
+                "type": "boolean",
+                "description": "True when the quote was found verbatim (after whitespace normalisation) in the source we gave the model."
+              }
+            },
+            "required": [
+              "kind",
+              "source",
+              "quote",
+              "verbatim"
+            ]
+          }
+        }
+      },
+      "required": [
+        "value",
+        "status",
+        "source",
+        "confidence",
+        "evidence"
+      ]
+    }
+  },
+  "required": [
+    "apiKey",
+    "account",
+    "pricing",
+    "companionApps",
+    "platforms",
+    "uiLanguages",
+    "networkRegion"
+  ]
+}

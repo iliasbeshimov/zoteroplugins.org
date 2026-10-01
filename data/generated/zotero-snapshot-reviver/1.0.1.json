@@ -1,0 +1,358 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-snapshot-reviver",
+ "repo": "shamanstone/zotero_snapshot_reviver",
+ "version": "1.0.1",
+ "tag": "v1.0.1",
+ "releaseAuthor": "ShamanStone",
+ "publishedAt": "2026-08-04T05:26:29Z",
+ "prerelease": false,
+ "asset": {
+  "name": "snapshot-reviver-1.0.1.xpi",
+  "url": "https://github.com/ShamanStone/Zotero_snapshot_reviver/releases/download/v1.0.1/snapshot-reviver-1.0.1.xpi",
+  "size": 11211,
+  "sha256": "394a213d42fada94b63d763f00079087e3e58edb2835caa96764699eedf83495",
+  "githubAssetId": 500932628,
+  "uploader": "ShamanStone",
+  "uploadedAt": "2026-08-04T05:25:02Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "snapshot-reviver@ying.local",
+  "name": "Snapshot Reviver",
+  "version": "1.0.1",
+  "description": "Right-click a webpage snapshot and revive it into a proper Journal Article by looking up metadata from Crossref (with PubMed fallback).",
+  "updateUrl": "https://example.com/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1303,
+   "sha256": "2659ec69cadf4b8d7489146620b912606afff6ff13e2160d07136833bd896b53"
+  },
+  {
+   "path": "icon.png",
+   "size": 1096,
+   "sha256": "4f8e5fee043d9a19926a12bcd0bcbcf293aba763aaf8b2b1b27a9a55243ac2a1"
+  },
+  {
+   "path": "icon96.png",
+   "size": 1866,
+   "sha256": "c7c16aef30a04d800b5d332fabd24824e36a00eef72ced79f3acc2c1310c8ac4"
+  },
+  {
+   "path": "manifest.json",
+   "size": 534,
+   "sha256": "85cd9f25f5c6d7171d3f2cb948e04f4b72d944b195cba91b26eb7b7f7156342f"
+  },
+  {
+   "path": "prefs.js",
+   "size": 295,
+   "sha256": "6dcf26795710adc534720d31fdd40e2311a48216d9e2e0150da53a35cf32c334"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 2152,
+   "sha256": "0c546b25ef085e28ba6be3f3518b5cd5e022f58db6b79c6ad5143cff8ebd6c78"
+  },
+  {
+   "path": "snapshot-reviver.js",
+   "size": 18805,
+   "sha256": "23abd7da10a44380532b97a874665af7f7165f1175be27a69dc3acfa8c6c355f"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-snapshot-reviver",
+   "version": "1.0.1",
+   "sha256": "394a213d42fada94b63d763f00079087e3e58edb2835caa96764699eedf83495"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icon96.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 22555,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "snapshot-reviver.js",
+       "line": 241,
+       "column": 25,
+       "snippet": "const resp = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "snapshot-reviver.js",
+       "line": 261,
+       "column": 19,
+       "snippet": "resp = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "snapshot-reviver.js",
+       "line": 334,
+       "column": 22,
+       "snippet": "const s = await Zotero.HTTP.request(\"GET\", searchURL, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "snapshot-reviver.js",
+       "line": 353,
+       "column": 22,
+       "snippet": "const f = await Zotero.HTTP.request(\"GET\", fetchURL, { timeout: 15000 });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "snapshot-reviver.js",
+       "line": 239,
+       "column": 16,
+       "snippet": "const url = `https://api.crossref.org/works/${encodeURIComponent(doi)}`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "snapshot-reviver.js",
+       "line": 257,
+       "column": 6,
+       "snippet": "\"https://api.crossref.org/works?rows=5&query.bibliographic=\" +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "eutils.ncbi.nlm.nih.gov",
+     "category": "scholarly-api",
+     "provider": "NCBI E-utilities",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "snapshot-reviver.js",
+       "line": 327,
+       "column": 17,
+       "snippet": "const base = \"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://example.com/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://example.com/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the ShamanStone account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-snapshot-reviver",
+   "version": "1.0.1",
+   "sha256": "394a213d42fada94b63d763f00079087e3e58edb2835caa96764699eedf83495"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "809c1ed740d342bf2b41bf875db104b1cd04f83c958ae6cb0479057d552ec17b"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "eutils.ncbi.nlm.nih.gov"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-04T05:26:29Z",
+    "lastCommitAt": "2026-08-03T09:39:28Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T05:53:14Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

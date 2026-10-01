@@ -1,0 +1,2982 @@
+{
+  "$id": "https://github.com/iliasacademia/zoteroatlas/schema/json/release.schema.json",
+  "title": "release",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "slug": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 100,
+      "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+    },
+    "repo": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+\\/[a-z0-9._-]+$",
+      "description": "Canonical GitHub repository key: lowercase owner/name"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "source": {
+      "description": "update-feed: the file a plugin's update address offers, not a GitHub release file",
+      "type": "string",
+      "enum": [
+        "release",
+        "update-feed"
+      ]
+    },
+    "tag": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "releaseAuthor": {
+      "description": "GitHub login that created the release; a [bot] login means a workflow did, whoever uploaded the file",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "publishedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+    },
+    "prerelease": {
+      "type": "boolean"
+    },
+    "asset": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "githubAssetId": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "uploader": {
+          "description": "GitHub login that uploaded the file; github-actions[bot] means a workflow did",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "uploadedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "GitHub asset updated_at; later than publishedAt means it was replaced"
+        },
+        "fetchedAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+        }
+      },
+      "required": [
+        "name",
+        "url",
+        "size",
+        "sha256",
+        "githubAssetId",
+        "uploadedAt",
+        "fetchedAt"
+      ]
+    },
+    "manifest": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": [
+            "manifest.json",
+            "install.rdf"
+          ]
+        },
+        "legacy": {
+          "type": "boolean",
+          "description": "True for install.rdf-based (Zotero 6 era) add-ons."
+        },
+        "addonId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "description": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "homepageUrl": {
+          "type": "string"
+        },
+        "updateUrl": {
+          "type": "string"
+        },
+        "strictMinVersion": {
+          "type": "string"
+        },
+        "strictMaxVersion": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "format",
+        "legacy",
+        "addonId",
+        "name",
+        "version"
+      ]
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "path",
+          "size",
+          "sha256"
+        ]
+      }
+    },
+    "analysis": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "analyzerVersion": {
+              "type": "string"
+            },
+            "analyzedAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "input": {
+              "type": "object",
+              "properties": {
+                "slug": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 100,
+                  "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "slug",
+                "version",
+                "sha256"
+              ]
+            },
+            "coverage": {
+              "type": "object",
+              "properties": {
+                "filesTotal": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "filesAnalyzed": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "filesSkipped": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string",
+                        "enum": [
+                          "binary",
+                          "too-large",
+                          "not-code",
+                          "unsupported-type"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "reason"
+                    ]
+                  }
+                },
+                "parseFailures": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      },
+                      "error": {
+                        "type": "string",
+                        "maxLength": 300
+                      },
+                      "fallback": {
+                        "type": "string",
+                        "const": "regex",
+                        "description": "Regex scanning was used instead of the AST walker."
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "error",
+                      "fallback"
+                    ]
+                  }
+                },
+                "partial": {
+                  "type": "boolean",
+                  "description": "True if any code file was skipped or fell back to regex. The card says so."
+                },
+                "codeBytes": {
+                  "description": "Bytes of code and markup files analysed",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "failedBytes": {
+                  "description": "Bytes of code the parser couldn't read (scanned with the regex fallback)",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "filesTotal",
+                "filesAnalyzed",
+                "filesSkipped",
+                "parseFailures",
+                "partial"
+              ]
+            },
+            "transparency": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "readable",
+                    "minified",
+                    "obfuscated",
+                    "mixed"
+                  ],
+                  "description": "Applies to the plugin's own code; vendored libraries are excluded."
+                },
+                "obfuscation": {
+                  "type": "object",
+                  "properties": {
+                    "detected": {
+                      "type": "boolean"
+                    },
+                    "confidence": {
+                      "type": "string",
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high"
+                      ]
+                    },
+                    "signals": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "hex-identifiers",
+                              "string-array-rotation",
+                              "escape-density",
+                              "eval-decoded-string",
+                              "identifier-entropy",
+                              "obfuscator-signature",
+                              "control-flow-flattening",
+                              "string-array-accessor",
+                              "packer"
+                            ]
+                          },
+                          "file": {
+                            "type": "string"
+                          },
+                          "score": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "evidence": {
+                            "maxItems": 10,
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "kind": {
+                                  "type": "string",
+                                  "const": "code"
+                                },
+                                "file": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "line": {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "column": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "snippet": {
+                                  "type": "string",
+                                  "maxLength": 300
+                                },
+                                "inVendoredCode": {
+                                  "type": "boolean",
+                                  "description": "True when the location falls inside a bundled third-party library we identified."
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "file",
+                                "line",
+                                "snippet",
+                                "inVendoredCode"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "file",
+                          "evidence"
+                        ]
+                      }
+                    },
+                    "libraries": {
+                      "description": "Set when every signal sits in bundled packages: the obfuscation is theirs (Nutstore's @nutstore/sso-js), the plugin's own code isn't",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "detected",
+                    "confidence",
+                    "signals"
+                  ]
+                },
+                "minifiedFiles": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "sourceMaps": {
+                  "type": "object",
+                  "properties": {
+                    "present": {
+                      "type": "boolean"
+                    },
+                    "files": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "present",
+                    "files"
+                  ]
+                },
+                "suspiciousUnicode": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "zero-width",
+                          "bidi-control",
+                          "variation-selector",
+                          "private-use",
+                          "tag-character"
+                        ]
+                      },
+                      "codepoints": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "pattern": "^U\\+[0-9A-F]{4,6}$"
+                        }
+                      },
+                      "occurrences": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "evidence": {
+                        "maxItems": 10,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "code"
+                            },
+                            "file": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "line": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "column": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "snippet": {
+                              "type": "string",
+                              "maxLength": 300
+                            },
+                            "inVendoredCode": {
+                              "type": "boolean",
+                              "description": "True when the location falls inside a bundled third-party library we identified."
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "file",
+                            "line",
+                            "snippet",
+                            "inVendoredCode"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "codepoints",
+                      "occurrences",
+                      "evidence"
+                    ]
+                  }
+                },
+                "vendoredLibraries": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "version": {
+                        "type": "string"
+                      },
+                      "files": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "identifiedBy": {
+                        "type": "string",
+                        "enum": [
+                          "banner",
+                          "hash",
+                          "file-name",
+                          "package-json"
+                        ],
+                        "description": "banner: a library licence header; file-name: a known library or release-style file name; package-json: a node_modules path or bundler module marker"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "files",
+                      "identifiedBy"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "verdict",
+                "obfuscation",
+                "minifiedFiles",
+                "sourceMaps",
+                "suspiciousUnicode",
+                "vendoredLibraries"
+              ]
+            },
+            "network": {
+              "type": "object",
+              "properties": {
+                "apis": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "api": {
+                        "type": "string",
+                        "enum": [
+                          "fetch",
+                          "xhr",
+                          "zotero-http",
+                          "websocket",
+                          "eventsource",
+                          "send-beacon",
+                          "nsi-channel",
+                          "netutil",
+                          "zotero-lookup",
+                          "remote-page",
+                          "download"
+                        ],
+                        "description": "zotero-lookup: Zotero's translators and full-text finders, which contact the services Zotero is set up with; remote-page: a web page loaded into a browser or frame the plugin created; download: Firefox's download manager (Downloads.createDownload, Downloads.fetch)"
+                      },
+                      "occurrences": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "inVendoredCodeOnly": {
+                        "description": "Every use is inside a bundled library, none in the plugin's own code",
+                        "type": "boolean"
+                      },
+                      "libraries": {
+                        "description": "Bundled libraries (package or file names) that some of these uses sit in",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "evidence": {
+                        "maxItems": 10,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "code"
+                            },
+                            "file": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "line": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "column": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "snippet": {
+                              "type": "string",
+                              "maxLength": 300
+                            },
+                            "inVendoredCode": {
+                              "type": "boolean",
+                              "description": "True when the location falls inside a bundled third-party library we identified."
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "file",
+                            "line",
+                            "snippet",
+                            "inVendoredCode"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "api",
+                      "occurrences",
+                      "evidence"
+                    ]
+                  }
+                },
+                "hosts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "host": {
+                        "type": "string"
+                      },
+                      "port": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "category": {
+                        "type": "string",
+                        "enum": [
+                          "llm-provider",
+                          "translation",
+                          "scholarly-api",
+                          "zotero",
+                          "code-hosting",
+                          "integration",
+                          "telemetry",
+                          "cloud-function",
+                          "developer-server",
+                          "localhost",
+                          "cdn",
+                          "documentation",
+                          "unknown"
+                        ]
+                      },
+                      "provider": {
+                        "description": "e.g. 'OpenAI', 'DeepL', 'Crossref'",
+                        "type": "string"
+                      },
+                      "flags": {
+                        "default": [],
+                        "description": "ip-literal: a bare IP address, which hosts.yaml can never classify by name; public-relay: an anonymous file drop or open proxy; account-oauth: another app's sign-in service; encrypted-upload: what the code sends there is encrypted to the developer's public key first (JWE), so the drop's other visitors can't read it; fixed-account: the address in the code carries an account or token of its own (a flomo, Slack, Discord or Telegram webhook), so data goes into the developer's account; unencrypted: a request we traced reaches it over plain http:// or ws://, which anyone on the network in between can read or change",
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "legal-risk",
+                            "china-only",
+                            "blocked-in-mainland-china",
+                            "ip-literal",
+                            "public-relay",
+                            "account-oauth",
+                            "encrypted-upload",
+                            "fixed-account",
+                            "unencrypted"
+                          ]
+                        }
+                      },
+                      "usage": {
+                        "type": "string",
+                        "enum": [
+                          "request",
+                          "link",
+                          "unknown"
+                        ],
+                        "description": "request: the literal reaches a network API in the same expression or via a simple constant. link: it only reaches openURL/launchURL/href. unknown: we couldn't tell."
+                      },
+                      "inVendoredCode": {
+                        "type": "boolean"
+                      },
+                      "libraries": {
+                        "description": "Bundled libraries (package or file names) that some of these uses sit in",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "occurrences": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "evidence": {
+                        "maxItems": 10,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "code"
+                            },
+                            "file": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "line": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "column": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "snippet": {
+                              "type": "string",
+                              "maxLength": 300
+                            },
+                            "inVendoredCode": {
+                              "type": "boolean",
+                              "description": "True when the location falls inside a bundled third-party library we identified."
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "file",
+                            "line",
+                            "snippet",
+                            "inVendoredCode"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "host",
+                      "category",
+                      "usage",
+                      "inVendoredCode",
+                      "occurrences",
+                      "evidence"
+                    ]
+                  }
+                },
+                "dynamicUrls": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "pattern": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "Reconstructed shape, e.g. `<base>/v1/chat/completions`"
+                      },
+                      "evidence": {
+                        "maxItems": 10,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "code"
+                            },
+                            "file": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "line": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "column": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "snippet": {
+                              "type": "string",
+                              "maxLength": 300
+                            },
+                            "inVendoredCode": {
+                              "type": "boolean",
+                              "description": "True when the location falls inside a bundled third-party library we identified."
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "file",
+                            "line",
+                            "snippet",
+                            "inVendoredCode"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "pattern",
+                      "evidence"
+                    ]
+                  }
+                },
+                "configurableEndpoints": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "prefKey": {
+                        "type": "string"
+                      },
+                      "defaultValue": {
+                        "type": "string"
+                      },
+                      "evidence": {
+                        "maxItems": 10,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "code"
+                            },
+                            "file": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "line": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "column": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "snippet": {
+                              "type": "string",
+                              "maxLength": 300
+                            },
+                            "inVendoredCode": {
+                              "type": "boolean",
+                              "description": "True when the location falls inside a bundled third-party library we identified."
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "file",
+                            "line",
+                            "snippet",
+                            "inVendoredCode"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "evidence"
+                    ]
+                  }
+                },
+                "programs": {
+                  "description": "Programs the plugin runs and companions on this computer it hands data to (AI command-line tools, edge-tts, a local translation app), which send it on to their provider",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "program": {
+                        "type": "string",
+                        "description": "e.g. 'Claude Code', 'Codex CLI', 'edge-tts'"
+                      },
+                      "provider": {
+                        "type": "string",
+                        "description": "Who the program sends your data to, e.g. 'Anthropic'; empty when unknown"
+                      },
+                      "category": {
+                        "description": "Where the card lists it (llm-provider when absent); unknown: a companion whose destination we can't check",
+                        "type": "string",
+                        "enum": [
+                          "llm-provider",
+                          "translation",
+                          "scholarly-api",
+                          "zotero",
+                          "code-hosting",
+                          "integration",
+                          "telemetry",
+                          "cloud-function",
+                          "developer-server",
+                          "localhost",
+                          "cdn",
+                          "documentation",
+                          "unknown"
+                        ]
+                      },
+                      "documents": {
+                        "description": "The code that hands it data works with PDF files or their text (a file path, full text, a selection)",
+                        "type": "boolean"
+                      },
+                      "automatic": {
+                        "description": "It's handed data without a click: from Zotero's startup, a timer, or Zotero's notice of a new or changed item",
+                        "type": "boolean"
+                      },
+                      "evidence": {
+                        "maxItems": 10,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "code"
+                            },
+                            "file": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "line": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "column": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "snippet": {
+                              "type": "string",
+                              "maxLength": 300
+                            },
+                            "inVendoredCode": {
+                              "type": "boolean",
+                              "description": "True when the location falls inside a bundled third-party library we identified."
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "file",
+                            "line",
+                            "snippet",
+                            "inVendoredCode"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "program",
+                      "provider",
+                      "evidence"
+                    ]
+                  }
+                },
+                "hostsTableVersion": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "apis",
+                "hosts",
+                "dynamicUrls",
+                "configurableEndpoints",
+                "hostsTableVersion"
+              ]
+            },
+            "capabilities": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "enum": [
+                      "filesystem",
+                      "process-launch",
+                      "native-code",
+                      "db-write",
+                      "sqlite-direct",
+                      "remote-code",
+                      "dynamic-code",
+                      "credential-storage",
+                      "login-manager",
+                      "clipboard",
+                      "local-http-server",
+                      "network-intercept",
+                      "ui-injection",
+                      "self-update",
+                      "remote-script",
+                      "remote-script-output",
+                      "installs-addons",
+                      "download-exec",
+                      "borrowed-identity",
+                      "encrypted-code",
+                      "link-runs-code",
+                      "link-installs-addons",
+                      "disables-security",
+                      "own-server",
+                      "self-installs",
+                      "runs-bundled-binary",
+                      "package-run",
+                      "installs-translators",
+                      "own-database",
+                      "runs-sent-code",
+                      "enables-local-api",
+                      "server-edits-library",
+                      "browser-credentials",
+                      "reused-app-login",
+                      "changes-settings",
+                      "sends-unencrypted"
+                    ]
+                  },
+                  "occurrences": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "inVendoredCodeOnly": {
+                    "type": "boolean"
+                  },
+                  "libraries": {
+                    "description": "Bundled libraries (package or file names) that some of these uses sit in",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "evidence": {
+                    "maxItems": 10,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "const": "code"
+                        },
+                        "file": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "line": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "column": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "snippet": {
+                          "type": "string",
+                          "maxLength": 300
+                        },
+                        "inVendoredCode": {
+                          "type": "boolean",
+                          "description": "True when the location falls inside a bundled third-party library we identified."
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "file",
+                        "line",
+                        "snippet",
+                        "inVendoredCode"
+                      ]
+                    }
+                  },
+                  "details": {
+                    "type": "object",
+                    "properties": {
+                      "sqlStatements": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "sqlTables": {
+                        "description": "Tables written; separates Zotero's own tables from a plugin's own",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "endpoints": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "prefKeys": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "fsScope": {
+                        "type": "string",
+                        "enum": [
+                          "zotero-data-dir",
+                          "user-chosen",
+                          "arbitrary",
+                          "unknown"
+                        ]
+                      },
+                      "updateUrl": {
+                        "type": "string"
+                      },
+                      "apis": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "sources": {
+                        "description": "Hosts a downloaded program comes from; `(http)` when unencrypted",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "programs": {
+                        "description": "Programs named where it launches processes, e.g. `python3`, `qlmanage`",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "asksFirst": {
+                        "description": "A link handler asks the user (or checks a password) before acting",
+                        "type": "boolean"
+                      },
+                      "pinning": {
+                        "description": "Package installs, the loosest counting: locked (a lockfile it ships, hashes required, or every requirement pinned exactly), top-level (exact versions for the packages it names; their dependencies can change), unpinned (no fixed version we could see)",
+                        "type": "string",
+                        "enum": [
+                          "locked",
+                          "top-level",
+                          "unpinned"
+                        ]
+                      },
+                      "packages": {
+                        "description": "Packages it installs by name, with the version when it's fixed",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "atStartup": {
+                        "description": "A package install runs from Zotero's startup, without a click or a prompt",
+                        "type": "boolean"
+                      },
+                      "once": {
+                        "description": "Every package install without a fixed version waits for an already-installed check (`if (!exists(venv))`): it installs once, not on every run",
+                        "type": "boolean"
+                      },
+                      "copiedToBrowser": {
+                        "description": "A browser's cookie or password store copied into the profile of a browser it starts, rather than read by the plugin",
+                        "type": "boolean"
+                      },
+                      "approval": {
+                        "description": "Code its AI assistant writes: shown and approved before each run, allowed by a setting named for running code, or run without the user seeing it first",
+                        "type": "string",
+                        "enum": [
+                          "each-run",
+                          "code-switch",
+                          "none"
+                        ]
+                      },
+                      "web": {
+                        "description": "An endpoint on Zotero's built-in server that web pages can use: any website, the websites the plugin names, or websites the user approves in a prompt. On its own server (own-server): any website, because nothing in its request handling turns web pages away",
+                        "type": "string",
+                        "enum": [
+                          "any",
+                          "listed",
+                          "approved"
+                        ]
+                      },
+                      "serverActions": {
+                        "description": "What any website can make its own server do (own-server, with web any): change the library, run code or commands it's sent, or send a stored API key to an address the request gives",
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "changes-library",
+                            "runs-code",
+                            "sends-keys"
+                          ]
+                        }
+                      },
+                      "setting": {
+                        "description": "A setting, off by default, that the endpoint waits for (its preference key, or httpServer.localAPI.enabled for Zotero's local API); on its own server, the setting its start or what websites can make it do waits for",
+                        "type": "string"
+                      },
+                      "needsKey": {
+                        "description": "Every change to the library a website can make through it (server-edits-library, or own-server whose only action is changes-library) needs the key of an item already in the library, and nothing a page can read from it or from Zotero's server hands keys out",
+                        "type": "boolean"
+                      },
+                      "agentModes": {
+                        "description": "AI coding agents it launches with fewer approval prompts: file edits accepted, no prompts inside the agent's sandbox, or no prompts and no sandbox; by default or through a setting",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "program": {
+                              "type": "string"
+                            },
+                            "mode": {
+                              "type": "string",
+                              "enum": [
+                                "accept-edits",
+                                "sandboxed",
+                                "full-bypass"
+                              ]
+                            },
+                            "byDefault": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "program",
+                            "mode",
+                            "byDefault"
+                          ]
+                        }
+                      },
+                      "installs": {
+                        "description": "Add-on installs: where each file comes from, and whether each install is asked",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "from": {
+                              "type": "string",
+                              "enum": [
+                                "file",
+                                "backup",
+                                "library",
+                                "fixed",
+                                "hidden",
+                                "catalogue",
+                                "feed",
+                                "page",
+                                "link",
+                                "message",
+                                "link-source"
+                              ],
+                              "description": "file: an add-on file the user picks or drops; backup: every add-on in a backup the user restores; library: add-on files kept in the user's Zotero library; fixed: an address written into the code; hidden: one hidden there (base64); catalogue: a list of add-ons it downloads; feed: its own update feed; page: a file name it reads off a web page; link: an address a zotero:// link supplies; message: an address another program or an AI tool sends; link-source: a zotero:// link can change where it installs from"
+                            },
+                            "hosts": {
+                              "description": "Where the file or the list comes from",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "via": {
+                              "description": "Third-party mirrors or proxies it fetches through",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "asks": {
+                              "type": "string",
+                              "enum": [
+                                "confirm",
+                                "click",
+                                "none"
+                              ],
+                              "description": "confirm: a dialog before each install; click: the user starts it from the plugin; none: it installs without either"
+                            },
+                            "auto": {
+                              "description": "It starts by itself, at startup or on a timer",
+                              "type": "boolean"
+                            },
+                            "hash": {
+                              "description": "The file is checked against a hash before it's installed",
+                              "type": "boolean"
+                            },
+                            "https": {
+                              "description": "true: only https addresses; false: plain http is accepted too",
+                              "type": "boolean"
+                            },
+                            "setting": {
+                              "description": "A setting, off by default, that this way of installing waits for",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "from",
+                            "asks"
+                          ]
+                        }
+                      },
+                      "settings": {
+                        "description": "Settings that aren't its own it changes, in Zotero or other programs, and whether each is asked",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "change": {
+                              "type": "string",
+                              "enum": [
+                                "proxy",
+                                "proxy-exceptions",
+                                "sync",
+                                "server",
+                                "find-pdf",
+                                "updates",
+                                "link-prompts",
+                                "zotero-config",
+                                "certificate",
+                                "agent-permissions",
+                                "autostart",
+                                "program-install",
+                                "office-macros",
+                                "mcp-config",
+                                "app-config",
+                                "shell",
+                                "global-install",
+                                "skills"
+                              ],
+                              "description": "proxy: Zotero's proxy; proxy-exceptions: servers kept off it; sync: where Zotero syncs; server: Zotero's built-in server turned back on; find-pdf: sources for Find Available PDF; updates: Zotero's own updates turned off; link-prompts: Zotero's question before opening a link in another app; zotero-config: Zotero's built-in service addresses (ZOTERO_CONFIG); certificate: a certificate the system trusts; agent-permissions: an AI coding tool's permission prompts; autostart: a program set to start by itself; program-install: a program copied in to run later; office-macros: macros or add-ins Word or WPS load; mcp-config: an MCP server added to another program; app-config: another program's settings; shell: the PATH or shell startup files; global-install: command-line tools installed for the whole computer; skills: skill files for AI coding tools"
+                            },
+                            "target": {
+                              "description": "What it changes: a program, a link scheme, packages, a Zotero field",
+                              "type": "string"
+                            },
+                            "asks": {
+                              "type": "string",
+                              "enum": [
+                                "confirm",
+                                "click",
+                                "none"
+                              ],
+                              "description": "confirm: a dialog first; click: the user starts it from the plugin; none: neither"
+                            },
+                            "auto": {
+                              "description": "It starts by itself, at startup or on a timer",
+                              "type": "boolean"
+                            },
+                            "setting": {
+                              "description": "A setting, off by default, that this change waits for",
+                              "type": "string"
+                            },
+                            "optIn": {
+                              "description": "A switch the user flips: the value follows a checkbox, or the plugin changes it back",
+                              "type": "boolean"
+                            },
+                            "whileInstalled": {
+                              "description": "Lasts only while the plugin runs: Zotero's code or configuration changed in memory, or changed back when Zotero closes",
+                              "type": "boolean"
+                            },
+                            "asDefault": {
+                              "description": "A default in its prefs.js: the user's own value wins, and it goes with the plugin",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "change",
+                            "asks"
+                          ]
+                        }
+                      },
+                      "unencrypted": {
+                        "description": "Hosts beyond this computer's network it sends data to over plain http://, and what goes to each",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "host": {
+                              "type": "string"
+                            },
+                            "sends": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "enum": [
+                                  "content",
+                                  "credentials",
+                                  "identifiers"
+                                ]
+                              },
+                              "description": "content: the user's text or library data (a selection, PDF text, a question, abstracts); credentials: an API key, token, licence code or account ID; identifiers: only public identifiers, titles or search terms sent to a catalogue"
+                            },
+                            "fallback": {
+                              "description": "Used only when the https servers listed before it can't be reached",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "host",
+                            "sends"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "occurrences",
+                  "inVendoredCodeOnly",
+                  "evidence"
+                ]
+              }
+            },
+            "diff": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "from": {
+                      "type": "object",
+                      "properties": {
+                        "version": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 64
+                        },
+                        "sha256": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "version",
+                        "sha256"
+                      ]
+                    },
+                    "addedHosts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "removedHosts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "addedCapabilities": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "filesystem",
+                          "process-launch",
+                          "native-code",
+                          "db-write",
+                          "sqlite-direct",
+                          "remote-code",
+                          "dynamic-code",
+                          "credential-storage",
+                          "login-manager",
+                          "clipboard",
+                          "local-http-server",
+                          "network-intercept",
+                          "ui-injection",
+                          "self-update",
+                          "remote-script",
+                          "remote-script-output",
+                          "installs-addons",
+                          "download-exec",
+                          "borrowed-identity",
+                          "encrypted-code",
+                          "link-runs-code",
+                          "link-installs-addons",
+                          "disables-security",
+                          "own-server",
+                          "self-installs",
+                          "runs-bundled-binary",
+                          "package-run",
+                          "installs-translators",
+                          "own-database",
+                          "runs-sent-code",
+                          "enables-local-api",
+                          "server-edits-library",
+                          "browser-credentials",
+                          "reused-app-login",
+                          "changes-settings",
+                          "sends-unencrypted"
+                        ]
+                      }
+                    },
+                    "removedCapabilities": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "filesystem",
+                          "process-launch",
+                          "native-code",
+                          "db-write",
+                          "sqlite-direct",
+                          "remote-code",
+                          "dynamic-code",
+                          "credential-storage",
+                          "login-manager",
+                          "clipboard",
+                          "local-http-server",
+                          "network-intercept",
+                          "ui-injection",
+                          "self-update",
+                          "remote-script",
+                          "remote-script-output",
+                          "installs-addons",
+                          "download-exec",
+                          "borrowed-identity",
+                          "encrypted-code",
+                          "link-runs-code",
+                          "link-installs-addons",
+                          "disables-security",
+                          "own-server",
+                          "self-installs",
+                          "runs-bundled-binary",
+                          "package-run",
+                          "installs-translators",
+                          "own-database",
+                          "runs-sent-code",
+                          "enables-local-api",
+                          "server-edits-library",
+                          "browser-credentials",
+                          "reused-app-login",
+                          "changes-settings",
+                          "sends-unencrypted"
+                        ]
+                      }
+                    },
+                    "transparencyChange": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "from": {
+                              "type": "string",
+                              "enum": [
+                                "readable",
+                                "minified",
+                                "obfuscated",
+                                "mixed"
+                              ],
+                              "description": "Applies to the plugin's own code; vendored libraries are excluded."
+                            },
+                            "to": {
+                              "type": "string",
+                              "enum": [
+                                "readable",
+                                "minified",
+                                "obfuscated",
+                                "mixed"
+                              ],
+                              "description": "Applies to the plugin's own code; vendored libraries are excluded."
+                            }
+                          },
+                          "required": [
+                            "from",
+                            "to"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "material": {
+                      "type": "boolean"
+                    },
+                    "reasons": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Plain-language lines for the changes feed."
+                    }
+                  },
+                  "required": [
+                    "from",
+                    "addedHosts",
+                    "removedHosts",
+                    "addedCapabilities",
+                    "removedCapabilities",
+                    "transparencyChange",
+                    "material",
+                    "reasons"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Null for the first analysed version."
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "analyzerVersion",
+            "analyzedAt",
+            "input",
+            "coverage",
+            "transparency",
+            "network",
+            "capabilities",
+            "diff"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "provenance": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "checkerVersion": {
+              "type": "string"
+            },
+            "checkedAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "level": {
+              "type": "string",
+              "enum": [
+                "reproduced",
+                "matches-source",
+                "plausible",
+                "mismatch",
+                "no-source",
+                "not-checked"
+              ]
+            },
+            "method": {
+              "type": "string",
+              "enum": [
+                "direct-diff",
+                "rebuild",
+                "none"
+              ]
+            },
+            "tag": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "commit": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{40}$"
+                    },
+                    "commitDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                    },
+                    "matchedBy": {
+                      "type": "string",
+                      "enum": [
+                        "exact",
+                        "v-prefix",
+                        "version-in-name",
+                        "release-target-commitish"
+                      ]
+                    },
+                    "stale": {
+                      "type": "boolean",
+                      "description": "Tag commit changes only docs and lags far behind while the .xpi contains new code."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "commit",
+                    "commitDate",
+                    "matchedBy",
+                    "stale"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "build": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "attempted": {
+                      "type": "boolean"
+                    },
+                    "succeeded": {
+                      "type": "boolean"
+                    },
+                    "timedOut": {
+                      "type": "boolean"
+                    },
+                    "nodeVersion": {
+                      "type": "string"
+                    },
+                    "command": {
+                      "type": "string"
+                    },
+                    "durationMs": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "logExcerpt": {
+                      "type": "string",
+                      "maxLength": 2000
+                    }
+                  },
+                  "required": [
+                    "attempted",
+                    "succeeded",
+                    "timedOut"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "diff": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "identical": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "differing": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "onlyInRelease": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "onlyInSource": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "unexplained": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "path": {
+                            "type": "string"
+                          },
+                          "bytes": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "evidence": {
+                            "maxItems": 5,
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "kind": {
+                                  "type": "string",
+                                  "const": "code"
+                                },
+                                "file": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "line": {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "column": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "snippet": {
+                                  "type": "string",
+                                  "maxLength": 300
+                                },
+                                "inVendoredCode": {
+                                  "type": "boolean",
+                                  "description": "True when the location falls inside a bundled third-party library we identified."
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "file",
+                                "line",
+                                "snippet",
+                                "inVendoredCode"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "path",
+                          "bytes",
+                          "evidence"
+                        ]
+                      },
+                      "description": "Substantial release code with no counterpart in the source. Drives `mismatch`."
+                    }
+                  },
+                  "required": [
+                    "identical",
+                    "differing",
+                    "onlyInRelease",
+                    "onlyInSource",
+                    "unexplained"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "attestation": {
+              "type": "object",
+              "properties": {
+                "present": {
+                  "type": "boolean"
+                },
+                "verified": {
+                  "type": "boolean"
+                },
+                "workflow": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "present",
+                "verified"
+              ]
+            },
+            "explanation": {
+              "type": "string",
+              "description": "Template-generated, factual sentence shown under the level."
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "checkerVersion",
+            "checkedAt",
+            "level",
+            "method",
+            "tag",
+            "build",
+            "diff",
+            "attestation",
+            "explanation"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dataFlow": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "inputHash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "statements": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "maxLength": 300
+                  },
+                  "certainty": {
+                    "type": "string",
+                    "enum": [
+                      "sends",
+                      "may-send"
+                    ],
+                    "description": "may-send when the trigger or payload couldn't be determined; text explains why"
+                  },
+                  "trigger": {
+                    "type": "string",
+                    "enum": [
+                      "user-action",
+                      "automatic",
+                      "startup",
+                      "unknown"
+                    ]
+                  },
+                  "hosts": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "dataKinds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "selected-text",
+                        "pdf-content",
+                        "item-metadata",
+                        "notes",
+                        "annotations",
+                        "attachments",
+                        "library-wide",
+                        "api-key",
+                        "usage-telemetry",
+                        "unknown"
+                      ]
+                    }
+                  },
+                  "codeEvidence": {
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "const": "code"
+                        },
+                        "file": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "line": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "column": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "snippet": {
+                          "type": "string",
+                          "maxLength": 300
+                        },
+                        "inVendoredCode": {
+                          "type": "boolean",
+                          "description": "True when the location falls inside a bundled third-party library we identified."
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "file",
+                        "line",
+                        "snippet",
+                        "inVendoredCode"
+                      ]
+                    }
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "draft",
+                      "approved",
+                      "edited",
+                      "rejected"
+                    ]
+                  }
+                },
+                "required": [
+                  "text",
+                  "certainty",
+                  "trigger",
+                  "hosts",
+                  "dataKinds",
+                  "codeEvidence",
+                  "status"
+                ]
+              }
+            }
+          },
+          "required": [
+            "inputHash",
+            "statements"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "trustCard": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "rulesVersion": {
+              "type": "string"
+            },
+            "computedAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "appliesTo": {
+              "type": "object",
+              "properties": {
+                "slug": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 100,
+                  "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "slug",
+                "version",
+                "sha256"
+              ]
+            },
+            "inputs": {
+              "type": "object",
+              "properties": {
+                "analyzerVersion": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "provenanceCheckerVersion": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "hostsTableVersion": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "currentZotero": {
+                  "type": "string"
+                },
+                "inputHash": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$",
+                  "description": "Hash of every input above; unchanged hash means unchanged card"
+                }
+              },
+              "required": [
+                "analyzerVersion",
+                "provenanceCheckerVersion",
+                "hostsTableVersion",
+                "currentZotero",
+                "inputHash"
+              ]
+            },
+            "facets": {
+              "type": "object",
+              "properties": {
+                "sourceTransparency": {
+                  "type": "object",
+                  "properties": {
+                    "provenance": {
+                      "type": "string",
+                      "enum": [
+                        "reproduced",
+                        "matches-source",
+                        "plausible",
+                        "mismatch",
+                        "no-source",
+                        "not-checked"
+                      ]
+                    },
+                    "obfuscated": {
+                      "anyOf": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "string",
+                          "const": "unknown"
+                        }
+                      ]
+                    },
+                    "suspiciousUnicode": {
+                      "type": "boolean"
+                    },
+                    "sourceMaps": {
+                      "type": "boolean"
+                    },
+                    "assetReplaced": {
+                      "type": "boolean",
+                      "description": "The file behind this release tag changed after it was first published"
+                    },
+                    "assetReplacedDetail": {
+                      "description": "How we know it changed: our own earlier copy, or the fingerprint the project's own update manifest gives for this version",
+                      "type": "string"
+                    },
+                    "updates": {
+                      "description": "Where updates come from; a template namespace the developer doesn't control is a concern",
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "check": {
+                          "description": "What the update address offers today, e.g. a different file and its label",
+                          "type": "string"
+                        },
+                        "note": {
+                          "description": "What the plugin does to its own updates, e.g. turning Zotero's automatic updates on",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "label"
+                      ]
+                    },
+                    "partialAnalysis": {
+                      "description": "Set when part of the code was skipped or only scanned for known patterns",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "concern": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "low",
+                        "medium",
+                        "high",
+                        "unknown"
+                      ]
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "drivers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "IDs of the rules that fired (the rule table in pipeline/src/profile/score.ts)"
+                    }
+                  },
+                  "required": [
+                    "provenance",
+                    "obfuscated",
+                    "suspiciousUnicode",
+                    "sourceMaps",
+                    "assetReplaced",
+                    "concern",
+                    "label",
+                    "drivers"
+                  ]
+                },
+                "dataSharing": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string",
+                      "enum": [
+                        "no-network-found",
+                        "user-configured-only",
+                        "named-third-parties",
+                        "developer-servers",
+                        "unknown-endpoints",
+                        "bundled-library-only",
+                        "not-analyzed"
+                      ]
+                    },
+                    "hosts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "category": {
+                            "type": "string",
+                            "enum": [
+                              "llm-provider",
+                              "translation",
+                              "scholarly-api",
+                              "zotero",
+                              "code-hosting",
+                              "integration",
+                              "telemetry",
+                              "cloud-function",
+                              "developer-server",
+                              "localhost",
+                              "cdn",
+                              "documentation",
+                              "unknown"
+                            ]
+                          },
+                          "hosts": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "unconfirmed": {
+                            "description": "Hosts in this group we found in the code but didn't trace to a request (shown as 'named in its code')",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "unencrypted": {
+                            "description": "Hosts in this group a request reaches over plain http:// (shown as 'unencrypted'): anyone on the network in between can read or change what's sent",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "observed": {
+                            "description": "Hosts in this group the plugin contacted when we ran this exact file in Zotero (shown as 'seen when we ran it'), whether or not we found them in its code; they count as traced requests",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "category",
+                          "hosts"
+                        ]
+                      }
+                    },
+                    "concern": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "low",
+                        "medium",
+                        "high",
+                        "unknown"
+                      ]
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "legalRisk": {
+                      "description": "A destination is a shadow library such as Sci-Hub: shown as a neutral legal notice",
+                      "type": "boolean"
+                    },
+                    "drivers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "IDs of the rules that fired (the rule table in pipeline/src/profile/score.ts)"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "hosts",
+                    "concern",
+                    "label",
+                    "drivers"
+                  ]
+                },
+                "capabilities": {
+                  "type": "object",
+                  "properties": {
+                    "badges": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "enum": [
+                              "filesystem",
+                              "process-launch",
+                              "native-code",
+                              "db-write",
+                              "sqlite-direct",
+                              "remote-code",
+                              "dynamic-code",
+                              "credential-storage",
+                              "login-manager",
+                              "clipboard",
+                              "local-http-server",
+                              "network-intercept",
+                              "ui-injection",
+                              "self-update",
+                              "remote-script",
+                              "remote-script-output",
+                              "installs-addons",
+                              "download-exec",
+                              "borrowed-identity",
+                              "encrypted-code",
+                              "link-runs-code",
+                              "link-installs-addons",
+                              "disables-security",
+                              "own-server",
+                              "self-installs",
+                              "runs-bundled-binary",
+                              "package-run",
+                              "installs-translators",
+                              "own-database",
+                              "runs-sent-code",
+                              "enables-local-api",
+                              "server-edits-library",
+                              "browser-credentials",
+                              "reused-app-login",
+                              "changes-settings",
+                              "sends-unencrypted"
+                            ]
+                          },
+                          "label": {
+                            "type": "string",
+                            "description": "Plain language, e.g. 'Writes to the Zotero database directly'"
+                          },
+                          "concern": {
+                            "type": "string",
+                            "enum": [
+                              "none",
+                              "low",
+                              "medium",
+                              "high",
+                              "unknown"
+                            ]
+                          },
+                          "libraries": {
+                            "description": "Set when every use sits in bundled libraries: the card names them, e.g. 'from zotero-plugin-toolkit'",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "detail": {
+                            "description": "What, where from or which setting, e.g. 'From astral.sh; not checked against a fixed fingerprint'",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "label",
+                          "concern"
+                        ]
+                      }
+                    },
+                    "concern": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "low",
+                        "medium",
+                        "high",
+                        "unknown"
+                      ]
+                    },
+                    "drivers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "IDs of the rules that fired (the rule table in pipeline/src/profile/score.ts)"
+                    }
+                  },
+                  "required": [
+                    "badges",
+                    "concern",
+                    "drivers"
+                  ]
+                },
+                "requirements": {
+                  "type": "object",
+                  "properties": {
+                    "badges": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "enum": [
+                              "api-key",
+                              "account",
+                              "paid",
+                              "companion-app"
+                            ]
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "detail": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "label"
+                        ]
+                      }
+                    },
+                    "reviewed": {
+                      "type": "boolean",
+                      "description": "False while any requirement is still an unreviewed draft"
+                    }
+                  },
+                  "required": [
+                    "badges",
+                    "reviewed"
+                  ]
+                },
+                "maintenance": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "active",
+                        "slowing",
+                        "dormant",
+                        "archived"
+                      ]
+                    },
+                    "lastReleaseAt": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "lastCommitAt": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "concern": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "low",
+                        "medium",
+                        "high",
+                        "unknown"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "lastReleaseAt",
+                    "lastCommitAt",
+                    "concern"
+                  ]
+                },
+                "compatibility": {
+                  "type": "object",
+                  "properties": {
+                    "current": {
+                      "type": "object",
+                      "properties": {
+                        "zoteroVersion": {
+                          "type": "string",
+                          "description": "e.g. '10.0.3' or '11.0-dev.5'"
+                        },
+                        "major": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "compatible",
+                            "incompatible",
+                            "unknown"
+                          ],
+                          "description": "Whether Zotero at exactly zoteroVersion installs and runs it: every part of the version is compared, as Zotero does"
+                        }
+                      },
+                      "required": [
+                        "zoteroVersion",
+                        "major",
+                        "status"
+                      ]
+                    },
+                    "previous": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "zoteroVersion": {
+                              "type": "string",
+                              "description": "e.g. '10.0.3' or '11.0-dev.5'"
+                            },
+                            "major": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "compatible",
+                                "incompatible",
+                                "unknown"
+                              ],
+                              "description": "Whether Zotero at exactly zoteroVersion installs and runs it: every part of the version is compared, as Zotero does"
+                            }
+                          },
+                          "required": [
+                            "zoteroVersion",
+                            "major",
+                            "status"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "next": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "zoteroVersion": {
+                              "type": "string",
+                              "description": "e.g. '10.0.3' or '11.0-dev.5'"
+                            },
+                            "major": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "compatible",
+                                "incompatible",
+                                "unknown"
+                              ],
+                              "description": "Whether Zotero at exactly zoteroVersion installs and runs it: every part of the version is compared, as Zotero does"
+                            }
+                          },
+                          "required": [
+                            "zoteroVersion",
+                            "major",
+                            "status"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "description": "Next major on the beta/dev channel, if any"
+                    },
+                    "blockedByZotero": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "reason": {
+                              "type": "string"
+                            },
+                            "source": {
+                              "type": "string",
+                              "format": "uri"
+                            }
+                          },
+                          "required": [
+                            "reason",
+                            "source"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "description": "This version is on Zotero's official plugin blocklist"
+                    },
+                    "installProblem": {
+                      "description": "Zotero won't install this manifest.json file at all, so it works with no Zotero version: an add-on ID missing or not in the form Firefox accepts (a GUID in braces, or name@domain in letters, digits, - . _), no update address (applications.zotero.update_url) or no maximum version (strict_max_version)",
+                      "type": "string",
+                      "enum": [
+                        "invalid-id",
+                        "no-update-url",
+                        "no-max-version"
+                      ]
+                    },
+                    "label": {
+                      "description": "One line shown next to the overall label: whether it runs on current Zotero",
+                      "type": "string"
+                    },
+                    "concern": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "low",
+                        "medium",
+                        "high",
+                        "unknown"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "current",
+                    "previous",
+                    "next",
+                    "blockedByZotero",
+                    "concern"
+                  ]
+                },
+                "reviewStatus": {
+                  "type": "object",
+                  "properties": {
+                    "state": {
+                      "type": "string",
+                      "enum": [
+                        "automated-only",
+                        "human-reviewed"
+                      ]
+                    },
+                    "reviewer": {
+                      "type": "string"
+                    },
+                    "reviewedAt": {
+                      "type": "string",
+                      "format": "date",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                    },
+                    "reviewedVersion": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 64
+                    },
+                    "stale": {
+                      "type": "boolean",
+                      "description": "A newer version with material changes has appeared since the review"
+                    }
+                  },
+                  "required": [
+                    "state",
+                    "stale"
+                  ]
+                }
+              },
+              "required": [
+                "sourceTransparency",
+                "dataSharing",
+                "capabilities",
+                "requirements",
+                "maintenance",
+                "compatibility",
+                "reviewStatus"
+              ]
+            },
+            "overall": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "enum": [
+                    "low-concern",
+                    "review-details",
+                    "high-concern",
+                    "insufficient-data"
+                  ]
+                },
+                "ruleId": {
+                  "type": "string"
+                },
+                "drivers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "sourceTransparency",
+                      "dataSharing",
+                      "capabilities",
+                      "requirements",
+                      "maintenance",
+                      "compatibility",
+                      "reviewStatus"
+                    ]
+                  },
+                  "description": "Facets that determined the label, shown next to it"
+                },
+                "reasons": {
+                  "description": "The findings that set the label, most important first: the 'because' line",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "label",
+                "ruleId",
+                "drivers"
+              ]
+            },
+            "tested": {
+              "description": "What this exact file did when we ran it in a throwaway Zotero (data/sandbox/<slug>.json); absent when this file hasn't been tested",
+              "type": "object",
+              "properties": {
+                "zotero": {
+                  "type": "string",
+                  "description": "The Zotero version it ran in"
+                },
+                "testedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                },
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "as-described",
+                    "unexpected",
+                    "not-loaded",
+                    "incomplete"
+                  ],
+                  "description": "as-described: it loaded, and everything it did beyond what Zotero does by itself is something its card says; unexpected: something it did isn't (the reasons are listed); not-loaded: it didn't start; incomplete: the test didn't finish"
+                },
+                "exercised": {
+                  "type": "object",
+                  "properties": {
+                    "itemsSelected": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "readerOpened": {
+                      "type": "boolean",
+                      "description": "A PDF was opened in Zotero's reader"
+                    },
+                    "settingsPane": {
+                      "type": "boolean",
+                      "description": "Zotero's settings opened at the plugin's own pane"
+                    },
+                    "menuItems": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991,
+                      "description": "Menu items the plugin added that the test clicked"
+                    },
+                    "dialogs": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991,
+                      "description": "Dialogs and prompts the test answered"
+                    }
+                  },
+                  "required": [
+                    "itemsSelected",
+                    "readerOpened",
+                    "settingsPane",
+                    "menuItems",
+                    "dialogs"
+                  ],
+                  "description": "How much of the plugin the test reached"
+                },
+                "contacted": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Hosts it contacted during the test"
+                },
+                "sentTo": {
+                  "description": "Hosts that received the test library's own text during the test, and which kinds, e.g. api.crossref.org: identifiers, titles (the items' DOIs and titles); absent when none did, or when the record doesn't say",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "host": {
+                        "type": "string"
+                      },
+                      "sent": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "titles",
+                            "identifiers",
+                            "authors",
+                            "abstract",
+                            "notes",
+                            "pdf-text",
+                            "pdf-file",
+                            "tags",
+                            "collections"
+                          ],
+                          "description": "A kind of the test library's own text found in a request: its items' titles, identifiers (DOI, ISBN), authors, abstract, note, the PDF's text, the PDF file itself, tags or collection name"
+                        }
+                      }
+                    },
+                    "required": [
+                      "host",
+                      "sent"
+                    ]
+                  }
+                },
+                "fetched": {
+                  "description": "Hosts it only loaded pages from during the test (plain GET or HEAD requests, nothing sent): listed, but not counted as data sharing; absent when there were none, or when the record doesn't say",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "unexpected": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "What it did that its card didn't say before the test, in plain English"
+                }
+              },
+              "required": [
+                "zotero",
+                "testedAt",
+                "verdict",
+                "exercised",
+                "contacted",
+                "unexpected"
+              ]
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "rulesVersion",
+            "computedAt",
+            "appliesTo",
+            "inputs",
+            "facets",
+            "overall"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "slug",
+    "repo",
+    "version",
+    "tag",
+    "publishedAt",
+    "prerelease",
+    "asset",
+    "manifest",
+    "files",
+    "analysis",
+    "provenance",
+    "dataFlow",
+    "trustCard"
+  ]
+}

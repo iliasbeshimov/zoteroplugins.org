@@ -1,0 +1,28 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-reply",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Only if the chosen OpenAI-compatible endpoint requires one; the endpoint URL and model must always be set",
+  "worksWithout": "A local OpenAI-compatible endpoint such as LiteLLM or vLLM, where the API key is optional",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Configuration",
+   "quote": "`API Key` optional",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Endpoint assumptions",
+   "quote": "`http://localhost:8000/v1`",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README configuration list has \"`API Key` optional\". It names LiteLLM and vLLM with \"`http://localhost:8000/v1`\" as example endpoints, which is a local OpenAI-compatible endpoint used for AI. The user must still set an endpoint and model."
+}

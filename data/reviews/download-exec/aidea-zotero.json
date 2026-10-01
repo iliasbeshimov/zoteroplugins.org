@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "slug": "aidea-zotero",
+  "version": "3.6.0",
+  "sha256": "43567682b242f7e2283bf26cd5d73d74cf07ee3f90fae3e626cdaab3c263d316",
+  "reviewedAt": "2026-09-30",
+  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "low",
+  "rule": "CAP-DOWNLOAD-EXEC-TOLD",
+  "summary": "When you press Install Environment, it downloads the Miniconda Python installer from Anaconda (or, if that fails, uv from Astral) and runs it, as its README says. Neither is checked against a fingerprint, and the uv installer script runs straight from the web.",
+  "facts": {
+    "what": "Miniconda (the Anaconda Python installer) from Anaconda's server, or if that fails the uv Python package manager via Astral's install script (piped straight into the shell, no check); then it builds a Python 3.12 environment and installs pdf2zh_next for full-document translation.",
+    "urls": [
+      "https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe",
+      "https://repo.anaconda.com/miniconda/Miniconda3-latest-${arch}-${ARCH}.sh",
+      "https://astral.sh/uv/install.sh",
+      "https://astral.sh/uv/install.ps1"
+    ],
+    "source": "official",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "user-clicks-install",
+    "toldInReadme": "yes",
+    "readmeQuote": "is installed by the **Install Environment** button on the Translate tab and needs an internet connection at that time",
+    "triggerQuote": {
+      "file": "content/scripts/aidea.js",
+      "text": "trInstallEnv: \"Install Environment\""
+    },
+    "integrityQuote": {
+      "file": "content/scripts/aidea.js",
+      "text": "curl -LsSf https://astral.sh/uv/install.sh | sh"
+    },
+    "notes": "Trigger: the Install Environment button (id llm-tr-install-env) on the Translate tab calls installEnvironment on click. No confirm dialog was found for this button (the 'Install Environment will perform...' oauthInstallNotice text covers the Node.js/CLI provider setup, not this path). The Miniconda installer is saved to /tmp (macOS/Linux) or the temp dir (Windows) and run with no hash check. Miniconda is tried first, uv only if Miniconda fails. The setup also auto-accepts conda Terms of Service for the user, and the README says Miniconda is the fallback, which is partly reversed (code tries conda first). The pdf2zh_next package install comes from the Python package index with no hash pinning seen. README states the Translate-tab button installs the Python environment and that it needs internet; it names uv and Miniconda but does not say the plugin itself pipes a script into the shell. Only the install-script one-liners appear in scanner evidence; Miniconda download lines are at aidea.js lines 57311-57345."
+  }
+}

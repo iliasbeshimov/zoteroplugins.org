@@ -1,0 +1,40 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-remind-me",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "AI drafting with Claude, OpenAI, DeepSeek, Kimi or Qwen needs your own API key",
+  "worksWithout": "Writing the notes yourself, or AI through a local Ollama model",
+  "services": [
+   "Anthropic",
+   "OpenAI",
+   "DeepSeek",
+   "Moonshot (Kimi)",
+   "Qwen"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README How it works",
+   "quote": "Write them yourself, or let AI draft them from the abstract and the PDF.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README Setup",
+   "quote": "Supported providers: Claude, OpenAI, DeepSeek, Kimi, Qwen, local Ollama, and any OpenAI-compatible endpoint.",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/remindme.js:3766",
+   "quote": "baseUrl: \"http://localhost:11434/v1\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: \"Write them yourself, or let AI draft them\"; providers include \"local Ollama\"; code has baseUrl \"http://localhost:11434/v1\". The default Anthropic provider needs a key, but notes and Ollama need none."
+}

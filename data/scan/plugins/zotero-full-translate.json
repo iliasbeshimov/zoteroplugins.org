@@ -1,0 +1,645 @@
+{
+ "repo": "xhy200606/Zotero-full-translate",
+ "slug": "zotero-full-translate",
+ "group": "sample-2026",
+ "rank": 1210,
+ "name": "Zotero Full Translate",
+ "stars": 0,
+ "downloads": 2,
+ "createdAt": "2026-08-28T12:08:06Z",
+ "tag": "0.4.2",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "Zotero-full-translate-v0.4.2.xpi",
+    "url": "https://github.com/xhy200606/Zotero-full-translate/releases/download/0.4.2/Zotero-full-translate-v0.4.2.xpi",
+    "size": 88761,
+    "uploadedAt": "2026-09-03T09:06:15Z",
+    "sha256": "c417a81e207cac3eb2ad4cac22d9a1ad614ead29ec1af64e1a8f72c0641a5f8e"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero-fulltext-translator@zft.local",
+    "name": "Zotero Full Translate",
+    "version": "0.4.2",
+    "description": "Zotero 全文 PDF 翻译客户端：连接 Zotero Full Translate Cloud，使用账户翻译 API 池执行全文翻译，显示实时进度，自动导入译文并支持原文/译文对照阅读。",
+    "homepageUrl": "https://example.com/zotero-full-translate",
+    "updateUrl": "https://example.com/zotero-full-translate/updates.json",
+    "minVersion": "9.0",
+    "maxVersion": "10.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-full-translate",
+     "version": "0.4.2",
+     "sha256": "c417a81e207cac3eb2ad4cac22d9a1ad614ead29ec1af64e1a8f72c0641a5f8e"
+    },
+    "coverage": {
+     "filesTotal": 11,
+     "filesAnalyzed": 5,
+     "filesSkipped": [
+      {
+       "path": "chrome.manifest",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/content/icons/icon-48.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/content/icons/icon-96.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/content/icons/icon.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "LICENSE",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "xhr",
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 5243,
+         "column": 26,
+         "snippet": "xhr = new XMLHttpRequest({ mozAnon: true });",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 5706,
+         "column": 26,
+         "snippet": "xhr = new XMLHttpRequest({ mozAnon: true });",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "api": "zotero-http",
+       "occurrences": 6,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 1888,
+         "column": 35,
+         "snippet": "resultResp = await Zotero.HTTP.request(\"GET\", resultURL, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 5171,
+         "column": 34,
+         "snippet": "healthRes = await Zotero.HTTP.request(\"GET\", `${base}/health`, { responseType: \"json\", timeout: 15000, successCodes: false });",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 5351,
+         "column": 34,
+         "snippet": "const res = await Zotero.HTTP.request(method, `${base}${path}`, options);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 5405,
+         "column": 34,
+         "snippet": "const res = await Zotero.HTTP.request(\"GET\", `${base}/api/v1/jobs/${encodeURIComponent(jobID)}/result/mono`, options);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 5832,
+         "column": 34,
+         "snippet": "const res = await Zotero.HTTP.request(method, url, options);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 6096,
+         "column": 37,
+         "snippet": "response = await Zotero.HTTP.request(\"GET\", testURL, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "192.168.1.205",
+       "port": 3005,
+       "category": "localhost",
+       "provider": "Local network",
+       "flags": [
+        "ip-literal"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/preferences.xhtml",
+         "line": 124,
+         "column": 148,
+         "snippet": "iv class=\"field\"><html:input type=\"text\" data-pref=\"cloud.baseURL\" placeholder=\"http://192.168.1.205:3005\"/></html:div></html:div>",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 2972,
+         "column": 59,
+         "snippet": "const base = asString(this.pref(\"gpt.baseURL\", \"https://api.openai.com/v1\")).replace(/\\/$/, \"\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 36,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.zft.gpt.baseURL\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 36,
+         "column": 42,
+         "snippet": "pref(\"extensions.zotero.zft.gpt.baseURL\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "mineru.net",
+       "category": "llm-provider",
+       "provider": "MinerU",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 1761,
+         "column": 62,
+         "snippet": "const base = asString(this.pref(\"mineru.baseURL\", \"https://mineru.net\")).replace(/\\/$/, \"\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 6092,
+         "column": 66,
+         "snippet": "const base = asString(this.pref(\"mineru.baseURL\", \"https://mineru.net\")).replace(/\\/$/, \"\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 43,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.zft.mineru.baseURL\", \"https://mineru.net\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 43,
+         "column": 45,
+         "snippet": "pref(\"extensions.zotero.zft.mineru.baseURL\", \"https://mineru.net\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "<expr>/api/v1/jobs",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 5245,
+         "column": 20,
+         "snippet": "xhr.open(\"POST\", `${base}/api/v1/jobs`, true);",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "<expr>/api/v1/jobs/<expr>/result/mono",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 5405,
+         "column": 34,
+         "snippet": "const res = await Zotero.HTTP.request(\"GET\", `${base}/api/v1/jobs/${encodeURIComponent(jobID)}/result/mono`, options);",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "<expr>/health",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 5171,
+         "column": 34,
+         "snippet": "healthRes = await Zotero.HTTP.request(\"GET\", `${base}/health`, { responseType: \"json\", timeout: 15000, successCodes: false });",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "<expr><expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/main.js",
+         "line": 5351,
+         "column": 34,
+         "snippet": "const res = await Zotero.HTTP.request(method, `${base}${path}`, options);",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.zotero.zft.gpt.baseURL",
+       "defaultValue": "https://api.openai.com/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 36,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.zft.gpt.baseURL\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "extensions.zotero.zft.mineru.baseURL",
+       "defaultValue": "https://mineru.net",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 43,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.zft.mineru.baseURL\", \"https://mineru.net\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "occurrences": 10,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 5147,
+        "column": 12,
+        "snippet": "this.setPref(\"cloud.authToken\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 5151,
+        "column": 12,
+        "snippet": "this.setPref(\"cloud.apiKey\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 5152,
+        "column": 12,
+        "snippet": "this.setPref(\"pdf2zh.cloud.apiKey\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 5153,
+        "column": 12,
+        "snippet": "this.setPref(\"cloud.authToken\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 37,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.zft.gpt.apiKey\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 42,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.zft.mineru.token\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 54,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.zft.cloud.apiKey\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 56,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.zft.cloud.authToken\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 71,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.zft.cloud.requestTokens\", \"{}\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 75,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.zft.pdf2zh.cloud.apiKey\", \"\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "cloud.apiKey",
+        "cloud.authToken",
+        "extensions.zotero.zft.cloud.apiKey",
+        "extensions.zotero.zft.cloud.authToken",
+        "extensions.zotero.zft.cloud.requestTokens",
+        "extensions.zotero.zft.gpt.apiKey",
+        "extensions.zotero.zft.mineru.token",
+        "extensions.zotero.zft.pdf2zh.cloud.apiKey",
+        "pdf2zh.cloud.apiKey"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 54,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 34,
+        "column": 19,
+        "snippet": "return PathUtils.filename(path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 1147,
+        "column": 43,
+        "snippet": "if (!translatedPath || !(await IOUtils.exists(translatedPath)))",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 1885,
+        "column": 28,
+        "snippet": "const zipPath = PathUtils.join(temp, \"result.zip\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 1907,
+        "column": 18,
+        "snippet": "await IOUtils.write(zipPath, new Uint8Array(resultBuffer));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 3561,
+        "column": 28,
+        "snippet": "const outPath = PathUtils.join(temp, `${stem(await attachment.getFilePathAsync())}-translation.html`);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 3570,
+        "column": 18,
+        "snippet": "await IOUtils.writeUTF8(outPath, html);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 3674,
+        "column": 32,
+        "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 3674,
+        "column": 76,
+        "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 3693,
+        "column": 36,
+        "snippet": "const bytes = await IOUtils.read(path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 3915,
+        "column": 33,
+        "snippet": "if (!path || !(await IOUtils.exists(path)))",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "zotero-data-dir",
+       "apis": [
+        "FileUtils",
+        "IOUtils/PathUtils",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "process-launch",
+      "occurrences": 2,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 5846,
+        "column": 55,
+        "snippet": "const mod = ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/main.js",
+        "line": 5854,
+        "column": 29,
+        "snippet": "proc = await Subprocess.call({ command, arguments: args, stdout: \"pipe\", stderr: \"pipe\" });",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "Subprocess"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 16,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://example.com/zotero-full-translate/updates.json\"",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://example.com/zotero-full-translate/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "localhost": [
+      "192.168.1.205"
+     ],
+     "llm-provider": [
+      "api.openai.com",
+      "mineru.net"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "process-launch",
+      "concern": "medium"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-NAMED",
+     "CAP-PROCESS"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

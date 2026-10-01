@@ -1,0 +1,525 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-llm-selection-translate",
+ "repo": "jasperyep/zotero-llm-selection-translate",
+ "version": "0.5.4",
+ "tag": "v0.5.4",
+ "releaseAuthor": "JasperYep",
+ "publishedAt": "2026-08-03T11:43:03Z",
+ "prerelease": false,
+ "asset": {
+  "name": "llm-selection-translate-for-zotero.xpi",
+  "url": "https://github.com/JasperYep/zotero-llm-selection-translate/releases/download/v0.5.4/llm-selection-translate-for-zotero.xpi",
+  "size": 38879,
+  "sha256": "547b37be543eb847efba55dc78ac50824808668bf52617ab49b95eff8b23b77c",
+  "githubAssetId": 499990332,
+  "uploader": "JasperYep",
+  "uploadedAt": "2026-08-03T11:43:02Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "llm-selection-translate@jasper.local",
+  "name": "LLM Selection Translate for Zotero",
+  "version": "0.5.4",
+  "description": "Translate selected text in the Zotero reader via a custom OpenAI-compatible LLM API.",
+  "updateUrl": "https://github.com/JasperYep/zotero-llm-selection-translate/releases/latest/download/update.json",
+  "strictMinVersion": "7.9.9",
+  "strictMaxVersion": "9.9.9"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1245,
+   "sha256": "6dd4acc571fe608238a7c6525c4de6415aa312d6975d0a27e9bbd39b9e2c27dc"
+  },
+  {
+   "path": "chrome/content/preferences.xhtml",
+   "size": 3636,
+   "sha256": "dc459c3e8c08600596a8a205ec6f27ee32a9d72e73c16827da88be844efd653b"
+  },
+  {
+   "path": "chrome/content/scripts/llmselectiontranslate.js",
+   "size": 146039,
+   "sha256": "1d5604074408c9d4f1a2c97ec4a4daff83960bb97556b4d02ce2fff541fb209b"
+  },
+  {
+   "path": "icon.svg",
+   "size": 1435,
+   "sha256": "746e37fae7a8801cda424a2fe7c7710daa28e463ca0343d2f424847b0a72b2c9"
+  },
+  {
+   "path": "manifest.json",
+   "size": 581,
+   "sha256": "27df73aa3e0708799431f0bf3a5d5c2b6e7b4bc9b11290d16d73af34e01c9d22"
+  },
+  {
+   "path": "prefs.js",
+   "size": 1316,
+   "sha256": "7b197e36cb11b7afbd40860a41a8f42c51e39a85ba6636147916557cc4d558df"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-llm-selection-translate",
+   "version": "0.5.4",
+   "sha256": "547b37be543eb847efba55dc78ac50824808668bf52617ab49b95eff8b23b77c"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 152236,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "chrome/content/scripts/llmselectiontranslate.js"
+     ],
+     "identifiedBy": "package-json"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llmselectiontranslate.js",
+       "line": 4030,
+       "column": 11,
+       "snippet": "return Zotero.HTTP.request(\"POST\", endpoint, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "endpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llmselectiontranslate.js",
+       "line": 3749,
+       "column": 23,
+       "snippet": "endpoint: String(getPref(\"endpoint\") || \"\").trim(),",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero.LLMSelectionTranslate.endpoint",
+     "defaultValue": "https://api.example.com/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.xhtml",
+       "line": 54,
+       "column": 8,
+       "snippet": "preference=\"extensions.zotero.LLMSelectionTranslate.endpoint\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 6,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.LLMSelectionTranslate.endpoint\", \"https://api.example.com/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 3,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 472,
+      "column": 49,
+      "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 472,
+      "column": 95,
+      "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 518,
+      "column": 43,
+      "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard",
+      "osascript (fixed command)"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 28,
+      "column": 13,
+      "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 31,
+      "column": 6,
+      "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v, true);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 3750,
+      "column": 23,
+      "snippet": "apiToken: String(getPref(\"apiToken\") || \"\").trim(),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 7,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.LLMSelectionTranslate.apiToken\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "apiToken",
+      "extensions.zotero.LLMSelectionTranslate.apiToken",
+      "extensions.zotero.debug-bridge.password"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 64,
+      "column": 24,
+      "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "AsyncFunction"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 507,
+      "column": 38,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 507,
+      "column": 82,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 3780,
+      "column": 24,
+      "snippet": "content = await IOUtils.readUTF8(filePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 3782,
+      "column": 43,
+      "snippet": "const fileObj = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 3782,
+      "column": 87,
+      "snippet": "const fileObj = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 3785,
+      "column": 20,
+      "snippet": "content = Zotero.File.getContents(fileObj);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 3817,
+      "column": 16,
+      "snippet": "await IOUtils.writeUTF8(filePath, jsonStr, { tmpPath: filePath + \".tmp\" });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llmselectiontranslate.js",
+      "line": 3819,
+      "column": 10,
+      "snippet": "Zotero.File.saveToFile(filePath, jsonStr);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 16,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/JasperYep/zotero-llm-selection-translate/releases/latest/download/update.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/JasperYep/zotero-llm-selection-translate/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the JasperYep account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-llm-selection-translate",
+   "version": "0.5.4",
+   "sha256": "547b37be543eb847efba55dc78ac50824808668bf52617ab49b95eff8b23b77c"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "b590c8896f60dcddf1717ccac618514147245bd20bb4fb9e9ae901648c262dfe"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers version 0.5.4, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-03T11:43:03Z",
+    "lastCommitAt": "2026-08-03T11:42:38Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:33:39Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-citation-linker",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Perplexity API key for AI citation extraction from URLs",
+  "worksWithout": "Copy Markdown Link and the local HTTP server",
+  "services": [
+   "Perplexity"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Quick Start",
+   "quote": "### Basic Usage (No Setup Required)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "### AI-Powered Setup (Optional, Recommended)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "lib.js:2802",
+   "quote": "this.baseUrl = \"https://api.perplexity.ai\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The README has \"### Basic Usage (No Setup Required)\" and \"### AI-Powered Setup (Optional, Recommended)\". Its only LLM service is Perplexity (lib.js:2802). The only localhost use is its own HTTP server on port 23119, which is not an AI model."
+}

@@ -1,0 +1,369 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paperlist-csv",
+ "repo": "zhoas/zotero-paperlist-csv",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-09-06T08:04:56Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-paperlist-csv-v0.1.0.xpi",
+  "url": "https://github.com/Zhoas/zotero-paperlist-csv/releases/download/v0.1.0/zotero-paperlist-csv-v0.1.0.xpi",
+  "size": 12301,
+  "sha256": "fbcdbbf0e4d07bd9a8226373bbf495328954c4cf7ea5e0760474563813590f3d",
+  "githubAssetId": 546930881,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-09-06T08:22:14Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-paperlist-csv@zhoas.com",
+  "name": "Zotero PaperList CSV",
+  "version": "0.1.0",
+  "description": "自动生成并同步分类论文列表 CSV 文件 (PaperList_[collection].csv)",
+  "homepageUrl": "https://github.com/Zhoas/zotero-paperlist-csv",
+  "updateUrl": "https://raw.githubusercontent.com/Zhoas/zotero-paperlist-csv/main/updates.json",
+  "strictMinVersion": "8.0-beta.21",
+  "strictMaxVersion": "10.99.99"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 38042,
+   "sha256": "c9d783ae6c3aa1f366bc3f183b6d6aecb5f6b7613e09948573d3bb204ebeade5"
+  },
+  {
+   "path": "lib/csv_engine.js",
+   "size": 5708,
+   "sha256": "8a589eebc656684c7061b514edaadb7b453df73fa6b5e89a7d1747c88a9142a9"
+  },
+  {
+   "path": "lib/icon.svg",
+   "size": 376,
+   "sha256": "f145613103276bd1cf4a6c7201ee4b26d2755694296f83cf5e70fe7acdffe03c"
+  },
+  {
+   "path": "manifest.json",
+   "size": 607,
+   "sha256": "b74e2e371527dd9473c2c7b73544863ceecf695281ab7d360cdc8c1b03a38a89"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-paperlist-csv",
+   "version": "0.1.0",
+   "sha256": "fbcdbbf0e4d07bd9a8226373bbf495328954c4cf7ea5e0760474563813590f3d"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "lib/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 43750,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 479,
+       "column": 47,
+       "snippet": "url = doi.startsWith('http') ? doi : `https://doi.org/${doi}`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 20,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 378,
+      "column": 44,
+      "snippet": "if (typeof IOUtils !== 'undefined' && IOUtils.readUTF8) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 379,
+      "column": 21,
+      "snippet": "return await IOUtils.readUTF8(filePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 384,
+      "column": 25,
+      "snippet": "if (Zotero.File && Zotero.File.getContentsAsync) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 385,
+      "column": 21,
+      "snippet": "return await Zotero.File.getContentsAsync(filePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 390,
+      "column": 20,
+      "snippet": "let file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 390,
+      "column": 64,
+      "snippet": "let file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 412,
+      "column": 44,
+      "snippet": "if (typeof IOUtils !== 'undefined' && IOUtils.writeUTF8) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 413,
+      "column": 14,
+      "snippet": "await IOUtils.writeUTF8(filePath, content, { tmpPath: filePath + '.tmp' });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 424,
+      "column": 25,
+      "snippet": "if (Zotero.File && Zotero.File.putContentsAsync) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 425,
+      "column": 14,
+      "snippet": "await Zotero.File.putContentsAsync(filePath, content);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Zhoas/zotero-paperlist-csv/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Zhoas/zotero-paperlist-csv/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-paperlist-csv",
+   "version": "0.1.0",
+   "sha256": "fbcdbbf0e4d07bd9a8226373bbf495328954c4cf7ea5e0760474563813590f3d"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "aafd1e25f762afa51962fd085d7ec9cef6793b36c518aeb3750a71b564088258"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found; its code names known services",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-06T08:04:56Z",
+    "lastCommitAt": "2026-09-06T08:21:52Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:35:36Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 2,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

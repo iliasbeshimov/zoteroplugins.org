@@ -1,0 +1,509 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-nvim",
+ "repo": "urtzienriquez/zotero.nvim",
+ "version": "1.5.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "urtzienriquez",
+ "publishedAt": "2026-09-24T18:26:07Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-nvim-connector@urtzi.xpi",
+  "url": "https://github.com/urtzienriquez/zotero.nvim/releases/download/v0.1.0/zotero-nvim-connector%40urtzi.xpi",
+  "size": 6709,
+  "sha256": "1422deb08428f7ad70159951c97a693af3cbff161989d4a54b2de46cb7bcfc8f",
+  "githubAssetId": 586554438,
+  "uploader": "urtzienriquez",
+  "uploadedAt": "2026-09-24T18:26:07Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-nvim-connector@urtzi",
+  "name": "Zotero Neovim Connector",
+  "version": "1.5.0",
+  "description": "Adds updateItem endpoint to the Zotero connector API for use with zotero.nvim",
+  "homepageUrl": "https://github.com/urtzi/zotero.nvim",
+  "updateUrl": "https://github.com/urtzi/zotero.nvim/releases/latest/download/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "11.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 45744,
+   "sha256": "478b1a9e0b9c652ce2f0927ceca7088588333426e8cea0271ee74a4589b2f6b2"
+  },
+  {
+   "path": "manifest.json",
+   "size": 502,
+   "sha256": "6cea4afa963126663c3a7bb52a4bb0be5346c47902454a9dd5a01907df45971e"
+  },
+  {
+   "path": "prefs.js",
+   "size": 94,
+   "sha256": "465e20179a611ef2581a04b2659145f4ea8b6f9dc2b933094a5c86430efcfc1c"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-nvim",
+   "version": "1.5.0",
+   "sha256": "1422deb08428f7ad70159951c97a693af3cbff161989d4a54b2de46cb7bcfc8f"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 45838,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 227,
+       "column": 28,
+       "snippet": "var req = await Zotero.HTTP.request(\"GET\", idStr, { responseType: \"document\" });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 357,
+       "column": 28,
+       "snippet": "var req = await Zotero.HTTP.request(\"GET\", idStr, { responseType: \"document\" });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 7,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 216,
+       "column": 28,
+       "snippet": "var translate = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 233,
+       "column": 28,
+       "snippet": "var translate = new Zotero.Translate.Web();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 253,
+       "column": 28,
+       "snippet": "var translate = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 346,
+       "column": 28,
+       "snippet": "var translate = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 363,
+       "column": 28,
+       "snippet": "var translate = new Zotero.Translate.Web();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 383,
+       "column": 28,
+       "snippet": "var translate = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 762,
+       "column": 16,
+       "snippet": "await Zotero.RecognizeDocument.autoRecognizeItems([item]);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "local-http-server",
+    "occurrences": 100,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 9,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[\"/connector/updateItem\"] = function () {};",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 10,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[\"/connector/updateItem\"].prototype = {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 69,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/connector/regenerateKey\"] = function () {};",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 70,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/connector/regenerateKey\"].prototype = {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 109,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/connector/addAttachment\"] = function () {};",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 110,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/connector/addAttachment\"].prototype = {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 148,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/connector/createItem\"] = function () {};",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 149,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/connector/createItem\"].prototype = {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 197,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/connector/fetchMetadata\"] = function () {};",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 198,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/connector/fetchMetadata\"].prototype = {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/connector/addAttachment",
+      "/connector/addByIdentifier",
+      "/connector/addFeed",
+      "/connector/addToCollection",
+      "/connector/createCollection",
+      "/connector/createItem",
+      "/connector/deleteFeed",
+      "/connector/deleteItem",
+      "/connector/deleteItems",
+      "/connector/deleteTag",
+      "/connector/eraseCollection",
+      "/connector/eraseItem",
+      "/connector/eraseItems",
+      "/connector/fetchMetadata",
+      "/connector/importFile",
+      "/connector/importOPML",
+      "/connector/mergeItems",
+      "/connector/refreshFeeds",
+      "/connector/regenerateKey",
+      "/connector/removeFromCollection",
+      "/connector/setFeedItemsRead",
+      "/connector/setTagColor",
+      "/connector/toggleTag",
+      "/connector/trashCollection",
+      "/connector/updateItem"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/urtzi/zotero.nvim/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/urtzi/zotero.nvim/releases/latest/download/update.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 109,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/connector/addAttachment\"] = function () {};",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 132,
+      "column": 29,
+      "snippet": "var imported = await Zotero.Attachments.importFromFile({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/connector/addAttachment",
+      "/connector/addFeed",
+      "/connector/addToCollection",
+      "/connector/deleteFeed",
+      "/connector/deleteItem",
+      "/connector/deleteItems",
+      "/connector/deleteTag",
+      "/connector/eraseCollection",
+      "/connector/eraseItem",
+      "/connector/eraseItems",
+      "/connector/importFile",
+      "/connector/removeFromCollection",
+      "/connector/trashCollection"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the urtzienriquez account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-nvim",
+   "version": "1.5.0",
+   "sha256": "1422deb08428f7ad70159951c97a693af3cbff161989d4a54b2de46cb7bcfc8f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "0d6efab4389a09f2dee6c4f42df28ae3e581bc3f7a1308e568c8d65f74d8eccd"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "unclaimed-namespace",
+     "label": "Updates are set to come from urtzi/zotero.nvim on GitHub, which doesn't exist or isn't public: if the owner of \"urtzi\" published an update there, Zotero would install it",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "medium",
+    "label": "Updates are set to come from an address someone else could control",
+    "drivers": [
+     "ST-UPDATE-UNCLAIMED",
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-24T18:26:07Z",
+    "lastCommitAt": "2026-09-25T01:37:12Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "sourceTransparency"
+   ],
+   "reasons": [
+    "Updates are set to come from an address someone else could control"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T11:15:38Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

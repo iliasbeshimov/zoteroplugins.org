@@ -1,0 +1,43 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-add-items-from-text",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Gemini (the default provider) and OpenAI-compatible cloud providers need the user's own key",
+  "worksWithout": "Ollama on the local computer needs no key",
+  "services": [
+   "Google AI Studio (Gemini)",
+   "OpenAI"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "defaults/preferences/prefs.js",
+   "quote": "pref(\"extensions.zotero.additemsfromtext.ollamaBaseUrl\", \"http://localhost:11434\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "using a configurable AI provider (Gemini, OpenAI-compatible, or Ollama)",
+   "supports": "localModel"
+  },
+  {
+   "source": "defaults",
+   "where": "defaults/preferences/prefs.js",
+   "quote": "pref(\"extensions.zotero.additemsfromtext.llmProvider\", \"gemini\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "defaults/preferences/prefs.js",
+   "quote": "pref(\"extensions.zotero.additemsfromtext.geminiApiKey\", \"\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Defaults set provider gemini with an empty geminiApiKey. The README says 'Gemini, OpenAI-compatible, or Ollama' and the default ollamaBaseUrl is http://localhost:11434, so Ollama gives a keyless route. Every quote is in the pack."
+}

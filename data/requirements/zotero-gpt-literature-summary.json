@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-gpt-literature-summary",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "A ChatGPT account signed in within Chrome (no OpenAI API key needed)",
+  "worksWithout": "",
+  "services": [
+   "ChatGPT"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Known limitations",
+   "quote": "需要在 Chrome 中提前登录支持文件上传的 ChatGPT 账号。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:5",
+   "quote": "const CHATGPT_QUERY_URL = \"https://chatgpt.com/?q=\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says \"需要在 Chrome 中提前登录支持文件上传的 ChatGPT 账号。\" and the only service is \"const CHATGPT_QUERY_URL = \\\"https://chatgpt.com/?q=\\\";\", so it is ChatGPT web only."
+}

@@ -1,0 +1,29 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf-translate-custom",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "AI and commercial services such as DeepL, OpenAI, Claude, Gemini, Azure, Baidu",
+  "worksWithout": "Google (googleapi) or CNKI, chosen as the default service",
+  "services": [
+   "DeepL",
+   "OpenAI",
+   "Anthropic",
+   "Google Gemini",
+   "Microsoft Translator",
+   "Baidu Translate"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/zoteropdftranslatecustom.js:36529",
+   "quote": "setPref(\"translateSource\", isZhCN ? \"cnki\" : \"googleapi\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README says 'Google does not require a secret' and lists Google as free; 'compatible GPT-like LLM (Custom GPT)' does not name a local model, so unknown."
+}

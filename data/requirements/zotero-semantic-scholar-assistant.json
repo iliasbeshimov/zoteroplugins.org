@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-semantic-scholar-assistant",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "An optional Semantic Scholar API key (extra rate limit); the default mock mode shows demo data only",
+  "worksWithout": "Semantic Scholar requests are sent without a key header when none is set (demo mock mode is on by default)",
+  "services": [
+   "Semantic Scholar"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "src/shared/semantic-scholar-client.js:79",
+   "quote": "if (apiKey) {",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "src/shared/semantic-scholar-client.js:80",
+   "quote": "headers[\"x-api-key\"] = apiKey;",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Checked the release code. semantic-scholar-client.js only sets the header when a key is present: `if (apiKey) {` then `headers[\"x-api-key\"] = apiKey;`. The default prefs have an empty key and `useMock` set to true. The only services it calls are Semantic Scholar and arXiv, and it has no AI features."
+}

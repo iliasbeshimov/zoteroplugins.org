@@ -1,0 +1,389 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-debug-log",
+ "repo": "retorquere/zotero-debug-log",
+ "version": "3.0.0",
+ "tag": "v3.0.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-02-23T09:06:52Z",
+ "prerelease": false,
+ "asset": {
+  "name": "debug-log-3.0.0.xpi",
+  "url": "https://github.com/retorquere/zotero-debug-log/releases/download/v3.0.0/debug-log-3.0.0.xpi",
+  "size": 24477,
+  "sha256": "a09b51f34b10a2d009facd2ff27d102bbd0853682143ef5ce579119277039672",
+  "githubAssetId": 360682765,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-02-23T09:06:53Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "debug-log@iris-advies.com",
+  "name": "Debug Log for Zotero",
+  "version": "3.0.0",
+  "description": "Debug Log for Zotero",
+  "updateUrl": "https://github.com/retorquere/zotero-debug-log/releases/download/release/updates.json",
+  "strictMinVersion": "8.0.1",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 103410,
+   "sha256": "ec6bd5a77cea68e4472f8a4274d4b9b05486952a487a15d8cc9668676a4e103c"
+  },
+  {
+   "path": "manifest.json",
+   "size": 392,
+   "sha256": "39b1d97a6d238743b9e1cefdd6360a530762d4befdd47a4974a02bb836ce6e2b"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-debug-log",
+   "version": "3.0.0",
+   "sha256": "a09b51f34b10a2d009facd2ff27d102bbd0853682143ef5ce579119277039672"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 103410,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "jose",
+     "files": [
+      "bootstrap.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "uzip",
+     "files": [
+      "bootstrap.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "zotero-plugin",
+     "files": [
+      "bootstrap.js"
+     ],
+     "identifiedBy": "package-json"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": true,
+     "libraries": [
+      "zotero-plugin"
+     ],
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 2615,
+       "column": 29,
+       "snippet": "const response = await fetch(`https://filebin.net/${this.key}/${this.name}`, {",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "filebin.net",
+     "category": "integration",
+     "provider": "Filebin (public file drop)",
+     "flags": [
+      "public-relay"
+     ],
+     "usage": "request",
+     "inVendoredCode": true,
+     "libraries": [
+      "zotero-plugin"
+     ],
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 2615,
+       "column": 35,
+       "snippet": "const response = await fetch(`https://filebin.net/${this.key}/${this.name}`, {",
+       "inVendoredCode": true
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": true,
+     "libraries": [
+      "zotero-plugin"
+     ],
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 2438,
+       "column": 16,
+       "snippet": "\"homepage\": \"https://github.com/retorquere/zotero-plugin/wiki\",",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 2568,
+       "column": 13,
+       "snippet": "\"url\": \"https://github.com/retorquere/zotero-plugin/issues\"",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://filebin.net/<expr>/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 2615,
+       "column": 29,
+       "snippet": "const response = await fetch(`https://filebin.net/${this.key}/${this.name}`, {",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2800,
+      "column": 45,
+      "snippet": "const cwd = dirService.get(\"CurWorkD\", Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/retorquere/zotero-debug-log/releases/download/release/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/retorquere/zotero-debug-log/releases/download/release/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-debug-log",
+   "version": "3.0.0",
+   "sha256": "a09b51f34b10a2d009facd2ff27d102bbd0853682143ef5ce579119277039672"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "b9811ddbda9f97ea22d9a4e6e8fc5c41633df1197ee4626c8bce373618c1afc8"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "filebin.net"
+      ],
+      "observed": [
+       "filebin.net"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Sends data through a public relay: filebin.net",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED",
+     "DS-PUBLIC-RELAY",
+     "DS-OBSERVED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2026-02-23T09:06:52Z",
+    "lastCommitAt": "2026-02-23T09:05:55Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Sends data through a public relay: filebin.net"
+   ]
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T09:17:15Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 1,
+    "dialogs": 1
+   },
+   "contacted": [
+    "filebin.net"
+   ],
+   "unexpected": []
+  }
+ }
+}

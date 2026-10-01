@@ -1,0 +1,328 @@
+{
+ "repo": "ShiyangZheng/zometaker",
+ "slug": "zometaker",
+ "group": "sample-2026",
+ "rank": 880,
+ "name": "Zometaker",
+ "stars": 3,
+ "downloads": 8,
+ "createdAt": "2026-06-24T13:51:35Z",
+ "tag": "v1.0.0",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zometaker-1.0.0.xpi",
+    "url": "https://github.com/ShiyangZheng/zometaker/releases/download/v1.0.0/zometaker-1.0.0.xpi",
+    "size": 39113,
+    "uploadedAt": "2026-06-24T15:04:20Z",
+    "sha256": "825809ae1a6776ba22588de6d188c430e2df3fa231b40f33f4f95033ab605c30"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zometaker@senior-developer",
+    "name": "Zometaker",
+    "version": "1.0.0",
+    "description": "Tidy up messy Zotero Connector imports. Auto-update, normalise to APA 7, and fill missing metadata so your library reads like a real bibliography.",
+    "homepageUrl": "https://github.com/shiyangzheng/zometaker",
+    "updateUrl": "https://raw.githubusercontent.com/shiyangzheng/zometaker/main/update.json",
+    "minVersion": "7.0",
+    "maxVersion": "9.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zometaker",
+     "version": "1.0.0",
+     "sha256": "825809ae1a6776ba22588de6d188c430e2df3fa231b40f33f4f95033ab605c30"
+    },
+    "coverage": {
+     "filesTotal": 17,
+     "filesAnalyzed": 9,
+     "filesSkipped": [
+      {
+       "path": ".gitignore",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome.manifest",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/skin/default/zometaker/icon.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "LICENSE",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zometaker.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zometaker.properties",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "update.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/metadata-fetcher.js",
+         "line": 87,
+         "column": 3,
+         "snippet": "fetch(url, opts)",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.crossref.org",
+       "category": "scholarly-api",
+       "provider": "Crossref",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/metadata-fetcher.js",
+         "line": 47,
+         "column": 12,
+         "snippet": "crossref: 'https://api.crossref.org/works/',",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.datacite.org",
+       "category": "scholarly-api",
+       "provider": "DataCite",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/metadata-fetcher.js",
+         "line": 50,
+         "column": 12,
+         "snippet": "datacite: 'https://api.datacite.org/dois/',",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.openalex.org",
+       "category": "scholarly-api",
+       "provider": "OpenAlex",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/metadata-fetcher.js",
+         "line": 48,
+         "column": 18,
+         "snippet": "openalex_works: 'https://api.openalex.org/works/',",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/metadata-fetcher.js",
+         "line": 49,
+         "column": 17,
+         "snippet": "openalex_isbn: 'https://api.openalex.org/works/isbn:',",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "doi.org",
+       "category": "scholarly-api",
+       "provider": "DOI resolver",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 6,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/preferences.xhtml",
+         "line": 153,
+         "column": 34,
+         "snippet": "label=\"DOI (URL form: https://doi.org/...)\" />",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/apa-checker.js",
+         "line": 329,
+         "column": 51,
+         "snippet": "after: d.replace(/^doi:\\s*/i, '').replace(/^/, 'https://doi.org/'),",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/apa-checker.js",
+         "line": 330,
+         "column": 13,
+         "snippet": "message: 'DOI should use the URL form (https://doi.org/...).',",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/apa-checker.js",
+         "line": 339,
+         "column": 11,
+         "snippet": "after: 'https://doi.org/' + d,",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/apa-checker.js",
+         "line": 340,
+         "column": 13,
+         "snippet": "message: 'DOI should use the URL form (https://doi.org/...).',",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/journal-normalizer.js",
+         "line": 267,
+         "column": 9,
+         "snippet": "return 'https://doi.org/' + bare;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/metadata-fetcher.js",
+         "line": 61,
+         "column": 9,
+         "snippet": "return 'Zometaker/1.0 (https://github.com/senior-developer/zometaker)';",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "openlibrary.org",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/metadata-fetcher.js",
+         "line": 51,
+         "column": 15,
+         "snippet": "openlibrary: 'https://openlibrary.org/api/books',",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 14,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/shiyangzheng/zometaker/main/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/shiyangzheng/zometaker/main/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "scholarly-api": [
+      "api.crossref.org",
+      "api.datacite.org",
+      "api.openalex.org",
+      "doi.org"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

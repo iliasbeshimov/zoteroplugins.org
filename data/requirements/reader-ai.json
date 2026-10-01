@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "reader-ai",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "AI chat: the default OpenAI-compatible service needs your own API key",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "any OpenAI-compatible provider"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, API setup",
+   "quote": "`API Key`: your provider key",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.reader-ai.apiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/reader-ai.js:1125",
+   "quote": "if (!apiKey) {",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Defaults in prefs.js are OpenAI with an empty key (pref(\"extensions.reader-ai.apiKey\", \"\");) and README says \"`API Key`: your provider key\"; the sandbox contacted no hosts. Nothing in the pack mentions Ollama or localhost, although the Base URL is configurable, so local use is not settled."
+}

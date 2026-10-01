@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-remarkable",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "One-time registration code from your own reMarkable account, needed to register the device",
+  "worksWithout": "",
+  "services": [
+   "reMarkable"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Setup",
+   "quote": "Go to [My reMarkable](https://my.remarkable.com/device/desktop/connect) to obtain a one-time registration code.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "lib.js:152",
+   "quote": "const storedDeviceToken = Zotero.Prefs.get(PREF_DEVICE_TOKEN, true);",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README Setup says to obtain a one-time registration code from the user's own reMarkable account before pushing; the code calls the reMarkable cloud."
+}

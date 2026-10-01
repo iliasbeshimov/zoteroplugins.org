@@ -1,0 +1,199 @@
+{
+ "repo": "ethanwillis/zotero-scihub",
+ "slug": "zotero-scihub",
+ "group": "top",
+ "rank": 28,
+ "name": "Sci-Hub Plugin for Zotero",
+ "stars": 4102,
+ "downloads": 408482,
+ "createdAt": "2018-08-13T10:51:26Z",
+ "tag": "v1.4.4",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-scihub-1.4.4.xpi",
+    "url": "https://github.com/ethanwillis/zotero-scihub/releases/download/v1.4.4/zotero-scihub-1.4.4.xpi",
+    "size": 14167,
+    "uploadedAt": "2022-04-06T12:15:35Z",
+    "sha256": "c0e7516c44b4a59a45630e5691243c5ad6a0fbd7364f3dd5bd78d5267bc32010"
+   },
+   "manifest": {
+    "format": "install.rdf",
+    "target": "zotero",
+    "addonId": "scihub@example.com",
+    "name": "Sci-Hub Plugin for Zotero",
+    "version": "1.4.4",
+    "description": "Download papers and books by DOI from Sci-Hub",
+    "homepageUrl": "https://github.com/ethanwillis/zotero-scihub",
+    "updateUrl": "https://github.com/ethanwillis/zotero-scihub/releases/download/release/update.rdf",
+    "minVersion": "5.0.79",
+    "maxVersion": "6.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-scihub",
+     "version": "1.4.4",
+     "sha256": "c0e7516c44b4a59a45630e5691243c5ad6a0fbd7364f3dd5bd78d5267bc32010"
+    },
+    "coverage": {
+     "filesTotal": 10,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": "chrome.manifest",
+       "reason": "not-code"
+      },
+      {
+       "path": "install.rdf",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/itemPane.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/prefPane.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/toolsPane.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "skin/default/sci-hub-logo.svg",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scihub.js",
+         "line": 178,
+         "column": 24,
+         "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", scihubUrl.href, { responseType: \"document\" });",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "sci-hub.ru",
+       "category": "scholarly-api",
+       "provider": "Sci-Hub",
+       "flags": [
+        "legal-risk"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scihub.js",
+         "line": 241,
+         "column": 30,
+         "snippet": "Scihub.DEFAULT_SCIHUB_URL = \"https://sci-hub.ru/\";",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [
+      {
+       "prefKey": "zoteroscihub.scihub_url",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scihub.js",
+         "line": 124,
+         "column": 10,
+         "snippet": "if (Zotero.Prefs.get(\"zoteroscihub.scihub_url\") === void 0) {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scihub.js",
+         "line": 127,
+         "column": 13,
+         "snippet": "return Zotero.Prefs.get(\"zoteroscihub.scihub_url\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 1,
+        "column": 0,
+        "snippet": "(whitespace)",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/ethanwillis/zotero-scihub/releases/download/release/update.rdf"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "scholarly-api": [
+      "sci-hub.ru"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

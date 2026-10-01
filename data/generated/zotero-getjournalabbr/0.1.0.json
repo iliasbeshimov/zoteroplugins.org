@@ -1,0 +1,338 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-getjournalabbr",
+ "repo": "sciencemaverick/zotero-getjournalabbr",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "sciencemaverick",
+ "publishedAt": "2026-07-30T04:36:38Z",
+ "prerelease": false,
+ "asset": {
+  "name": "getjournalabbr-0.1.0.xpi",
+  "url": "https://github.com/sciencemaverick/zotero-getjournalabbr/releases/download/v0.1.0/getjournalabbr-0.1.0.xpi",
+  "size": 16453,
+  "sha256": "373be29dcd3a90d91f6777c99c9eefa824311264456430ad10be4f83c25eaebf",
+  "githubAssetId": 494921851,
+  "uploader": "sciencemaverick",
+  "uploadedAt": "2026-07-30T04:36:38Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "getjournalabbr@example.com",
+  "name": "Get Journal Abbreviation",
+  "version": "0.1.0",
+  "description": "Fill missing Zotero journal abbreviations from your library, a bundled journal table, and Crossref.",
+  "homepageUrl": "https://github.com/sciencemaverick/zotero-getjournalabbr",
+  "updateUrl": "https://raw.githubusercontent.com/sciencemaverick/zotero-getjournalabbr/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "assets/icon-48.png",
+   "size": 1619,
+   "sha256": "566a0cb61619fe95aaf64ced7103a221bf7030d1bd84b224bc450f10fa02898c"
+  },
+  {
+   "path": "assets/icon-96.png",
+   "size": 3169,
+   "sha256": "67f52664cf12aa9d065c5da6ee9216c004fbe09389fcb160043ff67b4d4b249a"
+  },
+  {
+   "path": "assets/icon.svg",
+   "size": 559,
+   "sha256": "325d16ee31fe00afd3eab34801c0e168b10af17abfd1996725bc7aade8ec79bf"
+  },
+  {
+   "path": "assets/journal-abbreviations.json",
+   "size": 42864,
+   "sha256": "4bff19193c0b43b50c9070676a2dd33d02c73aaaefe2b9c4d3cc8d03a6745e2f"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 13276,
+   "sha256": "411cb26018ac788297f79f2f383538e5b0b306c0ea11601aee6b39d595c61370"
+  },
+  {
+   "path": "manifest.json",
+   "size": 661,
+   "sha256": "3fbb3149138332830bd88a38ded3b20d0836ca9120193fd01cd608c790c056c3"
+  },
+  {
+   "path": "prefs.js",
+   "size": 108,
+   "sha256": "adbfcf997437e1cb07af17daa4b1fcce31ae4ffaadf344a48f22a8d25ce423c1"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-getjournalabbr",
+   "version": "0.1.0",
+   "sha256": "373be29dcd3a90d91f6777c99c9eefa824311264456430ad10be4f83c25eaebf"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "assets/icon-48.png",
+     "reason": "binary"
+    },
+    {
+     "path": "assets/icon-96.png",
+     "reason": "binary"
+    },
+    {
+     "path": "assets/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "assets/journal-abbreviations.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 13384,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 344,
+       "column": 25,
+       "snippet": "const response = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 2,
+       "column": 27,
+       "snippet": "const CROSSREF_WORKS_URL = \"https://api.crossref.org/works\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 346,
+       "column": 4,
+       "snippet": "`${CROSSREF_WORKS_URL}/${encodeURIComponent(doi)}`,",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 344,
+       "column": 25,
+       "snippet": "const response = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/sciencemaverick/zotero-getjournalabbr/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/sciencemaverick/zotero-getjournalabbr/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the sciencemaverick account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-getjournalabbr",
+   "version": "0.1.0",
+   "sha256": "373be29dcd3a90d91f6777c99c9eefa824311264456430ad10be4f83c25eaebf"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "973f17dbedae5c5a6b2ea548fc7ad0ea885e919e6fdd18acb56dd936e4d85960"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-30T04:36:38Z",
+    "lastCommitAt": "2026-07-30T04:19:06Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T06:57:06Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 2,
+    "dialogs": 1
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "journal-tags",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "EasyScholar secret key needed to fetch journal rankings and impact factors",
+  "worksWithout": "",
+  "services": [
+   "EasyScholar"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README usage",
+   "quote": "密钥在 [EasyScholar](https://www.easyscholar.cc/) 申请。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/journaltags.js:3677",
+   "quote": "const url = \"https://www.easyscholar.cc/open/getPublicationRank?secretKey=\" + encodeURIComponent(secretKey)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "description",
+   "where": "manifest description",
+   "quote": "EasyScholar journal tags and impact factor columns for Zotero",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Pack: README says 编辑 → 设置 → Journal Tags，填 EasyScholar 密钥 and the prefs default secretKey is empty; its only service is easyscholar.cc. No AI features."
+}

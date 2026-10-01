@@ -1,0 +1,308 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-mcp--xpropel",
+ "repo": "xpropel/zotero-mcp",
+ "version": "0.2.0",
+ "tag": "v3.2.0",
+ "releaseAuthor": "Xpropel",
+ "publishedAt": "2026-05-15T15:18:31Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-mcp-local-bridge.xpi",
+  "url": "https://github.com/Xpropel/zotero-mcp/releases/download/v3.2.0/zotero-mcp-local-bridge.xpi",
+  "size": 2886,
+  "sha256": "8edfe36c32f8d8ff937141bf33ec01cf8df653135b7b8575f0feca5b5d8199d6",
+  "githubAssetId": 421098295,
+  "uploader": "Xpropel",
+  "uploadedAt": "2026-05-15T15:18:30Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-mcp-local-bridge@codex.local",
+  "name": "Zotero MCP Local Bridge",
+  "version": "0.2.0",
+  "description": "Local-only CRUD bridge for zotero-mcp.",
+  "homepageUrl": "https://www.zotero.org/support/dev/client_coding/plugin_development",
+  "updateUrl": "https://example.invalid/zotero-mcp-local-bridge/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.9.9"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 9510,
+   "sha256": "4df0f62c3ecfa340f3be490995b71cebeb9217aa4c9aa3c737f492b70ffb3ada"
+  },
+  {
+   "path": "manifest.json",
+   "size": 511,
+   "sha256": "86a51849f017371a9f1761af700a158f938b80697b0f3ea99815cb0148181f3f"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-mcp--xpropel",
+   "version": "0.2.0",
+   "sha256": "8edfe36c32f8d8ff937141bf33ec01cf8df653135b7b8575f0feca5b5d8199d6"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 9510,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "local-http-server",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 21,
+      "column": 7,
+      "snippet": "if (!Zotero?.Server?.Endpoints) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 189,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[fullPath] = Endpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/attachments/import-file",
+      "/attachments/link-file",
+      "/attachments/link-url",
+      "/collections/add-items",
+      "/collections/create",
+      "/collections/delete",
+      "/collections/remove-items",
+      "/collections/update",
+      "/items/create",
+      "/items/delete",
+      "/items/update"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://example.invalid/zotero-mcp-local-bridge/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://example.invalid/zotero-mcp-local-bridge/update.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 31,
+      "column": 19,
+      "snippet": "registerEndpoint(\"/items/create\", [\"POST\"], async (req) => {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 36,
+      "column": 14,
+      "snippet": "await item.saveTx();",
+      "inVendoredCode": false
+     }
+    ]
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Xpropel account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-mcp--xpropel",
+   "version": "0.2.0",
+   "sha256": "8edfe36c32f8d8ff937141bf33ec01cf8df653135b7b8575f0feca5b5d8199d6"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "d6f38a175c22a4fda6bfa6b92ef6e6932ba2ca45ed126b0f17dc4db44dcd0b9a"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-05-15T15:18:31Z",
+    "lastCommitAt": "2026-05-16T01:44:00Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T06:35:14Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

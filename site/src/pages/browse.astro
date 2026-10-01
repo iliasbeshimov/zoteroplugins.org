@@ -1,0 +1,44 @@
+---
+import PluginList from "../components/PluginList.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Base from "../layouts/Base.astro";
+import { CURRENT_ZOTERO_MAJOR, shownPlugins } from "../lib/atlas.ts";
+
+const plugins = shownPlugins();
+---
+
+<Base title="Find a plugin for the job · Zotero Plugins Atlas" description="Search every Zotero plugin by what you want it to do, and filter by your Zotero version, API keys, documentation language and grade.">
+  <SiteHeader active="browse" />
+  <div class="wrap">
+    <h1>Find a plugin for the job</h1>
+    <PluginList plugins={plugins} currentMajor={CURRENT_ZOTERO_MAJOR()} search />
+  </div>
+  <SiteFooter />
+</Base>
+
+<style>
+  .wrap {
+    max-width: 1184px;
+    margin: 0 auto;
+    padding: 44px var(--gutter) 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 48px;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 760;
+  }
+  @media (max-width: 720px) {
+    .wrap {
+      padding-top: 28px;
+    }
+    h1 {
+      font-size: 34px;
+    }
+  }
+</style>

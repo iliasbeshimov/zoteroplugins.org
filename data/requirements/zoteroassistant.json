@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zoteroassistant",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "GitHub Copilot sign-in (subscription) for the Copilot provider, which is the default provider",
+  "worksWithout": "Local models via Ollama or LM Studio need no key",
+  "services": [
+   "GitHub Copilot"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Requirements",
+   "quote": "GitHub Copilot subscription if you use Copilot models",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero-ai-assistant.ollamaEndpoint\", \"http://localhost:11434\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README Highlights",
+   "quote": "Local model support (LM Studio, Ollama) plus GitHub Copilot models.",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README 'Local model support (LM Studio, Ollama) plus GitHub Copilot models' and the default 'ollamaEndpoint' of 'http://localhost:11434'. Copilot, which is the default provider, needs a subscription sign-in, while the local providers need none."
+}

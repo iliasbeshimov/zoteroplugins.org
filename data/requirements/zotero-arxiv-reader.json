@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-arxiv-reader",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Bilingual translation (双语沉浸式翻译) uses an OpenAI-compatible API with a user-entered API key",
+  "worksWithout": "Fetching arXiv HTML, hiding page elements, style repair and Google Scholar search need no key",
+  "services": [
+   "OpenAI (or another OpenAI-compatible translation service)"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.arxiv-reader.translationApiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README 如何使用 A",
+   "quote": "配置翻译服务商：`API Base URL`、`API Key`、`Model`、`RPM`、`Temperature`。",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The defaults 'translationApiKey\", \"\"' and 'translationApiBaseUrl\", \"https://api.openai.com/v1\"' put the key only on translation; fetching HTML, hiding elements and Scholar search do not use it. The base URL can be edited, but no pack text names a local model, so 'unknown' is right."
+}

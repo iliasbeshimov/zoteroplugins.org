@@ -1,0 +1,534 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-local-academic-tts",
+ "repo": "linjiangxian110/zotero-local-academic-tts",
+ "version": "0.1.22",
+ "tag": "v0.1.22",
+ "releaseAuthor": "linjiangxian110",
+ "publishedAt": "2026-08-01T07:58:01Z",
+ "prerelease": false,
+ "asset": {
+  "name": "localtts0122.xpi",
+  "url": "https://github.com/linjiangxian110/zotero-local-academic-tts/releases/download/v0.1.22/localtts0122.xpi",
+  "size": 18251,
+  "sha256": "24987251e67b7d4b8aaf08edef06759f8dae5ba170f48cad35c225a72e0ff0f0",
+  "githubAssetId": 497708660,
+  "uploader": "linjiangxian110",
+  "uploadedAt": "2026-08-01T07:57:46Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "localacademictts@example.com",
+  "name": "Local Academic TTS",
+  "version": "0.1.22",
+  "description": "Play local academic TTS audio from Zotero.",
+  "homepageUrl": "https://github.com/linjiangxian110/zotero-local-academic-tts",
+  "updateUrl": "https://raw.githubusercontent.com/linjiangxian110/zotero-local-academic-tts/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1310,
+   "sha256": "100bad562ed123f544e0a71f52afe128e5b65c82e03b2ad3e826dffacb81543e"
+  },
+  {
+   "path": "local-academic-tts.js",
+   "size": 28243,
+   "sha256": "070869d40c42de5933e5420aecffca0d5941ac3f3db3ddcc48effceb0034da4c"
+  },
+  {
+   "path": "manifest.json",
+   "size": 555,
+   "sha256": "4beb5fefa070ac59d5b5fa9f9a220d730c45d3642731905eb1cfa65b8e6732dd"
+  },
+  {
+   "path": "prefs-pane.js",
+   "size": 3076,
+   "sha256": "8c9d9fb8c0eefd74789c55f5ed93b659158ef5d6750e6155dcac8c210c3ba8c5"
+  },
+  {
+   "path": "prefs.js",
+   "size": 357,
+   "sha256": "232196d05070f5718c1938e25faa6f1a6f39eda7e8b0fe447b31a4af5a232a5c"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 2105,
+   "sha256": "0e2766ed5d7b82a005e57a56b0f44cfe47b4387ab9d5b9dd48dc69e5eadee96c"
+  },
+  {
+   "path": "samples/test.wav",
+   "size": 72044,
+   "sha256": "220442d7c7ae9d1f18eb1d2a230efa7cef1ebe11fe8e01196daa79218f0b1cf4"
+  },
+  {
+   "path": "tts-client.js",
+   "size": 2308,
+   "sha256": "65a2242c12df777511469625879cc2ece9ea672aa60514bd8f776d121fed5d60"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-local-academic-tts",
+   "version": "0.1.22",
+   "sha256": "24987251e67b7d4b8aaf08edef06759f8dae5ba170f48cad35c225a72e0ff0f0"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "samples/test.wav",
+     "reason": "binary"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 37399,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs-pane.js",
+       "line": 101,
+       "column": 20,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", settings.serverURL + \"/health\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "tts-client.js",
+       "line": 7,
+       "column": 3,
+       "snippet": "Zotero.HTTP.request(\"GET\", this.baseURL + \"/health\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "tts-client.js",
+       "line": 20,
+       "column": 3,
+       "snippet": "Zotero.HTTP.request(\"POST\", this.baseURL + \"/synthesize\", {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 8765,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 5,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "local-academic-tts.js",
+       "line": 22,
+       "column": 13,
+       "snippet": "serverURL: \"http://127.0.0.1:8765\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs-pane.js",
+       "line": 5,
+       "column": 13,
+       "snippet": "serverURL: \"http://127.0.0.1:8765\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.localacademictts.serverURL\", \"http://127.0.0.1:8765\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 46,
+       "snippet": "pref(\"extensions.localacademictts.serverURL\", \"http://127.0.0.1:8765\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "tts-client.js",
+       "line": 2,
+       "column": 10,
+       "snippet": "baseURL: \"http://127.0.0.1:8765\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/health",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs-pane.js",
+       "line": 101,
+       "column": 20,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", settings.serverURL + \"/health\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "tts-client.js",
+       "line": 7,
+       "column": 3,
+       "snippet": "Zotero.HTTP.request(\"GET\", this.baseURL + \"/health\", {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr>/synthesize",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "tts-client.js",
+       "line": 20,
+       "column": 3,
+       "snippet": "Zotero.HTTP.request(\"POST\", this.baseURL + \"/synthesize\", {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.localacademictts.serverURL",
+     "defaultValue": "http://127.0.0.1:8765",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.localacademictts.serverURL\", \"http://127.0.0.1:8765\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 9,
+       "column": 61,
+       "snippet": "<html:input id=\"local-academic-tts-serverURL\" type=\"text\" preference=\"extensions.localacademictts.serverURL\" />",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "serverURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "local-academic-tts.js",
+       "line": 68,
+       "column": 27,
+       "snippet": "const serverURL = String(this.getPref(\"serverURL\"))",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs-pane.js",
+       "line": 93,
+       "column": 14,
+       "snippet": "serverURL: this.getPref(\"serverURL\").replace(/\\/+$/, \"\"),",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "local-academic-tts.js",
+      "line": 191,
+      "column": 40,
+      "snippet": "const powershell = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "local-academic-tts.js",
+      "line": 192,
+      "column": 3,
+      "snippet": "Components.interfaces.nsIFile,",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "local-academic-tts.js",
+      "line": 221,
+      "column": 34,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "local-academic-tts.js",
+      "line": 222,
+      "column": 3,
+      "snippet": "Components.interfaces.nsIFile,",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "local-academic-tts.js",
+      "line": 188,
+      "column": 37,
+      "snippet": "const process = Components.classes[\"@mozilla.org/process/util;1\"].createInstance(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "local-academic-tts.js",
+      "line": 189,
+      "column": 3,
+      "snippet": "Components.interfaces.nsIProcess,",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIProcess"
+     ],
+     "programs": [
+      "PowerShell",
+      "powershell"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/linjiangxian110/zotero-local-academic-tts/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/linjiangxian110/zotero-local-academic-tts/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the linjiangxian110 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-local-academic-tts",
+   "version": "0.1.22",
+   "sha256": "24987251e67b7d4b8aaf08edef06759f8dae5ba170f48cad35c225a72e0ff0f0"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "33e16c80220c602ef0b6824b812749437214f7c406811621dfe7e36e9865076a"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include PowerShell, powershell"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-01T07:58:01Z",
+    "lastCommitAt": "2026-08-01T07:51:42Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T10:23:11Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 6,
+    "dialogs": 4
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

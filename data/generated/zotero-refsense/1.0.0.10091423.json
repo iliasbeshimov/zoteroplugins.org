@@ -1,0 +1,875 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-refsense",
+ "repo": "ubvu/zotero-refsense",
+ "version": "1.0.0.10091423",
+ "tag": "refsense-20251009.1423",
+ "releaseAuthor": "mosart",
+ "publishedAt": "2025-10-09T14:33:04Z",
+ "prerelease": false,
+ "asset": {
+  "name": "refsense-20251009.1423.xpi",
+  "url": "https://github.com/ubvu/zotero-refsense/releases/download/refsense-20251009.1423/refsense-20251009.1423.xpi",
+  "size": 67585,
+  "sha256": "7b0b7ffe85298e636edf44a282b99a1a3430710cb5586eb5e7ad56b09f7a8c62",
+  "githubAssetId": 302358861,
+  "uploader": "mosart",
+  "uploadedAt": "2025-10-09T14:31:56Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "refsense@zotero-plugin",
+  "name": "RefSense - AI Metadata Extractor",
+  "version": "1.0.0.10091423",
+  "description": "Extract bibliographic metadata from PDF files using AI (OpenAI or Ollama) (Build: 20251009.1423)",
+  "homepageUrl": "https://github.com/your-username/zotero-refsense",
+  "updateUrl": "https://github.com/your-username/zotero-refsense/releases/latest/download/update.rdf",
+  "strictMinVersion": "7.0.0",
+  "strictMaxVersion": "7.*"
+ },
+ "files": [
+  {
+   "path": "ai/ollama.js",
+   "size": 5570,
+   "sha256": "a8d71cc24bb967c11903bc5f4045bbfee95f67a64cf352799d267e0c2a70304e"
+  },
+  {
+   "path": "ai/openai.js",
+   "size": 6895,
+   "sha256": "a73d05b823d211b252fc2917e5f8a5014a0c83642b19330b6c67999c983a0ac3"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 316855,
+   "sha256": "ffdeee3c611083830a9b15b079229e7d2625df0a0594c9f02c1c4ae97d070c8e"
+  },
+  {
+   "path": "config/settings.js",
+   "size": 8205,
+   "sha256": "f9ab68a6f0a632cfb1424f53690e76d903b830a1637a01d769b46da468d76bef"
+  },
+  {
+   "path": "manifest.json",
+   "size": 691,
+   "sha256": "16a25217ce3c15bf85f9cf3f38a762db5828a8e0d0a3e1be0c5077aa7a22e8d9"
+  },
+  {
+   "path": "prefs-script.js",
+   "size": 12377,
+   "sha256": "393dacb1f9149d549c4731997c6c3c3f64dccd35c397f81d63e8b7b99a2aedd2"
+  },
+  {
+   "path": "prefs.html",
+   "size": 6461,
+   "sha256": "087502f68c532796545ccc3c1b036637a3a7205d75cd683d040e2890f7c29ff4"
+  },
+  {
+   "path": "prefs.js",
+   "size": 702,
+   "sha256": "1eff2c9197448361b4a70b380a220e3e3f68fba74836e443dbc047365b55ac98"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 12716,
+   "sha256": "c3c09d20add1f6a64207a4728d2d9b21585bd56ae61f7d408126db1225211874"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-refsense",
+   "version": "1.0.0.10091423",
+   "sha256": "7b0b7ffe85298e636edf44a282b99a1a3430710cb5586eb5e7ad56b09f7a8c62"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 8,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 369781,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "ai/openai.js",
+       "line": 106,
+       "column": 39,
+       "snippet": "const response = await fetch(this.apiEndpoint, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "ai/openai.js",
+       "line": 198,
+       "column": 35,
+       "snippet": "const response = await fetch('https://api.openai.com/v1/models', {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "xhr",
+     "occurrences": 7,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "ai/ollama.js",
+       "line": 6,
+       "column": 20,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "ai/ollama.js",
+       "line": 58,
+       "column": 20,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "ai/ollama.js",
+       "line": 81,
+       "column": 20,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1050,
+       "column": 28,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 4445,
+       "column": 36,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 4499,
+       "column": 36,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 4522,
+       "column": 36,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.openai.com",
+     "category": "llm-provider",
+     "provider": "OpenAI",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "ai/openai.js",
+       "line": 8,
+       "column": 27,
+       "snippet": "this.apiEndpoint = 'https://api.openai.com/v1/chat/completions';",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "ai/openai.js",
+       "line": 198,
+       "column": 41,
+       "snippet": "const response = await fetch('https://api.openai.com/v1/models', {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 5069,
+       "column": 15,
+       "snippet": "return `<!DOCTYPE html>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "localhost",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 27,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "ai/ollama.js",
+       "line": 2,
+       "column": 60,
+       "snippet": "async queryOllama(text, model = 'llama3.2:latest', host = 'http://localhost:11434') {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "ai/ollama.js",
+       "line": 7,
+       "column": 25,
+       "snippet": "xhr.open('POST', `${host}/api/generate`, true);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "ai/ollama.js",
+       "line": 55,
+       "column": 31,
+       "snippet": "async checkConnection(host = 'http://localhost:11434') {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "ai/ollama.js",
+       "line": 59,
+       "column": 24,
+       "snippet": "xhr.open('GET', `${host}/api/tags`, true);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "ai/ollama.js",
+       "line": 78,
+       "column": 34,
+       "snippet": "async getAvailableModels(host = 'http://localhost:11434') {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "ai/ollama.js",
+       "line": 82,
+       "column": 24,
+       "snippet": "xhr.open('GET', `${host}/api/tags`, true);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 298,
+       "column": 58,
+       "snippet": "newSettings.ollamaHost = ollamaHost.trim() || 'http://localhost:11434';",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 523,
+       "column": 91,
+       "snippet": "ollamaHost: Zotero.Prefs.get(\"extensions.refsense.ollamaHost\", \"http://localhost:11434\"),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 628,
+       "column": 81,
+       "snippet": "ollama_host: Zotero.Prefs.get(\"extensions.refsense.ollama_host\", \"http://localhost:11434\"),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 926,
+       "column": 81,
+       "snippet": "ollama_host: Zotero.Prefs.get('extensions.refsense.ollama_host', 'http://localhost:11434'),",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "ollama.ai",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.html",
+       "line": 187,
+       "column": 70,
+       "snippet": "Enter the details of your locally running Ollama server. (https://ollama.ai)",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 230,
+       "column": 74,
+       "snippet": "Enter the details of your locally running Ollama server. (https://ollama.ai)",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/api/generate",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "ai/ollama.js",
+       "line": 7,
+       "column": 8,
+       "snippet": "xhr.open('POST', `${host}/api/generate`, true);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 4446,
+       "column": 24,
+       "snippet": "xhr.open('POST', `${host}/api/generate`, true);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr>/api/tags",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "ai/ollama.js",
+       "line": 59,
+       "column": 8,
+       "snippet": "xhr.open('GET', `${host}/api/tags`, true);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "ai/ollama.js",
+       "line": 82,
+       "column": 8,
+       "snippet": "xhr.open('GET', `${host}/api/tags`, true);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1051,
+       "column": 16,
+       "snippet": "xhr.open('GET', `${host}/api/tags`, true);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 4500,
+       "column": 24,
+       "snippet": "xhr.open('GET', `${host}/api/tags`, true);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 4523,
+       "column": 24,
+       "snippet": "xhr.open('GET', `${host}/api/tags`, true);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.refsense.ollama_host",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 628,
+       "column": 29,
+       "snippet": "ollama_host: Zotero.Prefs.get(\"extensions.refsense.ollama_host\", \"http://localhost:11434\"),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 926,
+       "column": 29,
+       "snippet": "ollama_host: Zotero.Prefs.get('extensions.refsense.ollama_host', 'http://localhost:11434'),",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.refsense.ollamaHost",
+     "defaultValue": "http://localhost:11434",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 480,
+       "column": 38,
+       "snippet": "const savedHost = Zotero.Prefs.get('extensions.refsense.ollamaHost');",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 523,
+       "column": 40,
+       "snippet": "ollamaHost: Zotero.Prefs.get(\"extensions.refsense.ollamaHost\", \"http://localhost:11434\"),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1155,
+       "column": 34,
+       "snippet": "const rawOllamaHost = Zotero.Prefs.get('extensions.refsense.ollamaHost');",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1169,
+       "column": 29,
+       "snippet": "ollama_host: Zotero.Prefs.get('extensions.refsense.ollamaHost') || 'http://localhost:11434',",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs-script.js",
+       "line": 41,
+       "column": 32,
+       "snippet": "ollamaHost: Zotero.Prefs.get('extensions.refsense.ollamaHost', 'http://localhost:11434'),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 12,
+       "column": 0,
+       "snippet": "pref(\"extensions.refsense.ollamaHost\", \"http://localhost:11434\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 23,
+       "column": 39,
+       "snippet": "const ollamaHost = Zotero.Prefs.get('extensions.refsense.ollamaHost', 'http://localhost:11434');",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "ollama-host",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.html",
+       "line": 177,
+       "column": 12,
+       "snippet": "<input type=\"text\" id=\"ollama-host\" placeholder=\"http://localhost:11434\">",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 14,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 459,
+      "column": 20,
+      "snippet": "Zotero.Prefs.set('extensions.refsense.openaiApiKey', encodedKey);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 463,
+      "column": 37,
+      "snippet": "const savedKey = Zotero.Prefs.get('extensions.refsense.openaiApiKey');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 522,
+      "column": 42,
+      "snippet": "openaiApiKey: Zotero.Prefs.get(\"extensions.refsense.openaiApiKey\", \"\"),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 627,
+      "column": 32,
+      "snippet": "openai_api_key: Zotero.Prefs.get(\"extensions.refsense.openai_api_key\", \"\"),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 924,
+      "column": 32,
+      "snippet": "openai_api_key: Zotero.Prefs.get('extensions.refsense.openai_api_key', ''),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1165,
+      "column": 30,
+      "snippet": "openaiApiKey: Zotero.Prefs.get('extensions.refsense.openaiApiKey') || '',",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 4926,
+      "column": 38,
+      "snippet": "const currentEncodedKey = Zotero.Prefs.get('extensions.refsense.openai_api_key');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 4980,
+      "column": 38,
+      "snippet": "const currentEncodedKey = Zotero.Prefs.get('extensions.refsense.openai_api_key');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 4997,
+      "column": 16,
+      "snippet": "Zotero.Prefs.set('extensions.refsense.openai_api_key', btoa(newKey.trim()));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 5041,
+      "column": 24,
+      "snippet": "apiKey: Zotero.Prefs.get('extensions.refsense.openai_api_key'),",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.refsense.openaiApiKey",
+      "extensions.refsense.openai_api_key"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 9,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2065,
+      "column": 46,
+      "snippet": "const cacheExists = await IOUtils.exists(cacheFilePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2067,
+      "column": 48,
+      "snippet": "const cacheData = await IOUtils.readUTF8(cacheFilePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2088,
+      "column": 52,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2089,
+      "column": 58,
+      "snippet": ".createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2534,
+      "column": 65,
+      "snippet": "const exists = await IOUtils.exists(cacheFilePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2536,
+      "column": 72,
+      "snippet": "const cacheData = await IOUtils.readUTF8(cacheFilePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2985,
+      "column": 53,
+      "snippet": "const exists = await OS.File.exists(filePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 2990,
+      "column": 59,
+      "snippet": "const fileData = await OS.File.read(filePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 3005,
+      "column": 55,
+      "snippet": "const fileData = await IOUtils.read(filePath);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "OS.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/your-username/zotero-refsense/releases/latest/download/update.rdf\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/your-username/zotero-refsense/releases/latest/download/update.rdf"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the mosart account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-refsense",
+   "version": "1.0.0.10091423",
+   "sha256": "7b0b7ffe85298e636edf44a282b99a1a3430710cb5586eb5e7ad56b09f7a8c62"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "55143e2d807b247df76768a8a563e8ee124d53fe8c8682354a24c08325ceffbe"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "unclaimed-namespace",
+     "label": "Updates are set to come from \"your-username\" on GitHub, an account that doesn't exist: anyone who registers that name could publish an update Zotero would install",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "medium",
+    "label": "Updates are set to come from an address someone else could control",
+    "drivers": [
+     "ST-UPDATE-UNCLAIMED",
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.openai.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2025-10-09T14:33:04Z",
+    "lastCommitAt": "2025-10-09T14:26:26Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "sourceTransparency"
+   ],
+   "reasons": [
+    "Updates are set to come from an address someone else could control"
+   ]
+  }
+ }
+}

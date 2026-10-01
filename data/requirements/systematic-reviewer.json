@@ -1,0 +1,31 @@
+{
+ "schemaVersion": 1,
+ "slug": "systematic-reviewer",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "A free OpenAlex key is recommended for project harvesting (higher rate limits); API keys for hosted AI services or protected model endpoints; optional MCP key",
+  "worksWithout": "Local AI runtimes and OpenAlex harvesting without a key",
+  "services": [
+   "OpenAlex",
+   "hosted AI model providers"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "ui/prefs-controller.js:3307",
+   "quote": "An API key is optional for the UI itself, but adding a free OpenAlex key is recommended for normal project harvesting",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, AI runtimes",
+   "quote": "Use the local or hosted AI runtimes that fit your environment, including, but not limited to, Ollama, LM Studio, and other compatible APIs",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "I found the quote 'An API key is optional for the UI itself, but adding a free OpenAlex key is recommended...' in the release file. The README says it supports 'Ollama, LM Studio, and other compatible APIs'. The MCP key is also optional."
+}

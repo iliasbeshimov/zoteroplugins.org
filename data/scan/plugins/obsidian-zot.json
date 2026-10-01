@@ -1,0 +1,189 @@
+{
+ "repo": "mmmaurer/obsidian-zot",
+ "slug": "obsidian-zot",
+ "group": "sample-2026",
+ "rank": 1180,
+ "name": "Obsidian Zot",
+ "stars": 0,
+ "downloads": 2,
+ "createdAt": "2026-06-20T20:49:20Z",
+ "tag": "v0.1.0",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "obsidian-zot.xpi",
+    "url": "https://github.com/mmmaurer/obsidian-zot/releases/download/v0.1.0/obsidian-zot.xpi",
+    "size": 6687,
+    "uploadedAt": "2026-06-20T20:54:49Z",
+    "sha256": "dd6ac7e67ea81df6858d0f384a1b88e9d21e3d7a1f94c26176d533224be43670"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "mmmaurer+obsidianzot@protonmail.com",
+    "name": "Obsidian Zot",
+    "version": "0.1.0",
+    "description": "Automatically create Obsidian notes from Zotero items",
+    "homepageUrl": null,
+    "updateUrl": "https://github.com/mmmaurer/obsidian-zot/releases/download/release/update.json",
+    "minVersion": "7.0",
+    "maxVersion": "9.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "obsidian-zot",
+     "version": "0.1.0",
+     "sha256": "dd6ac7e67ea81df6858d0f384a1b88e9d21e3d7a1f94c26176d533224be43670"
+    },
+    "coverage": {
+     "filesTotal": 6,
+     "filesAnalyzed": 5,
+     "filesSkipped": [
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [],
+     "hosts": [],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 7,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/index.js",
+        "line": 340,
+        "column": 25,
+        "snippet": "existing = await IOUtils.readUTF8(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/index.js",
+        "line": 344,
+        "column": 12,
+        "snippet": "await IOUtils.writeUTF8(filePath, content);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/index.js",
+        "line": 350,
+        "column": 31,
+        "snippet": "const existing = await IOUtils.readUTF8(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/index.js",
+        "line": 351,
+        "column": 14,
+        "snippet": "await IOUtils.writeUTF8(filePath, markAsDeleted(existing));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/index.js",
+        "line": 358,
+        "column": 25,
+        "snippet": "children = await IOUtils.getChildren(folderPath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/index.js",
+        "line": 365,
+        "column": 32,
+        "snippet": "const header = (await IOUtils.readUTF8(child)).split(\"\\n\").slice(0, 40).join(\"\\n\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/index.js",
+        "line": 375,
+        "column": 14,
+        "snippet": "await IOUtils.makeDirectory(path, { createAncestors: true });",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 10,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/mmmaurer/obsidian-zot/releases/download/release/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/mmmaurer/obsidian-zot/releases/download/release/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "no-network-found",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NONE"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

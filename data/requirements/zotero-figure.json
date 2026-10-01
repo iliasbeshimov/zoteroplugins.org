@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-figure",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Formula LaTeX recognition (SiliconFlow API key)",
+  "worksWithout": "Local figure, table and formula detection with the bundled model",
+  "services": [
+   "SiliconFlow"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Requirements",
+   "quote": "Formula OCR only: network access and a SiliconFlow API key.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Features",
+   "quote": "Analyze PDFs locally without uploading pages or downloading a model at runtime.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "chrome/content/scripts/zoterofigure.js:4308",
+   "quote": "var SILICONFLOW_CHAT_COMPLETIONS_URL = \"https://api.siliconflow.cn/v1/chat/completions\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: 'Optionally recognize formula LaTeX with SiliconFlow' and 'Formula OCR only: network access and a SiliconFlow API key'. The bundled model handles the main features locally. The only AI endpoint in the code is the hardcoded SiliconFlow URL, and grep finds no localhost or configurable base URL."
+}

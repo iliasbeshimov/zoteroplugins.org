@@ -1,0 +1,898 @@
+{
+ "repo": "X-T-E-R/Zotero-MCP-Neo",
+ "slug": "zotero-mcp-neo",
+ "group": "sample-2026",
+ "rank": 392,
+ "name": "Zotero MCP Neo",
+ "stars": 15,
+ "downloads": 172,
+ "createdAt": "2026-04-07T13:25:28Z",
+ "tag": "v2.0.2",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-mcp-neo-2.0.2.xpi",
+    "url": "https://github.com/X-T-E-R/Zotero-MCP-Neo/releases/download/v2.0.2/zotero-mcp-neo-2.0.2.xpi",
+    "size": 166103,
+    "uploadedAt": "2026-04-08T04:58:33Z",
+    "sha256": "32605281b446a5d943a69f8a5ee013a2198cc1e3337489fac0192e7ebc2ac80e"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "zotero-mcp-neo@xter.org",
+    "name": "Zotero MCP Neo",
+    "version": "2.0.2",
+    "description": "Zotero MCP Neo — A redesigned MCP server for Zotero with 6 unified tools",
+    "homepageUrl": "https://github.com/X-T-E-R/Zotero-MCP-Neo#readme",
+    "updateUrl": "https://github.com/X-T-E-R/Zotero-MCP-Neo/releases/latest/download/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "9.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-mcp-neo",
+     "version": "2.0.2",
+     "sha256": "32605281b446a5d943a69f8a5ee013a2198cc1e3337489fac0192e7ebc2ac80e"
+    },
+    "coverage": {
+     "filesTotal": 14,
+     "filesAnalyzed": 4,
+     "filesSkipped": [
+      {
+       "path": "content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/zoteroPane.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zotero-mcp-neo-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zotero-mcp-neo-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/zotero-mcp-neo-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/zotero-mcp-neo-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/zotero-mcp-neo-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/zotero-mcp-neo-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/zotero-mcp-neo.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 6441,
+         "column": 37,
+         "snippet": "const response = await Zotero.HTTP.request(\"POST\", url, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15712,
+         "column": 31,
+         "snippet": "const response = await Zotero.HTTP.request(\"POST\", url, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "127.0.0.1",
+       "category": "localhost",
+       "provider": "This computer",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 14097,
+         "column": 41,
+         "snippet": "const url = new URL(urlPath, \"http://127.0.0.1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/preferences.xhtml",
+         "line": 152,
+         "column": 166,
+         "snippet": "e\" preference=\"extensions.zotero.zotero-mcp-neo.embedding.apiBase\" placeholder=\"https://api.openai.com/v1\" style=\"flex: 1; max-width: 300px;\"></html:input>",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 5693,
+         "column": 17,
+         "snippet": "apiBase: \"https://api.openai.com/v1\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15543,
+         "column": 15,
+         "snippet": "apiBase: \"https://api.openai.com/v1\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15613,
+         "column": 82,
+         "snippet": "initValue(apiBaseInput, \"extensions.zotero.zotero-mcp-neo.embedding.apiBase\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.siliconflow.cn",
+       "category": "llm-provider",
+       "provider": "SiliconFlow",
+       "flags": [
+        "china-only"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15568,
+         "column": 15,
+         "snippet": "apiBase: \"https://api.siliconflow.cn/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.voyageai.com",
+       "category": "llm-provider",
+       "provider": "Voyage AI",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15573,
+         "column": 15,
+         "snippet": "apiBase: \"https://api.voyageai.com/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "dashscope.aliyuncs.com",
+       "category": "llm-provider",
+       "provider": "Alibaba Qwen (DashScope)",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15553,
+         "column": 15,
+         "snippet": "apiBase: \"https://dashscope.aliyuncs.com/compatible-mode/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "generativelanguage.googleapis.com",
+       "category": "llm-provider",
+       "provider": "Google Gemini",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15548,
+         "column": 15,
+         "snippet": "apiBase: \"https://generativelanguage.googleapis.com/v1beta/openai\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "github.com",
+       "category": "code-hosting",
+       "provider": "GitHub",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/preferences.xhtml",
+         "line": 312,
+         "column": 55,
+         "snippet": "<html:div style=\"margin: 4px 0;\"><html:a href=\"https://github.com/X-T-E-R/Zotero-MCP-Neo\" target=\"_blank\" data-l10n-id=\"zotero-mcp-neo-pref-contact-github\" style=\"color: #0066cc; text-decorati",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 14430,
+         "column": 22,
+         "snippet": "repository: \"https://github.com/X-T-E-R/Zotero-MCP-Neo\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 14431,
+         "column": 25,
+         "snippet": "documentation: \"https://github.com/X-T-E-R/Zotero-MCP-Neo/blob/main/README.md\"",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "localhost",
+       "port": 11434,
+       "category": "localhost",
+       "provider": "This computer",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15578,
+         "column": 15,
+         "snippet": "apiBase: \"http://localhost:11434/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "open.bigmodel.cn",
+       "category": "llm-provider",
+       "provider": "Zhipu (GLM)",
+       "flags": [
+        "china-only"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15558,
+         "column": 15,
+         "snippet": "apiBase: \"https://open.bigmodel.cn/api/paas/v4\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "openrouter.ai",
+       "category": "llm-provider",
+       "provider": "OpenRouter",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15563,
+         "column": 15,
+         "snippet": "apiBase: \"https://openrouter.ai/api/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "   claude mcp add --transport http --scope user zotero-mcp-neo http://127.0.0.1:<expr>/mcp",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 14893,
+         "column": 10,
+         "snippet": "` claude mcp add --transport http --scope user zotero-mcp-neo http://127.0.0.1:${port}/mcp`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "   claude mcp add --transport http zotero-mcp-neo http://127.0.0.1:<expr>/mcp",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 14890,
+         "column": 10,
+         "snippet": "` claude mcp add --transport http zotero-mcp-neo http://127.0.0.1:${port}/mcp`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "   qwen mcp add zotero-mcp-neo http://127.0.0.1:<expr>/mcp -t http",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15064,
+         "column": 10,
+         "snippet": "` qwen mcp add zotero-mcp-neo http://127.0.0.1:${port}/mcp -t http`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "   qwen mcp add zotero-mcp-neo http://127.0.0.1:<expr>/mcp \\",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15067,
+         "column": 10,
+         "snippet": "` qwen mcp add zotero-mcp-neo http://127.0.0.1:${port}/mcp \\\\`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "---\nname: zotero-mcp\ndescription: Uses Zotero MCP V2 unified tools (zotero_status/list/find/read/write) for safe read/write automation with dry-run-first workflow. Use when users ask to query Zotero l",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 16338,
+         "column": 11,
+         "snippet": "return `---",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "[mcp_servers.\"<expr>\"]\ntype = \"http\"\nurl = \"http://127.0.0.1:<expr>/mcp\"\n\n[mcp_servers.\"<expr>\".headers]\n\"Content-Type\" = \"application/json\"",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 14861,
+         "column": 17,
+         "snippet": "return `[mcp_servers.\"${safeServerName}\"]",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 16874,
+         "column": 13,
+         "snippet": "image: `chrome://${addon.data.config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "claude mcp add --transport http zotero-mcp-neo http://127.0.0.1:<expr>/mcp",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 14880,
+         "column": 17,
+         "snippet": "return `claude mcp add --transport http zotero-mcp-neo http://127.0.0.1:${port}/mcp`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "curl -X POST http://127.0.0.1:<expr>/mcp -H \"Content-Type: application/json\" -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"ping\",\"params\":{}}'",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15119,
+         "column": 26,
+         "snippet": "connectionTest: `curl -X POST http://127.0.0.1:${port}/mcp -H \"Content-Type: application/json\" -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"ping\",\"params\":{}}'`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "http://127.0.0.1:<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 14443,
+         "column": 21,
+         "snippet": "baseUrl: `http://127.0.0.1:${this.port}`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "http://127.0.0.1:<expr>/file/<expr>",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 4664,
+         "column": 27,
+         "snippet": "info.url = `http://127.0.0.1:${port}/file/${att.key}`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "http://127.0.0.1:<expr>/mcp",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15108,
+         "column": 22,
+         "snippet": "endpoint: `http://127.0.0.1:${port}/mcp`,",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [
+      {
+       "prefKey": "extensions.zotero.zotero-mcp-neo.embedding.apiBase",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15604,
+         "column": 27,
+         "snippet": "const savedApiBase = Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.embedding.apiBase\", true);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15777,
+         "column": 22,
+         "snippet": "const apiBase = Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.embedding.apiBase\", true) || \"\";",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "extensions.zotero.zotero-mcp-neo.mcp.server.enabled",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15226,
+         "column": 29,
+         "snippet": "const currentEnabled = Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.mcp.server.enabled\", true);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15280,
+         "column": 29,
+         "snippet": "const currentEnabled = Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.mcp.server.enabled\", true);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15293,
+         "column": 23,
+         "snippet": "const verify = Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.mcp.server.enabled\", true);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 16983,
+         "column": 35,
+         "snippet": "const currentEnabled = Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.mcp.server.enabled\", true);",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "extensions.zotero.zotero-mcp-neo.mcp.server.port",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15227,
+         "column": 26,
+         "snippet": "const currentPort = Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.mcp.server.port\", true);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15301,
+         "column": 33,
+         "snippet": "const portPref = Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.mcp.server.port\", true);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 15336,
+         "column": 31,
+         "snippet": "const originalPort = Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.mcp.server.port\", true) || 23120;",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/zotero-mcp-neo.js",
+         "line": 16984,
+         "column": 32,
+         "snippet": "const currentPort = Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.mcp.server.port\", true);",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 5,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 9868,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 9868,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 9920,
+        "column": 10,
+        "snippet": "Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 15180,
+        "column": 94,
+        "snippet": "peof Zotero !== \"undefined\" && Zotero.Utilities && Zotero.Utilities.Internal && Zotero.Utilities.Internal.copyTextToClipboard) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 15181,
+        "column": 10,
+        "snippet": "Zotero.Utilities.Internal.copyTextToClipboard(text);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "credential-storage",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 15778,
+        "column": 21,
+        "snippet": "const apiKey = Zotero.Prefs.get(\"extensions.zotero.zotero-mcp-neo.embedding.apiKey\", true) || \"\";",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "extensions.zotero.zotero-mcp-neo.embedding.apiKey"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 16,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 1043,
+        "column": 50,
+        "snippet": "if (typeof OS !== \"undefined\" && OS.File && OS.File.stat) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 1045,
+        "column": 29,
+        "snippet": "const stat = await OS.File.stat(path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 1052,
+        "column": 40,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 1052,
+        "column": 84,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 1913,
+        "column": 35,
+        "snippet": "const fileData = await IOUtils.read(path);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 2576,
+        "column": 40,
+        "snippet": "const htmlContent = await Zotero.File.getContentsAsync(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 2579,
+        "column": 27,
+        "snippet": "return await Zotero.File.getContentsAsync(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 6725,
+        "column": 26,
+        "snippet": "this.dbPath = PathUtils.join(dataDir, \"zotero-mcp-vectors.sqlite\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 7324,
+        "column": 28,
+        "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 7324,
+        "column": 72,
+        "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "zotero-data-dir",
+       "apis": [
+        "IOUtils/PathUtils",
+        "OS.File",
+        "Zotero.File",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "local-http-server",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/zotero-mcp-neo.js",
+        "line": 13809,
+        "column": 31,
+        "snippet": "this.serverSocket = Cc[\"@mozilla.org/network/server-socket;1\"].createInstance(Ci.nsIServerSocket);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "nsIServerSocket"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/X-T-E-R/Zotero-MCP-Neo/releases/latest/download/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/X-T-E-R/Zotero-MCP-Neo/releases/latest/download/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "localhost": [
+      "127.0.0.1",
+      "localhost"
+     ],
+     "llm-provider": [
+      "api.openai.com",
+      "api.siliconflow.cn",
+      "api.voyageai.com",
+      "dashscope.aliyuncs.com",
+      "generativelanguage.googleapis.com",
+      "open.bigmodel.cn",
+      "openrouter.ai"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "concern": "none"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

@@ -1,0 +1,314 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-bbt-pdf-mirror",
+ "repo": "jasumin/zotero-bbt-pdf-mirror",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-07-17T03:30:33Z",
+ "prerelease": false,
+ "asset": {
+  "name": "bbt-pdf-mirror-0.1.0.xpi",
+  "url": "https://github.com/Jasumin/zotero-bbt-pdf-mirror/releases/download/v0.1.0/bbt-pdf-mirror-0.1.0.xpi",
+  "size": 39018,
+  "sha256": "b22a40c067948c63509bc67d6c61e0156e313b4dd28e6b05dfdde54c5dd77c3f",
+  "githubAssetId": 479918283,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-07-17T03:30:30Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "bbt-pdf-mirror@maiamamiya.local",
+  "name": "BBT PDF Mirror",
+  "version": "0.1.0",
+  "description": "Mirrors PDF attachments for a Zotero collection alongside a Better BibTeX export.",
+  "updateUrl": "https://github.com/Jasumin/zotero-bbt-pdf-mirror/releases/download/release/update.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 869,
+   "sha256": "d1f551711671b77fe0d5e137d1df29695e1ad71ecd11ec39bc34a5b67be57394"
+  },
+  {
+   "path": "content/bbt-pdf-mirror.js",
+   "size": 156897,
+   "sha256": "7e89b48dad04f28da0587e9d1f6994d7f7160b43554038880908e110af4fd38a"
+  },
+  {
+   "path": "content/preferences.css",
+   "size": 2324,
+   "sha256": "48c4b3996dc3c4bf6a3ef5519d6faee5fe4b556ae9b98d6ef912858a7aa271cf"
+  },
+  {
+   "path": "content/preferences.js",
+   "size": 15713,
+   "sha256": "b8a35de273ce9d9c5b23f479bbaf88d70e5d7069e4a470d593feb41ffd619dca"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 4855,
+   "sha256": "1654d64a74cf59afb264f575305592d7135f5f560336ef1fb9f3439cfcc64053"
+  },
+  {
+   "path": "manifest.json",
+   "size": 481,
+   "sha256": "8611e9901e0d07943c13550390a7eb370417b4d0c689974fc376814e3932c826"
+  },
+  {
+   "path": "prefs.js",
+   "size": 127,
+   "sha256": "d66124b786200ec02a3f32201f2335dd80071db90c1e4443332eb64b28fb1a19"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-bbt-pdf-mirror",
+   "version": "0.1.0",
+   "sha256": "b22a40c067948c63509bc67d6c61e0156e313b4dd28e6b05dfdde54c5dd77c3f"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "content/preferences.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 178461,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/bbt-pdf-mirror.js",
+      "line": 3723,
+      "column": 23,
+      "snippet": "return await IOUtils.readUTF8(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/bbt-pdf-mirror.js",
+      "line": 3731,
+      "column": 29,
+      "snippet": "const stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/bbt-pdf-mirror.js",
+      "line": 4241,
+      "column": 14,
+      "snippet": "await IOUtils.makeDirectory(path, { createAncestors: true, ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/preferences.js",
+      "line": 258,
+      "column": 22,
+      "snippet": "userHomePath: FileUtils.getDir(\"Home\", []).path,",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "FileUtils",
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/Jasumin/zotero-bbt-pdf-mirror/releases/download/release/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/Jasumin/zotero-bbt-pdf-mirror/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-bbt-pdf-mirror",
+   "version": "0.1.0",
+   "sha256": "b22a40c067948c63509bc67d6c61e0156e313b4dd28e6b05dfdde54c5dd77c3f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "0b817adb61c8adfaa738673fcf7f03fd42bb12c4106ec54f924c01448ed3b6e4"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-17T03:30:33Z",
+    "lastCommitAt": "2026-07-17T03:59:05Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:27:47Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,824 @@
+# Host classification for static analysis.
+#
+# Each entry is an exact host or "*.suffix" (any subdomain of suffix, and suffix itself).
+# The first matching entry wins, so list specific hosts before broad wildcards.
+# Bump `version` on every change: analyses record it, so a table change never looks like a
+# plugin change.
+#
+# flags: legal-risk | china-only | blocked-in-mainland-china | public-relay | account-oauth
+# A developer-server entry is a factual claim about who runs a host; add one only with a source.
+
+version: "2026.09.13"
+
+categories:
+  llm-provider:
+    - { host: aip.baidubce.com, provider: Baidu AI Cloud, flags: [china-only] }
+    - { host: api.orcarouter.ai, provider: OrcaRouter }
+    - { host: api.stepfun.com, provider: StepFun }
+    - { host: api.longcat.chat, provider: LongCat }
+    - { host: chat.openai.com, provider: OpenAI ChatGPT, flags: [blocked-in-mainland-china] }
+    - { host: www.kimi.com, provider: Moonshot (Kimi) }
+    - { host: kimi.moonshot.cn, provider: Moonshot (Kimi), flags: [china-only] }
+    - { host: api.openai.com, provider: OpenAI, flags: [blocked-in-mainland-china] }
+    - { host: "*.openai.azure.com", provider: Azure OpenAI }
+    - { host: "*.cognitiveservices.azure.com", provider: Azure AI }
+    - { host: "*.services.ai.azure.com", provider: Azure AI }
+    - { host: api.anthropic.com, provider: Anthropic, flags: [blocked-in-mainland-china] }
+    - { host: generativelanguage.googleapis.com, provider: Google Gemini, flags: [blocked-in-mainland-china] }
+    - { host: aiplatform.googleapis.com, provider: Google Vertex AI, flags: [blocked-in-mainland-china] }
+    - { host: "*-aiplatform.googleapis.com", provider: Google Vertex AI, flags: [blocked-in-mainland-china] }
+    - { host: api.deepseek.com, provider: DeepSeek }
+    - { host: api.moonshot.cn, provider: Moonshot (Kimi), flags: [china-only] }
+    - { host: api.moonshot.ai, provider: Moonshot (Kimi) }
+    - { host: open.bigmodel.cn, provider: Zhipu (GLM), flags: [china-only] }
+    - { host: api.z.ai, provider: Zhipu (GLM) }
+    - { host: dashscope.aliyuncs.com, provider: Alibaba Qwen (DashScope) }
+    - { host: dashscope-intl.aliyuncs.com, provider: Alibaba Qwen (DashScope) }
+    - { host: ark.cn-beijing.volces.com, provider: ByteDance Doubao (Volcano Engine), flags: [china-only] }
+    - { host: qianfan.baidubce.com, provider: Baidu Qianfan, flags: [china-only] }
+    - { host: api.minimax.chat, provider: MiniMax }
+    - { host: api.minimaxi.com, provider: MiniMax }
+    - { host: api.minimax.io, provider: MiniMax }
+    - { host: chatbot.theb.ai, provider: TheB.AI }
+    - { host: api.siliconflow.cn, provider: SiliconFlow, flags: [china-only] }
+    - { host: api.siliconflow.com, provider: SiliconFlow }
+    - { host: api.lingyiwanwu.com, provider: 01.AI (Yi) }
+    - { host: spark-api-open.xf-yun.com, provider: iFlytek Spark, flags: [china-only] }
+    - { host: hunyuan.tencentcloudapi.com, provider: Tencent Hunyuan }
+    - { host: api.hunyuan.cloud.tencent.com, provider: Tencent Hunyuan }
+    - { host: openrouter.ai, provider: OpenRouter }
+    - { host: api.groq.com, provider: Groq }
+    - { host: api.mistral.ai, provider: Mistral }
+    - { host: api.x.ai, provider: xAI }
+    - { host: api.perplexity.ai, provider: Perplexity }
+    - { host: api.cohere.ai, provider: Cohere }
+    - { host: api.cohere.com, provider: Cohere }
+    - { host: api.together.xyz, provider: Together AI }
+    - { host: api.fireworks.ai, provider: Fireworks AI }
+    - { host: api-inference.huggingface.co, provider: Hugging Face }
+    - { host: router.huggingface.co, provider: Hugging Face }
+    - { host: api.replicate.com, provider: Replicate }
+    - { host: api.voyageai.com, provider: Voyage AI }
+    - { host: api.jina.ai, provider: Jina AI }
+    - { host: api.doc2x.noedgeai.com, provider: Doc2X (NoEdgeAI) }
+    - { host: v2.doc2x.noedgeai.com, provider: Doc2X (NoEdgeAI) }
+    - { host: api.mathpix.com, provider: Mathpix }
+    - { host: api.gptsapi.net, provider: GPTsAPI relay }
+    - { host: api.xiaomimimo.com, provider: Xiaomi MiMo }
+    - { host: integrate.api.nvidia.com, provider: NVIDIA NIM }
+    - { host: cloud.siliconflow.cn, provider: SiliconFlow, flags: [china-only] }
+    - { host: chatgpt.com, provider: OpenAI ChatGPT }
+    - { host: platform.deepseek.com, provider: DeepSeek }
+    - { host: paddleocr.aistudio-app.com, provider: Baidu PaddleOCR }
+    - { host: wanqing.streamlakeapi.com, provider: Kuaishou StreamLake }
+    - { host: inference-api.nvidia.com, provider: NVIDIA NIM }
+    - { host: www.datalab.to, provider: Datalab (Marker OCR) }
+    - { host: gemini.google.com, provider: Google Gemini (web app), flags: [blocked-in-mainland-china] }
+    - { host: notebooklm.google.com, provider: Google NotebookLM, flags: [blocked-in-mainland-china] }
+    # Sign-in endpoints of other apps. Plugins that use them with a borrowed client ID get the
+    # "Signs in using another app's identity" badge; the host alone isn't a concern.
+    - { host: auth.openai.com, provider: OpenAI sign-in, flags: [account-oauth, blocked-in-mainland-china] }
+    - { host: console.anthropic.com, provider: Anthropic sign-in, flags: [account-oauth, blocked-in-mainland-china] }
+    - { host: api.githubcopilot.com, provider: GitHub Copilot, flags: [account-oauth] }
+    - { host: ai-gateway.vercel.sh, provider: Vercel AI Gateway }
+    - { host: token-plan-cn.xiaomimimo.com, provider: Xiaomi MiMo, flags: [china-only] }
+
+    # Added 2026-09-26 from a review of every card: hosts the reviewed plugins really call.
+    - { host: opencode.ai, provider: OpenCode Zen }
+    - { host: apihub.agnes-ai.com, provider: Agnes AI }
+    - { host: api.individual.githubcopilot.com, provider: GitHub Copilot }
+    - { host: api.githubcopilot.com, provider: GitHub Copilot }
+    - { host: cloudcode-pa.googleapis.com, provider: Google Gemini Code Assist, flags: [blocked-in-mainland-china] }
+    - { host: cloudcode-pa.sandbox.googleapis.com, provider: Google Gemini Code Assist, flags: [blocked-in-mainland-china] }
+    - { host: "*-cloudcode-pa.sandbox.googleapis.com", provider: Google Gemini Code Assist, flags: [blocked-in-mainland-china] }
+    - { host: api.deepinfra.com, provider: DeepInfra }
+    - { host: api-inference.modelscope.cn, provider: ModelScope, flags: [china-only] }
+    - { host: api.cerebras.ai, provider: Cerebras }
+    - { host: api.cline.bot, provider: Cline }
+    - { host: api.sambanova.ai, provider: SambaNova }
+    - { host: api.together.ai, provider: Together AI }
+    - { host: api.together.xyz, provider: Together AI }
+    - { host: models.github.ai, provider: GitHub Models }
+    - { host: api.minimaxi.chat, provider: MiniMax }
+    - { host: api.minimax.cn, provider: MiniMax, flags: [china-only] }
+    - { host: chat.intern-ai.org.cn, provider: Shanghai AI Lab (InternLM), flags: [china-only] }
+    - { host: cloud.infini-ai.com, provider: Infinigence AI, flags: [china-only] }
+    - { host: api.kimi.com, provider: Moonshot (Kimi) }
+    - { host: api.baichuan-ai.com, provider: Baichuan, flags: [china-only] }
+    - { host: www.dmxapi.com, provider: DMXAPI (API reseller) }
+    - { host: dmxapi.cn, provider: DMXAPI (API reseller) }
+    - { host: chat.deepseek.com, provider: DeepSeek (web chat) }
+    - { host: chat.z.ai, provider: Zhipu Z.ai (web chat) }
+    - { host: chatglm.cn, provider: Zhipu ChatGLM (web chat) }
+    - { host: claude.ai, provider: Anthropic Claude (web chat) }
+    - { host: grok.com, provider: xAI Grok (web chat) }
+    - { host: chat.qwen.ai, provider: Alibaba Qwen (web chat) }
+    - { host: tongyi.aliyun.com, provider: Alibaba Tongyi Qianwen (web chat) }
+    - { host: www.doubao.com, provider: ByteDance Doubao (web chat) }
+    - { host: yuanbao.tencent.com, provider: Tencent Yuanbao (web chat) }
+    - { host: auth.x.ai, provider: xAI sign-in, flags: [account-oauth] }
+    - { host: maas.aliyuncs.com, provider: Alibaba Cloud Model Studio }
+    - { host: "*.maas.aliyuncs.com", provider: Alibaba Cloud Model Studio }
+    - { host: api.textin.com, provider: TextIn (document parsing) }
+    - { host: api.cloudflare.com, provider: Cloudflare Workers AI }
+    - { host: qianfan.bj.baidubce.com, provider: Baidu Qianfan, flags: [china-only] }
+  translation:
+    - { host: "*.immersivetranslate.cn", provider: Immersive Translate, flags: [china-only] }
+    - { host: clients5.google.com, provider: Google Translate (web), flags: [blocked-in-mainland-china] }
+    - { host: jisho.org, provider: Jisho (Japanese dictionary) }
+    - { host: en.wiktionary.org, provider: Wiktionary }
+    - { host: api.wordnik.com, provider: Wordnik }
+    - { host: www.dictionaryapi.com, provider: Merriam-Webster Dictionary API }
+    - { host: "*.niutrans.com", provider: NiuTrans }
+    - { host: translate.googleapis.com, provider: Google Translate, flags: [blocked-in-mainland-china] }
+    - { host: translate.google.com, provider: Google Translate, flags: [blocked-in-mainland-china] }
+    - { host: translate-pa.googleapis.com, provider: Google Translate, flags: [blocked-in-mainland-china] }
+    - { host: translation.googleapis.com, provider: Google Cloud Translation, flags: [blocked-in-mainland-china] }
+    - { host: api.deepl.com, provider: DeepL }
+    - { host: api-free.deepl.com, provider: DeepL }
+    - { host: www2.deepl.com, provider: DeepL }
+    - { host: api.cognitive.microsofttranslator.com, provider: Microsoft Translator }
+    - { host: edge.microsoft.com, provider: Microsoft Edge Translate }
+    - { host: api-edge.cognitive.microsofttranslator.com, provider: Microsoft Translator }
+    - { host: www.bing.com, provider: Microsoft Bing }
+    - { host: cn.bing.com, provider: Microsoft Bing }
+    - { host: fanyi-api.baidu.com, provider: Baidu Translate }
+    - { host: fanyi.baidu.com, provider: Baidu Translate }
+    - { host: api.fanyi.baidu.com, provider: Baidu Translate }
+    - { host: openapi.youdao.com, provider: Youdao }
+    - { host: fanyi.youdao.com, provider: Youdao }
+    - { host: dict.youdao.com, provider: Youdao }
+    - { host: aidemo.youdao.com, provider: Youdao }
+    - { host: api.interpreter.caiyunai.com, provider: Caiyun }
+    - { host: tmt.tencentcloudapi.com, provider: Tencent Translate }
+    - { host: fanyi.qq.com, provider: Tencent Translate }
+    - { host: transmart.qq.com, provider: Tencent TranSmart }
+    - { host: mt.aliyuncs.com, provider: Alibaba Translate }
+    - { host: mt.cn-hangzhou.aliyuncs.com, provider: Alibaba Translate }
+    - { host: translate.alibaba.com, provider: Alibaba Translate }
+    - { host: api.niutrans.com, provider: NiuTrans }
+    - { host: translate.yandex.net, provider: Yandex Translate }
+    - { host: translate.api.cloud.yandex.net, provider: Yandex Translate }
+    - { host: api.papago.naver.com, provider: Naver Papago }
+    - { host: papago.apigw.ntruss.com, provider: Naver Papago }
+    - { host: libretranslate.com, provider: LibreTranslate }
+    - { host: api.mymemory.translated.net, provider: MyMemory }
+    - { host: lingva.ml, provider: Lingva }
+    - { host: api.cambridge.org, provider: Cambridge Dictionary }
+    - { host: dictionary.cambridge.org, provider: Cambridge Dictionary }
+    - { host: www.collinsdictionary.com, provider: Collins Dictionary }
+    - { host: api.dictionaryapi.dev, provider: Free Dictionary API }
+    - { host: api.immersivetranslate.com, provider: Immersive Translate }
+    - { host: "*.immersivetranslate.com", provider: Immersive Translate }
+    - { host: capi.dict.cn, provider: Dict.cn }
+    - { host: fanyi.dict.cn, provider: Dict.cn }
+    - { host: audio.dict.cn, provider: Dict.cn }
+    - { host: api.deepl-pro.com, provider: DeepL }
+    - { host: www.deepl.com, provider: DeepL }
+    - { host: api.openl.club, provider: OpenL }
+    - { host: apis.niutrans.com, provider: NiuTrans }
+    - { host: niutrans.com, provider: NiuTrans }
+    - { host: translate.volcengine.com, provider: Volcano Engine Translate }
+    - { host: translate.volcengineapi.com, provider: Volcano Engine Translate }
+    - { host: www.youdao.com, provider: Youdao }
+    - { host: ejje.weblio.jp, provider: Weblio dictionary }
+    - { host: dict.cn, provider: Dict.cn }
+    - { host: gramota.ru, provider: Gramota.ru dictionary }
+    - { host: ifanyi.iciba.com, provider: iCIBA (Kingsoft) }
+    - { host: api.microsofttranslator.com, provider: Microsoft Translator }
+    - { host: speech.platform.bing.com, provider: Microsoft Edge read-aloud, flags: [account-oauth] }
+    - { host: trans.neu.edu.cn, provider: NiuTrans (Northeastern University), flags: [china-only] }
+    - { host: itrans.xfyun.cn, provider: iFlytek translation, flags: [china-only] }
+    - { host: ntrans.xfyun.cn, provider: iFlytek translation, flags: [china-only] }
+    - { host: www.frdic.com, provider: Eudic (Frdic) dictionary }
+    - { host: api.fish.audio, provider: Fish Audio (text to speech) }
+    - { host: www.zdic.net, provider: Zdic (Chinese dictionary) }
+    - { host: hjfy.top, provider: Hjfy (arXiv paper translation), flags: [china-only] }
+    - { host: api.elevenlabs.io, provider: ElevenLabs (text to speech) }
+    - { host: api.speechify.ai, provider: Speechify (text to speech) }
+
+    - { host: supertoneapi.com, provider: Supertone (text to speech) }
+    - { host: yi.qq.com, provider: Tencent Translator (TranSmart) }
+    - { host: api.frdic.com, provider: Eudic (dictionary) }
+    - { host: www.frdic.com, provider: Eudic (dictionary) }
+    - { host: www.esdict.cn, provider: Eudic Spanish dictionary }
+    - { host: www.godic.net, provider: Eudic German dictionary }
+    - { host: mall.baicizhan.com, provider: Baicizhan (dictionary) }
+    - { host: w.qianyix.com, provider: Qianyi (dictionary) }
+    - { host: www.spanishdict.com, provider: SpanishDict }
+    - { host: www.urbandictionary.com, provider: Urban Dictionary }
+    - { host: api.urbandictionary.com, provider: Urban Dictionary }
+    - { host: tts.speech.microsoft.com, provider: Microsoft text to speech }
+    - { host: "*.tts.speech.microsoft.com", provider: Microsoft text to speech }
+    - { host: speech.platform.bing.com, provider: Microsoft Edge read aloud }
+  scholarly-api:
+    - { host: api.labs.cognitive.microsoft.com, provider: Microsoft Academic (retired) }
+    - { host: api.projectpq.ai, provider: PQAI (patent search) }
+    - { host: chinarxiv.org, provider: ChinaXiv, flags: [china-only] }
+    - { host: zenodo.org, provider: Zenodo }
+    - { host: plus.kipris.or.kr, provider: KIPRIS (Korean patents) }
+    - { host: books.google.com, provider: Google Books }
+    - { host: patents.google.com, provider: Google Patents }
+    - { host: bibsonomy.org, provider: BibSonomy }
+    - { host: www.bibsonomy.org, provider: BibSonomy }
+    - { host: www.sciencedirect.com, provider: Elsevier ScienceDirect }
+    - { host: publications.europa.eu, provider: EU Publications Office }
+    - { host: www.courtlistener.com, provider: CourtListener }
+    - { host: image-ppubs.uspto.gov, provider: USPTO }
+    - { host: dblp.dagstuhl.de, provider: dblp }
+    - { host: api.crossref.org, provider: Crossref }
+    - { host: search.crossref.org, provider: Crossref }
+    - { host: doi.org, provider: DOI resolver }
+    - { host: dx.doi.org, provider: DOI resolver }
+    - { host: shortdoi.org, provider: shortDOI }
+    - { host: api.datacite.org, provider: DataCite }
+    - { host: api.semanticscholar.org, provider: Semantic Scholar }
+    - { host: www.semanticscholar.org, provider: Semantic Scholar }
+    - { host: api.openalex.org, provider: OpenAlex }
+    - { host: openalex.org, provider: OpenAlex }
+    - { host: eutils.ncbi.nlm.nih.gov, provider: NCBI E-utilities }
+    - { host: pubmed.ncbi.nlm.nih.gov, provider: PubMed }
+    - { host: www.ncbi.nlm.nih.gov, provider: NCBI }
+    - { host: www.ebi.ac.uk, provider: Europe PMC }
+    - { host: export.arxiv.org, provider: arXiv }
+    - { host: arxiv.org, provider: arXiv }
+    - { host: api.unpaywall.org, provider: Unpaywall }
+    - { host: api.openaccessbutton.org, provider: Open Access Button }
+    - { host: api.core.ac.uk, provider: CORE }
+    - { host: dblp.org, provider: dblp }
+    - { host: inspirehep.net, provider: INSPIRE-HEP }
+    - { host: ui.adsabs.harvard.edu, provider: NASA ADS }
+    - { host: api.adsabs.harvard.edu, provider: NASA ADS }
+    - { host: api.elsevier.com, provider: Elsevier (Scopus) }
+    - { host: api.clarivate.com, provider: Clarivate (Web of Science) }
+    - { host: wos-api.clarivate.com, provider: Clarivate (Web of Science) }
+    - { host: api.altmetric.com, provider: Altmetric }
+    - { host: opencitations.net, provider: OpenCitations }
+    - { host: api.opencitations.net, provider: OpenCitations }
+    - { host: api.scite.ai, provider: scite }
+    - { host: api.inciteful.xyz, provider: Inciteful }
+    - { host: pubpeer.com, provider: PubPeer }
+    - { host: api.retractionwatch.com, provider: Retraction Watch }
+    - { host: api.labs.crossref.org, provider: Crossref Labs }
+    - { host: api.ror.org, provider: ROR }
+    - { host: pub.orcid.org, provider: ORCID }
+    - { host: api.biorxiv.org, provider: bioRxiv }
+    - { host: api.medrxiv.org, provider: medRxiv }
+    - { host: scholar.google.com, provider: Google Scholar, flags: [blocked-in-mainland-china] }
+    - { host: scholar.archive.org, provider: Internet Archive Scholar }
+    - { host: www.easyscholar.cc, provider: EasyScholar, flags: [china-only] }
+    - { host: easyscholar.cc, provider: EasyScholar, flags: [china-only] }
+    - { host: kns.cnki.net, provider: CNKI, flags: [china-only] }
+    - { host: "*.cnki.net", provider: CNKI, flags: [china-only] }
+    - { host: "*.wanfangdata.com.cn", provider: Wanfang, flags: [china-only] }
+    - { host: "*.cqvip.com", provider: CQVIP, flags: [china-only] }
+    - { host: www.letpub.com.cn, provider: LetPub, flags: [china-only] }
+    - { host: www.scimagojr.com, provider: SCImago }
+    - { host: api.journalguide.com, provider: JournalGuide }
+    - { host: api.connectedpapers.com, provider: Connected Papers }
+    - { host: citation.crosscite.org, provider: Crosscite }
+    - { host: data.crossref.org, provider: Crossref }
+    - { host: api.lens.org, provider: The Lens }
+    - { host: api.dimensions.ai, provider: Dimensions }
+    - { host: api.researchgate.net, provider: ResearchGate }
+    - { host: aclanthology.org, provider: ACL Anthology }
+    - { host: openreview.net, provider: OpenReview }
+    - { host: api.openreview.net, provider: OpenReview }
+    - { host: api2.openreview.net, provider: OpenReview }
+    - { host: www.wikidata.org, provider: Wikidata }
+    - { host: query.wikidata.org, provider: Wikidata }
+    - { host: "*.wikidata.org", provider: Wikidata }
+    - { host: wikidata.reconci.link, provider: Wikidata reconciliation }
+    # A reference service plugins look titles up in (arxiv-marker-ccf2026 sends titles there).
+    - { host: "*.wikipedia.org", provider: Wikipedia }
+    - { host: readpaper.com, provider: ReadPaper }
+    - { host: www.connectedpapers.com, provider: Connected Papers }
+    - { host: rest.connectedpapers.com, provider: Connected Papers }
+    - { host: arxiv.paperswithcode.com, provider: Papers with Code }
+    - { host: ct.istic.ac.cn, provider: ISTIC }
+    - { host: book.ucdrs.superlib.net, provider: Superlib }
+    - { host: phq.njau.edu.cn, provider: NJAU journal rankings, flags: [china-only] }
+    - { host: sci.justscience.cn, provider: JustScience, flags: [china-only] }
+    - { host: "*.aminer.cn", provider: AMiner }
+    # Shadow libraries: flagged so the site can show a neutral legal-risk notice.
+    - { host: "*.sci-hub.se", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.ru", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.st", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.ren", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.wf", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.ee", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.do", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.tw", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.cc", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.hk", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.shop", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.al", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.pub", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.box", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.in", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.mksa.top", provider: Sci-Hub mirror, flags: [legal-risk] }
+    - { host: "*.libgen.rs", provider: Library Genesis, flags: [legal-risk] }
+    - { host: "*.libgen.is", provider: Library Genesis, flags: [legal-risk] }
+    - { host: "*.libgen.li", provider: Library Genesis, flags: [legal-risk] }
+    - { host: "*.libgen.la", provider: Library Genesis, flags: [legal-risk] }
+    - { host: "*.libgen.gl", provider: Library Genesis, flags: [legal-risk] }
+    - { host: "*.libgen.bz", provider: Library Genesis, flags: [legal-risk] }
+    - { host: "*.libgen.vg", provider: Library Genesis, flags: [legal-risk] }
+    - { host: "*.annas-archive.org", provider: Anna's Archive, flags: [legal-risk] }
+    - { host: "*.annas-archive.li", provider: Anna's Archive, flags: [legal-risk] }
+    - { host: "*.annas-archive.se", provider: Anna's Archive, flags: [legal-risk] }
+    - { host: "*.annas-archive.gl", provider: Anna's Archive, flags: [legal-risk] }
+    - { host: "*.libstc.cc", provider: STC (Nexus), flags: [legal-risk] }
+    - { host: "*.z-lib.org", provider: Z-Library, flags: [legal-risk] }
+    - { host: "*.z-library.sk", provider: Z-Library, flags: [legal-risk] }
+    - { host: "*.nexus.sh", provider: Nexus (shadow library), flags: [legal-risk] }
+    # Libraries, catalogues and indexes (review P5, P13)
+    - { host: www.crossref.org, provider: Crossref }
+    - { host: dblp.uni-trier.de, provider: dblp }
+    - { host: unpaywall.org, provider: Unpaywall }
+    - { host: europepmc.org, provider: Europe PMC }
+    - { host: openlibrary.org, provider: Open Library }
+    - { host: api.springernature.com, provider: Springer Nature API }
+    - { host: ieeexploreapi.ieee.org, provider: IEEE Xplore API }
+    - { host: ieeexplore.ieee.org, provider: IEEE Xplore }
+    - { host: catalogue.bnf.fr, provider: Bibliothèque nationale de France }
+    - { host: lccn.loc.gov, provider: Library of Congress }
+    - { host: services.dnb.de, provider: Deutsche Nationalbibliothek }
+    - { host: sru.bibsys.no, provider: BIBSYS (Norway) }
+    - { host: api.europeana.eu, provider: Europeana }
+    - { host: api.deutsche-digitale-bibliothek.de, provider: Deutsche Digitale Bibliothek }
+    - { host: jsru.kb.nl, provider: KB National Library of the Netherlands }
+    - { host: www.nla.gov.au, provider: National Library of Australia }
+    - { host: ixtheo.de, provider: Index Theologicus }
+    - { host: dspace.mit.edu, provider: MIT DSpace }
+    - { host: iiif.lib.harvard.edu, provider: Harvard Library IIIF }
+    - { host: www.doaj.org, provider: DOAJ }
+    - { host: abbreviso.toolforge.org, provider: Abbreviso (journal abbreviations) }
+    - { host: api.uspto.gov, provider: USPTO }
+    - { host: ops.epo.org, provider: European Patent Office }
+    - { host: epub.cnipa.gov.cn, provider: CNIPA (China patents), flags: [china-only] }
+    - { host: www.yiigle.com, provider: Yiigle (Chinese Medical Association), flags: [china-only] }
+    - { host: commons.wikimedia.org, provider: Wikimedia Commons }
+    - { host: lobid.org, provider: lobid (hbz) }
+    - { host: "*.hosted.exlibrisgroup.com", provider: Ex Libris library catalogue }
+    - { host: "*.alma.exlibrisgroup.com", provider: Ex Libris library catalogue }
+    - { host: rest.uniprot.org, provider: UniProt }
+    - { host: www.uniprot.org, provider: UniProt }
+    - { host: kermitt2-grobid.hf.space, provider: GROBID public demo }
+    - { host: lfoppiano-grobid.hf.space, provider: GROBID public demo }
+    # More Sci-Hub domains. Look-alike mirrors run by unknown operators (tesble, wellesu,
+    # pismin, usualwant) are left out on purpose: we can't say who receives the data.
+    - { host: "*.sci-hub.mk", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.red", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.vg", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: "*.sci-hub.world", provider: Sci-Hub, flags: [legal-risk] }
+    - { host: pubscholar.cn, provider: PubScholar (Chinese Academy of Sciences), flags: [china-only] }
+    - { host: www.pubscholar.cn, provider: PubScholar (Chinese Academy of Sciences), flags: [china-only] }
+    - { host: www.ncpssd.cn, provider: NCPSSD (National Center for Philosophy and Social Sciences Documentation), flags: [china-only] }
+    - { host: www.ncpssd.org, provider: NCPSSD (National Center for Philosophy and Social Sciences Documentation), flags: [china-only] }
+    - { host: kxp.k10plus.de, provider: K10plus union catalogue (GBV/SWB) }
+    - { host: api.openbd.jp, provider: openBD (Japanese book data) }
+    - { host: ndlsearch.ndl.go.jp, provider: National Diet Library Search }
+    - { host: sru.k10plus.de, provider: K10plus union catalogue (GBV/SWB) }
+
+    - { host: ar5iv.labs.arxiv.org, provider: arXiv (ar5iv HTML) }
+    - { host: ar5iv.org, provider: arXiv (ar5iv HTML) }
+    - { host: spotlight.dbpedia.org, provider: DBpedia Spotlight }
+    - { host: dbpedia.org, provider: DBpedia }
+    - { host: ws.geonames.org, provider: GeoNames }
+    - { host: sws.geonames.org, provider: GeoNames }
+    - { host: covers.openlibrary.org, provider: Open Library covers }
+    - { host: pmc.ncbi.nlm.nih.gov, provider: PubMed Central }
+    - { host: "*.ncbi.nlm.nih.gov", provider: NCBI }
+    - { host: www.biorxiv.org, provider: bioRxiv }
+    - { host: www.medrxiv.org, provider: medRxiv }
+    - { host: rest.prod.connectedpapers.com, provider: Connected Papers }
+    - { host: w3id.org, provider: W3ID permanent identifiers }
+    - { host: "*.knowledgepixels.com", provider: Knowledge Pixels (nanopublications) }
+    - { host: "*.petapico.org", provider: Nanopublication network }
+    - { host: memory.loc.gov, provider: Library of Congress }
+    - { host: www.bibliothek.kit.edu, provider: KIT Library }
+    - { host: bvbr.bib-bvb.de, provider: Bibliotheksverbund Bayern }
+    - { host: rvk.uni-regensburg.de, provider: RVK classification }
+    - { host: services.obvsg.at, provider: Austrian Library Network (OBV) }
+    - { host: sru.hebis.de, provider: HeBIS library network }
+    - { host: swisscovery.slsp.ch, provider: swisscovery (SLSP) }
+    - { host: orcid.org, provider: ORCID }
+    - { host: pub.orcid.org, provider: ORCID }
+    - { host: api.archives-ouvertes.fr, provider: HAL }
+    - { host: www.anlp.jp, provider: Association for Natural Language Processing (Japan) }
+    - { host: hudoc.echr.coe.int, provider: European Court of Human Rights (HUDOC) }
+    - { host: onlinelibrary.wiley.com, provider: Wiley Online Library }
+    - { host: pubs.acs.org, provider: ACS Publications }
+    - { host: static-content.springer.com, provider: Springer Nature }
+    - { host: arquivo.pt, provider: Arquivo.pt (web archive) }
+    - { host: perma.cc, provider: Perma.cc }
+    - { host: www.webarchive.org.uk, provider: UK Web Archive }
+    - { host: voyant-tools.org, provider: Voyant Tools }
+    - { host: papers.cool, provider: Cool Papers }
+    - { host: arxiv2md.org, provider: arxiv2md }
+    - { host: www.worldcat.org, provider: WorldCat }
+    - { host: aclanthology.org, provider: ACL Anthology }
+    - { host: ojs.aaai.org, provider: AAAI }
+    - { host: www.usenix.org, provider: USENIX }
+    - { host: api.openaire.eu, provider: OpenAIRE }
+    - { host: researchrabbitapp.com, provider: ResearchRabbit }
+    - { host: www.researchgate.net, provider: ResearchGate }
+    - { host: api.researchgate.net, provider: ResearchGate }
+    - { host: opac.regesta-imperii.de, provider: Regesta Imperii OPAC }
+    - { host: book.douban.com, provider: Douban Books }
+    - { host: apps.wanfangdata.com.cn, provider: Wanfang Data, flags: [china-only] }
+    - { host: rss.arxiv.org, provider: arXiv }
+    - { host: export.arxiv.org, provider: arXiv }
+    - { host: chemrxiv.org, provider: ChemRxiv }
+    # Z-Library: a shadow library, flagged like Sci-Hub.
+    - { host: b-ok.global, provider: Z-Library, flags: [legal-risk] }
+    - { host: b-ok.cc, provider: Z-Library, flags: [legal-risk] }
+    - { host: b-ok.org, provider: Z-Library, flags: [legal-risk] }
+    # Publishers and open archives, reached when a plugin fetches a paper or its PDF.
+    - { host: "*.nature.com", provider: Springer Nature }
+    - { host: "*.springer.com", provider: Springer Nature }
+    - { host: "*.springernature.com", provider: Springer Nature }
+    - { host: "*.biomedcentral.com", provider: BioMed Central (Springer Nature) }
+    - { host: "*.sciencedirect.com", provider: Elsevier ScienceDirect }
+    - { host: "*.elsevier.com", provider: Elsevier }
+    - { host: "*.cell.com", provider: Cell Press (Elsevier) }
+    - { host: "*.thelancet.com", provider: The Lancet (Elsevier) }
+    - { host: "*.wiley.com", provider: Wiley }
+    - { host: "*.tandfonline.com", provider: Taylor & Francis }
+    - { host: academic.oup.com, provider: Oxford University Press }
+    - { host: "*.sagepub.com", provider: SAGE }
+    - { host: dl.acm.org, provider: ACM Digital Library }
+    - { host: "*.jstor.org", provider: JSTOR }
+    - { host: www.cambridge.org, provider: Cambridge University Press }
+    - { host: "*.science.org", provider: Science (AAAS) }
+    - { host: "*.pnas.org", provider: PNAS }
+    - { host: "*.mdpi.com", provider: MDPI }
+    - { host: "*.frontiersin.org", provider: Frontiers }
+    - { host: "*.plos.org", provider: PLOS }
+    - { host: pubs.rsc.org, provider: Royal Society of Chemistry }
+    - { host: iopscience.iop.org, provider: IOP Publishing }
+    - { host: journals.aps.org, provider: American Physical Society }
+    - { host: "*.nejm.org", provider: New England Journal of Medicine }
+    - { host: "*.bmj.com", provider: BMJ }
+    - { host: "*.ssrn.com", provider: SSRN }
+    - { host: hal.science, provider: HAL open archive }
+    - { host: "*.hal.science", provider: HAL open archive }
+    - { host: hal.archives-ouvertes.fr, provider: HAL open archive }
+    - { host: "*.medrxiv.org", provider: medRxiv }
+    - { host: "*.chemrxiv.org", provider: ChemRxiv }
+    - { host: "*.researchsquare.com", provider: Research Square }
+    - { host: osf.io, provider: OSF }
+
+  zotero:
+    - { host: www.zotero.org, provider: Zotero }
+    - { host: api.zotero.org, provider: Zotero Web API }
+    - { host: zotero-download.s3.amazonaws.com, provider: Zotero downloads }
+    - { host: zotero.org, provider: Zotero }
+    - { host: forums.zotero.org, provider: Zotero }
+    - { host: download.zotero.org, provider: Zotero }
+    - { host: translate.zotero.org, provider: Zotero translation server }
+    - { host: repo.zotero.org, provider: Zotero }
+    - { host: services.zotero.org, provider: Zotero lookup services }
+
+  integration:
+    # Web search and page-reading APIs an AI assistant calls, all here (not AI model providers):
+    # they fetch search results or a page's text for it (review P13; precision check 3).
+    - { host: api.search.brave.com, provider: Brave Search API }
+    - { host: serpapi.com, provider: SerpApi }
+    - { host: google.serper.dev, provider: Serper (Google search API) }
+    - { host: api.scrape-it.cloud, provider: Scrape-It (Google search API) }
+    - { host: api.serply.io, provider: Serply (Google search API) }
+    - { host: api.bing.microsoft.com, provider: Bing Search API }
+    - { host: customsearch.googleapis.com, provider: Google Custom Search }
+    - { host: api.exa.ai, provider: Exa search }
+    - { host: api.metaphor.systems, provider: Exa search (Metaphor) }
+    - { host: api.tavily.com, provider: Tavily (web search) }
+    - { host: api.firecrawl.dev, provider: Firecrawl (web search and scraping) }
+    - { host: s.jina.ai, provider: Jina Search }
+    - { host: r.jina.ai, provider: Jina Reader (web page reading) }
+    - { host: lite.duckduckgo.com, provider: DuckDuckGo search }
+    - { host: "*.tectonic.remarkable.com", provider: reMarkable }
+    # PDF parsing services (not AI model providers).
+    - { host: mineru.net, provider: MinerU (PDF parsing) }
+    - { host: mineru.oss-cn-shanghai.aliyuncs.com, provider: MinerU (PDF parsing) }
+    - { host: cdn-mineru.openxlab.org.cn, provider: MinerU (PDF parsing), flags: [china-only] }
+    # Bookstores and reading apps a plugin looks books up in.
+    - { host: dx.3.cn, provider: JD.com (bookstore) }
+    - { host: product.dangdang.com, provider: Dangdang (bookstore) }
+    - { host: weread.qq.com, provider: WeRead (reading app) }
+    - { host: api.notion.com, provider: Notion }
+    - { host: readwise.io, provider: Readwise }
+    - { host: open.feishu.cn, provider: Feishu }
+    - { host: ankiweb.net, provider: AnkiWeb }
+    - { host: ankiuser.net, provider: AnkiWeb }
+    - { host: api.perma.cc, provider: Perma.cc }
+    - { host: nominatim.openstreetmap.org, provider: OpenStreetMap Nominatim }
+    - { host: photon.komoot.io, provider: Photon geocoder (Komoot) }
+    - { host: 0x0.st, provider: 0x0.st (public file drop), flags: [public-relay] }
+    - { host: open.larksuite.com, provider: Lark }
+    - { host: www.yuque.com, provider: Yuque }
+    - { host: api.dropboxapi.com, provider: Dropbox }
+    - { host: content.dropboxapi.com, provider: Dropbox }
+    - { host: www.googleapis.com, provider: Google APIs }
+    - { host: oauth2.googleapis.com, provider: Google APIs }
+    - { host: graph.microsoft.com, provider: Microsoft Graph }
+    - { host: login.microsoftonline.com, provider: Microsoft login }
+    - { host: api.todoist.com, provider: Todoist }
+    - { host: api.trello.com, provider: Trello }
+    - { host: api.tana.inc, provider: Tana }
+    - { host: logseq.com, provider: Logseq }
+    - { host: api.flomoapp.com, provider: flomo }
+    - { host: flomoapp.com, provider: flomo }
+    - { host: api.mem.ai, provider: Mem }
+    - { host: api.raindrop.io, provider: Raindrop }
+    - { host: hypothes.is, provider: Hypothesis }
+    - { host: api.hypothes.is, provider: Hypothesis }
+    - { host: api.getpocket.com, provider: Pocket }
+    - { host: api.telegram.org, provider: Telegram }
+    - { host: "*.webdav.yandex.ru", provider: Yandex Disk WebDAV }
+    - { host: dav.jianguoyun.com, provider: Jianguoyun WebDAV, flags: [china-only] }
+    - { host: webdav.123pan.cn, provider: 123pan WebDAV, flags: [china-only] }
+    - { host: api.mathjax.org, provider: MathJax }
+    - { host: api.eagle.cool, provider: Eagle }
+    - { host: api.tinify.com, provider: TinyPNG }
+    - { host: api.obsidian.md, provider: Obsidian }
+    - { host: accounts.google.com, provider: Google sign-in }
+    - { host: www.dropbox.com, provider: Dropbox }
+    - { host: api.pcloud.com, provider: pCloud }
+    - { host: "*.pcloud.com", provider: pCloud }
+    - { host: api.capacities.io, provider: Capacities }
+    - { host: pan.baidu.com, provider: Baidu Netdisk, flags: [china-only] }
+    - { host: read.readwise.io, provider: Readwise Reader }
+    - { host: export-svg.highcharts.com, provider: Highcharts export }
+    - { host: mermaid.ink, provider: mermaid.ink (diagram rendering) }
+    - { host: archive.org, provider: Internet Archive }
+    - { host: web.archive.org, provider: Internet Archive (Wayback Machine) }
+    - { host: archive.ph, provider: archive.today }
+    - { host: timetravel.mementoweb.org, provider: Memento Time Travel }
+    - { host: secure.geonames.org, provider: GeoNames }
+    - { host: "*.cloud.remarkable.com", provider: reMarkable cloud }
+    - { host: us-central1-excalidraw-room-persistence.cloudfunctions.net, provider: Excalidraw }
+    - { host: excalidraw-room-persistence.firebaseio.com, provider: Excalidraw }
+    - { host: "*.excalidraw.com", provider: Excalidraw }
+    # Anonymous public file drops and open proxies: named, but anyone can read what's uploaded or
+    # change what passes through, so they stay a concern (DS-PUBLIC-RELAY).
+    - { host: filebin.net, provider: Filebin (public file drop), flags: [public-relay] }
+    - { host: file.io, provider: file.io (public file drop), flags: [public-relay] }
+    - { host: cors-anywhere.herokuapp.com, provider: CORS Anywhere (public proxy), flags: [public-relay] }
+    - { host: "*.pcs.baidu.com", provider: Baidu Netdisk, flags: [china-only] }
+    - { host: openapi.baidu.com, provider: Baidu Netdisk, flags: [china-only] }
+    - { host: duckduckgo.com, provider: DuckDuckGo search }
+    - { host: html.duckduckgo.com, provider: DuckDuckGo search }
+    - { host: www.google.com, provider: Google Search, flags: [blocked-in-mainland-china] }
+    - { host: www.amazon.com, provider: Amazon }
+    - { host: api.duckduckgo.com, provider: DuckDuckGo search }
+
+    - { host: ima.qq.com, provider: Tencent ima (knowledge base) }
+    - { host: ainote.kdocs.cn, provider: WPS Notes }
+    - { host: apiv3.shanbay.com, provider: Shanbay (vocabulary) }
+    - { host: open.maimemo.com, provider: MaiMemo (vocabulary) }
+    - { host: tile.openstreetmap.org, provider: OpenStreetMap map tiles }
+    - { host: server.arcgisonline.com, provider: Esri ArcGIS map tiles }
+    - { host: search.dangdang.com, provider: Dangdang (bookstore) }
+    - { host: search.jd.com, provider: JD.com (bookstore) }
+    - { host: latex.codecogs.com, provider: CodeCogs LaTeX renderer }
+    - { host: webapp-prod.cloud.remarkable.engineering, provider: reMarkable }
+    - { host: "*.cloud.remarkable.com", provider: reMarkable }
+    - { host: dav-demo.jianguoyun.com, provider: Nutstore }
+    - { host: open.weixin.qq.com, provider: WeChat sign-in, flags: [account-oauth] }
+    - { host: long.open.weixin.qq.com, provider: WeChat sign-in, flags: [account-oauth] }
+    - { host: lp.open.weixin.qq.com, provider: WeChat sign-in, flags: [account-oauth] }
+    - { host: ims-na1.adobelogin.com, provider: Adobe sign-in, flags: [account-oauth] }
+    - { host: pdf-services-ue1.adobe.io, provider: Adobe PDF Services }
+    - { host: "*.adobe.io", provider: Adobe PDF Services }
+    - { host: bsky.social, provider: Bluesky }
+    - { host: api.semble.so, provider: Semble }
+    - { host: flomoapp.com, provider: flomo (notes) }
+    - { host: api.dropbox.com, provider: Dropbox }
+    - { host: api.dropboxapi.com, provider: Dropbox }
+    - { host: content.dropboxapi.com, provider: Dropbox }
+    - { host: readwise.io, provider: Readwise }
+    - { host: api.wakatime.com, provider: WakaTime }
+    - { host: "*.myqcloud.com", provider: Tencent Cloud Object Storage }
+    # Any other Google API host: Google runs every googleapis.com subdomain.
+    - { host: "*.googleapis.com", provider: Google APIs }
+  code-hosting:
+    - { host: github.com, provider: GitHub }
+    - { host: api.github.com, provider: GitHub API }
+    - { host: raw.githubusercontent.com, provider: GitHub }
+    - { host: objects.githubusercontent.com, provider: GitHub }
+    - { host: release-assets.githubusercontent.com, provider: GitHub }
+    - { host: gist.github.com, provider: GitHub }
+    - { host: gist.githubusercontent.com, provider: GitHub }
+    - { host: "*.github.io", provider: GitHub Pages }
+    - { host: gitee.com, provider: Gitee }
+    - { host: raw.giteeusercontent.com, provider: Gitee }
+    - { host: gitlab.com, provider: GitLab }
+    - { host: codeberg.org, provider: Codeberg }
+    - { host: bitbucket.org, provider: Bitbucket }
+    - { host: gh-proxy.com, provider: GitHub proxy mirror, flags: [public-relay] }
+    - { host: gh-proxy.org, provider: GitHub proxy mirror, flags: [public-relay] }
+    - { host: ghproxy.com, provider: GitHub proxy mirror, flags: [public-relay] }
+    - { host: mirror.ghproxy.com, provider: GitHub proxy mirror, flags: [public-relay] }
+    - { host: ghfast.top, provider: GitHub proxy mirror, flags: [public-relay] }
+    - { host: kkgithub.com, provider: GitHub proxy mirror, flags: [public-relay] }
+    - { host: ghproxy.net, provider: GitHub proxy mirror, flags: [public-relay] }
+    - { host: registry.npmjs.org, provider: npm }
+    - { host: pypi.org, provider: PyPI }
+    # Model downloads: count only when the plugin requests them.
+    - { host: huggingface.co, provider: Hugging Face (model downloads) }
+    - { host: hf-mirror.com, provider: HF-Mirror (third-party Hugging Face mirror), flags: [china-only] }
+
+    - { host: ftp.zotero-chinese.com, provider: Zotero Chinese community mirror }
+    - { host: deb.nodesource.com, provider: NodeSource }
+    - { host: repo.anaconda.com, provider: Anaconda }
+    - { host: nodejs.org, provider: Node.js }
+    - { host: adoptium.net, provider: Eclipse Adoptium }
+    - { host: api.adoptium.net, provider: Eclipse Adoptium }
+    - { host: mirrors.ustc.edu.cn, provider: USTC open-source mirror }
+    - { host: astral.sh, provider: Astral (uv) }
+    - { host: www.modelscope.cn, provider: ModelScope }
+    - { host: scriptcat.org, provider: ScriptCat (userscripts) }
+    - { host: release-assets.githubusercontent.com, provider: GitHub }
+  cdn:
+    - { host: cdn.jsdelivr.net, provider: jsDelivr }
+    - { host: fastly.jsdelivr.net, provider: jsDelivr }
+    - { host: gcore.jsdelivr.net, provider: jsDelivr }
+    - { host: unpkg.com, provider: unpkg }
+    - { host: cdnjs.cloudflare.com, provider: cdnjs }
+    - { host: fonts.googleapis.com, provider: Google Fonts }
+    - { host: fonts.gstatic.com, provider: Google Fonts }
+    - { host: esm.sh, provider: esm.sh }
+    - { host: cdn.staticfile.org, provider: Staticfile CDN }
+    - { host: cdn.bootcdn.net, provider: BootCDN }
+    - { host: lf3-cdn-tos.bytecdntp.com, provider: ByteDance CDN }
+    - { host: models.dev, provider: models.dev (model catalogue) }
+    - { host: tiktoken.pages.dev, provider: js-tiktoken (tokenizer files) }
+
+  telemetry:
+    - { host: www.google-analytics.com, provider: Google Analytics }
+    - { host: google-analytics.com, provider: Google Analytics }
+    - { host: analytics.google.com, provider: Google Analytics }
+    - { host: region1.google-analytics.com, provider: Google Analytics }
+    - { host: www.googletagmanager.com, provider: Google Tag Manager }
+    - { host: plausible.io, provider: Plausible }
+    - { host: "*.ingest.sentry.io", provider: Sentry }
+    - { host: "*.ingest.us.sentry.io", provider: Sentry }
+    - { host: "*.ingest.de.sentry.io", provider: Sentry }
+    - { host: sentry.io, provider: Sentry }
+    - { host: app.posthog.com, provider: PostHog }
+    - { host: us.i.posthog.com, provider: PostHog }
+    - { host: eu.i.posthog.com, provider: PostHog }
+    - { host: api.mixpanel.com, provider: Mixpanel }
+    - { host: api2.amplitude.com, provider: Amplitude }
+    - { host: api.amplitude.com, provider: Amplitude }
+    - { host: cloud.umami.is, provider: Umami }
+    - { host: analytics.umami.is, provider: Umami }
+    - { host: api-gateway.umami.dev, provider: Umami }
+    - { host: www.clarity.ms, provider: Microsoft Clarity }
+    - { host: hm.baidu.com, provider: Baidu Tongji }
+    - { host: api.segment.io, provider: Segment }
+    - { host: stats.g.doubleclick.net, provider: Google Analytics }
+    - { host: api.countapi.xyz, provider: CountAPI }
+    - { host: hits.seeyoufarm.com, provider: Hits counter }
+    - { host: visitor-badge.laobi.icu, provider: Visitor badge }
+    - { host: "*.aptabase.com", provider: Aptabase }
+
+    # Self-hosted Aptabase instance; the key "A-SH-…" selects it (paper-chat-for-zotero).
+    - { host: aptabase.zotero.store, provider: Aptabase (PaperChat's own instance) }
+    - { host: analytics.immersivetranslate.com, provider: Immersive Translate analytics }
+    - { host: analytics.immersivetranslate.cn, provider: Immersive Translate analytics }
+  cloud-function:
+    - { host: "*.tencentscf.com", provider: Tencent Cloud Functions }
+    - { host: "*.scf.tencentcs.com", provider: Tencent Cloud Functions }
+    - { host: "*.fcapp.run", provider: Alibaba Function Compute }
+    - { host: "*.fc.aliyuncs.com", provider: Alibaba Function Compute }
+    - { host: "*.workers.dev", provider: Cloudflare Workers }
+    - { host: "*.pages.dev", provider: Cloudflare Pages }
+    - { host: "*.vercel.app", provider: Vercel }
+    - { host: "*.netlify.app", provider: Netlify }
+    - { host: "*.herokuapp.com", provider: Heroku }
+    - { host: "*.deno.dev", provider: Deno Deploy }
+    - { host: "*.supabase.co", provider: Supabase }
+    - { host: "*.firebaseio.com", provider: Firebase }
+    - { host: "*.firebaseapp.com", provider: Firebase }
+    - { host: "*.web.app", provider: Firebase Hosting }
+    - { host: "*.cloudfunctions.net", provider: Google Cloud Functions }
+    - { host: "*.run.app", provider: Google Cloud Run }
+    - { host: "*.azurewebsites.net", provider: Azure App Service }
+    - { host: "*.onrender.com", provider: Render }
+    - { host: "*.railway.app", provider: Railway }
+    - { host: "*.up.railway.app", provider: Railway }
+    - { host: "*.fly.dev", provider: Fly.io }
+    - { host: "*.replit.app", provider: Replit }
+    - { host: "*.lambda-url.us-east-1.on.aws", provider: AWS Lambda }
+    - { host: "*.execute-api.us-east-1.amazonaws.com", provider: AWS API Gateway }
+    - { host: "*.laf.run", provider: Laf cloud functions }
+    - { host: "*.sealosgzg.site", provider: Sealos }
+    - { host: "*.hf.space", provider: Hugging Face Spaces }
+
+  developer-server:
+    # Source: plugin author's statement on forums.zotero.org/discussion/129786 (2026-02-19)
+    # that these endpoints verify Pro licences for MuiseDestiny plugins.
+    - { host: zoteroplugin.com, provider: MuiseDestiny licence server }
+    - { host: "*.muisedestiny.xyz", provider: MuiseDestiny }
+
+    # Sources: each plugin's manifest homepage or description names the service as its own.
+    - { host: "*.beaverapp.ai", provider: Beaver (beaver-zotero) }
+    - { host: "*.sciencelive4all.org", provider: Science Live (science-live-platform) }
+    - { host: api.uread.today, provider: uread.today (zoturead) }
+    - { host: "*.askingstage.com", provider: AskingStage (zotero-plugin) }
+    - { host: papermindapp.com, provider: PaperMind (papermind-zotero) }
+    - { host: "*.eieu.cn", provider: eieu.cn (zotero-unified-translator; also its update host) }
+    - { host: paperchat.zotero.store, provider: PaperChat (paper-chat-for-zotero) }
+    - { host: artalk.zotero.store, provider: Add-on Market comments (zotero-addons) }
+    - { host: "*.magiczotero.top", provider: MagicZotero (Zotero Chinese community) }
+    - { host: www.linxingzhong.top, provider: linxzh (zotero-updateifs, Tara) }
+    - { host: www.zotfile.com, provider: ZotFile }
+    - { host: api.scigreat.com, provider: SciGreat (zotbox) }
+    - { host: jadense.cn, provider: Jadense (jadense-in-zotero) }
+    - { host: "*.jadense.cn", provider: Jadense (jadense-in-zotero) }
+    - { host: www.bibgenie.com, provider: BibGenie }
+    - { host: llm.bibgenie.com, provider: BibGenie }
+    - { host: www.zotero-copilot.com, provider: Zotero Copilot (zoterocopilot) }
+    - { host: pdf2zh.lfystat.cn, provider: zoterosyncassistant's developer }
+    - { host: miscite.review, provider: miscite (miscite-zotero-connector) }
+  localhost:
+    - { host: localhost, provider: This computer }
+    - { host: 127.0.0.1, provider: This computer }
+    - { host: 0.0.0.0, provider: This computer }
+    - { host: "[::1]", provider: This computer }
+
+  documentation:
+    - { host: aistudio.google.com, provider: Google AI Studio (console) }
+    - { host: api-docs.deepseek.com, provider: DeepSeek documentation }
+    # Feishu and Notion pages are help documents; their APIs are open.feishu.cn and api.notion.com.
+    - { host: "*.feishu.cn", provider: Feishu (documents) }
+    - { host: www.notion.so, provider: Notion (pages) }
+    - { host: "*.notion.site", provider: Notion (pages) }
+    - { host: "*.readthedocs.io", provider: Read the Docs }
+    - { host: developer.mozilla.org, provider: MDN }
+    - { host: "*.gitbook.io", provider: GitBook }
+    - { host: support.mozilla.org, provider: Mozilla Support }
+    - { host: www.youtube.com, provider: YouTube }
+    - { host: www.bilibili.com, provider: Bilibili }
+    - { host: space.bilibili.com, provider: Bilibili }
+    - { host: www.zhihu.com, provider: Zhihu }
+    - { host: zhuanlan.zhihu.com, provider: Zhihu }
+    - { host: "*.xiaohongshu.com", provider: Xiaohongshu }
+    - { host: mp.weixin.qq.com, provider: WeChat articles }
+    - { host: afdian.com, provider: Afdian (donations) }
+    - { host: afdian.net, provider: Afdian (donations) }
+    - { host: www.buymeacoffee.com, provider: Buy Me a Coffee }
+    - { host: ko-fi.com, provider: Ko-fi }
+    - { host: www.paypal.com, provider: PayPal }
+    - { host: www.patreon.com, provider: Patreon }
+    - { host: opensource.org, provider: OSI }
+    - { host: creativecommons.org, provider: Creative Commons }
+    - { host: www.gnu.org, provider: GNU }
+    - { host: choosealicense.com, provider: License text }
+    - { host: spdx.org, provider: SPDX }
+    - { host: m.tb.cn, provider: Taobao (shopping link) }
+    - { host: mall.bilibili.com, provider: Bilibili shop }
+    - { host: appsumo.com, provider: AppSumo }
+    - { host: zotero-chinese.com, provider: Zotero Chinese community }
+    - { host: www.highcharts.com, provider: Highcharts }
+    - { host: www.hcharts.cn, provider: Highcharts }
+
+# Never network destinations: XML/RDF namespaces, spec identifiers, placeholders.
+ignore:
+  - not-yet-setup.com # placeholder in zotero-item-key-column
+  # Help, console and error-decoder pages quoted in bundled SDKs and UI text: never destinations.
+  - help.openai.com
+  - platform.openai.com
+  - react.dev
+  - base-ui.com
+  - qr.alipay.com
+  - www.w3.org
+  - w3.org
+  - www.mozilla.org
+  - mozilla.org
+  - purl.org
+  - ns.adobe.com
+  - schemas.openxmlformats.org
+  - schemas.microsoft.com
+  - xmlns.com
+  - json-schema.org
+  - www.idpf.org
+  - docbook.org
+  - relaxng.org
+  - www.tei-c.org
+  - www.openarchives.org
+  - www.loc.gov
+  - id.loc.gov
+  - example.com
+  - www.example.com
+  - example.org
+  - example.net
+  - your-api-endpoint.com
+  - your-domain.com
+  - api.example.com
+  - foo.com
+  - bar.com
+  - x.com

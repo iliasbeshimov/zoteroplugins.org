@@ -1,0 +1,303 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-convert-to-arxiv",
+ "repo": "ericjin2002/zotero-convert-to-arxiv",
+ "version": "1.3.0",
+ "tag": "v1.3.0",
+ "releaseAuthor": "EricJin2002",
+ "publishedAt": "2026-08-19T17:02:04Z",
+ "prerelease": false,
+ "asset": {
+  "name": "convert-to-arxiv-1.3.0.xpi",
+  "url": "https://github.com/EricJin2002/zotero-convert-to-arxiv/releases/download/v1.3.0/convert-to-arxiv-1.3.0.xpi",
+  "size": 7561,
+  "sha256": "44d489e50c8663a5f68d6ede04e8f680fca9fbe45fdf7cd3c3fe9a853893f138",
+  "githubAssetId": 521111460,
+  "uploader": "EricJin2002",
+  "uploadedAt": "2026-08-19T17:02:03Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "convert-to-arxiv@codex.local",
+  "name": "Convert to arXiv",
+  "version": "1.3.0",
+  "description": "Convert selected Zotero items in place to verified arXiv preprints.",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 550,
+   "sha256": "aebe52c3d9d07c64e750032f98320293b63c6dc6315f2b21044b983a00e5c401"
+  },
+  {
+   "path": "convert-to-arxiv.js",
+   "size": 20218,
+   "sha256": "8cf0ce35defbc322477003c821444a34814b23ccc145a5c9e9d09038ccecb9ce"
+  },
+  {
+   "path": "manifest.json",
+   "size": 351,
+   "sha256": "d725419189dd86dd0cb87c0e93cbbb1e4c0a14b5232dac2dd077963ec12b7244"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-convert-to-arxiv",
+   "version": "1.3.0",
+   "sha256": "44d489e50c8663a5f68d6ede04e8f680fca9fbe45fdf7cd3c3fe9a853893f138"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 20768,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "convert-to-arxiv.js",
+       "line": 310,
+       "column": 23,
+       "snippet": "let response = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "convert-to-arxiv.js",
+       "line": 320,
+       "column": 18,
+       "snippet": "let translate = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "convert-to-arxiv.js",
+       "line": 353,
+       "column": 20,
+       "snippet": "url: data.url || `http://arxiv.org/abs/${id}`,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "export.arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "convert-to-arxiv.js",
+       "line": 362,
+       "column": 32,
+       "snippet": "let xml = await this._request(\"https://export.arxiv.org/api/query?search_query=\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the EricJin2002 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-convert-to-arxiv",
+   "version": "1.3.0",
+   "sha256": "44d489e50c8663a5f68d6ede04e8f680fca9fbe45fdf7cd3c3fe9a853893f138"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "781984b5c82d75fc1fd7166f0f78edf3fc4d72b810419d8e35c0076156ef46e6"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "arxiv.org",
+       "export.arxiv.org"
+      ],
+      "unconfirmed": [
+       "arxiv.org"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-19T17:02:04Z",
+    "lastCommitAt": "2026-08-19T17:01:33Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "installProblem": "no-update-url",
+    "label": "Zotero won't install this file: its manifest has no update address, which Zotero requires",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:54:18Z",
+   "verdict": "not-loaded",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,188 @@
+{
+ "repo": "shi-keke/vocab-for-zotero",
+ "slug": "vocab-for-zotero",
+ "group": "sample-2026",
+ "rank": 648,
+ "name": "Vocab for Zotero",
+ "stars": 0,
+ "downloads": 23,
+ "createdAt": "2026-08-16T04:12:12Z",
+ "tag": "v0.3.3",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "vocab-for-zotero-0.3.3.xpi",
+    "url": "https://github.com/shi-keke/vocab-for-zotero/releases/download/v0.3.3/vocab-for-zotero-0.3.3.xpi",
+    "size": 16028,
+    "uploadedAt": "2026-08-16T04:15:04Z",
+    "sha256": "5302b75fbcee404649d9355bffcd2d7514dd761a2052129ae8df79b8c4040f1c"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "vocab-for-zotero@codex.local",
+    "name": "Vocab for Zotero",
+    "version": "0.3.3",
+    "description": "Collect, review, and remember vocabulary while reading in Zotero.",
+    "homepageUrl": null,
+    "updateUrl": "https://raw.githubusercontent.com/shi-keke/vocab-for-zotero/main/updates.json",
+    "minVersion": "9.0.0",
+    "maxVersion": "9.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "vocab-for-zotero",
+     "version": "0.3.3",
+     "sha256": "5302b75fbcee404649d9355bffcd2d7514dd761a2052129ae8df79b8c4040f1c"
+    },
+    "coverage": {
+     "filesTotal": 8,
+     "filesAnalyzed": 5,
+     "filesSkipped": [
+      {
+       "path": "content/vocabulary.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "icons/vocabulary.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/main.js",
+         "line": 259,
+         "column": 29,
+         "snippet": "const response = await Zotero.HTTP.request(\"GET\", url, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.mymemory.translated.net",
+       "category": "translation",
+       "provider": "MyMemory",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/main.js",
+         "line": 256,
+         "column": 8,
+         "snippet": "\"https://api.mymemory.translated.net/get?q=\" +",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 465,
+        "column": 10,
+        "snippet": "await Zotero.File.putContentsAsync(picker.file.path, csv);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 14,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/shi-keke/vocab-for-zotero/main/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/shi-keke/vocab-for-zotero/main/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "translation": [
+      "api.mymemory.translated.net"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

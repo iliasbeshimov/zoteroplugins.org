@@ -1,0 +1,42 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-refsense",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "OpenAI backend (the default) needs your own OpenAI API key",
+  "worksWithout": "Local Ollama models, no key",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README features",
+   "quote": "OpenAI GPT or local Ollama models",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "ai/ollama.js:2",
+   "quote": "async queryOllama(text, model = 'llama3.2:latest', host = 'http://localhost:11434') {",
+   "supports": "localModel"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.refsense.openaiApiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README Configuration",
+   "quote": "Choose your AI backend (OpenAI or Ollama)",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README: \"OpenAI GPT or local Ollama models\"; prefs.js has an empty openaiApiKey and an Ollama host of http://localhost:11434, so Ollama works with no key."
+}

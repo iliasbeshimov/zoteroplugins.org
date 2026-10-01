@@ -1,0 +1,267 @@
+{
+ "repo": "eschnett/zotero-citationcounts",
+ "slug": "zotero-citationcounts",
+ "group": "top",
+ "rank": 45,
+ "name": "Zotero Citation Counts Manager",
+ "stars": 931,
+ "downloads": 133405,
+ "createdAt": "2020-09-29T00:33:03Z",
+ "tag": "v1.3.0",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-citationcounts-1.3.0.xpi",
+    "url": "https://github.com/eschnett/zotero-citationcounts/releases/download/v1.3.0/zotero-citationcounts-1.3.0.xpi",
+    "size": 14285,
+    "uploadedAt": "2022-04-05T00:58:48Z",
+    "sha256": "a38b6351dc51875e2f2da409b824049e62e628914072d9ca761705e1033d3a0c"
+   },
+   "manifest": {
+    "format": "install.rdf",
+    "target": "zotero",
+    "addonId": "schnetter@gmail.com",
+    "name": "Zotero Citation Counts Manager",
+    "version": "1.3.0",
+    "description": "Automatically fetch and update citation counts",
+    "homepageUrl": "https://github.com/eschnett/zotero-citationcounts",
+    "updateUrl": "https://raw.githubusercontent.com/eschnett/zotero-citationcounts/master/update.rdf",
+    "minVersion": "6.0",
+    "maxVersion": "6.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-citationcounts",
+     "version": "1.3.0",
+     "sha256": "a38b6351dc51875e2f2da409b824049e62e628914072d9ca761705e1033d3a0c"
+    },
+    "coverage": {
+     "filesTotal": 13,
+     "filesAnalyzed": 5,
+     "filesSkipped": [
+      {
+       "path": "chrome.manifest",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/en-US/options.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/en-US/options.properties",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/en-US/overlay.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/en-US/zoteroshortdoi.properties",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/skin/default/zoterocitationcounts/doi.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/skin/default/zoterocitationcounts/doi@2x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "install.rdf",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterocitationcounts.js",
+         "line": 75,
+         "column": 25,
+         "snippet": "response = await fetch(url)",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterocitationcounts.js",
+         "line": 83,
+         "column": 25,
+         "snippet": "response = await fetch(url, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterocitationcounts.js",
+         "line": 133,
+         "column": 27,
+         "snippet": "const response = await fetch(url)",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterocitationcounts.js",
+         "line": 180,
+         "column": 27,
+         "snippet": "const response = await fetch(url)",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.crossref.org",
+       "category": "scholarly-api",
+       "provider": "Crossref",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterocitationcounts.js",
+         "line": 74,
+         "column": 20,
+         "snippet": "const url = \"https://api.crossref.org/works/\" + edoi + \"/\" + xform;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.semanticscholar.org",
+       "category": "scholarly-api",
+       "provider": "Semantic Scholar",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterocitationcounts.js",
+         "line": 178,
+         "column": 10,
+         "snippet": "\"https://api.semanticscholar.org/v1/paper/\" +",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "doi.org",
+       "category": "scholarly-api",
+       "provider": "DOI resolver",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterocitationcounts.js",
+         "line": 81,
+         "column": 20,
+         "snippet": "const url = \"https://doi.org/\" + edoi;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "inspirehep.net",
+       "category": "scholarly-api",
+       "provider": "INSPIRE-HEP",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoterocitationcounts.js",
+         "line": 132,
+         "column": 16,
+         "snippet": "const url = \"https://inspirehep.net/api/\" + idtype + \"/\" + edoi;",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 1,
+        "column": 0,
+        "snippet": "(whitespace)",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/eschnett/zotero-citationcounts/master/update.rdf"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "scholarly-api": [
+      "api.crossref.org",
+      "api.semanticscholar.org",
+      "doi.org",
+      "inspirehep.net"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

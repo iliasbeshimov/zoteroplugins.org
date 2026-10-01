@@ -1,0 +1,457 @@
+{
+ "schemaVersion": 1,
+ "slug": "paperpulse",
+ "repo": "noaul/paperpulse",
+ "version": "0.1.3",
+ "tag": "zotero-plugin-v0.1.3",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-05-12T04:08:24Z",
+ "prerelease": false,
+ "asset": {
+  "name": "paperpulse-zotero-analyzer.xpi",
+  "url": "https://github.com/noaul/PaperPulse/releases/download/zotero-plugin-v0.1.3/paperpulse-zotero-analyzer.xpi",
+  "size": 6372,
+  "sha256": "05ae9cdbe084e1eda64b4a8d2cc01860b248c81542e122cca5df211ac96b4a07",
+  "githubAssetId": 418036185,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-05-12T04:08:24Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "paperpulse-zotero-analyzer@uovme.github.io",
+  "name": "PaperPulse Zotero Analyzer",
+  "version": "0.1.3",
+  "description": "Analyze Zotero feed/library items with a PaperPulse backend and write scores, tags, and notes back to Zotero.",
+  "homepageUrl": "https://github.com/uovme/PaperPulse",
+  "updateUrl": "https://github.com/uovme/PaperPulse/releases/latest/download/paperpulse-zotero-analyzer-update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1512,
+   "sha256": "aa60ede26d85542f0753c70e8e51c8aedb7e01117603465829b3b0cd0771f132"
+  },
+  {
+   "path": "content\\paperpulse.js",
+   "size": 9988,
+   "sha256": "fd2f3256b6f8223bf0cc949fd1af10cd28d2190eec54e4f959ff748dc781f302"
+  },
+  {
+   "path": "content\\preferences.css",
+   "size": 199,
+   "sha256": "e4b822af96b48c40319f737a752393474e27ecc4d03bc8f7d864ba2f48279072"
+  },
+  {
+   "path": "content\\preferences.js",
+   "size": 516,
+   "sha256": "5cf41142bc9aaf408b2523af29a583780028d51ebc6c19fb0324d05aa8f8b167"
+  },
+  {
+   "path": "manifest.json",
+   "size": 589,
+   "sha256": "d2fd33e99f3b098476e53ccad5a5f62408b2721ab0a45d87cdcca3b8954ff246"
+  },
+  {
+   "path": "prefs.js",
+   "size": 256,
+   "sha256": "99ce5958b13693eeddbd50c65b755b898b78a7690da3fb067c5d9cdf79420fbf"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 1604,
+   "sha256": "68862b284bffce91f38d98620d42c6290d33c199604d0bb284f5692283ad4674"
+  },
+  {
+   "path": "README.md",
+   "size": 1815,
+   "sha256": "564d710a54cbf18e0b502654a01f9a2086c4bc99a409840914004e26fe1279f3"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "paperpulse",
+   "version": "0.1.3",
+   "sha256": "05ae9cdbe084e1eda64b4a8d2cc01860b248c81542e122cca5df211ac96b4a07"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "content\\preferences.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 13876,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content\\paperpulse.js",
+       "line": 270,
+       "column": 27,
+       "snippet": "const response = await fetch(url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 18095,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 5,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content\\paperpulse.js",
+       "line": 46,
+       "column": 41,
+       "snippet": "branch.setStringPref(\"backendURL\", \"http://127.0.0.1:18095\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content\\paperpulse.js",
+       "line": 131,
+       "column": 60,
+       "snippet": "return this.getPrefBranch().getStringPref(\"backendURL\", \"http://127.0.0.1:18095\").replace(/\\/+$/, \"\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content\\paperpulse.js",
+       "line": 151,
+       "column": 83,
+       "snippet": "this.getPrefBranch().setStringPref(\"backendURL\", String(value || \"\").trim() || \"http://127.0.0.1:18095\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.paperpulse.backendURL\", \"http://127.0.0.1:18095\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 41,
+       "snippet": "pref(\"extensions.paperpulse.backendURL\", \"http://127.0.0.1:18095\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content\\paperpulse.js",
+       "line": 121,
+       "column": 15,
+       "snippet": "helpURL: \"https://github.com/uovme/PaperPulse/tree/main/zotero-plugin\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "backendURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content\\paperpulse.js",
+       "line": 131,
+       "column": 11,
+       "snippet": "return this.getPrefBranch().getStringPref(\"backendURL\", \"http://127.0.0.1:18095\").replace(/\\/+$/, \"\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.paperpulse.backendURL",
+     "defaultValue": "http://127.0.0.1:18095",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.paperpulse.backendURL\", \"http://127.0.0.1:18095\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 14,
+       "column": 60,
+       "snippet": "<html:input id=\"paperpulse-backend-url\" type=\"text\" preference=\"extensions.paperpulse.backendURL\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content\\paperpulse.js",
+      "line": 49,
+      "column": 6,
+      "snippet": "branch.setStringPref(\"authToken\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content\\paperpulse.js",
+      "line": 135,
+      "column": 11,
+      "snippet": "return this.getPrefBranch().getStringPref(\"authToken\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content\\paperpulse.js",
+      "line": 155,
+      "column": 4,
+      "snippet": "this.getPrefBranch().setStringPref(\"authToken\", String(value || \"\").trim());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.paperpulse.authToken\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "authToken",
+      "extensions.paperpulse.authToken"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/uovme/PaperPulse/releases/latest/download/paperpulse-zotero-analyzer-update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/uovme/PaperPulse/releases/latest/download/paperpulse-zotero-analyzer-update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "paperpulse",
+   "version": "0.1.3",
+   "sha256": "05ae9cdbe084e1eda64b4a8d2cc01860b248c81542e122cca5df211ac96b4a07"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "46f4ae44bdb146f5500f1eea7277e19b36954fdfb4c59cc7ce0178e294382804"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository (under its old name)",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-05-12T04:08:24Z",
+    "lastCommitAt": "2026-07-11T08:13:00Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:52:34Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

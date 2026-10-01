@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-bilingual-reader",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "API key for the default DeepSeek endpoint (or MiniMax); some local services need none",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek",
+   "MiniMax"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.bilingualReader.endpoint\", \"https://api.deepseek.com/chat/completions\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Configure",
+   "quote": "API Key (not needed for some local services)",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, Configure",
+   "quote": "Plain HTTP is accepted only for\n`localhost`, `127.0.0.1`, and `::1`.",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Default endpoint is DeepSeek with empty apiKey; README says plain HTTP is allowed for localhost and the key is 'not needed for some local services' on an OpenAI-compatible endpoint."
+}

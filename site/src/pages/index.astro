@@ -1,0 +1,339 @@
+---
+import Findings from "../components/Findings.astro";
+import GradeLogList from "../components/GradeLogList.astro";
+import GradeTag from "../components/GradeTag.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Base from "../layouts/Base.astro";
+import { CURRENT_ZOTERO_MAJOR, GRADES, shownPlugins } from "../lib/atlas.ts";
+import { gradeLog } from "../lib/gradeLog.ts";
+import { JOBS } from "../lib/jobs.ts";
+
+const plugins = shownPlugins();
+const tries = ["cite in Word", "translate PDFs", "summarise a paper", "find duplicates"];
+const cats = JOBS.map((j) => ({ ...j, n: plugins.filter((p) => p.jobs.includes(j.slug)).length }));
+const top = plugins.filter((p) => p.grade === "A+").slice(0, 6);
+const changes = gradeLog().slice(0, 4);
+---
+
+<Base
+  title="Zotero Plugins Atlas · plugins for Zotero, checked before you install"
+  description="Every Zotero plugin gets a grade from a check of its code: what it does, what it needs from you and where it sends your data, with the evidence."
+>
+  <SiteHeader />
+  <div class="hero">
+    <div class="hl">
+      <h1>Plugins for Zotero, checked before you install</h1>
+      <form action="/browse" method="get" role="search" class="search">
+        <span aria-hidden="true" class="glass"></span>
+        <label class="visually-hidden" for="home-q">What do you want Zotero to do?</label>
+        <input id="home-q" name="q" type="search" placeholder="What do you want Zotero to do?" />
+      </form>
+      <div class="tries">
+        <span>Try</span>
+        {tries.map((t) => <a href={`/browse?q=${encodeURIComponent(t)}`}>{t}</a>)}
+      </div>
+      <p class="getz">New to Zotero? <a href="https://www.zotero.org/download/">Download it free from zotero.org</a></p>
+    </div>
+    <div class="ladder">
+      <span class="eyebrow">Every plugin gets a grade</span>
+      <div class="lg">
+        {
+          GRADES.map((g) => (
+            <>
+              <span class="lt">
+                <GradeTag grade={g.g} size="xs" />
+              </span>
+              <strong>{g.long}</strong>
+            </>
+          ))
+        }
+      </div>
+      <a href="/how-we-grade" class="how">How we grade</a>
+    </div>
+  </div>
+
+  <Findings plugins={plugins} currentMajor={CURRENT_ZOTERO_MAJOR()} />
+
+  <div class="wrap">
+    <section>
+      <div class="rule-head"><h2>Browse by job</h2><a href="/browse">All {plugins.length.toLocaleString("en-GB")} plugins</a></div>
+      <div class="cats">
+        {
+          cats.map((c) => (
+            <a href={`/c/${c.slug}`} class="cat">
+              <span class="ct">
+                <strong>{c.title}</strong>
+                <span class="n">{c.n}</span>
+              </span>
+              <span class="eg">{c.eg}</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <div class="two">
+      <section>
+        <div class="rule-head"><h2>Top of the ladder</h2><a href="/browse?grade=A%2B">All A+ plugins</a></div>
+        <div class="toplist">
+          {
+            top.map((r) => (
+              <a href={`/p/${r.slug}`} class="toprow">
+                <span class="tg">
+                  <GradeTag grade={r.grade} size="sm" />
+                </span>
+                <strong>{r.name}</strong>
+                <span class="tl">{r.oneLiner}</span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+      <section>
+        <div class="rule-head"><h2>Grade changes</h2><a href="/log">Full log</a></div>
+        <GradeLogList items={changes} compact />
+      </section>
+    </div>
+  </div>
+  <SiteFooter />
+</Base>
+
+<style>
+  .hero {
+    padding: 64px var(--gutter) 56px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 56px;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .hl {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 60px;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    font-weight: 780;
+    text-wrap: balance;
+  }
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    border: 1.5px solid var(--ink);
+    background: var(--surface);
+    box-shadow: var(--shadow-2);
+  }
+  .search input {
+    all: unset;
+    flex: 1;
+    min-width: 0;
+    font-size: 20px;
+    color: var(--ink);
+  }
+  .search input::placeholder {
+    color: var(--ink-3);
+  }
+  .glass {
+    flex: none;
+    width: 15px;
+    height: 15px;
+    border: 2.5px solid var(--ink);
+    border-radius: 50%;
+  }
+  .getz {
+    margin: 0;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .getz a {
+    font-weight: 600;
+  }
+  .tries {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .tries span {
+    font-size: 14px;
+    color: var(--ink-2);
+    margin-right: 4px;
+  }
+  .tries a {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 14.5px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .tries a:hover {
+    border-color: var(--ink);
+  }
+  .ladder {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 22px 24px;
+    border-radius: 18px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+  .lg {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 10px 12px;
+    align-items: center;
+    font-size: 14.5px;
+    line-height: 1.3;
+  }
+  .lg strong {
+    font-weight: 650;
+  }
+  .lt {
+    display: flex;
+  }
+  .how {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px var(--gutter) 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .cats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .cat {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 18px 16px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .cat:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .ct {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: baseline;
+  }
+  .ct strong {
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .n {
+    font: 500 12.5px var(--font-mono);
+    color: var(--ink-2);
+  }
+  .eg {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--ink-2);
+  }
+  .two {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+    align-items: start;
+  }
+  .two section {
+    gap: 6px;
+  }
+  .toplist {
+    display: flex;
+    flex-direction: column;
+  }
+  .toprow {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 2px 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .toprow:hover strong {
+    text-decoration: underline;
+  }
+  .tg {
+    grid-row: span 2;
+    display: flex;
+    padding-top: 2px;
+  }
+  .toprow strong {
+    font-size: 16.5px;
+  }
+  .tl {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 960px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding-top: 28px;
+      padding-bottom: 28px;
+    }
+    h1 {
+      font-size: 34px;
+      line-height: 1.05;
+    }
+    .search input {
+      font-size: 17px;
+    }
+    .tries {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
+    .tries a {
+      flex: none;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+    }
+    .cats {
+      grid-template-columns: 1fr 1fr;
+    }
+    .two {
+      grid-template-columns: 1fr;
+    }
+    .wrap {
+      padding-top: 28px;
+      gap: 40px;
+    }
+  }
+</style>

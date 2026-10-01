@@ -1,0 +1,340 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-filelink-bridge",
+ "repo": "imagontutu/zotero-filelink-bridge",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-05-18T14:38:00Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-filelink-bridge.xpi",
+  "url": "https://github.com/ImagonTuTu/zotero-filelink-bridge/releases/download/v0.1.0/zotero-filelink-bridge.xpi",
+  "size": 21250,
+  "sha256": "05bad0b9aac04b8ae082dc9a2b084b26ade63912799050ed83f9b04ee750e398",
+  "githubAssetId": 423362193,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-05-18T14:38:00Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-filelink-bridge@example.com",
+  "name": "Zotero FileLink Bridge",
+  "version": "0.1.0",
+  "description": "A minimal Zotero desktop bridge for creating linked file attachments from trusted local HTTP clients.",
+  "homepageUrl": "https://github.com/ImagonTuTu/zotero-filelink-bridge#readme",
+  "updateUrl": "https://github.com/ImagonTuTu/zotero-filelink-bridge/releases/download/release/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2602,
+   "sha256": "92a7e26b2c1c8f52b57e036d477e9faf43349eb5b47c73c2dd8a0b1e6478c944"
+  },
+  {
+   "path": "content/icons/favicon.png",
+   "size": 9109,
+   "sha256": "889c445d6ce98eaebdce8e20c4dc8f8b5e01eafb19de5407b8d4240feb2ee670"
+  },
+  {
+   "path": "content/icons/favicon@0.5x.png",
+   "size": 3218,
+   "sha256": "699a8660e21f0cb27e2c9f89efc8810b8e279861deb72597b17fe837950957a1"
+  },
+  {
+   "path": "content/scripts/zoterofilelinkbridge.js",
+   "size": 23608,
+   "sha256": "383edd81da007e7ae98267d5803e586c4882fcd41786d9b85b8df5fde48bb4d6"
+  },
+  {
+   "path": "manifest.json",
+   "size": 689,
+   "sha256": "f59c26ebaa7b0606d5fe67c0ee36e24ff434b923de79037348b0766e127a3ab4"
+  },
+  {
+   "path": "prefs.js",
+   "size": 173,
+   "sha256": "a4503c87f201c8af5ffcb9c3604d21ff965b0f98e63a9217081d9ea6bd8bd22f"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-filelink-bridge",
+   "version": "0.1.0",
+   "sha256": "05bad0b9aac04b8ae082dc9a2b084b26ade63912799050ed83f9b04ee750e398"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "content/icons/favicon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/icons/favicon@0.5x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 26383,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "own-server",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/zoterofilelinkbridge.js",
+      "line": 269,
+      "column": 8,
+      "snippet": "\"Access-Control-Allow-Origin\": \"*\",",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/zoterofilelinkbridge.js",
+      "line": 578,
+      "column": 29,
+      "snippet": "this.serverSocket = Cc[\"@mozilla.org/network/server-socket;1\"].createInstance(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/zoterofilelinkbridge.js",
+      "line": 579,
+      "column": 8,
+      "snippet": "Ci.nsIServerSocket",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/zoterofilelinkbridge.js",
+      "line": 581,
+      "column": 6,
+      "snippet": "this.serverSocket.init(port, !remoteAllowed, -1);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/zoterofilelinkbridge.js",
+      "line": 582,
+      "column": 6,
+      "snippet": "this.serverSocket.asyncListen(this.listener);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/zoterofilelinkbridge.js",
+      "line": 642,
+      "column": 42,
+      "snippet": "const item = canUseRelative ? await Zotero.Attachments.linkFromFileWithRelativePath({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "listens beyond this computer by default (a setting)",
+      "nsIServerSocket",
+      "web pages can call it"
+     ],
+     "web": "any",
+     "serverActions": [
+      "changes-library"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/ImagonTuTu/zotero-filelink-bridge/releases/download/release/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/ImagonTuTu/zotero-filelink-bridge/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-filelink-bridge",
+   "version": "0.1.0",
+   "sha256": "05bad0b9aac04b8ae082dc9a2b084b26ade63912799050ed83f9b04ee750e398"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "00351cd248afc94a726704086ace6b33aba372ff79d940f9905dcfa01593d8da"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "own-server",
+      "label": "Any website you visit can make it act through its local server: it doesn't check where requests come from",
+      "concern": "high",
+      "detail": "A website can make it change your library; it listens on your network by default"
+     }
+    ],
+    "concern": "high",
+    "drivers": [
+     "CAP-OWN-SERVER-WEB"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-05-18T14:38:00Z",
+    "lastCommitAt": "2026-05-18T14:30:36Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "high-concern",
+   "ruleId": "OV-HIGH",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Any website you visit can make it act through its local server: it doesn't check where requests come from"
+   ]
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T08:14:26Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

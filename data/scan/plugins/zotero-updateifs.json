@@ -1,0 +1,281 @@
+{
+ "repo": "redleafnew/zotero-updateifs",
+ "slug": "zotero-updateifs",
+ "group": "top",
+ "rank": 40,
+ "name": "Zotero更新影响因子",
+ "stars": 394,
+ "downloads": 153397,
+ "createdAt": "2022-01-19T23:53:24Z",
+ "tag": "0.95.6",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-updateifs.xpi",
+    "url": "https://github.com/redleafnew/zotero-updateifs/releases/download/0.95.6/zotero-updateifs.xpi",
+    "size": 49307,
+    "uploadedAt": "2022-12-10T09:00:38Z",
+    "sha256": "250fb59cbb15b8665ef18a0dab397e60f6def83f17ef9d00fa0a487e569272b8"
+   },
+   "manifest": {
+    "format": "install.rdf",
+    "target": "zotero",
+    "addonId": "zoteroupdateifs@redleafnew.me",
+    "name": "Zotero更新影响因子",
+    "version": "0.95.6",
+    "description": "从http://sci.justscience.cn/更新期刊影响因子",
+    "homepageUrl": "https://github.com/redleafnew/zotero-updateifs",
+    "updateUrl": "https://raw.githubusercontent.com/redleafnew/zotero-updateifs/main/update.rdf",
+    "minVersion": "3.0b1",
+    "maxVersion": "6.*.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-updateifs",
+     "version": "0.95.6",
+     "sha256": "250fb59cbb15b8665ef18a0dab397e60f6def83f17ef9d00fa0a487e569272b8"
+    },
+    "coverage": {
+     "filesTotal": 25,
+     "filesAnalyzed": 9,
+     "filesSkipped": [
+      {
+       "path": "chrome.manifest",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/en-US/options.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/en-US/options.properties",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/en-US/overlay.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/en-US/zoteroupdateifs.properties",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/zh-CN/options.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/zh-CN/options.properties",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/zh-CN/overlay.dtd",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/locale/zh-CN/zoteroupdateifs.properties",
+       "reason": "not-code"
+      },
+      {
+       "path": "chrome/skin/default/zoteroupdateifs/accept.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/skin/default/zoteroupdateifs/exclamation.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/skin/default/zoteroupdateifs/greenarrow.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/skin/default/zoteroupdateifs/information.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/skin/default/zoteroupdateifs/minus.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/skin/default/zoteroupdateifs/pen.png",
+       "reason": "binary"
+      },
+      {
+       "path": "install.rdf",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoteroupdateifs.js",
+         "line": 735,
+         "column": 25,
+         "snippet": "var resp = await Zotero.HTTP.request(\"GET\", url);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoteroupdateifs.js",
+         "line": 926,
+         "column": 25,
+         "snippet": "var resp = await Zotero.HTTP.request(\"GET\", url);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoteroupdateifs.js",
+         "line": 1030,
+         "column": 25,
+         "snippet": "var resp = await Zotero.HTTP.request(\"GET\", detailURL);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoteroupdateifs.js",
+         "line": 1181,
+         "column": 21,
+         "snippet": "let resp = await Zotero.HTTP.request(\"GET\", url);",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "sci.justscience.cn",
+       "category": "scholarly-api",
+       "provider": "JustScience",
+       "flags": [
+        "china-only"
+       ],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 6,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoteroupdateifs.js",
+         "line": 564,
+         "column": 28,
+         "snippet": "var urlCN = 'http://sci.justscience.cn/list?sci=0&q=' +",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoteroupdateifs.js",
+         "line": 605,
+         "column": 34,
+         "snippet": "var detailURLCN = 'http://sci.justscience.cn/' + detailURLPreCN; // 中文期刊详细地址20221025",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoteroupdateifs.js",
+         "line": 824,
+         "column": 24,
+         "snippet": "var detailURL = 'http://sci.justscience.cn/' + detailURLPre; // 20221024",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoteroupdateifs.js",
+         "line": 864,
+         "column": 24,
+         "snippet": "var detailURL = 'http://sci.justscience.cn/' + detailURLPre; // 20221024",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoteroupdateifs.js",
+         "line": 901,
+         "column": 24,
+         "snippet": "var detailURL = 'http://sci.justscience.cn/' + detailURLPre; // 20221024",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/zoteroupdateifs.js",
+         "line": 919,
+         "column": 18,
+         "snippet": "var url = 'http://sci.justscience.cn/list?sci=1&q=' +",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 1,
+        "column": 0,
+        "snippet": "(whitespace)",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/redleafnew/zotero-updateifs/main/update.rdf"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "scholarly-api": [
+      "sci.justscience.cn"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

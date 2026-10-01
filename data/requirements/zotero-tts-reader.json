@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-tts-reader",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "OpenAI API key needed for speech synthesis",
+  "worksWithout": "",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, 配置指南 step 1",
+   "quote": "访问 [OpenAI 平台](https://platform.openai.com/api-keys) 获取 API 密钥",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/index.js:851",
+   "quote": "var OPENAI_API_URL = \"https://api.openai.com/v1/audio/speech\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Pack shows the hard-coded OpenAI speech URL, apiKey default \"\" and the README telling the user to get an OpenAI key. The only service is OpenAI TTS and there is no endpoint setting, so no local model."
+}

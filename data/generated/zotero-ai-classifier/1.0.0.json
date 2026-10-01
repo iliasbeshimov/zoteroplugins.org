@@ -1,0 +1,391 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-classifier",
+ "repo": "keqiye/zotero-ai-classifier",
+ "version": "1.0.0",
+ "tag": "v2.0.0",
+ "releaseAuthor": "KeqiYe",
+ "publishedAt": "2026-03-12T12:52:26Z",
+ "prerelease": false,
+ "asset": {
+  "name": "AI_Classifier.xpi",
+  "url": "https://github.com/KeqiYe/Zotero-AI-Classifier/releases/download/v2.0.0/AI_Classifier.xpi",
+  "size": 15611,
+  "sha256": "e8c08fa58368d577134e52343278152244681f62b40a66887b912f47dac0fb1a",
+  "githubAssetId": 372332743,
+  "uploader": "KeqiYe",
+  "uploadedAt": "2026-03-12T12:52:02Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-ai-classifier@KeqiYe.io",
+  "name": "AI Classifier",
+  "version": "1.0.0",
+  "description": "使用 LLM API 对 Zotero 文献进行智能分类",
+  "homepageUrl": "https://github.com/KeqiYe/Zotero-AI-Classifier",
+  "updateUrl": "https://github.com/KeqiYe/Zotero-AI-Classifier",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "8.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 63057,
+   "sha256": "7c30a73416ed7337faac8be5d2cbf0b995a7a5bf2deb231020a44c5bcc9ade2d"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1062,
+   "sha256": "879d2d112f8403fbcc9548c6e3f2f219c564137d0ac052578be04a7c54abea89"
+  },
+  {
+   "path": "manifest.json",
+   "size": 471,
+   "sha256": "47823cc3130537347cd0d0c80abd63c648cec6a69bfb8d128a36cd72dcddd4ec"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-ai-classifier",
+   "version": "1.0.0",
+   "sha256": "e8c08fa58368d577134e52343278152244681f62b40a66887b912f47dac0fb1a"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 63057,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 263,
+       "column": 37,
+       "snippet": "let response = await fetch(url, options);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 952,
+       "column": 37,
+       "snippet": "let response = await fetch(tempUrl, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.siliconflow.cn",
+     "category": "llm-provider",
+     "provider": "SiliconFlow",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 100,
+       "column": 21,
+       "snippet": "api_url: \"https://api.siliconflow.cn/v1/chat/completions\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 921,
+       "column": 29,
+       "snippet": "let urlPlaceholder = \"例如: https://api.siliconflow.cn/v1/chat/completions / e.g., https://api.siliconflow.cn/v1/chat/completions\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 14,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 206,
+      "column": 22,
+      "snippet": "if (await IOUtils.exists(this.configPath)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 207,
+      "column": 33,
+      "snippet": "let data = await IOUtils.readUTF8(this.configPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 215,
+      "column": 18,
+      "snippet": "await IOUtils.writeUTF8(this.configPath, JSON.stringify(this.config, null, 2));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 248,
+      "column": 22,
+      "snippet": "if (await IOUtils.exists(logPath)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 249,
+      "column": 32,
+      "snippet": "content = await IOUtils.readUTF8(logPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 251,
+      "column": 18,
+      "snippet": "await IOUtils.writeUTF8(logPath, content + text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 380,
+      "column": 14,
+      "snippet": "await IOUtils.writeUTF8(savePath, JSON.stringify(exportData, null, 2));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 417,
+      "column": 14,
+      "snippet": "await IOUtils.writeUTF8(savePath, JSON.stringify(saveData, null, 2));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 426,
+      "column": 32,
+      "snippet": "let fileContent = await IOUtils.readUTF8(openPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 514,
+      "column": 32,
+      "snippet": "let fileContent = await IOUtils.readUTF8(openPath);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 7,
+      "column": 19,
+      "snippet": "\"homepage_url\": \"https://github.com/KeqiYe/Zotero-AI-Classifier\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/KeqiYe/Zotero-AI-Classifier"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the KeqiYe account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-ai-classifier",
+   "version": "1.0.0",
+   "sha256": "e8c08fa58368d577134e52343278152244681f62b40a66887b912f47dac0fb1a"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "598a86017c12ee96c44c49f4a5cd980aebbc431846fda03a7e4fac75dd41f9f0"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address isn't an update file"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.siliconflow.cn"
+      ],
+      "unconfirmed": [
+       "api.siliconflow.cn"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2026-03-12T12:52:26Z",
+    "lastCommitAt": "2026-03-12T12:46:14Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7–8",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

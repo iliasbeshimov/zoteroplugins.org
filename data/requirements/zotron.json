@@ -1,0 +1,44 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotron",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "OCR providers (MinerU, GLM) and cloud embedding providers (OpenAI, Jina, Cohere, Voyage etc.) for RAG",
+  "worksWithout": "Reading, searching and annotating the library through the local JSON-RPC API and CLI",
+  "services": [
+   "MinerU",
+   "Zhipu GLM",
+   "OpenAI",
+   "Jina AI",
+   "Cohere",
+   "Voyage AI",
+   "SiliconFlow",
+   "DashScope",
+   "Volcengine"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotron.extensions.zotero.zotron.embedding.apiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "Zotron is a local Rust CLI that talks directly to Zotero's internal JS API",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/preferences.js:18",
+   "quote": "ollama: { label: \"Ollama (本地)\", url: \"http://localhost:11434/v1/embeddings\", model: \"nomic-embed-text\" },",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Key prefs ocr.apiKey and embedding.apiKey default to \"\". The core is a local CLI for reading and writing the library. The Ollama embeddings preset is `ollama: { label: \"Ollama (本地)\", url: \"http://localhost:11434/v1/embeddings\" ...`, so local AI use is supported."
+}

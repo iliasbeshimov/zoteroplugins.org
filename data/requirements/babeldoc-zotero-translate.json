@@ -1,0 +1,38 @@
+{
+ "schemaVersion": 1,
+ "slug": "babeldoc-zotero-translate",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Immersive Translate Pro auth key (default setup), or your own OpenAI/DeepSeek API key for the local BabelDOC mode",
+  "worksWithout": "",
+  "services": [
+   "Immersive Translate",
+   "OpenAI",
+   "DeepSeek"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "description",
+   "where": "manifest description",
+   "quote": "Zotero BabelDOC plugin, for Immersive Translate Pro members.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.immersivetranslate.authkey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/immersivetranslate.js:71-85",
+   "quote": "\"Translation provider and API key must be configured in settings\"",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "Code: \"Translation provider and API key must be configured in settings\"; the default pref authkey is \"\" and the manifest says \"for Immersive Translate Pro members\". The custom provider is hard-coded to api.openai.com or api.deepseek.com, so nothing shows a local endpoint. BabelDOC itself may support one, so \"unknown\" is right."
+}

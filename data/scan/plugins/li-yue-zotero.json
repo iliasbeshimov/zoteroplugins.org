@@ -1,0 +1,544 @@
+{
+ "repo": "xiaoxiao937/li-yue-zotero",
+ "slug": "li-yue-zotero",
+ "group": "sample-2026",
+ "rank": 456,
+ "name": "狸阅",
+ "stars": 3,
+ "downloads": 90,
+ "createdAt": "2026-08-13T04:39:52Z",
+ "tag": "v1.3.0",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "li-yue-1.3.0.xpi",
+    "url": "https://github.com/xiaoxiao937/li-yue-zotero/releases/download/v1.3.0/li-yue-1.3.0.xpi",
+    "size": 71453,
+    "uploadedAt": "2026-08-21T14:24:43Z",
+    "sha256": "99c3704de437cd542aa6e7155d4e5811b3b29d7fa7b70a482229dc8e23357b06"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "ai-batch-reader@example.com",
+    "name": "狸阅",
+    "version": "1.3.0",
+    "description": "用同一个 Prompt 独立阅读多篇 Zotero PDF，并把回答分别保存到各自条目的笔记。",
+    "homepageUrl": null,
+    "updateUrl": "https://raw.githubusercontent.com/xiaoxiao937/li-yue-zotero/main/update.json",
+    "minVersion": "9.0.0",
+    "maxVersion": "9.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "li-yue-zotero",
+     "version": "1.3.0",
+     "sha256": "99c3704de437cd542aa6e7155d4e5811b3b29d7fa7b70a482229dc8e23357b06"
+    },
+    "coverage": {
+     "filesTotal": 15,
+     "filesAnalyzed": 5,
+     "filesSkipped": [
+      {
+       "path": "content/icon-48.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icon-96.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icon-color.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/icon-toolbar.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icon.svg",
+       "reason": "not-code"
+      },
+      {
+       "path": "content/task.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      },
+      {
+       "path": "PRIVACY.md",
+       "reason": "not-code"
+      },
+      {
+       "path": "README.md",
+       "reason": "not-code"
+      },
+      {
+       "path": "SECURITY.md",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/main.js",
+         "line": 1691,
+         "column": 24,
+         "snippet": "const xhr = await Zotero.HTTP.request(method, url, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/main.js",
+         "line": 1726,
+         "column": 24,
+         "snippet": "const xhr = await Zotero.HTTP.request(method, url, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api-docs.deepseek.com",
+       "category": "unknown",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/main.js",
+         "line": 1316,
+         "column": 22,
+         "snippet": "const sourceURL = \"https://api-docs.deepseek.com/quick_start/pricing\";",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.deepseek.com",
+       "category": "llm-provider",
+       "provider": "DeepSeek",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 2,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/main.js",
+         "line": 1231,
+         "column": 44,
+         "snippet": "return this.normalizeBaseURL(baseURL || \"https://api.deepseek.com\").replace(/\\/v1$/i, \"\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/task.js",
+         "line": 273,
+         "column": 21,
+         "snippet": "? { baseURL: \"https://api.deepseek.com\", model: \"deepseek-v4-flash\", context: 1000000, input: 0.14, cached: 0.0028, output: 0.28 }",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 7,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/main.js",
+         "line": 811,
+         "column": 42,
+         "snippet": "baseURL: this.getPref(\"baseURL\") || \"https://api.openai.com/v1\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/main.js",
+         "line": 825,
+         "column": 48,
+         "snippet": "ocrBaseURL: this.getPref(\"ocrBaseURL\") || \"https://api.openai.com/v1\",",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/task.js",
+         "line": 275,
+         "column": 23,
+         "snippet": "? { baseURL: \"https://api.openai.com/v1\", model: \"gpt-5.6-luna\", context: 1050000, input: 0.20, cached: 0.02, output: 1.20 }",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 2,
+         "column": 0,
+         "snippet": "pref(\"extensions.aiBatchReader.baseURL\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 2,
+         "column": 41,
+         "snippet": "pref(\"extensions.aiBatchReader.baseURL\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 15,
+         "column": 0,
+         "snippet": "pref(\"extensions.aiBatchReader.ocrBaseURL\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 15,
+         "column": 44,
+         "snippet": "pref(\"extensions.aiBatchReader.ocrBaseURL\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [
+      {
+       "prefKey": "baseURL",
+       "defaultValue": "https://api.openai.com/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/main.js",
+         "line": 811,
+         "column": 15,
+         "snippet": "baseURL: this.getPref(\"baseURL\") || \"https://api.openai.com/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "extensions.aiBatchReader.baseURL",
+       "defaultValue": "https://api.openai.com/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 2,
+         "column": 0,
+         "snippet": "pref(\"extensions.aiBatchReader.baseURL\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "extensions.aiBatchReader.ocrBaseURL",
+       "defaultValue": "https://api.openai.com/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 15,
+         "column": 0,
+         "snippet": "pref(\"extensions.aiBatchReader.ocrBaseURL\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "ocrBaseURL",
+       "defaultValue": "https://api.openai.com/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/main.js",
+         "line": 825,
+         "column": 18,
+         "snippet": "ocrBaseURL: this.getPref(\"ocrBaseURL\") || \"https://api.openai.com/v1\",",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "occurrences": 4,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 817,
+        "column": 44,
+        "snippet": "contextTokens: Math.max(16000, Number(this.getPref(\"contextTokens\")) || 128000),",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 818,
+        "column": 44,
+        "snippet": "maxOutputTokens: Math.max(256, Number(this.getPref(\"maxOutputTokens\")) || 4000),",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 7,
+        "column": 0,
+        "snippet": "pref(\"extensions.aiBatchReader.contextTokens\", \"128000\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 8,
+        "column": 0,
+        "snippet": "pref(\"extensions.aiBatchReader.maxOutputTokens\", 4000);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "contextTokens",
+        "extensions.aiBatchReader.contextTokens",
+        "extensions.aiBatchReader.maxOutputTokens",
+        "maxOutputTokens"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 7,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 595,
+        "column": 11,
+        "snippet": "return PathUtils.join(Zotero.DataDirectory.dir, \"ai-batch-reader-state.json\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 610,
+        "column": 29,
+        "snippet": "const contents = await Zotero.File.getContentsAsync(this.stateFilePath());",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 618,
+        "column": 34,
+        "snippet": "parsed = JSON.parse(await Zotero.File.getContentsAsync(this.stateBackupPath()));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 647,
+        "column": 31,
+        "snippet": "const existing = await Zotero.File.getContentsAsync(this.stateFilePath());",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 649,
+        "column": 14,
+        "snippet": "await Zotero.File.putContentsAsync(this.stateBackupPath(), existing);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 652,
+        "column": 12,
+        "snippet": "await Zotero.File.putContentsAsync(this.stateFilePath(), serialized);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 1510,
+        "column": 39,
+        "snippet": "const bytes = new Uint8Array(await IOUtils.read(path));",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "Zotero.File"
+       ]
+      }
+     },
+     {
+      "id": "login-manager",
+      "occurrences": 6,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 845,
+        "column": 27,
+        "snippet": "const logins = await Services.logins.findLogins(this.LOGIN_HOST, null, this.LOGIN_REALM);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 856,
+        "column": 25,
+        "snippet": "const logins = await Services.logins.findLogins(this.LOGIN_HOST, null, this.LOGIN_REALM);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 858,
+        "column": 12,
+        "snippet": "await Services.logins.removeLogin(login);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 864,
+        "column": 15,
+        "snippet": "if (typeof Services.logins.addLoginAsync === \"function\") {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 865,
+        "column": 12,
+        "snippet": "await Services.logins.addLoginAsync(login);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/main.js",
+        "line": 868,
+        "column": 6,
+        "snippet": "Services.logins.addLogin(login);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "nsILoginManager"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 14,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/xiaoxiao937/li-yue-zotero/main/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/xiaoxiao937/li-yue-zotero/main/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.deepseek.com",
+      "api.openai.com"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "login-manager",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

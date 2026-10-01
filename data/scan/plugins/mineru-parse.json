@@ -1,0 +1,603 @@
+{
+ "repo": "Lyn6969/mineru-parse",
+ "slug": "mineru-parse",
+ "group": "sample-2026",
+ "rank": 577,
+ "name": "Mineru Parse",
+ "stars": 2,
+ "downloads": 35,
+ "createdAt": "2026-02-17T15:24:04Z",
+ "tag": "v0.5.5",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "mineru-parse.xpi",
+    "url": "https://github.com/Lyn6969/mineru-parse/releases/download/v0.5.5/mineru-parse.xpi",
+    "size": 82958,
+    "uploadedAt": "2026-08-18T03:54:04Z",
+    "sha256": "a4697d8bc21b3d0b9ec5cf9fa4a3de3ed41346d330bdc7fd75d89b76d5e5a231"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "mineru-parse@local",
+    "name": "Mineru Parse",
+    "version": "0.5.5",
+    "description": "Mineru PDF 解析到笔记",
+    "homepageUrl": "https://github.com/LYN6969/mineru-parse#readme",
+    "updateUrl": "https://github.com/LYN6969/mineru-parse/releases/download/release/update.json",
+    "minVersion": "7.0",
+    "maxVersion": "10.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "mineru-parse",
+     "version": "0.5.5",
+     "sha256": "a4697d8bc21b3d0b9ec5cf9fa4a3de3ed41346d330bdc7fd75d89b76d5e5a231"
+    },
+    "coverage": {
+     "filesTotal": 16,
+     "filesAnalyzed": 6,
+     "filesSkipped": [
+      {
+       "path": "content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "content/icons/toolbar-16.png",
+       "reason": "binary"
+      },
+      {
+       "path": "locale/en-US/MineruParse-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/MineruParse-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/MineruParse-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/MineruParse-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/MineruParse-mainWindow.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/MineruParse-preferences.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "fflate",
+       "files": [
+        "content/scripts/MineruParse.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "path-browserify",
+       "files": [
+        "content/scripts/MineruParse.js"
+       ],
+       "identifiedBy": "package-json"
+      },
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "content/scripts/MineruParse.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "fetch",
+       "occurrences": 4,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 5293,
+         "column": 22,
+         "snippet": "const res = await fetch(uploadUrl, {",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 5445,
+         "column": 22,
+         "snippet": "const res = await fetch(url);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 5537,
+         "column": 22,
+         "snippet": "const res = await fetch(url, options);",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 5737,
+         "column": 23,
+         "snippet": "response = await fetch(url, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "api.openai.com",
+       "category": "llm-provider",
+       "provider": "OpenAI",
+       "flags": [
+        "blocked-in-mainland-china"
+       ],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 8,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/preferences.xhtml",
+         "line": 139,
+         "column": 21,
+         "snippet": "placeholder=\"https://api.openai.com/v1\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 3922,
+         "column": 20,
+         "snippet": "defaultValue: \"https://api.openai.com/v1\"",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 5957,
+         "column": 54,
+         "snippet": "const baseUrl = String(getPref(\"ai.baseUrl\") || \"https://api.openai.com/v1\").trim() || \"https://api.openai.com/v1\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 5957,
+         "column": 93,
+         "snippet": "aseUrl = String(getPref(\"ai.baseUrl\") || \"https://api.openai.com/v1\").trim() || \"https://api.openai.com/v1\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 6167,
+         "column": 54,
+         "snippet": "const baseUrl = String(getPref(\"ai.baseUrl\") || \"https://api.openai.com/v1\").trim() || \"https://api.openai.com/v1\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 6167,
+         "column": 93,
+         "snippet": "aseUrl = String(getPref(\"ai.baseUrl\") || \"https://api.openai.com/v1\").trim() || \"https://api.openai.com/v1\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 17,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.MineruParse.ai.baseUrl\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 17,
+         "column": 49,
+         "snippet": "pref(\"extensions.zotero.MineruParse.ai.baseUrl\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "mineru.net",
+       "category": "llm-provider",
+       "provider": "MinerU",
+       "flags": [],
+       "usage": "unknown",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 4879,
+         "column": 17,
+         "snippet": "var API_BASE = \"https://mineru.net\";",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "chrome://<expr>/content/batch-parse.xhtml",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 7330,
+         "column": 6,
+         "snippet": "`chrome://${config.addonRef}/content/batch-parse.xhtml`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/batch-stats.xhtml",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 7671,
+         "column": 6,
+         "snippet": "`chrome://${config.addonRef}/content/batch-stats.xhtml`,",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 8171,
+         "column": 6,
+         "snippet": "`chrome://${config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon@0.5x.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 6365,
+         "column": 17,
+         "snippet": "var menuIcon = `chrome://${config.addonRef}/content/icons/favicon@0.5x.png`;",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [
+      {
+       "prefKey": "ai.baseUrl",
+       "defaultValue": "https://api.openai.com/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 5957,
+         "column": 29,
+         "snippet": "const baseUrl = String(getPref(\"ai.baseUrl\") || \"https://api.openai.com/v1\").trim() || \"https://api.openai.com/v1\";",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "content/scripts/MineruParse.js",
+         "line": 6167,
+         "column": 29,
+         "snippet": "const baseUrl = String(getPref(\"ai.baseUrl\") || \"https://api.openai.com/v1\").trim() || \"https://api.openai.com/v1\";",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "prefKey": "extensions.zotero.MineruParse.ai.baseUrl",
+       "defaultValue": "https://api.openai.com/v1",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "prefs.js",
+         "line": 17,
+         "column": 0,
+         "snippet": "pref(\"extensions.zotero.MineruParse.ai.baseUrl\", \"https://api.openai.com/v1\");",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 3,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 898,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 898,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 944,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "credential-storage",
+      "occurrences": 5,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 4996,
+        "column": 25,
+        "snippet": "const token = String(getPref(\"token\") || \"\").trim();",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 5958,
+        "column": 28,
+        "snippet": "const apiKey = String(getPref(\"ai.apiKey\") || \"\").trim();",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 6168,
+        "column": 28,
+        "snippet": "const apiKey = String(getPref(\"ai.apiKey\") || \"\").trim();",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 1,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.MineruParse.token\", \"\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "prefs.js",
+        "line": 18,
+        "column": 0,
+        "snippet": "pref(\"extensions.zotero.MineruParse.ai.apiKey\", \"\");",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "prefKeys": [
+        "ai.apiKey",
+        "extensions.zotero.MineruParse.ai.apiKey",
+        "extensions.zotero.MineruParse.token",
+        "token"
+       ],
+       "apis": [
+        "preferences"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 42,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 933,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 933,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 4776,
+        "column": 30,
+        "snippet": "task.data = await IOUtils.read(task.absolutePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 4953,
+        "column": 27,
+        "snippet": "const fileStat = await IOUtils.stat(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 4960,
+        "column": 21,
+        "snippet": "const fileName = PathUtils.filename(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 5135,
+        "column": 25,
+        "snippet": "const exists = await IOUtils.exists(mdPath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 5152,
+        "column": 29,
+        "snippet": "const contentRaw = await Zotero.File.getContentsAsync(",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 5168,
+        "column": 20,
+        "snippet": "const fileDir = PathUtils.parent(mdPath) || \"\";",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 5292,
+        "column": 23,
+        "snippet": "const data = await IOUtils.read(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/scripts/MineruParse.js",
+        "line": 5453,
+        "column": 16,
+        "snippet": "const dir = PathUtils.join(baseDir, `${config.addonRef}-${dataId}`);",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "Zotero.File",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/LYN6969/mineru-parse/releases/download/release/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/LYN6969/mineru-parse/releases/download/release/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "named-third-parties",
+    "hostsByCategory": {
+     "llm-provider": [
+      "api.openai.com",
+      "mineru.net"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "credential-storage",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NAMED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

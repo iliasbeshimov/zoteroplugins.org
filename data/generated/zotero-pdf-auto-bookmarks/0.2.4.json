@@ -1,0 +1,375 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf-auto-bookmarks",
+ "repo": "yanyucai/zotero-pdf-auto-bookmarks",
+ "version": "0.2.4",
+ "tag": "v0.2.4",
+ "releaseAuthor": "yanyucai",
+ "publishedAt": "2026-08-30T08:07:49Z",
+ "prerelease": false,
+ "asset": {
+  "name": "pdf-auto-bookmarks-0.2.4.xpi",
+  "url": "https://github.com/yanyucai/zotero-pdf-auto-bookmarks/releases/download/v0.2.4/pdf-auto-bookmarks-0.2.4.xpi",
+  "size": 238337,
+  "sha256": "06cd74c752ed18acb7a75190f766479b1f4437ac6e2099b39b2f9b86fd89c240",
+  "githubAssetId": 536331492,
+  "uploader": "yanyucai",
+  "uploadedAt": "2026-08-30T08:07:48Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "pdf-auto-bookmarks@local.invalid",
+  "name": "PDF Auto Bookmarks",
+  "version": "0.2.4",
+  "description": "Generates PDF bookmarks with local multi-signal detection and optional AI refinement.",
+  "updateUrl": "https://updates.invalid/pdf-auto-bookmarks/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "auto-bookmarks.js",
+   "size": 8451,
+   "sha256": "c2db5a8c3f197c25f6e27af19b117bb836a6c772da4d8d4f065c5de72f2f4529"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 907,
+   "sha256": "3e170ccd701433cfc365af8401e62dadf018b031d707501dd157edb6a052324b"
+  },
+  {
+   "path": "engine.js",
+   "size": 918468,
+   "sha256": "1f2d4a8cd76111fcb45404f33a750518d706a90176ed32e1da41acd1fc4e5d38"
+  },
+  {
+   "path": "manifest.json",
+   "size": 454,
+   "sha256": "8ca3ddbe02d91c5a4e7d0a456a7aa9f847820fdf4b9aedbf5dd7d4889f129b58"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-pdf-auto-bookmarks",
+   "version": "0.2.4",
+   "sha256": "06cd74c752ed18acb7a75190f766479b1f4437ac6e2099b39b2f9b86fd89c240"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 927826,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "minified",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [
+    "auto-bookmarks.js"
+   ],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "@pdf-lib/standard-fonts",
+     "files": [
+      "engine.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "@pdf-lib/upng",
+     "files": [
+      "engine.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "pako",
+     "files": [
+      "engine.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "pdf-lib",
+     "files": [
+      "engine.js"
+     ],
+     "identifiedBy": "package-json"
+    },
+    {
+     "name": "tslib",
+     "files": [
+      "engine.js"
+     ],
+     "identifiedBy": "package-json"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "engine.js",
+       "line": 20376,
+       "column": 25,
+       "snippet": "let response = await Zotero.HTTP.request(\"POST\", ai.endpoint, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": true,
+     "libraries": [
+      "pdf-lib"
+     ],
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "engine.js",
+       "line": 18843,
+       "column": 21,
+       "snippet": "var pdfLib = \"pdf-lib (https://github.com/Hopding/pdf-lib)\";",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "auto-bookmarks.js",
+      "line": 1,
+      "column": 2990,
+      "snippet": "A\\u4E0B\\u8F7D\",\"The attachment file is missing or not downloaded\"));let a=await IOUtils.read(t),s=I(),r;try{r=await s.extractDocument(e.id,a,{ai:k()})}catch(l){throw/encrypted|encryption|password|perm",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "auto-bookmarks.js",
+      "line": 1,
+      "column": 4951,
+      "snippet": "Date().toISOString().replace(/[:.]/g,\"-\"),m=`${t}.pre-bookmarks-${c}.bak`;await IOUtils.copy(t,m);try{await IOUtils.write(t,n,{tmpPath:`${t}.auto-bookmarks.tmp`})}catch(l){throw await IOUtils.copy(m,t",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "auto-bookmarks.js",
+      "line": 1,
+      "column": 4979,
+      "snippet": "(/[:.]/g,\"-\"),m=`${t}.pre-bookmarks-${c}.bak`;await IOUtils.copy(t,m);try{await IOUtils.write(t,n,{tmpPath:`${t}.auto-bookmarks.tmp`})}catch(l){throw await IOUtils.copy(m,t,{noOverwrite:!1}),l}let P=M",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "auto-bookmarks.js",
+      "line": 1,
+      "column": 5055,
+      "snippet": "ait IOUtils.write(t,n,{tmpPath:`${t}.auto-bookmarks.tmp`})}catch(l){throw await IOUtils.copy(m,t,{noOverwrite:!1}),l}let P=Math.floor(await e.attachmentModificationTime/1e3);return e.attachmentLastPro",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://updates.invalid/pdf-auto-bookmarks/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://updates.invalid/pdf-auto-bookmarks/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the yanyucai account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T11:22:46.049Z",
+  "appliesTo": {
+   "slug": "zotero-pdf-auto-bookmarks",
+   "version": "0.2.4",
+   "sha256": "06cd74c752ed18acb7a75190f766479b1f4437ac6e2099b39b2f9b86fd89c240"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "5405974d8f2bfea3e2f1d4f1d92ba921f664e2eb6550bb6050012a414357fc6b"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Minified (compressed) code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [],
+    "concern": "medium",
+    "label": "Uses the network; we couldn't tell where",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-30T08:07:49Z",
+    "lastCommitAt": "2026-08-30T07:38:42Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Uses the network; we couldn't tell where"
+   ]
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T10:42:30Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 3,
+    "dialogs": 2
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

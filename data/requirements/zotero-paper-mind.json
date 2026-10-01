@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paper-mind",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "the paper analysis (key for an OpenAI-compatible endpoint, DeepSeek by default)",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Configure API",
+   "quote": "You also need to enter your own API key.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/paperassistant.js:3622",
+   "quote": "config2.endpoint.trim() && config2.apiKey.trim() && config2.model.trim()",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README says 'You also need to enter your own API key.' and the code checks that the key is non-empty. The endpoint can be edited and isn't restricted to https, but nothing in the pack or code mentions a local model, so 'unknown' is safer than 'no'."
+}

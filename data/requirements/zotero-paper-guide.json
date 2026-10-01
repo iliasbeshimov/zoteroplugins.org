@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paper-guide",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "generating the guide (OpenAI or DeepSeek key)",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "DeepSeek"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Notes",
+   "quote": "模型请求需要用户自己的 API Key 才能实际测试。",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:9",
+   "quote": "endpoint: 'https://api.openai.com/v1/chat/completions',",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:14",
+   "quote": "endpoint: 'https://api.deepseek.com/chat/completions',",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says to enter the provider's API Key and save it. bootstrap.js lists only the OpenAI and DeepSeek endpoints, and I found no custom or local endpoint option."
+}

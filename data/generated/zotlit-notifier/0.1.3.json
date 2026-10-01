@@ -1,0 +1,337 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotlit-notifier",
+ "repo": "faibk/zotlit-notifier",
+ "version": "0.1.3",
+ "tag": "v0.1.3",
+ "releaseAuthor": "Faibk",
+ "publishedAt": "2026-04-21T15:09:29Z",
+ "prerelease": false,
+ "asset": {
+  "name": "custom-zotlit-0.1.3.xpi",
+  "url": "https://github.com/Faibk/zotlit-notifier/releases/download/v0.1.3/custom-zotlit-0.1.3.xpi",
+  "size": 2227,
+  "sha256": "3cc8a521443a58bcdd4b335b8871319e566ddcfe57d49027eafe7c9f30e05f10",
+  "githubAssetId": 401759984,
+  "uploader": "Faibk",
+  "uploadedAt": "2026-04-21T17:07:21Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotlit-notifier@faibk.github.io",
+  "name": "Custom Zotlit Notifier",
+  "version": "0.1.3",
+  "description": "Notifies zotlit in obsidian about tab and annotation changes",
+  "homepageUrl": "https://github.com/Faibk/zotlit-notifier",
+  "updateUrl": "https://github.com/Faibk/zotlit-notifier/blob/master/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 654,
+   "sha256": "24c969f009e6ce38afb70737c3eac24184c81b7843ad79e1f998213e7082ec82"
+  },
+  {
+   "path": "manifest.json",
+   "size": 459,
+   "sha256": "c4bdc55c5e3dfcd01782514879dae881da256859697f59b85807e1c2a325ca01"
+  },
+  {
+   "path": "notifier.js",
+   "size": 2038,
+   "sha256": "93bbc89eadf6b2312b14f00312cc5d10873995c3d9d7d5784a7db41426479d85"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 69,
+   "sha256": "3e904ae8d2b7cfe09740e640e6ea5b6cd50dd2f8e4b88810b0e72fd58d38a1d3"
+  },
+  {
+   "path": "prefs.js",
+   "size": 65,
+   "sha256": "38925742cd181975dfe3b2dd78effb7e505cb482d1560b7b39515650a8b68fc5"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotlit-notifier",
+   "version": "0.1.3",
+   "sha256": "3cc8a521443a58bcdd4b335b8871319e566ddcfe57d49027eafe7c9f30e05f10"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 2826,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "notifier.js",
+       "line": 39,
+       "column": 8,
+       "snippet": "await fetch(new URL(\"/notify\", Zotero.Prefs.get('extensions.zotlit-notifier.url', true)), {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "localhost",
+     "port": 9091,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotlit-notifier.url\", \"http://localhost:9091\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 39,
+       "snippet": "pref(\"extensions.zotlit-notifier.url\", \"http://localhost:9091\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotlit-notifier.url",
+     "defaultValue": "http://localhost:9091",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "notifier.js",
+       "line": 26,
+       "column": 30,
+       "snippet": "this.log(`Main: Server is ${Zotero.Prefs.get('extensions.zotlit-notifier.url', true)}`);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "notifier.js",
+       "line": 39,
+       "column": 33,
+       "snippet": "await fetch(new URL(\"/notify\", Zotero.Prefs.get('extensions.zotlit-notifier.url', true)), {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 1,
+       "column": 24,
+       "snippet": "<html:input type=\"text\" preference=\"extensions.zotlit-notifier.url\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotlit-notifier.url\", \"http://localhost:9091\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 18,
+      "snippet": "\"update_url\": \"https://github.com/Faibk/zotlit-notifier/blob/master/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/Faibk/zotlit-notifier/blob/master/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Faibk account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotlit-notifier",
+   "version": "0.1.3",
+   "sha256": "3cc8a521443a58bcdd4b335b8871319e566ddcfe57d49027eafe7c9f30e05f10"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "aa5a426aaa15b114a83b2f31111840a5a75017738bea9a3f3b1681a02d46c6ba"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a web page, not an update file"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-04-21T15:09:29Z",
+    "lastCommitAt": "2026-04-21T15:12:49Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T06:01:05Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

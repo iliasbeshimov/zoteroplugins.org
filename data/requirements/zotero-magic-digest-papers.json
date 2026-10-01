@@ -1,0 +1,32 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-magic-digest-papers",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "An API key for at least one AI service (DeepSeek, Volcano Engine Ark or Qwen DashScope) to run the analysis",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek",
+   "Volcano Engine Ark",
+   "Alibaba DashScope (Qwen)"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, install requirements",
+   "quote": "至少一个 AI API Key：",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/magic_digest.js:969",
+   "quote": "placeholder=\"例如：DeepSeek 官方 / Kimi 32K / 本地 Ollama\"",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says '至少一个 AI API Key：' with no keyless default, so a key is required. Code line 969 (stored with unicode escapes) has the placeholder '本地 Ollama' in the model-label field. README also lists an 'openai-compatible' provider with a configurable address, so a local Ollama endpoint is supported."
+}

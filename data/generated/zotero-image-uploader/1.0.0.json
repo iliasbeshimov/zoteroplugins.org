@@ -1,0 +1,345 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-image-uploader",
+ "repo": "invincible-dhh/zotero-image-uploader",
+ "version": "1.0.0",
+ "tag": "v1.0.0",
+ "releaseAuthor": "Invincible-Dhh",
+ "publishedAt": "2026-03-16T09:17:20Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-image-uploader.xpi",
+  "url": "https://github.com/Invincible-Dhh/zotero-image-uploader/releases/download/v1.0.0/zotero-image-uploader.xpi",
+  "size": 3050,
+  "sha256": "fe85f24af17b9bd8d5385b319de63b5215b6995c65d0232b4faf2518cda8de84",
+  "githubAssetId": 374845714,
+  "uploader": "Invincible-Dhh",
+  "uploadedAt": "2026-03-16T09:17:35Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-image-uploader@DHH",
+  "name": "Zotero Image Uploader",
+  "version": "1.0.0",
+  "description": "Upload annotation images to image host via PicList",
+  "updateUrl": "https://raw.githubusercontent.com/Invincible-Dhh/zotero-image-uploader/main/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "8.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 8081,
+   "sha256": "2a0b1f48aa20783b95fd2c03646baca27450e6f59d24b16a8135ba4e4499206d"
+  },
+  {
+   "path": "manifest.json",
+   "size": 458,
+   "sha256": "6ed894c671bcb8badeec8ad01a92b11b319c3c7e741e073483cbd2548f2eb773"
+  },
+  {
+   "path": "prefs.js",
+   "size": 120,
+   "sha256": "64c80c55e0a94406b7f5d6550f8aa8581f05ffc255802f994152864bca2819e4"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-image-uploader",
+   "version": "1.0.0",
+   "sha256": "fe85f24af17b9bd8d5385b319de63b5215b6995c65d0232b4faf2518cda8de84"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 8201,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "xhr",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 190,
+       "column": 14,
+       "snippet": "var xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 191,
+       "column": 21,
+       "snippet": "xhr.open(\"POST\", \"http://127.0.0.1:\" + port + \"/upload\", true);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "http://127.0.0.1:<expr>/upload",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 191,
+       "column": 4,
+       "snippet": "xhr.open(\"POST\", \"http://127.0.0.1:\" + port + \"/upload\", true);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "PicList",
+     "provider": "",
+     "category": "unknown",
+     "automatic": true,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 191,
+       "column": 21,
+       "snippet": "xhr.open(\"POST\", \"http://127.0.0.1:\" + port + \"/upload\", true);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 154,
+      "column": 25,
+      "snippet": "if (path && (await IOUtils.exists(path))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 173,
+      "column": 16,
+      "snippet": "if (await IOUtils.exists(candidates[i])) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Invincible-Dhh/zotero-image-uploader/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Invincible-Dhh/zotero-image-uploader/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Invincible-Dhh account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-image-uploader",
+   "version": "1.0.0",
+   "sha256": "fe85f24af17b9bd8d5385b319de63b5215b6995c65d0232b4faf2518cda8de84"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "a52838521e9167b7df0b4b5759865dfa35bc58b88c681abc129f3a472272cbc8"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "unknown",
+      "hosts": [
+       "PicList"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Hands your data to PicList automatically; we can't check where it goes from there",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN-HANDOFF"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2026-03-16T09:17:20Z",
+    "lastCommitAt": "2026-03-16T09:15:35Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7–8",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Hands your data to PicList automatically; we can't check where it goes from there"
+   ]
+  }
+ }
+}

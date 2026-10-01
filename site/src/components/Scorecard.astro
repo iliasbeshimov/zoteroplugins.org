@@ -1,0 +1,498 @@
+---
+import { type Area, type Plugin, testedText } from "../lib/atlas.ts";
+import GradeTag from "./GradeTag.astro";
+import StatusIcon from "./StatusIcon.astro";
+import Tip from "./Tip.astro";
+import { REPORT_URL } from "../lib/links.ts";
+
+interface Props {
+  p: Plugin;
+  /** Area keys that start open. */
+  open?: string[];
+}
+const { p, open = [] } = Astro.props;
+const LV: Record<string, ["few" | "review" | "serious" | "nodata" | "info", string, string | null]> = {
+  low: ["few", "Low", "few"],
+  medium: ["review", "Medium", "rev"],
+  high: ["serious", "High", "ser"],
+  unknown: ["nodata", "Unknown", "nd"],
+  info: ["info", "", null],
+};
+const NOTICE: Record<string, ["few" | "review" | "serious" | "nodata" | "info" | null, string]> = {
+  lang: [null, "accent"],
+  fork: ["info", "plain"],
+  id: ["review", "rev"],
+  compat: ["review", "rev"],
+  legacy: ["review", "rev"],
+  release: ["nodata", "nd"],
+  analysis: ["nodata", "nd"],
+  blocklist: ["serious", "ser"],
+  legal: ["info", "plain"],
+  info: ["info", "plain"],
+};
+const LEVEL_TIP: Record<string, string> = {
+  low: "Low concern: normal for plugins that do this job. Listed so you know.",
+  medium: "Medium concern: worth reading before you install. One medium finding makes the grade B.",
+  high: "High concern: a serious problem. One high finding makes the grade C.",
+  unknown: "We couldn't check this yet.",
+};
+const NOTE_TIP: Record<string, string> = {
+  "named in its code": "The address is in its code, but we didn't trace a request to it. It may be a link or unused.",
+  unencrypted: "Reached over plain http://, so anyone on the network in between can read what's sent.",
+  "seen when we ran it": "It contacted this address when we ran it in Zotero.",
+  low: "Low concern.",
+  medium: "Medium concern: worth reading before you install.",
+  high: "High concern: a serious problem.",
+};
+const toneVars = (t?: string | null) =>
+  t && t !== "plain" && t !== "accent"
+    ? `background:var(--${t}-bg);color:var(--${t}-fg);border-color:var(--${t}-line)`
+    : t === "accent"
+      ? "background:var(--accent-soft);color:var(--ink);border-color:var(--accent)"
+      : "background:var(--surface);color:var(--ink);border-color:var(--line-strong)";
+const code = p.areas.filter((a) => ["code", "data", "caps"].includes(a.key));
+const setup = p.areas.filter((a) => !["code", "data", "caps"].includes(a.key));
+const groups: { title: string; hint: string; tip: string; areas: Area[] }[] = [
+
+  { title: "What we found in the code", hint: "Sets the grade", tip: "The worst finding in these three areas sets the grade.", areas: code },
+  { title: "Before you install", hint: "Shown, not graded", tip: "Facts to help you decide. They don't change the grade.", areas: setup },
+];
+const k = p.gradeTone;
+const checked = testedText(p);
+---
+
+<div class="sc">
+  <div class="hdr" style={`background:var(--${k}-bg);border-color:var(--${k}-line)`}>
+    <div class="top">
+      <div class="gl">
+        <GradeTag grade={p.grade} size="lg" />
+        <div class="glabel">
+          <span class="eyebrow" style={`color:var(--${k}-fg)`}>Atlas grade</span>
+          <span class="word" style={`color:var(--${k}-fg)`}>{p.gradeWord}</span>
+        </div>
+      </div>
+      <span class="ladder-wrap"><GradeTag grade={p.grade} variant="ladder" size="sm" /></span>
+    </div>
+    <div class="because"><span class="muted">because </span><strong>{p.because}</strong></div>
+    <div class="next">{p.next}</div>
+  </div>
+  <div class="meta">
+    {p.version && <span>Applies to v{p.version}, released {p.released}</span>}
+    <span>{checked}</span>
+  </div>
+  {
+    p.notices.length > 0 && (
+      <div class="notices">
+        {p.notices.map((n) => {
+          const [icon, t] = NOTICE[n.kind] ?? ["info", "plain"];
+          return (
+            <div class="notice" style={toneVars(t)}>
+              {n.kind === "lang" && <span aria-hidden="true" class="wen">文</span>}
+              {icon && (
+                <span class="ni">
+                  <StatusIcon kind={icon} size={20} />
+                </span>
+              )}
+              <div class="nt">
+                <strong>{n.t}</strong>
+                {n.sub && <span>{n.sub}</span>}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )
+  }
+  {
+    groups.map((g) => (
+      <>
+        <div class="ghead eyebrow">
+          <span>{g.title}</span>
+          <Tip text={g.tip} class="tip-end">{g.hint}</Tip>
+        </div>
+        {g.areas.map((a) => {
+          const lv = LV[a.level] ?? LV.info;
+          const empty = !a.groups.length && !a.evidence.length;
+          return (
+            <details class="area" open={open.includes(a.key) || open.includes("all")}>
+              <summary>
+                <span class="icon">
+                  <StatusIcon kind={lv[0]} size={18} />
+                </span>
+                <span class="body">
+                  <span class="title">{a.title}</span>
+                  <span class="value">
+                    <span class:list={{ hl: a.highlight }}>{a.value}</span>
+                  </span>
+                  {a.sub && <span class="sub">{a.sub}</span>}
+                </span>
+                <span class="right">
+                  {lv[1] && (
+                    <Tip text={LEVEL_TIP[a.level] ?? ""} class="lvl plain tip-end" style={toneVars(lv[2])}>
+                      {lv[1]}
+                    </Tip>
+                  )}
+                  <span aria-hidden="true" class="chev" />
+                </span>
+              </summary>
+              <div class="detail">
+                {a.groups.map((gr) => (
+                  <div class="grp">
+                    {gr.name && <span class="gname">{gr.name}</span>}
+                    <div class="items">
+                      {gr.items.map((c) => (
+                        <span class:list={["item", { mono: c.mono }]} style={toneVars(c.tone)}>
+                          {c.t}
+                          {c.note && (NOTE_TIP[c.note] ? <Tip text={NOTE_TIP[c.note]} class="note">{c.note}</Tip> : <span class="note">{c.note}</span>)}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                {a.evidence.length > 0 && (
+                  <>
+                    <span class="gname">Where we found it</span>
+                    {a.evidence.map((e) => (
+                      <div class="ev">
+                        <div class="evh">
+                          <strong>{e.what}</strong>
+                          <span>{e.loc}</span>
+                        </div>
+                        {e.note && <p class="evnote">{e.note}</p>}
+                        <pre>{e.code}</pre>
+                      </div>
+                    ))}
+                  </>
+                )}
+                {empty && <span class="sub">No further detail for this area yet.</span>}
+              </div>
+            </details>
+          );
+        })}
+      </>
+    ))
+  }
+  <div class="foot">
+    <span class="muted">We report what we found in the code. Open any area for the evidence.</span>
+    <span class="links"><a href="/how-we-grade">How we grade</a><a href={REPORT_URL}>Report a problem</a></span>
+  </div>
+</div>
+
+<style>
+  .sc {
+    --px: 24px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow-2);
+    color: var(--ink);
+  }
+  .hdr {
+    border-radius: 17px 17px 0 0;
+    border-bottom: 1px solid;
+    padding: 22px var(--px) 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .gl {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    min-width: 0;
+  }
+  .glabel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .word {
+    font-size: 30px;
+    line-height: 1.08;
+    font-weight: 720;
+    letter-spacing: -0.02em;
+  }
+  .because {
+    font-size: 16px;
+    line-height: 1.4;
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+  }
+  .because strong {
+    font-weight: 650;
+  }
+  .muted {
+    color: var(--ink-2);
+  }
+  .next {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--ink-2);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    padding: 12px var(--px);
+    border-bottom: 1px solid var(--line);
+    font: 500 12.5px/1.45 var(--font-mono);
+    color: var(--ink-2);
+  }
+  .notices {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px var(--px) 2px;
+  }
+  .notice {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid;
+  }
+  .notice .nt {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    color: var(--ink);
+  }
+  .notice strong {
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1.35;
+  }
+  .notice .nt span {
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  .ni {
+    flex: none;
+    padding-top: 1px;
+    display: flex;
+  }
+  .wen {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .ghead {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 20px var(--px) 8px;
+  }
+  .area {
+    border-top: 1px solid var(--line);
+  }
+  summary {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr) auto;
+    column-gap: 14px;
+    align-items: start;
+    padding: 14px var(--px);
+    cursor: pointer;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .area:hover {
+    background: var(--surface-2);
+  }
+  .icon {
+    padding-top: 20px;
+    display: flex;
+  }
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .value {
+    font-size: 16px;
+    line-height: 1.35;
+    font-weight: 620;
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+  }
+  .hl {
+    background: var(--accent-soft);
+    padding: 1px 6px;
+    border-radius: 5px;
+    box-decoration-break: clone;
+  }
+  .sub {
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+  }
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 18px;
+  }
+  .sc :global(.lvl) {
+    font: 600 11.5px/1 var(--font-mono);
+    padding: 5px 7px;
+    border-radius: 6px;
+    border: 1px solid;
+  }
+  .chev {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    border: 1px solid var(--line-strong);
+    display: grid;
+    place-items: center;
+    font: 500 16px/1 var(--font-mono);
+    color: var(--ink-2);
+    background: var(--surface);
+  }
+  .chev::before {
+    content: "+";
+  }
+  details[open] .chev::before {
+    content: "−";
+  }
+  .detail {
+    padding: 0 var(--px) 20px 58px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .grp {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .gname {
+    font: 600 12px/1.2 var(--font-mono);
+    color: var(--ink-3);
+  }
+  .items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .item {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    line-height: 1.35;
+    border: 1px solid;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+  .item.mono {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+  }
+  .sc :global(.note) {
+    font: 600 11.5px/1.2 var(--font-mono);
+    opacity: 0.85;
+  }
+  .ev {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .evh {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 14px;
+    padding: 8px 12px;
+    background: var(--surface-2);
+    font: 500 12px/1.4 var(--font-mono);
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  .evh strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .evnote {
+    margin: 0;
+    padding: 10px 12px 2px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--code-bg);
+  }
+  pre {
+    margin: 0;
+    padding: 10px 12px;
+    font: 12.5px/1.55 var(--font-mono);
+    background: var(--code-bg);
+    color: var(--ink);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px 16px;
+    padding: 14px var(--px);
+    border-top: 1px solid var(--line);
+    border-radius: 0 0 17px 17px;
+    background: var(--surface-2);
+    font-size: 13.5px;
+    line-height: 1.4;
+  }
+  .links {
+    display: flex;
+    gap: 16px;
+  }
+  .links a {
+    font-weight: 600;
+  }
+  @media (max-width: 720px) {
+    .sc {
+      --px: 18px;
+    }
+    .word {
+      font-size: 26px;
+    }
+    .ladder-wrap {
+      display: none;
+    }
+    .detail {
+      padding-left: 18px;
+    }
+  }
+</style>

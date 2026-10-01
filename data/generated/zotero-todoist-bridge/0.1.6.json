@@ -1,0 +1,364 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-todoist-bridge",
+ "repo": "cpsimpson/zotero-todoist-bridge",
+ "version": "0.1.6",
+ "tag": "v0.1.6",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-04-20T06:05:24Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-todoist-bridge-0.1.6.xpi",
+  "url": "https://github.com/cpsimpson/zotero-todoist-bridge/releases/download/v0.1.6/zotero-todoist-bridge-0.1.6.xpi",
+  "size": 7273,
+  "sha256": "4aa37264a6909381ad0f39a24aee32979415c4718e821597038e7ed03d8a1dd8",
+  "githubAssetId": 400442533,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-04-20T06:05:23Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-todoist-bridge@cpsimpson.dev",
+  "name": "Zotero Todoist Bridge",
+  "version": "0.1.6",
+  "description": "Send selected Zotero papers to Todoist with configurable quick-add templates.",
+  "homepageUrl": "https://github.com/cpsimpson/zotero-todoist-bridge",
+  "updateUrl": "https://github.com/cpsimpson/zotero-todoist-bridge/releases/latest/download/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 888,
+   "sha256": "69f1b0c8d9a6eb9b286bbf8251d513aa206c1c957a66a6f08d0edbe3ca6dd8ac"
+  },
+  {
+   "path": "locale/en-US/zotero-todoist-bridge.ftl",
+   "size": 192,
+   "sha256": "284eecd4dc476d483c6222972a6ab0711a8c2762caedd18a6ffb54c98c7ff9d7"
+  },
+  {
+   "path": "manifest.json",
+   "size": 535,
+   "sha256": "dd153e5e26debb4789a64d085fe7c4a1cacf19641eb440165414acdabda45c96"
+  },
+  {
+   "path": "preferences.js",
+   "size": 4658,
+   "sha256": "1a4cc7522cf3919097e31e648b0987e3bb474928e3c002e8e8d664f33ce1bbaf"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 1871,
+   "sha256": "1d342bf3aecbcc8c2df51279c307c4f0faf4797e9df481bea1d2f57dd678beaa"
+  },
+  {
+   "path": "zotero-todoist-bridge.js",
+   "size": 10746,
+   "sha256": "d8db8c44cb161afdff0ce63a74cda4d9f6c9c02930dbb700d0cad63a5380c3d7"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-todoist-bridge",
+   "version": "0.1.6",
+   "sha256": "4aa37264a6909381ad0f39a24aee32979415c4718e821597038e7ed03d8a1dd8"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/zotero-todoist-bridge.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 18163,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "zotero-todoist-bridge.js",
+       "line": 299,
+       "column": 27,
+       "snippet": "const response = await fetch(TODOIST_QUICK_ADD_URL, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.todoist.com",
+     "category": "integration",
+     "provider": "Todoist",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "zotero-todoist-bridge.js",
+       "line": 5,
+       "column": 30,
+       "snippet": "const TODOIST_QUICK_ADD_URL = \"https://api.todoist.com/api/v1/tasks/quick\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "todoist.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 21,
+       "column": 16,
+       "snippet": "href=\"https://todoist.com/app/settings/integrations/developer\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "preferences.js",
+      "line": 43,
+      "column": 28,
+      "snippet": "this.tokenInput.value = Zotero.Prefs.get(ZTB_PREF_TOKEN, true) || \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "preferences.js",
+      "line": 60,
+      "column": 4,
+      "snippet": "Zotero.Prefs.set(ZTB_PREF_TOKEN, this.tokenInput.value.trim(), true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-todoist-bridge.js",
+      "line": 234,
+      "column": 12,
+      "snippet": "return (Zotero.Prefs.get(ZTB_PREF_TOKEN, true) || \"\").trim();",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero-todoist-bridge.todoistToken"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/cpsimpson/zotero-todoist-bridge/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/cpsimpson/zotero-todoist-bridge/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-todoist-bridge",
+   "version": "0.1.6",
+   "sha256": "4aa37264a6909381ad0f39a24aee32979415c4718e821597038e7ed03d8a1dd8"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "19b826824110e816c94502296139063b9053afe43774c4ee47840fbe5e4775e9"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "api.todoist.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-04-20T06:05:24Z",
+    "lastCommitAt": "2026-04-20T06:19:25Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T06:52:14Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,615 @@
+{
+ "schemaVersion": 1,
+ "slug": "pdf-ai-bookmarks",
+ "repo": "edwintuan/pdf-ai-bookmarks",
+ "version": "1.0.2",
+ "tag": "1.0.2",
+ "releaseAuthor": "edwintuan",
+ "publishedAt": "2026-04-17T01:09:18Z",
+ "prerelease": false,
+ "asset": {
+  "name": "pdf-ai-bookmarks-1.0.2.xpi",
+  "url": "https://github.com/edwintuan/pdf-ai-bookmarks/releases/download/1.0.2/pdf-ai-bookmarks-1.0.2.xpi",
+  "size": 443260,
+  "sha256": "7c98f7bc8306f0f672225805c1459eb9efee9be3c3a607be7b3c5b1d44a6e031",
+  "githubAssetId": 398203767,
+  "uploader": "edwintuan",
+  "uploadedAt": "2026-04-17T01:09:18Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "pdf-ai-bookmarks@edwintuan.com",
+  "name": "PDF AI Bookmarks",
+  "version": "1.0.2",
+  "description": "Generate AI-powered bookmarks for PDFs using Gemini.",
+  "updateUrl": "https://raw.githubusercontent.com/edwintuan/pdf-ai-bookmarks/main/update.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1639,
+   "sha256": "559421aa032c5246cdb4b7efdb80ca3bd6a19be4e18e35e408321767448b93b5"
+  },
+  {
+   "path": "icon.svg",
+   "size": 274,
+   "sha256": "ce1c2a1a8031d386c4237be34e73639e3c8389f5eb67ec47fa8c49e16ef2b2ea"
+  },
+  {
+   "path": "lib/generative-ai.mjs",
+   "size": 61004,
+   "sha256": "06f6e99ae84b5dfef88d93ee2500b4a687cf375a28ff9dfc78a7f343c89826c2"
+  },
+  {
+   "path": "lib/pdf-lib.js",
+   "size": 1743338,
+   "sha256": "bb3ee8ff88640cd6f91da2febd8fefa2d537cab5f8ef852500c52241b6cf7514"
+  },
+  {
+   "path": "locale/en-US/pdf-ai-bookmarks.ftl",
+   "size": 484,
+   "sha256": "e3527ca1fb194c9e605aa2bebb550250edba0aafe8189cc4af6389d43fb4441a"
+  },
+  {
+   "path": "manifest.json",
+   "size": 416,
+   "sha256": "a7bf1199d571f8060d1ba7cedc0fedf4fcf9ec9ba3ec98d5c4f6ae50b0b3b379"
+  },
+  {
+   "path": "pdf-ai-bookmarks.js",
+   "size": 40407,
+   "sha256": "07c0c2509548aa7d66c119946d13e402aa3fe68970cbed656b1efefcc3c4ecff"
+  },
+  {
+   "path": "preferences.js",
+   "size": 773,
+   "sha256": "912cecc97be83638b7fb7da8aa80a3ca84ce3fff568517629589d0a3e64f7cc6"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 1249,
+   "sha256": "b7a415381293125e6fffab34046cffcc5bb8a1bcf87703d88c78839179944f9b"
+  },
+  {
+   "path": "prefs.js",
+   "size": 98,
+   "sha256": "bd36b262cca3e217b33c6b4f5a36bfcebf73f7dea0852022f4ab0a915f719eb7"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "pdf-ai-bookmarks",
+   "version": "1.0.2",
+   "sha256": "7c98f7bc8306f0f672225805c1459eb9efee9be3c3a607be7b3c5b1d44a6e031"
+  },
+  "coverage": {
+   "filesTotal": 10,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/pdf-ai-bookmarks.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 1848508,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": true,
+    "files": [
+     "lib/generative-ai.mjs",
+     "lib/pdf-lib.js"
+    ]
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "pdf-lib",
+     "files": [
+      "lib/pdf-lib.js"
+     ],
+     "identifiedBy": "file-name"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 9,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/generative-ai.mjs",
+       "line": 379,
+       "column": 25,
+       "snippet": "response = await fetchFn(url, fetchOptions);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 259,
+       "column": 29,
+       "snippet": "startRes = await fetch(`https://generativelanguage.googleapis.com/upload/v1beta/files?key=${apiKey}`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 347,
+       "column": 34,
+       "snippet": "const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/${resourceName}?key=${apiKey}`);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 381,
+       "column": 18,
+       "snippet": "await fetch(`https://generativelanguage.googleapis.com/v1beta/${resourceName}?key=${apiKey}`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 798,
+       "column": 31,
+       "snippet": "const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${this.getGeminiModel()}:generateContent?key=` + apiKey, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "xhr",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 289,
+       "column": 28,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 754,
+       "column": 32,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "generativelanguage.googleapis.com",
+     "category": "llm-provider",
+     "provider": "Google Gemini",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 6,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/generative-ai.mjs",
+       "line": 289,
+       "column": 25,
+       "snippet": "const DEFAULT_BASE_URL = \"https://generativelanguage.googleapis.com\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 259,
+       "column": 35,
+       "snippet": "startRes = await fetch(`https://generativelanguage.googleapis.com/upload/v1beta/files?key=${apiKey}`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 347,
+       "column": 40,
+       "snippet": "const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/${resourceName}?key=${apiKey}`);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 381,
+       "column": 24,
+       "snippet": "await fetch(`https://generativelanguage.googleapis.com/v1beta/${resourceName}?key=${apiKey}`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 755,
+       "column": 37,
+       "snippet": "xhr.open('POST', `https://generativelanguage.googleapis.com/v1beta/models/${this.getGeminiModel()}:generateContent?key=` + apiKey, true);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 798,
+       "column": 37,
+       "snippet": "const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${this.getGeminiModel()}:generateContent?key=` + apiKey, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": true,
+     "libraries": [
+      "pdf-lib"
+     ],
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/pdf-lib.js",
+       "line": 37698,
+       "column": 25,
+       "snippet": "var pdfLib = \"pdf-lib (https://github.com/Hopding/pdf-lib)\";",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://generativelanguage.googleapis.com/upload/v1beta/files?key=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 259,
+       "column": 29,
+       "snippet": "startRes = await fetch(`https://generativelanguage.googleapis.com/upload/v1beta/files?key=${apiKey}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "https://generativelanguage.googleapis.com/v1beta/<expr>?key=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 347,
+       "column": 34,
+       "snippet": "const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/${resourceName}?key=${apiKey}`);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 381,
+       "column": 18,
+       "snippet": "await fetch(`https://generativelanguage.googleapis.com/v1beta/${resourceName}?key=${apiKey}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "https://generativelanguage.googleapis.com/v1beta/models/<expr>:generateContent?key=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 755,
+       "column": 20,
+       "snippet": "xhr.open('POST', `https://generativelanguage.googleapis.com/v1beta/models/${this.getGeminiModel()}:generateContent?key=` + apiKey, true);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "pdf-ai-bookmarks.js",
+       "line": 798,
+       "column": 31,
+       "snippet": "const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${this.getGeminiModel()}:generateContent?key=` + apiKey, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "pdf-ai-bookmarks.js",
+      "line": 27,
+      "column": 15,
+      "snippet": "return Zotero.Prefs.get('extensions.pdf-ai-bookmarks.apiKey', true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "preferences.js",
+      "line": 8,
+      "column": 30,
+      "snippet": "const currentApiKey = Zotero.Prefs.get('extensions.pdf-ai-bookmarks.apiKey', true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 1,
+      "column": 0,
+      "snippet": "pref(\"extensions.pdf-ai-bookmarks.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.pdf-ai-bookmarks.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "pdf-ai-bookmarks.js",
+      "line": 55,
+      "column": 32,
+      "snippet": "if (path instanceof Components.interfaces.nsIFile) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "pdf-ai-bookmarks.js",
+      "line": 415,
+      "column": 33,
+      "snippet": "let data = await IOUtils.read(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "pdf-ai-bookmarks.js",
+      "line": 430,
+      "column": 25,
+      "snippet": "let data = await Zotero.File.getBinaryContentsAsync(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "pdf-ai-bookmarks.js",
+      "line": 454,
+      "column": 29,
+      "snippet": "return await IOUtils.write(path, data);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "pdf-ai-bookmarks.js",
+      "line": 460,
+      "column": 14,
+      "snippet": "await Zotero.File.putContentsAsync(path, data);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/edwintuan/pdf-ai-bookmarks/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/edwintuan/pdf-ai-bookmarks/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the edwintuan account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "pdf-ai-bookmarks",
+   "version": "1.0.2",
+   "sha256": "7c98f7bc8306f0f672225805c1459eb9efee9be3c3a607be7b3c5b1d44a6e031"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "98c2026a4cf365046032de91082845bba4ae4c6ccb9618161a290e98243aacf5"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": true,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers version 1.0.2, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "generativelanguage.googleapis.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-04-17T01:09:18Z",
+    "lastCommitAt": "2026-04-17T01:08:35Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T05:03:27Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 1,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-plugin-hover-translation",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "an API key for the LLM provider (default is OpenAI); a local Ollama endpoint would not need one",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "DeepSeek"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.hoverTranslation.apiBaseUrl\", \"https://api.openai.com/v1\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Comparison table",
+   "quote": "| API required | Yes | Yes | Local Python server |",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Supported API Providers",
+   "quote": "**Ollama** (local) — `http://localhost:11434/v1` with your local model name",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Default base URL is OpenAI with empty apiKey, README comparison says \"API required | Yes\"; README lists \"**Ollama** (local) — `http://localhost:11434/v1`\" as a supported provider."
+}

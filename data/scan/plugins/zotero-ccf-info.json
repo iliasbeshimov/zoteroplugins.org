@@ -1,0 +1,314 @@
+{
+ "repo": "TimeTrapzz/zotero-ccf-info",
+ "slug": "zotero-ccf-info",
+ "group": "top",
+ "rank": 69,
+ "name": "Zotero CCF Info",
+ "stars": 76,
+ "downloads": 46564,
+ "createdAt": "2024-09-22T11:22:43Z",
+ "tag": "v0.4.1",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "zotero-ccf-info.xpi",
+    "url": "https://github.com/TimeTrapzz/zotero-ccf-info/releases/download/v0.4.1/zotero-ccf-info.xpi",
+    "size": 62512,
+    "uploadedAt": "2026-09-16T14:12:59Z",
+    "sha256": "860e9dcb9036215782f19ab05655b686ee1a4b6db5527967218c9f21f60b034a"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "ccfinfo@timetrapzz.site",
+    "name": "Zotero CCF Info",
+    "version": "0.4.1",
+    "description": "Zotero Plugin for easily obtaining the ccf rating of a paper, the corresponding conference/journal and the number of citations",
+    "homepageUrl": "https://github.com/TimeTrapzz/zotero-ccf-info#readme",
+    "updateUrl": "https://github.com/TimeTrapzz/zotero-ccf-info/releases/download/release/update.json",
+    "minVersion": "6.999",
+    "maxVersion": "10.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-ccf-info",
+     "version": "0.4.1",
+     "sha256": "860e9dcb9036215782f19ab05655b686ee1a4b6db5527967218c9f21f60b034a"
+    },
+    "coverage": {
+     "filesTotal": 9,
+     "filesAnalyzed": 3,
+     "filesSkipped": [
+      {
+       "path": "chrome/content/icons/favicon.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/content/icons/favicon@0.5x.png",
+       "reason": "binary"
+      },
+      {
+       "path": "chrome/content/zoteroPane.css",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/en-US/ccfinfo-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/ccfinfo-addon.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": [
+      {
+       "name": "zotero-plugin-toolkit",
+       "files": [
+        "chrome/content/scripts/ccfinfo.js"
+       ],
+       "identifiedBy": "package-json"
+      }
+     ]
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "xhr",
+       "occurrences": 3,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/ccfinfo.js",
+         "line": 8535,
+         "column": 18,
+         "snippet": "const xhr = new XMLHttpRequest();",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/ccfinfo.js",
+         "line": 8596,
+         "column": 18,
+         "snippet": "const xhr = new XMLHttpRequest();",
+         "inVendoredCode": false
+        },
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/ccfinfo.js",
+         "line": 8616,
+         "column": 18,
+         "snippet": "const xhr = new XMLHttpRequest();",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "dblp.timetrap.workers.dev",
+       "category": "cloud-function",
+       "provider": "Cloudflare Workers",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/ccfinfo.js",
+         "line": 8617,
+         "column": 25,
+         "snippet": "const api_format = `https://dblp.timetrap.workers.dev/`;",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "host": "searchtest.aminer.cn",
+       "category": "scholarly-api",
+       "provider": "AMiner",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/ccfinfo.js",
+         "line": 8565,
+         "column": 8,
+         "snippet": "\"https://searchtest.aminer.cn/aminer-search/search/publication\"",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/ccfinfo.js",
+         "line": 8960,
+         "column": 6,
+         "snippet": "`chrome://${config.addonRef}/content/icons/favicon.png`",
+         "inVendoredCode": false
+        }
+       ]
+      },
+      {
+       "pattern": "chrome://<expr>/content/icons/favicon@0.5x.png",
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "chrome/content/scripts/ccfinfo.js",
+         "line": 8862,
+         "column": 23,
+         "snippet": "const menuIcon = `chrome://${config.addonRef}/content/icons/favicon@0.5x.png`;",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "clipboard",
+      "occurrences": 3,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/ccfinfo.js",
+        "line": 461,
+        "column": 49,
+        "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/ccfinfo.js",
+        "line": 461,
+        "column": 95,
+        "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/ccfinfo.js",
+        "line": 507,
+        "column": 43,
+        "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "apis": [
+        "clipboard",
+        "osascript (fixed command)"
+       ]
+      }
+     },
+     {
+      "id": "filesystem",
+      "occurrences": 2,
+      "inVendoredCodeOnly": true,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/ccfinfo.js",
+        "line": 496,
+        "column": 38,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       },
+       {
+        "kind": "code",
+        "file": "chrome/content/scripts/ccfinfo.js",
+        "line": 496,
+        "column": 82,
+        "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+        "inVendoredCode": true
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 15,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://github.com/TimeTrapzz/zotero-ccf-info/releases/download/release/update.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://github.com/TimeTrapzz/zotero-ccf-info/releases/download/release/update.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "developer-servers",
+    "hostsByCategory": {
+     "cloud-function": [
+      "dblp.timetrap.workers.dev"
+     ],
+     "scholarly-api": [
+      "searchtest.aminer.cn"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-DEVELOPER"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

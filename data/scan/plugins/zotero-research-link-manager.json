@@ -1,0 +1,247 @@
+{
+ "repo": "kai-yhg/zotero-research-link-manager",
+ "slug": "zotero-research-link-manager",
+ "group": "sample-2026",
+ "rank": 1338,
+ "name": "Research Link Manager",
+ "stars": 1,
+ "downloads": 0,
+ "createdAt": "2026-09-08T16:52:29Z",
+ "tag": "v0.1.7",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "research-link-manager-0.1.7.xpi",
+    "url": "https://github.com/kai-yhg/zotero-research-link-manager/releases/download/v0.1.7/research-link-manager-0.1.7.xpi",
+    "size": 14742,
+    "uploadedAt": "2026-09-08T16:56:00Z",
+    "sha256": "8166687de13b02989f9253d766d5150ae4fbb04b68b49bd599c4d7c098ad7702"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "research-link-manager@local",
+    "name": "Research Link Manager",
+    "version": "0.1.7",
+    "description": "Mirrors Zotero Collections as a filesystem view of PDF links.",
+    "homepageUrl": null,
+    "updateUrl": "https://example.invalid/research-link-manager/updates.json",
+    "minVersion": "9.0",
+    "maxVersion": "9.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-research-link-manager",
+     "version": "0.1.7",
+     "sha256": "8166687de13b02989f9253d766d5150ae4fbb04b68b49bd599c4d7c098ad7702"
+    },
+    "coverage": {
+     "filesTotal": 14,
+     "filesAnalyzed": 11,
+     "filesSkipped": [
+      {
+       "path": "locale/en-US/research-link-manager.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "locale/zh-CN/research-link-manager.ftl",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [],
+     "hosts": [],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 38,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "src/CollectionMapper.js",
+        "line": 16,
+        "column": 13,
+        "snippet": "base ? PathUtils.join(base, part) : part);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/CollectionMapper.js",
+        "line": 19,
+        "column": 19,
+        "snippet": "const path = PathUtils.join(root, relativePaths.get(collection.id));",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/CollectionMapper.js",
+        "line": 89,
+        "column": 21,
+        "snippet": "destination: PathUtils.join(record.directory, targetName)",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/LinkManager.js",
+        "line": 6,
+        "column": 50,
+        "snippet": "const systemDir = Services.dirsvc.get(\"SysD\", Ci.nsIFile).path;",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/LinkManager.js",
+        "line": 7,
+        "column": 18,
+        "snippet": "this.fsutil = PathUtils.join(systemDir, \"fsutil.exe\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/LinkManager.js",
+        "line": 8,
+        "column": 22,
+        "snippet": "this.powershell = PathUtils.join(systemDir, \"WindowsPowerShell\", \"v1.0\", \"powershell.exe\");",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/LinkManager.js",
+        "line": 45,
+        "column": 18,
+        "snippet": "if (!(await IOUtils.exists(destination))) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/LinkManager.js",
+        "line": 56,
+        "column": 27,
+        "snippet": "if (created && await IOUtils.exists(destination)) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/LinkManager.js",
+        "line": 58,
+        "column": 16,
+        "snippet": "await IOUtils.remove(destination);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "src/LinkManager.js",
+        "line": 71,
+        "column": 20,
+        "snippet": "if (!(await IOUtils.exists(entry.destination))) {",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "zotero-data-dir",
+       "apis": [
+        "IOUtils/PathUtils",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "process-launch",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "src/LinkManager.js",
+        "line": 5,
+        "column": 6,
+        "snippet": "Zotero.Utilities.Internal.subprocess(command, args));",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "apis": [
+        "Zotero.Utilities.Internal.exec"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 10,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://example.invalid/research-link-manager/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://example.invalid/research-link-manager/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "no-network-found",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "process-launch",
+      "concern": "medium"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "review-details",
+    "drivers": [
+     "DS-NONE",
+     "CAP-PROCESS"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

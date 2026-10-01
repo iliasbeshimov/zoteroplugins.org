@@ -1,0 +1,160 @@
+{
+ "repo": "ruali-dev/qingyi-translator",
+ "slug": "qingyi-translator",
+ "group": "sample-2026",
+ "rank": 1065,
+ "name": "轻译 · Qingyi 连接器",
+ "stars": 0,
+ "downloads": 4,
+ "createdAt": "2026-08-25T04:48:36Z",
+ "tag": "v0.2.5",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "qingyi-zotero.xpi",
+    "url": "https://github.com/ruali-dev/qingyi-translator/releases/download/v0.2.5/qingyi-zotero.xpi",
+    "size": 5774,
+    "uploadedAt": "2026-09-06T07:30:04Z",
+    "sha256": "eec48051603d89d6db828de653af7ce29b8a94787663a3878e62a0f5ec9a9341"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "paper-translator-connector@local",
+    "name": "轻译 · Qingyi 连接器",
+    "version": "0.2.5",
+    "description": "把 Zotero PDF 选区发送到本机轻译桌面端",
+    "homepageUrl": null,
+    "updateUrl": "https://raw.githubusercontent.com/ruali-dev/qingyi-translator/main/updates.json",
+    "minVersion": "10.0",
+    "maxVersion": "10.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "qingyi-translator",
+     "version": "0.2.5",
+     "sha256": "eec48051603d89d6db828de653af7ce29b8a94787663a3878e62a0f5ec9a9341"
+    },
+    "coverage": {
+     "filesTotal": 4,
+     "filesAnalyzed": 2,
+     "filesSkipped": [
+      {
+       "path": "LICENSE",
+       "reason": "not-code"
+      },
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [
+      {
+       "api": "zotero-http",
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/connector.js",
+         "line": 38,
+         "column": 12,
+         "snippet": "await Zotero.HTTP.request(\"POST\", ENDPOINT, {",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "hosts": [
+      {
+       "host": "127.0.0.1",
+       "port": 8765,
+       "category": "localhost",
+       "provider": "This computer",
+       "flags": [],
+       "usage": "request",
+       "inVendoredCode": false,
+       "occurrences": 1,
+       "evidence": [
+        {
+         "kind": "code",
+         "file": "content/connector.js",
+         "line": 6,
+         "column": 19,
+         "snippet": "const ENDPOINT = \"http://127.0.0.1:8765/translate\";",
+         "inVendoredCode": false
+        }
+       ]
+      }
+     ],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 10,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://raw.githubusercontent.com/ruali-dev/qingyi-translator/main/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://raw.githubusercontent.com/ruali-dev/qingyi-translator/main/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "user-configured-only",
+    "hostsByCategory": {
+     "localhost": [
+      "127.0.0.1"
+     ]
+    },
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

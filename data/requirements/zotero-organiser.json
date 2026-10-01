@@ -1,0 +1,28 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-organiser",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README core features",
+   "quote": "Runs FastEmbed BGE embeddings + ModernBERT NLI cross-encoder locally on CPU, Apple Silicon (MPS), NVIDIA CUDA, or AMD ROCm. Never uploads metadata and never parses PDFs.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "sandbox",
+   "where": "Sandbox test",
+   "quote": "hosts contacted with no key entered: {}",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The plugin's build/addon.js has a 'remote' classifier mode needing remoteEndpoint and remoteApiKey (`config.mode === \"remote\" && config.remoteEndpoint && config.remoteApiKey`), while the default is `mode: \"local\"`, so a key is optional for an extra mode, not none. That remote endpoint could be a local OpenAI-style server, so 'no' is unproven."
+}

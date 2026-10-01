@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paper-classification-xt",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "the AI classification (DeepSeek, Alibaba Model Studio or other provider key)",
+  "worksWithout": "",
+  "services": [
+   "DeepSeek",
+   "Alibaba Model Studio"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Requirements",
+   "quote": "Your own model API key",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README FAQ",
+   "quote": "Open **Model/API Settings**, enter your own API key, and click **Test Connection**.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/xt-auto-classifier.js:126",
+   "quote": "The endpoint must be an https:// URL.",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README lists 'Your own model API key' as a requirement and the default prefs point at DeepSeek. The code quote 'The endpoint must be an https:// URL.' rules out a plain http://localhost Ollama endpoint."
+}

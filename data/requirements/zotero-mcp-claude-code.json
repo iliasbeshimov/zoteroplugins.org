@@ -1,0 +1,33 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-mcp-claude-code",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Semantic search embeddings via a hosted provider such as OpenAI",
+  "worksWithout": "The MCP server for AI clients runs locally with no key",
+  "services": [
+   "OpenAI",
+   "SiliconFlow",
+   "Voyage AI",
+   "Google Gemini"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README Semantic Search",
+   "quote": "Configure an embedding provider in preferences (OpenAI, Ollama, or any OpenAI-compatible API)",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README What it does",
+   "quote": "The plugin runs an MCP server inside Zotero that AI clients connect to over HTTP. No separate server process needed.",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "The README quote \"Configure an embedding provider in preferences (OpenAI, Ollama, or any OpenAI-compatible API)\" is in the pack and supports local use via Ollama. The core MCP server needs no key. The README's Semantic Search settings list \"API key\", so the key is only for hosted embedding providers."
+}

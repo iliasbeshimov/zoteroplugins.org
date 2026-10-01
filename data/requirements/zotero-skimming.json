@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-skimming",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Remote API summarization mode (OpenAI-compatible endpoint)",
+  "worksWithout": "Local Ollama summarization and the baseline ranker",
+  "services": [
+   "OpenAI-compatible API (DeepSeek, OpenRouter, OpenAI)"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Usage",
+   "quote": "Remote mode requires an OpenAI-compatible endpoint, API key, and model name. Local mode requires a user-installed [Ollama]",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README",
+   "quote": "Ollama for efficient fully local processing on most consumer laptops",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README: \"Local mode requires a user-installed Ollama\" and \"Remote mode requires an OpenAI-compatible endpoint, API key, and model name\". The baseline ranker works without models, and the code has OLLAMA_URL = http://127.0.0.1:11434."
+}

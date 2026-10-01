@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-links",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "The automatic collection-assignment feature, which calls Anthropic's Claude and needs the user's own Claude API key",
+  "worksWithout": "Copying zotero:// links for collections via the right-click menu",
+  "services": [
+   "Anthropic"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "description",
+   "where": "Manifest description",
+   "quote": "Copy zotero:// links for collections via right-click menu",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:123-126",
+   "quote": "const apiKey = Services.prefs.getCharPref(\"extensions.zotero-links.claudeApiKey\", \"\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "bootstrap.js:275",
+   "quote": "response = await fetch(\"https://api.anthropic.com/v1/messages\", {",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "bootstrap.js:123 reads extensions.zotero-links.claudeApiKey, and the auto-assign menu opens preferences if it is empty. Copying collection links needs no key. The only AI endpoint in the code is the hardcoded https://api.anthropic.com/v1/messages, so a local model is not supported."
+}

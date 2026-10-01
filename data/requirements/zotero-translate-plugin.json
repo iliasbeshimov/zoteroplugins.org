@@ -1,0 +1,41 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-translate-plugin",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "DeepL, OpenAI, DeepSeek, OpenRouter, SiliconFlow, Groq (hosted services)",
+  "worksWithout": "the default Ollama preset on localhost, with an empty key",
+  "services": [
+   "DeepL",
+   "OpenAI",
+   "DeepSeek",
+   "OpenRouter",
+   "SiliconFlow",
+   "Groq"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zoterotranslate.apiAddress\", \"http://localhost:11434/v1\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zoterotranslate.apiPreset\", \"ollama\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "readme",
+   "where": "README, Highlights",
+   "quote": "兼容本地 `Ollama` 模型以及 `OpenAI Compatible / LLM`、`DeepL`、`LibreTranslate` 等翻译服务",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Default prefs are apiPreset \"ollama\", apiAddress \"http://localhost:11434/v1\" and apiKey \"\". The manifest says it calls a local LLM API. Hosted services such as DeepL and OpenAI need their own keys."
+}

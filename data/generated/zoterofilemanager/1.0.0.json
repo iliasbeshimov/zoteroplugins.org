@@ -1,0 +1,267 @@
+{
+ "schemaVersion": 1,
+ "slug": "zoterofilemanager",
+ "repo": "drownfish19/zoterofilemanager",
+ "version": "1.0.0",
+ "tag": "v1.0.0",
+ "releaseAuthor": "DrownFish19",
+ "publishedAt": "2025-12-07T03:22:59Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-file-manager.xpi",
+  "url": "https://github.com/DrownFish19/ZoteroFileManager/releases/download/v1.0.0/zotero-file-manager.xpi",
+  "size": 3193,
+  "sha256": "d926472ce43f96f7cf02f18c5033aa8754f70d78bf3cde318bd5083b17f2dc5a",
+  "githubAssetId": 325360161,
+  "uploader": "DrownFish19",
+  "uploadedAt": "2025-12-07T03:22:56Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "drownfish19@gmail.com",
+  "name": "Zotero File Manager",
+  "version": "1.0.0",
+  "description": "A Zotero 7 plugin to manage missing linked files, find duplicates, and merge items.",
+  "updateUrl": "https://raw.githubusercontent.com/drownfish19/ZoteroFileManager/main/updates.json",
+  "strictMinVersion": "6.99",
+  "strictMaxVersion": "8.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 631,
+   "sha256": "b58267720f3e357ece3b04c23b1d624e6f07c0f2fc2802cd36fd5c4ca5d34e6f"
+  },
+  {
+   "path": "content/file_manager.js",
+   "size": 7711,
+   "sha256": "b4a06c94f515f02b869503bfd0386d5b81e99cc49fbc4acc785b5c45575d8451"
+  },
+  {
+   "path": "manifest.json",
+   "size": 475,
+   "sha256": "e6414a017a2ccb9c94121ddd6527f2f71eb8ddc2baaeea41bd226fe877411fb7"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zoterofilemanager",
+   "version": "1.0.0",
+   "sha256": "d926472ce43f96f7cf02f18c5033aa8754f70d78bf3cde318bd5083b17f2dc5a"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 8342,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/file_manager.js",
+      "line": 75,
+      "column": 42,
+      "snippet": "if (!path || !(await IOUtils.exists(path))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/file_manager.js",
+      "line": 132,
+      "column": 35,
+      "snippet": "if (path && (await IOUtils.exists(path))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/file_manager.js",
+      "line": 134,
+      "column": 41,
+      "snippet": "let stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/drownfish19/ZoteroFileManager/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/drownfish19/ZoteroFileManager/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the DrownFish19 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zoterofilemanager",
+   "version": "1.0.0",
+   "sha256": "d926472ce43f96f7cf02f18c5033aa8754f70d78bf3cde318bd5083b17f2dc5a"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "34f6872d067fe20847fb08ef24f7d0667fd2d8459c3b795c1df0973ea9c46ab7"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "slowing",
+    "lastReleaseAt": "2025-12-07T03:22:59Z",
+    "lastCommitAt": "2025-12-07T03:19:56Z",
+    "concern": "low"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7–8",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

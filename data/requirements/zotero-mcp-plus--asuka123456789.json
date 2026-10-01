@@ -1,0 +1,42 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-mcp-plus--asuka123456789",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Semantic indexing (off by default) with a hosted embedding provider needs the user's own embedding API key",
+  "worksWithout": "The MCP server and its tools (PDF recognition, tasks, duplicates, health check) using a locally generated bearer token",
+  "services": [
+   "OpenAI",
+   "Google Gemini",
+   "Alibaba DashScope",
+   "Zhipu",
+   "SiliconFlow",
+   "Voyage AI",
+   "OpenRouter"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zotero-mcp-plus.semantic.enabled\", false);",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-mcp-plus.js:3914",
+   "quote": "const apiKey = Zotero.Prefs.get(PREF_API_KEY, true);",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-mcp-plus.js:24968",
+   "quote": "apiBase: \"http://localhost:11434/v1\",",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Semantic indexing is off by default (pref semantic.enabled false), and the core MCP tools need no user key. Code has apiBase \"http://localhost:11434/v1\" (Ollama) and an API key pref for hosted providers."
+}

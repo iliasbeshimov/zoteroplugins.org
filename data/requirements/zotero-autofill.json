@@ -1,0 +1,31 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-autofill",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "AI bibliography parsing (Import Bibliography Text) needs an OpenRouter or CUNY AI Lab Gateway key",
+  "worksWithout": "Catalogue metadata lookup via Open Library, Google Books and Crossref",
+  "services": [
+   "OpenRouter",
+   "CUNY AI Lab Gateway"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Data and costs",
+   "quote": "Without a key, catalogue lookup still works but bibliography parsing shows an add-a-key error.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotero-metadata-assistant.js:58",
+   "quote": "const url = \"https://openrouter.ai/api/v1/chat/completions\";",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says \"Without a key, catalogue lookup still works but bibliography parsing shows an add-a-key error.\" The shipped 1.0.0 code hardcodes the OpenRouter URL, so there is no local endpoint. The CUNY gateway in the README is not in this release code, so the key services should list only OpenRouter for this release."
+}

@@ -1,0 +1,30 @@
+{
+ "schemaVersion": 1,
+ "slug": "z-o-bridge",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "The 'AI import to Obsidian' feature needs an AI address, model and key for a third-party OpenAI-compatible service",
+  "worksWithout": "Sending Zotero items and PDFs to Obsidian and generating Markdown cards, using Obsidian's local receiver",
+  "services": [
+   "a third-party OpenAI-compatible API service"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, privacy section",
+   "quote": "未填写 AI 地址、模型或密钥时不会发出请求",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero-obsidian-ai-bridge.apiKey\", \"\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README says no request is sent when the AI address, model or key is left empty, and sending items to Obsidian works without AI. A user-set AI base URL exists, but no Ollama or local AI reference was found, so local model is unknown."
+}

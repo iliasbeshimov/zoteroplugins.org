@@ -1,0 +1,160 @@
+---
+/**
+ * Submit a plugin: paste a GitHub address; the function at /api/submit checks it and queues
+ * it. ?repo=owner/name shows where a submission stands, from /api/known.json.
+ */
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Base from "../layouts/Base.astro";
+import { fmtDate } from "../lib/atlas.ts";
+import { inReview } from "../lib/submissions.ts";
+
+// Cloudflare's always-pass test key until the real one is set at build time.
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA";
+const reviewing = inReview().slice(0, 20);
+---
+
+<Base title="Submit a plugin · Zotero Plugins Atlas" description="Missing a Zotero plugin? Paste its GitHub address and we'll add it, then check its code and grade it.">
+  <SiteHeader />
+  <main class="page">
+    <h1>Submit a plugin</h1>
+    <p class="lede">Missing a Zotero plugin? Paste the address of its GitHub repository. If it's a Zotero plugin we don't have yet, we add it right away as "In review", then check its code and grade it like every other plugin.</p>
+
+    <form id="f" class="box" novalidate>
+      <label for="url">GitHub repository</label>
+      <input id="url" name="url" type="text" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://github.com/owner/plugin" required maxlength="300" />
+      <div class="cf-turnstile" data-sitekey={siteKey} data-size="flexible"></div>
+      <button type="submit">Submit</button>
+      <p id="msg" class="msg" role="status" aria-live="polite"></p>
+    </form>
+
+    <section class="how">
+      <h2>What happens next</h2>
+      <ol>
+        <li>We check that the repository has a release with a Zotero plugin file (.xpi).</li>
+        <li>If it does, it's listed as "In review" within a few minutes, without a grade and without an Install button.</li>
+        <li>We check its code. When that's done, usually within half an hour, its page shows the grade and what we found.</li>
+      </ol>
+      <p class="muted">Submitting the same plugin again changes nothing. Plugins we already list, and addresses that aren't Zotero plugins, are answered straight away.</p>
+    </section>
+
+    {
+      reviewing.length > 0 && (
+        <section class="how">
+          <h2>In review now</h2>
+          <ul class="list">
+            {reviewing.map((r) => (
+              <li>
+                <a href={`/p/${r.slug}`}>{r.name ?? r.repo}</a> <span class="muted">· submitted {fmtDate(r.decidedAt)}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </main>
+  <SiteFooter />
+</Base>
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script>
+  type Known =
+    | { status: "listed" | "in-review"; slug: string; name: string }
+    | { status: "rejected"; reason: string; checkedTag: string | null }
+    | { status: "waiting" };
+  const form = document.getElementById("f") as HTMLFormElement;
+  const input = document.getElementById("url") as HTMLInputElement;
+  const msg = document.getElementById("msg") as HTMLParagraphElement;
+  const say = (html: string, tone = "") => {
+    msg.innerHTML = html;
+    msg.dataset.tone = tone;
+  };
+  const esc = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+  const repoOf = (s: string) => {
+    const t = s.trim();
+    const m = /^(?:https?:\/\/)?(?:www\.)?github\.com\/([A-Za-z0-9-]+)\/([A-Za-z0-9._-]+)/i.exec(t) ?? /^([A-Za-z0-9-]+)\/([A-Za-z0-9._-]+)$/.exec(t);
+    return m ? `${m[1]}/${m[2].replace(/\.git$/i, "")}`.toLowerCase() : null;
+  };
+  const describe = (k: Known | undefined): [string, string] | null => {
+    if (!k) return null;
+    if (k.status === "listed") return [`<strong>${esc(k.name)}</strong> is in the atlas: <a href="/p/${k.slug}">see its page</a>.`, "ok"];
+    if (k.status === "in-review") return [`<strong>${esc(k.name)}</strong> is in review: <a href="/p/${k.slug}">see its page</a>. Its grade appears there when the checks finish.`, "ok"];
+    if (k.status === "waiting") return ["It's queued. We add a limited number of new plugins a day, so it will be added within a day.", "ok"];
+    return k.status === "rejected" ? [esc(k.reason), "no"] : null;
+  };
+  const lookup = async (repo: string) => {
+    const r = await fetch(`/api/known.json?t=${Date.now()}`);
+    const k = (await r.json()) as { repos: Record<string, Known> };
+    return k.repos[repo];
+  };
+  // Waits for a queued submission to appear, for up to 15 minutes.
+  const watch = async (repo: string) => {
+    for (let i = 0; i < 45; i++) {
+      await new Promise((ok) => setTimeout(ok, 20_000));
+      const d = describe(await lookup(repo).catch(() => undefined));
+      if (d) return say(...d);
+    }
+    say(`Still checking. Come back to <a href="/submit?repo=${encodeURIComponent(repo)}">this link</a> later to see where it stands.`, "ok");
+  };
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const repo = repoOf(input.value);
+    if (!repo) return say("That doesn't look like a GitHub repository address, such as https://github.com/owner/plugin.", "no");
+    const token = (form.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement | null)?.value;
+    if (!token) return say("Please wait for the check above to finish, then submit again.", "no");
+    say("Checking…");
+    const btn = form.querySelector("button") as HTMLButtonElement;
+    btn.disabled = true;
+    try {
+      const r = await fetch("/api/submit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ url: input.value, token }) });
+      const j = (await r.json()) as { status: string; message?: string; slug?: string; name?: string; repo?: string };
+      if (j.status === "queued") {
+        say(`Thanks. <strong>${esc(j.repo ?? repo)}</strong> looks like a Zotero plugin, so we're adding it. This message updates when it's listed, usually in a few minutes. You can also keep <a href="/submit?repo=${encodeURIComponent(j.repo ?? repo)}">this link</a>.`, "ok");
+        history.replaceState(null, "", `/submit?repo=${encodeURIComponent(j.repo ?? repo)}`);
+        void watch((j.repo ?? repo).toLowerCase());
+      } else if (j.status === "listed" || j.status === "in-review") {
+        const d = describe({ status: j.status, slug: j.slug ?? "", name: j.name ?? repo });
+        if (d) say(...d);
+      } else say(esc(j.message ?? "Something went wrong. Please try again."), j.status === "error" ? "no" : "no");
+    } catch {
+      say("We couldn't reach the server. Please try again.", "no");
+    } finally {
+      btn.disabled = false;
+      (window as unknown as { turnstile?: { reset: () => void } }).turnstile?.reset();
+    }
+  });
+
+  const pre = new URLSearchParams(location.search).get("repo");
+  if (pre) {
+    input.value = `https://github.com/${pre}`;
+    const repo = repoOf(pre);
+    if (repo)
+      lookup(repo)
+        .then((k) => {
+          const d = describe(k);
+          if (d) say(...d);
+          else say("We're still checking it, or haven't received it. If you submitted it more than an hour ago, try again.", "ok");
+        })
+        .catch(() => {});
+  }
+</script>
+
+<style>
+  .page { max-width: 720px; margin: 0 auto; padding: 40px var(--gutter) 64px; display: flex; flex-direction: column; gap: 20px; }
+  h1 { margin: 0; font-size: clamp(30px, 4.5vw, 44px); line-height: 1.05; letter-spacing: -0.035em; font-weight: 780; }
+  .lede { margin: 0; font-size: 17px; line-height: 1.6; color: var(--ink-2); }
+  .box { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 12px; }
+  label { font-weight: 650; }
+  input { font: inherit; font-size: 16px; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); min-width: 0; }
+  input:focus { outline: 2px solid var(--focus); outline-offset: 1px; }
+  button { align-self: flex-start; font: inherit; font-weight: 650; padding: 12px 22px; min-height: 44px; border: 0; border-radius: 10px; background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+  button:disabled { opacity: 0.6; cursor: wait; }
+  .msg { margin: 0; line-height: 1.55; min-height: 1.55em; }
+  .msg[data-tone="no"] { color: var(--ser-fg); }
+  .how h2 { margin: 0 0 8px; font-size: 20px; font-weight: 720; }
+  .how ol, .how ul { margin: 0; padding-left: 22px; line-height: 1.7; }
+  .how .list { list-style: none; padding: 0; }
+  .muted { color: var(--ink-3); }
+  .how p { margin: 10px 0 0; line-height: 1.6; }
+</style>

@@ -1,0 +1,216 @@
+{
+ "repo": "FedeFRC/Zotero-Paper-Viewer",
+ "slug": "zotero-paper-viewer",
+ "group": "sample-2026",
+ "rank": 1152,
+ "name": "Paper Viewer",
+ "stars": 0,
+ "downloads": 2,
+ "createdAt": "2026-05-04T11:22:34Z",
+ "tag": "v0.3.7",
+ "artifacts": [
+  {
+   "asset": {
+    "name": "paper-viewer-0.3.7.xpi",
+    "url": "https://github.com/FedeFRC/Zotero-Paper-Viewer/releases/download/v0.3.7/paper-viewer-0.3.7.xpi",
+    "size": 10221,
+    "uploadedAt": "2026-05-16T14:26:57Z",
+    "sha256": "cf793cca86e385812a439a1b661332bd04cfbb97713a42d8510df8a60721abf6"
+   },
+   "manifest": {
+    "format": "manifest.json",
+    "target": "zotero",
+    "addonId": "paper-feed-viewer@example.com",
+    "name": "Paper Viewer",
+    "version": "0.3.7",
+    "description": "A focused paper gallery viewer for Zotero collections and searches.",
+    "homepageUrl": null,
+    "updateUrl": "https://example.com/paper-feed-viewer/updates.json",
+    "minVersion": "6.999",
+    "maxVersion": "9.0.*"
+   },
+   "analysis": {
+    "schemaVersion": 1,
+    "analyzerVersion": "0.3.1",
+    "analyzedAt": "2026-09-25T06:05:33.245Z",
+    "input": {
+     "slug": "zotero-paper-viewer",
+     "version": "0.3.7",
+     "sha256": "cf793cca86e385812a439a1b661332bd04cfbb97713a42d8510df8a60721abf6"
+    },
+    "coverage": {
+     "filesTotal": 3,
+     "filesAnalyzed": 2,
+     "filesSkipped": [
+      {
+       "path": "manifest.json",
+       "reason": "not-code"
+      }
+     ],
+     "parseFailures": [],
+     "partial": false
+    },
+    "transparency": {
+     "verdict": "readable",
+     "obfuscation": {
+      "detected": false,
+      "confidence": "high",
+      "signals": []
+     },
+     "minifiedFiles": [],
+     "sourceMaps": {
+      "present": false,
+      "files": []
+     },
+     "suspiciousUnicode": [],
+     "vendoredLibraries": []
+    },
+    "network": {
+     "apis": [],
+     "hosts": [],
+     "dynamicUrls": [],
+     "configurableEndpoints": [],
+     "hostsTableVersion": "2026.09.3"
+    },
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "occurrences": 17,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "content/paperFeed.js",
+        "line": 642,
+        "column": 31,
+        "snippet": "if (!filePath || !(await OS.File.exists(filePath))) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/paperFeed.js",
+        "line": 649,
+        "column": 25,
+        "snippet": "const stat = await OS.File.stat(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/paperFeed.js",
+        "line": 661,
+        "column": 16,
+        "snippet": "if (await OS.File.exists(path)) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/paperFeed.js",
+        "line": 694,
+        "column": 29,
+        "snippet": "if (!filePath || !(await OS.File.exists(filePath))) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/paperFeed.js",
+        "line": 699,
+        "column": 14,
+        "snippet": "if (await OS.File.exists(outputPath)) {",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/paperFeed.js",
+        "line": 707,
+        "column": 23,
+        "snippet": "const data = await OS.File.read(filePath);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/paperFeed.js",
+        "line": 817,
+        "column": 10,
+        "snippet": "await Zotero.File.createDirectoryIfMissingAsync(baseDir);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/paperFeed.js",
+        "line": 818,
+        "column": 10,
+        "snippet": "await Zotero.File.createDirectoryIfMissingAsync(dir);",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/paperFeed.js",
+        "line": 823,
+        "column": 52,
+        "snippet": "const profileDir = Services.dirsvc.get(\"ProfD\", Components.interfaces.nsIFile).path;",
+        "inVendoredCode": false
+       },
+       {
+        "kind": "code",
+        "file": "content/paperFeed.js",
+        "line": 828,
+        "column": 44,
+        "snippet": "if (typeof PathUtils !== \"undefined\" && PathUtils.join) {",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "fsScope": "unknown",
+       "apis": [
+        "IOUtils/PathUtils",
+        "OS.File",
+        "Zotero.File",
+        "nsIFile"
+       ]
+      }
+     },
+     {
+      "id": "self-update",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+       {
+        "kind": "code",
+        "file": "manifest.json",
+        "line": 10,
+        "column": 21,
+        "snippet": "\"update_url\": \"https://example.com/paper-feed-viewer/updates.json\",",
+        "inVendoredCode": false
+       }
+      ],
+      "details": {
+       "updateUrl": "https://example.com/paper-feed-viewer/updates.json"
+      }
+     }
+    ],
+    "diff": null
+   },
+   "preview": {
+    "dataSharing": "no-network-found",
+    "hostsByCategory": {},
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "capabilities": [
+     {
+      "id": "filesystem",
+      "concern": "low"
+     },
+     {
+      "id": "self-update",
+      "concern": "none"
+     }
+    ],
+    "label": "low-concern",
+    "drivers": [
+     "DS-NONE"
+    ]
+   }
+  }
+ ],
+ "error": null
+}

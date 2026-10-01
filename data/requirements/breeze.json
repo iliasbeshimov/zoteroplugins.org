@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "slug": "breeze",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Both features (interest summary and RSS filtering) call an OpenAI-compatible LLM API",
+  "worksWithout": "",
+  "services": [
+   "OpenAI",
+   "any OpenAI-compatible provider"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Requirements",
+   "quote": "An OpenAI-compatible API key (OpenAI, or any compatible provider)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Usage",
+   "quote": "Set your API key in Breeze settings",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Configuration",
+   "quote": "| API Base URL | OpenAI-compatible API endpoint | `https://api.openai.com/v1` |",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The key is required. The code in breeze.js returns early with a 'no api key' alert when apiKey is empty, and the README says 'An OpenAI-compatible API key'. The apiUrl pref is configurable, but the pack never mentions Ollama, LM Studio or a local endpoint. The quoted default is api.openai.com, which does not support 'yes', so 'unknown' is the honest answer."
+}

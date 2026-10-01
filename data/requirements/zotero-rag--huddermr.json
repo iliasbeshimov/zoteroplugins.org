@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-rag--huddermr",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "OpenAI provider (openaiApiKey)",
+  "worksWithout": "Ollama or LM Studio running locally (Ollama is the default provider)",
+  "services": [
+   "OpenAI"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zoterorag.provider\", \"ollama\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zoterorag.ollamaBaseUrl\", \"http://localhost:11434\");",
+   "supports": "localModel"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zoterorag.lmstudioBaseUrl\", \"http://localhost:1234/v1\");",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The default prefs are real: provider is 'ollama', ollamaBaseUrl is 'http://localhost:11434' and lmstudioBaseUrl is 'http://localhost:1234/v1'. openaiApiKey defaults to empty and is needed only for the OpenAI or cloud provider."
+}

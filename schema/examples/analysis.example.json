@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "analyzerVersion": "0.1.0",
+  "analyzedAt": "2026-09-24T12:00:00Z",
+  "input": {
+    "slug": "example-reader-ai",
+    "version": "2.1.0",
+    "sha256": "3f2a9c0d6b1e4f5a7c8d9e0f1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d"
+  },
+  "coverage": {
+    "filesTotal": 14,
+    "filesAnalyzed": 9,
+    "filesSkipped": [
+      { "path": "content/icons/favicon.png", "reason": "binary" },
+      { "path": "locale/en-US/addon.ftl", "reason": "not-code" }
+    ],
+    "parseFailures": [],
+    "partial": false
+  },
+  "transparency": {
+    "verdict": "minified",
+    "obfuscation": { "detected": false, "confidence": "high", "signals": [] },
+    "minifiedFiles": ["content/scripts/index.js"],
+    "sourceMaps": { "present": false, "files": [] },
+    "suspiciousUnicode": [],
+    "vendoredLibraries": [
+      {
+        "name": "marked",
+        "version": "12.0.2",
+        "files": ["content/scripts/index.js"],
+        "identifiedBy": "banner"
+      }
+    ]
+  },
+  "network": {
+    "apis": [
+      {
+        "api": "fetch",
+        "occurrences": 3,
+        "evidence": [
+          {
+            "kind": "code",
+            "file": "content/scripts/index.js",
+            "line": 1,
+            "column": 48211,
+            "snippet": "await fetch(`${e.baseUrl}/v1/chat/completions`,{method:\"POST\",headers:{Authorization:`Bearer ${e.apiKey}`}",
+            "inVendoredCode": false
+          }
+        ]
+      }
+    ],
+    "hosts": [
+      {
+        "host": "api.openai.com",
+        "category": "llm-provider",
+        "provider": "OpenAI",
+        "flags": ["blocked-in-mainland-china"],
+        "usage": "request",
+        "inVendoredCode": false,
+        "occurrences": 1,
+        "evidence": [
+          {
+            "kind": "code",
+            "file": "content/scripts/index.js",
+            "line": 1,
+            "column": 1022,
+            "snippet": "baseUrl:Zotero.Prefs.get(\"extensions.readerai.baseUrl\",!0)||\"https://api.openai.com\"",
+            "inVendoredCode": false
+          }
+        ]
+      },
+      {
+        "host": "plausible.io",
+        "category": "telemetry",
+        "provider": "Plausible Analytics",
+        "flags": [],
+        "usage": "request",
+        "inVendoredCode": false,
+        "occurrences": 1,
+        "evidence": [
+          {
+            "kind": "code",
+            "file": "content/scripts/index.js",
+            "line": 1,
+            "column": 90444,
+            "snippet": "fetch(\"https://plausible.io/api/event\",{method:\"POST\",body:JSON.stringify({n:\"startup\",d:\"readerai\"",
+            "inVendoredCode": false
+          }
+        ]
+      },
+      {
+        "host": "github.com",
+        "category": "code-hosting",
+        "flags": [],
+        "usage": "link",
+        "inVendoredCode": false,
+        "occurrences": 2,
+        "evidence": [
+          {
+            "kind": "code",
+            "file": "content/scripts/index.js",
+            "line": 1,
+            "column": 77310,
+            "snippet": "Zotero.launchURL(\"https://github.com/example/zotero-reader-ai#readme\")",
+            "inVendoredCode": false
+          }
+        ]
+      }
+    ],
+    "dynamicUrls": [
+      {
+        "pattern": "`${baseUrl}/v1/chat/completions`",
+        "evidence": [
+          {
+            "kind": "code",
+            "file": "content/scripts/index.js",
+            "line": 1,
+            "column": 48211,
+            "snippet": "await fetch(`${e.baseUrl}/v1/chat/completions`,",
+            "inVendoredCode": false
+          }
+        ]
+      }
+    ],
+    "configurableEndpoints": [
+      {
+        "prefKey": "extensions.readerai.baseUrl",
+        "defaultValue": "https://api.openai.com",
+        "evidence": [
+          {
+            "kind": "code",
+            "file": "content/scripts/index.js",
+            "line": 1,
+            "column": 1022,
+            "snippet": "baseUrl:Zotero.Prefs.get(\"extensions.readerai.baseUrl\",!0)||\"https://api.openai.com\"",
+            "inVendoredCode": false
+          }
+        ]
+      }
+    ],
+    "hostsTableVersion": "2026.09.1"
+  },
+  "capabilities": [
+    {
+      "id": "credential-storage",
+      "occurrences": 2,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+        {
+          "kind": "code",
+          "file": "content/scripts/index.js",
+          "line": 1,
+          "column": 1101,
+          "snippet": "apiKey:Zotero.Prefs.get(\"extensions.readerai.apiKey\",!0)",
+          "inVendoredCode": false
+        }
+      ],
+      "details": { "prefKeys": ["extensions.readerai.apiKey"] }
+    },
+    {
+      "id": "filesystem",
+      "occurrences": 1,
+      "inVendoredCodeOnly": false,
+      "evidence": [
+        {
+          "kind": "code",
+          "file": "content/scripts/index.js",
+          "line": 1,
+          "column": 60233,
+          "snippet": "await IOUtils.writeUTF8(PathUtils.join(Zotero.DataDirectory.dir,\"readerai-cache.json\"),t)",
+          "inVendoredCode": false
+        }
+      ],
+      "details": { "apis": ["IOUtils", "PathUtils"], "fsScope": "zotero-data-dir" }
+    }
+  ],
+  "diff": {
+    "from": {
+      "version": "2.0.3",
+      "sha256": "9b1c7e2f4a6d8c0e1f3a5b7d9e0c2a4f6b8d0e1c3a5f7b9d1e2c4a6f8b0d2e4f"
+    },
+    "addedHosts": ["plausible.io"],
+    "removedHosts": [],
+    "addedCapabilities": [],
+    "removedCapabilities": [],
+    "transparencyChange": null,
+    "material": true,
+    "reasons": ["v2.1.0 now contacts plausible.io (analytics) at startup."]
+  }
+}

@@ -1,0 +1,34 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-notes--haobbc",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "unknown",
+  "keyFor": "",
+  "worksWithout": "",
+  "services": []
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README, Setup",
+   "quote": "Get a Grok API key from [xAI Console](https://console.x.ai/)",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zoteroainotes.js:3516",
+   "quote": "baseUrl: \"http://localhost:11434/v1\",",
+   "supports": "localModel"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.zoteroainotes.apiKeyOllama\", \"\");",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "Code has an Ollama (Local) provider at http://localhost:11434/v1 and skips the key check for it: zoteroainotes.js:3878 `if (!apiKey && provider !== \"ollama\") {`. The default provider Grok needs a key (README: \"Get a Grok API key from [xAI Console]\"), so the key is optional because Ollama works without one."
+}

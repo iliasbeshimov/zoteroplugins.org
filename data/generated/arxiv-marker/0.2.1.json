@@ -1,0 +1,459 @@
+{
+ "schemaVersion": 1,
+ "slug": "arxiv-marker",
+ "repo": "lelelelelelelelelelelelele/arxiv-marker",
+ "version": "0.2.1",
+ "tag": "v0.2.1",
+ "releaseAuthor": "lelelelelelelelelelelelele",
+ "publishedAt": "2026-06-07T08:43:53Z",
+ "prerelease": false,
+ "asset": {
+  "name": "arxiv-marker-0.2.1.xpi",
+  "url": "https://github.com/lelelelelelelelelelelelele/arxiv-marker/releases/download/v0.2.1/arxiv-marker-0.2.1.xpi",
+  "size": 19602,
+  "sha256": "296992cbebbeca59647ba04583aba2081706a978a2dcd161b251037c48b4f9e0",
+  "githubAssetId": 440798525,
+  "uploader": "lelelelelelelelelelelelele",
+  "uploadedAt": "2026-06-07T08:43:52Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "arxiv-marker@lele.dev",
+  "name": "arxiv-marker",
+  "version": "0.2.1",
+  "description": "Resolve arXiv preprints to their real CS/ML venue (conference/journal) and CCF/CORE tier, then write the venue field back to the local library - so easyScholar / zotero-style light up. Deterministic: Semantic Scholar + DBLP, no LLM guessing.",
+  "homepageUrl": "https://github.com/lelelelelelelelelelelelele/arxiv-marker",
+  "updateUrl": "https://github.com/lelelelelelelelelelelelele/arxiv-marker/releases/download/release/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "99.99.99"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2128,
+   "sha256": "7f012c94ad76c83605e04ff3e40b1bb4340b86484db1ce1ba9a32369f2aebe09"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 1955,
+   "sha256": "7430449b5fc8c3bd326efb9ad434a715cfbb45a6fb03f2a0b243d14f70bfefc6"
+  },
+  {
+   "path": "content/review.xhtml",
+   "size": 1215,
+   "sha256": "0b309ee04431154d162c05f22b397363d0585b6e1cf4996e3293751b7a778eb9"
+  },
+  {
+   "path": "content/scripts/arxiv-marker.js",
+   "size": 15584,
+   "sha256": "ff88fcab3ef06fb51b96ee45695e81a03fe512d541fb3779b11eccb42661128c"
+  },
+  {
+   "path": "content/scripts/resolver.js",
+   "size": 20269,
+   "sha256": "a25932923a52a606a98c306785bec2fd4d8c4df7f6ad7434c27a7fbac83f9ade"
+  },
+  {
+   "path": "content/scripts/review.js",
+   "size": 4923,
+   "sha256": "aafae35e61315c8c3192e297267f28bae7399ca0746b249c92b5d87872db8323"
+  },
+  {
+   "path": "content/scripts/zm-data.js",
+   "size": 6830,
+   "sha256": "cfc1e29ab26b8435d25b710da7d5b22f1b12909ef815f881169be20ec777b820"
+  },
+  {
+   "path": "manifest.json",
+   "size": 1033,
+   "sha256": "33f37b5b6c1846705943007690934c5efbc25628866dab36b9613b8acf620ec3"
+  },
+  {
+   "path": "prefs.js",
+   "size": 439,
+   "sha256": "bb04c5ef039d7f0df6e2edac09740fade5bac848fb2d99b4f0f56be95da98043"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "arxiv-marker",
+   "version": "0.2.1",
+   "sha256": "296992cbebbeca59647ba04583aba2081706a978a2dcd161b251037c48b4f9e0"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 8,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 53343,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/arxiv-marker.js",
+       "line": 89,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(method, url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/resolver.js",
+       "line": 165,
+       "column": 18,
+       "snippet": "const _S2_BATCH = \"https://api.semanticscholar.org/graph/v1/paper/batch\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dblp.org",
+     "category": "scholarly-api",
+     "provider": "dblp",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/resolver.js",
+       "line": 237,
+       "column": 16,
+       "snippet": "const url = \"https://dblp.org/search/publ/api?q=\" + encodeURIComponent(query) + \"&format=json&h=10\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/resolver.js",
+       "line": 223,
+       "column": 24,
+       "snippet": "evidence_url: \"https://www.semanticscholar.org/arxiv/\" + chunk[j],",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/arxiv-marker.js",
+      "line": 228,
+      "column": 22,
+      "snippet": "const s2ApiKey = (Zotero.Prefs.get(\"zoteromarker.s2ApiKey\") || \"\").trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/arxiv-marker.js",
+      "line": 343,
+      "column": 16,
+      "snippet": "key.value = Zotero.Prefs.get(\"zoteromarker.s2ApiKey\") || \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/arxiv-marker.js",
+      "line": 344,
+      "column": 41,
+      "snippet": "key.addEventListener(\"change\", () => Zotero.Prefs.set(\"zoteromarker.s2ApiKey\", key.value.trim()));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 3,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.zoteromarker.s2ApiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.zoteromarker.s2ApiKey",
+      "zoteromarker.s2ApiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/arxiv-marker.js",
+      "line": 151,
+      "column": 10,
+      "snippet": "await Zotero.File.putContentsAsync(undoFilePath(), JSON.stringify(snapshot));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/arxiv-marker.js",
+      "line": 160,
+      "column": 32,
+      "snippet": "snapshot = JSON.parse(await Zotero.File.getContentsAsync(undoFilePath()));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/lelelelelelelelelelelelele/arxiv-marker/releases/download/release/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/lelelelelelelelelelelelele/arxiv-marker/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the lelelelelelelelelelelelele account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "arxiv-marker",
+   "version": "0.2.1",
+   "sha256": "296992cbebbeca59647ba04583aba2081706a978a2dcd161b251037c48b4f9e0"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "3bd7b6186416d6859fb5e9af44edb57da1545d5e488c493346f9fd0c043787e6"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.semanticscholar.org",
+       "dblp.org",
+       "www.semanticscholar.org"
+      ],
+      "unconfirmed": [
+       "api.semanticscholar.org",
+       "www.semanticscholar.org"
+      ],
+      "observed": [
+       "dblp.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED",
+     "DS-OBSERVED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-06-07T08:43:53Z",
+    "lastCommitAt": "2026-06-11T09:47:39Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T05:16:52Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 4,
+    "dialogs": 0
+   },
+   "contacted": [
+    "dblp.org"
+   ],
+   "sentTo": [
+    {
+     "host": "dblp.org",
+     "sent": [
+      "authors",
+      "titles"
+     ]
+    }
+   ],
+   "unexpected": []
+  }
+ }
+}

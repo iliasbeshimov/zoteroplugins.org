@@ -1,0 +1,336 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-copy-path",
+ "repo": "justushenke/zotero-copy-path",
+ "version": "1.3.2",
+ "tag": "1.3.2",
+ "releaseAuthor": "JustusHenke",
+ "publishedAt": "2026-07-07T12:59:09Z",
+ "prerelease": false,
+ "asset": {
+  "name": "copy-file-path.xpi",
+  "url": "https://github.com/JustusHenke/zotero-copy-path/releases/download/1.3.2/copy-file-path.xpi",
+  "size": 4126,
+  "sha256": "99be4edeebc2908ff3f66d5efeb674588db213d740773dbb5aae78c486615de9",
+  "githubAssetId": 469175816,
+  "uploader": "JustusHenke",
+  "uploadedAt": "2026-07-07T12:59:07Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "copy-file-path@justushenke.github.io",
+  "name": "Copy File Path",
+  "version": "1.3.2",
+  "description": "Kopiert PDF-Dateipfade ausgewählter Einträge in die Zwischenablage.",
+  "homepageUrl": "https://github.com/JustusHenke/",
+  "updateUrl": "https://raw.githubusercontent.com/JustusHenke/zotero-copy-path/main/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1726,
+   "sha256": "c411ba41ac7f33b668489d8f1dd7b38d7587726d73892e32045b46f69fb737c9"
+  },
+  {
+   "path": "copy-file-path.js",
+   "size": 4292,
+   "sha256": "6d7f69dd8e60146bf57d6e93989133bd90ed8487ba4847052793aa4cc7669d3d"
+  },
+  {
+   "path": "locale/de/copy-file-path.ftl",
+   "size": 139,
+   "sha256": "d837cb3e0349cd10b1bdc0f65f8be1651439ed5f1df6b2bae2361b0b73379a5a"
+  },
+  {
+   "path": "locale/en-US/copy-file-path.ftl",
+   "size": 131,
+   "sha256": "48b524473eea183d9bfebe75e7bcf729eba626880e9d34f4de08ba139b524712"
+  },
+  {
+   "path": "manifest.json",
+   "size": 520,
+   "sha256": "3e8ebf77b9b61c9249a0b2f622216092d8d7b53e105551cc19a807cef556e811"
+  },
+  {
+   "path": "README.md",
+   "size": 1426,
+   "sha256": "0e1fd6abc190a9c4a512335677895c3c5e5dcce8e7dd13b207a7ef48468c8b46"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-copy-path",
+   "version": "1.3.2",
+   "sha256": "99be4edeebc2908ff3f66d5efeb674588db213d740773dbb5aae78c486615de9"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "locale/de/copy-file-path.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/copy-file-path.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 6018,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "copy-file-path.js",
+       "line": 112,
+       "column": 23,
+       "snippet": "const link = \"https://doi.org/\" + doi;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "copy-file-path.js",
+      "line": 139,
+      "column": 9,
+      "snippet": "Cc[\"@mozilla.org/widget/clipboardhelper;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "copy-file-path.js",
+      "line": 140,
+      "column": 20,
+      "snippet": ".getService(Ci.nsIClipboardHelper)",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "copy-file-path.js",
+      "line": 147,
+      "column": 30,
+      "snippet": "if (Zotero.Utilities && Zotero.Utilities.copyTextToClipboard) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "copy-file-path.js",
+      "line": 148,
+      "column": 8,
+      "snippet": "Zotero.Utilities.copyTextToClipboard(text);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/JustusHenke/zotero-copy-path/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/JustusHenke/zotero-copy-path/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the JustusHenke account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-copy-path",
+   "version": "1.3.2",
+   "sha256": "99be4edeebc2908ff3f66d5efeb674588db213d740773dbb5aae78c486615de9"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "4221c83de0f3d9b7b2b77197470a370b5e46a8d514199b3e05314a44d3213f19"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found; its code names known services",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-07T12:59:09Z",
+    "lastCommitAt": "2026-07-08T07:23:23Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T06:12:28Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": false,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

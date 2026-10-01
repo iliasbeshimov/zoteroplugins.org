@@ -1,0 +1,301 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-jcode",
+ "repo": "myshevchuk/zotero-jcode",
+ "version": "1.0.1",
+ "tag": "v1.0.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-06-13T23:12:12Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-jcode.xpi",
+  "url": "https://github.com/myshevchuk/zotero-jcode/releases/download/v1.0.1/zotero-jcode.xpi",
+  "size": 17722,
+  "sha256": "1257a25b37ccbf4240ab1976ba9e47eef939f874dab8bda86ed61a2eb5eff6bf",
+  "githubAssetId": 446867710,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-06-13T23:12:11Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "jcode@zotero-jcode.local",
+  "name": "Journal Code",
+  "version": "1.0.1",
+  "description": "Tag selected Zotero items with a `jcode:` line in the Extra field, looked up from a configurable journal-abbreviation TSV.",
+  "updateUrl": "https://zotero-jcode.invalid/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 15303,
+   "sha256": "53955efc19aef16262a87998ffaf30f31a1d06f3b363863578c274ce9bb70d23"
+  },
+  {
+   "path": "content/icons/jcode.svg",
+   "size": 354,
+   "sha256": "e9c70f9f2dca837cd8a7caf3334c2057e98cbb66262ef3a25d5126832ae98d10"
+  },
+  {
+   "path": "content/prefs-pane.js",
+   "size": 2463,
+   "sha256": "36960d2b28fa55f5966b0930625c75825d37f8be9a1a737d40b3d3a84bd7bfdd"
+  },
+  {
+   "path": "content/prefs.xhtml",
+   "size": 504,
+   "sha256": "7b77a3406974163959271349707bc4b10f328916e2b6081bd8763cbef2da3b8c"
+  },
+  {
+   "path": "data/journal_titles.tsv",
+   "size": 27054,
+   "sha256": "0e6ec8725335edaa336a0195d9aa7212728b77d287d872d6ddbdc5b3c62e4703"
+  },
+  {
+   "path": "locale/en-US/jcode.ftl",
+   "size": 473,
+   "sha256": "672ae3fb15ab3fbdc43c7231c01555a6c256c9af7ca359ef3bdb981693ade808"
+  },
+  {
+   "path": "manifest.json",
+   "size": 442,
+   "sha256": "394cc07502a8ff6388415ba486efc5393f4c7d9a7146477d414b1bfd83ee4c82"
+  },
+  {
+   "path": "prefs.js",
+   "size": 391,
+   "sha256": "967142855f9c2bfe49485d02a3c0eed1b73a5d6096238f0e92a560df7238d8a8"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-jcode",
+   "version": "1.0.1",
+   "sha256": "1257a25b37ccbf4240ab1976ba9e47eef939f874dab8bda86ed61a2eb5eff6bf"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "content/icons/jcode.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "data/journal_titles.tsv",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/jcode.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 18661,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 178,
+      "column": 19,
+      "snippet": "return await Zotero.File.getContentsAsync(overridePath);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://zotero-jcode.invalid/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://zotero-jcode.invalid/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-jcode",
+   "version": "1.0.1",
+   "sha256": "1257a25b37ccbf4240ab1976ba9e47eef939f874dab8bda86ed61a2eb5eff6bf"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "bc3ca5a3a78faba11ac0637a2011a12e45f0e3812bb3623925d187fce1c5579b"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-06-13T23:12:12Z",
+    "lastCommitAt": "2026-06-13T23:07:54Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "9.0.6",
+   "testedAt": "2026-09-27T07:32:17Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 1,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

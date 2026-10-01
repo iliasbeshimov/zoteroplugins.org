@@ -1,0 +1,36 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotldr",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "required",
+  "keyFor": "Google Gemini API key, set in the shared zs-context note",
+  "worksWithout": "",
+  "services": [
+   "Google AI Studio (Gemini)"
+  ]
+ },
+ "localModel": "no",
+ "evidence": [
+  {
+   "source": "readme",
+   "where": "README intro",
+   "quote": "Chat with AI about papers in [Zotero 8](https://www.zotero.org/) using Google Gemini.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README troubleshooting",
+   "quote": "**\"API key missing\"** — Verify your `zs-context` note has `api_key: AIzaSy...` in the frontmatter",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/scripts/zotldr.js:3621",
+   "quote": "https://generativelanguage.googleapis.com/v1beta/models/${req.config.model}:generateContent?key=${req.config.apiKey}",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "README says chat uses Google Gemini and troubleshooting says 'API key missing' unless api_key is set. The only endpoint in the code is generativelanguage.googleapis.com; grep of the code finds no ollama, localhost, baseUrl or openai."
+}

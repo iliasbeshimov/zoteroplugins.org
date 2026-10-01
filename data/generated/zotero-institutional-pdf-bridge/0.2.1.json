@@ -1,0 +1,750 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-institutional-pdf-bridge",
+ "repo": "as-zdq/zotero-institutional-pdf-bridge",
+ "version": "0.2.1",
+ "tag": "v0.2.1",
+ "releaseAuthor": "as-zdq",
+ "publishedAt": "2026-07-31T02:53:41Z",
+ "prerelease": false,
+ "asset": {
+  "name": "institutional-pdf-bridge-0.2.1.xpi",
+  "url": "https://github.com/as-zdq/zotero-institutional-pdf-bridge/releases/download/v0.2.1/institutional-pdf-bridge-0.2.1.xpi",
+  "size": 16310,
+  "sha256": "3bdec71fe736add6e3f07c7582b2263caec6ecb149e50bdbad1619b7c21fea5e",
+  "githubAssetId": 496149935,
+  "uploader": "as-zdq",
+  "uploadedAt": "2026-07-31T02:53:41Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "institutional-pdf-bridge@as-zdq.github.io",
+  "name": "Institutional PDF Bridge",
+  "version": "0.2.1",
+  "description": "Uses a configured institutional proxy to find full-text PDFs from Zotero.",
+  "homepageUrl": "https://github.com/as-zdq/zotero-institutional-pdf-bridge",
+  "updateUrl": "https://raw.githubusercontent.com/as-zdq/zotero-institutional-pdf-bridge/main/update.json",
+  "strictMinVersion": "8.0-beta.21",
+  "strictMaxVersion": "10.99.99"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 37083,
+   "sha256": "6850981e8316a9a798acca2121e2d9d0af2d83ae0aefd0bdcfc3b426544c9d8f"
+  },
+  {
+   "path": "icon.svg",
+   "size": 236,
+   "sha256": "ce4ba143b203f6f55bf67d11c3c4d980bca764d33669619b3977cd4a07a2f923"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1094,
+   "sha256": "454b8323c761457404ca3c8dc9963874e6fadb6aa9e03a428fa9c5efb5b586cd"
+  },
+  {
+   "path": "manifest.json",
+   "size": 674,
+   "sha256": "79a7acf2f3bfdbecaa4d0896c9636e70d99c66656e1706c8018f63ab590e7182"
+  },
+  {
+   "path": "preferences.css",
+   "size": 755,
+   "sha256": "db6f5de66826c909b7b20730d08f8549fee1039ce998f5be3b5f66bb7a232be5"
+  },
+  {
+   "path": "preferences.js",
+   "size": 5489,
+   "sha256": "07ddda3380df720e1ded4ba504b726735d816f756b6efb95df946b196b4d12b2"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 7222,
+   "sha256": "7ae576172f45b6a8f5fc43ef7ba626a9d1517efd3043d172c334a4b3067aacf8"
+  },
+  {
+   "path": "prefs.js",
+   "size": 1121,
+   "sha256": "1e219039d3acb377aded4b235d794a18f033fd1c864a3f56d7e74758eebd4f2a"
+  },
+  {
+   "path": "proxy-child.sys.mjs",
+   "size": 5039,
+   "sha256": "48f9f6592a4ae9d05190780d1d252eba126183a7d73ce9bf6f94bdcf9d8dd9b6"
+  },
+  {
+   "path": "proxy-parent.sys.mjs",
+   "size": 2522,
+   "sha256": "00cfdaffed5ebad9622cf5265f5c16bb003db7e9d9e5b667c06c079bffa2883a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-institutional-pdf-bridge",
+   "version": "0.2.1",
+   "sha256": "3bdec71fe736add6e3f07c7582b2263caec6ecb149e50bdbad1619b7c21fea5e"
+  },
+  "coverage": {
+   "filesTotal": 10,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "preferences.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 58476,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "proxy-child.sys.mjs",
+       "line": 128,
+       "column": 29,
+       "snippet": "const response = await this.contentWindow.fetch(target.href, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 367,
+       "column": 31,
+       "snippet": "const attachment = await Zotero.Attachments.addFileFromURLs(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 473,
+       "column": 28,
+       "snippet": "const sourceURL = doi ? `https://doi.org/${encodeURIComponent(doi)}` : itemURL;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "pubs.acs.org",
+     "category": "scholarly-api",
+     "provider": "ACS Publications",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 916,
+       "column": 12,
+       "snippet": "add(`https://pubs.acs.org/doi/pdf/${encodedDOI}`, \"Full Text PDF\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.annualreviews.org",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 918,
+       "column": 12,
+       "snippet": "add(`https://www.annualreviews.org/doi/pdf/${encodedDOI}`, \"Full Text PDF\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 919,
+       "column": 12,
+       "snippet": "add(`https://www.annualreviews.org/doi/epdf/${encodedDOI}`, \"Full Text PDF\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.spiedigitallibrary.org",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 921,
+       "column": 12,
+       "snippet": "add(`https://www.spiedigitallibrary.org/doi/pdf/${encodedDOI}`, \"Full Text PDF\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "resource://<expr>/proxy-child.sys.mjs",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 242,
+       "column": 25,
+       "snippet": "this.actorChildURL = `resource://${this.resourceName}/proxy-child.sys.mjs`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "resource://<expr>/proxy-parent.sys.mjs",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1059,
+       "column": 21,
+       "snippet": "esModuleURI: `resource://${this.resourceName}/proxy-parent.sys.mjs`",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero.institutionalPDFBridge.gatewayURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 21,
+       "column": 20,
+       "snippet": "preference=\"extensions.zotero.institutionalPDFBridge.gatewayURL\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero.institutionalPDFBridge.loginURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 27,
+       "column": 20,
+       "snippet": "preference=\"extensions.zotero.institutionalPDFBridge.loginURL\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "gatewayURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 53,
+       "column": 30,
+       "snippet": "const gatewayURL = String(this.getPref(\"gatewayURL\", \"\"))",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "proxy-parent.sys.mjs",
+       "line": 15,
+       "column": 48,
+       "snippet": "const loginURL = getStringPref(\"loginURL\") || getStringPref(\"gatewayURL\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "institutional-pdf-bridge-gateway",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 19,
+       "column": 8,
+       "snippet": "<html:input id=\"institutional-pdf-bridge-gateway\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "institutional-pdf-bridge-login",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 25,
+       "column": 8,
+       "snippet": "<html:input id=\"institutional-pdf-bridge-login\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "loginURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 56,
+       "column": 28,
+       "snippet": "const loginURL = String(this.getPref(\"loginURL\", \"\")).trim();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "proxy-parent.sys.mjs",
+       "line": 15,
+       "column": 19,
+       "snippet": "const loginURL = getStringPref(\"loginURL\") || getStringPref(\"gatewayURL\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "changes-settings",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 453,
+      "column": 4,
+      "snippet": "Zotero.Attachments.getFileResolvers = this.patchedGetFileResolvers;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "settings": [
+      {
+       "change": "find-pdf",
+       "asks": "none",
+       "auto": true,
+       "whileInstalled": true
+      }
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 93,
+      "column": 43,
+      "snippet": "captureCredentialsFromLogin: Boolean(this.getPref(\"captureCredentialsFromLogin\", true)),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 14,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.institutionalPDFBridge.captureCredentialsFromLogin\", true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "proxy-parent.sys.mjs",
+      "line": 11,
+      "column": 4,
+      "snippet": "Services.prefs.getBoolPref(PREF_BRANCH + \"captureCredentialsFromLogin\", true);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "captureCredentialsFromLogin",
+      "extensions.zotero.institutionalPDFBridge.captureCredentialsFromLogin"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 956,
+      "column": 12,
+      "snippet": "await Zotero.File.putContentsAsync(path, blob);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 957,
+      "column": 27,
+      "snippet": "const sample = await Zotero.File.getContentsAsync(path, null, 5);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 962,
+      "column": 12,
+      "snippet": "await Zotero.File.removeIfExists(path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "login-manager",
+    "occurrences": 24,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 123,
+      "column": 9,
+      "snippet": "if (!Services.logins) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 126,
+      "column": 10,
+      "snippet": "await Services.logins.initializationPromise;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 129,
+      "column": 15,
+      "snippet": "if (typeof Services.logins.searchLoginsAsync === \"function\") {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 130,
+      "column": 13,
+      "snippet": "return Services.logins.searchLoginsAsync({ origin, httpRealm });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 132,
+      "column": 11,
+      "snippet": "return Services.logins.findLogins(origin, null, httpRealm);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 164,
+      "column": 17,
+      "snippet": "if (typeof Services.logins.removeLoginAsync === \"function\") {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 165,
+      "column": 14,
+      "snippet": "await Services.logins.removeLoginAsync(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 167,
+      "column": 8,
+      "snippet": "Services.logins.removeLogin(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 171,
+      "column": 15,
+      "snippet": "if (typeof Services.logins.addLoginAsync === \"function\") {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 172,
+      "column": 12,
+      "snippet": "await Services.logins.addLoginAsync(login);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsILoginManager"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/as-zdq/zotero-institutional-pdf-bridge/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/as-zdq/zotero-institutional-pdf-bridge/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T10:26:54.334Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the as-zdq account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-institutional-pdf-bridge",
+   "version": "0.2.1",
+   "sha256": "3bdec71fe736add6e3f07c7582b2263caec6ecb149e50bdbad1619b7c21fea5e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "d193134dd0435cf43bfcb1e18ac2b105cf4477c13b599e6f1694374e405e5f46"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "doi.org",
+       "pubs.acs.org"
+      ],
+      "unconfirmed": [
+       "doi.org",
+       "pubs.acs.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "changes-settings",
+      "label": "Changes Zotero settings that aren't its own",
+      "concern": "low",
+      "detail": "Adds sources to Zotero's Find Available PDF, at startup, without asking, only while it's running"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "login-manager",
+      "label": "Uses Zotero's password manager",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-31T02:53:41Z",
+    "lastCommitAt": "2026-07-31T02:52:20Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T06:50:15Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 0,
+    "dialogs": 0
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

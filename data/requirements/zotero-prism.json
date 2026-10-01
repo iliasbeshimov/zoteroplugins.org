@@ -1,0 +1,35 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-prism",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "The AI copilot (Lens) needs a key for its model provider (default OpenAI); some translation engines (DeepL, Microsoft, Baidu, NiuTrans) and easyScholar rankings need keys",
+  "worksWithout": "Library visualization, reading analytics and Google translation (the default engine)",
+  "services": [
+   "OpenAI",
+   "DeepL",
+   "Microsoft Translator",
+   "Baidu Translate",
+   "NiuTrans",
+   "easyScholar"
+  ]
+ },
+ "localModel": "unknown",
+ "evidence": [
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.prism.refract.engine\", \"google\");",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zotero.prism.lens.apiKey\", \"\");",
+   "supports": "apiKey"
+  }
+ ],
+ "checkNote": "README (模型接入) says: '支持 OpenAI / DeepSeek / 硅基流动 / Kimi / 智谱 / Ollama / LM Studio / 中转服务及 Anthropic'. The Lens model has a configurable baseURL ('baseURL:U(\"lens.baseURL\",\"https://api.openai.com\")'). So local Ollama and LM Studio are supported, and 'unknown' is wrong. The key answer 'optional' stands because the default Google translation engine needs no key."
+}

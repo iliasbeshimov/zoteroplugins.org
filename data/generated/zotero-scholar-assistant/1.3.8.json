@@ -1,0 +1,786 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-scholar-assistant",
+ "repo": "saxena224pawan/zotero-scholar-assistant",
+ "version": "1.3.8",
+ "tag": "v1.3.8",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-08-31T02:16:22Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-scholar-assistant-1.3.8.xpi",
+  "url": "https://github.com/Saxena224pawan/zotero-scholar-assistant/releases/download/v1.3.8/zotero-scholar-assistant-1.3.8.xpi",
+  "size": 29738,
+  "sha256": "2abc7e4262685a6853e81da00ca9cee0f536a751dacccd61df68b0924ea3d826",
+  "githubAssetId": 537323815,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-08-31T02:16:21Z",
+  "fetchedAt": "2026-09-25T06:47:56.738Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "scholar-assistant@zotero-plugin.local",
+  "name": "Zotero Scholar Assistant",
+  "version": "1.3.8",
+  "description": "Imports paper lists, retrieves open PDFs, and creates Ollama- or Google Gemini-powered highlights, study notes, and quizzes.",
+  "homepageUrl": "https://github.com/Saxena224pawan/zotero-scholar-assistant",
+  "updateUrl": "https://raw.githubusercontent.com/Saxena224pawan/zotero-scholar-assistant/main/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1498,
+   "sha256": "752528ca77272f4977d8e85e69e19a24291699a7676d7a1dfbc7a222290a5c4e"
+  },
+  {
+   "path": "chrome/content/dashboard.css",
+   "size": 3386,
+   "sha256": "e2144bc25cd013c28d772278a9eeaadf80bca308fa05bd48d92ffe5c0cee59bd"
+  },
+  {
+   "path": "chrome/content/dashboard.js",
+   "size": 11461,
+   "sha256": "0d33be6b1f6880de4aeee31880a9c92bdf6008d4fdbba5b1649f73c32e683bc3"
+  },
+  {
+   "path": "chrome/content/dashboard.xhtml",
+   "size": 3507,
+   "sha256": "e758f44c169a1a13fd3e26bb5cfa0814ff5bf2e32ee081b4fdc961aa1bc8f025"
+  },
+  {
+   "path": "chrome/content/icons/icon.svg",
+   "size": 502,
+   "sha256": "68e2fb2304acb1ba40602ddf615a4be82bb6a5580933e98d6760457b66b7aba5"
+  },
+  {
+   "path": "chrome/content/preferences.js",
+   "size": 5503,
+   "sha256": "1c81a7ea691168d1a77f37fd0b6bc271531e068d835a03b972af60d7740c81a8"
+  },
+  {
+   "path": "chrome/content/preferences.xhtml",
+   "size": 4847,
+   "sha256": "73f3c9af30ae1b7265204a6475b72284b93d522b5bb0cfbec0a00ff3e10407f5"
+  },
+  {
+   "path": "content/index.js",
+   "size": 72621,
+   "sha256": "56be9a5a827e54ba064246848e95c934579a2c3c9e497657bed5011afc287297"
+  },
+  {
+   "path": "locale/en-US/scholar-assistant.ftl",
+   "size": 141,
+   "sha256": "8828dcd85450c024458a29e844782bf637082581687e33712c8328db5f47440b"
+  },
+  {
+   "path": "manifest.json",
+   "size": 732,
+   "sha256": "483ac0282877ed5113b7608b52650c1399bddd7f78aade20acd10e0fc043dc93"
+  },
+  {
+   "path": "prefs.js",
+   "size": 1140,
+   "sha256": "7c3aa020942878af61e7cb7b6f9ef478328cf36d1402b9bac3ff054e720099ec"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "input": {
+   "slug": "zotero-scholar-assistant",
+   "version": "1.3.8",
+   "sha256": "2abc7e4262685a6853e81da00ca9cee0f536a751dacccd61df68b0924ea3d826"
+  },
+  "coverage": {
+   "filesTotal": 11,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "chrome/content/dashboard.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "chrome/content/icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/scholar-assistant.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 100577,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 9,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.js",
+       "line": 67,
+       "column": 14,
+       "snippet": "await Zotero.HTTP.request(\"POST\", \"https://generativelanguage.googleapis.com/v1beta/models/\" + encodeURIComponent(googleModel) + \":generateContent\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.js",
+       "line": 80,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", endpoint + \"/api/tags\", { responseType: \"json\", timeout: 10000 });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 121,
+       "column": 25,
+       "snippet": "response = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 155,
+       "column": 14,
+       "snippet": "await Zotero.HTTP.request(\"POST\", `${API_ROOT}/models/${encodeURIComponent(model)}:generateContent`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 279,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 310,
+       "column": 31,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 810,
+       "column": 21,
+       "snippet": "return await Zotero.Attachments.importFromURL({",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 833,
+       "column": 33,
+       "snippet": "const response = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 850,
+       "column": 31,
+       "snippet": "const response = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 751,
+       "column": 24,
+       "snippet": "const translate = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 5,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.js",
+       "line": 34,
+       "column": 49,
+       "snippet": "var endpoint = String(value || \"\").trim() || \"http://127.0.0.1:11434\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 245,
+       "column": 30,
+       "snippet": "if (!endpoint) endpoint = \"http://127.0.0.1:11434\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 258,
+       "column": 67,
+       "snippet": "endpoint: normalizeOllamaEndpoint(getPref(prefKeys.endpoint, \"http://127.0.0.1:11434\")),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.scholarAssistant.ollamaEndpoint\", \"http://127.0.0.1:11434\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 58,
+       "snippet": "pref(\"extensions.zotero.scholarAssistant.ollamaEndpoint\", \"http://127.0.0.1:11434\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 852,
+       "column": 10,
+       "snippet": "`https://api.semanticscholar.org/graph/v1/paper/${encodeURIComponent(identifier)}?fields=openAccessPdf`,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.unpaywall.org",
+     "category": "scholarly-api",
+     "provider": "Unpaywall",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 835,
+       "column": 12,
+       "snippet": "`https://api.unpaywall.org/v2/${encodeURIComponent(paper.doi)}?email=${encodeURIComponent(email)}`,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 822,
+       "column": 38,
+       "snippet": "const attachment = await tryPDF(`https://arxiv.org/pdf/${encodeURIComponent(paper.arxivId)}.pdf`);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "generativelanguage.googleapis.com",
+     "category": "llm-provider",
+     "provider": "Google Gemini",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.js",
+       "line": 67,
+       "column": 42,
+       "snippet": "await Zotero.HTTP.request(\"POST\", \"https://generativelanguage.googleapis.com/v1beta/models/\" + encodeURIComponent(googleModel) + \":generateContent\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 94,
+       "column": 17,
+       "snippet": "var API_ROOT = \"https://generativelanguage.googleapis.com/v1beta\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 123,
+       "column": 10,
+       "snippet": "`${API_ROOT}/models/${encodeURIComponent(model)}:generateContent`,",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 155,
+       "column": 42,
+       "snippet": "await Zotero.HTTP.request(\"POST\", `${API_ROOT}/models/${encodeURIComponent(model)}:generateContent`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/api/tags",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.js",
+       "line": 80,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", endpoint + \"/api/tags\", { responseType: \"json\", timeout: 10000 });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr>/models/<expr>:generateContent",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 121,
+       "column": 25,
+       "snippet": "response = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 155,
+       "column": 14,
+       "snippet": "await Zotero.HTTP.request(\"POST\", `${API_ROOT}/models/${encodeURIComponent(model)}:generateContent`, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "http://<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 246,
+       "column": 52,
+       "snippet": "if (!/^https?:\\/\\//i.test(endpoint)) endpoint = `http://${endpoint}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "https://api.semanticscholar.org/graph/v1/paper/<expr>?fields=openAccessPdf",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 850,
+       "column": 31,
+       "snippet": "const response = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "https://api.unpaywall.org/v2/<expr>?email=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 833,
+       "column": 33,
+       "snippet": "const response = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "https://generativelanguage.googleapis.com/v1beta/models/<expr>:generateContent",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.js",
+       "line": 67,
+       "column": 14,
+       "snippet": "await Zotero.HTTP.request(\"POST\", \"https://generativelanguage.googleapis.com/v1beta/models/\" + encodeURIComponent(googleModel) + \":generateContent\", {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero.scholarAssistant.ollamaEndpoint",
+     "defaultValue": "http://127.0.0.1:11434",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.js",
+       "line": 47,
+       "column": 68,
+       "snippet": "const endpoint = this.normalizeEndpoint(endpointInput?.value || Zotero.Prefs.get(\"extensions.zotero.scholarAssistant.ollamaEndpoint\", true));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.xhtml",
+       "line": 22,
+       "column": 65,
+       "snippet": "<html:input id=\"scholar-assistant-endpoint\" type=\"url\" preference=\"extensions.zotero.scholarAssistant.ollamaEndpoint\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 258,
+       "column": 40,
+       "snippet": "endpoint: normalizeOllamaEndpoint(getPref(prefKeys.endpoint, \"http://127.0.0.1:11434\")),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.scholarAssistant.ollamaEndpoint\", \"http://127.0.0.1:11434\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "scholar-assistant-endpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.xhtml",
+       "line": 22,
+       "column": 10,
+       "snippet": "<html:input id=\"scholar-assistant-endpoint\" type=\"url\" preference=\"extensions.zotero.scholarAssistant.ollamaEndpoint\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/preferences.js",
+      "line": 51,
+      "column": 54,
+      "snippet": "const googleKey = String(googleKeyInput?.value || Zotero.Prefs.get(\"extensions.zotero.scholarAssistant.googleApiKey\", true) || \"\").trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/preferences.js",
+      "line": 57,
+      "column": 31,
+      "snippet": "if (googleKeyInput?.value) Zotero.Prefs.set(\"extensions.zotero.scholarAssistant.googleApiKey\", googleKey, true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 260,
+      "column": 38,
+      "snippet": "apiKey: provider === \"google\" ? getPref(prefKeys.googleApiKey, \"\") : \"\",",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 5,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.scholarAssistant.googleApiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.scholarAssistant.googleApiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 507,
+      "column": 26,
+      "snippet": "const input = await Zotero.File.getContentsAsync(path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Saxena224pawan/zotero-scholar-assistant/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Saxena224pawan/zotero-scholar-assistant/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-09-26T11:01:03.755Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-09-27T08:57:27.616Z",
+  "appliesTo": {
+   "slug": "zotero-scholar-assistant",
+   "version": "1.3.8",
+   "sha256": "2abc7e4262685a6853e81da00ca9cee0f536a751dacccd61df68b0924ea3d826"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.4",
+   "inputHash": "26be65281ea7e67342817c3acca68e9cc328d0c1ba0521474182022a722a7e14"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "generativelanguage.googleapis.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.semanticscholar.org",
+       "api.unpaywall.org",
+       "arxiv.org"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-08-31T02:16:22Z",
+    "lastCommitAt": "2026-08-31T02:50:02Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.4",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-09-27T07:16:26Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 6,
+    "dialogs": 5
+   },
+   "contacted": [],
+   "unexpected": []
+  }
+ }
+}

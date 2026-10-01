@@ -1,0 +1,32 @@
+{
+ "schemaVersion": 1,
+ "slug": "sentai",
+ "checkedAt": "2026-09-30",
+ "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "apiKey": {
+  "need": "optional",
+  "keyFor": "Chat answers via your own provider (Gemini, Anthropic or OpenAI-compatible) need that provider's key",
+  "worksWithout": "The developer's default server for embeddings and chat (no key field is needed), or local Ollama",
+  "services": [
+   "Google Gemini",
+   "Anthropic",
+   "OpenAI-compatible provider"
+  ]
+ },
+ "localModel": "yes",
+ "evidence": [
+  {
+   "source": "code",
+   "where": "content/scripts/sentai.js:3897",
+   "quote": "if (!endpoint) return \"sentai\";",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "README, Local mode (Ollama)",
+   "quote": "Run embeddings and/or chat entirely on your own machine instead of Azure/Gemini — no API keys, nothing leaves your computer.",
+   "supports": "localModel"
+  }
+ ],
+ "checkNote": "The code quote `if (!endpoint) return \"sentai\";` is real: the default empty endpoint goes to the developer's server with no key, and Gemini, Anthropic and OpenAI-compatible providers take a key. The README quote about running on your own machine with Ollama and \"no API keys\" is in the pack."
+}
