@@ -238,6 +238,7 @@ const LABEL: Record<string, string> = {
   "review-details": "Review",
   "low-concern": "Few",
   "insufficient-data": "Not enough data",
+  checking: "Still checking",
 };
 const short = (l: string | null) => (l ? (LABEL[l] ?? l) : "none");
 

@@ -127,7 +127,13 @@ export const PluginProfile = z.object({
             version: z.string(),
             supports: z.array(z.int()).describe("Zotero majors this build declares"),
             label: z
-              .enum(["low-concern", "review-details", "high-concern", "insufficient-data"])
+              .enum([
+                "low-concern",
+                "review-details",
+                "high-concern",
+                "insufficient-data",
+                "checking",
+              ])
               .nullable(),
             releaseFile: z.string(),
           }),
@@ -206,7 +212,13 @@ export const PluginProfile = z.object({
                 "When the update address's file last changed (its Last-Modified), set when the hash doesn't match: a release file uploaded after it isn't the file it was written for",
               ),
               label: z
-                .enum(["low-concern", "review-details", "high-concern", "insufficient-data"])
+                .enum([
+                  "low-concern",
+                  "review-details",
+                  "high-concern",
+                  "insufficient-data",
+                  "checking",
+                ])
                 .nullable()
                 .describe("Overall label of that file when it differs from this one"),
               releaseFile: z.string().nullable(),

@@ -30,7 +30,7 @@ import { type ObservedHost, testedSummary, withObserved } from "./sandbox.ts";
  * Preview rules: the overall label ignores "source match not checked yet", because that is
  * a gap in our checks rather than something the plugin did. The facet still says it.
  */
-export const RULES_VERSION = "0.6.1-preview";
+export const RULES_VERSION = "0.7.0-preview";
 
 const RANK: Record<Concern, number> = { none: 0, low: 1, unknown: 2, medium: 2, high: 3 };
 const worst = (cs: Concern[]): Concern =>
@@ -573,6 +573,9 @@ export const DS_CONCERN: Record<string, Concern> = {
   "DS-UNKNOWN": "medium",
   "DS-UNKNOWN-HANDOFF": "medium",
   "DS-UNKNOWN-DESTINATION": "medium",
+  // score() swaps DS-UNKNOWN-DESTINATION for these once something settles it; preview.ts never fires them.
+  "DS-UNTRACED-QUIET": "low",
+  "DS-REVIEWED-NONE": "none",
   "DS-LIBRARY-ONLY": "low",
   "DS-DEVELOPER": "medium",
   "DS-TELEMETRY": "medium",
@@ -659,6 +662,17 @@ export interface ScoreInput {
   downloadReview?: Pick<DownloadReview, "real" | "concern" | "rule" | "summary"> & {
     files: string[];
   };
+  /**
+   * A reviewed finding on network code we couldn't trace (reviews.ts): that it sends nothing, or
+   * the hosts it sends to (classified like the code's, but not "seen when we ran it"). Used only
+   * for the exact file it reviewed.
+   */
+  networkReview?: {
+    outcome: "no-requests" | "hosts";
+    summary: string;
+    files: string[];
+    observed: ObservedHost[];
+  };
 }
 
 type CompatStatus = "compatible" | "incompatible" | "unknown";
@@ -705,10 +719,18 @@ export function score(input: ScoreInput): TrustCard {
   // A test applies to the file it ran: a new release is untested until it's tested again.
   const tested =
     input.tested?.record.sha256 === input.analysis.input.sha256 ? input.tested : undefined;
+  const netReview = input.networkReview?.files.includes(input.analysis.input.sha256)
+    ? input.networkReview
+    : undefined;
+  // Hosts a review names count as traced requests, but only a test marks a host as seen.
+  const reviewed =
+    netReview?.outcome === "hosts"
+      ? withObserved(input.analysis, netReview.observed).analysis
+      : input.analysis;
   // The hosts it sent data to when we ran it count as traced requests (DS-OBSERVED).
   const { analysis: a, seen } = tested
-    ? withObserved(input.analysis, tested.hosts)
-    : { analysis: input.analysis, seen: new Set<string>() };
+    ? withObserved(reviewed, tested.hosts)
+    : { analysis: reviewed, seen: new Set<string>() };
   const p = preview(a, input.updateHost);
   const review = input.downloadReview?.files.includes(a.input.sha256)
     ? input.downloadReview
@@ -769,8 +791,20 @@ export function score(input: ScoreInput): TrustCard {
   // Data sharing: DS-OBSERVED when the test marks a host the card lists (a page load from a host
   // the code names but the card doesn't count marks nothing).
   const observedOnCard = Object.values(p.hostsByCategory).some((hs) => hs.some((h) => seen.has(h)));
+  const quiet = (r: SandboxRecord) =>
+    r.loaded && !r.cutShort && r.contacted.length === 0 && r.refused.length === 0;
+  // "We couldn't tell where" isn't a grade: a quiet test run or a reviewer settles it, and
+  // otherwise it waits for the next check (overall "checking").
+  const settled =
+    netReview?.outcome === "no-requests"
+      ? "DS-REVIEWED-NONE"
+      : tested && quiet(tested.record) && !p.obfuscated
+        ? "DS-UNTRACED-QUIET"
+        : undefined;
   const dsDrivers = [
-    ...p.drivers.filter((d) => d.startsWith("DS-")),
+    ...p.drivers
+      .filter((d) => d.startsWith("DS-"))
+      .map((d) => (d === "DS-UNKNOWN-DESTINATION" && settled ? settled : d)),
     ...(observedOnCard ? ["DS-OBSERVED"] : []),
   ];
   const dsConcern = worst(dsDrivers.map((d) => DS_CONCERN[d] ?? "unknown"));
@@ -868,18 +902,42 @@ export function score(input: ScoreInput): TrustCard {
     capabilities: capConcern,
   } as const;
   const top = worst(Object.values(facets));
+  // Network code we couldn't trace, with no test of this file and nothing else at medium or worse:
+  // it isn't graded until a check settles it.
+  const untracedOnly =
+    dsDrivers.includes("DS-UNKNOWN-DESTINATION") &&
+    !tested &&
+    RANK[
+      worst([
+        stForOverall,
+        capConcern,
+        worst(
+          dsDrivers
+            .filter((d) => d !== "DS-UNKNOWN-DESTINATION")
+            .map((d) => DS_CONCERN[d] ?? "unknown"),
+        ),
+      ])
+    ] < RANK.medium;
   const overall: TrustCard["overall"] = insufficient
     ? { label: "insufficient-data", ruleId: "OV-INSUFFICIENT", drivers: [] }
-    : {
-        label: RANK[top] >= 3 ? "high-concern" : RANK[top] >= 2 ? "review-details" : "low-concern",
-        ruleId: RANK[top] >= 3 ? "OV-HIGH" : RANK[top] >= 2 ? "OV-REVIEW" : "OV-LOW",
-        drivers:
-          RANK[top] >= 2
-            ? (Object.entries(facets) as [keyof typeof facets, Concern][])
-                .filter(([, c]) => RANK[c] === RANK[top])
-                .map(([f]) => f)
-            : [],
-      };
+    : untracedOnly
+      ? {
+          label: "checking",
+          ruleId: "OV-CHECKING",
+          drivers: ["dataSharing"],
+          reasons: ["We're still checking where its network code sends data"],
+        }
+      : {
+          label:
+            RANK[top] >= 3 ? "high-concern" : RANK[top] >= 2 ? "review-details" : "low-concern",
+          ruleId: RANK[top] >= 3 ? "OV-HIGH" : RANK[top] >= 2 ? "OV-REVIEW" : "OV-LOW",
+          drivers:
+            RANK[top] >= 2
+              ? (Object.entries(facets) as [keyof typeof facets, Concern][])
+                  .filter(([, c]) => RANK[c] === RANK[top])
+                  .map(([f]) => f)
+              : [],
+        };
 
   const found = new Set(a.network.hosts.map((h) => h.host));
   // A host seen when we ran it was contacted, even when all it did was load a page.
@@ -955,6 +1013,15 @@ export function score(input: ScoreInput): TrustCard {
         ...(input.manifestMismatch ? { manifestMismatch: true } : {}),
         ...(tested ? { tested: [testedCard, tested.hosts] } : {}),
         ...(review ? { downloadReview: { ...review, files: undefined } } : {}),
+        ...(netReview
+          ? {
+              networkReview: {
+                outcome: netReview.outcome,
+                summary: netReview.summary,
+                hosts: netReview.observed.map((o) => o.host).sort(),
+              },
+            }
+          : {}),
       }),
     )
     .digest("hex");
@@ -1003,7 +1070,7 @@ export function score(input: ScoreInput): TrustCard {
         drivers: stDrivers,
       },
       dataSharing: {
-        value: p.dataSharing,
+        value: dsDrivers.includes("DS-REVIEWED-NONE") ? "no-network-found" : p.dataSharing,
         hosts: Object.entries(p.hostsByCategory)
           .map(([category, hosts]) => {
             const unique = [...new Set(hosts)].sort();
@@ -1021,6 +1088,7 @@ export function score(input: ScoreInput): TrustCard {
           .sort((x, y) => x.category.localeCompare(y.category, "en")),
         concern: dsConcern,
         label: dsLabel,
+        ...(netReview ? { note: netReview.summary } : {}),
         legalRisk: p.legalRisk,
         drivers: dsDrivers,
       },
@@ -1096,6 +1164,9 @@ function dataSharingLabel(
   // Network code with no destination we could name is a different finding from a server we saw
   // but couldn't identify, so it gets its own wording.
   if (drivers.includes("DS-UNKNOWN-DESTINATION")) return "Uses the network; we couldn't tell where";
+  if (drivers.includes("DS-REVIEWED-NONE")) return "No network use found (checked by hand)";
+  if (drivers.includes("DS-UNTRACED-QUIET"))
+    return "Has network code we couldn't trace; it contacted nothing when we ran it";
   // Usage data and public relays are what the facet is about when they fire.
   const tel = [...new Set(hostsByCategory.telemetry ?? [])].sort();
   if (drivers.includes("DS-TELEMETRY") && tel.length && value === "named-third-parties")

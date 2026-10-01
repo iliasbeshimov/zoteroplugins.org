@@ -53,8 +53,15 @@ import {
 import { detectDocLanguages, linkedReadmeLanguages, uiLocales } from "./languages.ts";
 import { assignSlugs, listingKind, resolveListing } from "./listing.ts";
 import { buildProfileReport } from "./report.ts";
-import { type DownloadReview, readDownloadReview, reviewedFiles } from "./reviews.ts";
-import { observedHosts, readSandboxRecord } from "./sandbox.ts";
+import {
+  type DownloadReview,
+  type NetworkReview,
+  readDownloadReview,
+  readNetworkReview,
+  reviewedFiles,
+  reviewedNetworkFiles,
+} from "./reviews.ts";
+import { observedHosts, readSandboxRecord, reviewedHosts } from "./sandbox.ts";
 import { RULES_VERSION, score } from "./score.ts";
 import {
   cachedUpdateText,
@@ -364,6 +371,8 @@ export interface Gathered {
   sandbox?: SandboxRecord | null;
   /** A reviewed download-and-run finding (data/reviews/download-exec/<slug>.json). */
   downloadReview?: DownloadReview | null;
+  /** A reviewed finding on network code we couldn't trace (data/reviews/network/<slug>.json). */
+  networkReview?: NetworkReview | null;
 }
 
 /** data/plugins/<slug>.yaml, when someone wrote one. A malformed file stops the run. */
@@ -491,6 +500,7 @@ export async function gather(
     curated: await readCurated(slug),
     sandbox: await readSandboxRecord(slug),
     downloadReview: await readDownloadReview(slug),
+    networkReview: await readNetworkReview(slug),
   };
 }
 
@@ -508,6 +518,7 @@ const LABEL_TEXT: Record<string, string> = {
   "review-details": "Review the details",
   "high-concern": "Serious concerns found",
   "insufficient-data": "Not enough data",
+  checking: "Still checking",
 };
 
 /** The update check's label, record path and the line the card shows. */
@@ -831,6 +842,19 @@ export function assemble(
       ...(record ? { tested: { record, hosts: observedHosts(record, ctx.table, developer) } } : {}),
       ...(g.downloadReview
         ? { downloadReview: { ...g.downloadReview, files: reviewedFiles(g.downloadReview) } }
+        : {}),
+      ...(g.networkReview
+        ? {
+            networkReview: {
+              outcome: g.networkReview.outcome,
+              summary: g.networkReview.summary,
+              files: reviewedNetworkFiles(g.networkReview),
+              observed:
+                g.networkReview.outcome === "hosts"
+                  ? reviewedHosts(g.networkReview.hosts ?? [], ctx.table, developer)
+                  : [],
+            },
+          }
         : {}),
     });
     const before = art.doc.trustCard;

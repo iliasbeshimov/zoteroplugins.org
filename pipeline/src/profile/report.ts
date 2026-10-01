@@ -14,6 +14,7 @@ const LABEL_TEXT: Record<string, string> = {
   "review-details": "Review the details",
   "low-concern": "Few concerns found",
   "insufficient-data": "Not enough data",
+  checking: "Still checking",
   none: "Not analyzed",
 };
 
@@ -85,7 +86,14 @@ export function buildProfileReport(profiles: PluginProfile[], meta: Meta): strin
     "",
     table(
       ["Label", "All profiles", "Shown by default"],
-      ["high-concern", "review-details", "low-concern", "insufficient-data", "none"].map((l) => [
+      [
+        "high-concern",
+        "review-details",
+        "low-concern",
+        "insufficient-data",
+        "checking",
+        "none",
+      ].map((l) => [
         LABEL_TEXT[l] ?? l,
         profiles.filter((p) => label(p) === l).length,
         shown.filter((p) => label(p) === l).length,

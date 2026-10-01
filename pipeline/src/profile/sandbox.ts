@@ -76,6 +76,26 @@ export const receivedData = (o: { usage?: Usage; category?: string }) =>
   o.usage !== "fetches" || o.category === "telemetry";
 
 /**
+ * How one host a plugin contacted is classified: the hosts table, then the developer's own names.
+ * The table's ignore list is for names in code that are never destinations (XML namespaces, help
+ * pages); one the plugin actually contacted is a destination we can't classify.
+ */
+export function classifyContacted(
+  host: string,
+  table: HostTable,
+  developer: DeveloperHints,
+): Omit<ObservedHost, "usage"> {
+  const found = classifyHost(table, host) ?? { category: "unknown" as const, flags: [] };
+  const dev =
+    found.category === "unknown" &&
+    !found.flags.includes("ip-literal") &&
+    isDeveloperHost(host, developer);
+  return dev
+    ? { host, category: "developer-server", provider: "Plugin developer (name match)", flags: [] }
+    : { host, ...found };
+}
+
+/**
  * The hosts a test contacted, classified the way the analysis classifies the hosts in the code
  * (reclassifyHosts): the hosts table, then the developer's own names. Hosts the test refused (this
  * computer, a private network) aren't among them; the record lists those as unexpected.
@@ -102,26 +122,22 @@ export function observedHosts(
       out.set(host, most ? { ...rest, usage: most } : rest);
       continue;
     }
-    // The table's ignore list is for names in code that are never destinations (XML namespaces,
-    // help pages); one the plugin actually contacted is a destination we can't classify.
-    const found = classifyHost(table, host) ?? { category: "unknown" as const, flags: [] };
-    const dev =
-      found.category === "unknown" &&
-      !found.flags.includes("ip-literal") &&
-      isDeveloperHost(host, developer);
-    out.set(host, {
-      ...(dev
-        ? {
-            host,
-            category: "developer-server",
-            provider: "Plugin developer (name match)",
-            flags: [],
-          }
-        : { host, ...found }),
-      ...(usage ? { usage } : {}),
-    });
+    out.set(host, { ...classifyContacted(host, table, developer), ...(usage ? { usage } : {}) });
   }
   return [...out.values()];
+}
+
+/** The hosts a review says the untraced code sends to, classified like the ones a test contacted. */
+export function reviewedHosts(
+  hosts: string[],
+  table: HostTable,
+  developer: DeveloperHints,
+): ObservedHost[] {
+  const names = new Set(hosts.map(sameHost).filter((h): h is string => Boolean(h)));
+  return [...names].map((h) => ({
+    ...classifyContacted(h, table, developer),
+    usage: "sends-data",
+  }));
 }
 
 /**

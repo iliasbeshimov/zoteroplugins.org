@@ -382,6 +382,7 @@ function gradeOf(p: PluginProfile): Grade {
     case "review-details":
       return "B";
     case "insufficient-data":
+    case "checking":
       return "–";
     case "low-concern": {
       const cur = t.inputs.currentZotero.split(".")[0];
@@ -418,6 +419,8 @@ function build(
   if (grade === "A+")
     because = "every code check came out low, and our live test in Zotero found nothing unexpected";
   else if (grade === "A") because = "every code check came out low";
+  else if (t?.overall.label === "checking")
+    because = "we're still checking where its network code sends data";
   else if (grade === "–")
     because = p.scan.reason ? becauseClause(p.scan.reason) : "we couldn't analyse its code yet";
   else {
@@ -438,7 +441,9 @@ function build(
           ? "Next rung: A, once every finding in the code comes out low."
           : grade === "C"
             ? "Next rung: B, once nothing in the code is a serious concern."
-            : "We'll grade it once we can check it.";
+            : t?.overall.label === "checking"
+              ? "We'll grade it once we've traced where its network code sends data."
+              : "We'll grade it once we can check it.";
 
   // areas
   const areas: Area[] = [];
@@ -481,9 +486,15 @@ function build(
     title: "Where your data goes",
     level: ds ? CONCERN_LEVEL[ds.concern] : "unknown",
     value: ds?.label ?? "Not checked yet",
-    sub: hostCount
-      ? `${hostCount} address${hostCount > 1 ? "es" : ""} in ${ds?.hosts.length} group${(ds?.hosts.length ?? 0) > 1 ? "s" : ""}.`
-      : undefined,
+    sub:
+      [
+        ds?.note,
+        hostCount
+          ? `${hostCount} address${hostCount > 1 ? "es" : ""} in ${ds?.hosts.length} group${(ds?.hosts.length ?? 0) > 1 ? "s" : ""}.`
+          : undefined,
+      ]
+        .filter(Boolean)
+        .join(" ") || undefined,
     groups: [...(ds?.hosts ?? [])]
       .sort((a, b) => HOST_ORDER.indexOf(a.category) - HOST_ORDER.indexOf(b.category))
       .map((g) => {

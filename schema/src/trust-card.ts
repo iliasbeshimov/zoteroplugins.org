@@ -143,6 +143,12 @@ export const TrustCard = z.object({
         .describe(
           "A destination is a shadow library such as Sci-Hub: shown as a neutral legal notice",
         ),
+      note: z
+        .string()
+        .optional()
+        .describe(
+          "A reviewer's note on the data-sharing finding: what the code is and why it does or doesn't send",
+        ),
       drivers: RuleIds,
     }),
     capabilities: z.object({
@@ -217,7 +223,11 @@ export const TrustCard = z.object({
     }),
   }),
   overall: z.object({
-    label: z.enum(["low-concern", "review-details", "high-concern", "insufficient-data"]),
+    label: z
+      .enum(["low-concern", "review-details", "high-concern", "insufficient-data", "checking"])
+      .describe(
+        "checking: not graded yet, because it has network code we couldn't trace and nothing else to go on; a later check settles it",
+      ),
     ruleId: z.string(),
     drivers: z.array(FacetId).describe("Facets that determined the label, shown next to it"),
     reasons: z

@@ -28,7 +28,12 @@ import {
   unchangedRelease,
   writtenForAnotherFile,
 } from "../src/profile/run.ts";
-import { observedHosts, readSandboxRecord, withObserved } from "../src/profile/sandbox.ts";
+import {
+  observedHosts,
+  readSandboxRecord,
+  reviewedHosts,
+  withObserved,
+} from "../src/profile/sandbox.ts";
 import { compatibilityLabel, DS_CONCERN, score } from "../src/profile/score.ts";
 import {
   matchesStatedHash,
@@ -1951,5 +1956,131 @@ describe("a reviewed download-and-run finding", () => {
       dl(cardFor(code, { downloadReview: review({ files: ["c".repeat(64)] }) }))?.concern,
     ).toBe("high");
     expect(dl(cardFor(code, { downloadReview: review({ real: false }) }))).toBeUndefined();
+  });
+});
+
+describe("untraced network code", () => {
+  const untraced = `export function send(u, body) { return fetch(u, { method: "POST", body }); }`;
+  const sha = "b".repeat(64);
+  const sandboxBase: SandboxRecord = {
+    schemaVersion: 1,
+    sandboxVersion: "1.1.0",
+    slug: "fixture",
+    sha256: sha,
+    addonId: "fixture@example.org",
+    zotero: "10.0.3",
+    testedAt: "2026-09-27T05:25:06Z",
+    seconds: 137,
+    verdict: "as-described",
+    loaded: true,
+    cutShort: false,
+    exercised: {
+      itemsSelected: 3,
+      readerOpened: true,
+      settingsPane: true,
+      menuItems: 2,
+      dialogs: 0,
+    },
+    contacted: [],
+    requests: [],
+    refused: [],
+    programs: [],
+    servers: [],
+    settings: [],
+    files: [],
+    databaseStructureChanged: false,
+    unexpected: [],
+  };
+  const developer = { names: [], domains: [] };
+  const ran = (over: Partial<SandboxRecord> = {}) => {
+    const record = { ...sandboxBase, ...over };
+    return { record, hosts: observedHosts(record, table, developer) };
+  };
+  const netReview = (
+    over: Partial<NonNullable<Parameters<typeof score>[0]["networkReview"]>> = {},
+  ) => ({
+    outcome: "no-requests" as const,
+    summary: "The helper that sends is never called.",
+    files: [sha],
+    observed: [],
+    ...over,
+  });
+
+  it("is only the unknown-destination rule before anything settles it", () => {
+    const card = cardFor(untraced);
+    expect(card.facets.dataSharing.drivers).toEqual(["DS-UNKNOWN-DESTINATION"]);
+    expect(card.facets.sourceTransparency.concern).not.toBe("medium");
+    expect(card.facets.capabilities.concern).toMatch(/none|low/);
+  });
+
+  it("isn't graded when nothing has checked it", () => {
+    const card = cardFor(untraced);
+    expect(card.overall).toMatchObject({
+      label: "checking",
+      ruleId: "OV-CHECKING",
+      drivers: ["dataSharing"],
+      reasons: ["We're still checking where its network code sends data"],
+    });
+  });
+
+  it("is low concern when we ran this file and it contacted nothing", () => {
+    const card = cardFor(untraced, { tested: ran() });
+    expect(card.facets.dataSharing).toMatchObject({
+      concern: "low",
+      drivers: ["DS-UNTRACED-QUIET"],
+      label: "Has network code we couldn't trace; it contacted nothing when we ran it",
+    });
+    expect(card.overall.label).toBe("low-concern");
+  });
+
+  it("stays medium when it contacted something in the run", () => {
+    const tested = ran({
+      contacted: ["x.example.org"],
+      hostUsage: { "x.example.org": { usage: "fetches", sent: [] } },
+    });
+    const card = cardFor(untraced, { tested });
+    expect(card.facets.dataSharing.drivers).toContain("DS-UNKNOWN-DESTINATION");
+    expect(card.overall.label).toBe("review-details");
+  });
+
+  it("treats a run of another file as no run", () => {
+    const card = cardFor(untraced, { tested: ran({ sha256: "c".repeat(64) }) });
+    expect(card.overall.label).toBe("checking");
+    expect(card.facets.dataSharing.drivers).toEqual(["DS-UNKNOWN-DESTINATION"]);
+  });
+
+  it("is settled by a review that says it never sends, for the file it reviewed", () => {
+    const card = cardFor(untraced, { networkReview: netReview() });
+    expect(card.facets.dataSharing).toMatchObject({
+      value: "no-network-found",
+      concern: "none",
+      drivers: ["DS-REVIEWED-NONE"],
+      label: "No network use found (checked by hand)",
+      note: "The helper that sends is never called.",
+    });
+    expect(card.overall.label).toBe("low-concern");
+    const other = cardFor(untraced, { networkReview: netReview({ files: ["c".repeat(64)] }) });
+    expect(other.overall.label).toBe("checking");
+    expect(other.facets.dataSharing.note).toBeUndefined();
+  });
+
+  it("counts the hosts a review names, but doesn't mark them seen", () => {
+    const observed = reviewedHosts(["api.crossref.org"], table, developer);
+    const card = cardFor(untraced, { networkReview: netReview({ outcome: "hosts", observed }) });
+    expect(card.facets.dataSharing.value).not.toBe("unknown-endpoints");
+    const groups = card.facets.dataSharing.hosts;
+    expect(groups.flatMap((g) => g.hosts)).toContain("api.crossref.org");
+    expect(groups.flatMap((g) => g.observed ?? [])).toEqual([]);
+    expect(card.facets.dataSharing.drivers).not.toContain("DS-UNKNOWN-DESTINATION");
+  });
+
+  it("is graded when something else about the plugin is medium or worse", () => {
+    const cert = `async function trust() { if (!Services.prompt.confirm(null, "x", "Trust?")) return;
+         await Subprocess.call({ command: "/usr/bin/security", arguments: ["add-trusted-cert", "-r", "trustRoot", ca] }); }
+       async function init() { if (!getPref("httpsProxyEnabled")) return; await trust(); }
+       function startup() { init(); }`;
+    const card = cardFor(`${untraced}\n${cert}`);
+    expect(card.facets.dataSharing.drivers).toContain("DS-UNKNOWN-DESTINATION");
+    expect(card.overall.label).toBe("review-details");
   });
 });
