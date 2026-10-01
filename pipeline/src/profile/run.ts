@@ -105,6 +105,8 @@ export interface ProfileOptions {
   plugin?: string;
   force?: boolean;
   limit?: number;
+  /** Rebuild from stored release files and cached .xpi blobs, with no GitHub calls (as regress does). */
+  offline?: boolean;
 }
 
 export interface Context {
@@ -273,7 +275,10 @@ export async function runProfile(
   const prep = await prepare();
   const { census, candidates, registry, listing, table } = prep;
   const selected = selectCandidates(candidates, opts);
-  const ctx = await makeContext(prep, { force: Boolean(opts.force) });
+  const ctx = await makeContext(prep, {
+    force: Boolean(opts.force),
+    offline: Boolean(opts.offline),
+  });
   log(
     `Profiling ${selected.length} of ${candidates.length} listed plugins (analyzer ${ANALYZER_VERSION}, hosts ${table.version}, rules ${RULES_VERSION})`,
   );

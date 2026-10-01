@@ -132,14 +132,21 @@ export function buildProgram(): Command {
     .option("-p, --plugin <slug-or-repo>", "profile one plugin, e.g. zotero-pdf-translate")
     .option("--limit <n>", "profile only the first n plugins by downloads")
     .addOption(forceOption())
-    .action(async (opts: { plugin?: string; limit?: string; force?: boolean }) => {
-      const { runProfile } = await import("./profile/run.ts");
-      await runProfile({
-        ...(opts.plugin ? { plugin: opts.plugin } : {}),
-        ...(opts.limit ? { limit: Number(opts.limit) } : {}),
-        force: Boolean(opts.force),
-      });
-    });
+    .option(
+      "--offline",
+      "rebuild from stored release files and cached .xpi blobs, with no GitHub calls (after a scanner or rules change)",
+    )
+    .action(
+      async (opts: { plugin?: string; limit?: string; force?: boolean; offline?: boolean }) => {
+        const { runProfile } = await import("./profile/run.ts");
+        await runProfile({
+          ...(opts.plugin ? { plugin: opts.plugin } : {}),
+          ...(opts.limit ? { limit: Number(opts.limit) } : {}),
+          force: Boolean(opts.force),
+          offline: Boolean(opts.offline),
+        });
+      },
+    );
 
   const submit = program
     .command("submit")
