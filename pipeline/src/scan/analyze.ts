@@ -11193,7 +11193,7 @@ function evidenceList(hits: Hit[]): CodeEvidence[] {
     const key = `${h.file.path}:${h.offset}`;
     if (seen.has(key)) continue;
     seen.add(key);
-    const e = h.file.evidence(h.offset);
+    const e = h.file.evidence(h.offset, !h.library && !h.own);
     out.push(
       h.library ? { ...e, inVendoredCode: true } : h.own ? { ...e, inVendoredCode: false } : e,
     );
@@ -11525,7 +11525,7 @@ function vendoredLibraries(col: Collector): AnalysisDoc["transparency"]["vendore
     .map(([name, v]) => {
       const found = state.get(name);
       const unmatched = (found?.match === "partial" ? found.at : []).slice(0, 10).map((h) => {
-        const e = h.file.evidence(h.offset);
+        const e = h.file.evidence(h.offset, false);
         return { file: e.file, line: e.line, snippet: e.snippet };
       });
       return {

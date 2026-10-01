@@ -77,10 +77,10 @@ const MAX_FINGERPRINT_CHARS = 8 * 1024 * 1024;
 const IDENTIFY_MIN_CALLS = 25;
 /** …and they are at least this share of those calls. */
 const IDENTIFY_MIN_SHARE = 0.15;
+/** A string this long, found in a library's release, says more than a plain call does. */
+const LONG_STRING = 20;
 /** A function is a library's when this share of its calls (at least three) are. */
 const FUNCTION_MATCH_SHARE = 0.8;
-/** Failures kept per library and file; the report shows ten. */
-const UNMATCHED_KEPT = 200;
 
 /** How a file's calls match one library's release, as counts per function. */
 interface LibraryStats {
@@ -101,6 +101,8 @@ export class SourceFile {
   readonly vendoredFile: string | null;
   readonly vendoredBy: LibraryEvidence | null;
   readonly regions: Region[];
+  /** Stretches a bundler marks as the plugin's own source modules (`// src/utils/prefs.ts`). */
+  private readonly ownSource: { start: number; end: number }[];
   private calls: CallRecord[] = [];
   private literals: LiteralRecord[] = [];
   private fns: FnRecord[] = [];
@@ -109,7 +111,10 @@ export class SourceFile {
   private identifiedLibraries: string[] | null = null;
   private stats = new Map<string, LibraryStats>();
   private memo = new Map<number, string | null>();
-  private failed = new Map<string, number[]>();
+  /** Offsets where a claim that code is a library's failed, with the libraries it was made for. */
+  private failed = new Map<number, string[]>();
+  /** Offsets of the evidence written out: only a failure at one of these is worth a person's look. */
+  private reported = new Set<number>();
 
   constructor(
     readonly path: string,
@@ -121,7 +126,9 @@ export class SourceFile {
     const lib = detectVendoredFile(path, text);
     this.vendoredFile = lib?.name ?? null;
     this.vendoredBy = lib?.by ?? null;
-    this.regions = this.vendoredFile ? [] : detectRegions(text);
+    const found = this.vendoredFile ? null : detectRegions(text);
+    this.regions = found?.regions ?? [];
+    this.ownSource = found?.own ?? [];
   }
 
   lineCol(offset: number): { line: number; column: number } {
@@ -213,22 +220,37 @@ export class SourceFile {
     return lib;
   }
 
+  /** Whether a bundler's marker puts the offset in one of the plugin's own modules (they run in order). */
+  private inOwnSource(offset: number): boolean {
+    let lo = 0;
+    let hi = this.ownSource.length - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      const r = this.ownSource[mid] as { start: number; end: number };
+      if (offset < r.start) hi = mid - 1;
+      else if (offset >= r.end) lo = mid + 1;
+      else return true;
+    }
+    return false;
+  }
+
   private resolve(offset: number, record: boolean): string | null {
     const claim = this.claimAt(offset);
     if (this.index.calls.size === 0) return claim;
+    // A bundler's own marker says whose module this is. Plain calls in the plugin's code match
+    // plenty of a library's release, so without this a bundle that opens with a library would
+    // take the plugin's modules for it too.
+    if (!claim && this.inOwnSource(offset)) return null;
     const claimed = claim ? this.index.aliasOf(claim) : null;
     if (claim && claimed && !this.index.has(claimed)) return claim;
     const candidates = new Set(this.identified());
     if (claimed) candidates.add(claimed);
     for (const lib of candidates) if (this.matches(lib, offset)) return lib;
     // Between statements isn't a place worth a person's look, unless a file name or marker
-    // put the library there.
+    // put the library there. The failure is the claiming library's; only code nothing claimed
+    // is open to every library the file's calls point to.
     if (record && (claim !== null || this.inCode(offset)))
-      for (const lib of candidates) {
-        const list = this.failed.get(lib) ?? [];
-        if (list.length < UNMATCHED_KEPT) list.push(offset);
-        this.failed.set(lib, list);
-      }
+      this.failed.set(offset, claimed ? [claimed] : [...candidates]);
     return null;
   }
 
@@ -271,7 +293,9 @@ export class SourceFile {
   }
 
   private callIsIn(lib: string, i: number, c: CallRecord): boolean {
-    if (!this.index.calls.get(this.hashOf(i))?.includes(lib)) return false;
+    const known = (key: string) => this.index.calls.get(hashKey(key))?.includes(lib);
+    if (!this.index.calls.get(this.hashOf(i))?.includes(lib) && !(c.plainKey && known(c.plainKey)))
+      return false;
     return c.literals.every((s) => this.index.literals.get(hashKey(s))?.includes(lib));
   }
 
@@ -284,6 +308,16 @@ export class SourceFile {
     const calls = (all ? stats.nestedCalls : stats.calls)[fn + 1] as number;
     const matching = (all ? stats.nestedMatching : stats.matching)[fn + 1] as number;
     return calls >= 3 && matching / calls >= FUNCTION_MATCH_SHARE;
+  }
+
+  /**
+   * Whether the code around a string is mostly the library's: the nearest function with calls
+   * enough to say. A message built in a one-line arrow function has none of its own.
+   */
+  private mostlyAround(stats: LibraryStats, fn: number): boolean {
+    let f = fn;
+    while (f >= 0 && (stats.nestedCalls[f + 1] as number) < 3) f = (this.fns[f] as FnRecord).parent;
+    return this.mostlyIn(stats, f, true);
   }
 
   /** The innermost record open at `offset`: the last one starting before it, climbing out of siblings. */
@@ -356,14 +390,18 @@ export class SourceFile {
         if (outer.fn !== c.fn) break;
         if (outer.specific && stats.ok[a]) return true;
       }
-      return c.fn >= 0 && this.mostlyIn(stats, c.fn);
+      if (c.fn < 0) return false;
+      if (this.mostlyIn(stats, c.fn)) return true;
+      // A long string of the release's in a call (an error message in a one-line method) is
+      // the library's even where the function has too few calls to say.
+      return c.literals.some((s) => s.length >= LONG_STRING) && this.mostlyAround(stats, c.fn);
     }
     const literal = this.literalAt(offset);
     if (literal) {
       return (
         (literal.group ?? [literal.value]).every((s) =>
           this.index.literals.get(hashKey(s))?.includes(lib),
-        ) && this.mostlyIn(stats, literal.fn)
+        ) && this.mostlyAround(stats, literal.fn)
       );
     }
     // Between nodes (a statement, a declaration): in a function that is mostly the library's,
@@ -374,7 +412,9 @@ export class SourceFile {
 
   /**
    * Each library claimed in this file with how the claim held up, and where it didn't (file
-   * offsets). A library recognised by name alone, outside the catalogue, isn't checked.
+   * offsets). A claim failed only where a finding written out sat in the code: a stretch the
+   * release lacks that holds nothing worth reporting (a bundler's preamble) says nothing about the
+   * library. A library recognised by name alone, outside the catalogue, isn't checked.
    */
   libraryReport(): Map<string, { match: LibraryMatch; unmatched: number[] }> {
     const report = new Map<string, { match: LibraryMatch; unmatched: number[] }>();
@@ -389,14 +429,24 @@ export class SourceFile {
     if (this.index.calls.size > 0)
       for (const lib of this.identified()) report.set(lib, { match: "release", unmatched: [] });
     for (const [lib, entry] of report) {
-      const offsets = this.failed.get(lib);
-      if (entry.match === "release" && offsets?.length)
-        report.set(lib, { match: "partial", unmatched: [...offsets].sort((a, b) => a - b) });
+      if (entry.match !== "release") continue;
+      const offsets = [...this.reported]
+        .filter((o) => this.failed.get(o)?.includes(lib))
+        .sort((a, b) => a - b);
+      if (offsets.length) report.set(lib, { match: "partial", unmatched: offsets });
     }
     return report;
   }
 
-  evidence(offset: number): CodeEvidence {
+  /**
+   * A finding's evidence. `checked` is false for one a library's descriptor already placed (inside
+   * the library, or the plugin's own by what it sets), which no verification decided.
+   */
+  evidence(offset: number, checked = true): CodeEvidence {
+    if (checked) {
+      this.libraryAt(offset);
+      this.reported.add(offset);
+    }
     const { line, column } = this.lineCol(offset);
     const lineStart = this.lineStarts[line - 1] ?? 0;
     const nextLine = this.lineStarts[line] ?? this.text.length + 1;
@@ -534,8 +584,11 @@ const SIBLING_PACKAGE = /^(?:\.\.\/)+([\w@.-]+)\/(?:dist|lib|build|esm|cjs|es)\/
 /** esbuild's minified module wrappers: `__commonJS({"node_modules/pkg/x.js"(e){…}})`. */
 const ESBUILD_MODULE = /["'](node_modules\/[^"']+?\.(?:m?js|cjs|json))["']\s*\([\w$,\s]*\)\s*\{/g;
 
-function detectRegions(text: string): Region[] {
-  const markers: { at: number; vendored: string | null }[] = [];
+function detectRegions(text: string): {
+  regions: Region[];
+  own: { start: number; end: number }[];
+} {
+  const markers: { at: number; vendored: string | null; own: boolean }[] = [];
   for (const m of text.matchAll(SECTION_MARKER)) {
     const p = m[1] ?? m[2] ?? "";
     markers.push({
@@ -543,12 +596,16 @@ function detectRegions(text: string): Region[] {
       vendored: p.includes("node_modules/")
         ? packageName(p)
         : (p.match(SIBLING_PACKAGE)?.[1] ?? null),
+      // A path that reads like a library's folder or release stays open to the file-wide check.
+      own: !p.includes("node_modules/") && !SIBLING_PACKAGE.test(p) && !looksVendored(p),
     });
   }
   const regions: Region[] = [];
+  const own: { start: number; end: number }[] = [];
   markers.forEach((mk, i) => {
-    if (!mk.vendored) return;
-    regions.push({ start: mk.at, end: markers[i + 1]?.at ?? text.length, library: mk.vendored });
+    const end = markers[i + 1]?.at ?? text.length;
+    if (mk.vendored) regions.push({ start: mk.at, end, library: mk.vendored });
+    else if (mk.own) own.push({ start: mk.at, end });
   });
   // Minified bundles have no comment markers: a wrapper's region ends at its closing brace, so
   // the plugin's own code after the last library module isn't attributed to it. Only when the
@@ -565,7 +622,11 @@ function detectRegions(text: string): Region[] {
       )
         regions.push({ start: m.index ?? 0, end: close + 1, library: packageName(m[1] ?? "") });
     }
-  return regions;
+  return { regions, own };
+}
+
+function looksVendored(path: string): boolean {
+  return VENDOR_DIR.test(path) || LIB_DIR.test(path) || VENDORED_FILE.test(path);
 }
 
 /**
