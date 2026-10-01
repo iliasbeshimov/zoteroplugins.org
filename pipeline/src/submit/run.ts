@@ -75,6 +75,14 @@ const isPlugin = (v: Verdict) => v === "zotero-plugin" || v === "zotero-plugin-l
 export async function enqueueSubmission(input: string, now = new Date()): Promise<string> {
   const repo = repoFromInput(input);
   if (!repo) throw new Error(`Not a GitHub repository address: ${input}`);
+  // Listed or already being checked under this name: nothing to queue (a renamed repo still goes
+  // through the queue, which resolves GitHub's current name).
+  const census = JSON.parse(await readFile(CENSUS_FILE, "utf8")) as { rows: CensusRow[] };
+  if (census.rows.some((r) => r.repo.toLowerCase() === repo && isPlugin(r.verdict)))
+    return `${repo} is already listed`;
+  const record = (await readRecords()).find((r) => r.repo.toLowerCase() === repo);
+  if (record?.status === "in-review" || record?.status === "added")
+    return `${repo} is already ${record.status}`;
   const added = await enqueue(repo, now.toISOString());
   return added ? `Queued ${repo}` : `${repo} is already queued`;
 }

@@ -1,3 +1,4 @@
+import { appendFile } from "node:fs/promises";
 import { Command, Option } from "commander";
 
 export class NotImplementedError extends Error {
@@ -158,6 +159,9 @@ export function buildProgram(): Command {
       const { processQueue } = await import("./submit/run.ts");
       const accepted = await processQueue({ cap: Number(opts.cap) });
       console.log(`${accepted.length} new in review`);
+      // The workflow deploys only when a plugin went into review.
+      if (process.env.GITHUB_OUTPUT)
+        await appendFile(process.env.GITHUB_OUTPUT, `in-review=${accepted.length > 0}\n`);
     });
   submit
     .command("check")

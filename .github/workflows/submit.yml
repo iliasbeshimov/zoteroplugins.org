@@ -75,6 +75,7 @@ jobs:
             census-
 
       - name: Decide what's queued
+        id: process
         run: pnpm atlas submit process --cap 20
 
       - name: Commit decisions
@@ -82,7 +83,7 @@ jobs:
         run: '.github/scripts/commit-push.sh "Submissions: decided" data/submissions data/census/census.json data/slugs.json'
 
       - name: Deploy (plugins in review)
-        if: steps.decided.outputs.changed == 'true' && env.CLOUDFLARE_API_TOKEN != ''
+        if: steps.process.outputs.in-review == 'true' && env.CLOUDFLARE_API_TOKEN != ''
         run: |
           pnpm site:build
           cd site && npx -y wrangler@4 pages deploy dist --project-name zoteroplugins --branch main --commit-hash "$(git rev-parse HEAD)" --commit-dirty=false
