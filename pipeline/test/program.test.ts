@@ -20,6 +20,7 @@ describe("atlas CLI", () => {
       "profile",
       "submit",
       "regress",
+      "queue",
       "census-explorer",
     ]);
   });

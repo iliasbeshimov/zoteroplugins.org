@@ -202,6 +202,23 @@ export function buildProgram(): Command {
     );
 
   program
+    .command("queue")
+    .description(
+      "derive the investigation queue and the scanner-vs-sandbox report from data/ (writes docs/review/)",
+    )
+    .option("--out <dir>", "where to write queue.json, queue.md and queue-state.json")
+    .option("--data <dir>", "the data folder to read")
+    .action(async (opts: { out?: string; data?: string }) => {
+      const { join, resolve } = await import("node:path");
+      const { paths } = await import("./paths.ts");
+      const { runQueue } = await import("./queue/run.ts");
+      await runQueue({
+        out: resolve(paths.root, opts.out ?? join("docs", "review")),
+        dataDir: resolve(paths.root, opts.data ?? "data"),
+      });
+    });
+
+  program
     .command("census-explorer")
     .description("build data/census/explorer.html from data/census/census.json")
     .action(async () => {
