@@ -1058,6 +1058,119 @@
                     ]
                   }
                 },
+                "libraryNetwork": {
+                  "description": "What each bundled library with a known set of settings sends in this plugin, read from the settings the plugin passes it. Hosts it makes the plugin send to are in `hosts`; when every address setting is off or local, the library's own network calls are left out of `apis`",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "library": {
+                        "type": "string",
+                        "description": "The library's npm name"
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "How the card names it"
+                      },
+                      "role": {
+                        "type": "string",
+                        "description": "What it is to the plugin, e.g. 'the Markdown editor it bundles'"
+                      },
+                      "configFound": {
+                        "type": "boolean",
+                        "description": "The plugin's own code passes the library a configuration object we could read; when false every setting is the library's default"
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "path": {
+                              "type": "string",
+                              "description": "The setting, e.g. `upload.url`"
+                            },
+                            "state": {
+                              "type": "string",
+                              "enum": [
+                                "off",
+                                "local",
+                                "remote",
+                                "unknown"
+                              ],
+                              "description": "off: empty, or switched off by another setting; local: inside the package or on this computer; remote: a web address; unknown: the value isn't a plain string we could read"
+                            },
+                            "host": {
+                              "description": "The host, when the address is remote",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "state"
+                          ]
+                        },
+                        "description": "Settings that hold an address, as the plugin leaves them"
+                      },
+                      "fixed": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "host": {
+                              "type": "string"
+                            },
+                            "state": {
+                              "type": "string",
+                              "enum": [
+                                "active",
+                                "missing-asset",
+                                "unknown"
+                              ],
+                              "description": "active: the library's code sends there; missing-asset: it would, but a script it needs first isn't in the package; unknown: where its scripts come from isn't clear"
+                            }
+                          },
+                          "required": [
+                            "host",
+                            "state"
+                          ]
+                        },
+                        "description": "Destinations no setting turns off, for those the library's code contains"
+                      },
+                      "userContent": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "what": {
+                              "type": "string"
+                            },
+                            "state": {
+                              "type": "string",
+                              "enum": [
+                                "on",
+                                "off"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "what",
+                            "state"
+                          ]
+                        },
+                        "description": "Loads that happen only for addresses the user puts in their own content (video links in a note)"
+                      }
+                    },
+                    "required": [
+                      "library",
+                      "displayName",
+                      "role",
+                      "configFound",
+                      "options",
+                      "fixed",
+                      "userContent"
+                    ]
+                  }
+                },
                 "hostsTableVersion": {
                   "type": "string"
                 }

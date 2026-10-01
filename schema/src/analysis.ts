@@ -259,6 +259,60 @@ export const Network = z.object({
     .describe(
       "Programs the plugin runs and companions on this computer it hands data to (AI command-line tools, edge-tts, a local translation app), which send it on to their provider",
     ),
+  libraryNetwork: z
+    .array(
+      z.object({
+        library: z.string().describe("The library's npm name"),
+        displayName: z.string().describe("How the card names it"),
+        role: z
+          .string()
+          .describe("What it is to the plugin, e.g. 'the Markdown editor it bundles'"),
+        configFound: z
+          .boolean()
+          .describe(
+            "The plugin's own code passes the library a configuration object we could read; when false every setting is the library's default",
+          ),
+        options: z
+          .array(
+            z.object({
+              path: z.string().describe("The setting, e.g. `upload.url`"),
+              state: z
+                .enum(["off", "local", "remote", "unknown"])
+                .describe(
+                  "off: empty, or switched off by another setting; local: inside the package or on this computer; remote: a web address; unknown: the value isn't a plain string we could read",
+                ),
+              host: z.string().optional().describe("The host, when the address is remote"),
+            }),
+          )
+          .describe("Settings that hold an address, as the plugin leaves them"),
+        fixed: z
+          .array(
+            z.object({
+              host: z.string(),
+              state: z
+                .enum(["active", "missing-asset", "unknown"])
+                .describe(
+                  "active: the library's code sends there; missing-asset: it would, but a script it needs first isn't in the package; unknown: where its scripts come from isn't clear",
+                ),
+            }),
+          )
+          .describe("Destinations no setting turns off, for those the library's code contains"),
+        userContent: z
+          .array(
+            z.object({
+              what: z.string(),
+              state: z.enum(["on", "off"]),
+            }),
+          )
+          .describe(
+            "Loads that happen only for addresses the user puts in their own content (video links in a note)",
+          ),
+      }),
+    )
+    .optional()
+    .describe(
+      "What each bundled library with a known set of settings sends in this plugin, read from the settings the plugin passes it. Hosts it makes the plugin send to are in `hosts`; when every address setting is off or local, the library's own network calls are left out of `apis`",
+    ),
   hostsTableVersion: z.string(),
 });
 

@@ -30,7 +30,7 @@ import { type ObservedHost, testedSummary, withObserved } from "./sandbox.ts";
  * Preview rules: the overall label ignores "source match not checked yet", because that is
  * a gap in our checks rather than something the plugin did. The facet still says it.
  */
-export const RULES_VERSION = "0.7.0-preview";
+export const RULES_VERSION = "0.7.1-preview";
 
 const RANK: Record<Concern, number> = { none: 0, low: 1, unknown: 2, medium: 2, high: 3 };
 const worst = (cs: Concern[]): Concern =>
@@ -974,6 +974,15 @@ export function score(input: ScoreInput): TrustCard {
     input.repo,
     input.fork,
   );
+  // What a bundled library does with the plugin's settings, where it depends on the user's own
+  // content: "Vditor, the Markdown editor it bundles, shows videos your notes link to…". It says
+  // what the library does without changing the level.
+  const libraryNotes = (a.network.libraryNetwork ?? []).flatMap((l) =>
+    l.userContent
+      .filter((u) => u.state === "on")
+      .map((u) => `${l.displayName}, ${l.role}, ${u.what}.`),
+  );
+  const dsNote = [...(netReview ? [netReview.summary] : []), ...libraryNotes].join(" ");
   // The "because" line: every finding at the level that set the label.
   if (overall.label === "high-concern" || overall.label === "review-details") {
     const reasons: string[] = [];
@@ -1095,7 +1104,7 @@ export function score(input: ScoreInput): TrustCard {
           .sort((x, y) => x.category.localeCompare(y.category, "en")),
         concern: dsConcern,
         label: dsLabel,
-        ...(netReview ? { note: netReview.summary } : {}),
+        ...(dsNote ? { note: dsNote } : {}),
         legalRisk: p.legalRisk,
         drivers: dsDrivers,
       },

@@ -306,6 +306,33 @@ const cardFor = (code: string, over: Partial<Parameters<typeof score>[0]> = {}) 
 describe("scorecard", () => {
   const openai = `fetch("https://api.openai.com/v1/chat/completions", { method: "POST" });`;
 
+  it("says what a bundled library loads for the user's own content, without changing the level", () => {
+    const analysis = analyze("");
+    const plain = cardFor("", { analysis });
+    analysis.network.libraryNetwork = [
+      {
+        library: "vditor",
+        displayName: "Vditor",
+        role: "the Markdown editor it bundles",
+        configFound: true,
+        options: [],
+        fixed: [],
+        userContent: [
+          { what: "shows videos your notes link to, loading them from those sites", state: "on" },
+        ],
+      },
+    ];
+    const card = cardFor("", { analysis });
+    expect(card.facets.dataSharing.note).toBe(
+      "Vditor, the Markdown editor it bundles, shows videos your notes link to, loading them from those sites.",
+    );
+    expect(card.facets.dataSharing.concern).toBe(plain.facets.dataSharing.concern);
+    expect(card.facets.dataSharing.label).toBe(plain.facets.dataSharing.label);
+    for (const l of analysis.network.libraryNetwork ?? [])
+      for (const u of l.userContent) u.state = "off";
+    expect(cardFor("", { analysis }).facets.dataSharing.note).toBeUndefined();
+  });
+
   it("labels a plugin that only calls a named AI service as few concerns", () => {
     const card = cardFor(openai);
     expect(card.facets.dataSharing.value).toBe("named-third-parties");

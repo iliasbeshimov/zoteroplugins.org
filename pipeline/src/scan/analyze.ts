@@ -8,6 +8,7 @@ import {
 import { fullAncestor } from "acorn-walk";
 import { parseInstallRdf, parseManifestJson, type XpiManifest } from "../census/xpi.ts";
 import { EMPTY_INDEX, type LibraryIndex } from "../libs/index.ts";
+import { type Config, findConfigs, type LibraryNetwork, resolveNetwork } from "../libs/network.ts";
 import { parseJs } from "../libs/parse.ts";
 import {
   classifyHost,
@@ -22,7 +23,7 @@ import { type LibraryEvidence, SourceFile } from "./text.ts";
  * Static analysis of one .xpi. Deterministic for a given file and ANALYZER_VERSION: the same
  * bytes always produce the same document apart from `analyzedAt`.
  */
-export const ANALYZER_VERSION = "0.9.0";
+export const ANALYZER_VERSION = "0.10.0";
 /** The self-update detail saying it turns Zotero's automatic updates on for itself at startup. */
 export const FORCES_AUTO_UPDATE = "turns on its automatic updates at startup";
 
@@ -42,6 +43,11 @@ interface Hit {
   offset: number;
   /** A library recognised from the code where the file's map doesn't say (the toolkit's bridges). */
   library?: string;
+  /**
+   * The address is one the plugin chose, or one library code always sends to: it counts as the
+   * plugin's, though the text it comes from sits in the library.
+   */
+  own?: boolean;
 }
 
 /**
@@ -812,6 +818,8 @@ class Collector {
   metrics: FileMetrics[] = [];
   unicode = new Map<UnicodeKind, { codepoints: Set<string>; hits: Hit[]; count: number }>();
   vendored = new Map<string, { files: Set<string>; by: LibraryEvidence }>();
+  /** What the bundled libraries with a network descriptor send, as the plugin sets them up. */
+  libraryNetwork: LibraryNetwork[] = [];
   minified = new Set<string>();
   sourceMaps = new Set<string>();
   parseFailures: { path: string; error: string }[] = [];
@@ -10139,9 +10147,9 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
       const ranges: Ranges = { regex: [], strings: [] };
       analyzeJs(col, file, blankTranslatorHeader(file.text), 0, ranges);
       // After the parse, so a library claim can be checked against its release.
-      if (!file.vendoredFile && file.minified) col.minified.add(path);
+      if (!nameIsProof(col, file) && file.minified) col.minified.add(path);
       scanUnicode(col, file, ranges);
-      if (!col.aiLoop && !file.vendoredFile)
+      if (!col.aiLoop && !nameIsProof(col, file))
         for (const m of file.text.matchAll(AI_TOOL_LOOP))
           if (file.libraryAt(m.index) === null) {
             col.aiLoop = true;
@@ -10152,7 +10160,7 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
       // Web scripts loaded into one of the plugin's pages (review P11); commented-out tags don't
       // count.
       const markup = file.text.replace(/<!--[\s\S]*?-->/g, (x) => x.replace(/[^\n]/g, " "));
-      if (!file.vendoredFile) {
+      if (!nameIsProof(col, file)) {
         for (const m of markup.matchAll(REMOTE_SCRIPT_TAG)) {
           const url = m[1] as string;
           const at = { file, offset: (m.index ?? 0) + m[0].indexOf(url) };
@@ -10678,10 +10686,58 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
     }
   }
 
+  noteLibraryNetwork(col, files);
   noteCompanions(col, primary);
   noteUnencrypted(col);
   const analysis = buildDocument(col, input, primary?.version ?? "unknown");
   return { analysis, manifests, updateHost, metrics: col.metrics };
+}
+
+/**
+ * What each bundled library with a descriptor sends, given the settings the plugin's own code
+ * passes it. A library that sends nowhere under those settings has its network calls accounted
+ * for; one that sends somewhere puts that host on the plugin's list.
+ */
+function noteLibraryNetwork(col: Collector, entries: XpiEntry[]) {
+  if (col.libraries.network.size === 0) return;
+  const present = new Map(vendoredLibraries(col).map((v) => [v.name, v]));
+  const paths = entries.map((e) => e.path);
+  for (const [library, descriptor] of col.libraries.network) {
+    const found = present.get(library);
+    if (!found || (found.match !== "release" && found.match !== "partial")) continue;
+    const configs: Config[] = [];
+    for (const file of col.sources) {
+      if (!CODE_EXT.test(file.path)) continue;
+      // Cheap test first: a file that doesn't spell enough of the keys can't hold the object.
+      const spelled = descriptor.configKeys.filter((k) =>
+        new RegExp(`(?<![\\w$.])["']?${k}["']?\\s*:`).test(file.text),
+      );
+      if (spelled.length < descriptor.minConfigKeys) continue;
+      let ast: AstNode;
+      try {
+        ast = parseJs(file.text);
+      } catch {
+        continue;
+      }
+      configs.push(
+        ...findConfigs(file, ast, descriptor, (offset) => file.libraryAt(offset, false) === null),
+      );
+    }
+    const result = resolveNetwork(library, descriptor, configs, col.sources, paths);
+    if (!result) continue;
+    col.libraryNetwork.push(result.entry);
+    for (const d of result.destinations)
+      col.url(d.url, { file: d.file, offset: d.offset, own: true }, "request");
+    if (!result.quiet) continue;
+    // Its own requests are the ones the settings above switch off or keep inside the package.
+    for (const api of ["xhr", "fetch"] as const) {
+      const hits = col.apis.get(api);
+      if (!hits) continue;
+      const rest = hits.filter((h) => libraryOf(h) !== library);
+      if (rest.length) col.apis.set(api, rest);
+      else col.apis.delete(api);
+    }
+  }
 }
 
 /**
@@ -10931,6 +10987,17 @@ function libraryName(col: Collector, name: string): string {
   return col.libraries.has(npm) ? npm : name;
 }
 
+/**
+ * Whether a file's name settles that it's a library, so its code needn't be checked as the
+ * plugin's own. A library in the catalogue is settled by its code, not its name: the file has to
+ * have been identified as that library. One that isn't catalogued can only be taken on its name.
+ */
+function nameIsProof(col: Collector, file: SourceFile): boolean {
+  if (!file.vendoredFile) return false;
+  const npm = col.libraries.aliasOf(file.vendoredFile);
+  return !col.libraries.has(npm) || file.identified().includes(npm);
+}
+
 function addVendored(col: Collector, claimed: string, path: string, by: LibraryEvidence) {
   const name = libraryName(col, claimed);
   const v = col.vendored.get(name) ?? { files: new Set<string>(), by };
@@ -10989,7 +11056,7 @@ function readPrefs(col: Collector, file: SourceFile) {
 // Document assembly
 
 /** The bundled library a use sits in: the file's own map, or one recognised from the code. */
-const libraryOf = (h: Hit) => h.library ?? h.file.libraryAt(h.offset);
+const libraryOf = (h: Hit) => (h.own ? null : (h.library ?? h.file.libraryAt(h.offset)));
 
 function evidenceList(hits: Hit[]): CodeEvidence[] {
   const seen = new Set<string>();
@@ -11001,7 +11068,9 @@ function evidenceList(hits: Hit[]): CodeEvidence[] {
     if (seen.has(key)) continue;
     seen.add(key);
     const e = h.file.evidence(h.offset);
-    out.push(h.library ? { ...e, inVendoredCode: true } : e);
+    out.push(
+      h.library ? { ...e, inVendoredCode: true } : h.own ? { ...e, inVendoredCode: false } : e,
+    );
     if (out.length >= EVIDENCE_CAP) break;
   }
   return out;
@@ -11245,7 +11314,7 @@ function buildDocument(col: Collector, input: AnalyzeInput, version: string): An
                 : []),
             ],
             usage,
-            inVendoredCode: h.hits.every((x) => x.file.libraryAt(x.offset) !== null),
+            inVendoredCode: h.hits.every((x) => !x.own && x.file.libraryAt(x.offset) !== null),
             ...libraryNames(h.hits),
             occurrences: h.hits.length,
             evidence: evidenceList(h.hits),
@@ -11263,6 +11332,7 @@ function buildDocument(col: Collector, input: AnalyzeInput, version: string): An
           evidence: evidenceList(e.hits),
         })),
       ...(programs.length ? { programs } : {}),
+      ...(col.libraryNetwork.length ? { libraryNetwork: col.libraryNetwork } : {}),
       hostsTableVersion: input.table.version,
     },
     capabilities: [...col.caps.entries()]

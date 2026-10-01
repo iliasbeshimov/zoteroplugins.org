@@ -191,6 +191,16 @@ describe("library fingerprints in the scanner", () => {
     });
   });
 
+  it("still checks a file named like a catalogued library for minified own code", async () => {
+    const minified = "var a=f(1,2);".repeat(800);
+    const files = { "vendor/libx.min.js": minified, "content/plain.js": "var a = 1;\n" };
+    const checked = await scanFiles(files, { libraries: libraries() });
+    expect(checked.analysis.transparency.minifiedFiles).toEqual(["vendor/libx.min.js"]);
+    // Without the catalogue the name is taken as it always was.
+    const unchecked = await scanFiles(files);
+    expect(unchecked.analysis.transparency.minifiedFiles).toEqual([]);
+  });
+
   it("keeps the old behaviour for a library that isn't in the catalogue", async () => {
     const files = { "vendor/other.min.js": 'fetch("https://own-service.org/x");\n' };
     const r = await scanFiles(files, { libraries: libraries() });

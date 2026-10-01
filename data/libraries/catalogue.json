@@ -78,7 +78,87 @@
       "aliases": []
     },
     "vditor": {
-      "aliases": []
+      "aliases": [],
+      "network": {
+        "displayName": "Vditor",
+        "role": "the Markdown editor it bundles",
+        "configKeys": [
+          "mode",
+          "cdn",
+          "toolbar",
+          "preview",
+          "upload",
+          "cache",
+          "hint",
+          "toolbarConfig",
+          "outline",
+          "after",
+          "input",
+          "counter",
+          "lang",
+          "icon",
+          "theme",
+          "value"
+        ],
+        "minConfigKeys": 3,
+        "options": [
+          {
+            "path": "cdn",
+            "default": "https://unpkg.com/vditor@{version}",
+            "what": "loads its scripts and styles"
+          },
+          {
+            "path": "_lutePath",
+            "default": "{cdn}/dist/js/lute/lute.min.js",
+            "what": "loads its Markdown parser"
+          },
+          {
+            "path": "preview.theme.path",
+            "default": "{cdn}/dist/css/content-theme",
+            "what": "loads preview styles"
+          },
+          {
+            "path": "hint.emojiPath",
+            "default": "{cdn}/dist/images/emoji",
+            "what": "loads emoji images"
+          },
+          {
+            "path": "upload.url",
+            "default": "",
+            "unlessSet": ["upload.handler"],
+            "what": "uploads files you paste or drop",
+            "sends": true
+          },
+          {
+            "path": "upload.linkToImgUrl",
+            "default": "",
+            "what": "sends image addresses from pasted content",
+            "sends": true
+          },
+          {
+            "path": "preview.url",
+            "default": "",
+            "what": "sends the whole note to render a preview",
+            "sends": true
+          }
+        ],
+        "fixed": [
+          {
+            "host": "www.plantuml.com",
+            "literal": "https://www.plantuml.com/plantuml/svg/~1",
+            "what": "sends the text of PlantUML diagrams in your notes to draw them",
+            "needsAsset": "dist/js/plantuml/plantuml-encoder.min.js",
+            "sends": true
+          }
+        ],
+        "userContent": [
+          {
+            "literal": "https://player.bilibili.com/player.html?",
+            "unlessFalse": "preview.render.media.enable",
+            "what": "shows videos your notes link to (YouTube, Bilibili and others), loading them from those sites"
+          }
+        ]
+      }
     },
     "zotero-plugin": {
       "aliases": []
