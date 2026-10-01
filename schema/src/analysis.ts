@@ -81,8 +81,19 @@ export const VendoredLibrary = z.object({
   identifiedBy: z
     .enum(["banner", "hash", "file-name", "package-json"])
     .describe(
-      "banner: a library licence header; file-name: a known library or release-style file name; package-json: a node_modules path or bundler module marker",
+      "banner: a library licence header; file-name: a known library or release-style file name; package-json: a node_modules path or bundler module marker; hash: its code matches the library's official release",
     ),
+  match: z
+    .enum(["release", "partial", "not-in-catalogue"])
+    .optional()
+    .describe(
+      "release: in our catalogue, and every place we checked matched its official release; partial: some code claimed as this library didn't match its release and was scanned as the plugin's own; not-in-catalogue: recognised by name only",
+    ),
+  unmatched: z
+    .array(z.object({ file: z.string(), line: z.number().int(), snippet: z.string() }))
+    .max(10)
+    .optional()
+    .describe("Where code claimed as this library didn't match its release (at most 10)"),
 });
 
 export const Transparency = z.object({

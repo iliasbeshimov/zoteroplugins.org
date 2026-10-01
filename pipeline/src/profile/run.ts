@@ -24,6 +24,7 @@ import {
 import type { CensusRow } from "../census/run.ts";
 import type { XpiManifest } from "../census/xpi.ts";
 import { loadConfig, requireGithubToken } from "../config.ts";
+import { loadLibraryIndex } from "../libs/index.ts";
 import { cachedRest, GitHub } from "../net/github.ts";
 import { DiskCache, fetchWithRetry, mapLimit } from "../net/http.ts";
 import { paths } from "../paths.ts";
@@ -1585,6 +1586,7 @@ async function artifactFor(
       table: ctx.table,
       analyzedAt: ctx.now,
       developer,
+      libraries: loadLibraryIndex(),
     });
     analysis = result.analysis;
     const m = pickManifest(result.manifests) ?? null;

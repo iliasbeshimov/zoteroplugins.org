@@ -1,4 +1,13 @@
 import type { CodeEvidence } from "@atlas/schema";
+import { EMPTY_INDEX, type LibraryIndex } from "../libs/index.ts";
+import {
+  type CallRecord,
+  collect,
+  type FnRecord,
+  hashKey,
+  type LiteralRecord,
+} from "../libs/normalize.ts";
+import type { AcornNode } from "../libs/parse.ts";
 
 /**
  * A code file with a line index, evidence helpers, and a map of which byte ranges are bundled
@@ -54,7 +63,7 @@ const VENDOR_DIR = /(^|\/)(lib|libs|vendor|vendors|third[-_]?party|external)\//i
 const SECTION_MARKER =
   /^[ \t]*\/\/ ((?:\.\.\/)*[\w@+./-]+\.(?:m?js|cjs|mts|cts|ts|tsx|jsx|json|vue|svelte|pug|jade|html?|xhtml|css|scss|sass|less|styl|md|txt|svg|ftl|ya?ml|wasm|properties))[ \t]*$|["'](\.\/node_modules\/[^"']+)["']\s*:/gm;
 
-export type LibraryEvidence = "banner" | "file-name" | "package-json";
+export type LibraryEvidence = "banner" | "file-name" | "package-json" | "hash";
 
 export interface Region {
   start: number;
@@ -62,15 +71,50 @@ export interface Region {
   library: string;
 }
 
+/** Files over this size aren't fingerprinted: code in them is the plugin's own. */
+const MAX_FINGERPRINT_CHARS = 8 * 1024 * 1024;
+/** A library is in a file when this many of the file's distinct specific calls are its… */
+const IDENTIFY_MIN_CALLS = 25;
+/** …and they are at least this share of those calls. */
+const IDENTIFY_MIN_SHARE = 0.15;
+/** A function is a library's when this share of its calls (at least three) are. */
+const FUNCTION_MATCH_SHARE = 0.8;
+/** Failures kept per library and file; the report shows ten. */
+const UNMATCHED_KEPT = 200;
+
+/** How a file's calls match one library's release, as counts per function. */
+interface LibraryStats {
+  /** Per call: it, and every string in it, is in the release. */
+  ok: Uint8Array;
+  /** Per function (index + 1; slot 0 is the top level): calls directly in it, and matching ones. */
+  calls: Int32Array;
+  matching: Int32Array;
+  /** The same, counting the functions inside each one too. */
+  nestedCalls: Int32Array;
+  nestedMatching: Int32Array;
+}
+
+export type LibraryMatch = "release" | "partial" | "not-in-catalogue";
+
 export class SourceFile {
   readonly lineStarts: number[] = [0];
   readonly vendoredFile: string | null;
   readonly vendoredBy: LibraryEvidence | null;
   readonly regions: Region[];
+  private calls: CallRecord[] = [];
+  private literals: LiteralRecord[] = [];
+  private fns: FnRecord[] = [];
+  /** Hashes of the calls, filled in as they're needed. */
+  private hashes: (string | undefined)[] = [];
+  private identifiedLibraries: string[] | null = null;
+  private stats = new Map<string, LibraryStats>();
+  private memo = new Map<number, string | null>();
+  private failed = new Map<string, number[]>();
 
   constructor(
     readonly path: string,
     readonly text: string,
+    private readonly index: LibraryIndex = EMPTY_INDEX,
   ) {
     for (let i = 0; i < text.length; i++)
       if (text.charCodeAt(i) === 10) this.lineStarts.push(i + 1);
@@ -91,10 +135,265 @@ export class SourceFile {
     return { line: lo + 1, column: offset - (this.lineStarts[lo] ?? 0) };
   }
 
-  libraryAt(offset: number): string | null {
+  /**
+   * Records the calls and strings of a parsed script, so a claim that code is a library's can be
+   * checked against that library's release. `base` is where the script starts in the file; a
+   * file can have several. Without it the claim can't be checked and the code counts as the
+   * plugin's own.
+   */
+  attachAst(ast: AcornNode, base: number): void {
+    if (this.index.calls.size === 0 || this.text.length > MAX_FINGERPRINT_CHARS) return;
+    let found: ReturnType<typeof collect>;
+    try {
+      found = collect(ast, base);
+    } catch {
+      // A tree too deep to walk: leave the file unchecked.
+      return;
+    }
+    const callsBefore = this.calls.length;
+    const fnsBefore = this.fns.length;
+    for (const c of found.calls) {
+      if (c.parent >= 0) c.parent += callsBefore;
+      if (c.fn >= 0) c.fn += fnsBefore;
+      this.calls.push(c);
+    }
+    for (const f of found.fns) {
+      if (f.parent >= 0) f.parent += fnsBefore;
+      this.fns.push(f);
+    }
+    for (const l of found.literals) {
+      if (l.fn >= 0) l.fn += fnsBefore;
+      this.literals.push(l);
+    }
+    this.identifiedLibraries = null;
+    this.stats.clear();
+    this.memo.clear();
+    this.failed.clear();
+  }
+
+  /** Libraries in the catalogue whose calls make up a real share of this file. */
+  identified(): string[] {
+    if (this.identifiedLibraries) return this.identifiedLibraries;
+    const found: string[] = [];
+    const specific = this.calls.filter((c) => c.specific);
+    if (specific.length >= IDENTIFY_MIN_CALLS) {
+      const distinct = new Set<string>();
+      for (const c of specific) distinct.add(hashKey(c.key));
+      const counts = new Map<string, number>();
+      for (const h of distinct)
+        for (const lib of this.index.calls.get(h) ?? [])
+          counts.set(lib, (counts.get(lib) ?? 0) + 1);
+      for (const [lib, n] of counts)
+        if (n >= IDENTIFY_MIN_CALLS && n / distinct.size >= IDENTIFY_MIN_SHARE) found.push(lib);
+    }
+    this.identifiedLibraries = found.sort();
+    return this.identifiedLibraries;
+  }
+
+  /** What the file's name or markers say the code at `offset` is, before any checking. */
+  private claimAt(offset: number): string | null {
     if (this.vendoredFile) return this.vendoredFile;
     for (const r of this.regions) if (offset >= r.start && offset < r.end) return r.library;
     return null;
+  }
+
+  /**
+   * The library the code at `offset` belongs to, or null when it's the plugin's own. A library in
+   * the catalogue counts only where the call (or string) there is one the official release has;
+   * anything else is the plugin's code, however the file is named. A library not in the
+   * catalogue is taken on its name.
+   */
+  libraryAt(offset: number, record = true): string | null {
+    const known = this.memo.get(offset);
+    if (known !== undefined) return known;
+    // A question that isn't about a finding (is the file as a whole a library?) leaves no trace.
+    if (!record) return this.resolve(offset, false);
+    const lib = this.resolve(offset, true);
+    this.memo.set(offset, lib);
+    return lib;
+  }
+
+  private resolve(offset: number, record: boolean): string | null {
+    const claim = this.claimAt(offset);
+    if (this.index.calls.size === 0) return claim;
+    const claimed = claim ? this.index.aliasOf(claim) : null;
+    if (claim && claimed && !this.index.has(claimed)) return claim;
+    const candidates = new Set(this.identified());
+    if (claimed) candidates.add(claimed);
+    for (const lib of candidates) if (this.matches(lib, offset)) return lib;
+    // Between statements isn't a place worth a person's look, unless a file name or marker
+    // put the library there.
+    if (record && (claim !== null || this.inCode(offset)))
+      for (const lib of candidates) {
+        const list = this.failed.get(lib) ?? [];
+        if (list.length < UNMATCHED_KEPT) list.push(offset);
+        this.failed.set(lib, list);
+      }
+    return null;
+  }
+
+  private hashOf(i: number): string {
+    let h = this.hashes[i];
+    if (h === undefined) {
+      h = hashKey((this.calls[i] as CallRecord).key);
+      this.hashes[i] = h;
+    }
+    return h;
+  }
+
+  private statsFor(lib: string): LibraryStats {
+    const cached = this.stats.get(lib);
+    if (cached) return cached;
+    const stats: LibraryStats = {
+      ok: new Uint8Array(this.calls.length),
+      calls: new Int32Array(this.fns.length + 1),
+      matching: new Int32Array(this.fns.length + 1),
+      nestedCalls: new Int32Array(this.fns.length + 1),
+      nestedMatching: new Int32Array(this.fns.length + 1),
+    };
+    for (let i = 0; i < this.calls.length; i++) {
+      const c = this.calls[i] as CallRecord;
+      const ok = this.callIsIn(lib, i, c);
+      stats.ok[i] = ok ? 1 : 0;
+      (stats.calls[c.fn + 1] as number)++;
+      if (ok) (stats.matching[c.fn + 1] as number)++;
+    }
+    // A function's parent always comes before it, so one pass from the end adds each up.
+    stats.nestedCalls.set(stats.calls);
+    stats.nestedMatching.set(stats.matching);
+    for (let f = this.fns.length - 1; f >= 0; f--) {
+      const parent = (this.fns[f] as FnRecord).parent + 1;
+      (stats.nestedCalls[parent] as number) += stats.nestedCalls[f + 1] as number;
+      (stats.nestedMatching[parent] as number) += stats.nestedMatching[f + 1] as number;
+    }
+    this.stats.set(lib, stats);
+    return stats;
+  }
+
+  private callIsIn(lib: string, i: number, c: CallRecord): boolean {
+    if (!this.index.calls.get(this.hashOf(i))?.includes(lib)) return false;
+    return c.literals.every((s) => this.index.literals.get(hashKey(s))?.includes(lib));
+  }
+
+  /**
+   * Whether a function is mostly the library's calls. With `nested`, the calls in the functions
+   * inside it count too; the top level (-1) always means the whole file.
+   */
+  private mostlyIn(stats: LibraryStats, fn: number, nested = false): boolean {
+    const all = nested || fn < 0;
+    const calls = (all ? stats.nestedCalls : stats.calls)[fn + 1] as number;
+    const matching = (all ? stats.nestedMatching : stats.matching)[fn + 1] as number;
+    return calls >= 3 && matching / calls >= FUNCTION_MATCH_SHARE;
+  }
+
+  /** The innermost record open at `offset`: the last one starting before it, climbing out of siblings. */
+  private innermost(
+    list: { start: number; end: number; parent: number }[],
+    offset: number,
+  ): number {
+    let lo = 0;
+    let hi = list.length - 1;
+    let at = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if ((list[mid] as { start: number }).start <= offset) {
+        at = mid;
+        lo = mid + 1;
+      } else hi = mid - 1;
+    }
+    while (at >= 0 && (list[at] as { end: number }).end <= offset)
+      at = (list[at] as { parent: number }).parent;
+    return at;
+  }
+
+  /**
+   * The call the code at `offset` is part of (-1 for none) and the function it sits in. A function
+   * passed to a library call has the plugin's code in it, and shows as just `fn` in the call's
+   * key: only a call inside the body counts as the place.
+   */
+  private place(offset: number): { call: number; fn: number } {
+    const call = this.innermost(this.calls, offset);
+    const fn = this.innermost(this.fns, offset);
+    const inCallback =
+      call >= 0 &&
+      fn >= 0 &&
+      (this.fns[fn] as FnRecord).start >= (this.calls[call] as CallRecord).start;
+    return { call: inCallback ? -1 : call, fn };
+  }
+
+  private inCode(offset: number): boolean {
+    return this.place(offset).call >= 0 || this.literalAt(offset) !== null;
+  }
+
+  private literalAt(offset: number): LiteralRecord | null {
+    let lo = 0;
+    let hi = this.literals.length - 1;
+    let at = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if ((this.literals[mid] as LiteralRecord).start <= offset) {
+        at = mid;
+        lo = mid + 1;
+      } else hi = mid - 1;
+    }
+    const l = this.literals[at];
+    return l && offset < l.end ? l : null;
+  }
+
+  /** Whether the code at `offset` is the release of `lib`: a call or string it has, in code that is mostly its own. */
+  private matches(lib: string, offset: number): boolean {
+    if (this.calls.length === 0 && this.literals.length === 0) return false;
+    const stats = this.statsFor(lib);
+    const { call, fn } = this.place(offset);
+    if (call >= 0) {
+      const c = this.calls[call] as CallRecord;
+      if (!stats.ok[call]) return false;
+      if (c.specific) return true;
+      // `Zotero.Prefs.get(x)` starts where `Zotero.Prefs` does: a call that is part of a specific
+      // one around it (outside any callback) was checked along with it.
+      for (let a = c.parent; a >= 0; a = (this.calls[a] as CallRecord).parent) {
+        const outer = this.calls[a] as CallRecord;
+        if (outer.fn !== c.fn) break;
+        if (outer.specific && stats.ok[a]) return true;
+      }
+      return c.fn >= 0 && this.mostlyIn(stats, c.fn);
+    }
+    const literal = this.literalAt(offset);
+    if (literal) {
+      return (
+        (literal.group ?? [literal.value]).every((s) =>
+          this.index.literals.get(hashKey(s))?.includes(lib),
+        ) && this.mostlyIn(stats, literal.fn)
+      );
+    }
+    // Between nodes (a statement, a declaration): in a function that is mostly the library's,
+    // counting what is inside it, or at the top level in a file that is. A bundler's
+    // `exports.X = void 0` is the kind of statement that has no call of its own to match.
+    return this.mostlyIn(stats, fn, true);
+  }
+
+  /**
+   * Each library claimed in this file with how the claim held up, and where it didn't (file
+   * offsets). A library recognised by name alone, outside the catalogue, isn't checked.
+   */
+  libraryReport(): Map<string, { match: LibraryMatch; unmatched: number[] }> {
+    const report = new Map<string, { match: LibraryMatch; unmatched: number[] }>();
+    const claims = [this.vendoredFile, ...this.regions.map((r) => r.library)];
+    for (const claim of claims) {
+      if (!claim) continue;
+      const npm = this.index.aliasOf(claim);
+      if (this.index.calls.size === 0 || !this.index.has(npm))
+        report.set(claim, { match: "not-in-catalogue", unmatched: [] });
+      else report.set(npm, { match: "release", unmatched: [] });
+    }
+    if (this.index.calls.size > 0)
+      for (const lib of this.identified()) report.set(lib, { match: "release", unmatched: [] });
+    for (const [lib, entry] of report) {
+      const offsets = this.failed.get(lib);
+      if (entry.match === "release" && offsets?.length)
+        report.set(lib, { match: "partial", unmatched: [...offsets].sort((a, b) => a - b) });
+    }
+    return report;
   }
 
   evidence(offset: number): CodeEvidence {
@@ -130,7 +429,7 @@ export class SourceFile {
     for (let i = 0; i < this.lineStarts.length; i++) {
       const start = this.lineStarts[i] ?? 0;
       const end = this.lineStarts[i + 1] ?? this.text.length;
-      if (end - start <= 5000 || this.libraryAt(start) !== null) continue;
+      if (end - start <= 5000 || this.libraryAt(start, false) !== null) continue;
       if (someLooksLikeCode(this.text, start, end)) return true;
     }
     return false;

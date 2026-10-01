@@ -5,6 +5,7 @@ import type { Analysis } from "@atlas/schema";
 import type { CensusRow } from "../census/run.ts";
 import { listZipEntries, readZipEntry, type XpiManifest } from "../census/xpi.ts";
 import { loadConfig, requireGithubToken } from "../config.ts";
+import { loadLibraryIndex } from "../libs/index.ts";
 import { GitHub } from "../net/github.ts";
 import { DiskCache, fetchWithRetry, mapLimit } from "../net/http.ts";
 import { paths } from "../paths.ts";
@@ -185,6 +186,7 @@ export async function runScan(
             table,
             analyzedAt,
             developer: developerHints(row.repo, row.addonId, null),
+            libraries: loadLibraryIndex(),
           });
           result.artifacts.push({
             asset: {

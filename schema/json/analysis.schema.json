@@ -373,7 +373,42 @@
                   "file-name",
                   "package-json"
                 ],
-                "description": "banner: a library licence header; file-name: a known library or release-style file name; package-json: a node_modules path or bundler module marker"
+                "description": "banner: a library licence header; file-name: a known library or release-style file name; package-json: a node_modules path or bundler module marker; hash: its code matches the library's official release"
+              },
+              "match": {
+                "description": "release: in our catalogue, and every place we checked matched its official release; partial: some code claimed as this library didn't match its release and was scanned as the plugin's own; not-in-catalogue: recognised by name only",
+                "type": "string",
+                "enum": [
+                  "release",
+                  "partial",
+                  "not-in-catalogue"
+                ]
+              },
+              "unmatched": {
+                "description": "Where code claimed as this library didn't match its release (at most 10)",
+                "maxItems": 10,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string"
+                    },
+                    "line": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "snippet": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "file",
+                    "line",
+                    "snippet"
+                  ]
+                }
               }
             },
             "required": [

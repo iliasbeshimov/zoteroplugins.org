@@ -1,3 +1,4 @@
+import type { LibraryIndex } from "../../src/libs/index.ts";
 import { analyzeXpi, type XpiEntry } from "../../src/scan/analyze.ts";
 import { type HostTable, loadHostTable } from "../../src/scan/hosts.ts";
 import { preview } from "../../src/scan/preview.ts";
@@ -36,6 +37,8 @@ export interface ScanOptions {
   rawManifest?: string | null;
   repo?: string;
   addonId?: string;
+  /** Official library releases to check library claims against. */
+  libraries?: LibraryIndex;
 }
 
 export async function scanFiles(
@@ -63,6 +66,7 @@ export async function scanFiles(
     entries,
     table: await hostTable(),
     analyzedAt: "2026-09-25T00:00:00Z",
+    ...(opts.libraries ? { libraries: opts.libraries } : {}),
     ...(opts.repo ? { developer: developerHints(opts.repo, opts.addonId ?? null, null) } : {}),
   });
   return { ...result, card: preview(result.analysis, result.updateHost) };

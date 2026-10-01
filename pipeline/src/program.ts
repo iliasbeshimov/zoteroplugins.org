@@ -201,6 +201,38 @@ export function buildProgram(): Command {
       },
     );
 
+  const libs = program
+    .command("libs")
+    .description("reference fingerprints of third-party libraries, built from their npm releases");
+  libs
+    .command("add <names...>")
+    .description("download a library's releases from npm and record the calls they contain")
+    .option("--max <n>", "newest releases to use", "30")
+    .option(
+      "--versions <list>",
+      "use exactly these releases (comma separated), merged with the file",
+    )
+    .action(async (names: string[], opts: { max: string; versions?: string }) => {
+      const { addLibrary } = await import("./libs/reference.ts");
+      for (const name of names) {
+        const ref = await addLibrary(name, {
+          max: Number(opts.max),
+          ...(opts.versions ? { versions: opts.versions.split(",") } : {}),
+        });
+        console.log(`${name}: ${ref.versions.length} releases, ${ref.calls.length} calls`);
+      }
+    });
+  libs
+    .command("list")
+    .description("the libraries in the catalogue")
+    .action(async () => {
+      const { listLibraries } = await import("./libs/reference.ts");
+      for (const l of listLibraries())
+        console.log(
+          `${l.name}\t${l.versions} releases\t${l.calls} calls\t${l.literals} strings\t${l.aliases.join(", ")}`,
+        );
+    });
+
   program
     .command("queue")
     .description(

@@ -5,9 +5,10 @@ import {
   type CodeEvidence,
   EVIDENCE_CAP,
 } from "@atlas/schema";
-import { parse } from "acorn";
 import { fullAncestor } from "acorn-walk";
 import { parseInstallRdf, parseManifestJson, type XpiManifest } from "../census/xpi.ts";
+import { EMPTY_INDEX, type LibraryIndex } from "../libs/index.ts";
+import { parseJs } from "../libs/parse.ts";
 import {
   classifyHost,
   type HostCategory,
@@ -21,7 +22,7 @@ import { type LibraryEvidence, SourceFile } from "./text.ts";
  * Static analysis of one .xpi. Deterministic for a given file and ANALYZER_VERSION: the same
  * bytes always produce the same document apart from `analyzedAt`.
  */
-export const ANALYZER_VERSION = "0.8.0";
+export const ANALYZER_VERSION = "0.9.0";
 /** The self-update detail saying it turns Zotero's automatic updates on for itself at startup. */
 export const FORCES_AUTO_UPDATE = "turns on its automatic updates at startup";
 
@@ -976,9 +977,13 @@ class Collector {
   programUrls: Hit[] = [];
   toolkit = new ToolkitSetup();
 
+  /** Every plugin code file we read, for how well each library claim held up. */
+  sources: SourceFile[] = [];
+
   constructor(
     readonly table: HostTable,
     readonly developer: DeveloperHints,
+    readonly libraries: LibraryIndex = EMPTY_INDEX,
   ) {}
 
   cap(id: CapabilityId, hit: Hit, api?: string) {
@@ -3377,27 +3382,6 @@ function functionName(fn: AstNode, parent: AstNode | undefined): string | null {
   return null;
 }
 
-function parseJs(code: string): AstNode {
-  try {
-    return parse(code, {
-      ecmaVersion: "latest",
-      sourceType: "script",
-      allowReturnOutsideFunction: true,
-      allowAwaitOutsideFunction: true,
-      allowImportExportEverywhere: true,
-      allowHashBang: true,
-      allowReserved: true,
-    }) as unknown as AstNode;
-  } catch {
-    return parse(code, {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      allowHashBang: true,
-      allowAwaitOutsideFunction: true,
-    }) as unknown as AstNode;
-  }
-}
-
 /** Old Firefox `for each (x in y)` loops: blank the `each` so the rest parses, offsets unchanged. */
 const LEGACY_FOR_EACH = /\bfor(\s+)each(\s*\()/g;
 
@@ -3419,11 +3403,13 @@ function analyzeJs(
   let ast: AstNode;
   try {
     ast = parseJs(code);
+    file.attachAst(ast, base);
   } catch (error) {
     const legacy = code.replace(LEGACY_FOR_EACH, (_m, a: string, b: string) => `for${a}    ${b}`);
     try {
       if (legacy === code) throw error;
       ast = parseJs(legacy);
+      file.attachAst(ast, base);
     } catch (error2) {
       col.parseFailures.push({ path: file.path, error: (error2 as Error).message.slice(0, 300) });
       const bytes = Buffer.byteLength(code);
@@ -6555,7 +6541,7 @@ function analyzeJs(
   }
   col.metrics.push({
     file: file.path,
-    vendored: !own(base),
+    vendored: file.libraryAt(base, false) !== null,
     identifiers,
     hexIdentifiers,
     rawStringChars,
@@ -9915,6 +9901,8 @@ export interface AnalyzeInput {
   table: HostTable;
   analyzedAt?: string;
   developer?: DeveloperHints;
+  /** Official releases of known libraries; without it, libraries are taken on their names. */
+  libraries?: LibraryIndex;
 }
 
 export interface FileMetrics {
@@ -9934,7 +9922,11 @@ export interface AnalyzeResult {
 }
 
 export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
-  const col = new Collector(input.table, input.developer ?? { names: [], domains: [] });
+  const col = new Collector(
+    input.table,
+    input.developer ?? { names: [], domains: [] },
+    input.libraries ?? EMPTY_INDEX,
+  );
   const decoder = new TextDecoder("utf-8", { fatal: false });
   const manifests: XpiManifest[] = [];
   const manifestFiles: SourceFile[] = [];
@@ -9980,7 +9972,7 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
       const text = decoder.decode(entry.data);
       try {
         manifests.push(path === "manifest.json" ? parseManifestJson(text) : parseInstallRdf(text));
-        manifestFiles.push(new SourceFile(path, text));
+        manifestFiles.push(new SourceFile(path, text, col.libraries));
       } catch {
         // an unreadable manifest is reported through the missing version below
       }
@@ -10000,7 +9992,12 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
       // …and packages among them that hand data on to an online service (notebooklm-py).
       for (const h of HANDOFFS) {
         const m = h.pkg?.exec(text);
-        if (m) col.handoff(h, { file: new SourceFile(path, text), offset: m.index }, "launch");
+        if (m)
+          col.handoff(
+            h,
+            { file: new SourceFile(path, text, col.libraries), offset: m.index },
+            "launch",
+          );
       }
     }
     if (/(^|\/)(uv\.lock|poetry\.lock|package-lock\.json|pnpm-lock\.yaml|bun\.lockb?)$/.test(path))
@@ -10008,7 +10005,7 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
     if (/(^|\/)pyproject\.toml$/.test(path) && entry.data.length < 1e6)
       col.pyprojects.set(path, decoder.decode(entry.data));
     if (/(^|\/)(prefs\.js|defaults\/preferences\/[^/]+\.js)$/.test(path)) {
-      readPrefs(col, new SourceFile(path, decoder.decode(entry.data)));
+      readPrefs(col, new SourceFile(path, decoder.decode(entry.data), col.libraries));
     }
     const isCode = CODE_EXT.test(path);
     const isHtml = HTML_EXT.test(path);
@@ -10034,11 +10031,15 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
             text,
           );
         if (m)
-          col.shellDownloads.push({ file: new SourceFile(path, text), offset: m.index, pinned });
+          col.shellDownloads.push({
+            file: new SourceFile(path, text, col.libraries),
+            offset: m.index,
+            pinned,
+          });
         // Packages it installs from npm or PyPI: `"$uv_path" sync --frozen` (jadense-in-zotero),
         // `& $uvPath pip install …` (iris-zotero). Comments and echoed instructions don't count.
         const code = text.replace(/^\s*(?:#|REM\b|::|echo\b|Write-Host\b|printf\b).*$/gim, "");
-        const sf = new SourceFile(path, code);
+        const sf = new SourceFile(path, code, col.libraries);
         for (const p of code.matchAll(new RegExp(SCRIPT_PACKAGE_RUN.source, "gim"))) {
           const end = code.indexOf("\n", p.index + 1);
           const line = code.slice(p.index, end < 0 ? undefined : end);
@@ -10054,7 +10055,7 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
             text,
           )
         ) {
-          const sf = new SourceFile(path, text);
+          const sf = new SourceFile(path, text, col.libraries);
           // In Python, only an address that reaches a request call is one it sends to; the rest
           // are names, as in JavaScript (papermachines' Linked Data identifiers).
           const py = /\.py$/i.test(path) ? pyRequestUrls(text) : null;
@@ -10080,7 +10081,7 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
           }
         }
         if (/\.py$/i.test(path) && PY_PACKAGE_RUN.test(text)) {
-          const sf = new SourceFile(path, text);
+          const sf = new SourceFile(path, text, col.libraries);
           for (const m of text.matchAll(new RegExp(PY_PACKAGE_RUN.source, "g")))
             col.packageRuns.push({ file: sf, offset: m.index, words: pyListWords(text, m.index) });
         }
@@ -10088,18 +10089,30 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
         if (/\.py$/i.test(path))
           for (const h of HANDOFFS) {
             const m = h.py?.exec(text);
-            if (m) col.handoff(h, { file: new SourceFile(path, text), offset: m.index }, "launch");
+            if (m)
+              col.handoff(
+                h,
+                { file: new SourceFile(path, text, col.libraries), offset: m.index },
+                "launch",
+              );
           }
         // A Python program it runs that starts a server of its own (read once we know it runs
         // programs: readPyServer).
         const server = /\.py$/i.test(path) ? PY_SERVER.exec(text) : null;
         if (server && col.pyServers.length < 5)
-          col.pyServers.push({ file: new SourceFile(path, text), offset: server.index });
+          col.pyServers.push({
+            file: new SourceFile(path, text, col.libraries),
+            offset: server.index,
+          });
         // A Python program it runs that opens Zotero's database itself (kanzi's importer).
         if (/\.py$/i.test(path)) {
           if (/zotero\.sqlite/.test(text)) col.pyNamesZoteroDb = true;
           const db = /\bsqlite3\.connect\s*\(/.exec(text);
-          if (db) col.pySqlite.push({ file: new SourceFile(path, text), offset: db.index });
+          if (db)
+            col.pySqlite.push({
+              file: new SourceFile(path, text, col.libraries),
+              offset: db.index,
+            });
         }
       }
       continue;
@@ -10111,20 +10124,22 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
       col.skipped.push({ path, reason: "too-large" });
       continue;
     }
-    const file = new SourceFile(path, decoder.decode(entry.data));
+    const file = new SourceFile(path, decoder.decode(entry.data), col.libraries);
     col.analyzed++;
     if (/\bCompactEncrypt\b|["']RSA-OAEP/.test(file.text) && EMBEDDED_RSA_JWK.test(file.text))
       col.jweFiles.add(path);
     col.codeBytes += entry.data.length;
+    col.sources.push(file);
     if (file.vendoredFile && file.vendoredBy)
       addVendored(col, file.vendoredFile, path, file.vendoredBy);
     for (const r of file.regions) addVendored(col, r.library, path, "package-json");
     if (/sourceMappingURL=/.test(file.text.slice(-500))) col.sourceMaps.add(path);
     if (isCode) {
-      if (!file.vendoredFile && file.minified) col.minified.add(path);
       if (OWN_DB_CONNECTION.test(file.text)) col.ownDbConnection = true;
       const ranges: Ranges = { regex: [], strings: [] };
       analyzeJs(col, file, blankTranslatorHeader(file.text), 0, ranges);
+      // After the parse, so a library claim can be checked against its release.
+      if (!file.vendoredFile && file.minified) col.minified.add(path);
       scanUnicode(col, file, ranges);
       if (!col.aiLoop && !file.vendoredFile)
         for (const m of file.text.matchAll(AI_TOOL_LOOP))
@@ -10647,7 +10662,8 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
     const h = hostOf(primary.updateUrl);
     const cls = h ? classifyHost(input.table, h.host) : null;
     const file =
-      manifestFiles.find((f) => f.path === primary.format) ?? new SourceFile(primary.format, "");
+      manifestFiles.find((f) => f.path === primary.format) ??
+      new SourceFile(primary.format, "", col.libraries);
     const offset = file.text.indexOf(primary.updateUrl);
     const updates = col.cap(
       "self-update",
@@ -10900,7 +10916,7 @@ function noteExtension(col: Collector, path: string, data: Uint8Array) {
   }
   if (!m.manifest_version || !(m.content_scripts || m.background)) return;
   const perms = [m.host_permissions, m.manifest_version === 2 ? m.permissions : []].flat();
-  const file = new SourceFile(path, text);
+  const file = new SourceFile(path, text, col.libraries);
   for (const p of perms) {
     // Named sites only: not `<all_urls>`, `*://*/*` or this computer.
     const host = typeof p === "string" ? p.match(/^(?:https?|\*):\/\/([\w.-]+)\//)?.[1] : null;
@@ -10909,7 +10925,14 @@ function noteExtension(col: Collector, path: string, data: Uint8Array) {
   }
 }
 
-function addVendored(col: Collector, name: string, path: string, by: LibraryEvidence) {
+/** A catalogued library under its npm name (`pdf.js` → `pdfjs-dist`); any other keeps its name. */
+function libraryName(col: Collector, name: string): string {
+  const npm = col.libraries.aliasOf(name);
+  return col.libraries.has(npm) ? npm : name;
+}
+
+function addVendored(col: Collector, claimed: string, path: string, by: LibraryEvidence) {
+  const name = libraryName(col, claimed);
   const v = col.vendored.get(name) ?? { files: new Set<string>(), by };
   v.files.add(path);
   col.vendored.set(name, v);
@@ -11182,9 +11205,8 @@ function buildDocument(col: Collector, input: AnalyzeInput, version: string): An
           occurrences: u.count,
           evidence: evidenceList(u.hits),
         })),
-      vendoredLibraries: [...col.vendored.entries()]
-        .sort(([a], [b]) => a.localeCompare(b, "en"))
-        .map(([name, v]) => ({ name, files: [...v.files].sort(), identifiedBy: v.by })),
+      // Filled in below, once everything that checks a library claim has run.
+      vendoredLibraries: [] as AnalysisDoc["transparency"]["vendoredLibraries"],
     },
     network: {
       apis: [...col.apis.entries()]
@@ -11283,7 +11305,41 @@ function buildDocument(col: Collector, input: AnalyzeInput, version: string): An
       }),
     diff: null,
   };
+  doc.transparency.vendoredLibraries = vendoredLibraries(col);
   return Analysis.parse(doc);
+}
+
+/** The libraries found in the plugin, and for each one whether its code matched the release. */
+function vendoredLibraries(col: Collector): AnalysisDoc["transparency"]["vendoredLibraries"] {
+  const checking = col.libraries.calls.size > 0;
+  const state = new Map<string, { match: "release" | "partial" | "not-in-catalogue"; at: Hit[] }>();
+  if (checking)
+    for (const file of col.sources) {
+      for (const lib of file.identified()) addVendored(col, lib, file.path, "hash");
+      for (const [lib, r] of file.libraryReport()) {
+        const entry = state.get(lib) ?? { match: r.match, at: [] };
+        if (r.match === "partial" || (r.match === "release" && entry.match === "not-in-catalogue"))
+          entry.match = r.match;
+        entry.at.push(...r.unmatched.map((offset) => ({ file, offset })));
+        state.set(lib, entry);
+      }
+    }
+  return [...col.vendored.entries()]
+    .sort(([a], [b]) => a.localeCompare(b, "en"))
+    .map(([name, v]) => {
+      const found = state.get(name);
+      const unmatched = (found?.match === "partial" ? found.at : []).slice(0, 10).map((h) => {
+        const e = h.file.evidence(h.offset);
+        return { file: e.file, line: e.line, snippet: e.snippet };
+      });
+      return {
+        name,
+        files: [...v.files].sort(),
+        identifiedBy: v.by,
+        ...(found ? { match: found.match } : {}),
+        ...(unmatched.length ? { unmatched } : {}),
+      };
+    });
 }
 
 export function touchesZoteroTables(tables: string[] | undefined): boolean {
