@@ -2033,6 +2033,22 @@ describe("untraced network code", () => {
     expect(card.overall.label).toBe("low-concern");
   });
 
+  it("isn't cleared by a quiet run, or left ungraded, when its own code names a server", () => {
+    // pdf-fetcher: the run never reached the feature (it needs a token), and the scanner couldn't
+    // connect the class field to the request.
+    const named = `class Api {
+      static baseURL = "https://api.jlss.vip";
+      static async post(path, body) { return fetch(this.baseURL + path, { method: "POST", body }); }
+    }
+    export { Api };`;
+    const untested = cardFor(named);
+    expect(untested.facets.dataSharing.drivers).toContain("DS-UNKNOWN-DESTINATION");
+    expect(untested.overall.label).toBe("review-details");
+    const quiet = cardFor(named, { tested: ran() });
+    expect(quiet.facets.dataSharing.drivers).toContain("DS-UNKNOWN-DESTINATION");
+    expect(quiet.overall.label).toBe("review-details");
+  });
+
   it("stays medium when it contacted something in the run", () => {
     const tested = ran({
       contacted: ["x.example.org"],

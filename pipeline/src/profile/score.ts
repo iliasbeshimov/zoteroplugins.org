@@ -793,12 +793,18 @@ export function score(input: ScoreInput): TrustCard {
   const observedOnCard = Object.values(p.hostsByCategory).some((hs) => hs.some((h) => seen.has(h)));
   const quiet = (r: SandboxRecord) =>
     r.loaded && !r.cutShort && r.contacted.length === 0 && r.refused.length === 0;
+  // A server its own code names, even one we couldn't connect to a request, is the likely
+  // destination: a test run that never reached the feature (no API key set) doesn't clear it
+  // (pdf-fetcher's `static baseURL = "https://api.jlss.vip"`, scholar-sidekick's default baseUrl).
+  const namesServer = input.analysis.network.hosts.some(
+    (h) => !h.inVendoredCode && h.usage !== "link",
+  );
   // "We couldn't tell where" isn't a grade: a quiet test run or a reviewer settles it, and
   // otherwise it waits for the next check (overall "checking").
   const settled =
     netReview?.outcome === "no-requests"
       ? "DS-REVIEWED-NONE"
-      : tested && quiet(tested.record) && !p.obfuscated
+      : tested && quiet(tested.record) && !p.obfuscated && !namesServer
         ? "DS-UNTRACED-QUIET"
         : undefined;
   const dsDrivers = [
@@ -902,11 +908,12 @@ export function score(input: ScoreInput): TrustCard {
     capabilities: capConcern,
   } as const;
   const top = worst(Object.values(facets));
-  // Network code we couldn't trace, with no test of this file and nothing else at medium or worse:
-  // it isn't graded until a check settles it.
+  // Network code we couldn't trace, with no test of this file, no server named in its own code and
+  // nothing else at medium or worse: it isn't graded until a check settles it.
   const untracedOnly =
     dsDrivers.includes("DS-UNKNOWN-DESTINATION") &&
     !tested &&
+    !namesServer &&
     RANK[
       worst([
         stForOverall,
