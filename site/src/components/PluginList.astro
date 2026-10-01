@@ -6,7 +6,8 @@ import GradeTag from "./GradeTag.astro";
 
 /**
  * Cards with the filters people actually ask about (works with my Zotero, API key, docs language,
- * grade). Filtering, search and sorting run in the browser over the server-rendered cards. The grade
+ * grade). Filtering, search and sorting run in the browser over the server-rendered cards; the
+ * search index (lib/search.ts) is fetched from /search.json the first time it's needed. The grade
  * is a filter but never the sort: a worse-graded plugin that does exactly the job still shows up.
  */
 interface Props {
@@ -109,8 +110,6 @@ const versions: [string, string][] = [
           data-cn={p.chineseDocs ? "1" : "0"}
           data-jobs={p.jobs.join(" ")}
           data-dl={p.downloadsN}
-          data-text={search ? p.searchText : undefined}
-          data-nm={p.name.toLowerCase()}
         >
           {compare && (
             <button type="button" role="checkbox" aria-checked="false" aria-label={`Compare ${p.name}`} class="tick" data-tick>
@@ -138,6 +137,8 @@ const versions: [string, string][] = [
 </div>
 
 <script>
+  import { createIndex, search as runSearch, type SearchDoc, type SearchIndex } from "../lib/search.ts";
+
   const PAGE = 40;
   for (const root of document.querySelectorAll<HTMLElement>("[data-plugin-list]")) {
     const cells = [...root.querySelectorAll<HTMLElement>("[data-cards] > .cell")];
@@ -172,32 +173,35 @@ const versions: [string, string][] = [
       root.querySelector(`[data-grade-btn="${CSS.escape(g)}"]`)?.setAttribute("aria-pressed", "true");
     }
 
-    const esc = (t: string) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const score = (c: HTMLElement, terms: string[]) => {
-      if (!terms.length) return 1;
-      const text = c.dataset.text ?? "";
-      const nm = c.dataset.nm ?? "";
-      let s = 0;
-      for (const t of terms) {
-        const start = new RegExp(`(^|[^\\p{L}\\p{N}])${esc(t)}`, "u");
-        const inName = start.test(nm);
-        if (!inName && !start.test(text)) return 0;
-        s += inName ? 6 : 2;
-      }
-      return s;
+    // The search index is fetched and built on first use (at once when the page opens with ?q=).
+    let index: SearchIndex | null = null;
+    let loading: Promise<void> | null = null;
+    const loadIndex = () => {
+      loading ??= fetch("/search.json")
+        .then((r) => r.json() as Promise<SearchDoc[]>)
+        .then((docs) => {
+          index = createIndex(docs);
+          render();
+        })
+        .catch(() => {
+          loading = null; // the next keystroke tries again
+        });
+      return loading;
     };
 
-    /** A pasted repository link becomes its owner/name: "https://github.com/Owner/repo/releases" → "Owner/repo". */
-    const unlink = (q: string) =>
-      q.replace(/(?:https?:\/\/)?(?:[\w-]+\.)+[a-z]{2,}\/+([^/\s#?]+)(?:\/+([^/\s#?]+))?\S*/gi, (_, owner: string, name?: string) =>
-        (name ? `${owner}/${name}` : owner).replace(/\.git$/, ""),
-      );
-    const STOP = ["a", "an", "the", "to", "in", "my", "of", "for", "with", "and", "want", "zotero", "plugin", "http", "https", "www"];
-
     function render() {
-      const terms = unlink((qInput?.value ?? "").toLowerCase())
-        .split(/[^\p{L}\p{N}+#]+/u)
-        .filter((t) => t.length > 1 && !STOP.includes(t));
+      const q = qInput?.value.trim() ?? "";
+      // null: no query, every card is a hit. undefined: the index is still loading.
+      let hits: Map<string, number> | null | undefined = null;
+      if (q) {
+        if (index) {
+          const found = runSearch(index, q);
+          hits = found ? new Map(found.map((h) => [h.slug, h.score])) : null;
+        } else {
+          void loadIndex();
+          hits = undefined;
+        }
+      }
       const job = jobSel?.value ?? "";
       const zv = zSel.value;
       if (zv) root.dataset.zv = zv;
@@ -210,26 +214,27 @@ const versions: [string, string][] = [
         if (on.has("local") && d.local !== "1") continue;
         if (on.has("hidecn") && d.cn === "1") continue;
         if (job && !(d.jobs ?? "").split(" ").includes(job)) continue;
-        const s = score(c, terms);
-        if (s > 0) pre.push([c, s]);
+        if (hits === undefined) continue;
+        const s = hits ? hits.get(d.slug ?? "") : 1;
+        if (s !== undefined) pre.push([c, s]);
       }
       const counts: Record<string, number> = {};
       for (const [c] of pre) counts[c.dataset.grade!] = (counts[c.dataset.grade!] ?? 0) + 1;
       for (const b of root.querySelectorAll<HTMLElement>("[data-grade-btn]"))
         b.querySelector("[data-grade-n]")!.textContent = String(counts[b.dataset.gradeBtn!] ?? 0);
       const shown = pre.filter(([c]) => !grades.size || grades.has(c.dataset.grade!));
-      const rel = byRelevance && terms.length > 0;
+      const rel = byRelevance && !!hits;
       shown.sort(([a, sa], [b, sb]) => (rel ? sb - sa : 0) || Number(b.dataset.dl) - Number(a.dataset.dl));
       sortLabel.textContent = rel ? "relevance" : "most downloaded";
       sortBtn.textContent = rel ? "Most downloaded" : "Sort by relevance";
-      sortBtn.hidden = !terms.length;
+      sortBtn.hidden = !hits;
       for (const c of cells) c.hidden = true;
       shown.forEach(([c], i) => {
         container.appendChild(c);
         c.hidden = i >= limit;
       });
-      countEl.textContent = String(shown.length);
-      none.hidden = shown.length > 0;
+      countEl.textContent = hits === undefined ? "…" : String(shown.length);
+      none.hidden = shown.length > 0 || hits === undefined;
       more.hidden = shown.length <= limit;
       more.textContent = `Show more (${shown.length - limit} left)`;
     }
@@ -266,6 +271,7 @@ const versions: [string, string][] = [
         limit = PAGE;
         render();
       });
+    qInput?.addEventListener("focus", () => void loadIndex(), { once: true });
     qInput?.addEventListener("input", () => {
       byRelevance = true;
       limit = PAGE;

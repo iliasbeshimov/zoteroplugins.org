@@ -2,11 +2,13 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import type { PluginProfile } from "@atlas/schema";
 import { JOB_BY_SLUG, jobsFor } from "./jobs.ts";
+import type { SearchDoc } from "./search.ts";
 
 /**
  * Turns data/generated/<slug>/profile.json into what the pages show: the Atlas grade, its
  * "because" line, the scorecard's areas and the notices. Everything comes from the deterministic
- * profile; the only AI-written text is the summaries in data/census/summaries.json, tagged as such.
+ * profile; the only AI-written text is the summaries in data/census/summaries.json and the search
+ * phrases in data/search/phrases.json, tagged as such.
  */
 
 /** The repository's data/ folder, found from where the build runs (the site or the repo root). */
@@ -170,7 +172,8 @@ export interface Plugin {
   compat: { v: string; cur: boolean; ok: boolean | null }[];
   autoText: string;
   liveTest: { zotero: string; date: string; verdict: string } | null;
-  searchText: string;
+  /** What the browse page's search indexes (served as /search.json). */
+  search: SearchDoc;
   /** Findings to fix for the next rung, for the developer page. */
   toFix: { t: string; level: Level; evidence: Evidence | null }[];
   passing: string[];
@@ -316,6 +319,12 @@ function loadSummaries(): Record<string, Summary> {
   if (!existsSync(f)) return {};
   return (JSON.parse(readFileSync(f, "utf8")) as { summaries: Record<string, Summary> }).summaries;
 }
+/** "Ways people ask" for each plugin, keyed by owner/repo, for the search index. */
+function loadPhrases(): Record<string, string[]> {
+  const f = `${ROOT}search/phrases.json`;
+  if (!existsSync(f)) return {};
+  return (JSON.parse(readFileSync(f, "utf8")) as { phrases: Record<string, string[]> }).phrases;
+}
 
 interface Requirement {
   apiKey: { need: Plugin["keyNeed"]; keyFor: string; worksWithout: string; services: string[] };
@@ -385,6 +394,7 @@ function build(
   p: PluginProfile,
   summaries: Record<string, Summary>,
   reqs: Record<string, Requirement>,
+  phrases: Record<string, string[]>,
 ): Plugin {
   const t = p.trust;
   const f = t?.facets;
@@ -846,18 +856,17 @@ function build(
     liveTest: tested
       ? { zotero: tested.zotero, date: fmtDate(tested.testedAt), verdict: tested.verdict }
       : null,
-    searchText: [
-      p.name,
-      p.repoName,
-      p.about.githubDescription,
-      p.about.manifestDescription,
-      summary?.does,
-      p.about.topics.join(" "),
-      jobs.map((j) => JOB_BY_SLUG[j].title).join(" "),
-    ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase(),
+    search: {
+      slug: p.slug,
+      name: p.name,
+      repo: p.repoName,
+      desc: [p.about.githubDescription, p.about.manifestDescription].filter(Boolean).join(" "),
+      does: summary?.does ?? "",
+      topics: p.about.topics.join(" "),
+      jobs: jobs.map((j) => JOB_BY_SLUG[j].title).join(" "),
+      ask: (phrases[p.repoName] ?? phrases[p.repo] ?? []).join("; "),
+      dl: p.popularity.downloads ?? 0,
+    },
     toFix,
     passing,
     capIds: badges.map((b) => b.id),
@@ -879,11 +888,12 @@ export function allPlugins(): Plugin[] {
   if (cache) return cache;
   const summaries = loadSummaries();
   const reqs = loadRequirements();
+  const phrases = loadPhrases();
   const out: Plugin[] = [];
   for (const slug of readdirSync(GENERATED)) {
     const f = `${GENERATED}${slug}/profile.json`;
     if (!existsSync(f)) continue;
-    out.push(build(JSON.parse(readFileSync(f, "utf8")) as PluginProfile, summaries, reqs));
+    out.push(build(JSON.parse(readFileSync(f, "utf8")) as PluginProfile, summaries, reqs, phrases));
   }
   out.sort((a, b) => b.downloadsN - a.downloadsN);
   cache = out;
