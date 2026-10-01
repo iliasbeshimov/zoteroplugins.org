@@ -4257,3 +4257,107 @@ describe("review of the follow-ups: numbers behind keyed changes, socket argumen
     expect(capIn(relayed, "own-server")?.details?.apis).toContain("web pages can call it");
   });
 });
+
+describe("addresses held in a class field or a table of defaults", () => {
+  const request = (r: ScanOutput, host: string) => hostIn(r, host)?.usage;
+  const site = (url: string) =>
+    `async search(q) { return Zotero.HTTP.request("POST", ${url}, { body: JSON.stringify({ q }) }); }`;
+
+  // pdf-fetcher: `static baseURL` read as `this.baseURL` in a static method.
+  it("follows a static field read through this, or through the class name", async () => {
+    const viaThis = await scanFiles({
+      "content/api.js": `class JlssApi {
+        static baseURL = "https://api.jlss.vip";
+        static ${site("`${this.baseURL}/search/trans`")}
+      }`,
+    });
+    expect(request(viaThis, "api.jlss.vip")).toBe("request");
+    const viaName = await scanFiles({
+      "content/api.js": `class JlssApi {
+        static baseURL = "https://api.jlss.vip";
+        static ${site('JlssApi.baseURL + "/search/trans"')}
+      }`,
+    });
+    expect(request(viaName, "api.jlss.vip")).toBe("request");
+  });
+
+  it("follows an instance field, and an assignment in the constructor", async () => {
+    const field = await scanFiles({
+      "content/api.js": `class Api {
+        baseURL = "https://api.jlss.vip";
+        ${site("`${this.baseURL}/search/trans`")}
+      }`,
+    });
+    expect(request(field, "api.jlss.vip")).toBe("request");
+    const ctor = await scanFiles({
+      "content/api.js": `class Api {
+        constructor() { this.baseURL = "https://api.jlss.vip"; }
+        ${site('this.baseURL + "/search/trans"')}
+      }`,
+    });
+    expect(request(ctor, "api.jlss.vip")).toBe("request");
+  });
+
+  it("leaves a field no request uses as a mention", async () => {
+    const r = await scanFiles({
+      "content/api.js": `class Api {
+        static baseURL = "https://api.jlss.vip";
+        static homepage = "https://docs.example.org";
+        static ${site('"https://api.other-dev.io/search"')}
+      }`,
+    });
+    expect(request(r, "api.jlss.vip")).not.toBe("request");
+    expect(request(r, "docs.example.org")).not.toBe("request");
+    expect(request(r, "api.other-dev.io")).toBe("request");
+  });
+
+  // scholar-sidekick-zotero (minified): a setting read with a fallback to a table of defaults.
+  const defaults = (read: string, call = 'f("baseUrl")') => `
+    var ie = "extensions.scholar-sidekick", oe = { apiKey: "", baseUrl: "https://scholar-sidekick.com" };
+    function f(e) { let t = Zotero.Prefs.get(\`\${ie}.\${e}\`, !0); ${read} }
+    async function m(e) { let r = ${call} + "/api/format"; return await Zotero.HTTP.request(e.method, r, { body: e.body }); }`;
+  const endpointOf = (r: ScanOutput) =>
+    r.analysis.network.configurableEndpoints.find(
+      (e) => e.defaultValue === "https://scholar-sidekick.com",
+    );
+
+  it.each([
+    ["??", "return t ?? oe[e];"],
+    ["||", "return t || oe[e];"],
+    ["a void 0 test", "return t === void 0 ? oe[e] : t;"],
+    ["a type test", 'return typeof t == "string" && t.length > 0 ? t : oe[e];'],
+  ])("takes the default host of a setting with a fallback written with %s", async (_, read) => {
+    const r = await scanFiles({ "content/main.js": defaults(read) });
+    expect(request(r, "scholar-sidekick.com")).toBe("request");
+    expect(endpointOf(r)?.prefKey).toBe("extensions.scholar-sidekick.baseUrl");
+  });
+
+  it("follows the setting through a name, and after string methods", async () => {
+    const r = await scanFiles({
+      "content/main.js": `${defaults("return t ?? oe[e];", 'f("baseUrl").replace(/\\/+$/, "")')}
+        async function n(p) { const base = f("baseUrl"); return fetch(base + p); }`,
+    });
+    expect(request(r, "scholar-sidekick.com")).toBe("request");
+    expect(endpointOf(r)).toBeDefined();
+  });
+
+  it("leaves a default no request reads as a mention", async () => {
+    // The helper is only asked for the key; the address in the table is never requested.
+    const r = await scanFiles({
+      "content/main.js": `${defaults("return t ?? oe[e];", 'f("apiKey")')}
+        const unused = () => f("baseUrl");`,
+    });
+    expect(request(r, "scholar-sidekick.com")).not.toBe("request");
+    expect(endpointOf(r)).toBeUndefined();
+  });
+
+  it("doesn't take a lookup that reads no setting as one the user can change", async () => {
+    const r = await scanFiles({
+      "content/main.js": `
+        var oe = { baseUrl: "https://scholar-sidekick.com" };
+        function f(e) { return cache[e] ?? oe[e]; }
+        async function m() { return fetch(f("baseUrl") + "/api"); }`,
+    });
+    expect(endpointOf(r)).toBeUndefined();
+  });
+});

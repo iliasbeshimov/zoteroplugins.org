@@ -23,7 +23,7 @@ import { type LibraryEvidence, SourceFile } from "./text.ts";
  * Static analysis of one .xpi. Deterministic for a given file and ANALYZER_VERSION: the same
  * bytes always produce the same document apart from `analyzedAt`.
  */
-export const ANALYZER_VERSION = "0.10.0";
+export const ANALYZER_VERSION = "0.11.0";
 /** The self-update detail saying it turns Zotero's automatic updates on for itself at startup. */
 export const FORCES_AUTO_UPDATE = "turns on its automatic updates at startup";
 
@@ -6348,10 +6348,8 @@ function analyzeJs(
     !/(key|apply|console|dashboard|pricing|help|doc|error|pay|support|view|explore|setting|nominat|corpus|profile|website|home|regist|sign|login|account|billing|guide|tutorial|faq|terms|privacy|about|feedback|donate|sponsor|star|repo|issue|release|download|update|cover|icon|image|img|avatar|logo|site|github|redirect|callback|purchase)/i.test(
       n,
     );
-  // Where a request's address starts: `${BASE}…`, `BASE + …`, `getApiBase() + …`,
-  // `${pref("baseUrl")}…`, or a variable holding one of those.
-  const startsOnBase = (a: AstNode | undefined, fns: AstNode[], depth = 0): boolean => {
-    if (!a || depth > 2) return false;
+  /** The first part of an address put together from several: `${BASE}/x`, `BASE + x`, `f(k).trim()`. */
+  const addressStart = (a: AstNode): AstNode | undefined => {
     let first: AstNode | undefined = a;
     while (first?.type === "BinaryExpression" && first.operator === "+") first = node(first.left);
     if (first?.type === "TemplateLiteral" && textOf(first)?.startsWith(EXPR))
@@ -6365,6 +6363,13 @@ function analyzeJs(
       )
     )
       first = node(node(first.callee)?.object);
+    return first;
+  };
+  // Where a request's address starts: `${BASE}…`, `BASE + …`, `getApiBase() + …`,
+  // `${pref("baseUrl")}…`, or a variable holding one of those.
+  const startsOnBase = (a: AstNode | undefined, fns: AstNode[], depth = 0): boolean => {
+    if (!a || depth > 2) return false;
+    const first = addressStart(a);
     if (first && first !== a) {
       if (baseName(chain(first)?.split(".").at(-1)?.replace(/\(\)$/, ""))) return true;
       if (first.type === "CallExpression" && baseName(str(nodes(first.arguments)[0]))) return true;
@@ -6456,6 +6461,125 @@ function analyzeJs(
         for (const r of helperReturns(f)) useBase(r);
       }
   }
+  // A setting read through a helper that falls back to a table of defaults, where the key is the
+  // helper's parameter: `function f(e) { let t = Zotero.Prefs.get(`${ie}.${e}`); return t ?? oe[e]; }`
+  // with `oe = { baseUrl: "https://…" }` (scholar-sidekick-zotero). `f("baseUrl")` is then the
+  // table's `baseUrl`: the user can change it, and until they do it's where requests go.
+  const nameCount = new Map<string, number>();
+  for (const name of fnNames.values()) {
+    const bare = name.replace(/^\./, "");
+    nameCount.set(bare, (nameCount.get(bare) ?? 0) + 1);
+  }
+  const defaultsHelpers = new Map<
+    string,
+    { table: AstNode; pref: AstNode | undefined; fn: AstNode; param: string }
+  >();
+  for (const [fn, fname] of fnNames) {
+    const name = fname.replace(/^\./, "");
+    const param = nodes(fn.params)[0];
+    if (param?.type !== "Identifier" || nameCount.get(name) !== 1) continue;
+    const key = param.name as string;
+    // `table[key]`, with the table a name.
+    const fromTable = (x: AstNode | undefined): string | null => {
+      if (x?.type !== "MemberExpression" || !x.computed) return null;
+      const prop = node(x.property);
+      if (prop?.type !== "Identifier" || prop.name !== key) return null;
+      const obj = node(x.object);
+      return obj?.type === "Identifier" ? (obj.name as string) : null;
+    };
+    const parts = [...descendants(fn)];
+    const returned =
+      fn.type === "ArrowFunctionExpression" && node(fn.body)?.type !== "BlockStatement"
+        ? [node(fn.body)]
+        : parts.filter((d) => d.type === "ReturnStatement").map((d) => node(d.argument));
+    let tableName: string | null = null;
+    for (const r of returned) {
+      if (r?.type === "LogicalExpression" && (r.operator === "??" || r.operator === "||"))
+        tableName ??= fromTable(node(r.right));
+      else if (r?.type === "ConditionalExpression")
+        tableName ??= fromTable(node(r.consequent)) ?? fromTable(node(r.alternate));
+    }
+    if (!tableName) continue;
+    // Only a setting the user can change: the helper reads a preference first.
+    const read = parts.find(
+      (d) =>
+        d.type === "CallExpression" &&
+        /(^|\.)(Prefs\.get|getPref\w*|get(Char|String|Bool|Int|Complex)Pref)$/.test(
+          chain(node(d.callee)) ?? "",
+        ),
+    );
+    if (!read) continue;
+    // The table is bound once in the file, to an object literal.
+    let bound = bindings.lookup(tableName, [fn]);
+    if (!bound.length) bound = bindings.all(tableName);
+    const table = bound.length === 1 ? bound[0] : undefined;
+    if (table?.type === "ObjectExpression")
+      defaultsHelpers.set(name, { table, pref: nodes(read.arguments)[0], fn, param: key });
+  }
+  const prefName = (
+    a: AstNode | undefined,
+    param: string,
+    key: string,
+    fn: AstNode,
+  ): string | undefined => {
+    if (a?.type === "Identifier" && a.name === param) return key;
+    if (a?.type === "TemplateLiteral") {
+      const quasis = nodes(a.quasis).map((q) => (q.value as { cooked?: string }).cooked ?? "");
+      const exprs = nodes(a.expressions);
+      return quasis
+        .map((q, i) => q + (exprs[i] ? (prefName(exprs[i], param, key, fn) ?? EXPR) : ""))
+        .join("");
+    }
+    if (a?.type === "BinaryExpression" && a.operator === "+")
+      return (
+        (prefName(node(a.left), param, key, fn) ?? EXPR) +
+        (prefName(node(a.right), param, key, fn) ?? EXPR)
+      );
+    const found = bindings.texts(a, [fn])[0];
+    if (found !== undefined || a?.type !== "Identifier") return found;
+    // A bundle's wrapper function holds the prefix, out of the helper's own scope.
+    const all = bindings.all(a.name as string);
+    return all.length === 1 ? (str(all[0]) ?? undefined) : undefined;
+  };
+  /** The calls of such a helper an address starts with, through names: `let base = f("baseUrl")`. */
+  const defaultsAt = (a: AstNode | undefined, fns: AstNode[], depth = 0): AstNode[] => {
+    if (!a || depth > 2) return [];
+    const first = addressStart(a);
+    if (first?.type === "CallExpression") {
+      const name = (chain(node(first.callee)) ?? "").split(".").at(-1) ?? "";
+      return defaultsHelpers.has(name) && str(nodes(first.arguments)[0]) !== null ? [first] : [];
+    }
+    if (first?.type !== "Identifier") return [];
+    return bindings
+      .lookup(first.name as string, fns)
+      .slice(0, 5)
+      .flatMap((v) => defaultsAt(v, fns, depth + 1));
+  };
+  if (defaultsHelpers.size)
+    for (const k of netCalls) {
+      const req = reqByNode.get(k.n);
+      const arg = k.urlIdx >= 0 ? k.args[k.urlIdx] : undefined;
+      if (!req || !arg || !own(base + k.n.start)) continue;
+      for (const call of defaultsAt(arg, k.fns)) {
+        const name = (chain(node(call.callee)) ?? "").split(".").at(-1) ?? "";
+        const helper = defaultsHelpers.get(name);
+        const key = str(nodes(call.arguments)[0]);
+        const entry = nodes(helper?.table.properties).find(
+          (q) => ((node(q.key)?.name as string) ?? str(node(q.key))) === key,
+        );
+        if (!helper || !key || !entry) continue;
+        noteRequestProp(key, req);
+        // The setting's name with the key filled in: `${PREFIX}.${e}` is `extensions.x.baseUrl`.
+        const named = prefName(helper.pref, helper.param, key, helper.fn);
+        const prefKey = named && !named.includes(EXPR) ? named : key;
+        const fallback = bindings.texts(node(entry.value), [])[0];
+        const e = col.endpoints.get(prefKey) ?? { hits: [] };
+        if (fallback && /^https?:/.test(fallback)) e.defaultValue = fallback;
+        if (!e.hits.some((x) => x.file === file && x.offset === base + call.start))
+          e.hits.push(hit(call));
+        col.endpoints.set(prefKey, e);
+      }
+    }
   // Resolve one-hop usage: a URL bound to a name that later feeds a request call, or a base address
   // (`apiBaseUrl: "https://api.beaverapp.ai"`) in a file whose requests are built on one.
   const linkRanges: [number, number][] = [];
@@ -6991,7 +7115,9 @@ function urlContext(anc: AstNode[]): {
     if (!binding) {
       if (a.type === "VariableDeclarator" && node(a.id)?.type === "Identifier")
         binding = node(a.id)?.name as string;
-      if (a.type === "Property") {
+      // A class field is a property too: `static baseURL = "https://…"` is read back as
+      // `this.baseURL` or `Api.baseURL` (pdf-fetcher).
+      if (a.type === "Property" || (a.type === "PropertyDefinition" && !a.computed)) {
         const k = node(a.key);
         binding = k?.type === "Identifier" ? (k.name as string) : str(k);
         bindingKind = "prop";

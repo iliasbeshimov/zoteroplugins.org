@@ -2061,11 +2061,12 @@ describe("untraced network code", () => {
   });
 
   it("isn't cleared by a quiet run, or left ungraded, when its own code names a server", () => {
-    // pdf-fetcher: the run never reached the feature (it needs a token), and the scanner couldn't
-    // connect the class field to the request.
-    const named = `class Api {
-      static baseURL = "https://api.jlss.vip";
-      static async post(path, body) { return fetch(this.baseURL + path, { method: "POST", body }); }
+    // The run never reached the feature (it needs a token), and the scanner can't connect the
+    // address to the request: it's stored under a key put together at run time.
+    const named = `const cfg = {};
+    cfg["base" + "Url"] = "https://api.example-dev.io";
+    class Api {
+      static async post(path, body) { return fetch(cfg["base" + "Url"] + path, { method: "POST", body }); }
     }
     export { Api };`;
     const untested = cardFor(named);
@@ -2074,6 +2075,17 @@ describe("untraced network code", () => {
     const quiet = cardFor(named, { tested: ran() });
     expect(quiet.facets.dataSharing.drivers).toContain("DS-UNKNOWN-DESTINATION");
     expect(quiet.overall.label).toBe("review-details");
+  });
+
+  it("traces an address held in a class field, so the card names the server", () => {
+    // pdf-fetcher: `static baseURL` read back through `this` in a static method.
+    const traced = cardFor(`class Api {
+      static baseURL = "https://api.jlss.vip";
+      static async post(path, body) { return fetch(this.baseURL + path, { method: "POST", body }); }
+    }
+    export { Api };`);
+    expect(traced.facets.dataSharing.drivers).not.toContain("DS-UNKNOWN-DESTINATION");
+    expect(JSON.stringify(traced.facets.dataSharing)).toContain("api.jlss.vip");
   });
 
   it("stays medium when it contacted something in the run", () => {
