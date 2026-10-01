@@ -16,7 +16,7 @@ export const KINDS = [
   "possible-miss",
   "sandbox-unexpected",
   "checking",
-  "likely-false-alarm",
+  "untraced-but-quiet",
   "new-release-concern",
   "grade-change",
   "unknown-host",
@@ -248,11 +248,11 @@ export async function buildQueue(opts: {
     if (untraced && record?.loaded && !record.cutShort && record.contacted.length === 0) {
       items.push({
         ...base(p),
-        key: `likely-false-alarm:${p.slug}:${sha12(p)}`,
-        kind: "likely-false-alarm",
+        key: `untraced-but-quiet:${p.slug}:${sha12(p)}`,
+        kind: "untraced-but-quiet",
         priority: "medium",
         summary:
-          "Couldn't trace where its network code sends data, and it contacted nothing when we ran it: find out why the scanner couldn't tell",
+          "Couldn't trace where its network code sends data, and it contacted nothing when we ran it. A run without an API key may never reach the feature: check the code for a default address",
         details: { drivers: p.drivers },
       });
     }

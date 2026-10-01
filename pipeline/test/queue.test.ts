@@ -153,8 +153,8 @@ describe("investigation queue", () => {
     const kinds = queue.items.map((i) => [i.kind, i.slug]).sort();
     expect(kinds).toEqual([
       ["checking", "untested"],
-      ["likely-false-alarm", "quietly"],
-      ["likely-false-alarm", "tested"],
+      ["untraced-but-quiet", "quietly"],
+      ["untraced-but-quiet", "tested"],
     ]);
   });
 
