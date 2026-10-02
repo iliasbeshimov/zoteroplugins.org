@@ -1,0 +1,269 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-time-tracking",
+ "repo": "ievlevpn/zotero-time-tracking",
+ "version": "0.43.1",
+ "tag": "v0.43.1",
+ "releaseAuthor": "ievlevpn",
+ "publishedAt": "2026-09-30T12:43:07Z",
+ "prerelease": false,
+ "asset": {
+  "name": "reading-time.xpi",
+  "url": "https://github.com/ievlevpn/zotero-time-tracking/releases/download/v0.43.1/reading-time.xpi",
+  "size": 44205,
+  "sha256": "6bdba053be85acda6decbd6f1d60ed472699be4b83c7fcf391eef4711346e80a",
+  "githubAssetId": 600898714,
+  "uploader": "ievlevpn",
+  "uploadedAt": "2026-09-30T12:43:06Z",
+  "fetchedAt": "2026-10-02T10:04:47.009Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "reading-time@local",
+  "name": "Reading Time",
+  "version": "0.43.1",
+  "description": "Tracks reading time per item: a stopwatch, a pomodoro timer and manual entry in the reader toolbar, totalled into a \"Reading time\" field.",
+  "homepageUrl": "https://github.com/ievlevpn/zotero-time-tracking",
+  "updateUrl": "https://raw.githubusercontent.com/ievlevpn/zotero-time-tracking/master/update.json",
+  "strictMinVersion": "9.999",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 127956,
+   "sha256": "39438a20914fd86639a45758f66107a4a84d6ee4f7b366400e755a7310e10f4b"
+  },
+  {
+   "path": "icons/icon.svg",
+   "size": 729,
+   "sha256": "1ddb8318fb3cb432582708e6b334f20bacd5db5eb29939c4e380f24c5bfde6e8"
+  },
+  {
+   "path": "locale/en-US/reading-time.ftl",
+   "size": 381,
+   "sha256": "ce85609148bb8f7592b2e1bf710a573d066912c6c77426d8399e8ee570c20664"
+  },
+  {
+   "path": "manifest.json",
+   "size": 639,
+   "sha256": "ec4670de42f8e0fd8a1b3b94dc975f3c6d27f61d04af725d305b1ae018ec2ffc"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-02T10:04:47.009Z",
+  "input": {
+   "slug": "zotero-time-tracking",
+   "version": "0.43.1",
+   "sha256": "6bdba053be85acda6decbd6f1d60ed472699be4b83c7fcf391eef4711346e80a"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/reading-time.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 127956,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "own-database",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 201,
+      "column": 9,
+      "snippet": "await conn.queryAsync(`ALTER TABLE ${table} ADD COLUMN ${column} ${type}`);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "sqlTables": [
+      "(computed)",
+      "goals",
+      "sessions"
+     ],
+     "apis": [
+      "Zotero.DBConnection"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 18,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/ievlevpn/zotero-time-tracking/master/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/ievlevpn/zotero-time-tracking/master/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-02T10:04:47.009Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the ievlevpn account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-02T10:04:47.009Z",
+  "appliesTo": {
+   "slug": "zotero-time-tracking",
+   "version": "0.43.1",
+   "sha256": "6bdba053be85acda6decbd6f1d60ed472699be4b83c7fcf391eef4711346e80a"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "229b31273155c539ccc6ca81239b873a1638891931a741d427923db9c89dee55"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "own-database",
+      "label": "Keeps its own database file",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-30T12:43:07Z",
+    "lastCommitAt": "2026-09-30T12:43:03Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

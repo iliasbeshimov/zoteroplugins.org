@@ -1,0 +1,498 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-scihub",
+ "repo": "ethanwillis/zotero-scihub",
+ "version": "2.0.0",
+ "tag": "v2.0.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-09-26T11:31:36Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-scihub-2.0.0.xpi",
+  "url": "https://github.com/ethanwillis/zotero-scihub/releases/download/v2.0.0/zotero-scihub-2.0.0.xpi",
+  "size": 13962,
+  "sha256": "881c8cc261a0710ad1b66e6eecf75c04f0dca3aa0164e6aa92c5f79d784c615e",
+  "githubAssetId": 590539684,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-09-26T11:31:36Z",
+  "fetchedAt": "2026-10-02T10:04:47.009Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "scihub@example.com",
+  "name": "Sci-Hub Plugin for Zotero",
+  "version": "2.0.0",
+  "description": "Download papers and books by DOI from Sci-Hub",
+  "homepageUrl": "https://github.com/ethanwillis/zotero-scihub",
+  "updateUrl": "https://github.com/ethanwillis/zotero-scihub/releases/latest/download/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 896,
+   "sha256": "f9711187b203102c30f148fc068c0052d48369c5e86725bb69e0c609d115c233"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 954,
+   "sha256": "e162d8483d972abe020862ce14454b259a64ea51be2bc13a7d524f62142c3937"
+  },
+  {
+   "path": "content/scihub.js",
+   "size": 15891,
+   "sha256": "0e1b61aa48ed871437565e43388387e748fe97a51285710c613db5f05bcad6ed"
+  },
+  {
+   "path": "locale/en-US/zotero-scihub.ftl",
+   "size": 556,
+   "sha256": "8a31b71f36ddc823953137f57284a754da0f8c186f0a66a579fabf2f16c58cbc"
+  },
+  {
+   "path": "manifest.json",
+   "size": 609,
+   "sha256": "e7ac733af185f9bbc11bce9f939833707ccdacfb04763d2d1023c08bcc5d3a1b"
+  },
+  {
+   "path": "prefs.js",
+   "size": 218,
+   "sha256": "c6fb3fb05e28892df3d123029151eee88058bd38e3bacf4edecc04efbe5ee8ab"
+  },
+  {
+   "path": "skin/default/sci-hub-logo.svg",
+   "size": 15314,
+   "sha256": "0dec7635d4c322d5e83e11fb8eacbf27b1a3d7c59d9e67395e0eaa9c31cbda9b"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-02T10:04:47.009Z",
+  "input": {
+   "slug": "zotero-scihub",
+   "version": "2.0.0",
+   "sha256": "881c8cc261a0710ad1b66e6eecf75c04f0dca3aa0164e6aa92c5f79d784c615e"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/zotero-scihub.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "skin/default/sci-hub-logo.svg",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 17959,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scihub.js",
+       "line": 70,
+       "column": 27,
+       "snippet": "const result = await Zotero.Attachments.importFromURL(importOptions);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scihub.js",
+       "line": 300,
+       "column": 24,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url.href, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scihub.js",
+       "line": 293,
+       "column": 23,
+       "snippet": "return !!await Zotero.Attachments.addAvailableFile(item);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "sci-hub.box",
+     "category": "scholarly-api",
+     "provider": "Sci-Hub",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scihub.js",
+       "line": 247,
+       "column": 14,
+       "snippet": "`Cannot reach ${error.host}.",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "sci-hub.ru",
+     "category": "scholarly-api",
+     "provider": "Sci-Hub",
+     "flags": [
+      "legal-risk"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scihub.js",
+       "line": 126,
+       "column": 32,
+       "snippet": "this.DEFAULT_SCIHUB_URL = \"https://sci-hub.ru/\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.zoteroscihub.scihub_url\", \"https://sci-hub.ru/\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 50,
+       "snippet": "pref(\"extensions.zotero.zoteroscihub.scihub_url\", \"https://sci-hub.ru/\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "sci-net.xyz",
+     "category": "unknown",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scihub.js",
+       "line": 130,
+       "column": 32,
+       "snippet": "this.DEFAULT_SCINET_URL = \"https://sci-net.xyz/\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 3,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.zoteroscihub.scinet_url\", \"https://sci-net.xyz/\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 3,
+       "column": 50,
+       "snippet": "pref(\"extensions.zotero.zoteroscihub.scinet_url\", \"https://sci-net.xyz/\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero.zoteroscihub.scihub_url",
+     "defaultValue": "https://sci-hub.ru/",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 11,
+       "column": 16,
+       "snippet": "preference=\"extensions.zotero.zoteroscihub.scihub_url\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.zoteroscihub.scihub_url\", \"https://sci-hub.ru/\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero.zoteroscihub.scinet_url",
+     "defaultValue": "https://sci-net.xyz/",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 16,
+       "column": 16,
+       "snippet": "preference=\"extensions.zotero.zoteroscihub.scinet_url\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 3,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.zoteroscihub.scinet_url\", \"https://sci-net.xyz/\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "zoteroscihub.scihub_url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scihub.js",
+       "line": 146,
+       "column": 10,
+       "snippet": "if (Zotero.Prefs.get(\"zoteroscihub.scihub_url\") === void 0) {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scihub.js",
+       "line": 149,
+       "column": 13,
+       "snippet": "return Zotero.Prefs.get(\"zoteroscihub.scihub_url\").trim();",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "zoteroscihub.scinet_url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scihub.js",
+       "line": 152,
+       "column": 10,
+       "snippet": "if (Zotero.Prefs.get(\"zoteroscihub.scinet_url\") === void 0) {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scihub.js",
+       "line": 155,
+       "column": 13,
+       "snippet": "return Zotero.Prefs.get(\"zoteroscihub.scinet_url\").trim();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/ethanwillis/zotero-scihub/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/ethanwillis/zotero-scihub/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-02T10:04:47.009Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-02T10:04:47.009Z",
+  "appliesTo": {
+   "slug": "zotero-scihub",
+   "version": "2.0.0",
+   "sha256": "881c8cc261a0710ad1b66e6eecf75c04f0dca3aa0164e6aa92c5f79d784c615e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "470eba40eff83d31fb0015e7459f76384322b3b426b9bb3b380065320dd86dde"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "sci-hub.box",
+       "sci-hub.ru"
+      ],
+      "unconfirmed": [
+       "sci-hub.box"
+      ]
+     },
+     {
+      "category": "unknown",
+      "hosts": [
+       "sci-net.xyz"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts a server we couldn't identify: sci-net.xyz",
+    "legalRisk": true,
+    "drivers": [
+     "DS-UNKNOWN"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-26T11:31:36Z",
+    "lastCommitAt": "2026-09-26T11:31:07Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Contacts a server we couldn't identify: sci-net.xyz"
+   ]
+  }
+ }
+}

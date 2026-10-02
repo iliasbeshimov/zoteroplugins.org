@@ -1,0 +1,410 @@
+{
+ "schemaVersion": 1,
+ "slug": "paperloop",
+ "repo": "jinkeguo/paperloop",
+ "version": "0.5.5",
+ "tag": "v0.3.35",
+ "releaseAuthor": "jinkeguo",
+ "publishedAt": "2026-09-29T07:27:33Z",
+ "prerelease": false,
+ "asset": {
+  "name": "PaperLoop-for-Zotero-0.5.5.xpi",
+  "url": "https://github.com/jinkeguo/PaperLoop/releases/download/v0.3.35/PaperLoop-for-Zotero-0.5.5.xpi",
+  "size": 37954,
+  "sha256": "a03cc977431124ecab417a82d2e0291f4694114c20d18c0173382ea1c13d7897",
+  "githubAssetId": 597569983,
+  "uploader": "jinkeguo",
+  "uploadedAt": "2026-09-29T07:26:13Z",
+  "fetchedAt": "2026-10-02T10:04:47.009Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "paperloop-doi-bridge@paperloop.app",
+  "name": "PaperLoop for Zotero",
+  "version": "0.5.5",
+  "description": "Collect papers, add editable PDF excerpts, mention other literature, and export relation data.",
+  "homepageUrl": "https://github.com/jinkeguo/PaperLoop",
+  "updateUrl": "https://paperloop.invalid/zotero/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1778,
+   "sha256": "fc3b2f96c96d3828237845b434c339c11f01827ecbd3a4ec0fb2317efa665416"
+  },
+  {
+   "path": "editor-helper.js",
+   "size": 5742,
+   "sha256": "23ad7686c90f7ab0d3d00eac6ca842dc30ae69321eb3bf5fab87fc5318c6b68f"
+  },
+  {
+   "path": "literature-mentions.js",
+   "size": 58700,
+   "sha256": "39eff5885698e05a2f82d82ddcd165337020be08004f0477bdfab630bbb8f901"
+  },
+  {
+   "path": "manifest.json",
+   "size": 496,
+   "sha256": "a75416ea4352132d08f7dcfc0d93d848855f55d792fac31770cda7e1898338a5"
+  },
+  {
+   "path": "notebook.js",
+   "size": 18099,
+   "sha256": "3d140aa7879c28a3e54076fb0b6c4e0a8df07908cf084c2a278b5d4dc1098c6c"
+  },
+  {
+   "path": "paperloop.js",
+   "size": 26235,
+   "sha256": "0d73907895f303e710c0e5d40a50e0a6d93c2456627540760d9f089b0d3ba20d"
+  },
+  {
+   "path": "reader-quotes.js",
+   "size": 18276,
+   "sha256": "50634cb70026c3d5149a9a65b452c904dcd855146bdfccd037e5b098f14407eb"
+  },
+  {
+   "path": "README.md",
+   "size": 1371,
+   "sha256": "8d9233330d0388e03e4504498929e5643c5b9c72c6ca187ceddb4b7d12452235"
+  },
+  {
+   "path": "zotero-compat.js",
+   "size": 3492,
+   "sha256": "353fbf2422a317137312eb35e89f8514321931dfee394397e569aa45339a11f2"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-02T10:04:47.009Z",
+  "input": {
+   "slug": "paperloop",
+   "version": "0.5.5",
+   "sha256": "a03cc977431124ecab417a82d2e0291f4694114c20d18c0173382ea1c13d7897"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 132322,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "notebook.js",
+      "line": 283,
+      "column": 21,
+      "snippet": "const stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "paperloop.js",
+      "line": 353,
+      "column": 9,
+      "snippet": "await Zotero.File.putContentsAsync(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "paperloop.js",
+      "line": 382,
+      "column": 9,
+      "snippet": "await Zotero.File.removeIfExists(tempPath);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 13,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "literature-mentions.js",
+      "line": 36,
+      "column": 2,
+      "snippet": "PaperLoopZoteroCompat.registerEndpoint(this.graphEndpointPath, this.GraphEndpoint);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "literature-mentions.js",
+      "line": 37,
+      "column": 2,
+      "snippet": "PaperLoopZoteroCompat.registerEndpoint(this.stateEndpointPath, this.StateEndpoint);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "notebook.js",
+      "line": 5,
+      "column": 14,
+      "snippet": "register() { PaperLoopZoteroCompat.registerEndpoint(this.path, this.Endpoint); this.installColumnLayout(); },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "paperloop.js",
+      "line": 14,
+      "column": 2,
+      "snippet": "PaperLoopZoteroCompat.registerEndpoint(this.endpointPath, this.Endpoint);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "paperloop.js",
+      "line": 15,
+      "column": 2,
+      "snippet": "PaperLoopZoteroCompat.registerEndpoint(this.appendEndpointPath, this.AppendNoteEndpoint);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "paperloop.js",
+      "line": 16,
+      "column": 2,
+      "snippet": "PaperLoopZoteroCompat.registerEndpoint(this.searchEndpointPath, this.SearchItemsEndpoint);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "paperloop.js",
+      "line": 17,
+      "column": 2,
+      "snippet": "PaperLoopZoteroCompat.registerEndpoint(this.stateEndpointPath, this.StateEndpoint);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "paperloop.js",
+      "line": 18,
+      "column": 2,
+      "snippet": "PaperLoopZoteroCompat.registerEndpoint(this.addPDFEndpointPath, this.AddPDFEndpoint);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "reader-quotes.js",
+      "line": 17,
+      "column": 2,
+      "snippet": "PaperLoopZoteroCompat.registerEndpoint(this.stateEndpointPath, this.StateEndpoint);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-compat.js",
+      "line": 25,
+      "column": 40,
+      "snippet": "serverEndpoints: !!(Zotero.Server && Zotero.Server.Endpoints),",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/connector/paperloop/add-pdf",
+      "/connector/paperloop/append-note",
+      "/connector/paperloop/literature-graph",
+      "/connector/paperloop/literature-mention-state",
+      "/connector/paperloop/notebook",
+      "/connector/paperloop/reader-quote-state",
+      "/connector/paperloop/resolve",
+      "/connector/paperloop/search-items",
+      "/connector/paperloop/state"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://paperloop.invalid/zotero/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://paperloop.invalid/zotero/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-02T10:04:47.009Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the jinkeguo account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-02T10:04:47.009Z",
+  "appliesTo": {
+   "slug": "paperloop",
+   "version": "0.5.5",
+   "sha256": "a03cc977431124ecab417a82d2e0291f4694114c20d18c0173382ea1c13d7897"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "0a70d44362bbe1cf25bc6ce0b43bf9fa4f5911a26610e0e44d1e5aa653cddd69"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-29T07:27:33Z",
+    "lastCommitAt": "2026-09-29T09:15:07Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

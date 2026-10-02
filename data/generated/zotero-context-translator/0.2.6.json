@@ -1,0 +1,434 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-context-translator",
+ "repo": "mug-chen/zotero-context-translator",
+ "version": "0.2.6",
+ "tag": "v0.2.6",
+ "releaseAuthor": "MUG-chen",
+ "publishedAt": "2026-10-01T13:03:58Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-context-translator-0.2.6.xpi",
+  "url": "https://github.com/MUG-chen/zotero-context-translator/releases/download/v0.2.6/zotero-context-translator-0.2.6.xpi",
+  "size": 37725,
+  "sha256": "e098eab9dd3ece5d9024da04fbffd31832700e35e699de720adfdec802cf578f",
+  "githubAssetId": 603282066,
+  "uploader": "MUG-chen",
+  "uploadedAt": "2026-10-01T13:03:57Z",
+  "fetchedAt": "2026-10-02T10:04:47.009Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-context-translator@local",
+  "name": "Zotero Context Translator",
+  "version": "0.2.6",
+  "description": "Context-aware academic translation inside the Zotero PDF reader.",
+  "updateUrl": "https://github.com/MUG-chen/zotero-context-translator/releases/latest/download/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 3003,
+   "sha256": "fe1727723f4d83fb4519ada1edcd9e269d883fdb6eaeb1496fa79b25efe3635d"
+  },
+  {
+   "path": "content/plugin-bundle.js",
+   "size": 136465,
+   "sha256": "3a1146ea441ad882780bc6ba9f41b90abaf7ba6ab3e892930841c3a61bf58b21"
+  },
+  {
+   "path": "content/preferences.js",
+   "size": 2946,
+   "sha256": "461f9b7e791ff904c208c6f540febae34eee545e00191a09061961d4f26af1ec"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 2013,
+   "sha256": "7c0309c5a63fd27b24cce03094b1205d88addbee822143d3e6e8a009fdc12240"
+  },
+  {
+   "path": "manifest.json",
+   "size": 490,
+   "sha256": "3d34ec33b3dab27fd7f5e57e46a489009389d74b9e6f4bf9bbdf4b70c598eb39"
+  },
+  {
+   "path": "prefs.js",
+   "size": 184,
+   "sha256": "d81c6f976940440259dbcb15011251b7dfc99084c0c234b6683b1ab8e3000ea6"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-02T10:04:47.009Z",
+  "input": {
+   "slug": "zotero-context-translator",
+   "version": "0.2.6",
+   "sha256": "e098eab9dd3ece5d9024da04fbffd31832700e35e699de720adfdec802cf578f"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 144611,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 27,
+       "column": 26,
+       "snippet": "fetch: (...args) => platformWindow.fetch(...args),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/plugin-bundle.js",
+       "line": 402,
+       "column": 31,
+       "snippet": "const response = await this.fetchImpl(url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "zct-base-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 8,
+       "column": 4,
+       "snippet": "<html:input id=\"zct-base-url\" type=\"url\" placeholder=\"https://api.example.com/v1\" />",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 3643,
+      "column": 31,
+      "snippet": "const clipboardHelper = Cc[\"@mozilla.org/widget/clipboardhelper;1\"].getService(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 3644,
+      "column": 6,
+      "snippet": "Ci.nsIClipboardHelper",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 9,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 2965,
+      "column": 32,
+      "snippet": "return JSON.parse(await IOUtils.readUTF8(resolve(relativePath)));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 2970,
+      "column": 14,
+      "snippet": "await IOUtils.makeDirectory(parent, cloneIntoIO({",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 2975,
+      "column": 14,
+      "snippet": "await IOUtils.writeUTF8(temporary, JSON.stringify(value));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 2977,
+      "column": 16,
+      "snippet": "await IOUtils.move(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 2983,
+      "column": 16,
+      "snippet": "await IOUtils.remove?.(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 2991,
+      "column": 15,
+      "snippet": "return IOUtils.remove(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 2998,
+      "column": 15,
+      "snippet": "return IOUtils.move(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 3008,
+      "column": 27,
+      "snippet": "children = await IOUtils.getChildren(directory);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 3015,
+      "column": 31,
+      "snippet": "const stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "login-manager",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 3613,
+      "column": 28,
+      "snippet": "const loginManager = Cc[\"@mozilla.org/login-manager;1\"].getService(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin-bundle.js",
+      "line": 3614,
+      "column": 6,
+      "snippet": "Ci.nsILoginManager",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsILoginManager"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/MUG-chen/zotero-context-translator/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/MUG-chen/zotero-context-translator/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-02T10:04:47.009Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the MUG-chen account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-02T10:04:47.009Z",
+  "appliesTo": {
+   "slug": "zotero-context-translator",
+   "version": "0.2.6",
+   "sha256": "e098eab9dd3ece5d9024da04fbffd31832700e35e699de720adfdec802cf578f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "1f5c5b53584216b97bc8c9190e4958bd525ea20995fa63ed932ddf4312b8d512"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "login-manager",
+      "label": "Uses Zotero's password manager",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-01T13:03:58Z",
+    "lastCommitAt": "2026-10-01T13:02:52Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

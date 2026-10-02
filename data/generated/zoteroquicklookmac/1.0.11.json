@@ -1,0 +1,444 @@
+{
+ "schemaVersion": 1,
+ "slug": "zoteroquicklookmac",
+ "repo": "gchapron/zoteroquicklookmac",
+ "version": "1.0.11",
+ "tag": "v1.0.11",
+ "releaseAuthor": "gchapron",
+ "publishedAt": "2026-09-25T08:37:00Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zoteroquicklookmac.xpi",
+  "url": "https://github.com/gchapron/ZoteroQuickLookMac/releases/download/v1.0.11/zoteroquicklookmac.xpi",
+  "size": 143693,
+  "sha256": "2b77940367414b76da9ddfe6efe3fb538a8f17fa7a563e8703661374be670355",
+  "githubAssetId": 587917710,
+  "uploader": "gchapron",
+  "uploadedAt": "2026-09-25T08:36:22Z",
+  "fetchedAt": "2026-10-02T10:04:47.009Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "quicklook@zotero-plugin.org",
+  "name": "ZoteroQuickLookMac",
+  "version": "1.0.11",
+  "description": "Preview PDFs with selectable text and Zotero annotations; use QuickLook for other attachments",
+  "homepageUrl": "https://github.com/gchapron/ZoteroQuickLookMac",
+  "updateUrl": "https://raw.githubusercontent.com/gchapron/ZoteroQuickLookMac/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 721,
+   "sha256": "6b413533ee0250cba4bb824db2f978f2812fc9048cd907ffa9f08eb3b0749ddb"
+  },
+  {
+   "path": "contactsheet",
+   "size": 151824,
+   "sha256": "a158af46d42564860194e0ccc3864d056d638d904ba7de394a2af4c1666d3bdb"
+  },
+  {
+   "path": "manifest.json",
+   "size": 629,
+   "sha256": "7ad54bc48c93d5ecb1697a5c4662e5e62bc0634430ca6e99a513907d362ccecf"
+  },
+  {
+   "path": "pdfpreview",
+   "size": 361536,
+   "sha256": "123573e98cecf9eb8bd355ca0960d4b861cb297282c7a0dcb4ef569d549cbea7"
+  },
+  {
+   "path": "prefs.js",
+   "size": 51,
+   "sha256": "e27b20f73d1d70023aaaa60e7f5a328c61d6bfbb3bb32102c188d42c253c002a"
+  },
+  {
+   "path": "quicklook.js",
+   "size": 27789,
+   "sha256": "ee2ad8167f16e26e8dbcc1decc7cc9070bc2e5b8b459dba858768a838d9bc0df"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-02T10:04:47.009Z",
+  "input": {
+   "slug": "zoteroquicklookmac",
+   "version": "1.0.11",
+   "sha256": "2b77940367414b76da9ddfe6efe3fb538a8f17fa7a563e8703661374be670355"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "contactsheet",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "pdfpreview",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 28561,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 22,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 284,
+      "column": 9,
+      "snippet": "await IOUtils.makeDirectory(session.tempDir, { createAncestors: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 340,
+      "column": 9,
+      "snippet": "await IOUtils.remove(session.tempDir, { recursive: true, ignoreAbsent: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 361,
+      "column": 10,
+      "snippet": "await IOUtils.makeDirectory(tempDir, { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 365,
+      "column": 10,
+      "snippet": "await IOUtils.write(path, new Uint8Array(await response.arrayBuffer()));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 366,
+      "column": 10,
+      "snippet": "await IOUtils.setPermissions(path, 0o755);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 480,
+      "column": 8,
+      "snippet": "await IOUtils.makeDirectory(directory, { createAncestors: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 488,
+      "column": 15,
+      "snippet": "if (!(await IOUtils.exists(output))) throw new Error(\"No PDF was exported.\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 536,
+      "column": 20,
+      "snippet": "if (path && await IOUtils.exists(path)) return path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 544,
+      "column": 22,
+      "snippet": "if (path && await IOUtils.exists(path)) return path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 566,
+      "column": 8,
+      "snippet": "await IOUtils.makeDirectory(tempDir, { ignoreExisting: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 385,
+      "column": 3,
+      "snippet": "\"resource://gre/modules/Subprocess.sys.mjs\"",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 387,
+      "column": 19,
+      "snippet": "let proc = await Subprocess.call({ command, arguments: args, stderr: \"stdout\" });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 633,
+      "column": 3,
+      "snippet": "\"resource://gre/modules/Subprocess.sys.mjs\"",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 639,
+      "column": 20,
+      "snippet": "let proc = await Subprocess.call({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ],
+     "programs": [
+      "qlmanage",
+      "unzip"
+     ]
+    }
+   },
+   {
+    "id": "runs-bundled-binary",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 91,
+      "column": 24,
+      "snippet": "contactMenuItem.id = \"quicklook-contactsheet-menu-item\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "quicklook.js",
+      "line": 257,
+      "column": 49,
+      "snippet": "let binary = await this._ensureBundledBinary(\"pdfpreview\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "contactsheet",
+      "pdfpreview"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 27,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/gchapron/ZoteroQuickLookMac/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/gchapron/ZoteroQuickLookMac/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-02T10:04:47.009Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the gchapron account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-02T10:04:47.009Z",
+  "appliesTo": {
+   "slug": "zoteroquicklookmac",
+   "version": "1.0.11",
+   "sha256": "2b77940367414b76da9ddfe6efe3fb538a8f17fa7a563e8703661374be670355"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "f473e6bd8560f1f9f3c5d1c64d8e5074de5a2a972b8ee2e3726059346cc07c5d"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include qlmanage, unzip"
+     },
+     {
+      "id": "runs-bundled-binary",
+      "label": "Runs a compiled program it ships, which we can't read",
+      "concern": "medium",
+      "detail": "contactsheet, pdfpreview"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS",
+     "CAP-BUNDLED-BINARY"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-25T08:37:00Z",
+    "lastCommitAt": "2026-09-25T08:36:03Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer",
+    "Runs a compiled program it ships, which we can't read"
+   ]
+  }
+ }
+}
