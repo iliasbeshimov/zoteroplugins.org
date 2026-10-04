@@ -1,0 +1,427 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-auto-tagger",
+ "repo": "dnnunn/zotero-auto-tagger",
+ "version": "0.7.1",
+ "tag": "v0.7.1",
+ "releaseAuthor": "dnnunn",
+ "publishedAt": "2026-09-18T13:39:08Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-auto-tagger-v0.7.1.xpi",
+  "url": "https://github.com/dnnunn/zotero-auto-tagger/releases/download/v0.7.1/zotero-auto-tagger-v0.7.1.xpi",
+  "size": 21112,
+  "sha256": "0ccba3ad377154b543eba5ec460fc85e28f9d3bd2484f238312260b23d68fd82",
+  "githubAssetId": 572705584,
+  "uploader": "dnnunn",
+  "uploadedAt": "2026-09-18T13:39:07Z",
+  "fetchedAt": "2026-10-04T13:06:20.885Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-auto-tagger@dnnunn.github.io",
+  "name": "Zotero Auto-Tagger",
+  "version": "0.7.1",
+  "description": "Automatically tag Zotero items using PubMed and a local LLM (Ollama)",
+  "homepageUrl": "https://github.com/dnnunn/zotero-auto-tagger",
+  "updateUrl": "https://raw.githubusercontent.com/dnnunn/zotero-auto-tagger/main/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1317,
+   "sha256": "14e9a00fcf586b037e45f597913c3c8fb7cdde3ab4971c37282a358d4ea48626"
+  },
+  {
+   "path": "chrome/content/icons/icon-16.png",
+   "size": 806,
+   "sha256": "54d34f82a4d4bdb7a9a57b858173ef5ab4c4d3e4862690df1597476162d6b89f"
+  },
+  {
+   "path": "chrome/content/icons/icon-32.png",
+   "size": 1393,
+   "sha256": "37365d9b84e5216dd27fd34552218c90e259233486d004e8c3dbe5c7e4bc8071"
+  },
+  {
+   "path": "chrome/content/icons/icon-48.png",
+   "size": 2074,
+   "sha256": "d1330581efa6dbb2e8d7caadeab939c26f6f65f85d7788064eb7418369760717"
+  },
+  {
+   "path": "chrome/content/icons/icon-96.png",
+   "size": 4127,
+   "sha256": "892a91c6d02975ff0ca5e2fbcae2c5ca4dd2fb745b2a68e236caf9f968df30e0"
+  },
+  {
+   "path": "chrome/content/preferences/index.xhtml",
+   "size": 488,
+   "sha256": "153460fb131c6602abeda1d7c7a90f582ef31ab81c12d242bdf04423d274f461"
+  },
+  {
+   "path": "chrome/content/scripts/index.js",
+   "size": 28199,
+   "sha256": "d9d5fbdd67ee515a57205a344dee366d572d469309921dd6fed929c70cc60a7e"
+  },
+  {
+   "path": "chrome/locale/en-US/addon.ftl",
+   "size": 422,
+   "sha256": "6aeff8d3227d774059c79ea1254ca071f0f2357757c1734e5f9dedc094876a10"
+  },
+  {
+   "path": "manifest.json",
+   "size": 731,
+   "sha256": "c124cf808dd162a288860af403121fc075fc8aea844320514d1d02f5da41f5a8"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "input": {
+   "slug": "zotero-auto-tagger",
+   "version": "0.7.1",
+   "sha256": "0ccba3ad377154b543eba5ec460fc85e28f9d3bd2484f238312260b23d68fd82"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "chrome/content/icons/icon-16.png",
+     "reason": "binary"
+    },
+    {
+     "path": "chrome/content/icons/icon-32.png",
+     "reason": "binary"
+    },
+    {
+     "path": "chrome/content/icons/icon-48.png",
+     "reason": "binary"
+    },
+    {
+     "path": "chrome/content/icons/icon-96.png",
+     "reason": "binary"
+    },
+    {
+     "path": "chrome/locale/en-US/addon.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 30004,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/index.js",
+       "line": 102,
+       "column": 33,
+       "snippet": "const response = await Zotero.HTTP.request('GET', url);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/index.js",
+       "line": 288,
+       "column": 27,
+       "snippet": "response = await Zotero.HTTP.request('POST', `${this.baseURL}/api/generate`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "eutils.ncbi.nlm.nih.gov",
+     "category": "scholarly-api",
+     "provider": "NCBI E-utilities",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/index.js",
+       "line": 81,
+       "column": 23,
+       "snippet": "this.baseURL = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/';",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "localhost",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/index.js",
+       "line": 210,
+       "column": 24,
+       "snippet": "this.baseURL = (getPref('extensions.autoTagger.ollamaUrl')",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/index.js",
+       "line": 211,
+       "column": 27,
+       "snippet": "|| 'http://localhost:11434').replace(/\\/$/, '');",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/api/generate",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/index.js",
+       "line": 288,
+       "column": 27,
+       "snippet": "response = await Zotero.HTTP.request('POST', `${this.baseURL}/api/generate`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.autoTagger.ollamaUrl",
+     "defaultValue": "http://localhost:11434",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/index.js",
+       "line": 210,
+       "column": 24,
+       "snippet": "this.baseURL = (getPref('extensions.autoTagger.ollamaUrl')",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/index.js",
+      "line": 84,
+      "column": 22,
+      "snippet": "this.apiKey = getPref('extensions.autoTagger.pubmedApiKey');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/index.js",
+      "line": 438,
+      "column": 16,
+      "snippet": "if (getPref(`extensions.autoTagger.${stale}`) !== undefined) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.autoTagger.claudeApiKey",
+      "extensions.autoTagger.pubmedApiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 19,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/dnnunn/zotero-auto-tagger/main/update.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/dnnunn/zotero-auto-tagger/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T13:06:20.885Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the dnnunn account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T13:06:20.885Z",
+  "appliesTo": {
+   "slug": "zotero-auto-tagger",
+   "version": "0.7.1",
+   "sha256": "0ccba3ad377154b543eba5ec460fc85e28f9d3bd2484f238312260b23d68fd82"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "4158c57dab3121d00f3c6b61ebd018a7aa0b5289d26679dbe7ac889d2ce30bb7"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "eutils.ncbi.nlm.nih.gov"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-18T13:39:08Z",
+    "lastCommitAt": "2026-09-18T13:38:36Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

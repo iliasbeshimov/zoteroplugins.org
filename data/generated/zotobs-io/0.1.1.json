@@ -1,0 +1,474 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotobs-io",
+ "repo": "zepadovani/zotobs-io",
+ "version": "0.1.1",
+ "tag": "v0.1.1",
+ "releaseAuthor": "zepadovani",
+ "publishedAt": "2026-10-01T00:33:42Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotobs-bridge-0.1.1.xpi",
+  "url": "https://github.com/zepadovani/zotobs-io/releases/download/v0.1.1/zotobs-bridge-0.1.1.xpi",
+  "size": 9608,
+  "sha256": "e0162c9154fb3a2325c58882eb854f1d6a55f2e6972758c240cc5ff250dd8b70",
+  "githubAssetId": 602084115,
+  "uploader": "zepadovani",
+  "uploadedAt": "2026-10-01T00:33:41Z",
+  "fetchedAt": "2026-10-04T13:06:20.885Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotobs-bridge@zotobs-io",
+  "name": "zotobs-bridge",
+  "version": "0.1.1",
+  "description": "Recebe anotações do CLI zotobs por um endpoint local e as cria no Zotero.",
+  "homepageUrl": "https://github.com/zepadovani/zotobs-io",
+  "updateUrl": "https://raw.githubusercontent.com/zepadovani/zotobs-io/main/extension/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 10407,
+   "sha256": "03ddf6c8225d9ee66502203452e197a61a9528727a2363a459deb1616b38080d"
+  },
+  {
+   "path": "export.js",
+   "size": 11106,
+   "sha256": "dc80d2ec422348747b07a96a83b7d695363ce272020cc343108306b1d8d5b398"
+  },
+  {
+   "path": "manifest.json",
+   "size": 537,
+   "sha256": "3b97babcfbc09e54aaa5b4bc00f9987ac62dc79da30e979683e0a687555408b6"
+  },
+  {
+   "path": "prefs-pane.js",
+   "size": 469,
+   "sha256": "1babe4763a3496267898fb2661eb826c8ce127571c782a1160b558997c1f529e"
+  },
+  {
+   "path": "prefs.js",
+   "size": 170,
+   "sha256": "7264b019da3dc159fa06690751095f40d41b5b9003aa9f29cad2eb3e6b521973"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 1270,
+   "sha256": "751c57e397143e2fd18fe5c3c44ed520e7652bfeb299e315c6339c78be0e0fc4"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "input": {
+   "slug": "zotobs-io",
+   "version": "0.1.1",
+   "sha256": "e0162c9154fb3a2325c58882eb854f1d6a55f2e6972758c240cc5ff250dd8b70"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 23422,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 16,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 21,
+      "column": 45,
+      "snippet": "const home = Services.dirsvc.get(\"Home\", Ci.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 32,
+      "column": 24,
+      "snippet": "try { want = (await IOUtils.readUTF8(this.tokenPath())).trim(); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "export.js",
+      "line": 72,
+      "column": 47,
+      "snippet": "const home = Services.dirsvc.get(\"Home\", Ci.nsIFile).path, ext = Zotero.isWin ? \".cmd\" : \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "export.js",
+      "line": 75,
+      "column": 45,
+      "snippet": "for (const c of cands) if (c && (await IOUtils.exists(c))) return c;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "export.js",
+      "line": 82,
+      "column": 46,
+      "snippet": "const tmp = Services.dirsvc.get(\"TmpD\", Ci.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "export.js",
+      "line": 90,
+      "column": 16,
+      "snippet": "await IOUtils.writeUTF8(bat, \"@echo off\\r\\nchcp 65001 >nul\\r\\n\" +",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "export.js",
+      "line": 102,
+      "column": 17,
+      "snippet": "if ((await IOUtils.exists(mdPath)) && (await IOUtils.stat(mdPath)).lastModified >= t0) return \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "export.js",
+      "line": 102,
+      "column": 51,
+      "snippet": "if ((await IOUtils.exists(mdPath)) && (await IOUtils.stat(mdPath)).lastModified >= t0) return \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "export.js",
+      "line": 103,
+      "column": 26,
+      "snippet": "try { return (await IOUtils.readUTF8(log)).trim().split(\"\\n\").slice(-2).join(\" | \"); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "export.js",
+      "line": 112,
+      "column": 19,
+      "snippet": "const base = Zotero.File.getValidFileName(pdfName.replace(/\\.pdf$/i, \"\"));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "user-chosen",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 110,
+      "column": 14,
+      "snippet": "const E = Zotero.Server.Endpoints;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 111,
+      "column": 4,
+      "snippet": "E[\"/zotobs/ping\"] = function () {};",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 119,
+      "column": 4,
+      "snippet": "E[\"/zotobs/import\"] = function () {};",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 130,
+      "column": 4,
+      "snippet": "E[\"/zotobs/update\"] = function () {};",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zotobs/import",
+      "/zotobs/ping",
+      "/zotobs/update"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "export.js",
+      "line": 93,
+      "column": 16,
+      "snippet": "await Zotero.Utilities.Internal.exec(\"cmd.exe\", [\"/d\", \"/c\", bat]);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "export.js",
+      "line": 97,
+      "column": 16,
+      "snippet": "await Zotero.Utilities.Internal.exec(sh,",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Zotero.Utilities.Internal.exec"
+     ],
+     "programs": [
+      "bash",
+      "cmd",
+      "zsh"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/zepadovani/zotobs-io/main/extension/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/zepadovani/zotobs-io/main/extension/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 57,
+      "column": 14,
+      "snippet": "await Zotero.Annotations.saveFromJSON(att, {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 119,
+      "column": 4,
+      "snippet": "E[\"/zotobs/import\"] = function () {};",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zotobs/import",
+      "/zotobs/update"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T13:06:20.885Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the zepadovani account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T13:06:20.885Z",
+  "appliesTo": {
+   "slug": "zotobs-io",
+   "version": "0.1.1",
+   "sha256": "e0162c9154fb3a2325c58882eb854f1d6a55f2e6972758c240cc5ff250dd8b70"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "1d5631a82db4e3053ef77a55b0d27489aba42a93733ea1ac5653abc820d8b006"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include bash, cmd, zsh"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-01T00:33:42Z",
+    "lastCommitAt": "2026-10-01T00:33:36Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

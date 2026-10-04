@@ -1,0 +1,311 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-open-in-obsidian",
+ "repo": "adamsghaier/zotero-open-in-obsidian",
+ "version": "1.1.0",
+ "tag": "v1.1.0",
+ "releaseAuthor": "adamsghaier",
+ "publishedAt": "2026-09-30T08:26:30Z",
+ "prerelease": false,
+ "asset": {
+  "name": "open-in-obsidian.xpi",
+  "url": "https://github.com/adamsghaier/zotero-open-in-obsidian/releases/download/v1.1.0/open-in-obsidian.xpi",
+  "size": 4020,
+  "sha256": "cdd3820c1298f5749b504ee799bd2a1d622eb712dba54a277ff378979dee952e",
+  "githubAssetId": 600409887,
+  "uploader": "adamsghaier",
+  "uploadedAt": "2026-09-30T08:26:28Z",
+  "fetchedAt": "2026-10-04T13:06:20.885Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "open-in-obsidian@adamsghaier.local",
+  "name": "Open in Obsidian",
+  "version": "1.1.0",
+  "description": "Right-click a paper → Open in Obsidian opens its literature note (<citekey>.md) in a new Obsidian tab.",
+  "homepageUrl": "https://github.com/adamsghaier/zotero-open-in-obsidian",
+  "updateUrl": "https://raw.githubusercontent.com/adamsghaier/zotero-open-in-obsidian/main/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 8059,
+   "sha256": "d98237b0a9561620a43fc871d6453e510d6887781dd9cc03d8af78e3cb196aa3"
+  },
+  {
+   "path": "locale/en-US/open-in-obsidian.ftl",
+   "size": 124,
+   "sha256": "881e0617981e5ea26775b1122115c0a1c03040672af52f9077dc9109a49bbbc3"
+  },
+  {
+   "path": "manifest.json",
+   "size": 587,
+   "sha256": "21534d86e7ed10c17ed55a7dde0caed7e3e081593817c3883d89f377bb2b885f"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "input": {
+   "slug": "zotero-open-in-obsidian",
+   "version": "1.1.0",
+   "sha256": "cdd3820c1298f5749b504ee799bd2a1d622eb712dba54a277ff378979dee952e"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/open-in-obsidian.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 8059,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [
+    {
+     "pattern": "obsidian://<expr>?vault=<expr>&file=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 143,
+       "column": 11,
+       "snippet": "return `obsidian://${COMPANION}?vault=${encodeURIComponent(vault.id)}&file=${encodeURIComponent(rel)}`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 41,
+      "column": 37,
+      "snippet": "return Services.dirsvc.get(\"Home\", Ci.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 47,
+      "column": 73,
+      "snippet": "if (Zotero.isWin) return PathUtils.join(Services.dirsvc.get(\"AppData\", Ci.nsIFile).path, \"obsidian\", \"obsidian.json\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 53,
+      "column": 11,
+      "snippet": "return Zotero.File.pathToFile(path).exists();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 66,
+      "column": 30,
+      "snippet": "let registry = JSON.parse(Zotero.File.getContents(file)).vaults || {};",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 82,
+      "column": 18,
+      "snippet": "let entries = Zotero.File.pathToFile(dir).directoryEntries;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 128,
+      "column": 22,
+      "snippet": "return JSON.parse(Zotero.File.getContents(enabled)).includes(COMPANION);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/adamsghaier/zotero-open-in-obsidian/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/adamsghaier/zotero-open-in-obsidian/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T13:06:20.885Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the adamsghaier account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T13:06:20.885Z",
+  "appliesTo": {
+   "slug": "zotero-open-in-obsidian",
+   "version": "1.1.0",
+   "sha256": "cdd3820c1298f5749b504ee799bd2a1d622eb712dba54a277ff378979dee952e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "6c494f5e8c7171d97865393d758240b355a76ba72f4f50a628f06e8c372931ad"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-30T08:26:30Z",
+    "lastCommitAt": "2026-09-30T09:30:32Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

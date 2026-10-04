@@ -1,0 +1,326 @@
+{
+ "schemaVersion": 1,
+ "slug": "memorive",
+ "repo": "kuchinashiyume/memorive",
+ "version": "1.0.0",
+ "tag": "v1.01",
+ "releaseAuthor": "KuchinashiYume",
+ "publishedAt": "2026-09-26T13:35:11Z",
+ "prerelease": false,
+ "asset": {
+  "name": "Memorive-Zotero-Companion.xpi",
+  "url": "https://github.com/KuchinashiYume/Memorive/releases/download/v1.01/Memorive-Zotero-Companion.xpi",
+  "size": 21855,
+  "sha256": "b33bfc553d65c38c806470e468a34a0e2a3ce7c5b09a42956591e35bcb6dd458",
+  "githubAssetId": 590645595,
+  "uploader": "KuchinashiYume",
+  "uploadedAt": "2026-09-26T12:43:27Z",
+  "fetchedAt": "2026-10-04T13:06:20.885Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "memorive-companion@memorive",
+  "name": "Memorive Companion",
+  "version": "1.0.0",
+  "description": "将选中的文献与批注连接到 Memo，检索证据并回写研究结果。",
+  "updateUrl": "https://raw.githubusercontent.com/KuchinashiYume/Memorive/main/memorive_desktop/integrations/zotero/memorive-companion/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 693,
+   "sha256": "857ebb8cf735f96dc6cb19c383362a4dc45533ff161ac112420849a39cae0f4c"
+  },
+  {
+   "path": "LICENSE",
+   "size": 34523,
+   "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+  },
+  {
+   "path": "main.js",
+   "size": 15895,
+   "sha256": "b49736c246ac8264dd8ca40bc3e72b3c45e14c1a3783fbc2a3881bc15f9ea84f"
+  },
+  {
+   "path": "manifest.json",
+   "size": 515,
+   "sha256": "8f43b035e222f1cd945478ab744c86810c9f3234ae9fdfab95dbdf2098bd24db"
+  },
+  {
+   "path": "NOTICE.md",
+   "size": 1426,
+   "sha256": "960ac5d9ef01735dccd86346e7df1377f8c51ec1631e3e5c1763e4f6f67df71c"
+  },
+  {
+   "path": "preferences.js",
+   "size": 1155,
+   "sha256": "6973b9e16067b7ba7ccbba3784db6a55b7c1c8965f8e4ad1cbf2e77a1c0c6178"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 1114,
+   "sha256": "62b6fee771a44b101be639b1d32769abb74e302bed50efbd7484a03c3313f70d"
+  },
+  {
+   "path": "style.css",
+   "size": 1476,
+   "sha256": "b93575d515b701f4714b426e5b08292024f3faa93df27932384625380bb97ce0"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "input": {
+   "slug": "memorive",
+   "version": "1.0.0",
+   "sha256": "b33bfc553d65c38c806470e468a34a0e2a3ce7c5b09a42956591e35bcb6dd458"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "NOTICE.md",
+     "reason": "not-code"
+    },
+    {
+     "path": "style.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 18857,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 96,
+      "column": 124,
+      "snippet": "t x=await this.call(\"read\",{evidence_id:ref.id,expected_hash:ref.content_hash});Zotero.Utilities.Internal.copyTextToClipboard(x.text+\"\\n\\n\"+x.title+\" · \"+x.id+\" · SHA256 \"+x.content_hash+\"\\n\"+(x.sourc",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 18,
+      "column": 48,
+      "snippet": "const {Subprocess}=ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 19,
+      "column": 19,
+      "snippet": "const proc=await Subprocess.call({command:helper,arguments:[\"--memo-agent\",\"--workspace\",workspace,\"--connector-call\",method],stderr:\"pipe\"});",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/KuchinashiYume/Memorive/main/memorive_desktop/integrations/zotero/memorive-companion/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/KuchinashiYume/Memorive/main/memorive_desktop/integrations/zotero/memorive-companion/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T13:06:20.885Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the KuchinashiYume account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T13:06:20.885Z",
+  "appliesTo": {
+   "slug": "memorive",
+   "version": "1.0.0",
+   "sha256": "b33bfc553d65c38c806470e468a34a0e2a3ce7c5b09a42956591e35bcb6dd458"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "89d8f29b10f0da97e6561777d32a464397857eee13474dd75283e66354835f09"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address has no version for Zotero 10"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium"
+     },
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-26T13:35:11Z",
+    "lastCommitAt": "2026-10-02T16:03:47Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

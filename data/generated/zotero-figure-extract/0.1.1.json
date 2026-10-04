@@ -1,0 +1,425 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-figure-extract",
+ "repo": "pbilodeau94/zotero-figure-extract",
+ "version": "0.1.1",
+ "tag": "v0.1.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-09-29T17:43:41Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-figure-extract-0.1.1.xpi",
+  "url": "https://github.com/pbilodeau94/zotero-figure-extract/releases/download/v0.1.1/zotero-figure-extract-0.1.1.xpi",
+  "size": 7277,
+  "sha256": "d152300e1eba079e2f48d483474382aea3e50230aba1356bc66d1f279d40ea21",
+  "githubAssetId": 598825795,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-09-29T17:43:41Z",
+  "fetchedAt": "2026-10-04T13:06:20.885Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-figure-extract@pbilodeau94.github.io",
+  "name": "Zotero Figure Extract",
+  "version": "0.1.1",
+  "description": "Extract figures and tables from PDF attachments using a figure-extractor (pdffigures2) HTTP service and store them as child attachments.",
+  "homepageUrl": "https://github.com/pbilodeau94/zotero-figure-extract",
+  "updateUrl": "https://raw.githubusercontent.com/pbilodeau94/zotero-figure-extract/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1380,
+   "sha256": "9d7c2890c25f20b947c62f246f515199d6e461bdd02077988cf22c78488b85a0"
+  },
+  {
+   "path": "content/figure-extract.js",
+   "size": 13754,
+   "sha256": "e58f118a29349c839273ad726f5afc434d57209b4af67848ecb15c9e14b332de"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1082,
+   "sha256": "95876899b5ba78b03b6b22e3728d68537363f5bc9376dbb27209d991157130d7"
+  },
+  {
+   "path": "manifest.json",
+   "size": 643,
+   "sha256": "bd8e919860c3d7a82365cc956cf8392d08300e37bf5f0ae263b04101e8c29e1a"
+  },
+  {
+   "path": "prefs.js",
+   "size": 197,
+   "sha256": "809de4563344a186896e1fd85b91cb202a4c03df3bb53932e407aefc754fea77"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 806,
+   "sha256": "840d25ce487303b5b2b7205042a4b653354a0c93ae8e01e862a07922322e5072"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "input": {
+   "slug": "zotero-figure-extract",
+   "version": "0.1.1",
+   "sha256": "d152300e1eba079e2f48d483474382aea3e50230aba1356bc66d1f279d40ea21"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 16137,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/figure-extract.js",
+       "line": 223,
+       "column": 19,
+       "snippet": "return await win.fetch(url, Object.assign({}, opts, { signal: ctl.signal }));",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "localhost",
+     "port": 5001,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 5,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/figure-extract.js",
+       "line": 33,
+       "column": 6,
+       "snippet": "Zotero.Prefs.get(this.PREF_PREFIX + \"serverUrl\") || \"http://localhost:5001\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/figure-extract.js",
+       "line": 33,
+       "column": 58,
+       "snippet": "Zotero.Prefs.get(this.PREF_PREFIX + \"serverUrl\") || \"http://localhost:5001\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.figureExtract.serverUrl\", \"http://localhost:5001\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 50,
+       "snippet": "pref(\"extensions.zotero.figureExtract.serverUrl\", \"http://localhost:5001\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 9,
+       "column": 70,
+       "snippet": "<description>Address of the figure-extractor service, for example http://localhost:5001</description>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero.figureExtract.serverUrl",
+     "defaultValue": "http://localhost:5001",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.figureExtract.serverUrl\", \"http://localhost:5001\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 8,
+       "column": 16,
+       "snippet": "preference=\"extensions.zotero.figureExtract.serverUrl\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "figureExtract.serverUrl",
+     "defaultValue": "http://localhost:5001",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/figure-extract.js",
+       "line": 33,
+       "column": 6,
+       "snippet": "Zotero.Prefs.get(this.PREF_PREFIX + \"serverUrl\") || \"http://localhost:5001\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/figure-extract.js",
+      "line": 251,
+      "column": 10,
+      "snippet": "await IOUtils.write(destPath, buf);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/figure-extract.js",
+      "line": 262,
+      "column": 10,
+      "snippet": "await IOUtils.makeDirectory(tmpDir, { createAncestors: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/figure-extract.js",
+      "line": 266,
+      "column": 26,
+      "snippet": "const bytes = await IOUtils.read(pdfPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/figure-extract.js",
+      "line": 288,
+      "column": 42,
+      "snippet": "const parsed = JSON.parse(await IOUtils.readUTF8(metaPath));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/figure-extract.js",
+      "line": 360,
+      "column": 14,
+      "snippet": "await IOUtils.remove(tmpDir, { recursive: true, ignoreAbsent: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/figure-extract.js",
+      "line": 387,
+      "column": 11,
+      "snippet": "return Zotero.File.getValidFileName(String(s)) || \"file\";",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/pbilodeau94/zotero-figure-extract/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/pbilodeau94/zotero-figure-extract/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T13:06:20.885Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T13:06:20.885Z",
+  "appliesTo": {
+   "slug": "zotero-figure-extract",
+   "version": "0.1.1",
+   "sha256": "d152300e1eba079e2f48d483474382aea3e50230aba1356bc66d1f279d40ea21"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "a3a2a25b5cb98f4681149181a7c9be2db36b9ae2cd1f9be74e75940c0d703645"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address lists version 0.1.2, but its download link is broken, so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-29T17:43:41Z",
+    "lastCommitAt": "2026-09-29T17:46:46Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

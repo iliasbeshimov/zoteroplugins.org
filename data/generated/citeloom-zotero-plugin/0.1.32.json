@@ -1,0 +1,309 @@
+{
+ "schemaVersion": 1,
+ "slug": "citeloom-zotero-plugin",
+ "repo": "rch-huang/citeloom-zotero-plugin",
+ "version": "0.1.32",
+ "tag": "v0.1.32",
+ "releaseAuthor": "rch-huang",
+ "publishedAt": "2026-09-29T16:30:10Z",
+ "prerelease": false,
+ "asset": {
+  "name": "citeloom-0.1.32.xpi",
+  "url": "https://github.com/rch-huang/CiteLoom-Zotero-Plugin/releases/download/v0.1.32/citeloom-0.1.32.xpi",
+  "size": 22033,
+  "sha256": "797d8b36791441602164708d64a94cb69748f8886de33777b13420f9dcd57f5f",
+  "githubAssetId": 598675296,
+  "uploader": "rch-huang",
+  "uploadedAt": "2026-09-29T16:29:46Z",
+  "fetchedAt": "2026-10-04T13:06:20.885Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "citation-view-mvp@example.org",
+  "name": "CiteLoom",
+  "version": "0.1.32",
+  "description": "Trace citation threads among papers in your Zotero collections.",
+  "homepageUrl": "https://example.com/citation-view-mvp/",
+  "updateUrl": "https://example.com/citation-view-mvp/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1725,
+   "sha256": "9c39f1d7a5c8be5b3a83e81b4d76dbda3734fa2bda0cfd4fe065b1c0eb8aba22"
+  },
+  {
+   "path": "citation-graph.js",
+   "size": 8438,
+   "sha256": "45ac9c5cb3e55cbbb6cae0a300082a9f23cdd9be2617f8b820f755a83fba46eb"
+  },
+  {
+   "path": "citation-view.js",
+   "size": 59161,
+   "sha256": "5302064b9bbafd13b33516e06c7b66c6f80b67e685db986dd1908d4cc1a50f1f"
+  },
+  {
+   "path": "icon.svg",
+   "size": 661,
+   "sha256": "05f96ce87a4fb7ee4dd4c195a90ce5326b6cebf5bb5904bb88a15557f0db05d7"
+  },
+  {
+   "path": "manifest.json",
+   "size": 456,
+   "sha256": "be53a410546ba649dc83fbe9f22d4acd0ff7b792b723f6606a4b8fc91ea08a48"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 972,
+   "sha256": "a8624cc9814d254d41d3b3a42540e4f379ea0098f5eb2e879e07e10b40c8f4c0"
+  },
+  {
+   "path": "prefs.js",
+   "size": 175,
+   "sha256": "08ea516c742231f58ae81b6185b474823674e4efaee9138dfe8627d4f5438f19"
+  },
+  {
+   "path": "style.css",
+   "size": 4305,
+   "sha256": "e6c2aca61aee99948a4cfa1c1b45df5605583e88dff690b201853fa765f8ba3a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "input": {
+   "slug": "citeloom-zotero-plugin",
+   "version": "0.1.32",
+   "sha256": "797d8b36791441602164708d64a94cb69748f8886de33777b13420f9dcd57f5f"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "style.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 70471,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "citation-graph.js",
+      "line": 63,
+      "column": 15,
+      "snippet": "if (!await IOUtils.exists(this.path)) { this.loaded = true; return; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "citation-graph.js",
+      "line": 65,
+      "column": 38,
+      "snippet": "const parsed = JSON.parse(await Zotero.File.getContentsAsync(this.path));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "citation-graph.js",
+      "line": 80,
+      "column": 6,
+      "snippet": "Zotero.File.putContentsAsync(this.path, snapshot));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "citation-graph.js",
+      "line": 90,
+      "column": 23,
+      "snippet": "const stat = await IOUtils.stat(path).catch(() => null);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://example.com/citation-view-mvp/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://example.com/citation-view-mvp/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T13:06:20.885Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the rch-huang account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T13:06:20.885Z",
+  "appliesTo": {
+   "slug": "citeloom-zotero-plugin",
+   "version": "0.1.32",
+   "sha256": "797d8b36791441602164708d64a94cb69748f8886de33777b13420f9dcd57f5f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "3d5ecffa385b7bdbcb1fd3253ad5a71363165b2380734e7668b5c08615d61e59"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-29T16:30:10Z",
+    "lastCommitAt": "2026-09-29T16:23:15Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

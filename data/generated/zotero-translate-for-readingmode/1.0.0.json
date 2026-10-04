@@ -1,0 +1,1167 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-translate-for-readingmode",
+ "repo": "bionux-th/zotero-translate-for-readingmode",
+ "version": "1.0.0",
+ "tag": "V1.0.0",
+ "releaseAuthor": "bionux-th",
+ "publishedAt": "2026-10-03T13:24:22Z",
+ "prerelease": false,
+ "asset": {
+  "name": "translate-for-readingmode-1.0.0.xpi",
+  "url": "https://github.com/bionux-th/Zotero-Translate-for-ReadingMode/releases/download/V1.0.0/translate-for-readingmode-1.0.0.xpi",
+  "size": 51463,
+  "sha256": "20d199aa6a5b8671b4bd65db64c6373143e541e1fdde595fadc958a2dbda9033",
+  "githubAssetId": 607852050,
+  "uploader": "bionux-th",
+  "uploadedAt": "2026-10-03T13:23:28Z",
+  "fetchedAt": "2026-10-04T13:06:20.885Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-readtrans@github.com",
+  "name": "Translate for ReadingMode",
+  "version": "1.0.0",
+  "description": "Translate Zotero PDF reading mode with local and online translation services",
+  "homepageUrl": "https://github.com/bionux-th/Zotero-Translate-for-ReadingMode",
+  "strictMinVersion": "9.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 864,
+   "sha256": "d97e86cae6f09bd7da3b5c20b0fc5dde014aa71e80e22b37e9444ffe04eb9300"
+  },
+  {
+   "path": "content/icons/icon-48.png",
+   "size": 3013,
+   "sha256": "63343b80d129c6d29584c34c75916390e8c07329e67ca5823b989ec2c70fd0ac"
+  },
+  {
+   "path": "content/icons/icon-96.png",
+   "size": 6889,
+   "sha256": "3a16db368946e7296e43822a2cf67be6f47df373556c6e5ecb19a97dbbc6c3d0"
+  },
+  {
+   "path": "content/icons/readtrans-icon.svg",
+   "size": 2252,
+   "sha256": "3c0e2212e69daf877a0e5330c03bda5562fc01ea88f6a3ee57fee33938a85b32"
+  },
+  {
+   "path": "content/icons/readtrans-menu.svg",
+   "size": 559,
+   "sha256": "f52238169503a0e54c83ae050870de1bdccf3bc75a7dc8a24ab53ca88372cc7c"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 400,
+   "sha256": "ff254bd45f57078e9d98f26d06f86070870f4b36f68071b23830539914c99264"
+  },
+  {
+   "path": "content/scripts/preferences.js",
+   "size": 35313,
+   "sha256": "fbd546c010e5e14569201a6c0126de2a14faae103d74bd9f413749879479554e"
+  },
+  {
+   "path": "content/scripts/readtrans.js",
+   "size": 113087,
+   "sha256": "dd163cbbba8101da046c7bfd20a082c899f2832bb2cc719ec80593005ecc3cc7"
+  },
+  {
+   "path": "manifest.json",
+   "size": 567,
+   "sha256": "aaf3bec65a591df49c924ccd989637af5dfeca984998f9d4d680bbd0e2109238"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "input": {
+   "slug": "zotero-translate-for-readingmode",
+   "version": "1.0.0",
+   "sha256": "20d199aa6a5b8671b4bd65db64c6373143e541e1fdde595fadc958a2dbda9033"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "content/icons/icon-48.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/icons/icon-96.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/icons/readtrans-icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/readtrans-menu.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 149664,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1036,
+       "column": 23,
+       "snippet": "response = await Zotero.HTTP.request(method, url, { body: payload, headers: requestHeaders, responseType: \"text\", timeout });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1049,
+       "column": 23,
+       "snippet": "response = await Zotero.HTTP.request(method, url, { body, headers: headers || {}, responseType: \"text\", timeout: 6e4 });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 15,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 59,
+       "column": 20,
+       "snippet": "ollamaEndpoint: \"http://127.0.0.1:11434/api/chat\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 74,
+       "column": 28,
+       "snippet": "libretranslateEndpoint: \"http://127.0.0.1:5000\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 76,
+       "column": 25,
+       "snippet": "mtranserverEndpoint: \"http://127.0.0.1:8989/translate\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 78,
+       "column": 18,
+       "snippet": "nllbEndpoint: \"http://127.0.0.1:6060/translate\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 79,
+       "column": 17,
+       "snippet": "potEndpoint: \"http://127.0.0.1:23119/translate\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 572,
+       "column": 70,
+       "snippet": "const response = await requestJson(settings.ollamaEndpoint || \"http://127.0.0.1:11434/api/chat\", \"POST\", payload, void 0, 24e4);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 799,
+       "column": 60,
+       "snippet": "const endpoint = `${(settings.libretranslateEndpoint || \"http://127.0.0.1:5000\").replace(/\\/$/, \"\")}/translate`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 811,
+       "column": 71,
+       "snippet": "const response = await requestJson(settings.mtranserverEndpoint || \"http://127.0.0.1:8989/translate\", \"POST\", { text, from: sourceLanguage(settings), to: targetLanguage(settings) }, headers);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 815,
+       "column": 64,
+       "snippet": "const response = await requestJson(settings.nllbEndpoint || \"http://127.0.0.1:6060/translate\", \"POST\", { source: text, src_lang: nllbLanguage(sourceLanguage(settings) === \"auto\" ? \"en\" : sourceLan",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 819,
+       "column": 63,
+       "snippet": "const response = await requestText(settings.potEndpoint || \"http://127.0.0.1:23119/translate\", \"POST\", text, { \"Content-Type\": \"text/plain;charset=UTF-8\" });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "aidemo.youdao.com",
+     "category": "translation",
+     "provider": "Youdao",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 70,
+       "column": 20,
+       "snippet": "youdaoEndpoint: \"https://aidemo.youdao.com/trans\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 764,
+       "column": 66,
+       "snippet": "const response = await requestJson(settings.youdaoEndpoint || \"https://aidemo.youdao.com/trans\", \"POST\", params.toString(), { \"Content-Type\": \"application/x-www-form-urlencoded\" });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1119,
+       "column": 20,
+       "snippet": "youdaoEndpoint: \"https://aidemo.youdao.com/trans\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api-free.deepl.com",
+     "category": "translation",
+     "provider": "DeepL",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 725,
+       "column": 87,
+       "snippet": "st endpoint = settings.deeplEndpoint || (settings.deeplApiKey.endsWith(\":fx\") ? \"https://api-free.deepl.com/v2/translate\" : \"https://api.deepl.com/v2/translate\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.anthropic.com",
+     "category": "llm-provider",
+     "provider": "Anthropic",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 100,
+       "column": 20,
+       "snippet": "claudeEndpoint: \"https://api.anthropic.com/v1/messages\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 963,
+       "column": 66,
+       "snippet": "const response = await requestJson(settings.claudeEndpoint || \"https://api.anthropic.com/v1/messages\", \"POST\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1149,
+       "column": 20,
+       "snippet": "claudeEndpoint: \"https://api.anthropic.com/v1/messages\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.cognitive.microsofttranslator.com",
+     "category": "translation",
+     "provider": "Microsoft Translator",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 67,
+       "column": 18,
+       "snippet": "bingEndpoint: \"https://api.cognitive.microsofttranslator.com/translate?api-version=3.0\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 743,
+       "column": 42,
+       "snippet": "const base = settings.bingEndpoint || \"https://api.cognitive.microsofttranslator.com/translate?api-version=3.0\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1116,
+       "column": 18,
+       "snippet": "bingEndpoint: \"https://api.cognitive.microsofttranslator.com/translate?api-version=3.0\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.deepl.com",
+     "category": "translation",
+     "provider": "DeepL",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 725,
+       "column": 131,
+       "snippet": "tings.deeplApiKey.endsWith(\":fx\") ? \"https://api-free.deepl.com/v2/translate\" : \"https://api.deepl.com/v2/translate\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.fanyi.baidu.com",
+     "category": "translation",
+     "provider": "Baidu Translate",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 879,
+       "column": 39,
+       "snippet": "const response = await requestJson(`https://api.fanyi.baidu.com/api/trans/vip/${path}?q=${encoded(text)}&appid=${encoded(settings.baiduAppId)}&from=${encoded(baseLang(sourceLanguage(settings)))}&t",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.interpreter.caiyunai.com",
+     "category": "translation",
+     "provider": "Caiyun",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 773,
+       "column": 39,
+       "snippet": "const response = await requestJson(\"https://api.interpreter.caiyunai.com/v1/translator\", \"POST\", { source: texts, trans_type: `${from}2${to}`, request_id: Date.now() / 1e4, detect: sourceLanguage(",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.mymemory.translated.net",
+     "category": "translation",
+     "provider": "MyMemory",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 792,
+       "column": 21,
+       "snippet": "const query = `${\"https://api.mymemory.translated.net/get\"}?q=${encoded(text)}&langpair=${encoded(sourceLanguage(settings))}|${encoded(targetLanguage(settings))}${email ? `&de=${encoded(email)}` :",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openai.com",
+     "category": "llm-provider",
+     "provider": "OpenAI",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 106,
+       "column": 20,
+       "snippet": "openaiEndpoint: \"https://api.openai.com/v1/chat/completions\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 952,
+       "column": 51,
+       "snippet": "const response = await requestJson(endpoint || \"https://api.openai.com/v1/chat/completions\", \"POST\", { model: model || \"gpt-4o-mini\", messages: [{ role: \"user\", content: translationPrompt(text, se",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1155,
+       "column": 20,
+       "snippet": "openaiEndpoint: \"https://api.openai.com/v1/chat/completions\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openl.club",
+     "category": "translation",
+     "provider": "OpenL",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 866,
+       "column": 39,
+       "snippet": "const response = await requestJson(\"https://api.openl.club/group/translate\", \"POST\", { apikey: settings.openlApiKey.trim(), services, text, source_lang: sourceLanguage(settings), target_lang: targ",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dashscope.aliyuncs.com",
+     "category": "llm-provider",
+     "provider": "Alibaba Qwen (DashScope)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 94,
+       "column": 20,
+       "snippet": "qwenmtEndpoint: \"https://dashscope.aliyuncs.com/compatible-mode\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 657,
+       "column": 55,
+       "snippet": "const configured = (settings.qwenmtEndpoint || \"https://dashscope.aliyuncs.com/compatible-mode\").replace(/\\/$/, \"\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1143,
+       "column": 20,
+       "snippet": "qwenmtEndpoint: \"https://dashscope.aliyuncs.com/compatible-mode\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dict.cnki.net",
+     "category": "scholarly-api",
+     "provider": "CNKI",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 829,
+       "column": 46,
+       "snippet": "const tokenResponse = await requestJson(\"https://dict.cnki.net/fyzs-front-api/getToken\", \"GET\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 835,
+       "column": 39,
+       "snippet": "const response = await requestJson(\"https://dict.cnki.net/fyzs-front-api/translate/literaltranslation\", \"POST\", { words, translateType: null }, { Token: cnkiToken, \"Content-Type\": \"application/jso",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "edge.microsoft.com",
+     "category": "translation",
+     "provider": "Microsoft Edge Translate",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 69,
+       "column": 21,
+       "snippet": "bingWebEndpoint: \"https://edge.microsoft.com/translate/translatetext\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 753,
+       "column": 49,
+       "snippet": "const endpoint = settings.bingWebEndpoint || \"https://edge.microsoft.com/translate/translatetext\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1118,
+       "column": 21,
+       "snippet": "bingWebEndpoint: \"https://edge.microsoft.com/translate/translatetext\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "generativelanguage.googleapis.com",
+     "category": "llm-provider",
+     "provider": "Google Gemini",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 97,
+       "column": 20,
+       "snippet": "geminiEndpoint: \"https://generativelanguage.googleapis.com/v1beta/models\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 957,
+       "column": 45,
+       "snippet": "const root = (settings.geminiEndpoint || \"https://generativelanguage.googleapis.com/v1beta/models\").replace(/\\/$/, \"\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1146,
+       "column": 20,
+       "snippet": "geminiEndpoint: \"https://generativelanguage.googleapis.com/v1beta/models\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "mt.aliyuncs.com",
+     "category": "translation",
+     "provider": "Alibaba Translate",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 88,
+       "column": 20,
+       "snippet": "aliyunEndpoint: \"https://mt.aliyuncs.com/\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 887,
+       "column": 48,
+       "snippet": "const endpoint = settings.aliyunEndpoint || \"https://mt.aliyuncs.com/\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1137,
+       "column": 20,
+       "snippet": "aliyunEndpoint: \"https://mt.aliyuncs.com/\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "niutrans.com",
+     "category": "translation",
+     "provider": "NiuTrans",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 92,
+       "column": 22,
+       "snippet": "niutransEndpoint: \"https://niutrans.com/niuInterface\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 931,
+       "column": 47,
+       "snippet": "const root = (settings.niutransEndpoint || \"https://niutrans.com/niuInterface\").replace(/\\/$/, \"\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1141,
+       "column": 22,
+       "snippet": "niutransEndpoint: \"https://niutrans.com/niuInterface\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "openapi.youdao.com",
+     "category": "translation",
+     "provider": "Youdao",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 104,
+       "column": 23,
+       "snippet": "youdaoLlmEndpoint: \"https://openapi.youdao.com/llm_trans\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 979,
+       "column": 67,
+       "snippet": "const raw = await requestText(`${settings.youdaoLlmEndpoint || \"https://openapi.youdao.com/llm_trans\"}?${query}`, \"POST\", \"\", { \"Content-Type\": \"application/x-www-form-urlencoded\" });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1153,
+       "column": 23,
+       "snippet": "youdaoLlmEndpoint: \"https://openapi.youdao.com/llm_trans\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "translate.google.com",
+     "category": "translation",
+     "provider": "Google Translate",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 68,
+       "column": 23,
+       "snippet": "googleWebEndpoint: \"https://translate.google.com\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 717,
+       "column": 48,
+       "snippet": "const root = (settings.googleWebEndpoint || \"https://translate.google.com\").replace(/\\/$/, \"\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1117,
+       "column": 23,
+       "snippet": "googleWebEndpoint: \"https://translate.google.com\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "translate.volcengineapi.com",
+     "category": "translation",
+     "provider": "Volcano Engine Translate",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 926,
+       "column": 39,
+       "snippet": "const response = await requestJson(`https://${host}/?${query}`, \"POST\", body, headers);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "translation.googleapis.com",
+     "category": "translation",
+     "provider": "Google Cloud Translation",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 62,
+       "column": 20,
+       "snippet": "googleEndpoint: \"https://translation.googleapis.com/language/translate/v2\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 680,
+       "column": 51,
+       "snippet": "const endpoint = `${settings.googleEndpoint || \"https://translation.googleapis.com/language/translate/v2\"}?key=${encoded(settings.googleApiKey.trim())}`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1111,
+       "column": 20,
+       "snippet": "googleEndpoint: \"https://translation.googleapis.com/language/translate/v2\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "transmart.qq.com",
+     "category": "translation",
+     "provider": "Tencent TranSmart",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 72,
+       "column": 21,
+       "snippet": "tencentEndpoint: \"https://transmart.qq.com/api/imt\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 785,
+       "column": 67,
+       "snippet": "const response = await requestJson(settings.tencentEndpoint || \"https://transmart.qq.com/api/imt\", \"POST\", { header: { fn: \"auto_translation\", client_key: \"readtrans-zotero\" }, type: \"plain\", mode",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1121,
+       "column": 21,
+       "snippet": "tencentEndpoint: \"https://transmart.qq.com/api/imt\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www2.deepl.com",
+     "category": "translation",
+     "provider": "DeepL",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/preferences.js",
+       "line": 80,
+       "column": 20,
+       "snippet": "deeplxEndpoint: \"https://www2.deepl.com/jsonrpc\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 734,
+       "column": 48,
+       "snippet": "const endpoint = settings.deeplxEndpoint || \"https://www2.deepl.com/jsonrpc\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 1129,
+       "column": 20,
+       "snippet": "deeplxEndpoint: \"https://www2.deepl.com/jsonrpc\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://<expr>/?<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/readtrans.js",
+       "line": 926,
+       "column": 39,
+       "snippet": "const response = await requestJson(`https://${host}/?${query}`, \"POST\", body, headers);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/readtrans.js",
+      "line": 1298,
+      "column": 37,
+      "snippet": "const value = JSON.parse(await IOUtils.readUTF8(checkpointPath(pdf)));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/readtrans.js",
+      "line": 1307,
+      "column": 10,
+      "snippet": "await IOUtils.makeDirectory(dir, { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/readtrans.js",
+      "line": 1309,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(path, JSON.stringify(record), { tmpPath: `${path}.tmp` });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/readtrans.js",
+      "line": 1332,
+      "column": 37,
+      "snippet": "const value = JSON.parse(await IOUtils.readUTF8(path));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/readtrans.js",
+      "line": 1358,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(path, JSON.stringify(record, null, 2));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/readtrans.js",
+      "line": 1390,
+      "column": 14,
+      "snippet": "await IOUtils.remove(path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T13:06:20.885Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the bionux-th account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T13:06:20.885Z",
+  "appliesTo": {
+   "slug": "zotero-translate-for-readingmode",
+   "version": "1.0.0",
+   "sha256": "20d199aa6a5b8671b4bd65db64c6373143e541e1fdde595fadc958a2dbda9033"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "a87f86a3d2efcff59e244bff9243b9c56c05cedbaff6e87ca7b47c7e4cfeedb0"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.anthropic.com",
+       "api.openai.com",
+       "dashscope.aliyuncs.com",
+       "generativelanguage.googleapis.com"
+      ],
+      "unconfirmed": [
+       "dashscope.aliyuncs.com",
+       "generativelanguage.googleapis.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "dict.cnki.net"
+      ]
+     },
+     {
+      "category": "translation",
+      "hosts": [
+       "aidemo.youdao.com",
+       "api-free.deepl.com",
+       "api.cognitive.microsofttranslator.com",
+       "api.deepl.com",
+       "api.fanyi.baidu.com",
+       "api.interpreter.caiyunai.com",
+       "api.mymemory.translated.net",
+       "api.openl.club",
+       "edge.microsoft.com",
+       "mt.aliyuncs.com",
+       "niutrans.com",
+       "openapi.youdao.com",
+       "translate.google.com",
+       "translate.volcengineapi.com",
+       "translation.googleapis.com",
+       "transmart.qq.com",
+       "www2.deepl.com"
+      ],
+      "unconfirmed": [
+       "api.cognitive.microsofttranslator.com",
+       "edge.microsoft.com",
+       "niutrans.com",
+       "translate.google.com",
+       "www2.deepl.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-03T13:24:22Z",
+    "lastCommitAt": "2026-10-03T13:15:02Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "installProblem": "no-update-url",
+    "label": "Zotero won't install this file: its manifest has no update address, which Zotero requires",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

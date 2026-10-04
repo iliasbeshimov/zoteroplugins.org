@@ -1,0 +1,458 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-explain",
+ "repo": "steven04hub/zotero-explain",
+ "version": "0.3.6",
+ "tag": "v0.3.6",
+ "releaseAuthor": "Steven04hub",
+ "publishedAt": "2026-09-28T13:43:17Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-explain-0.3.6.xpi",
+  "url": "https://github.com/Steven04hub/zotero-explain/releases/download/v0.3.6/zotero-explain-0.3.6.xpi",
+  "size": 25089,
+  "sha256": "9a8d87333f6b3f94247792422b819594a638176064f68cb1473dc2aeb0898a13",
+  "githubAssetId": 595510259,
+  "uploader": "Steven04hub",
+  "uploadedAt": "2026-09-28T13:43:16Z",
+  "fetchedAt": "2026-10-04T13:06:20.885Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-explain@local",
+  "name": "论文解释 · ChatGPT",
+  "version": "0.3.6",
+  "description": "选中论文句子，用 ChatGPT 账号登录后解释与追问，无需 API Key（使用 Codex 额度）。",
+  "updateUrl": "https://zotero-explain.invalid/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1157,
+   "sha256": "14941806a190cde96fb54f6d7431c28103e2a4115252e36c976f66ab8203745a"
+  },
+  {
+   "path": "controller.js",
+   "size": 11112,
+   "sha256": "bc81c3afdeabcf9d1a6132979447ed3f40215098aaa31e99020d516f5d8492bc"
+  },
+  {
+   "path": "core.js",
+   "size": 11879,
+   "sha256": "000c2ca8f16f287f42705a110311537c8801887c751c4521d550022c74e1c920"
+  },
+  {
+   "path": "layout.js",
+   "size": 4611,
+   "sha256": "fe965a4ff6e42130958622b952a58f937c70d30188c9cc6c80e7bc4e15b85b4f"
+  },
+  {
+   "path": "manifest.json",
+   "size": 439,
+   "sha256": "44529b1b172a81ca205dd686a91b1992381de269389dcce46fa8d3b79521009b"
+  },
+  {
+   "path": "panel.css",
+   "size": 7575,
+   "sha256": "ea5b8464553a52cc9fe765ec854b10074c3fad47e9883e6800f99dfb2c3678db"
+  },
+  {
+   "path": "panel.js",
+   "size": 20036,
+   "sha256": "f09b8cbea56959a7b9c12267b66f382243870a86a33cc5016f104ed7c33019b5"
+  },
+  {
+   "path": "panel.xhtml",
+   "size": 4084,
+   "sha256": "c14838e2785c7df488601f495605d9b0248e044a39725e0040b3914a1a5740a1"
+  },
+  {
+   "path": "platform.js",
+   "size": 11383,
+   "sha256": "3f25b499f4d93acb3d8ce852d9cef0f9f8598b6383d2cd9438693c3b3a042058"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "input": {
+   "slug": "zotero-explain",
+   "version": "0.3.6",
+   "sha256": "9a8d87333f6b3f94247792422b819594a638176064f68cb1473dc2aeb0898a13"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "panel.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 64262,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "Codex CLI",
+     "provider": "OpenAI",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "platform.js",
+       "line": 75,
+       "column": 51,
+       "snippet": "PathUtils.join(root, \"app\", \"resources\", \"codex.exe\"),",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 218,
+      "column": 37,
+      "snippet": "copy: text => Components.classes[\"@mozilla.org/widget/clipboardhelper;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 219,
+      "column": 18,
+      "snippet": ".getService(Components.interfaces.nsIClipboardHelper).copyString(text),",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 6,
+      "column": 46,
+      "snippet": "const homeDir = Services.dirsvc.get(\"Home\", Components.interfaces.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 30,
+      "column": 24,
+      "snippet": "try { return (await IOUtils.stat(path)).type === \"regular\"; } catch (_) { return false; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 136,
+      "column": 12,
+      "snippet": "await IOUtils.makeDirectory(dataDir, { permissions: 0o700, ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 137,
+      "column": 12,
+      "snippet": "await IOUtils.makeDirectory(workDir, { permissions: 0o700, ignoreExisting: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 3,
+      "column": 52,
+      "snippet": "const { Subprocess } = ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 23,
+      "column": 18,
+      "snippet": "const env = Subprocess.getEnvironment();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 34,
+      "column": 16,
+      "snippet": "const env = Subprocess.getEnvironment();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 50,
+      "column": 20,
+      "snippet": "child = await Subprocess.call({ command,",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 102,
+      "column": 29,
+      "snippet": "const local = envValue(Subprocess.getEnvironment(), \"LOCALAPPDATA\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 119,
+      "column": 25,
+      "snippet": "const path = await Subprocess.pathSearch(Zotero.isWin ? \"codex.exe\" : \"codex\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 138,
+      "column": 18,
+      "snippet": "const env = Subprocess.getEnvironment();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "platform.js",
+      "line": 155,
+      "column": 22,
+      "snippet": "child = await Subprocess.call({ command, arguments: args, workdir: workDir,",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ],
+     "programs": [
+      "Codex",
+      "codex",
+      "powershell"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://zotero-explain.invalid/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://zotero-explain.invalid/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T13:06:20.885Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Steven04hub account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T13:06:20.885Z",
+  "appliesTo": {
+   "slug": "zotero-explain",
+   "version": "0.3.6",
+   "sha256": "9a8d87333f6b3f94247792422b819594a638176064f68cb1473dc2aeb0898a13"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "7db77eb8a5f6965822c53bd0189eace9f624993e2aedcf2ad170ce7c1e0257ae"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "Codex CLI (OpenAI)"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include Codex, codex, powershell"
+     },
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-09-28T13:43:17Z",
+    "lastCommitAt": "2026-09-29T08:31:41Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

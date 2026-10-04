@@ -1,0 +1,400 @@
+{
+ "schemaVersion": 1,
+ "slug": "scholar-published-bibtex",
+ "repo": "yedadasd/scholar-published-bibtex",
+ "version": "1.1.1",
+ "tag": "v1.1.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-07-27T16:05:01Z",
+ "prerelease": false,
+ "asset": {
+  "name": "scholar-published-bibtex.xpi",
+  "url": "https://github.com/yedadasd/scholar-published-bibtex/releases/download/v1.1.1/scholar-published-bibtex.xpi",
+  "size": 15869,
+  "sha256": "f21a076a8468cddba9b9ebc5c1da943141373baf615d267cb6471567bddb25f5",
+  "githubAssetId": 491647762,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-07-27T16:05:01Z",
+  "fetchedAt": "2026-10-04T13:06:20.885Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "scholar-published-bibtex@github.com",
+  "name": "Scholar Published BibTeX",
+  "version": "1.1.1",
+  "description": "Fetches current Google Scholar BibTeX and prioritizes journal and conference originals over later book chapters and preprints.",
+  "homepageUrl": "https://github.com/yedadasd/scholar-published-bibtex",
+  "updateUrl": "https://github.com/yedadasd/scholar-published-bibtex/releases/latest/download/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1491,
+   "sha256": "32e0b6b32f520105a2867ac83b5e58cedd98bc19ae519a4fc2ff34742108bbe4"
+  },
+  {
+   "path": "content/core.js",
+   "size": 14714,
+   "sha256": "b2e02ba9b941fbfb1a9783c67016ea5b6970e688ba91e90814616babfb146749"
+  },
+  {
+   "path": "content/icons/icon.svg",
+   "size": 474,
+   "sha256": "de1b1fbdfe03b431388b921b34caba7a6381628b5d3a0b10e550f4423bc994fb"
+  },
+  {
+   "path": "content/scholar-bibtex.js",
+   "size": 30511,
+   "sha256": "7aea98e65f16ee2ca0490ba249a23ed0bf125adeaa71893b9319829385547e68"
+  },
+  {
+   "path": "locale/en-US/scholar-published-bibtex.ftl",
+   "size": 138,
+   "sha256": "5e812e0bc831a7d0547031da9165f09ad5319caf1faae21f525af7ef44fe195b"
+  },
+  {
+   "path": "locale/zh-CN/scholar-published-bibtex.ftl",
+   "size": 143,
+   "sha256": "40d66672465bb83911ba459bf08d51fe430bae03a16435363fe82ce0f0ef07b9"
+  },
+  {
+   "path": "manifest.json",
+   "size": 751,
+   "sha256": "c6fa23e1384a7431bde72996a18db7e825bf822724f536354d4a199e9369fdf9"
+  },
+  {
+   "path": "prefs.js",
+   "size": 428,
+   "sha256": "1e13d658bca4b300b03b1655ba35f3b54f5206923c6d512ec248562a38724d18"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "input": {
+   "slug": "scholar-published-bibtex",
+   "version": "1.1.1",
+   "sha256": "f21a076a8468cddba9b9ebc5c1da943141373baf615d267cb6471567bddb25f5"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "content/icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/scholar-published-bibtex.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/scholar-published-bibtex.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 47144,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scholar-bibtex.js",
+       "line": 104,
+       "column": 23,
+       "snippet": "response = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scholar-bibtex.js",
+       "line": 344,
+       "column": 6,
+       "snippet": "`https://api.crossref.org/works/${encodeURIComponent(",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scholar-bibtex.js",
+       "line": 363,
+       "column": 6,
+       "snippet": "\"https://api.crossref.org/works?rows=5&query.title=\" +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scholar-bibtex.js",
+       "line": 343,
+       "column": 6,
+       "snippet": "`https://doi.org/${safeDoiPath(doi)}`,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "scholar.google.com",
+     "category": "scholarly-api",
+     "provider": "Google Scholar",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scholar-bibtex.js",
+       "line": 8,
+       "column": 25,
+       "snippet": "const SCHOLAR_ORIGIN = \"https://scholar.google.com\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scholar-bibtex.js",
+       "line": 214,
+       "column": 6,
+       "snippet": "`${SCHOLAR_ORIGIN}/scholar?hl=en&as_sdt=0%2C5&q=` +",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scholar-bibtex.js",
+       "line": 274,
+       "column": 6,
+       "snippet": "`${SCHOLAR_ORIGIN}/scholar?q=info:` +",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scholar-bibtex.js",
+      "line": 690,
+      "column": 6,
+      "snippet": "Zotero.Utilities.Internal.copyTextToClipboard(entries.join(\"\\n\\n\"));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/yedadasd/scholar-published-bibtex/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/yedadasd/scholar-published-bibtex/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T13:06:20.885Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T13:06:20.885Z",
+  "appliesTo": {
+   "slug": "scholar-published-bibtex",
+   "version": "1.1.1",
+   "sha256": "f21a076a8468cddba9b9ebc5c1da943141373baf615d267cb6471567bddb25f5"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "b2ed60c4e140ad9bdddd7901e63fe4caeeed530f4a03816d8d52a340bdcd4226"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "doi.org",
+       "scholar.google.com"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-27T16:05:01Z",
+    "lastCommitAt": "2026-07-27T16:01:23Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

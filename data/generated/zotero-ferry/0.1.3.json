@@ -1,0 +1,292 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ferry",
+ "repo": "ebawak-fekede/zotero-ferry",
+ "version": "0.1.3",
+ "tag": "v0.1.3",
+ "releaseAuthor": "ebawak-fekede",
+ "publishedAt": "2026-10-02T23:24:21Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-ferry-0.1.3.xpi",
+  "url": "https://github.com/ebawak-fekede/zotero-ferry/releases/download/v0.1.3/zotero-ferry-0.1.3.xpi",
+  "size": 4593,
+  "sha256": "9390090ff172bc97aaf617b762a5cf0016c5c7a216a7e8b92153af9a9bb5dfca",
+  "githubAssetId": 606703093,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-02T23:24:23Z",
+  "fetchedAt": "2026-10-04T13:06:20.885Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-ferry@ebawak-fekede.github.io",
+  "name": "Zotero Ferry",
+  "version": "0.1.3",
+  "description": "Temporarily promote Zotero linked attachments to stored files so they sync to mobile, then ferry them back to their original linked paths.",
+  "homepageUrl": "https://github.com/ebawak-fekede/zotero-ferry",
+  "updateUrl": "https://github.com/ebawak-fekede/zotero-ferry/releases/latest/download/update.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1906,
+   "sha256": "1dfd44e3547c510653ac14ddbf9f563b33d441fe82c658b92b82139e6b21276d"
+  },
+  {
+   "path": "main.js",
+   "size": 9817,
+   "sha256": "54c762db71ae7fe13223525be308aceb16d039e4840e375558ff9fa204177a94"
+  },
+  {
+   "path": "manifest.json",
+   "size": 607,
+   "sha256": "cb75ef80d77f991b7c5a376c1558bcce908dcd2fdb42aff0a1b0895ec1195626"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "input": {
+   "slug": "zotero-ferry",
+   "version": "0.1.3",
+   "sha256": "9390090ff172bc97aaf617b762a5cf0016c5c7a216a7e8b92153af9a9bb5dfca"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 11723,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 35,
+      "column": 15,
+      "snippet": "if (!await IOUtils.exists(path)) throw new Error(`File not found: ${path}`);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 87,
+      "column": 51,
+      "snippet": "if (item.isStoredFileAttachment() && await IOUtils.exists(oldDirectory)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 89,
+      "column": 20,
+      "snippet": "if (await IOUtils.exists(temporary))",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 91,
+      "column": 16,
+      "snippet": "await IOUtils.move(oldDirectory, temporary, { noOverwrite: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 97,
+      "column": 24,
+      "snippet": "if (backup) await IOUtils.move(backup, oldDirectory, { noOverwrite: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 106,
+      "column": 14,
+      "snippet": "await IOUtils.remove(backup, { recursive: true, ignoreAbsent: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/ebawak-fekede/zotero-ferry/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/ebawak-fekede/zotero-ferry/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T13:06:20.885Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T13:06:20.885Z",
+  "appliesTo": {
+   "slug": "zotero-ferry",
+   "version": "0.1.3",
+   "sha256": "9390090ff172bc97aaf617b762a5cf0016c5c7a216a7e8b92153af9a9bb5dfca"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "822ff37c7691971e7fc56b71014831f914e0c6b6ce7302e82e39edd7cb91e290"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-02T23:24:21Z",
+    "lastCommitAt": "2026-10-02T23:22:59Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

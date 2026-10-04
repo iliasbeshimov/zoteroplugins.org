@@ -1,0 +1,373 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paper-partner--imxiaotaoya",
+ "repo": "imxiaotaoya/zotero-paper-partner",
+ "version": "0.1.7",
+ "tag": "zotero",
+ "releaseAuthor": "imxiaotaoya",
+ "publishedAt": "2026-10-03T12:12:09Z",
+ "prerelease": false,
+ "asset": {
+  "name": "paper-partner-0.1.7.xpi",
+  "url": "https://github.com/imxiaotaoya/zotero-paper-partner/releases/download/zotero/paper-partner-0.1.7.xpi",
+  "size": 19983,
+  "sha256": "61f7d2034d3b5a6ff30d6bce77fc6d1b6562a803dcedceb6f7e0a5ee35a1c112",
+  "githubAssetId": 607755367,
+  "uploader": "imxiaotaoya",
+  "uploadedAt": "2026-10-03T12:10:30Z",
+  "fetchedAt": "2026-10-04T13:06:20.885Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "paper-partner@qinsihan.github.io",
+  "name": "Zotero Paper Partner",
+  "version": "0.1.7",
+  "description": "Async Q&A for Zotero notes — quietly answers your reading questions in the background.",
+  "updateUrl": "https://raw.githubusercontent.com/imxiaotaoya/zotero-paper-partner/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 37418,
+   "sha256": "140a853e7c566f598921af464d880475b57c78814fa42f222ca44cfb94b77be5"
+  },
+  {
+   "path": "icon.png",
+   "size": 2044,
+   "sha256": "99b21e5ef0a6658bdf2ebf38069d5b4bfebe31b6e966a34eff99a7b2fe79c4a2"
+  },
+  {
+   "path": "icon@2x.png",
+   "size": 5036,
+   "sha256": "1f56ebee1d68e6f4c9322b104f48a022f3a1679f0411a93b1dc7cd294bb0c8a4"
+  },
+  {
+   "path": "manifest.json",
+   "size": 629,
+   "sha256": "638e3254f6bd5dcd609b46a561e2528c37b5fdd45cffd5f660974c6653af9df6"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 3618,
+   "sha256": "6311f189f4fda2b548b29153478d1d3b586f0c59d6ca65e0130e6cf193081b79"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "input": {
+   "slug": "zotero-paper-partner--imxiaotaoya",
+   "version": "0.1.7",
+   "sha256": "61f7d2034d3b5a6ff30d6bce77fc6d1b6562a803dcedceb6f7e0a5ee35a1c112"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icon@2x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 41036,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 599,
+       "column": 28,
+       "snippet": "xhr = await Zotero.HTTP.request(\"POST\", endpoint, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 24,
+       "column": 17,
+       "snippet": "apiEndpoint: \"https://api.deepseek.com/v1/chat/completions\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 5,
+       "column": 18,
+       "snippet": "apiEndpoint: 'https://api.deepseek.com/v1/chat/completions',",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "apiEndpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 544,
+       "column": 25,
+       "snippet": "const endpoint = getPref(\"apiEndpoint\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 602,
+      "column": 51,
+      "snippet": "\"Authorization\": `Bearer ${getPref(\"apiKey\")}`,",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 726,
+      "column": 9,
+      "snippet": "if (!getPref(\"apiKey\")) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 338,
+      "column": 35,
+      "snippet": "const text = await Zotero.File.getContentsAsync(p);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 27,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/imxiaotaoya/zotero-paper-partner/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/imxiaotaoya/zotero-paper-partner/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T13:06:20.885Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the imxiaotaoya account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T13:06:20.885Z",
+  "appliesTo": {
+   "slug": "zotero-paper-partner--imxiaotaoya",
+   "version": "0.1.7",
+   "sha256": "61f7d2034d3b5a6ff30d6bce77fc6d1b6562a803dcedceb6f7e0a5ee35a1c112"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "88ef9160c1d61e1fb3bc5acf6b57553a5be0279ef06b8713a4bd89b93a67e469"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers version 0.1.7, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com"
+      ],
+      "unconfirmed": [
+       "api.deepseek.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-03T12:12:09Z",
+    "lastCommitAt": "2026-10-03T10:38:36Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
