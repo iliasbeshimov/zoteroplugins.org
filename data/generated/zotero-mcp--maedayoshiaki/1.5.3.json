@@ -1,0 +1,584 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-mcp--maedayoshiaki",
+ "repo": "maedayoshiaki/zotero-mcp",
+ "version": "1.5.3",
+ "tag": "v1.5.3",
+ "releaseAuthor": "maedayoshiaki",
+ "publishedAt": "2026-10-03T11:41:05Z",
+ "prerelease": false,
+ "asset": {
+  "name": "mcp-zotero-api.xpi",
+  "url": "https://github.com/maedayoshiaki/zotero-mcp/releases/download/v1.5.3/mcp-zotero-api.xpi",
+  "size": 561914,
+  "sha256": "aa5d21b4efba111f15d18c68ebac1feaaafadcdabc26a12cf37277ce2d1539b9",
+  "githubAssetId": 607714371,
+  "uploader": "maedayoshiaki",
+  "uploadedAt": "2026-10-03T11:41:04Z",
+  "fetchedAt": "2026-10-04T10:05:35.580Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "mcp-zotero-api@mcp.local",
+  "name": "MCP Zotero API",
+  "version": "1.5.3",
+  "description": "Local HTTP + MCP (Model Context Protocol) endpoints for Zotero: read items and PDF text/outline, create text-search highlights (bundled pdf.js), and create/update/delete annotations, notes, tags, collections, attachments, and item fields",
+  "updateUrl": "https://raw.githubusercontent.com/maedayoshiaki/zotero-mcp/main/zotero-mcp-plugin/updates.json",
+  "strictMinVersion": "7.0.0",
+  "strictMaxVersion": "999.0.0"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 86720,
+   "sha256": "ba1983ce5546640a33b0c78c83c669292d0bec96677843508c6394d1ade47709"
+  },
+  {
+   "path": "icon.svg",
+   "size": 272,
+   "sha256": "56686340cc22b1b5709fcf78f78808ae36495442a80138f69490e15d929c1ebb"
+  },
+  {
+   "path": "manifest.json",
+   "size": 642,
+   "sha256": "ca4fd587bdbf6def61e8f728cda9234ceda701319ff2f34a6850f9989cdaf78e"
+  },
+  {
+   "path": "vendor/.gitattributes",
+   "size": 76,
+   "sha256": "433b3c28af8b66ee2a58c7b35e06f3ceddd7397123f9349e83c5261c2703f2a7"
+  },
+  {
+   "path": "vendor/pdf.js",
+   "size": 711553,
+   "sha256": "8c6a4a46bd1d58c32417f3bbd526ed1a221283214018cdef60ad483c35cceb00"
+  },
+  {
+   "path": "vendor/pdf.worker.js",
+   "size": 2103752,
+   "sha256": "343e858b9e2e5353e0476ece39272e9c1e79f44f34bf845ca104f4189e7dc24c"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T10:05:35.580Z",
+  "input": {
+   "slug": "zotero-mcp--maedayoshiaki",
+   "version": "1.5.3",
+   "sha256": "aa5d21b4efba111f15d18c68ebac1feaaafadcdabc26a12cf37277ce2d1539b9"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "vendor/.gitattributes",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 2902025,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": true,
+    "files": [
+     "vendor/pdf.js",
+     "vendor/pdf.worker.js"
+    ]
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "pdf.js",
+     "files": [
+      "vendor/pdf.js",
+      "vendor/pdf.worker.js"
+     ],
+     "identifiedBy": "file-name"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 12,
+     "inVendoredCodeOnly": true,
+     "libraries": [
+      "pdf.js"
+     ],
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "vendor/pdf.js",
+       "line": 8030,
+       "column": 31,
+       "snippet": "const response = await fetch(rawData);",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "vendor/pdf.js",
+       "line": 9752,
+       "column": 27,
+       "snippet": "const response = await fetch(url);",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "vendor/pdf.js",
+       "line": 14743,
+       "column": 4,
+       "snippet": "fetch(url, createFetchOptions(this._headers, this._withCredentials, this._abortController)).then(response => {",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "vendor/pdf.js",
+       "line": 14825,
+       "column": 4,
+       "snippet": "fetch(url, createFetchOptions(this._headers, this._withCredentials, this._abortController)).then(response => {",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "vendor/pdf.worker.js",
+       "line": 12432,
+       "column": 29,
+       "snippet": "const response = await fetch(url);",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "vendor/pdf.worker.js",
+       "line": 12463,
+       "column": 29,
+       "snippet": "const response = await fetch(url);",
+       "inVendoredCode": true
+      }
+     ]
+    },
+    {
+     "api": "xhr",
+     "occurrences": 2,
+     "inVendoredCodeOnly": true,
+     "libraries": [
+      "pdf.js"
+     ],
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "vendor/pdf.js",
+       "line": 9759,
+       "column": 20,
+       "snippet": "const request = new XMLHttpRequest();",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "vendor/pdf.js",
+       "line": 15126,
+       "column": 16,
+       "snippet": "const xhr = new XMLHttpRequest();",
+       "inVendoredCode": true
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1644,
+       "column": 36,
+       "snippet": "att = await Zotero.Attachments.importFromURL({ url: data.url, parentItemID: parentItemID, libraryID: libraryID, title: data.title });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": true,
+     "libraries": [
+      "pdf.js"
+     ],
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "vendor/pdf.js",
+       "line": 1456,
+       "column": 10,
+       "snippet": "license: 'https://github.com/zloirock/core-js/blob/v3.32.2/LICENSE',",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "vendor/pdf.js",
+       "line": 1457,
+       "column": 9,
+       "snippet": "source: 'https://github.com/zloirock/core-js'",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "vendor/pdf.worker.js",
+       "line": 1289,
+       "column": 10,
+       "snippet": "license: 'https://github.com/zloirock/core-js/blob/v3.32.2/LICENSE',",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "vendor/pdf.worker.js",
+       "line": 1290,
+       "column": 9,
+       "snippet": "source: 'https://github.com/zloirock/core-js'",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "http://<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "vendor/pdf.worker.js",
+       "line": 4018,
+       "column": 16,
+       "snippet": "url = `http://${url}`;",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "dynamic-code",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "pdf.js"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "vendor/pdf.js",
+      "line": 10750,
+      "column": 46,
+      "snippet": "return this.compiledGlyphs[character] = new Function(\"c\", \"size\", jsBuf.join(\"\"));",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "vendor/pdf.worker.js",
+      "line": 41744,
+      "column": 15,
+      "snippet": "return new Function(\"src\", \"srcOffset\", \"dest\", \"destOffset\", compiled);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "Function"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 450,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(f.path, text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 469,
+      "column": 20,
+      "snippet": "let buf = await IOUtils.read(path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1904,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[path] = function() {};",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/mcp",
+      "/mcp/annotations",
+      "/mcp/annotations/delete",
+      "/mcp/annotations/update",
+      "/mcp/attachments",
+      "/mcp/children",
+      "/mcp/citekey",
+      "/mcp/collections",
+      "/mcp/collections/create",
+      "/mcp/collections/delete",
+      "/mcp/highlight",
+      "/mcp/item",
+      "/mcp/items",
+      "/mcp/items/delete",
+      "/mcp/items/update",
+      "/mcp/notes",
+      "/mcp/pdfoutline",
+      "/mcp/ping",
+      "/mcp/readpdf",
+      "/mcp/search",
+      "/mcp/tags"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/maedayoshiaki/zotero-mcp/main/zotero-mcp-plugin/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/maedayoshiaki/zotero-mcp/main/zotero-mcp-plugin/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 669,
+      "column": 21,
+      "snippet": "registerEndpoint(\"/mcp/annotations\", {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 773,
+      "column": 32,
+      "snippet": "await annotation.saveTx();",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/mcp",
+      "/mcp/annotations",
+      "/mcp/annotations/delete",
+      "/mcp/annotations/update",
+      "/mcp/attachments",
+      "/mcp/collections",
+      "/mcp/collections/create",
+      "/mcp/collections/delete",
+      "/mcp/highlight",
+      "/mcp/items/delete",
+      "/mcp/items/update",
+      "/mcp/notes",
+      "/mcp/tags"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T10:05:35.580Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the maedayoshiaki account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T10:05:35.580Z",
+  "appliesTo": {
+   "slug": "zotero-mcp--maedayoshiaki",
+   "version": "1.5.3",
+   "sha256": "aa5d21b4efba111f15d18c68ebac1feaaafadcdabc26a12cf37277ce2d1539b9"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "54e2a29bc44d246d839e90026f930f6e3d0f1b8c8aba7cea993f54fba05075bf"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": true,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [],
+    "concern": "medium",
+    "label": "Uses the network; we couldn't tell where",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-03T11:41:05Z",
+    "lastCommitAt": "2026-10-03T11:40:37Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Uses the network; we couldn't tell where"
+   ]
+  }
+ }
+}

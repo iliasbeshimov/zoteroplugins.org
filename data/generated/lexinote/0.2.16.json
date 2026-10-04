@@ -1,0 +1,474 @@
+{
+ "schemaVersion": 1,
+ "slug": "lexinote",
+ "repo": "wu-lipeng/lexinote",
+ "version": "0.2.16",
+ "tag": "v0.2.16",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-04T06:08:27Z",
+ "prerelease": false,
+ "asset": {
+  "name": "lexinote-0.2.16.xpi",
+  "url": "https://github.com/Wu-Lipeng/LexiNote/releases/download/v0.2.16/lexinote-0.2.16.xpi",
+  "size": 64154,
+  "sha256": "42cbba3b7ae56048a3544638b822871d888783afbc2652cca90481c709cea015",
+  "githubAssetId": 609252840,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-04T06:08:26Z",
+  "fetchedAt": "2026-10-04T10:05:35.580Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "lexinote@local.tools",
+  "name": "LexiNote 划词生词本",
+  "version": "0.2.16",
+  "description": "阅读时划词查释义，将生词追加到当前文献的同一条笔记。",
+  "updateUrl": "https://raw.githubusercontent.com/Wu-Lipeng/LexiNote/main/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1015,
+   "sha256": "2cf996fac2cf3037269ae2a02121caaa3ef9650395a04bb1895e7be80aee7524"
+  },
+  {
+   "path": "core.js",
+   "size": 8806,
+   "sha256": "5decfe453ac84c99de82636801cd8301474dce1127b63dcf38757406a35651e9"
+  },
+  {
+   "path": "icon-48.png",
+   "size": 6870,
+   "sha256": "d2658a679e0c5d9167c225b77b7b881a86260d4fdfb6dceb698ea28a85b5c14d"
+  },
+  {
+   "path": "icon-96.png",
+   "size": 23862,
+   "sha256": "01d63e9d72d25f6451aae64b493a7b97e3e6292f9f848f470b8c5a4ccb1dd1f0"
+  },
+  {
+   "path": "manifest.json",
+   "size": 521,
+   "sha256": "bea14f6fc93dfefda3348d251121b955c4c4f8e7e59de1c1f8885487395ce7a9"
+  },
+  {
+   "path": "preferences.js",
+   "size": 18333,
+   "sha256": "5a21495a508e28b5244d0d4183e9fe0d61e66dedd3f4bc133fee18c96949a013"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 8538,
+   "sha256": "db768e6d2cc43b1f17f0c4cacf5e8cf445781698a1cd4cb22333474bd9681a90"
+  },
+  {
+   "path": "runtime.js",
+   "size": 79239,
+   "sha256": "8c88afce07f4c1ac267029c89223b131e876507b7035241048bbe63c23d317a1"
+  },
+  {
+   "path": "trial-credentials.js",
+   "size": 344,
+   "sha256": "8879472471d3ac0325bc11d04f1c96f36f92705c7dab0a17413150f3fca2c1bd"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-04T10:05:35.580Z",
+  "input": {
+   "slug": "lexinote",
+   "version": "0.2.16",
+   "sha256": "42cbba3b7ae56048a3544638b822871d888783afbc2652cca90481c709cea015"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "icon-48.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icon-96.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 116275,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "xhr",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 227,
+       "column": 18,
+       "snippet": "const xhr = new XMLHttpRequest({ mozAnon: true });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 293,
+       "column": 29,
+       "snippet": "const tokenXHR = await Zotero.HTTP.request(\"POST\", tokenURL, { body: \"\", headers: { \"Content-Type\": \"application/x-www-form-urlencoded\" }, timeout: config.timeout, cancellerReceiver: cancel => {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 300,
+       "column": 27,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", endpoint + \"?access_token=\" + encodeURIComponent(token.value), {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "aip.baidubce.com",
+     "category": "llm-provider",
+     "provider": "Baidu AI Cloud",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 291,
+       "column": 23,
+       "snippet": "const tokenURL = \"https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 299,
+       "column": 59,
+       "snippet": "const endpoint = config.provider === \"baidu-general\" ? \"https://aip.baidubce.com/rpc/2.0/mt/texttrans/v1\" : \"https://aip.baidubce.com/rpc/2.0/mt/texttrans-with-dict/v1\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 299,
+       "column": 112,
+       "snippet": "ider === \"baidu-general\" ? \"https://aip.baidubce.com/rpc/2.0/mt/texttrans/v1\" : \"https://aip.baidubce.com/rpc/2.0/mt/texttrans-with-dict/v1\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>?access_token=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 300,
+       "column": 27,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", endpoint + \"?access_token=\" + encodeURIComponent(token.value), {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "lexinote-endpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 44,
+       "column": 6,
+       "snippet": "<html:input id=\"lexinote-endpoint\" type=\"url\" placeholder=\"https://your-service.example/lookup?word={{word}}\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 847,
+      "column": 10,
+      "snippet": "await Zotero.File.putContentsAsync(picker.file, JSON.stringify(wordbook, null, 2) + \"\\n\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "login-manager",
+    "occurrences": 7,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 45,
+      "column": 13,
+      "snippet": "return Services.logins.findLogins(this.loginOrigin, null, name)[0]?.password || \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 69,
+      "column": 21,
+      "snippet": "const existing = Services.logins.findLogins(this.loginOrigin, null, name);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 70,
+      "column": 46,
+      "snippet": "if (!key) { for (const login of existing) Services.logins.removeLogin(login); return; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 73,
+      "column": 25,
+      "snippet": "if (existing.length) Services.logins.modifyLogin(existing[0], login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 74,
+      "column": 13,
+      "snippet": "else if (Services.logins.addLoginAsync) await Services.logins.addLoginAsync(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 74,
+      "column": 50,
+      "snippet": "else if (Services.logins.addLoginAsync) await Services.logins.addLoginAsync(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 75,
+      "column": 9,
+      "snippet": "else Services.logins.addLogin(login);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsILoginManager"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 13,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Wu-Lipeng/LexiNote/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Wu-Lipeng/LexiNote/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-04T10:05:35.580Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-04T10:05:35.580Z",
+  "appliesTo": {
+   "slug": "lexinote",
+   "version": "0.2.16",
+   "sha256": "42cbba3b7ae56048a3544638b822871d888783afbc2652cca90481c709cea015"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "ee3ea4b6670fea9f6535ce2239da7b83045a2164421a3a167653d2d89dd51afe"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "aip.baidubce.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "login-manager",
+      "label": "Uses Zotero's password manager",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-04T06:08:27Z",
+    "lastCommitAt": "2026-10-04T06:08:05Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
