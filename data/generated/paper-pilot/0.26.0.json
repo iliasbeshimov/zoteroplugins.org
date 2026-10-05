@@ -1,0 +1,2405 @@
+{
+ "schemaVersion": 1,
+ "slug": "paper-pilot",
+ "repo": "yebuqiu/paper-pilot",
+ "version": "0.26.0",
+ "tag": "v0.26.0",
+ "releaseAuthor": "yebuqiu",
+ "publishedAt": "2026-10-04T21:03:07Z",
+ "prerelease": false,
+ "asset": {
+  "name": "paper-pilot-0.26.0.xpi",
+  "url": "https://github.com/yebuqiu/paper-pilot/releases/download/v0.26.0/paper-pilot-0.26.0.xpi",
+  "size": 482277,
+  "sha256": "aff750431ba5642b9c0011bc618fddb8afcb7cec3db7bca4d5d19e8542664d5b",
+  "githubAssetId": 610668937,
+  "uploader": "yebuqiu",
+  "uploadedAt": "2026-10-04T21:03:09Z",
+  "fetchedAt": "2026-10-05T10:38:46.186Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "paperpilot@dev.local",
+  "name": "PaperPilot 文献副驾",
+  "version": "0.26.0",
+  "description": "全文对照翻译新增左右双栏对照窗口（左原文 / 右译文，两栏等宽并随窗口宽度自适应，长段落滚动时逐段行级同步，窄屏自动切单栏；工具栏可调字号、切换布局、复制译文并一键导出双语笔记）+ 主题切换按钮（界面主题在主窗口左上角、PDF 阅读主题在 PDF 阅读器工具栏，两个按钮各管各的、实时生效并持久化；阅读器界面随界面主题同步换肤）+ 文献发现（arXiv 每日推荐：库内兴趣画像 → arXiv 增量拉取 → 打分排序 → 排除已入库，可一键收藏到分类；支持每日自动刷新）+ MCP 对外供给（把库检索/读全文/读批注/写笔记/分类统计封装为 MCP 工具，供 Claude Desktop / Cursor / 自建 Agent 调用；仅 127.0.0.1 + Bearer 令牌，默认关闭）+ 元数据体检（期刊缩写↔全称互转、作者名归一化、DOI 有效性、类型必备字段、重复 DOI，出问题清单后勾选修复）+ 自动化引擎（触发→条件→动作：新条目入库 / 打开 PDF / 手动 → 多条件 all/any 匹配 → 打标签·去标签·写字段·设阅读状态·加入分类·AI 总结·AI 打标签，含可视化规则编辑器、试跑预览、AI 每日额度闸门）+ 入库自动精读 + 库内问答（问整个文献库：两阶段检索 + 全文复核 + [n] 引用编号）+ 标签治理 + 附件体检 + 笔记关系图谱 + 阅读行为统计 + 多篇 PDF 并排对比 + 主题库（标准/动漫/风景/动态 + 自定义壁纸）+ PDF 阅读主题 + 期刊分区列 + 被引量列 + 账号系统与模型通道 + 工作台 2.0 + 功能中心 + 全文对照翻译 + AI 综述 / 思维导图 / Anki 制卡 + 中文元数据 + 阅读状态 · Zotero 7-10 插件",
+  "updateUrl": "https://gitee.com/cassiuschen9261/paper-pilot/raw/main/paperpilot-update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "99.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 5281,
+   "sha256": "fb1aa95f59e8447a657aa15feef91c6ea4c50dacf757443e8c0068fe642b3d16"
+  },
+  {
+   "path": "chrome/content/automation-ui.js",
+   "size": 19538,
+   "sha256": "35822d1ba9be80ef1219cb1185dd701b22a873e0f9759b602145e8609f6973de"
+  },
+  {
+   "path": "chrome/content/automation.xhtml",
+   "size": 2298,
+   "sha256": "c08175e477eef41cd6fd9b7e0530bf637c107d0ff32063e51b30b3b41decc60d"
+  },
+  {
+   "path": "chrome/content/bilingual-view.js",
+   "size": 15272,
+   "sha256": "91b5d88329076a09584bbef5c14789ae0fdc4472f799d15d5945d26a88e58e1d"
+  },
+  {
+   "path": "chrome/content/bilingual.xhtml",
+   "size": 4887,
+   "sha256": "fd3b9cc7361dc635a68ea93a7138839d4002fde59e577c44c14785a44258ca64"
+  },
+  {
+   "path": "chrome/content/compare.js",
+   "size": 55778,
+   "sha256": "718bcee9a14dd8e7823a0c986a0c48492cb273f3b8a3182c034a69702914e1b8"
+  },
+  {
+   "path": "chrome/content/compare.xhtml",
+   "size": 4536,
+   "sha256": "af167170903e237df6e6ec22ba3d4b6cf9fbe0b7ec9a2d7bfdb4d86bd55f130b"
+  },
+  {
+   "path": "chrome/content/data/journal-rank.json",
+   "size": 2413,
+   "sha256": "7e21ef2f8a609ee04206e94949def2d2599ccc99f1c4048c4d544c74e8ad9765"
+  },
+  {
+   "path": "chrome/content/discovery-ui.js",
+   "size": 10134,
+   "sha256": "0cb3921dcb1b28a3bfd688329eec31e6b536730306870b49f9e6407469622081"
+  },
+  {
+   "path": "chrome/content/discovery.xhtml",
+   "size": 2160,
+   "sha256": "2dd4e94dd7ed6586ffeb17d4d0cfa5de51208397abf98afaae601f91e74dbe48"
+  },
+  {
+   "path": "chrome/content/hub.js",
+   "size": 20771,
+   "sha256": "a5577d8679653d657907246b968eee5427c0c1b7ed8241b55ba46a0a9160d7ec"
+  },
+  {
+   "path": "chrome/content/hub.xhtml",
+   "size": 2081,
+   "sha256": "28d12ab7b58f9fbb2fa834c431cfb03abf44d6870aadeef177397a13b17b923e"
+  },
+  {
+   "path": "chrome/content/icons/chat.svg",
+   "size": 378,
+   "sha256": "073b1b5abfc5102ae377f641554585d9a746c73549f3c02c510a46830d65f3ff"
+  },
+  {
+   "path": "chrome/content/icons/icon.png",
+   "size": 194,
+   "sha256": "1ab141641fd78a835fd103558bf63f52bea08086a8210885ab3aebf85911fe50"
+  },
+  {
+   "path": "chrome/content/icons/theme.svg",
+   "size": 351,
+   "sha256": "d19e5344ae7fb033bea098c1db7a334de5c919820a76ce116f738c2072289495"
+  },
+  {
+   "path": "chrome/content/lib-ask.js",
+   "size": 7325,
+   "sha256": "a144145d73d7269ecddadcef7190861c51c41c16a0ce0b9fdced1552893f1b51"
+  },
+  {
+   "path": "chrome/content/lib-ask.xhtml",
+   "size": 3016,
+   "sha256": "e0d2f2a6228ea9872ffa783d135119a54d391f090f250a14e684211262daf09f"
+  },
+  {
+   "path": "chrome/content/mcp-ui.js",
+   "size": 7082,
+   "sha256": "98329eb494ef0952c380e57b1d09ce852ffa6ac936a19e63958c344135a74b19"
+  },
+  {
+   "path": "chrome/content/mcp.xhtml",
+   "size": 3204,
+   "sha256": "e63dbc9ef11820044545e3cf41c22d3d837e3da2be16c7b4dc37aa2876e8df48"
+  },
+  {
+   "path": "chrome/content/meta-rules-ui.js",
+   "size": 9265,
+   "sha256": "4db07a0f0884ed6ab5959360d6fa5ce111191af90ffc3d04fef712eb1e5a4e7d"
+  },
+  {
+   "path": "chrome/content/meta-rules.xhtml",
+   "size": 2803,
+   "sha256": "289783bd90eb73ce38ca2c975bdb3b9e7eb6c4de80fd49700a593987781c1a29"
+  },
+  {
+   "path": "chrome/content/note-graph-ui.js",
+   "size": 7883,
+   "sha256": "6b49a6822a088c04921763748f633e779eccb0057b9918d5f0f1349493dc7e80"
+  },
+  {
+   "path": "chrome/content/note-graph.xhtml",
+   "size": 1455,
+   "sha256": "a87e5572fc2d0804a9b09719cf2e7221463b19b69b2bfe4adfd36ee436572cc9"
+  },
+  {
+   "path": "chrome/content/paste-check.js",
+   "size": 5297,
+   "sha256": "b60019948e1f2201987f4919e1c1108c99292047ea3e9ab589c8e4133b5bcdee"
+  },
+  {
+   "path": "chrome/content/paste-check.xhtml",
+   "size": 1530,
+   "sha256": "deeaf17124029f77111f9e4d4c2444c0b71500fb238a79025c5a75be1ac50584"
+  },
+  {
+   "path": "chrome/content/prefs-account.js",
+   "size": 72245,
+   "sha256": "2b9e1d8272c7037612fed318194f009fa5cb4bf14ff55f33eb2bf289296752a3"
+  },
+  {
+   "path": "chrome/content/prefs-pane.js",
+   "size": 12999,
+   "sha256": "3e5d886c6b57e8eb588d0348ea2c83923025f43983a7451310e123ec892a5092"
+  },
+  {
+   "path": "chrome/content/prefs-theme.js",
+   "size": 19340,
+   "sha256": "57b5d5d164db3ca3221bffc2b29db970f1a1943f09056f8f4946ed626998338f"
+  },
+  {
+   "path": "chrome/content/prefs.css",
+   "size": 16663,
+   "sha256": "d16ee808374bf31e03f034d573294c0646ef4e5cdcb244edc2aa3f22c4ad8c9c"
+  },
+  {
+   "path": "chrome/content/prefs.xhtml",
+   "size": 45537,
+   "sha256": "b90ef07f29f1c1fac60c9b07f7e43d9cecfc5b132f0f82619d24f3d5e9da4f8e"
+  },
+  {
+   "path": "chrome/content/refs-picker.js",
+   "size": 2617,
+   "sha256": "91d04514177ae3907b14dc9295c94b057db7bdd1e876c859ceaf0017ca99bbb3"
+  },
+  {
+   "path": "chrome/content/refs-picker.xhtml",
+   "size": 1268,
+   "sha256": "b266a281e5e58dbd129672570e88734763fcef81afa62b2c24cd3d720599a446"
+  },
+  {
+   "path": "chrome/content/scripts/ai/account.js",
+   "size": 45898,
+   "sha256": "6dc4c43b32004226f338da22a64e01bd1c8761395a8fbb48f4c1de7929761cc1"
+  },
+  {
+   "path": "chrome/content/scripts/ai/auto-tag.js",
+   "size": 5012,
+   "sha256": "61303722d3dbc933913e074df92756e67e7bcb72e2ef4fbf34c81142938ced2f"
+  },
+  {
+   "path": "chrome/content/scripts/ai/channels.js",
+   "size": 26893,
+   "sha256": "ba61a95776b972dba70297d5a1f3347ddd79bd401f1c74aafa07f6376ddd1f59"
+  },
+  {
+   "path": "chrome/content/scripts/ai/chat.js",
+   "size": 8297,
+   "sha256": "424614d92606e56a7dc9e587d1b321a46445d0134ab0c6bde8475a9a27744514"
+  },
+  {
+   "path": "chrome/content/scripts/ai/client.js",
+   "size": 12778,
+   "sha256": "81dbe3566962d54b5aa994aaefe7f8f46cfa53e5333bba322f2a9077b1a5d632"
+  },
+  {
+   "path": "chrome/content/scripts/ai/matrix.js",
+   "size": 4504,
+   "sha256": "26920750c55cb3682a9a45c93f1a8f22dfbc5826d0dfd59b733d81ead4ac0e61"
+  },
+  {
+   "path": "chrome/content/scripts/ai/prompts.js",
+   "size": 3050,
+   "sha256": "da11e91f312d5d7046bdec685f3e99414ed789b02a39385c64f05e3572cf7345"
+  },
+  {
+   "path": "chrome/content/scripts/ai/providers.js",
+   "size": 6684,
+   "sha256": "f610ef1eff6f99efca7de5fe89f88740da54c1b3f2cb231afbe2607f1b552054"
+  },
+  {
+   "path": "chrome/content/scripts/ai/semantic-scholar.js",
+   "size": 4146,
+   "sha256": "bed2add1cb83c63db032e30b8a038a11a789a0f5aad0e2acf9cad49f0f47e9f3"
+  },
+  {
+   "path": "chrome/content/scripts/arxiv/arxiv-analyze.js",
+   "size": 22678,
+   "sha256": "08cfc0e5dac873feda994b178d10e2af8d0ef665a76c4db265e99efaeb8e62bd"
+  },
+  {
+   "path": "chrome/content/scripts/arxiv/arxiv-atom.js",
+   "size": 14065,
+   "sha256": "86569fdfec88b33d39f95794b957ba79bd4a5e34055d8d91b85abc4922fdfe31"
+  },
+  {
+   "path": "chrome/content/scripts/arxiv/arxiv-categories.js",
+   "size": 10111,
+   "sha256": "73016e6a9263f8f1948c6a2a7e834c602cfd7b2fa371edd273fa8781aa780bb5"
+  },
+  {
+   "path": "chrome/content/scripts/arxiv/arxiv-dates.js",
+   "size": 4953,
+   "sha256": "269476530b1a79519b4cbdbef9b1d62d9bd0f2869b1032fe371401d033231597"
+  },
+  {
+   "path": "chrome/content/scripts/arxiv/arxiv-errors.js",
+   "size": 4472,
+   "sha256": "3d0cfd26bd1f9fd4e630696a91eae5e31375be597b55a35ee5e787b81d0d2e2d"
+  },
+  {
+   "path": "chrome/content/scripts/arxiv/arxiv-fetch.js",
+   "size": 12057,
+   "sha256": "23113389ee8953f60546ea7d2b9a3896b5fd024db151884d8635403b4063c0ab"
+  },
+  {
+   "path": "chrome/content/scripts/arxiv/arxiv-query.js",
+   "size": 13392,
+   "sha256": "acbef40a657585473a05585393a60b9ae43a88e15c155b0eaea4f4dad9d00ca7"
+  },
+  {
+   "path": "chrome/content/scripts/arxiv/arxiv-rate-limiter.js",
+   "size": 4592,
+   "sha256": "4b9e740b900a0340cb689be928483de4207beca8fdb5bd762d8e112148cb7331"
+  },
+  {
+   "path": "chrome/content/scripts/columns/citation-column.js",
+   "size": 10992,
+   "sha256": "6bd1a98c67d44d0cbbf0f812fa7407b876f56193ebeb36e02f444ac3115a3a92"
+  },
+  {
+   "path": "chrome/content/scripts/columns/rank-column.js",
+   "size": 33316,
+   "sha256": "70600b7af1141084e38541fc27516d2e1ffb35a1adead3ec6c8584f62c8a24eb"
+  },
+  {
+   "path": "chrome/content/scripts/core/utils.js",
+   "size": 24808,
+   "sha256": "6c8f7a01ec78d062c5233920f8e4e5f1dcafa3978f044fed2d95596654ce95ae"
+  },
+  {
+   "path": "chrome/content/scripts/features/anki-export.js",
+   "size": 4409,
+   "sha256": "6427a3c2b2c0059a9e4c4bbfdb118fcdaa42da776d6aecc6b2af975ef2b91077"
+  },
+  {
+   "path": "chrome/content/scripts/features/annotations.js",
+   "size": 4251,
+   "sha256": "357d4a91469c8f003c25ea2da3249f1a0eed55c578d8d67c72d84ea93b48e7d5"
+  },
+  {
+   "path": "chrome/content/scripts/features/attach-doctor.js",
+   "size": 14667,
+   "sha256": "65187dfc71192e4ab8b7deedda446a2a5b5045c28b596f786fece9fa0815a47f"
+  },
+  {
+   "path": "chrome/content/scripts/features/attach-manager.js",
+   "size": 4434,
+   "sha256": "1a475818092540cdb2894da58136ff969e51699a56b3b67c3427635f3de04f90"
+  },
+  {
+   "path": "chrome/content/scripts/features/auto-read.js",
+   "size": 9892,
+   "sha256": "38e7154d6c392733118cfef01116b259fbb9b16dc64d5ae9677708b255be1ea6"
+  },
+  {
+   "path": "chrome/content/scripts/features/automation.js",
+   "size": 24527,
+   "sha256": "c175f49476a2d5501ff0b3110123d82337103bc6ebb7950ecd1e8eca66a20f5c"
+  },
+  {
+   "path": "chrome/content/scripts/features/bilingual-translate.js",
+   "size": 9112,
+   "sha256": "6e86ee10ba036b5d0206c730ea3e92dd0b73db5b425d186a7b91cb176742b8d3"
+  },
+  {
+   "path": "chrome/content/scripts/features/citation-trace.js",
+   "size": 12238,
+   "sha256": "1517f1eaaeb4010c2297190b6c0ec26f43a27cd2ad2ec90805284ff9e33d10a0"
+  },
+  {
+   "path": "chrome/content/scripts/features/cn-fetch.js",
+   "size": 45972,
+   "sha256": "74cd8d26310b324c09b07c062effd614eab1917aeee0b2d0dd9a2809f914ea2b"
+  },
+  {
+   "path": "chrome/content/scripts/features/cn-meta.js",
+   "size": 6841,
+   "sha256": "bf77eef35ab00c7470b92b21c504b37dd7915b3f59b2664fb56a857c9a57049a"
+  },
+  {
+   "path": "chrome/content/scripts/features/cn-translators.js",
+   "size": 9372,
+   "sha256": "65a14c17820beac53472cfe6e8ca29ab90e8c4b9aed159735c48b33e0e6d97f8"
+  },
+  {
+   "path": "chrome/content/scripts/features/collection-stats.js",
+   "size": 2016,
+   "sha256": "936d5d4796d8d4b636d942345a2e5ae9099099f5b0b635b93eac4ff71ce9440a"
+  },
+  {
+   "path": "chrome/content/scripts/features/discovery.js",
+   "size": 29111,
+   "sha256": "7f227555db14fb197d328118c15d68b9c10e6137a05028c3c0e489efe86a608c"
+  },
+  {
+   "path": "chrome/content/scripts/features/fake-check.js",
+   "size": 9875,
+   "sha256": "604ac17a168cc38f7f32b2cc50aed601f937a5d0275b195ad9306b03fb29708e"
+  },
+  {
+   "path": "chrome/content/scripts/features/lib-graph.js",
+   "size": 7901,
+   "sha256": "8945c9fda59194b3c1270843d9cb24e229f75feefc0c9fa98435aa46418d5047"
+  },
+  {
+   "path": "chrome/content/scripts/features/lib-search.js",
+   "size": 13354,
+   "sha256": "142f411962e0b876df432c1e3d14a2ad103ae944956f25ced2665bd33471f50e"
+  },
+  {
+   "path": "chrome/content/scripts/features/mcp.js",
+   "size": 31059,
+   "sha256": "0347ef997941e898a1732931b847436778f9d9053a56e140ee23f35c9379fb7e"
+  },
+  {
+   "path": "chrome/content/scripts/features/meta-enrich.js",
+   "size": 6047,
+   "sha256": "d334ea3ca8561df786a58dc9ee43152e540d603732aa430d8747f24a8f20b2e5"
+  },
+  {
+   "path": "chrome/content/scripts/features/meta-lint.js",
+   "size": 4764,
+   "sha256": "213ab1e9c6a31da6cbc119f755d61d1c5a47f3a2264d81dd167fb8a2d92c3b26"
+  },
+  {
+   "path": "chrome/content/scripts/features/meta-rules.js",
+   "size": 25665,
+   "sha256": "45c38cbb5354bb0c15e10d5b5d2a66fa2f1957a5ee8cce1e64f6e065e31511b8"
+  },
+  {
+   "path": "chrome/content/scripts/features/mindmap.js",
+   "size": 3575,
+   "sha256": "d3c9aa911bc56b2325ffb60be036309f823f570c59b9e3136b93c23b754a5de9"
+  },
+  {
+   "path": "chrome/content/scripts/features/note-graph.js",
+   "size": 15296,
+   "sha256": "ddd24c94a428df5d3b127824b0f235651524698cf4c12296cb020a46f2c69713"
+  },
+  {
+   "path": "chrome/content/scripts/features/note-templates.js",
+   "size": 5662,
+   "sha256": "447ccf86c1cb02ac03d9dcd9974945f7531a9e3d9b882238138b6aa7013907f4"
+  },
+  {
+   "path": "chrome/content/scripts/features/oa-fetch.js",
+   "size": 3971,
+   "sha256": "c6ada160a45751540993befe609fcb9a628ac4edae5d55cceed040e9781c17ac"
+  },
+  {
+   "path": "chrome/content/scripts/features/pdf-compare.js",
+   "size": 10845,
+   "sha256": "3b4de0f83177c4633b109041ac5e0b2d09a28b695c11aa9a9b718037ce190e63"
+  },
+  {
+   "path": "chrome/content/scripts/features/pdf-theme.js",
+   "size": 11223,
+   "sha256": "6e6a4f5f0cbb417ef68592e3d940a915d585d7bff9ad4eb691bc956dffec8814"
+  },
+  {
+   "path": "chrome/content/scripts/features/reader-popup.js",
+   "size": 23686,
+   "sha256": "7b2e7a2fd1c3fae784f2b44bf34074813d0df8d4c7c01e17304b52f911723aca"
+  },
+  {
+   "path": "chrome/content/scripts/features/reading-state.js",
+   "size": 4472,
+   "sha256": "62cfee40d5c3def43031d1aa894b242df6c648184aabed3a9cca41ea9e625aaf"
+  },
+  {
+   "path": "chrome/content/scripts/features/reading-stats.js",
+   "size": 13733,
+   "sha256": "bb44c83d8a6bc4b44db90e483581be7742c4b7bc87fa80898a621e9dc5a892a1"
+  },
+  {
+   "path": "chrome/content/scripts/features/review-gen.js",
+   "size": 4218,
+   "sha256": "79497934a17078be481265401008d0b4c15c72a7632a6425330b24b10a9f8fff"
+  },
+  {
+   "path": "chrome/content/scripts/features/rule-tag.js",
+   "size": 7685,
+   "sha256": "ec49fc5886a30e57fb0f8af62d1e11e6d54ac3c5fb2ca4f4157ce516d88a7ce7"
+  },
+  {
+   "path": "chrome/content/scripts/features/smart-cleanup.js",
+   "size": 8886,
+   "sha256": "385c59a31cac7ec3a55a3e9337905046b79c0b7f75a0e2cf61eda9a991b3f5e5"
+  },
+  {
+   "path": "chrome/content/scripts/features/tag-curator.js",
+   "size": 12741,
+   "sha256": "e0680655a5e84a0ad240445256e2e93dcbbf8ab82450012497cef2e68a10ce25"
+  },
+  {
+   "path": "chrome/content/scripts/features/theme-toggle.js",
+   "size": 26924,
+   "sha256": "fba61bd94bfb4a7ec7fda30cd4dbdf5a8e3a3bc8ef6ba8dbdf46908393dbd8c3"
+  },
+  {
+   "path": "chrome/content/scripts/features/ui-theme.js",
+   "size": 109648,
+   "sha256": "a5514efb7eaf489a088ee9095e01e0f358eb24e271de0a92c803106780fdb64f"
+  },
+  {
+   "path": "chrome/content/scripts/main.js",
+   "size": 27570,
+   "sha256": "7af96b5753ea8921685f6575fa87331e6d688ec199fc9359cd0724b487d05dc1"
+  },
+  {
+   "path": "chrome/content/scripts/menus.js",
+   "size": 22655,
+   "sha256": "54a95e2e2dfc3a5d05d04bde1be12949c394bae9e531ff4c568e3a1af1469b6f"
+  },
+  {
+   "path": "chrome/content/scripts/panels/ai-chat-pane.js",
+   "size": 12429,
+   "sha256": "617a800b5907c0d597e74b4f30524fb7340b004f7c0e7e3c8381c3a46d0f26e2"
+  },
+  {
+   "path": "chrome/content/scripts/panels/glance-pane.js",
+   "size": 5388,
+   "sha256": "35f96d024d33c6cb98e7588059f72d94a754510ae21c635f8ea45a56b2f06c1a"
+  },
+  {
+   "path": "chrome/content/tag-preview.js",
+   "size": 1645,
+   "sha256": "1a128f785582a4b817de03ec46f712f7030722dfa35fdcce4c41f3dea27086fa"
+  },
+  {
+   "path": "chrome/content/tag-preview.xhtml",
+   "size": 989,
+   "sha256": "d80cd7039dcd98e3ad1fdc2b0fd5aa32c0abd024812da683a907dd7d78e44bd1"
+  },
+  {
+   "path": "chrome/content/workbench.js",
+   "size": 34022,
+   "sha256": "f0221ae3cde0be48346efb9c84fbd6e1585c2c5a0c0d7958895122bf408295d9"
+  },
+  {
+   "path": "chrome/content/workbench.xhtml",
+   "size": 11767,
+   "sha256": "7e964df7f4c6fbae9488c7a6404f5bdcf5c38fbc4744061bc379bbae165a80f6"
+  },
+  {
+   "path": "LICENSE",
+   "size": 11542,
+   "sha256": "18c89a52756103c3441734a4e8854702ad7a72e58b675308c662a8f41e5ac4bc"
+  },
+  {
+   "path": "locale/en-US/paperpilot.ftl",
+   "size": 615,
+   "sha256": "12caf6e971587ffe5dcdbf1242744ce64d4c4f2cc9db891151c9b7a6137bf40c"
+  },
+  {
+   "path": "locale/zh-CN/paperpilot.ftl",
+   "size": 741,
+   "sha256": "9940f142b02d2be6e69744ef461549c4b140c6f2d9b15d6f19b36da4c1e6c49d"
+  },
+  {
+   "path": "manifest.json",
+   "size": 2272,
+   "sha256": "83e630653c02acc4415346566bdaf6af314453b955dde7a69a3d8944431cdf83"
+  },
+  {
+   "path": "NOTICE",
+   "size": 666,
+   "sha256": "06f5b4882ce0960fad98b9c93e3bbe1940aae704fc2cbfd4fe83dc45c6eafbde"
+  },
+  {
+   "path": "prefs.js",
+   "size": 13525,
+   "sha256": "155116572b9aa8508eb54b8a06b1c79d6569b543ba34a04961cea9601a53039d"
+  },
+  {
+   "path": "README.md",
+   "size": 22173,
+   "sha256": "2b8d9c4a955467782867fbfd6ea7733d88e391ba9903e0abfb0fcdd63f9dfa41"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-05T10:38:46.186Z",
+  "input": {
+   "slug": "paper-pilot",
+   "version": "0.26.0",
+   "sha256": "aff750431ba5642b9c0011bc618fddb8afcb7cec3db7bca4d5d19e8542664d5b"
+  },
+  "coverage": {
+   "filesTotal": 102,
+   "filesAnalyzed": 91,
+   "filesSkipped": [
+    {
+     "path": "chrome/content/data/journal-rank.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "chrome/content/icons/chat.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "chrome/content/icons/icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "chrome/content/icons/theme.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "chrome/content/prefs.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/paperpilot.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/paperpilot.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "NOTICE",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 1286362,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/client.js",
+       "line": 206,
+       "column": 25,
+       "snippet": "const resp = await fetch(this._endpoint(cfg), {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 21,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/account.js",
+       "line": 948,
+       "column": 18,
+       "snippet": "req = await Zotero.HTTP.request(method, url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 332,
+       "column": 18,
+       "snippet": "req = await Zotero.HTTP.request(\"GET\", url.href, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 481,
+       "column": 18,
+       "snippet": "req = await Zotero.HTTP.request(\"POST\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/client.js",
+       "line": 122,
+       "column": 18,
+       "snippet": "req = await Zotero.HTTP.request(\"POST\", this._endpoint(cfg), {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 53,
+       "column": 22,
+       "snippet": "const req = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 86,
+       "column": 22,
+       "snippet": "const req = await Zotero.HTTP.request(\"POST\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/semantic-scholar.js",
+       "line": 35,
+       "column": 6,
+       "snippet": "Zotero.HTTP.request(method, url, opts),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/arxiv/arxiv-fetch.js",
+       "line": 93,
+       "column": 6,
+       "snippet": "Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/columns/rank-column.js",
+       "line": 363,
+       "column": 22,
+       "snippet": "const req = await Zotero.HTTP.request(\"GET\", url, { responseType: \"json\", timeout: 15000 });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 163,
+       "column": 29,
+       "snippet": "const resp = await Zotero.HTTP.request(\"POST\", this._PS_URL, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 18790,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 9,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 69,
+       "column": 54,
+       "snippet": "{ id: \"prism-local\", name: \"Prism 本地网关\", baseUrl: \"http://127.0.0.1:18790/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 76,
+       "column": 49,
+       "snippet": "{ id: \"ollama\", name: \"Ollama（本地）\", baseUrl: \"http://127.0.0.1:11434/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 582,
+       "column": 23,
+       "snippet": "SERVER_DEFAULT_BASE: \"http://127.0.0.1:8000/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 16,
+       "column": 12,
+       "snippet": "base: \"http://127.0.0.1:8000/v1\", models: [\"auto\"] },",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 39,
+       "column": 46,
+       "snippet": "{ id: \"ollama\", name: \"Ollama（本地）\", base: \"http://127.0.0.1:11434/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/mcp.js",
+       "line": 259,
+       "column": 11,
+       "snippet": "return \"http://127.0.0.1:\" + this.serverStatus().port + this.PATH;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/mcp.js",
+       "line": 390,
+       "column": 20,
+       "snippet": "const r = await Zotero.HTTP.request(\"POST\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 12,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.paperpilot.aiBaseUrl\", \"http://127.0.0.1:8000/v1\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 12,
+       "column": 47,
+       "snippet": "pref(\"extensions.zotero.paperpilot.aiBaseUrl\", \"http://127.0.0.1:8000/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.baichuan-ai.com",
+     "category": "llm-provider",
+     "provider": "Baichuan",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 66,
+       "column": 45,
+       "snippet": "{ id: \"baichuan\", name: \"百川智能\", baseUrl: \"https://api.baichuan-ai.com/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/fake-check.js",
+       "line": 14,
+       "column": 12,
+       "snippet": "CROSSREF: \"https://api.crossref.org/works/\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 28,
+       "column": 54,
+       "snippet": "{ id: \"deepseek\", name: \"DeepSeek 深度求索\", baseUrl: \"https://api.deepseek.com/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 17,
+       "column": 51,
+       "snippet": "{ id: \"deepseek\", name: \"DeepSeek 深度求索\", base: \"https://api.deepseek.com/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.hunyuan.cloud.tencent.com",
+     "category": "llm-provider",
+     "provider": "Tencent Hunyuan",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 60,
+       "column": 44,
+       "snippet": "{ id: \"hunyuan\", name: \"腾讯混元\", baseUrl: \"https://api.hunyuan.cloud.tencent.com/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 37,
+       "column": 41,
+       "snippet": "{ id: \"hunyuan\", name: \"腾讯混元\", base: \"https://api.hunyuan.cloud.tencent.com/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.lingyiwanwu.com",
+     "category": "llm-provider",
+     "provider": "01.AI (Yi)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 44,
+       "column": 39,
+       "snippet": "{ id: \"yi\", name: \"零一万物\", baseUrl: \"https://api.lingyiwanwu.com/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 27,
+       "column": 36,
+       "snippet": "{ id: \"yi\", name: \"零一万物\", base: \"https://api.lingyiwanwu.com/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.minimaxi.com",
+     "category": "llm-provider",
+     "provider": "MiniMax",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 50,
+       "column": 47,
+       "snippet": "{ id: \"minimax\", name: \"MiniMax\", baseUrl: \"https://api.minimaxi.com/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 31,
+       "column": 44,
+       "snippet": "{ id: \"minimax\", name: \"MiniMax\", base: \"https://api.minimaxi.com/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.moonshot.cn",
+     "category": "llm-provider",
+     "provider": "Moonshot (Kimi)",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 37,
+       "column": 47,
+       "snippet": "{ id: \"kimi\", name: \"Kimi（月之暗面）\", baseUrl: \"https://api.moonshot.cn/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 23,
+       "column": 44,
+       "snippet": "{ id: \"kimi\", name: \"Kimi（月之暗面）\", base: \"https://api.moonshot.cn/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openai.com",
+     "category": "llm-provider",
+     "provider": "OpenAI",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 73,
+       "column": 45,
+       "snippet": "{ id: \"openai\", name: \"OpenAI\", baseUrl: \"https://api.openai.com/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/semantic-scholar.js",
+       "line": 17,
+       "column": 7,
+       "snippet": "API: \"https://api.semanticscholar.org/graph/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.siliconflow.cn",
+     "category": "llm-provider",
+     "provider": "SiliconFlow",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 53,
+       "column": 48,
+       "snippet": "{ id: \"siliconflow\", name: \"硅基流动\", baseUrl: \"https://api.siliconflow.cn/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 33,
+       "column": 45,
+       "snippet": "{ id: \"siliconflow\", name: \"硅基流动\", base: \"https://api.siliconflow.cn/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.stepfun.com",
+     "category": "llm-provider",
+     "provider": "StepFun",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 63,
+       "column": 44,
+       "snippet": "{ id: \"stepfun\", name: \"阶跃星辰\", baseUrl: \"https://api.stepfun.com/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.unpaywall.org",
+     "category": "scholarly-api",
+     "provider": "Unpaywall",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/oa-fetch.js",
+       "line": 9,
+       "column": 7,
+       "snippet": "API: \"https://api.unpaywall.org/v2/\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "ark.cn-beijing.volces.com",
+     "category": "llm-provider",
+     "provider": "ByteDance Doubao (Volcano Engine)",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 40,
+       "column": 47,
+       "snippet": "{ id: \"doubao\", name: \"豆包（火山方舟）\", baseUrl: \"https://ark.cn-beijing.volces.com/api/v3\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 25,
+       "column": 44,
+       "snippet": "{ id: \"doubao\", name: \"豆包（火山方舟）\", base: \"https://ark.cn-beijing.volces.com/api/v3\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/arxiv/arxiv-atom.js",
+       "line": 203,
+       "column": 44,
+       "snippet": "const abs = links.abs || (parsed.baseId ? \"https://arxiv.org/abs/\" + parsed.baseId + parsed.versionTag : idUrl);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/arxiv/arxiv-atom.js",
+       "line": 204,
+       "column": 44,
+       "snippet": "const pdf = links.pdf || (parsed.baseId ? \"https://arxiv.org/pdf/\" + parsed.baseId + parsed.versionTag : \"\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/arxiv/arxiv-fetch.js",
+       "line": 264,
+       "column": 6,
+       "snippet": "\"<entry><id>http://arxiv.org/abs/2501.00001v2</id><title>Self &amp; Test</title>\" +",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/arxiv/arxiv-fetch.js",
+       "line": 269,
+       "column": 6,
+       "snippet": "\"<entry><id>http://arxiv.org/abs/2501.00001v1</id><title>Self &amp; Test</title>\" +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "cdn.jsdelivr.net",
+     "category": "cdn",
+     "provider": "jsDelivr",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-translators.js",
+       "line": 22,
+       "column": 4,
+       "snippet": "\"https://cdn.jsdelivr.net/gh/l0o0/translators_CN@master\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "chn.oversea.cnki.net",
+     "category": "scholarly-api",
+     "provider": "CNKI",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 285,
+       "column": 48,
+       "snippet": "if (url && !url.startsWith(\"http\")) url = \"https://chn.oversea.cnki.net\" + url;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dashscope.aliyuncs.com",
+     "category": "llm-provider",
+     "provider": "Alibaba Qwen (DashScope)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 31,
+       "column": 47,
+       "snippet": "{ id: \"qwen\", name: \"通义千问（阿里百炼）\", baseUrl: \"https://dashscope.aliyuncs.com/compatible-mode/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 19,
+       "column": 44,
+       "snippet": "{ id: \"qwen\", name: \"通义千问（阿里百炼）\", base: \"https://dashscope.aliyuncs.com/compatible-mode/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/citation-trace.js",
+       "line": 75,
+       "column": 21,
+       "snippet": "if (doi) line += \" — https://doi.org/\" + doi;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "export.arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/arxiv/arxiv-fetch.js",
+       "line": 22,
+       "column": 7,
+       "snippet": "API: \"https://export.arxiv.org/api/query\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "ftp.zotero-chinese.com",
+     "category": "code-hosting",
+     "provider": "Zotero Chinese community mirror",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-translators.js",
+       "line": 21,
+       "column": 4,
+       "snippet": "\"https://ftp.zotero-chinese.com/translators_CN\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/arxiv/arxiv-fetch.js",
+       "line": 23,
+       "column": 6,
+       "snippet": "UA: \"PaperPilot/1.0 (+https://github.com/yebuqiu/paper-pilot)\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "images.unsplash.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/ui-theme.js",
+       "line": 137,
+       "column": 11,
+       "snippet": "return \"https://images.unsplash.com/photo-\" + pid + \"?auto=format&fit=crop&w=\" + w + \"&q=80\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "kns.cnki.net",
+     "category": "scholarly-api",
+     "provider": "CNKI",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 8,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 252,
+       "column": 16,
+       "snippet": "\"Origin\": \"https://kns.cnki.net\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 253,
+       "column": 17,
+       "snippet": "\"Referer\": \"https://kns.cnki.net/kns8s/defaultresult/index?kw=\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 259,
+       "column": 47,
+       "snippet": "resp = await Zotero.HTTP.request(\"POST\", \"https://kns.cnki.net/kns8s/brief/grid\", {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 421,
+       "column": 39,
+       "snippet": "await Zotero.HTTP.request(\"GET\", \"https://kns.cnki.net/kns8s/\", { timeout: 8000 });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 510,
+       "column": 17,
+       "snippet": "pages.push(\"https://kns.cnki.net/kcms/detail/detail.aspx?dbname=\" +",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 519,
+       "column": 32,
+       "snippet": "headers: { \"Referer\": \"https://kns.cnki.net/kns8s/\" },",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 534,
+       "column": 12,
+       "snippet": ": \"https://kns.cnki.net\" + (href.startsWith(\"/\") ? href : \"/\" + href);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 865,
+       "column": 14,
+       "snippet": "VERIFY_URL: \"https://kns.cnki.net/\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "open.bigmodel.cn",
+     "category": "llm-provider",
+     "provider": "Zhipu (GLM)",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 34,
+       "column": 42,
+       "snippet": "{ id: \"glm\", name: \"智谱 GLM\", baseUrl: \"https://open.bigmodel.cn/api/paas/v4\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 21,
+       "column": 39,
+       "snippet": "{ id: \"glm\", name: \"智谱 GLM\", base: \"https://open.bigmodel.cn/api/paas/v4\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "oss.wwang.de",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-translators.js",
+       "line": 19,
+       "column": 4,
+       "snippet": "\"https://oss.wwang.de/translators_CN\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "picsum.photos",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/prefs-theme.js",
+       "line": 288,
+       "column": 18,
+       "snippet": "const u = \"https://picsum.photos/1920/1080?random=\" + Date.now();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/prefs-theme.js",
+       "line": 300,
+       "column": 18,
+       "snippet": "const u = \"https://picsum.photos/seed/\" + seed + \"/1920/1080\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "pp.xinglintools.top",
+     "category": "unknown",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/account.js",
+       "line": 72,
+       "column": 18,
+       "snippet": "SERVER_DEFAULT: \"https://pp.xinglintools.top\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 5,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.paperpilot.accountServerUrl\", \"https://pp.xinglintools.top\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 5,
+       "column": 54,
+       "snippet": "pref(\"extensions.zotero.paperpilot.accountServerUrl\", \"https://pp.xinglintools.top\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "pubscholar.cn",
+     "category": "scholarly-api",
+     "provider": "PubScholar (Chinese Academy of Sciences)",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 64,
+       "column": 11,
+       "snippet": "_PS_URL: \"https://pubscholar.cn/hky/open/resources/api/v1/articles\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 130,
+       "column": 16,
+       "snippet": "\"Origin\": \"https://pubscholar.cn\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 131,
+       "column": 17,
+       "snippet": "\"Referer\": \"https://pubscholar.cn/explore\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-fetch.js",
+       "line": 485,
+       "column": 62,
+       "snippet": "const r = await this._downloadPDFBytes(pick.pdfUrl, \"https://pubscholar.cn/\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "qianfan.baidubce.com",
+     "category": "llm-provider",
+     "provider": "Baidu Qianfan",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 47,
+       "column": 48,
+       "snippet": "{ id: \"ernie\", name: \"文心一言（百度千帆）\", baseUrl: \"https://qianfan.baidubce.com/v2\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 29,
+       "column": 45,
+       "snippet": "{ id: \"ernie\", name: \"文心一言（百度千帆）\", base: \"https://qianfan.baidubce.com/v2\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "raw.githubusercontent.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-translators.js",
+       "line": 23,
+       "column": 4,
+       "snippet": "\"https://raw.githubusercontent.com/l0o0/translators_CN/master\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "spark-api-open.xf-yun.com",
+     "category": "llm-provider",
+     "provider": "iFlytek Spark",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 57,
+       "column": 42,
+       "snippet": "{ id: \"spark\", name: \"讯飞星火\", baseUrl: \"https://spark-api-open.xf-yun.com/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/providers.js",
+       "line": 35,
+       "column": 39,
+       "snippet": "{ id: \"spark\", name: \"讯飞星火\", base: \"https://spark-api-open.xf-yun.com/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.easyscholar.cc",
+     "category": "scholarly-api",
+     "provider": "EasyScholar",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/columns/rank-column.js",
+       "line": 45,
+       "column": 15,
+       "snippet": "ES_ENDPOINT: \"https://www.easyscholar.cc/open/getPublicationRank\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/prefs.xhtml",
+       "line": 430,
+       "column": 41,
+       "snippet": "<html:div class=\"pp-hint\">申请地址 https://www.semanticscholar.org/product/api ，配置后速度更快</html:div>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.wieke.cn",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-translators.js",
+       "line": 20,
+       "column": 4,
+       "snippet": "\"https://www.wieke.cn/translators_CN\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/data/translators.json",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-translators.js",
+       "line": 45,
+       "column": 14,
+       "snippet": "await Zotero.HTTP.request(\"HEAD\", base + \"/data/translators.json\", { timeout: 5000 });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/cn-translators.js",
+       "line": 62,
+       "column": 25,
+       "snippet": "const resp = await Zotero.HTTP.request(\"GET\", base + \"/data/translators.json\", {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/fake-check.js",
+       "line": 88,
+       "column": 26,
+       "snippet": "const req = await Zotero.HTTP.request(\"GET\", this.CROSSREF + encodeURIComponent(doi), {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "accountServerUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/account.js",
+       "line": 86,
+       "column": 18,
+       "snippet": "return String(Prefs.get(\"accountServerUrl\", this.SERVER_DEFAULT) || this.SERVER_DEFAULT)",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/main.js",
+       "line": 229,
+       "column": 30,
+       "snippet": "const curSrv = String(Prefs.get(\"accountServerUrl\", \"\") || \"\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "aiBaseUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/channels.js",
+       "line": 540,
+       "column": 24,
+       "snippet": "const base = String(Prefs.get(\"aiBaseUrl\", \"\") || \"\").trim();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/ai/client.js",
+       "line": 25,
+       "column": 18,
+       "snippet": "const base = (Prefs.get(\"aiBaseUrl\", \"\") || \"\").replace(/\\/+$/, \"\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero.paperpilot.accountServerUrl",
+     "defaultValue": "https://pp.xinglintools.top",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 5,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.paperpilot.accountServerUrl\", \"https://pp.xinglintools.top\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero.paperpilot.aiBaseUrl",
+     "defaultValue": "http://127.0.0.1:8000/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 12,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.paperpilot.aiBaseUrl\", \"http://127.0.0.1:8000/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero.paperpilot.uiShowFullUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/prefs-account.js",
+       "line": 36,
+       "column": 19,
+       "snippet": "try { return !!Zotero.Prefs.get(PREF_PREFIX + \"uiShowFullUrl\", true); } catch (e) { return false; }",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "pp-mf-baseUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/prefs.xhtml",
+       "line": 242,
+       "column": 10,
+       "snippet": "<html:input type=\"text\" id=\"pp-mf-baseUrl\" class=\"pp-input\" placeholder=\"https://api.deepseek.com/v1\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "pp-wp-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/prefs.xhtml",
+       "line": 569,
+       "column": 10,
+       "snippet": "<html:input type=\"text\" id=\"pp-wp-url\" class=\"pp-input pp-grow\" placeholder=\"图片或视频直链 https://…（优先于本地路径）\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "uiWallpaperUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/prefs-theme.js",
+       "line": 140,
+       "column": 26,
+       "snippet": "const curUrl = String(getPref(\"uiWallpaperUrl\", \"\") || \"\").trim();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/prefs-theme.js",
+       "line": 178,
+       "column": 29,
+       "snippet": "const onlineUrl = String(getPref(\"uiWallpaperUrl\", \"\") || \"\").trim();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/prefs-theme.js",
+       "line": 277,
+       "column": 30,
+       "snippet": "urlInput.value = String(getPref(\"uiWallpaperUrl\", \"\") || \"\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/features/ui-theme.js",
+       "line": 830,
+       "column": 25,
+       "snippet": "const url = String(Prefs.get(\"uiWallpaperUrl\", \"\") || \"\").trim();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 10,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/ai/channels.js",
+      "line": 539,
+      "column": 23,
+      "snippet": "const key = String(Prefs.get(\"aiApiKey\", \"\") || \"\").trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/ai/client.js",
+      "line": 26,
+      "column": 16,
+      "snippet": "const key = Prefs.get(\"aiApiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/ai/providers.js",
+      "line": 105,
+      "column": 4,
+      "snippet": "Prefs.set(\"aiApiKey\", apiKey || \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/ai/semantic-scholar.js",
+      "line": 21,
+      "column": 18,
+      "snippet": "return String(Prefs.get(\"s2ApiKey\", \"\") || \"\").trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/features/mcp.js",
+      "line": 209,
+      "column": 21,
+      "snippet": "try { t = String(Prefs.get(\"mcpToken\", \"\") || \"\"); } catch (e) { t = \"\"; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/features/mcp.js",
+      "line": 212,
+      "column": 12,
+      "snippet": "try { Prefs.set(\"mcpToken\", t); } catch (e) { /* ignore */ }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/features/mcp.js",
+      "line": 219,
+      "column": 10,
+      "snippet": "try { Prefs.set(\"mcpToken\", t); } catch (e) { /* ignore */ }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 13,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.paperpilot.aiApiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 44,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.paperpilot.s2ApiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 162,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.paperpilot.mcpToken\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "aiApiKey",
+      "extensions.zotero.paperpilot.aiApiKey",
+      "extensions.zotero.paperpilot.mcpToken",
+      "extensions.zotero.paperpilot.s2ApiKey",
+      "mcpToken",
+      "s2ApiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 40,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 20,
+      "column": 44,
+      "snippet": "var prof = Services.dirsvc.get(\"ProfD\", Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 34,
+      "column": 18,
+      "snippet": "try { await IOUtils.writeUTF8(paths[i], text); } catch (e) { /* ignore */ }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/ai/account.js",
+      "line": 131,
+      "column": 48,
+      "snippet": "const prof = Services.dirsvc.get(\"ProfD\", Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/ai/account.js",
+      "line": 182,
+      "column": 44,
+      "snippet": "try { old = await this._withTimeout(IOUtils.readUTF8(p), 3000, \"readUTF8\"); } catch (e) { /* 无文件 */ }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/ai/account.js",
+      "line": 190,
+      "column": 32,
+      "snippet": "await this._withTimeout(IOUtils.writeUTF8(p, text), 3000, \"writeUTF8\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/ai/account.js",
+      "line": 223,
+      "column": 25,
+      "snippet": "const p = opts ? IOUtils.writeUTF8(path, text, opts) : IOUtils.writeUTF8(path, text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/ai/account.js",
+      "line": 223,
+      "column": 63,
+      "snippet": "const p = opts ? IOUtils.writeUTF8(path, text, opts) : IOUtils.writeUTF8(path, text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/ai/account.js",
+      "line": 225,
+      "column": 45,
+      "snippet": "const back = await this._withTimeout(IOUtils.readUTF8(path), this.WRITE_TIMEOUT_MS, \"readUTF8\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/ai/account.js",
+      "line": 245,
+      "column": 39,
+      "snippet": "try { c0 = await this._withTimeout(IOUtils.readUTF8(paths[0]), 3000, \"readUTF8\"); } catch (e) { /* 无旧文件 */ }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/ai/account.js",
+      "line": 246,
+      "column": 39,
+      "snippet": "try { c1 = await this._withTimeout(IOUtils.readUTF8(paths[1]), 3000, \"readUTF8\"); } catch (e) { /* ignore */ }",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "installs-translators",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/features/cn-translators.js",
+      "line": 176,
+      "column": 14,
+      "snippet": "await Zotero.Translators.reinit({ fromSchemaUpdate: false });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/features/cn-translators.js",
+      "line": 179,
+      "column": 20,
+      "snippet": "try { await Zotero.Translators.reinit(); } catch (e2) { /* ignore */ }",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "bundled"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/features/mcp.js",
+      "line": 349,
+      "column": 29,
+      "snippet": "if (!Zotero.Server || !Zotero.Server.Endpoints) return false;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/features/mcp.js",
+      "line": 361,
+      "column": 6,
+      "snippet": "Zotero.Server.Endpoints[this.PATH] = Ctor;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/features/mcp.js",
+      "line": 373,
+      "column": 27,
+      "snippet": "if (Zotero.Server && Zotero.Server.Endpoints && Zotero.Server.Endpoints[this.PATH]) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/paperpilot/mcp"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://gitee.com/cassiuschen9261/paper-pilot/raw/main/paperpilot-update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://gitee.com/cassiuschen9261/paper-pilot/raw/main/paperpilot-update.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/features/mcp.js",
+      "line": 361,
+      "column": 6,
+      "snippet": "Zotero.Server.Endpoints[this.PATH] = Ctor;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/features/mcp.js",
+      "line": 594,
+      "column": 14,
+      "snippet": "await note.saveTx();",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/paperpilot/mcp"
+     ],
+     "web": "any"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-05T10:38:46.186Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the yebuqiu account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-05T10:38:46.186Z",
+  "appliesTo": {
+   "slug": "paper-pilot",
+   "version": "0.26.0",
+   "sha256": "aff750431ba5642b9c0011bc618fddb8afcb7cec3db7bca4d5d19e8542664d5b"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "fbae7e91d5145f6875b736cc297b4443fc2243c902873a03fefaf4dd17b7a04e"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "other-repository",
+     "label": "Updates come from cassiuschen9261/paper-pilot on Gitee",
+     "check": "The update address offers version 0.26.0, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.baichuan-ai.com",
+       "api.deepseek.com",
+       "api.hunyuan.cloud.tencent.com",
+       "api.lingyiwanwu.com",
+       "api.minimaxi.com",
+       "api.moonshot.cn",
+       "api.openai.com",
+       "api.siliconflow.cn",
+       "api.stepfun.com",
+       "ark.cn-beijing.volces.com",
+       "dashscope.aliyuncs.com",
+       "open.bigmodel.cn",
+       "qianfan.baidubce.com",
+       "spark-api-open.xf-yun.com"
+      ],
+      "unconfirmed": [
+       "api.baichuan-ai.com",
+       "api.deepseek.com",
+       "api.hunyuan.cloud.tencent.com",
+       "api.lingyiwanwu.com",
+       "api.minimaxi.com",
+       "api.moonshot.cn",
+       "api.openai.com",
+       "api.siliconflow.cn",
+       "api.stepfun.com",
+       "ark.cn-beijing.volces.com",
+       "dashscope.aliyuncs.com",
+       "open.bigmodel.cn",
+       "qianfan.baidubce.com",
+       "spark-api-open.xf-yun.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "api.semanticscholar.org",
+       "api.unpaywall.org",
+       "arxiv.org",
+       "chn.oversea.cnki.net",
+       "doi.org",
+       "export.arxiv.org",
+       "kns.cnki.net",
+       "pubscholar.cn",
+       "www.easyscholar.cc",
+       "www.semanticscholar.org"
+      ],
+      "unconfirmed": [
+       "api.semanticscholar.org",
+       "arxiv.org",
+       "chn.oversea.cnki.net",
+       "doi.org",
+       "export.arxiv.org",
+       "www.semanticscholar.org"
+      ]
+     },
+     {
+      "category": "unknown",
+      "hosts": [
+       "pp.xinglintools.top"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts a server we couldn't identify: pp.xinglintools.top",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "server-edits-library",
+      "label": "Any website you visit can change your library through it",
+      "concern": "high"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "installs-translators",
+      "label": "Adds Zotero translators it ships",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "high",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-SERVER-EDITS-WEB"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-04T21:03:07Z",
+    "lastCommitAt": "2026-10-05T05:36:19Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "high-concern",
+   "ruleId": "OV-HIGH",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Any website you visit can change your library through it"
+   ]
+  }
+ }
+}

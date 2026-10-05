@@ -1,0 +1,455 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-easyread",
+ "repo": "apple5089/zotero-easyread",
+ "version": "0.1.1",
+ "tag": "v0.1.1",
+ "releaseAuthor": "apple5089",
+ "publishedAt": "2026-10-05T09:06:08Z",
+ "prerelease": true,
+ "asset": {
+  "name": "zotero-easyread-0.1.1.xpi",
+  "url": "https://github.com/apple5089/zotero-easyread/releases/download/v0.1.1/zotero-easyread-0.1.1.xpi",
+  "size": 11471,
+  "sha256": "588f467dfb90a20243866ba9a78509bab432cc3e1810937f1d6eec25970f07e7",
+  "githubAssetId": 612056895,
+  "uploader": "apple5089",
+  "uploadedAt": "2026-10-05T09:06:11Z",
+  "fetchedAt": "2026-10-05T10:38:46.186Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-easyread@local.research",
+  "name": "Zotero → EasyRead",
+  "version": "0.1.1",
+  "description": "右键用 EasyRead 阅读 PDF，将划线、笔记和保存的 AI 回答回写到 Zotero。",
+  "updateUrl": "https://raw.githubusercontent.com/apple5089/zotero-easyread/main/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 419,
+   "sha256": "afdcb2eb68eb3fcdf488d783eb2bdebba6a2853855e6359e5bfc8848adfbab33"
+  },
+  {
+   "path": "bridge.js",
+   "size": 21284,
+   "sha256": "73d599b5b0cdf9dfa67a372c3b6e1b116756a41797e37ef27599d1382a2760d9"
+  },
+  {
+   "path": "core.js",
+   "size": 5254,
+   "sha256": "a8087518a5d210b27267ab9dbd5b799813fdb71885dbabcbfb1c5ee413ff1b97"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1066,
+   "sha256": "8c4a9f95378663455a7a3964e77c4986d6ca9db23f0a9a16ee0211f56d9bec49"
+  },
+  {
+   "path": "manifest.json",
+   "size": 468,
+   "sha256": "993560faf9e22a600fbfe3b2373d8322e0d8736d5310a24df828117ea2c82e3c"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-05T10:38:46.186Z",
+  "input": {
+   "slug": "zotero-easyread",
+   "version": "0.1.1",
+   "sha256": "588f467dfb90a20243866ba9a78509bab432cc3e1810937f1d6eec25970f07e7"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 26957,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 107,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(body === undefined ? \"GET\" : \"POST\", conn.url + endpoint, options);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 121,
+       "column": 31,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\",info.url + \"/api/version\",options);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 129,
+       "column": 31,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\",info.url + \"/api/library\",options);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/api/library",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 129,
+       "column": 31,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\",info.url + \"/api/library\",options);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr>/api/version",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 121,
+       "column": 31,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\",info.url + \"/api/version\",options);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 107,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(body === undefined ? \"GET\" : \"POST\", conn.url + endpoint, options);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 12,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 12,
+      "column": 67,
+      "snippet": "legacyHome() { return PathUtils.join(Services.dirsvc.get(\"Home\", Components.interfaces.nsIFile).path, \"EasyRead\"); },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 21,
+      "column": 34,
+      "snippet": "try { return JSON.parse(await IOUtils.readUTF8(path)); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 25,
+      "column": 10,
+      "snippet": "await IOUtils.makeDirectory(PathUtils.parent(path), {ignoreExisting:true});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 26,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(path, JSON.stringify(data, null, 2), {tmpPath: path + \".tmp\"});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 36,
+      "column": 26,
+      "snippet": "this.registry = await IOUtils.exists(this.registryPath()) ? await this.readJSON(this.registryPath()) : {schema:1,attachments:{},notes:{}};",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 147,
+      "column": 15,
+      "snippet": "if (!await IOUtils.exists(executable)) throw new Error(\"找不到 EasyRead.exe，请在“工具 → EasyRead：连接设置”中设置路径。\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 173,
+      "column": 26,
+      "snippet": "if (!path || !await IOUtils.exists(path)) throw new Error(\"部分 PDF 尚未下载到本机，请先在 Zotero 下载附件。\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 174,
+      "column": 25,
+      "snippet": "const stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 176,
+      "column": 27,
+      "snippet": "const header = await IOUtils.read(path, {maxBytes:5});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 185,
+      "column": 24,
+      "snippet": "const bytes = await IOUtils.read(file.path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 141,
+      "column": 4,
+      "snippet": "Zotero.Utilities.Internal.exec(executable, []).catch(error => Zotero.logError(error));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 213,
+      "column": 20,
+      "snippet": "try { await Zotero.Utilities.Internal.exec(executable,target ? [\"easyread://\" + target] : []); return; }",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Zotero.Utilities.Internal.exec"
+     ],
+     "programs": [
+      "EasyRead"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 19,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/apple5089/zotero-easyread/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/apple5089/zotero-easyread/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-05T10:38:46.186Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the apple5089 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-05T10:38:46.186Z",
+  "appliesTo": {
+   "slug": "zotero-easyread",
+   "version": "0.1.1",
+   "sha256": "588f467dfb90a20243866ba9a78509bab432cc3e1810937f1d6eec25970f07e7"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "1755fa8f0b093a578655f395c801e907ecb2e2f1a1dbb269ac120e1ccf0d729c"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address has no version for Zotero 10"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [],
+    "concern": "medium",
+    "label": "Uses the network; we couldn't tell where",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include EasyRead"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-05T09:06:08Z",
+    "lastCommitAt": "2026-10-05T09:05:05Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing",
+    "capabilities"
+   ],
+   "reasons": [
+    "Uses the network; we couldn't tell where",
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}
