@@ -1,0 +1,514 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-scholium",
+ "repo": "weilr/zotero-scholium",
+ "version": "0.1.6",
+ "tag": "v0.1.6",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-05T13:51:04Z",
+ "prerelease": false,
+ "asset": {
+  "name": "scholium-bridge.xpi",
+  "url": "https://github.com/weilr/zotero-scholium/releases/download/v0.1.6/scholium-bridge.xpi",
+  "size": 42780,
+  "sha256": "b64e2d7af7e50c9a6b72a617e9fdda88b2703f01185b38cb0010a19f1e0db22c",
+  "githubAssetId": 612713433,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-05T13:51:03Z",
+  "fetchedAt": "2026-10-06T10:37:41.907Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "scholium-bridge@zotero-scholium",
+  "name": "Scholium Bridge",
+  "version": "0.1.6",
+  "description": "Annotates papers with Claude Code or Codex from the Scholium section of the item pane, and shows or hides the tool's annotations in the reader. On Zotero 7 to 9 it also lets the tool write annotations through local endpoints.",
+  "homepageUrl": "https://github.com/weilr/zotero-scholium",
+  "updateUrl": "https://github.com/weilr/zotero-scholium/releases/latest/download/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9999.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 126181,
+   "sha256": "b0c673d2a5881c7b39c2b2b90bd17e720e691f0a1800564ccf97ed92bad787f8"
+  },
+  {
+   "path": "content/icon16.svg",
+   "size": 234,
+   "sha256": "0bae2283695d6518cc640c5b133dbf61e06f95e314429ca330f439415c07ffa4"
+  },
+  {
+   "path": "content/icon20.svg",
+   "size": 261,
+   "sha256": "6e57bec841c751c5e22bad7fb8aed5f2d9178d64c3a72c363f14748f2b0df3fb"
+  },
+  {
+   "path": "content/scholium.css",
+   "size": 11290,
+   "sha256": "4331de9fad656f4c559c1305cce520ebbae941d8c3113e9215477d430704cf25"
+  },
+  {
+   "path": "locale/en-US/scholium-bridge.ftl",
+   "size": 88,
+   "sha256": "ed3805314b5ddd77bf81a8962cb0bec24006d238bfbe51408a75e57214893e6b"
+  },
+  {
+   "path": "locale/zh-CN/scholium-bridge.ftl",
+   "size": 88,
+   "sha256": "ed3805314b5ddd77bf81a8962cb0bec24006d238bfbe51408a75e57214893e6b"
+  },
+  {
+   "path": "manifest.json",
+   "size": 700,
+   "sha256": "5830ed3f5ad2676acefd6dab9054b1b03582cb77e0858aa85002074016b0a06b"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-06T10:37:41.907Z",
+  "input": {
+   "slug": "zotero-scholium",
+   "version": "0.1.6",
+   "sha256": "b64e2d7af7e50c9a6b72a617e9fdda88b2703f01185b38cb0010a19f1e0db22c"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "content/icon16.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icon20.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/scholium.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/scholium-bridge.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/scholium-bridge.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 126181,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "Claude Code",
+     "provider": "Anthropic",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 615,
+       "column": 23,
+       "snippet": "const configured = this.getPref(\"claudePath\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "program": "Codex CLI",
+     "provider": "OpenAI",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 633,
+       "column": 23,
+       "snippet": "const configured = this.getPref(\"codexPath\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 22,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 26,
+      "column": 16,
+      "snippet": "if (await IOUtils.exists(path)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 27,
+      "column": 25,
+      "snippet": "const t = (await IOUtils.readUTF8(path)).trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 32,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(path, t);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 597,
+      "column": 33,
+      "snippet": "try { return !!path && await IOUtils.exists(path); } catch (e) { return false; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 607,
+      "column": 47,
+      "snippet": "const path = Services.dirsvc.get(\"Home\", Components.interfaces.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 643,
+      "column": 38,
+      "snippet": "try { for (const dir of await IOUtils.getChildren(bin)) candidates.push(PathUtils.join(dir, exe)); } catch (e) {}",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1359,
+      "column": 51,
+      "snippet": "if (await this.exists(ed.path)) text = await IOUtils.readUTF8(ed.path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1376,
+      "column": 55,
+      "snippet": "const now = (await this.exists(ed.path)) ? await IOUtils.readUTF8(ed.path) : null;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1383,
+      "column": 12,
+      "snippet": "await IOUtils.makeDirectory(PathUtils.join(Zotero.DataDirectory.dir, \"zotero-scholium\"), { createAncestors: true, ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1384,
+      "column": 12,
+      "snippet": "await IOUtils.writeUTF8(ed.path, text);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 182,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[\"/scholium-bridge/ping\"] = Ping;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 183,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[\"/scholium-bridge/list\"] = List;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 184,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[\"/scholium-bridge/apply\"] = Apply;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/scholium-bridge/apply",
+      "/scholium-bridge/list",
+      "/scholium-bridge/ping"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 690,
+      "column": 43,
+      "snippet": "const mod = ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/weilr/zotero-scholium/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/weilr/zotero-scholium/releases/latest/download/update.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 108,
+      "column": 68,
+      "snippet": "if ((n.getNoteTitle() || \"\").startsWith(prefix)) { await n.eraseTx(); notesRemoved++; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 184,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[\"/scholium-bridge/apply\"] = Apply;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/scholium-bridge/apply"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-06T10:37:41.907Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-06T10:37:41.907Z",
+  "appliesTo": {
+   "slug": "zotero-scholium",
+   "version": "0.1.6",
+   "sha256": "b64e2d7af7e50c9a6b72a617e9fdda88b2703f01185b38cb0010a19f1e0db22c"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "747dcc0dcf57d86ab26be2ea0759614c4e5e4a04b06799543aa431091100b363"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "Claude Code (Anthropic)",
+       "Codex CLI (OpenAI)"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-05T13:51:04Z",
+    "lastCommitAt": "2026-10-05T13:50:34Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}
