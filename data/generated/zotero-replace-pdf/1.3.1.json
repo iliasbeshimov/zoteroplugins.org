@@ -1,0 +1,432 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-replace-pdf",
+ "repo": "adamsghaier/zotero-replace-pdf",
+ "version": "1.3.1",
+ "tag": "v1.3.1",
+ "releaseAuthor": "adamsghaier",
+ "publishedAt": "2026-10-08T00:04:53Z",
+ "prerelease": false,
+ "asset": {
+  "name": "replace-pdf.xpi",
+  "url": "https://github.com/adamsghaier/zotero-replace-pdf/releases/download/v1.3.1/replace-pdf.xpi",
+  "size": 6910,
+  "sha256": "25aac1abea51ef96834d3354a8d698acb72b0c16edd3510f9fbb2c51682f8328",
+  "githubAssetId": 620174496,
+  "uploader": "adamsghaier",
+  "uploadedAt": "2026-10-08T00:04:52Z",
+  "fetchedAt": "2026-10-08T10:47:22.745Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "replace-pdf@adamsghaier.local",
+  "name": "Replace PDF",
+  "version": "1.3.1",
+  "description": "Right-click a paper → Add PDF or Replace PDF. Replacing writes the new PDF into the existing file (same name, no delete), so iCloud syncs it as an edit. The picked file is cleared from Downloads.",
+  "homepageUrl": "https://github.com/adamsghaier/zotero-replace-pdf",
+  "updateUrl": "https://raw.githubusercontent.com/adamsghaier/zotero-replace-pdf/main/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 16630,
+   "sha256": "168ee9e7d2ca1dbd278e9e70b7577dfe8cae0622ec557ba9d80fdac0a9a45104"
+  },
+  {
+   "path": "locale/en-US/replace-pdf.ftl",
+   "size": 88,
+   "sha256": "8d971d2e93a9c74e565948f0579b083eb59150fce1ceb9a6b88df27bc340eb07"
+  },
+  {
+   "path": "manifest.json",
+   "size": 660,
+   "sha256": "b4183fc624ba18076f084dcc27ccc2329188413d3108e39e11a47f55a050d5df"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-08T10:47:22.745Z",
+  "input": {
+   "slug": "zotero-replace-pdf",
+   "version": "1.3.1",
+   "sha256": "25aac1abea51ef96834d3354a8d698acb72b0c16edd3510f9fbb2c51682f8328"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/replace-pdf.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 16630,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 14,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 102,
+      "column": 44,
+      "snippet": "return Services.dirsvc.get(\"DfltDwnld\", Ci.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 105,
+      "column": 54,
+      "snippet": "return PathUtils.join(Services.dirsvc.get(\"Home\", Ci.nsIFile).path, \"Downloads\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 124,
+      "column": 25,
+      "snippet": "if (!sameBytes(await IOUtils.read(path), bytes)) return false;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 125,
+      "column": 10,
+      "snippet": "await IOUtils.remove(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 222,
+      "column": 12,
+      "snippet": "if (await IOUtils.exists(dl)) fp.displayDirectory = dl;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 234,
+      "column": 20,
+      "snippet": "let bytes = await IOUtils.read(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 246,
+      "column": 30,
+      "snippet": "if (copy && sameBytes(await IOUtils.read(copy), bytes)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 272,
+      "column": 23,
+      "snippet": "let newBytes = await IOUtils.read(newPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 277,
+      "column": 23,
+      "snippet": "let oldBytes = await IOUtils.read(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 304,
+      "column": 8,
+      "snippet": "await IOUtils.makeDirectory(dir, { ignoreExisting: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "native-code",
+    "occurrences": 21,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 165,
+      "column": 46,
+      "snippet": "let { ctypes } = ChromeUtils.importESModule(\"resource://gre/modules/ctypes.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 166,
+      "column": 13,
+      "snippet": "let libc = ctypes.open(\"libSystem.B.dylib\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 168,
+      "column": 19,
+      "snippet": "let attrlist = ctypes.StructType(\"attrlist\", [",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 169,
+      "column": 21,
+      "snippet": "{ bitmapcount: ctypes.unsigned_short }, { reserved: ctypes.uint16_t },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 169,
+      "column": 58,
+      "snippet": "{ bitmapcount: ctypes.unsigned_short }, { reserved: ctypes.uint16_t },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 170,
+      "column": 20,
+      "snippet": "{ commonattr: ctypes.uint32_t }, { volattr: ctypes.uint32_t }, { dirattr: ctypes.uint32_t },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 170,
+      "column": 50,
+      "snippet": "{ commonattr: ctypes.uint32_t }, { volattr: ctypes.uint32_t }, { dirattr: ctypes.uint32_t },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 170,
+      "column": 80,
+      "snippet": "{ commonattr: ctypes.uint32_t }, { volattr: ctypes.uint32_t }, { dirattr: ctypes.uint32_t },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 171,
+      "column": 18,
+      "snippet": "{ fileattr: ctypes.uint32_t }, { forkattr: ctypes.uint32_t },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 171,
+      "column": 49,
+      "snippet": "{ fileattr: ctypes.uint32_t }, { forkattr: ctypes.uint32_t },",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "js-ctypes"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/adamsghaier/zotero-replace-pdf/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/adamsghaier/zotero-replace-pdf/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-08T10:47:22.745Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the adamsghaier account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-08T10:47:22.745Z",
+  "appliesTo": {
+   "slug": "zotero-replace-pdf",
+   "version": "1.3.1",
+   "sha256": "25aac1abea51ef96834d3354a8d698acb72b0c16edd3510f9fbb2c51682f8328"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "8246156ecd09f8bd0608253ce64c380e0dbd0f04a9d189ad5b0d0f73c99bc8e2"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "native-code",
+      "label": "Loads native code",
+      "concern": "medium"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-08T00:04:53Z",
+    "lastCommitAt": "2026-10-08T00:04:54Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Loads native code"
+   ]
+  }
+ }
+}

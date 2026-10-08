@@ -1,0 +1,935 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-wechat-importer",
+ "repo": "nkbaim/zotero-wechat-importer",
+ "version": "0.3.0",
+ "tag": "v0.3.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-08T04:34:47Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-wechat-importer-0.3.0.xpi",
+  "url": "https://github.com/nkbaim/zotero-wechat-importer/releases/download/v0.3.0/zotero-wechat-importer-0.3.0.xpi",
+  "size": 24817,
+  "sha256": "d0e81053b0e11a0e38e5a44fc21f5ebbf92e84ccc960e25a11ac14554c34517d",
+  "githubAssetId": 620731234,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-08T04:34:46Z",
+  "fetchedAt": "2026-10-08T10:47:22.745Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-wechat-importer@duyang.dev",
+  "name": "WeChat Papers",
+  "version": "0.3.0",
+  "description": "Find papers in WeChat articles with AI, verify them, import them into Zotero, and find available full text.",
+  "homepageUrl": "https://github.com/nkbaim/zotero-wechat-importer",
+  "updateUrl": "https://raw.githubusercontent.com/nkbaim/zotero-wechat-importer/main/updates.json",
+  "strictMinVersion": "8.999",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1404,
+   "sha256": "9ac86f13abde4a7a8ae4e741450b5657f3e324628b1fdac60248af06c5c4d868"
+  },
+  {
+   "path": "content/preferences.js",
+   "size": 2820,
+   "sha256": "c06f5de58cacb2323aa5fe1b6fe57b34bb0a3a287d2b2c12500235d600c22f58"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 9054,
+   "sha256": "734c8140d90b6535b027b4ac935e6153192cc0183b095d72e5fe7c0fdb0ab5cf"
+  },
+  {
+   "path": "content/wechat-core.js",
+   "size": 4866,
+   "sha256": "fce3d521edb6b93b9e6f8482971865bc88bea6dafe03725b4ba4a1f95d584eaf"
+  },
+  {
+   "path": "content/wechat-import.js",
+   "size": 30151,
+   "sha256": "ccac2235b6491ac557b531faf90a0990c6162d116b8d427d7b04405533511305"
+  },
+  {
+   "path": "content/wechat-import.xhtml",
+   "size": 17986,
+   "sha256": "0c6062f3f002968e55262d474d71e4b3d1fe16051705bcf8a7992f473d03e165"
+  },
+  {
+   "path": "content/wechat-importer.js",
+   "size": 7800,
+   "sha256": "a7f774cc55ad83eabf5db1ac954f0fa83be5d18e60d3832168df7f52cf655bd5"
+  },
+  {
+   "path": "icon.svg",
+   "size": 1353,
+   "sha256": "7cfb434c96592aff270c41cb6aa0d9b8d0475fc308007400f6ee172f59bdd8f3"
+  },
+  {
+   "path": "manifest.json",
+   "size": 633,
+   "sha256": "179e74b6614c8a35750ae74c60152258c8e2db36e80729dcc670d79c7d67cfb5"
+  },
+  {
+   "path": "prefs.js",
+   "size": 1288,
+   "sha256": "45a9bb833c72741ba746f30a06a7c6a0f6a8093bcca41584957eb813ae57a5a2"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-08T10:47:22.745Z",
+  "input": {
+   "slug": "zotero-wechat-importer",
+   "version": "0.3.0",
+   "sha256": "d0e81053b0e11a0e38e5a44fc21f5ebbf92e84ccc960e25a11ac14554c34517d"
+  },
+  "coverage": {
+   "filesTotal": 10,
+   "filesAnalyzed": 8,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 75369,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-import.js",
+       "line": 58,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/wechat-import.js",
+       "line": 239,
+       "column": 23,
+       "snippet": "return await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/wechat-import.js",
+       "line": 467,
+       "column": 27,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/wechat-importer.js",
+       "line": 67,
+       "column": 23,
+       "snippet": "response = await Zotero.HTTP.request(\"POST\", endpoint, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-import.js",
+       "line": 667,
+       "column": 26,
+       "snippet": "const translate = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-import.js",
+       "line": 399,
+       "column": 10,
+       "snippet": "`https://api.crossref.org/works/${encodeURIComponent(candidate.doi)}`",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/wechat-import.js",
+       "line": 413,
+       "column": 40,
+       "snippet": "const data = await this.requestJSON(`https://api.crossref.org/works?${params}`);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-importer.js",
+       "line": 11,
+       "column": 44,
+       "snippet": "deepseek: { label: \"DeepSeek\", baseURL: \"https://api.deepseek.com\", model: \"deepseek-flash\", visionModel: \"deepseek-flash\" },",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 3,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-wechat-importer.deepseek.baseURL\", \"https://api.deepseek.com\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 3,
+       "column": 59,
+       "snippet": "pref(\"extensions.zotero-wechat-importer.deepseek.baseURL\", \"https://api.deepseek.com\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.xiaomimimo.com",
+     "category": "llm-provider",
+     "provider": "Xiaomi MiMo",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-importer.js",
+       "line": 14,
+       "column": 40,
+       "snippet": "mimo: { label: \"MiMo（小米）\", baseURL: \"https://api.xiaomimimo.com/v1\", model: \"mimo-v2.6-pro\", visionModel: \"mimo-v2.6-pro\" }",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 15,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-wechat-importer.mimo.baseURL\", \"https://api.xiaomimimo.com/v1\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 15,
+       "column": 55,
+       "snippet": "pref(\"extensions.zotero-wechat-importer.mimo.baseURL\", \"https://api.xiaomimimo.com/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dashscope.aliyuncs.com",
+     "category": "llm-provider",
+     "provider": "Alibaba Qwen (DashScope)",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-importer.js",
+       "line": 12,
+       "column": 42,
+       "snippet": "qwen: { label: \"Qwen（通义千问）\", baseURL: \"https://dashscope.aliyuncs.com/compatible-mode/v1\", model: \"qwen-plus\", visionModel: \"qwen3-vl-plus\" },",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 7,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-wechat-importer.qwen.baseURL\", \"https://dashscope.aliyuncs.com/compatible-mode/v1\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 7,
+       "column": 55,
+       "snippet": "pref(\"extensions.zotero-wechat-importer.qwen.baseURL\", \"https://dashscope.aliyuncs.com/compatible-mode/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-import.js",
+       "line": 435,
+       "column": 11,
+       "snippet": "url: `https://doi.org/${encodeURIComponent(doi)}`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "eutils.ncbi.nlm.nih.gov",
+     "category": "scholarly-api",
+     "provider": "NCBI E-utilities",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-import.js",
+       "line": 346,
+       "column": 6,
+       "snippet": "`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?${searchParams}`",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/wechat-import.js",
+       "line": 352,
+       "column": 8,
+       "snippet": "`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?${searchParams}`",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/wechat-import.js",
+       "line": 365,
+       "column": 6,
+       "snippet": "`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?${summaryParams}`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 92,
+       "column": 31,
+       "snippet": "<html:p>项目仓库：<html:a href=\"https://github.com/nkbaim/zotero-wechat-importer\" target=\"_blank\" onclick=\"WeChatImporterPreferences.openExternalLink(event);\">github.com/nkbaim/zotero-wechat-importer</",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 94,
+       "column": 20,
+       "snippet": "<html:a href=\"https://github.com/nkbaim/zotero-wechat-importer/releases\" target=\"_blank\" onclick=\"WeChatImporterPreferences.openExternalLink(event);\">版本发布</html:a>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 95,
+       "column": 22,
+       "snippet": "· <html:a href=\"https://github.com/nkbaim/zotero-wechat-importer/issues\" target=\"_blank\" onclick=\"WeChatImporterPreferences.openExternalLink(event);\">问题反馈</html:a>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 96,
+       "column": 22,
+       "snippet": "· <html:a href=\"https://github.com/nkbaim/zotero-wechat-importer/blob/main/LICENSE\" target=\"_blank\" onclick=\"WeChatImporterPreferences.openExternalLink(event);\">MIT License</html:a>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "mp.weixin.qq.com",
+     "category": "documentation",
+     "provider": "WeChat articles",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-import.js",
+       "line": 41,
+       "column": 22,
+       "snippet": "throw new Error(\"目前仅支持 https://mp.weixin.qq.com/ 的文章链接\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "open.bigmodel.cn",
+     "category": "llm-provider",
+     "provider": "Zhipu (GLM)",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-importer.js",
+       "line": 13,
+       "column": 39,
+       "snippet": "zhipu: { label: \"智谱 GLM\", baseURL: \"https://open.bigmodel.cn/api/paas/v4\", model: \"glm-4.7-flash\", visionModel: \"glm-5.3-flash\" },",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 11,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-wechat-importer.zhipu.baseURL\", \"https://open.bigmodel.cn/api/paas/v4\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 11,
+       "column": 56,
+       "snippet": "pref(\"extensions.zotero-wechat-importer.zhipu.baseURL\", \"https://open.bigmodel.cn/api/paas/v4\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "pubmed.ncbi.nlm.nih.gov",
+     "category": "scholarly-api",
+     "provider": "PubMed",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-import.js",
+       "line": 391,
+       "column": 11,
+       "snippet": "url: `https://pubmed.ncbi.nlm.nih.gov/${summary.uid}/`",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "deepseek.baseURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-importer.js",
+       "line": 30,
+       "column": 22,
+       "snippet": "baseURL: String(this.getPref(`${id}.baseURL`, defaults.baseURL)).trim(),",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero-wechat-importer.deepseek.baseURL",
+     "defaultValue": "https://api.deepseek.com",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 53,
+       "column": 186,
+       "snippet": "epseek-base-url\"/><html:input id=\"wechat-importer-deepseek-base-url\" type=\"url\" preference=\"extensions.zotero-wechat-importer.deepseek.baseURL\"/></hbox>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 3,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-wechat-importer.deepseek.baseURL\", \"https://api.deepseek.com\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero-wechat-importer.mimo.baseURL",
+     "defaultValue": "https://api.xiaomimimo.com/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 75,
+       "column": 178,
+       "snippet": "orter-mimo-base-url\"/><html:input id=\"wechat-importer-mimo-base-url\" type=\"url\" preference=\"extensions.zotero-wechat-importer.mimo.baseURL\"/></hbox>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 15,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-wechat-importer.mimo.baseURL\", \"https://api.xiaomimimo.com/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero-wechat-importer.qwen.baseURL",
+     "defaultValue": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 60,
+       "column": 178,
+       "snippet": "orter-qwen-base-url\"/><html:input id=\"wechat-importer-qwen-base-url\" type=\"url\" preference=\"extensions.zotero-wechat-importer.qwen.baseURL\"/></hbox>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 7,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-wechat-importer.qwen.baseURL\", \"https://dashscope.aliyuncs.com/compatible-mode/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero-wechat-importer.zhipu.baseURL",
+     "defaultValue": "https://open.bigmodel.cn/api/paas/v4",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 68,
+       "column": 180,
+       "snippet": "ter-zhipu-base-url\"/><html:input id=\"wechat-importer-zhipu-base-url\" type=\"url\" preference=\"extensions.zotero-wechat-importer.zhipu.baseURL\"/></hbox>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 11,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-wechat-importer.zhipu.baseURL\", \"https://open.bigmodel.cn/api/paas/v4\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "url-input",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wechat-import.xhtml",
+       "line": 514,
+       "column": 10,
+       "snippet": "<html:input id=\"url-input\" type=\"url\" aria-label=\"微信公众号文章链接\" placeholder=\"粘贴 https://mp.weixin.qq.com/s/...\" autocomplete=\"off\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "wechat-importer-deepseek-base-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 53,
+       "column": 124,
+       "snippet": "ign=\"center\"><label value=\"API 地址\" control=\"wechat-importer-deepseek-base-url\"/><html:input id=\"wechat-importer-deepseek-base-url\" type=\"url\" preference=\"extensions.zotero-wechat-importer.deepseek.bas",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "wechat-importer-mimo-base-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 75,
+       "column": 120,
+       "snippet": "\" align=\"center\"><label value=\"API 地址\" control=\"wechat-importer-mimo-base-url\"/><html:input id=\"wechat-importer-mimo-base-url\" type=\"url\" preference=\"extensions.zotero-wechat-importer.mimo.baseURL\"/><",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "wechat-importer-qwen-base-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 60,
+       "column": 120,
+       "snippet": "\" align=\"center\"><label value=\"API 地址\" control=\"wechat-importer-qwen-base-url\"/><html:input id=\"wechat-importer-qwen-base-url\" type=\"url\" preference=\"extensions.zotero-wechat-importer.qwen.baseURL\"/><",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "wechat-importer-zhipu-base-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 68,
+       "column": 121,
+       "snippet": "align=\"center\"><label value=\"API 地址\" control=\"wechat-importer-zhipu-base-url\"/><html:input id=\"wechat-importer-zhipu-base-url\" type=\"url\" preference=\"extensions.zotero-wechat-importer.zhipu.baseURL\"/",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/wechat-import.js",
+      "line": 504,
+      "column": 6,
+      "snippet": "Zotero.Utilities.Internal.copyTextToClipboard(url);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/wechat-importer.js",
+      "line": 29,
+      "column": 21,
+      "snippet": "apiKey: String(this.getPref(`${id}.apiKey`)).trim(),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/wechat-importer.js",
+      "line": 38,
+      "column": 19,
+      "snippet": "const oldKey = this.getPref(\"apiKey\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/wechat-importer.js",
+      "line": 39,
+      "column": 19,
+      "snippet": "if (oldKey && !this.getPref(\"deepseek.apiKey\")) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/wechat-importer.js",
+      "line": 40,
+      "column": 6,
+      "snippet": "Zotero.Prefs.set(`${root}deepseek.apiKey`, oldKey, true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-wechat-importer.deepseek.apiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 6,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-wechat-importer.qwen.apiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 10,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-wechat-importer.zhipu.apiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 14,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-wechat-importer.mimo.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "apiKey",
+      "deepseek.apiKey",
+      "extensions.zotero-wechat-importer.deepseek.apiKey",
+      "extensions.zotero-wechat-importer.mimo.apiKey",
+      "extensions.zotero-wechat-importer.qwen.apiKey",
+      "extensions.zotero-wechat-importer.zhipu.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/nkbaim/zotero-wechat-importer/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/nkbaim/zotero-wechat-importer/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-08T10:47:22.745Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-08T10:47:22.745Z",
+  "appliesTo": {
+   "slug": "zotero-wechat-importer",
+   "version": "0.3.0",
+   "sha256": "d0e81053b0e11a0e38e5a44fc21f5ebbf92e84ccc960e25a11ac14554c34517d"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "616ced185592465e5415da3be0ba414023ff3fed6b6bee70fdb86d33bf3a3b10"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com",
+       "api.xiaomimimo.com",
+       "dashscope.aliyuncs.com",
+       "open.bigmodel.cn"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "doi.org",
+       "eutils.ncbi.nlm.nih.gov",
+       "pubmed.ncbi.nlm.nih.gov"
+      ],
+      "unconfirmed": [
+       "doi.org",
+       "pubmed.ncbi.nlm.nih.gov"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-08T04:34:47Z",
+    "lastCommitAt": "2026-10-08T04:34:29Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
