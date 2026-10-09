@@ -1,0 +1,340 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-management-bridge",
+ "repo": "by1907047/zotero-management-bridge",
+ "version": "0.4.1",
+ "tag": "v0.4.1",
+ "releaseAuthor": "by1907047",
+ "publishedAt": "2026-07-21T08:04:45Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-management-bridge-0.4.1.xpi",
+  "url": "https://github.com/by1907047/zotero-management-bridge/releases/download/v0.4.1/zotero-management-bridge-0.4.1.xpi",
+  "size": 18188,
+  "sha256": "130c2d4201dc1703f54ad9e120de113ce8599e92910e86c65c01b47d5f283971",
+  "githubAssetId": 484417729,
+  "uploader": "by1907047",
+  "uploadedAt": "2026-07-21T08:04:45Z",
+  "fetchedAt": "2026-10-09T10:46:57.979Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-management-bridge@example.org",
+  "name": "Zotero Management Bridge",
+  "version": "0.4.1",
+  "description": "Local Zotero management bridge for automation agents and scripts.",
+  "homepageUrl": "https://github.com/by1907047/zotero-management-bridge",
+  "updateUrl": "https://raw.githubusercontent.com/by1907047/zotero-management-bridge/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 735,
+   "sha256": "c5ce87207267aac732dd3ea2ebe476205b02fd193703448b56b6e6f72bb14d21"
+  },
+  {
+   "path": "install.rdf",
+   "size": 947,
+   "sha256": "adf88f382397ccde4b4a0694985e4f87bb76266947cd4cac4b986eaa152f62d4"
+  },
+  {
+   "path": "manifest.json",
+   "size": 598,
+   "sha256": "e135eedbb576b44b9b39070a95ccab5c1b3cc93a9bca881571bc55bd5c68deb6"
+  },
+  {
+   "path": "prefs.js",
+   "size": 351,
+   "sha256": "2db75669a97b5ea04e23fe91747beaf4fcbceab7c6427a726b84d3b3003b1687"
+  },
+  {
+   "path": "src/zotero-management-bridge.js",
+   "size": 84026,
+   "sha256": "1383a652d055abe5f90d14ebb3858f20fbe43a3a67b65a4198b092e4606071b6"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-09T10:46:57.979Z",
+  "input": {
+   "slug": "zotero-management-bridge",
+   "version": "0.4.1",
+   "sha256": "130c2d4201dc1703f54ad9e120de113ce8599e92910e86c65c01b47d5f283971"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "install.rdf",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 85112,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 22,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "src/zotero-management-bridge.js",
+      "line": 55,
+      "column": 44,
+      "snippet": "return Services.dirsvc.get(\"ProfD\", Ci.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotero-management-bridge.js",
+      "line": 101,
+      "column": 42,
+      "snippet": "if (typeof IOUtils !== \"undefined\" && IOUtils.makeDirectory) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotero-management-bridge.js",
+      "line": 102,
+      "column": 12,
+      "snippet": "await IOUtils.makeDirectory(path, { ignoreExisting: true, createAncestors: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotero-management-bridge.js",
+      "line": 121,
+      "column": 50,
+      "snippet": "if (typeof IOUtils !== \"undefined\" && await IOUtils.exists(path)) return true;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotero-management-bridge.js",
+      "line": 134,
+      "column": 42,
+      "snippet": "if (typeof IOUtils !== \"undefined\" && IOUtils.readUTF8) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotero-management-bridge.js",
+      "line": 135,
+      "column": 19,
+      "snippet": "return await IOUtils.readUTF8(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotero-management-bridge.js",
+      "line": 137,
+      "column": 17,
+      "snippet": "return await Zotero.File.getContentsAsync(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotero-management-bridge.js",
+      "line": 142,
+      "column": 8,
+      "snippet": "if (Zotero.File.putContentsAsync) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotero-management-bridge.js",
+      "line": 143,
+      "column": 19,
+      "snippet": "return await Zotero.File.putContentsAsync(path, text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/zotero-management-bridge.js",
+      "line": 145,
+      "column": 8,
+      "snippet": "if (Zotero.File.putContents) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/by1907047/zotero-management-bridge/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/by1907047/zotero-management-bridge/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-09T10:46:57.979Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the by1907047 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-09T10:46:57.979Z",
+  "appliesTo": {
+   "slug": "zotero-management-bridge",
+   "version": "0.4.1",
+   "sha256": "130c2d4201dc1703f54ad9e120de113ce8599e92910e86c65c01b47d5f283971"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "dafb32cd99a601932f9b340629a8e59bc8cc03d6363fdac5899602e938d183bd"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-21T08:04:45Z",
+    "lastCommitAt": "2026-07-21T08:04:01Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
