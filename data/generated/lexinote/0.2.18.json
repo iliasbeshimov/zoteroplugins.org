@@ -1,0 +1,533 @@
+{
+ "schemaVersion": 1,
+ "slug": "lexinote",
+ "repo": "wu-lipeng/lexinote",
+ "version": "0.2.18",
+ "tag": "v0.2.18",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-10T01:19:19Z",
+ "prerelease": false,
+ "asset": {
+  "name": "lexinote-0.2.18.xpi",
+  "url": "https://github.com/Wu-Lipeng/LexiNote/releases/download/v0.2.18/lexinote-0.2.18.xpi",
+  "size": 66933,
+  "sha256": "f1b84a0ed567e4c970e849257f5a9c61d6f48e0060ed511949a5e8b640621003",
+  "githubAssetId": 626656990,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-10T01:19:19Z",
+  "fetchedAt": "2026-10-10T10:08:56.513Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "lexinote@local.tools",
+  "name": "LexiNote 划词生词本",
+  "version": "0.2.18",
+  "description": "阅读时划词查释义，将生词追加到当前文献的同一条笔记。",
+  "updateUrl": "https://raw.githubusercontent.com/Wu-Lipeng/LexiNote/main/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1015,
+   "sha256": "2cf996fac2cf3037269ae2a02121caaa3ef9650395a04bb1895e7be80aee7524"
+  },
+  {
+   "path": "core.js",
+   "size": 8889,
+   "sha256": "882b21a86e5975bd92448fdb2ec091a7f00a81d3b784df2b3b32aa80e9fd22e6"
+  },
+  {
+   "path": "icon-48.png",
+   "size": 6870,
+   "sha256": "d2658a679e0c5d9167c225b77b7b881a86260d4fdfb6dceb698ea28a85b5c14d"
+  },
+  {
+   "path": "icon-96.png",
+   "size": 23862,
+   "sha256": "01d63e9d72d25f6451aae64b493a7b97e3e6292f9f848f470b8c5a4ccb1dd1f0"
+  },
+  {
+   "path": "manifest.json",
+   "size": 521,
+   "sha256": "e031b636da9134463ce277c821d2bd1152aae7ba7e049d9804a04eacc164acfc"
+  },
+  {
+   "path": "preferences.js",
+   "size": 19649,
+   "sha256": "55baccbb9508e079bcca58e31d738cea7af05ac25b7051c72e6183f08f8d295b"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 10266,
+   "sha256": "f4c43592748c63d2517f3e0bc61de1db30bc1ab1cb2d878e8fe1ebd1b0055681"
+  },
+  {
+   "path": "runtime.js",
+   "size": 87115,
+   "sha256": "807cdfb4ca83762367c64d894bdae62817cb70b5d49ed2add3f865fbf1b85b37"
+  },
+  {
+   "path": "trial-credentials.js",
+   "size": 344,
+   "sha256": "8879472471d3ac0325bc11d04f1c96f36f92705c7dab0a17413150f3fca2c1bd"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-10T10:08:56.513Z",
+  "input": {
+   "slug": "lexinote",
+   "version": "0.2.18",
+   "sha256": "f1b84a0ed567e4c970e849257f5a9c61d6f48e0060ed511949a5e8b640621003"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "icon-48.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icon-96.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 127278,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "xhr",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 278,
+       "column": 18,
+       "snippet": "const xhr = new XMLHttpRequest({ mozAnon: true });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 114,
+       "column": 12,
+       "snippet": "await Zotero.HTTP.request(\"MKCOL\", this.nutstoreFolderUrl(), { headers: { \"Authorization\": `Basic ${auth}` }, timeout: 30000 });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 344,
+       "column": 29,
+       "snippet": "const tokenXHR = await Zotero.HTTP.request(\"POST\", tokenURL, { body: \"\", headers: { \"Content-Type\": \"application/x-www-form-urlencoded\" }, timeout: config.timeout, cancellerReceiver: cancel => {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 351,
+       "column": 27,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", endpoint + \"?access_token=\" + encodeURIComponent(token.value), {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 952,
+       "column": 12,
+       "snippet": "await Zotero.HTTP.request(\"PUT\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "aip.baidubce.com",
+     "category": "llm-provider",
+     "provider": "Baidu AI Cloud",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 342,
+       "column": 23,
+       "snippet": "const tokenURL = \"https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 350,
+       "column": 59,
+       "snippet": "const endpoint = config.provider === \"baidu-general\" ? \"https://aip.baidubce.com/rpc/2.0/mt/texttrans/v1\" : \"https://aip.baidubce.com/rpc/2.0/mt/texttrans-with-dict/v1\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 350,
+       "column": 112,
+       "snippet": "ider === \"baidu-general\" ? \"https://aip.baidubce.com/rpc/2.0/mt/texttrans/v1\" : \"https://aip.baidubce.com/rpc/2.0/mt/texttrans-with-dict/v1\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dav.jianguoyun.com",
+     "category": "integration",
+     "provider": "Jianguoyun WebDAV",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "core.js",
+       "line": 11,
+       "column": 47,
+       "snippet": "nutstoreEnabled: false, nutstoreServerUrl: \"https://dav.jianguoyun.com/dav/\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>?access_token=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 351,
+       "column": 27,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", endpoint + \"?access_token=\" + encodeURIComponent(token.value), {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "lexinote-endpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 59,
+       "column": 6,
+       "snippet": "<html:input id=\"lexinote-endpoint\" type=\"url\" placeholder=\"https://your-service.example/lookup?word={{word}}\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "lexinote-nutstoreServerUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 38,
+       "column": 8,
+       "snippet": "<html:input id=\"lexinote-nutstoreServerUrl\" type=\"url\" placeholder=\"https://dav.jianguoyun.com/dav/\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 905,
+      "column": 10,
+      "snippet": "await Zotero.File.putContentsAsync(picker.file, JSON.stringify(wordbook, null, 2) + \"\\n\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "login-manager",
+    "occurrences": 7,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 45,
+      "column": 13,
+      "snippet": "return Services.logins.findLogins(this.loginOrigin, null, name)[0]?.password || \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 69,
+      "column": 21,
+      "snippet": "const existing = Services.logins.findLogins(this.loginOrigin, null, name);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 70,
+      "column": 46,
+      "snippet": "if (!key) { for (const login of existing) Services.logins.removeLogin(login); return; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 73,
+      "column": 25,
+      "snippet": "if (existing.length) Services.logins.modifyLogin(existing[0], login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 74,
+      "column": 13,
+      "snippet": "else if (Services.logins.addLoginAsync) await Services.logins.addLoginAsync(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 74,
+      "column": 50,
+      "snippet": "else if (Services.logins.addLoginAsync) await Services.logins.addLoginAsync(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 75,
+      "column": 9,
+      "snippet": "else Services.logins.addLogin(login);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsILoginManager"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 13,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Wu-Lipeng/LexiNote/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Wu-Lipeng/LexiNote/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-10T10:08:56.513Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-10T10:08:56.513Z",
+  "appliesTo": {
+   "slug": "lexinote",
+   "version": "0.2.18",
+   "sha256": "f1b84a0ed567e4c970e849257f5a9c61d6f48e0060ed511949a5e8b640621003"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "c0ae3c65ed4496963970b7958781f234ae830d7712459251fcb8322454abba37"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers version 0.2.17, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "dav.jianguoyun.com"
+      ],
+      "unconfirmed": [
+       "dav.jianguoyun.com"
+      ]
+     },
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "aip.baidubce.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "login-manager",
+      "label": "Uses Zotero's password manager",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-10T01:19:19Z",
+    "lastCommitAt": "2026-10-10T07:14:32Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
