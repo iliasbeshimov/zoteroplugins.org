@@ -1,0 +1,397 @@
+{
+ "schemaVersion": 1,
+ "slug": "codex-zotero-obsidian-bridge",
+ "repo": "loading500/codex-zotero-obsidian-bridge",
+ "version": "0.2.1",
+ "tag": "v0.2.1",
+ "releaseAuthor": "loading500",
+ "publishedAt": "2026-10-04T15:55:43Z",
+ "prerelease": false,
+ "asset": {
+  "name": "codex-zotero-obsidian-bridge.xpi",
+  "url": "https://github.com/loading500/codex-zotero-obsidian-bridge/releases/download/v0.2.1/codex-zotero-obsidian-bridge.xpi",
+  "size": 11990,
+  "sha256": "d81ffa4454ac35b92230dc538213371f456740e323c5be442df35172a3c6ac36",
+  "githubAssetId": 610132486,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-04T15:55:54Z",
+  "fetchedAt": "2026-10-11T12:40:33.543Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "codex-zotero-obsidian-bridge@local",
+  "name": "Codex Zotero–Obsidian Bridge",
+  "version": "0.2.1",
+  "description": "Open and incrementally update Codex-managed Obsidian literature notes from Zotero.",
+  "updateUrl": "https://github.com/loading500/codex-zotero-obsidian-bridge/releases/latest/download/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 854,
+   "sha256": "ba9ecf7fb9822dc4d2a40222338427de5460216306d5c32b826e17bfa4214bf8"
+  },
+  {
+   "path": "bridge-core.js",
+   "size": 9092,
+   "sha256": "80cdbbc2cc9f45ef049380a5f2d4905bd199f6258b069f9fec5b6c4afcfc77c9"
+  },
+  {
+   "path": "bridge.js",
+   "size": 21052,
+   "sha256": "2e7b1b1fb5643a3a19dad33e7b7da93286e7d519dce421ddbd86968e17af4042"
+  },
+  {
+   "path": "icons/obsidian-black.svg",
+   "size": 309,
+   "sha256": "3af119d4ddccbf56427fa77058421cf19df6416c9dce4527ea2b805af39b97da"
+  },
+  {
+   "path": "manifest.json",
+   "size": 545,
+   "sha256": "f10ac652647796824cb9dbc9663d9f015c320e684179249b50194d03e066a1ff"
+  },
+  {
+   "path": "prefs.js",
+   "size": 282,
+   "sha256": "beab7d49ab99072bd3636b5f1098449bedccde79315929886a72203c0e34c082"
+  },
+  {
+   "path": "style.css",
+   "size": 342,
+   "sha256": "63b693fbbfe7a6d3aa6374b4fbedd17a726661789c92fbe483973853d5ce49c9"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-11T12:40:33.543Z",
+  "input": {
+   "slug": "codex-zotero-obsidian-bridge",
+   "version": "0.2.1",
+   "sha256": "d81ffa4454ac35b92230dc538213371f456740e323c5be442df35172a3c6ac36"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "icons/obsidian-black.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "style.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 31280,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 289,
+       "column": 29,
+       "snippet": "const response = await fetch(\"http://127.0.0.1:23119/better-bibtex/json-rpc\", {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 23119,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 289,
+       "column": 35,
+       "snippet": "const response = await fetch(\"http://127.0.0.1:23119/better-bibtex/json-rpc\", {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 21,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 49,
+      "column": 39,
+      "snippet": "return Services.dirsvc.get(\"Home\", Ci.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 62,
+      "column": 16,
+      "snippet": "if (!(await IOUtils.exists(path))) return [];",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 64,
+      "column": 38,
+      "snippet": "const parsed = JSON.parse(await IOUtils.readUTF8(path));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 78,
+      "column": 16,
+      "snippet": "if (!(await IOUtils.exists(registryPath))) return [];",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 79,
+      "column": 38,
+      "snippet": "const registry = JSON.parse(await IOUtils.readUTF8(registryPath));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 85,
+      "column": 18,
+      "snippet": "if (!(await IOUtils.exists(notesPath))) continue;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 99,
+      "column": 30,
+      "snippet": "for (const child of await IOUtils.getChildren(directory)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 100,
+      "column": 25,
+      "snippet": "const stat = await IOUtils.stat(child);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 113,
+      "column": 27,
+      "snippet": "markdown = await IOUtils.readUTF8(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 246,
+      "column": 35,
+      "snippet": "if (!records.length || !(await IOUtils.exists(records[0].path))) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/loading500/codex-zotero-obsidian-bridge/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/loading500/codex-zotero-obsidian-bridge/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-11T12:40:33.543Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-11T12:40:33.543Z",
+  "appliesTo": {
+   "slug": "codex-zotero-obsidian-bridge",
+   "version": "0.2.1",
+   "sha256": "d81ffa4454ac35b92230dc538213371f456740e323c5be442df35172a3c6ac36"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "f7965f7fe7f1add3f3f49f27d3d22ea6975a356b0f3de0f4535f8eb242673116"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts programs on this computer",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-04T15:55:43Z",
+    "lastCommitAt": "2026-10-04T15:51:43Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

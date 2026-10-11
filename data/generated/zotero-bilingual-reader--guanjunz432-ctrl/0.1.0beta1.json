@@ -1,0 +1,352 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-bilingual-reader--guanjunz432-ctrl",
+ "repo": "guanjunz432-ctrl/zotero-bilingual-reader",
+ "version": "0.1.0beta1",
+ "tag": "v0.1.0-beta.1",
+ "releaseAuthor": "guanjunz432-ctrl",
+ "publishedAt": "2026-10-09T08:20:57Z",
+ "prerelease": true,
+ "asset": {
+  "name": "zotero-bilingual-reader-0.1.0-beta.1.xpi",
+  "url": "https://github.com/guanjunz432-ctrl/zotero-bilingual-reader/releases/download/v0.1.0-beta.1/zotero-bilingual-reader-0.1.0-beta.1.xpi",
+  "size": 44300,
+  "sha256": "8422c4cb0ce848283b39733d9a6c204d77480b9582c172771f888a122831f65e",
+  "githubAssetId": 624353799,
+  "uploader": "guanjunz432-ctrl",
+  "uploadedAt": "2026-10-09T08:20:41Z",
+  "fetchedAt": "2026-10-11T12:40:33.543Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-bilingual-reader@zbr.community",
+  "name": "Zotero Bilingual Reader",
+  "version": "0.1.0beta1",
+  "description": "Source-position English-Chinese reading with figure labels and page recovery",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "9.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 370,
+   "sha256": "9b10e7abb22a18b5d4f7ae77d7c7bd37ca81a7a69ef67a3ef968ffd2523834ac"
+  },
+  {
+   "path": "bridge.js",
+   "size": 9092,
+   "sha256": "3fd9ca64c0f7ea7d0f4782c8bd36d1ad1bdf5c26a8a9b774fd95dd2ac645a6ca"
+  },
+  {
+   "path": "LICENSE",
+   "size": 34020,
+   "sha256": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee"
+  },
+  {
+   "path": "manifest.json",
+   "size": 410,
+   "sha256": "4af7140db85eb43f4503729c2e8e63c66dcb43a70c823521f6a1f1c6e31e5037"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-11T12:40:33.543Z",
+  "input": {
+   "slug": "zotero-bilingual-reader--guanjunz432-ctrl",
+   "version": "0.1.0beta1",
+   "sha256": "8422c4cb0ce848283b39733d9a6c204d77480b9582c172771f888a122831f65e"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 9462,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 13,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 30,
+      "column": 21,
+      "snippet": "if(!path||!await IOUtils.exists(path))throw Error('原 PDF 不在本机。请先在 Zotero 中打开附件完成下载，再重试。');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 46,
+      "column": 16,
+      "snippet": "if(!await IOUtils.exists(settingsPath))throw Error('后端尚未安装。请按 README 运行 setup.ps1，然后运行 login.ps1 登录。');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 47,
+      "column": 27,
+      "snippet": "const settings=await IOUtils.readJSON(settingsPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 50,
+      "column": 16,
+      "snippet": "if(!await IOUtils.exists(python)||!await IOUtils.exists(root+'\\\\backend\\\\native_job.py'))throw Error('后端文件已移动或未安装，请重新运行 setup.ps1。');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 50,
+      "column": 47,
+      "snippet": "if(!await IOUtils.exists(python)||!await IOUtils.exists(root+'\\\\backend\\\\native_job.py'))throw Error('后端文件已移动或未安装，请重新运行 setup.ps1。');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 51,
+      "column": 12,
+      "snippet": "await IOUtils.makeDirectory(dataRoot+'\\\\jobs',{ignoreExisting:true});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 54,
+      "column": 12,
+      "snippet": "await IOUtils.writeJSON(jobPath,job);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 83,
+      "column": 10,
+      "snippet": "await IOUtils.writeJSON(current.jobPath.replace(/\\.json$/,'.attached.json'),{",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 95,
+      "column": 17,
+      "snippet": "if(await IOUtils.exists(statusPath)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 96,
+      "column": 24,
+      "snippet": "const s=await IOUtils.readJSON(statusPath);last=s;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 57,
+      "column": 52,
+      "snippet": "const {Subprocess}=ChromeUtils.importESModule('resource://gre/modules/Subprocess.sys.mjs');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 58,
+      "column": 27,
+      "snippet": "active.process=await Subprocess.call({command:python,arguments:[root+'\\\\backend\\\\native_job.py',jobPath],environmentAppend:true,stderr:'pipe'});",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-11T12:40:33.543Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the guanjunz432-ctrl account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-11T12:40:33.543Z",
+  "appliesTo": {
+   "slug": "zotero-bilingual-reader--guanjunz432-ctrl",
+   "version": "0.1.0beta1",
+   "sha256": "8422c4cb0ce848283b39733d9a6c204d77480b9582c172771f888a122831f65e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "43087c380a6de675969f11d8ddf40b622eb7f275b15632cde152679370b0b6c3"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-09T08:20:57Z",
+    "lastCommitAt": "2026-10-09T08:19:09Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "installProblem": "no-update-url",
+    "label": "Zotero won't install this file: its manifest has no update address, which Zotero requires",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

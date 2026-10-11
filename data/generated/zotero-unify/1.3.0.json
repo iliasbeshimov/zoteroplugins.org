@@ -1,0 +1,401 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-unify",
+ "repo": "jiangshuguo/zotero-unify",
+ "version": "1.3.0",
+ "tag": "v1.3.0",
+ "releaseAuthor": "JiangShuguo",
+ "publishedAt": "2026-10-10T16:44:01Z",
+ "prerelease": false,
+ "asset": {
+  "name": "unify.xpi",
+  "url": "https://github.com/JiangShuguo/zotero-unify/releases/download/v1.3.0/unify.xpi",
+  "size": 19642,
+  "sha256": "2a440db7ceb65aa844acc5081b007ad4a7643b83024c157ba36e0f51c513e2d0",
+  "githubAssetId": 628465726,
+  "uploader": "JiangShuguo",
+  "uploadedAt": "2026-10-10T16:44:00Z",
+  "fetchedAt": "2026-10-11T12:40:33.543Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "unify@jsg.local",
+  "name": "Unify",
+  "version": "1.3.0",
+  "description": "Normalize venue names for publication tags and enrich USENIX metadata.",
+  "homepageUrl": "https://github.com/JiangShuguo/zotero-unify",
+  "updateUrl": "https://raw.githubusercontent.com/JiangShuguo/zotero-unify/main/unify/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1470,
+   "sha256": "35cd2c055a63e3d9d24b83019cec5b3ec61efcd94020a6335f3c65e7e855d8af"
+  },
+  {
+   "path": "crossref.js",
+   "size": 6054,
+   "sha256": "b95547654b7870cf54c4977fcca98b92bab3d7af0edc0e055410fc890846011e"
+  },
+  {
+   "path": "icon.png",
+   "size": 1477,
+   "sha256": "8b7821bab24c2920ae90559a9e1e9391b8b9bcde2bd230454a1b8741e81fc112"
+  },
+  {
+   "path": "icon@2x.png",
+   "size": 3360,
+   "sha256": "8ed5aba8b33e209024c1d01551e0234924d3452a8d86957f9e4a2833a15a4dbf"
+  },
+  {
+   "path": "JOURNAL_ALIASES.txt",
+   "size": 1604,
+   "sha256": "238ac7addf4cb269ccdb263d3da3001cfa91eabc39eb365fbbdc42b08d5f5e74"
+  },
+  {
+   "path": "manifest.json",
+   "size": 564,
+   "sha256": "bbc928e52969ae1d1dc214c400298b59cb33ced254dadf0d8e9bee44d68d2a4c"
+  },
+  {
+   "path": "normalizer.js",
+   "size": 5358,
+   "sha256": "12b275b064d65d067e21b17264158ba606a9a5a7c42ff3162cb59277cd823438"
+  },
+  {
+   "path": "unify.js",
+   "size": 12892,
+   "sha256": "5678fdb1f9ba7499d3fd67a1025a632fcca0f73359ee850a2e3931da7d209f54"
+  },
+  {
+   "path": "usenix.js",
+   "size": 4991,
+   "sha256": "737993b614334bf4cfc2c4ce65c848742921be1768432dae2cf3e149d2399ae0"
+  },
+  {
+   "path": "venue-map.js",
+   "size": 17611,
+   "sha256": "2cf84081b46b6267841e2e7d54f3cee446e92dfcab99a310b4d619c04ad82f9a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-11T12:40:33.543Z",
+  "input": {
+   "slug": "zotero-unify",
+   "version": "1.3.0",
+   "sha256": "2a440db7ceb65aa844acc5081b007ad4a7643b83024c157ba36e0f51c513e2d0"
+  },
+  "coverage": {
+   "filesTotal": 10,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icon@2x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "JOURNAL_ALIASES.txt",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 48376,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "crossref.js",
+       "line": 52,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "crossref.js",
+       "line": 68,
+       "column": 6,
+       "snippet": "\"https://api.crossref.org/works?\" +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "crossref.js",
+       "line": 181,
+       "column": 64,
+       "snippet": "const url = (rec.URL && String(rec.URL).trim()) || (doi ? \"https://doi.org/\" + doi : \"\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "crossref.js",
+       "line": 56,
+       "column": 10,
+       "snippet": "\"ZoteroUnify/1.3.0 (https://github.com/JiangShuguo/zotero-unify; mailto:unify@jsg.local)\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "unify.js",
+      "line": 27,
+      "column": 44,
+      "snippet": "if (typeof IOUtils !== \"undefined\" && IOUtils.writeUTF8) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "unify.js",
+      "line": 28,
+      "column": 14,
+      "snippet": "await IOUtils.writeUTF8(path, new Date().toISOString() + \" \" + msg + \"\\n\", {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "usenix.js",
+      "line": 26,
+      "column": 23,
+      "snippet": "return await Zotero.File.getContentsAsync(cacheFile);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/JiangShuguo/zotero-unify/main/unify/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/JiangShuguo/zotero-unify/main/unify/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-11T12:40:33.543Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the JiangShuguo account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-11T12:40:33.543Z",
+  "appliesTo": {
+   "slug": "zotero-unify",
+   "version": "1.3.0",
+   "sha256": "2a440db7ceb65aa844acc5081b007ad4a7643b83024c157ba36e0f51c513e2d0"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "6e5459753d791f4ed12b7f925fbc30a0e2afb9f2530dd7463347bb8256986087"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-10T16:44:01Z",
+    "lastCommitAt": "2026-10-10T16:43:47Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

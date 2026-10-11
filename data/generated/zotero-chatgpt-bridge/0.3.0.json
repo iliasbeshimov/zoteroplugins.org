@@ -1,0 +1,410 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-chatgpt-bridge",
+ "repo": "chengrain0424/zotero-chatgpt-bridge",
+ "version": "0.3.0",
+ "tag": "v0.3.0-beta",
+ "releaseAuthor": "chengrain0424",
+ "publishedAt": "2026-10-11T11:16:26Z",
+ "prerelease": true,
+ "asset": {
+  "name": "Zotero_to_ChatGPT_Direct_v0.3.0_Zotero10-2.xpi",
+  "url": "https://github.com/chengrain0424/zotero-chatgpt-bridge/releases/download/v0.3.0-beta/Zotero_to_ChatGPT_Direct_v0.3.0_Zotero10-2.xpi",
+  "size": 12149,
+  "sha256": "a872a625b0bbcd31740a7762a8db3c25ea16d93d5d5100ea46a73d6f584efcba",
+  "githubAssetId": 630547630,
+  "uploader": "chengrain0424",
+  "uploadedAt": "2026-10-11T11:16:18Z",
+  "fetchedAt": "2026-10-11T12:40:33.543Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-chatgpt-safari@local.bridge",
+  "name": "Zotero to ChatGPT Chat (Safari, Reader Toolbar)",
+  "version": "0.3.0",
+  "description": "Reader toolbar one-click send of current PDF and SI to a Safari ChatGPT Chat; editable prompt; hidden Terminal automation, no plugin dialogs.",
+  "updateUrl": "https://raw.githubusercontent.com/chengrain0424/zotero-chatgpt-bridge/main/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1040,
+   "sha256": "138d6da7f5943144c19e78c2447426966432c72e418362d90c61c7a9b9b19db2"
+  },
+  {
+   "path": "bridge.js",
+   "size": 16459,
+   "sha256": "a03bedbbdfab65a35a5bcffd93bd198e7ca944622306b7cb374b78d18ee33514"
+  },
+  {
+   "path": "manifest.json",
+   "size": 602,
+   "sha256": "032a81bb02a153d710d172962083a3c410665dad635be75904cc7bb44802906d"
+  },
+  {
+   "path": "safari_source.js",
+   "size": 13084,
+   "sha256": "a2d83b4ae6c973c0e0702efdbb236e98565e6b2766ec2386563ff071a5eb15c1"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-11T12:40:33.543Z",
+  "input": {
+   "slug": "zotero-chatgpt-bridge",
+   "version": "0.3.0",
+   "sha256": "a872a625b0bbcd31740a7762a8db3c25ea16d93d5d5100ea46a73d6f584efcba"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 30583,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "chatgpt.com",
+     "category": "llm-provider",
+     "provider": "OpenAI ChatGPT",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "safari_source.js",
+       "line": 1,
+       "column": 20,
+       "snippet": "var SAFARI_SOURCE = \"-- Safari ChatGPT direct-attachment upload. NO PDF is copied, only per-run symlinks.\\n-- Never presses Send; verify Chat mode, attachment count, and upload completion.\\nproperty a",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 14,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 172,
+      "column": 33,
+      "snippet": "if (!sourcePath || !(await IOUtils.exists(sourcePath))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 175,
+      "column": 25,
+      "snippet": "const stat = await IOUtils.stat(sourcePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 180,
+      "column": 24,
+      "snippet": "const b = await IOUtils.read(sourcePath, { maxBytes: 5 });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 197,
+      "column": 19,
+      "snippet": "const exe = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 197,
+      "column": 63,
+      "snippet": "const exe = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 210,
+      "column": 61,
+      "snippet": "const cache = PathUtils.join(Services.dirsvc.get(\"Home\", Ci.nsIFile).path, \"Library\", \"Caches\", \"ZoteroChatGPTBridge\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 214,
+      "column": 10,
+      "snippet": "await IOUtils.makeDirectory(linkDir, {createAncestors:true});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 226,
+      "column": 18,
+      "snippet": "if (!(await IOUtils.exists(linkPath))) throw new Error(`链接未能指向有效文件：${name}`);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 231,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(promptPath, prompt);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 233,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(manifestPath, JSON.stringify({title:data.title, itemID:data.record.id, files,",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 199,
+      "column": 20,
+      "snippet": "const proc = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 199,
+      "column": 66,
+      "snippet": "const proc = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 267,
+      "column": 18,
+      "snippet": "const proc=Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 267,
+      "column": 64,
+      "snippet": "const proc=Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIProcess"
+     ],
+     "programs": [
+      "chmod",
+      "ln",
+      "open"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/chengrain0424/zotero-chatgpt-bridge/main/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/chengrain0424/zotero-chatgpt-bridge/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-11T12:40:33.543Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the chengrain0424 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-11T12:40:33.543Z",
+  "appliesTo": {
+   "slug": "zotero-chatgpt-bridge",
+   "version": "0.3.0",
+   "sha256": "a872a625b0bbcd31740a7762a8db3c25ea16d93d5d5100ea46a73d6f584efcba"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "4c6c1f346bac716772f35f6084e7dc195d00bf3973751f2a8cb523457625e861"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found; its code names known services",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include chmod, ln, open"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-11T11:16:26Z",
+    "lastCommitAt": "2026-10-11T11:07:48Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

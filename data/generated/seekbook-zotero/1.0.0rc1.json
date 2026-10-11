@@ -1,0 +1,529 @@
+{
+ "schemaVersion": 1,
+ "slug": "seekbook-zotero",
+ "repo": "ils-research/seekbook-zotero",
+ "version": "1.0.0rc1",
+ "tag": "v1.0.0-rc.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-05T12:18:12Z",
+ "prerelease": true,
+ "asset": {
+  "name": "seekbook-1.0.0rc1.xpi",
+  "url": "https://github.com/ILS-Research/seekbook-zotero/releases/download/v1.0.0-rc.1/seekbook-1.0.0rc1.xpi",
+  "size": 54599,
+  "sha256": "b515882ee6a7b7cc5bca86696342c47a9e1b0221527687186743ae3d363e7b4e",
+  "githubAssetId": 612493999,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-05T12:18:12Z",
+  "fetchedAt": "2026-10-11T12:40:33.543Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "seekbook@ils-forschung.de",
+  "name": "SeekBook",
+  "version": "1.0.0rc1",
+  "description": "Full-text index (semantic + keyword) for books in Zotero, served to other plugins over a local REST API.",
+  "homepageUrl": "https://gitlab.com/ils-research/zotero-plugins/seekbook-zotero",
+  "updateUrl": "https://gitlab.com/ils-research/zotero-plugins/seekbook-zotero/-/raw/master/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1765,
+   "sha256": "a0a4c26ea58bbe86a150d5924e6f8a4ffc67c9a5c1fdc4db0c132afdd519c8c4"
+  },
+  {
+   "path": "content/bookStatus.xhtml",
+   "size": 1462,
+   "sha256": "dae16e3ecc58d0ffc1b4e3610c504e94171d36c43a80aae9795f9c56886bf87b"
+  },
+  {
+   "path": "content/icons/seekbook.svg",
+   "size": 383,
+   "sha256": "093039d3675c4628a18a0a16fa04b262a37df940d0f6a6855d7588d1cfdd439a"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 10665,
+   "sha256": "1b7114d1d46a7b6d62d960c886071d68b44c8b1e15ccdcdd34c79f1fea4c2347"
+  },
+  {
+   "path": "content/scripts/search-worker.js",
+   "size": 2267,
+   "sha256": "05f02a1c6905aec581cc06f6658591fcfa59a78bc68ac92f448e5481256aba46"
+  },
+  {
+   "path": "content/scripts/seekbook.js",
+   "size": 160902,
+   "sha256": "ff372a47c9d8fc503b403b7fcaa5c363b14d1ed95b76cb961b9c4da0e19ef45a"
+  },
+  {
+   "path": "locale/de/seekbook-main.ftl",
+   "size": 204,
+   "sha256": "b0da7b3e9bb0fcd2fb1e9909f8a401ddff1e20596cbf51a0c368991bbba6dfd2"
+  },
+  {
+   "path": "locale/en-US/seekbook-main.ftl",
+   "size": 185,
+   "sha256": "d9a1bb17a710036f52b0bbeea47b39520343fde0d6195cb5f27c1b73e567a587"
+  },
+  {
+   "path": "manifest.json",
+   "size": 671,
+   "sha256": "f6fc976a667c078847f697cad1fdadf5ab26bddf8a397b423a4194453d00f4a6"
+  },
+  {
+   "path": "prefs.js",
+   "size": 3010,
+   "sha256": "f9782c7960613d9cf02595ee435802a3986f276d242345c8dc69a105880fccb5"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-11T12:40:33.543Z",
+  "input": {
+   "slug": "seekbook-zotero",
+   "version": "1.0.0rc1",
+   "sha256": "b515882ee6a7b7cc5bca86696342c47a9e1b0221527687186743ae3d363e7b4e"
+  },
+  "coverage": {
+   "filesTotal": 10,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "content/icons/seekbook.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/de/seekbook-main.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/seekbook-main.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 180071,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/seekbook.js",
+       "line": 389,
+       "column": 21,
+       "snippet": "resp = await getFetch()(url, { ...init, signal: ctrl.signal });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/seekbook.js",
+       "line": 469,
+       "column": 23,
+       "snippet": "const resp = await getFetch()(url, { method: \"GET\", headers, redirect: \"error\" });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "xhr",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/seekbook.js",
+       "line": 200,
+       "column": 16,
+       "snippet": "const xhr = new win.XMLHttpRequest();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 6,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.seekbook.baseUrl\", \"http://127.0.0.1:11434\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 6,
+       "column": 43,
+       "snippet": "pref(\"extensions.zotero.seekbook.baseUrl\", \"http://127.0.0.1:11434\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/seekbook.js",
+       "line": 201,
+       "column": 4,
+       "snippet": "xhr.open(\"HEAD\", `${origin}/`);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero.seekbook.baseUrl",
+     "defaultValue": "http://127.0.0.1:11434",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 6,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.seekbook.baseUrl\", \"http://127.0.0.1:11434\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 7,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.seekbook.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.seekbook.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/seekbook.js",
+      "line": 1803,
+      "column": 21,
+      "snippet": "pdfjsPromise = win.eval(`import(${JSON.stringify(PDFJS_URL)})`).then((mod) => {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "win.eval"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/seekbook.js",
+      "line": 2847,
+      "column": 4,
+      "snippet": "server.Endpoints[PATHS.stats] = endpoint(guard(() => statsPayload(store, indexer), PATHS.stats));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/seekbook.js",
+      "line": 2848,
+      "column": 4,
+      "snippet": "server.Endpoints[PATHS.search] = endpoint(guard(async (sp) => {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/seekbook.js",
+      "line": 2862,
+      "column": 4,
+      "snippet": "server.Endpoints[PATHS.pages] = endpoint(guard((sp) => pagesPayload(store, sp), PATHS.pages));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/seekbook.js",
+      "line": 2863,
+      "column": 4,
+      "snippet": "server.Endpoints[PATHS.books] = endpoint(guard((sp) => booksPayload(store, sp), PATHS.books));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/seekbook/books",
+      "/seekbook/pages",
+      "/seekbook/search",
+      "/seekbook/stats"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "own-database",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/seekbook.js",
+      "line": 691,
+      "column": 17,
+      "snippet": "return await db.queryAsync(sql, params) || [];",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/seekbook.js",
+      "line": 713,
+      "column": 38,
+      "snippet": "for (const sql of SCHEMA) await this.db.queryAsync(sql);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "sqlTables": [
+      "books",
+      "chunks",
+      "doc_vectors",
+      "documents",
+      "meta",
+      "outline",
+      "page_labels",
+      "pages",
+      "terms"
+     ],
+     "apis": [
+      "Zotero.DBConnection"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://gitlab.com/ils-research/zotero-plugins/seekbook-zotero/-/raw/master/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://gitlab.com/ils-research/zotero-plugins/seekbook-zotero/-/raw/master/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-11T12:40:33.543Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-11T12:40:33.543Z",
+  "appliesTo": {
+   "slug": "seekbook-zotero",
+   "version": "1.0.0rc1",
+   "sha256": "b515882ee6a7b7cc5bca86696342c47a9e1b0221527687186743ae3d363e7b4e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "242ca51e436ed3540bd48476814e1a779b820b597a9a6fb6da75ae0abe310d7d"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "other-repository",
+     "label": "Updates come from ils-research/zotero-plugins on GitLab",
+     "check": "The update address offers version 1.0.0rc1, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "dynamic-code",
+      "label": "Runs code it assembles while running",
+      "concern": "low"
+     },
+     {
+      "id": "own-database",
+      "label": "Keeps its own database file",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-05T12:18:12Z",
+    "lastCommitAt": "2026-10-05T12:02:51Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

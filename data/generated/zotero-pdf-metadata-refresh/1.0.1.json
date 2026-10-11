@@ -1,0 +1,1232 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf-metadata-refresh",
+ "repo": "git-jiwon/zotero-pdf-metadata-refresh",
+ "version": "1.0.1",
+ "tag": "v1.0.1",
+ "releaseAuthor": "git-jiwon",
+ "publishedAt": "2026-10-07T07:25:58Z",
+ "prerelease": false,
+ "asset": {
+  "name": "pdf-metadata-refresh-1.0.1.xpi",
+  "url": "https://github.com/git-jiwon/zotero-pdf-metadata-refresh/releases/download/v1.0.1/pdf-metadata-refresh-1.0.1.xpi",
+  "size": 674724,
+  "sha256": "ab7cb0595064978614356d4577b18f992512d9c16e1c4ba83c10c771590a36a3",
+  "githubAssetId": 617918946,
+  "uploader": "git-jiwon",
+  "uploadedAt": "2026-10-07T07:20:46Z",
+  "fetchedAt": "2026-10-11T12:40:33.543Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "pdf-metadata-refresh@zotero.org",
+  "name": "PDF Metadata Refresh",
+  "version": "1.0.1",
+  "description": "Re-recognize existing Zotero items from their attached PDFs",
+  "updateUrl": "https://raw.githubusercontent.com/git-jiwon/zotero-pdf-metadata-refresh/main/updates.json",
+  "strictMinVersion": "10.0.1",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1420,
+   "sha256": "15509288a0308176ee6e581db402048caaa7784472a71185dd983e326fe0900b"
+  },
+  {
+   "path": "content/batch.xhtml",
+   "size": 779,
+   "sha256": "2026aa394abfd5e08a8526504cf99b5ddf6e98c247738e4d043772b4068d647e"
+  },
+  {
+   "path": "content/main.js",
+   "size": 2472243,
+   "sha256": "88dd85360600aafc5b1b99bb41bbf5d2e7ecac208a40b831871f1e46c60c4c66"
+  },
+  {
+   "path": "icons/icon.png",
+   "size": 1377,
+   "sha256": "91575f80bcbaa036cc9c41fbe9afb2e9481cfe1169c7c606a4454a69404b3bb9"
+  },
+  {
+   "path": "icons/icon@2x.png",
+   "size": 2346,
+   "sha256": "5bce90ba24e7a29b7f5e8787e1134f855c917901e977a70da3ff60c9eeb8d278"
+  },
+  {
+   "path": "manifest.json",
+   "size": 547,
+   "sha256": "a12dd0f32a6ede96509286c8d0771fb8a5e1fc9ae8732d1c492f88aee981d03c"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-11T12:40:33.543Z",
+  "input": {
+   "slug": "zotero-pdf-metadata-refresh",
+   "version": "1.0.1",
+   "sha256": "ab7cb0595064978614356d4577b18f992512d9c16e1c4ba83c10c771590a36a3"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "icons/icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icons/icon@2x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 2474442,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "minified",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [
+    "content/main.js"
+   ],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 405300,
+       "snippet": ".reason}`};return{...skipped,body:\"\"}}await spaced(provider);const result=await ctx.fetch(url,{provider,accept:options.accept,timeoutMs:ctx.ledger.limits.requestTimeoutMs});let outcome=classifyFetch(r",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 405805,
+       "snippet": "ise(resolve=>setTimeout(resolve,wait));await spaced(provider);const again=await ctx.fetch(url,{provider,accept:options.accept,timeoutMs:ctx.ledger.limits.requestTimeoutMs});outcome=classifyFetch(again",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 11,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 2,
+       "column": 43093,
+       "snippet": ");let lastError;for(let attempt=0;attempt<2;attempt++){try{const response=await Zotero.HTTP.request(\"GET\",url,{timeout});assertPublicURL(response.responseURL||url);return response}catch(error){lastErr",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 2,
+       "column": 45031,
+       "snippet": "anslators.get(provider.id);if(translator)return translator;const response=await Zotero.HTTP.request(\"GET\",`https://raw.githubusercontent.com/go00ood/zotero-translators-kr/${revision}/${provider.file}.",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 298239,
+       "snippet": "solve,wait));nextRequestAt=Date.now()+REQUEST_INTERVAL;try{const response=await Zotero.HTTP.request(\"GET\",url,{responseType:\"json\",timeout:REQUEST_TIMEOUT});return response.response}catch(cause){const",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 346841,
+       "snippet": "patible.pathname=\"/api/v0/models\";compatible.search=\"\";try{const response=await Zotero.HTTP.request(\"GET\",compatible.href,{responseType:\"json\",timeout:1e4});const models=(response.response?.data||[]).",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 347366,
+       "snippet": "] LM Studio model metadata unavailable: ${String(cause)}`);const response=await Zotero.HTTP.request(\"GET\",endpointURL(endpoint,\"/models\"),{responseType:\"json\",timeout:1e4});const models=(response.resp",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 359061,
+       "snippet": "unavailable\");const url=googlePatentURL(number);let response;try{response=await Zotero.HTTP.request(\"GET\",url,{timeout:2e4})}catch(cause){const status=Number(cause?.status||cause?.xmlhttp?.status||0);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 368990,
+       "snippet": "}function zoteroCrossrefFetch(){const once=async url=>{try{const response=await Zotero.HTTP.request(\"GET\",url,{headers:{Accept:\"application/json\"},responseType:\"json\",timeout:12e3,errorDelayMax:0});le",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 402979,
+       "snippet": "ed URL)\",status:0,body:\"\",ms:0,error:PUBLIC_URL_ERROR};try{const response=await Zotero.HTTP.request(\"GET\",url,{responseType:\"text\",timeout:options.timeoutMs??DEFAULT_LIMITS.requestTimeoutMs,headers:op",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 525649,
+       "snippet": "Type=\"\";let status=0;for(let hop=0;hop<5;hop++){let response;try{response=await Zotero.HTTP.request(\"GET\",current,{followRedirects:false,successCodes:false,timeout:15e3,errorDelayMax:0,responseType:\"t",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 526298,
+       "snippet": "tType,status}},async readPDF(url){try{assertPublicURL(url);const response=await Zotero.HTTP.request(\"GET\",url,{responseType:\"arraybuffer\",timeout:6e4,successCodes:false,errorDelayMax:0});assertPublicU",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 5,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 2,
+       "column": 46427,
+       "snippet": "Zotero.HTTP.Location(Services.io.newURI(finalURL)),cookie:\"\"});const translate=new Zotero.Translate.Web;translate.setDocument(doc);translate.setTranslator(translator);const items=await translate.tran",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 6,
+       "column": 330868,
+       "snippet": "onst timeoutMs=options.timeoutMs??LOOKUP_TIMEOUT_MS;let translate;try{translate=new Zotero.Translate.Search;translate.setIdentifier({[identifier.kind]:identifier.value})}catch(cause){return{outcome:\"f",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 351358,
+       "snippet": "} file=${PathUtils.filename(originalPath)} recognition started`);try{temp=await Zotero.RecognizeDocument._recognize(attachment);if(!temp)return null;await Zotero.DB.waitForTransaction();const recogniz",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 359753,
+       "snippet": "Zotero.HTTP.Location(Services.io.newURI(finalURL)),cookie:\"\"});const translate=new Zotero.Translate.Web;translate.setDocument(doc);translate.setTranslator(translator);const items=await translate.tran",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 529974,
+       "snippet": "return ranked[0]}async function translateDOI(parent,doi,source){const translate=new Zotero.Translate.Search;translate.setIdentifier({DOI:doi});const translators=await translate.getTranslators();if(!tr",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 1234,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 346276,
+       "snippet": "\\uB2E4.\");return url.href}function getLMStudioSettings(){return{endpoint:String(Zotero.Prefs.get(PREFIX2+\"lmEndpoint\",true)||\"http://127.0.0.1:1234/v1\"),visionModel:String(Zotero.Prefs.get(PREFIX2+\"lm",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 346321,
+       "snippet": "oSettings(){return{endpoint:String(Zotero.Prefs.get(PREFIX2+\"lmEndpoint\",true)||\"http://127.0.0.1:1234/v1\"),visionModel:String(Zotero.Prefs.get(PREFIX2+\"lmVisionModel\",true)||\"\")}}function saveLMStudi",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.archives-ouvertes.fr",
+     "category": "scholarly-api",
+     "provider": "HAL",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 428847,
+       "snippet": "tcome,kind:\"noMatch\",note:\"the feed listed no entries\"},records}}var HAL_SEARCH=\"https://api.archives-ouvertes.fr/search/\";var HAL_FIELDS=\"halId_s,uri_s,title_s,authFirstName_s,authLastName_s,authFull",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 431374,
+       "snippet": "now(),ms:0,method:\"api\",live:false,note:\"nothing to ask\"},records:[]};const url=`${HAL_SEARCH}?q=${encodeURIComponent(q)}&fl=${HAL_FIELDS}&rows=3&wt=json`;const outcome=await guarded(ctx,\"hal\",url,{me",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 10,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 285363,
+       "snippet": "n{itemType:String(reading.itemType||\"book\"),fields,creators,notes}}var ENDPOINT=\"https://api.crossref.org/works/\";var CITED_PAGE_ROLES=new Set([\"references\",\"contents\"]);function normaliseDOI(value2){",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 296293,
+       "snippet": "age.type,bound:binding.reason};added.push(\"itemType\")}return added}var CROSSREF=\"https://api.crossref.org/works\";var OPENLIBRARY=\"https://openlibrary.org/search.json\";var REQUEST_TIMEOUT=12e3;var REQU",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 298623,
+       "snippet": "94\\uCCAD \\uC2E4\\uD328\")}async function crossrefWorks(title,cancelled){const url=`${CROSSREF}?rows=5&select=DOI,title,subtitle,author,editor,issued,published-print,published-online,container-title,volu",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 299888,
+       "snippet": "ossrefWorkByDOI(parent,before,doi,cancelled=()=>false){const json=await getJSON(`${CROSSREF}/${encodeURIComponent(doi.trim())}`,cancelled);const work=json?.message;const found=work?fromCrossref(parent",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 406095,
+       "snippet": "{...outcome,body:again.body}}}return{...outcome,body:result.body}}var CROSSREF2=\"https://api.crossref.org/works\";var CROSSREF_SELECT=\"DOI,type,title,author,issued,published-print,published-online,cont",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 409643,
+       "snippet": "pe:\"registry record\"}}async function crossrefSearch(query,ctx,rows=5){const url=`${CROSSREF2}?rows=${rows}&select=${CROSSREF_SELECT}&query.bibliographic=${encodeURIComponent(query.slice(0,300))}`;cons",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 410818,
+       "snippet": "edAt:now(),ms:0,method:\"api\",live:false,note:\"not a DOI\"},records:[]}}const url=`${CROSSREF2}/${encodeURIComponent(value2)}`;const outcome=await guarded(ctx,\"crossref\",url,{method:\"api\",expect:\"json\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 412380,
+       "snippet": "bibliographic=${encodeURIComponent(coordinateTerms(at))}`;return route===\"issn\"?`${CROSSREF2}?rows=20&select=${CROSSREF_SELECT}&filter=issn:${at.ISSN},${dates}&${terms}`:`${CROSSREF2}?rows=20&select=$",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 412470,
+       "snippet": "F2}?rows=20&select=${CROSSREF_SELECT}&filter=issn:${at.ISSN},${dates}&${terms}`:`${CROSSREF2}?rows=20&select=${CROSSREF_SELECT}&filter=${dates}&query.container-title=${encodeURIComponent(String(at.jou",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 531257,
+       "snippet": "f(!isResearchSquare(recognized)||!recognized.fields.title)return null;const url=\"https://api.crossref.org/works?filter=type:journal-article&rows=5&select=DOI,title,author,type&query.bibliographic=\"+en",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 8,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 7,
+       "column": 30871,
+       "snippet": "tadata,note:\"\"};let page=null;try{page=await recognizeFromWebPage(parent,before,`https://doi.org/${doi}`,cancelled)}catch{page=null}if(!page?.metadata)return{metadata,note:\" \\u2014 \\uAE68\\uC9C4 \\uAE00",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 293737,
+       "snippet": "==null&&value2!==\"\")fields[field]=String(value2);return{provider:\"crossref\",url:`https://doi.org/${doi}`,retrievedAt:new Date().toISOString(),live:true,method:\"api\",itemType:itemTypeFromCrossref(Strin",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 333967,
+       "snippet": "orks(query,cancelled)).map(work2=>({built:fromCrossref(parent,before,work2),url:`https://doi.org/${clean7(work2?.DOI)}`,provider:\"Crossref\"})):(await openLibraryDocs(query,cancelled)).map(doc=>({built",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 410145,
+       "snippet": "},records:[]}}const records=items.map(item=>recordFromCrossref(trimRecord(item),`https://doi.org/${item?.DOI}`,outcome)).filter(Boolean);return{outcome:records.length?outcome:{...outcome,kind:\"noMatch",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 411235,
+       "snippet": "parse\"},records:[]}}const record=message?recordFromCrossref(trimRecord(message),`https://doi.org/${value2}`,outcome):null;return{outcome:record?outcome:{...outcome,kind:\"noMatch\",note:\"no record for t",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 419006,
+       "snippet": "ithPlaceholderMonths(ofTheJournal.map(item=>recordFromCrossref(trimRecord(item),`https://doi.org/${item?.DOI}`,outcome2)).filter(Boolean));pick=recordAtCoordinates(at,records);if(pick.chosen||pick.ref",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 339,
+       "column": 56364,
+       "snippet": "missed){try{const landing=await this.stoppable(recognizeFromWebPage(item,before,`https://doi.org/${missed.value}`,()=>this.cancel));if(landing?.metadata){const fields=landing.metadata.fields||{};const",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 825,
+       "column": 49098,
+       "snippet": ".className=`value${old?\" old\":\"\"}`;if(field===\"DOI\"&&value2)externalLink(value2,`https://doi.org/${value2.replace(/^https?:\\/\\/(?:dx\\.)?doi\\.org\\//i,\"\")}`,box);else if(field.toLowerCase()===\"url\"&&/^h",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "export.arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 428424,
+       "snippet": "server record\"})}return records}async function arxivSearch(query,ctx){const url=`https://export.arxiv.org/api/query?max_results=3&search_query=${encodeURIComponent(`all:${query.slice(0,200)}`)}`;const",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "openlibrary.org",
+     "category": "scholarly-api",
+     "provider": "Open Library",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 5,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 296342,
+       "snippet": "pe\")}return added}var CROSSREF=\"https://api.crossref.org/works\";var OPENLIBRARY=\"https://openlibrary.org/search.json\";var REQUEST_TIMEOUT=12e3;var REQUEST_INTERVAL=250;var RETRY_BACKOFF=2e3;var SEARCH",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 299185,
+       "snippet": ").toUpperCase();if(value2.length!==10&&value2.length!==13)return null;const url=`${OPENLIBRARY}?limit=1&fields=key,title,author_name,first_publish_year,publisher,isbn,number_of_pages_median&q=isbn:${e",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 299490,
+       "snippet": "son.docs[0]:null;if(!doc)return null;let edition=null;try{edition=await getJSON(`https://openlibrary.org/isbn/${encodeURIComponent(value2)}.json`,cancelled)}catch(cause){Zotero.debug(`[PDF Metadata Re",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 300228,
+       "snippet": "itle}`}};return found}async function openLibraryDocs(title,cancelled){const url=`${OPENLIBRARY}?limit=5&fields=key,title,subtitle,author_name,first_publish_year,publisher,isbn,number_of_pages_median&t",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 334140,
+       "snippet": "ancelled)).map(doc=>({built:fromOpenLibrary(parent,before,doc,{text:text3}),url:`https://openlibrary.org${clean7(doc?.key)}`,provider:\"OpenLibrary\"}));for(const record of records){if(!record.built)con",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "patents.google.com",
+     "category": "scholarly-api",
+     "provider": "Google Patents",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 358334,
+       "snippet": "parseUSPatentNumberFromPDFHeader(header)}function googlePatentURL(number){return`https://patents.google.com/patent/${number}/en`}function assertGooglePatentURL(value2,number){const url=new URL(value2)",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 359061,
+       "snippet": "unavailable\");const url=googlePatentURL(number);let response;try{response=await Zotero.HTTP.request(\"GET\",url,{timeout:2e4})}catch(cause){const status=Number(cause?.status||cause?.xmlhttp?.status||0);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "raw.githubusercontent.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 2,
+       "column": 45057,
+       "snippet": ";if(translator)return translator;const response=await Zotero.HTTP.request(\"GET\",`https://raw.githubusercontent.com/go00ood/zotero-translators-kr/${revision}/${provider.file}.js`);const source=response",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.aladin.co.kr",
+     "category": "unknown",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 432326,
+       "snippet": "[]}}async function aladinLookup(isbn,ctx){const key2=ctx.keys?.aladin;const url=`https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=${encodeURIComponent(key2||\"\")}&itemIdType=ISBN13&ItemId=${enco",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.dbpia.co.kr",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 6,
+       "column": 567971,
+       "snippet": "oSearchBean.keywordList=\"+encodeURIComponent(query);if(provider===\"DBpia\")return\"https://www.dbpia.co.kr/search/topSearch?searchOption=all&query=\"+encodeURIComponent(query);void material;return\"https:",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.google.com",
+     "category": "integration",
+     "provider": "Google Search",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 459854,
+       "snippet": "googleSearchURL(query,script=\"latin\"){const hl=script===\"latin\"?\"en\":\"ko\";return`https://www.google.com/search?q=${encodeURIComponent(query.slice(0,200))}&hl=${hl}&num=10`}var BIBLIOGRAPHIC=/(^|\\.)(do",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.kci.go.kr",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 6,
+       "column": 567797,
+       "snippet": "n searchURL(query,provider=\"RISS\",material=\"article\"){if(provider===\"KCI\")return\"https://www.kci.go.kr/kciportal/po/search/poArtiSearList.kci?poSearchBean.conditionList=ALL&poSearchBean.keywordList=\"+",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 6,
+       "column": 573197,
+       "snippet": "te(\"onclick\")||\"\").match(/fnArtiDetail\\(['\"](ART\\d+)['\"]\\)/);const href=article?\"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=\"+article[1]:a.get",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.nl.go.kr",
+     "category": "unknown",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 434400,
+       "snippet": "item\"}]}}async function nlkLookup(isbn,ctx){const key2=ctx.keys?.nlk;const url=`https://www.nl.go.kr/seoji/SearchApi.do?cert_key=${encodeURIComponent(key2||\"\")}&result_style=json&page_no=1&page_size=",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 435555,
+       "snippet": "lean8(doc.PAGE).replace(/\\D.*$/,\"\");return{outcome,records:[{provider:\"nlk\",url:`https://www.nl.go.kr/seoji/contents/S80100000000.do?schType=simple&schStr=${isbn}`,retrievedAt:outcome.fetchedAt,live:o",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.riss.kr",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 6,
+       "column": 568084,
+       "snippet": "opSearch?searchOption=all&query=\"+encodeURIComponent(query);void material;return\"https://www.riss.kr/search/Search.do?isDetailSearch=N&searchGubun=true&viewYn=OP&query=\"+encodeURIComponent(query)}func",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.yes24.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 419453,
+       "snippet": "outcome:{...outcome,kind:\"noMatch\",note:pick.reason},records,queries}}var YES24=\"https://www.yes24.com\";var SHOP_NOISE=/\\s*[\\[(](?:예약판매|예약|세트|리커버|한정판|특별판|사은품|무료배송|당일배송|초판\\s*한정|\\d+\\s*권\\s*세트)[^\\])]*[\\])",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 423992,
+       "snippet": "geType:\"bookshop product page\"}}async function yes24Search(query,ctx){const url=`${YES24}/Product/Search?domain=BOOK&query=${encodeURIComponent(query.slice(0,120))}`;const outcome=await guarded(ctx,\"y",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 424582,
+       "snippet": "]};const records=[];for(const id of goods){const page=await guarded(ctx,\"yes24\",`${YES24}/product/goods/${id}`,{method:\"html\",expect:\"html\"});if(page.kind!==\"record\")continue;const record=recordFromYe",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 424720,
+       "snippet": "\"});if(page.kind!==\"record\")continue;const record=recordFromYes24Page(page.body,`${YES24}/product/goods/${id}`,page);if(record)records.push(record)}return{outcome:records.length?outcome:{...outcome,ki",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 7,
+       "column": 27311,
+       "snippet": "\",value:bare2};if(/^[\\w.-]+\\.[a-z]{2,}\\//i.test(value2))return{kind:\"url\",value:`https://${value2}`};return null}var STANDARD_LABELS={citation:\"Highwire citation \\uBA54\\uD0C0\\uD0DC\\uADF8\",\"json-ld\":\"s",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "https://openlibrary.org<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 334140,
+       "snippet": "ancelled)).map(doc=>({built:fromOpenLibrary(parent,before,doc,{text:text3}),url:`https://openlibrary.org${clean7(doc?.key)}`,provider:\"OpenLibrary\"}));for(const record of records){if(!record.built)con",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "https://raw.githubusercontent.com/go00ood/zotero-translators-kr/<expr>/<expr>.js",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 2,
+       "column": 45031,
+       "snippet": "anslators.get(provider.id);if(translator)return translator;const response=await Zotero.HTTP.request(\"GET\",`https://raw.githubusercontent.com/go00ood/zotero-translators-kr/${revision}/${provider.file}.",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero.pdfMetadataRefresh.lmEndpoint",
+     "defaultValue": "http://127.0.0.1:1234/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/main.js",
+       "line": 15,
+       "column": 346276,
+       "snippet": "\\uB2E4.\");return url.href}function getLMStudioSettings(){return{endpoint:String(Zotero.Prefs.get(PREFIX2+\"lmEndpoint\",true)||\"http://127.0.0.1:1234/v1\"),visionModel:String(Zotero.Prefs.get(PREFIX2+\"lm",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 70,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 2,
+      "column": 45565,
+      "snippet": "${provider.file}`;const path=Zotero.Translators.getSavePath(metadata);if(await IOUtils.exists(path))throw new Error(\"Translator destination already exists; refusing overwrite\");await Zotero.Translato",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 6,
+      "column": 298,
+      "snippet": "ile2=Zotero.Fulltext?.getItemCacheFile?.(attachment);if(cacheFile2?.path&&await IOUtils.exists(cacheFile2.path)){const cached=repairShiftedPages(firstPages(await Zotero.File.getContentsAsync(cacheFile",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 6,
+      "column": 380,
+      "snippet": "Utils.exists(cacheFile2.path)){const cached=repairShiftedPages(firstPages(await Zotero.File.getContentsAsync(cacheFile2,\"utf-8\",characterLimit*2),pageLimit,characterLimit));return combinePDFTextSource",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 6,
+      "column": 1848,
+      "snippet": "e2=Zotero.Fulltext?.getItemCacheFile?.(attachment);if(!cacheFile2?.path||!await IOUtils.exists(cacheFile2.path))return null;return bodySampleOf(String(await Zotero.File.getContentsAsync(cacheFile2,\"ut",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 6,
+      "column": 1925,
+      "snippet": "it IOUtils.exists(cacheFile2.path))return null;return bodySampleOf(String(await Zotero.File.getContentsAsync(cacheFile2,\"utf-8\",BODY_SAMPLE_READ)||\"\"),front)}catch(cause){Zotero.debug(`[PDF Metadata R",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 6,
+      "column": 550924,
+      "snippet": "ile2=Zotero.Fulltext?.getItemCacheFile?.(attachment);if(cacheFile2?.path&&await IOUtils.exists(cacheFile2.path)){patent=parseKoreanPatentText(await Zotero.File.getContentsAsync(cacheFile2,\"utf-8\",3e4)",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 6,
+      "column": 550992,
+      "snippet": "path&&await IOUtils.exists(cacheFile2.path)){patent=parseKoreanPatentText(await Zotero.File.getContentsAsync(cacheFile2,\"utf-8\",3e4));if(patent)debug(`item=${parent.key} pdf=${attachment.key} KIPO mar",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 7,
+      "column": 40667,
+      "snippet": "gerprint(attachment){const path=await attachment.getFilePath();if(!path||!await IOUtils.exists(path))throw new Error(\"PDF file is unavailable\");const stat=typeof IOUtils.stat===\"function\"?await IOUtil",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 7,
+      "column": 40749,
+      "snippet": "Utils.exists(path))throw new Error(\"PDF file is unavailable\");const stat=typeof IOUtils.stat===\"function\"?await IOUtils.stat(path):{};return JSON.stringify({pipeline:RECOGNITION_PIPELINE_VERSION,attac",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 7,
+      "column": 40781,
+      "snippet": "or(\"PDF file is unavailable\");const stat=typeof IOUtils.stat===\"function\"?await IOUtils.stat(path):{};return JSON.stringify({pipeline:RECOGNITION_PIPELINE_VERSION,attachmentKey:String(attachment.key||",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "installs-translators",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 2,
+      "column": 44901,
+      "snippet": "strings.join(\" \").slice(0,5e4)}async function ensureTranslator(provider){await Zotero.Translators.init();let translator=Zotero.Translators.get(provider.id);if(translator)return translator;const respo",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 2,
+      "column": 45669,
+      "snippet": "ow new Error(\"Translator destination already exists; refusing overwrite\");await Zotero.Translators.save(metadata,source.slice(end+2));await Zotero.Translators.reinit();translator=Zotero.Translators.ge",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 2,
+      "column": 45729,
+      "snippet": "g overwrite\");await Zotero.Translators.save(metadata,source.slice(end+2));await Zotero.Translators.reinit();translator=Zotero.Translators.get(provider.id);if(!translator)throw new Error(\"Translator in",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "downloaded"
+     ]
+    }
+   },
+   {
+    "id": "network-intercept",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 15,
+      "column": 522820,
+      "snippet": "ng)return;try{await target._createdPromise}catch{}if(observing||!browser)return;Services.obs.addObserver(observer,\"http-on-examine-response\");Services.obs.addObserver(observer,\"http-on-examine-cached-",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 15,
+      "column": 522882,
+      "snippet": "||!browser)return;Services.obs.addObserver(observer,\"http-on-examine-response\");Services.obs.addObserver(observer,\"http-on-examine-cached-response\");observing=true};const unwatch=()=>{if(!observing)re",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "http-on-examine-cached-response",
+      "http-on-examine-response"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/main.js",
+      "line": 337,
+      "column": 16862,
+      "snippet": "done\");const errorPath=PathUtils.join(directory,\"render.error\");const rendering=Zotero.Utilities.Internal.subprocess(powershell,[\"-NoProfile\",\"-NonInteractive\",\"-ExecutionPolicy\",\"Bypass\",\"-File\",scri",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Zotero.Utilities.Internal.exec"
+     ],
+     "programs": [
+      "powershell"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/git-jiwon/zotero-pdf-metadata-refresh/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/git-jiwon/zotero-pdf-metadata-refresh/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-11T12:40:33.543Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the git-jiwon account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-11T12:40:33.543Z",
+  "appliesTo": {
+   "slug": "zotero-pdf-metadata-refresh",
+   "version": "1.0.1",
+   "sha256": "ab7cb0595064978614356d4577b18f992512d9c16e1c4ba83c10c771590a36a3"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "5628a5bff9b084c20b47c615f6d91b691a328a07bc5c4880db3d093a05d1696b"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Minified (compressed) code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "code-hosting",
+      "hosts": [
+       "raw.githubusercontent.com"
+      ]
+     },
+     {
+      "category": "integration",
+      "hosts": [
+       "www.google.com"
+      ],
+      "unconfirmed": [
+       "www.google.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.archives-ouvertes.fr",
+       "api.crossref.org",
+       "doi.org",
+       "export.arxiv.org",
+       "openlibrary.org",
+       "patents.google.com"
+      ]
+     },
+     {
+      "category": "unknown",
+      "hosts": [
+       "www.aladin.co.kr",
+       "www.nl.go.kr",
+       "www.yes24.com"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts servers we couldn't identify: www.aladin.co.kr, www.nl.go.kr and www.yes24.com",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "installs-translators",
+      "label": "Adds Zotero translators it downloads",
+      "concern": "medium"
+     },
+     {
+      "id": "network-intercept",
+      "label": "Watches Zotero's network traffic",
+      "concern": "medium"
+     },
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include powershell"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-TRANSLATORS",
+     "CAP-INTERCEPT",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-07T07:25:58Z",
+    "lastCommitAt": "2026-10-07T07:22:10Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing",
+    "capabilities"
+   ],
+   "reasons": [
+    "Contacts servers we couldn't identify: www.aladin.co.kr, www.nl.go.kr and www.yes24.com",
+    "Adds Zotero translators it downloads",
+    "Watches Zotero's network traffic",
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

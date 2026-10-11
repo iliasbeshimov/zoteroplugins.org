@@ -1,0 +1,310 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-add-missing-snapshots",
+ "repo": "seanlawsonphd/zotero-add-missing-snapshots",
+ "version": "1.1.0",
+ "tag": "v1.1.0",
+ "releaseAuthor": "seanlawsonphd",
+ "publishedAt": "2026-10-09T19:11:09Z",
+ "prerelease": false,
+ "asset": {
+  "name": "add-missing-snapshots-1.1.0.xpi",
+  "url": "https://github.com/seanlawsonphd/zotero-add-missing-snapshots/releases/download/v1.1.0/add-missing-snapshots-1.1.0.xpi",
+  "size": 36068,
+  "sha256": "37158f28099e130b6f8c58807d7f98111d18cd6b76683de55b1f5b32a803c460",
+  "githubAssetId": 625911627,
+  "uploader": "seanlawsonphd",
+  "uploadedAt": "2026-10-09T19:11:08Z",
+  "fetchedAt": "2026-10-11T12:40:33.543Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "add-missing-snapshots@seanlawsonphd",
+  "name": "Add Missing Snapshots",
+  "version": "1.1.0",
+  "description": "Adds missing page snapshots to selected items and creates clean reader-view copies of snapshots, from the item context menu.",
+  "homepageUrl": "https://github.com/seanlawsonphd/zotero-add-missing-snapshots",
+  "updateUrl": "https://raw.githubusercontent.com/seanlawsonphd/zotero-add-missing-snapshots/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "add-missing-snapshots.js",
+   "size": 9667,
+   "sha256": "a1d769d44f95b355b37bd6b25e29d1df6cda5021058c3772b974f182aec0be6e"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 919,
+   "sha256": "966d2cbefa8384b11e4f9f47741d4cd599bd7981527151ca859b06b6daf8c554"
+  },
+  {
+   "path": "lib/LICENSE-Readability.txt",
+   "size": 11565,
+   "sha256": "06994c60cb951f5a4f860d6f4a8377b536e86200c896ee352409223166a229d5"
+  },
+  {
+   "path": "lib/Readability.js",
+   "size": 90944,
+   "sha256": "e9330028c8a5a4aa7d75147be2605d520f7f213c7b28474947dc0e9c984e9bed"
+  },
+  {
+   "path": "locale/en-US/add-missing-snapshots.ftl",
+   "size": 136,
+   "sha256": "a457e67fb2483a6da9441b73c3b5d02c10a116e82bcb58e3efadf6fcadcedd0b"
+  },
+  {
+   "path": "manifest.json",
+   "size": 602,
+   "sha256": "b6b81e66eaa30853b9fa265210fc7fa3eaa26efe9bd769d3852661ba8696a102"
+  },
+  {
+   "path": "reader-view.js",
+   "size": 4757,
+   "sha256": "f75c66256f05a7dd42734f2cf1ef94f03379797c4520c70403807c48b8604a4d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-11T12:40:33.543Z",
+  "input": {
+   "slug": "zotero-add-missing-snapshots",
+   "version": "1.1.0",
+   "sha256": "37158f28099e130b6f8c58807d7f98111d18cd6b76683de55b1f5b32a803c460"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "lib/LICENSE-Readability.txt",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/add-missing-snapshots.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 106287,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "add-missing-snapshots.js",
+       "line": 187,
+       "column": 11,
+       "snippet": "await Zotero.Attachments.importFromURL({",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "(the item's own URL)",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "add-missing-snapshots.js",
+       "line": 187,
+       "column": 11,
+       "snippet": "await Zotero.Attachments.importFromURL({",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "add-missing-snapshots.js",
+      "line": 301,
+      "column": 19,
+      "snippet": "let html = await Zotero.File.getContentsAsync(path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 18,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/seanlawsonphd/zotero-add-missing-snapshots/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/seanlawsonphd/zotero-add-missing-snapshots/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-11T12:40:33.543Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the seanlawsonphd account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-11T12:40:33.543Z",
+  "appliesTo": {
+   "slug": "zotero-add-missing-snapshots",
+   "version": "1.1.0",
+   "sha256": "37158f28099e130b6f8c58807d7f98111d18cd6b76683de55b1f5b32a803c460"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "557cad9231285d455b7fc70ca1d3516b6bf10af9a4bf81961e01d210d018835a"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [],
+    "concern": "none",
+    "label": "Only visits the web addresses saved in your items",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-09T19:11:09Z",
+    "lastCommitAt": "2026-10-09T19:11:04Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

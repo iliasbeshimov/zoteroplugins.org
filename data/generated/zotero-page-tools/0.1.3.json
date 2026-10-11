@@ -1,0 +1,327 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-page-tools",
+ "repo": "yuukibarns/zotero-page-tools",
+ "version": "0.1.3",
+ "tag": "v0.1.3",
+ "releaseAuthor": "yuukibarns",
+ "publishedAt": "2026-10-05T10:05:48Z",
+ "prerelease": false,
+ "asset": {
+  "name": "pdf-page-tools-0.1.3.xpi",
+  "url": "https://github.com/yuukibarns/zotero-page-tools/releases/download/v0.1.3/pdf-page-tools-0.1.3.xpi",
+  "size": 7127,
+  "sha256": "1bcdb11ac2ff0caef5fda6e0b9e177e982e0f80547f59a1aa0ef8875ebfe7f06",
+  "githubAssetId": 612189471,
+  "uploader": "yuukibarns",
+  "uploadedAt": "2026-10-05T10:05:47Z",
+  "fetchedAt": "2026-10-11T12:40:33.543Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "pdf-page-tools@yuukibarns",
+  "name": "PDF Page Tools",
+  "version": "0.1.3",
+  "description": "Copy the current PDF page as an image or PDF file, and export page ranges.",
+  "updateUrl": "https://raw.githubusercontent.com/yuukibarns/zotero-page-tools/main/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 528,
+   "sha256": "5478878e38416645c5dfeac384b205f0e74158d38a53ee78ef7455786045f2fb"
+  },
+  {
+   "path": "icon.svg",
+   "size": 539,
+   "sha256": "43cf70e7ecdb7f0815d4369d70d4673d08d983fab310bcd3b9309575a8a155f9"
+  },
+  {
+   "path": "manifest.json",
+   "size": 497,
+   "sha256": "ce1b00235b89943074d5aece92f8af702a600df6842bc21ac09b07a9ada2dc62"
+  },
+  {
+   "path": "page-tools.js",
+   "size": 12347,
+   "sha256": "49029a13c4dda9e093c9102b0e7efbe4555376a49bf9e44868b1ae738fc11970"
+  },
+  {
+   "path": "README.md",
+   "size": 2527,
+   "sha256": "83cf1cf7682a14bdde336dea242e831318e0db4d2ff0db395139533e3f381b19"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-11T12:40:33.543Z",
+  "input": {
+   "slug": "zotero-page-tools",
+   "version": "0.1.3",
+   "sha256": "1bcdb11ac2ff0caef5fda6e0b9e177e982e0f80547f59a1aa0ef8875ebfe7f06"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 12875,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "page-tools.js",
+      "line": 87,
+      "column": 16,
+      "snippet": "C.classes['@mozilla.org/widget/clipboard;1'].getService(C.interfaces.nsIClipboard)",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "page-tools.js",
+      "line": 87,
+      "column": 62,
+      "snippet": "C.classes['@mozilla.org/widget/clipboard;1'].getService(C.interfaces.nsIClipboard)",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "page-tools.js",
+      "line": 106,
+      "column": 46,
+      "snippet": "const dir = Services.dirsvc.get('TmpD', C.interfaces.nsIFile).clone();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "page-tools.js",
+      "line": 112,
+      "column": 18,
+      "snippet": "try { await IOUtils.write(file.path, bytes);return file; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "page-tools.js",
+      "line": 133,
+      "column": 14,
+      "snippet": "await IOUtils.write(temporary.path, bytes);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "page-tools.js",
+      "line": 134,
+      "column": 28,
+      "snippet": "if (!stopped) await IOUtils.move(temporary.path, picker.file, { noOverwrite: result !== picker.returnReplace });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "user-chosen",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 19,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/yuukibarns/zotero-page-tools/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/yuukibarns/zotero-page-tools/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-11T12:40:33.543Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the yuukibarns account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-11T12:40:33.543Z",
+  "appliesTo": {
+   "slug": "zotero-page-tools",
+   "version": "0.1.3",
+   "sha256": "1bcdb11ac2ff0caef5fda6e0b9e177e982e0f80547f59a1aa0ef8875ebfe7f06"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.5",
+   "inputHash": "dcb5946e7e9ac69c0f468063cac6a9154b93f323608cc4327d0b5467c79230a0"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-05T10:05:48Z",
+    "lastCommitAt": "2026-10-05T10:05:42Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.5",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
