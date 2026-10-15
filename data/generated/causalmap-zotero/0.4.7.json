@@ -1,0 +1,313 @@
+{
+ "schemaVersion": 1,
+ "slug": "causalmap-zotero",
+ "repo": "stevepowell99/causalmap-zotero",
+ "version": "0.4.7",
+ "tag": "v0.4.7",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-14T13:46:53Z",
+ "prerelease": false,
+ "asset": {
+  "name": "causalmap-zotero.xpi",
+  "url": "https://github.com/stevepowell99/causalmap-zotero/releases/download/v0.4.7/causalmap-zotero.xpi",
+  "size": 4891,
+  "sha256": "217de6aab313d56bb8b090e288c8c954c41633a1632756d8bfc0c8f755f2ecea",
+  "githubAssetId": 640520323,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-14T13:46:53Z",
+  "fetchedAt": "2026-10-15T08:33:05.281Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "causalmap@causalmap.app",
+  "name": "Causal Map for Zotero",
+  "version": "0.4.7",
+  "description": "Turn a Zotero item into a Causal Map project.",
+  "homepageUrl": "https://causalmap.app",
+  "updateUrl": "https://github.com/stevepowell99/causalmap-zotero/releases/latest/download/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 699,
+   "sha256": "e56c85c9e41c4f8fc7c9a032e4f8e77552d8eb5c56de7e1a32a42b7ca141785f"
+  },
+  {
+   "path": "icons/causalmap.png",
+   "size": 109,
+   "sha256": "c72c5b6b2abd4038c5922820603a67c41175bf08cf70c9fb540901ae3d6641e6"
+  },
+  {
+   "path": "manifest.json",
+   "size": 492,
+   "sha256": "c1f4b3627edd674633b6108d7fef09b555eba5413acaa69b68096739e63b30d5"
+  },
+  {
+   "path": "src/causalmap.js",
+   "size": 10278,
+   "sha256": "c16e2c9f5f8d25519e861b1ae0837e5e920063d938f746fcb0681146c37b4f0a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-15T08:33:05.281Z",
+  "input": {
+   "slug": "causalmap-zotero",
+   "version": "0.4.7",
+   "sha256": "217de6aab313d56bb8b090e288c8c954c41633a1632756d8bfc0c8f755f2ecea"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "icons/causalmap.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 10977,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/causalmap.js",
+       "line": 165,
+       "column": 18,
+       "snippet": "let xhr = await Zotero.HTTP.request('POST', this.FUNCTION_URL, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "app.causalmap.app",
+     "category": "developer-server",
+     "provider": "Plugin developer (name match)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/causalmap.js",
+       "line": 7,
+       "column": 10,
+       "snippet": "APP_URL: 'https://app.causalmap.app',",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "ltonrdstoclpnhefgmtz.supabase.co",
+     "category": "cloud-function",
+     "provider": "Supabase",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/causalmap.js",
+       "line": 8,
+       "column": 15,
+       "snippet": "FUNCTION_URL: 'https://ltonrdstoclpnhefgmtz.supabase.co/functions/v1/zotero',",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.causalmap.appUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/causalmap.js",
+       "line": 157,
+       "column": 11,
+       "snippet": "let v = Services.prefs.getStringPref(this.APP_URL_PREF, '');",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/stevepowell99/causalmap-zotero/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/stevepowell99/causalmap-zotero/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-15T08:33:05.281Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-15T08:33:05.281Z",
+  "appliesTo": {
+   "slug": "causalmap-zotero",
+   "version": "0.4.7",
+   "sha256": "217de6aab313d56bb8b090e288c8c954c41633a1632756d8bfc0c8f755f2ecea"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "dc4b6e46a8e63cf406ad800e230e9ae59a80436129fedba4c3c2e3482f38ad70"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "developer-servers",
+    "hosts": [
+     {
+      "category": "cloud-function",
+      "hosts": [
+       "ltonrdstoclpnhefgmtz.supabase.co"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts a server on a hosting platform: ltonrdstoclpnhefgmtz.supabase.co",
+    "legalRisk": false,
+    "drivers": [
+     "DS-DEVELOPER"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-14T13:46:53Z",
+    "lastCommitAt": "2026-10-14T13:55:34Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Contacts a server on a hosting platform: ltonrdstoclpnhefgmtz.supabase.co"
+   ]
+  }
+ }
+}

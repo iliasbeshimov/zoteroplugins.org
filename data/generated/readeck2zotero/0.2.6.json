@@ -1,0 +1,377 @@
+{
+ "schemaVersion": 1,
+ "slug": "readeck2zotero",
+ "repo": "core-hn/readeck2zotero",
+ "version": "0.2.6",
+ "tag": "v0.2.6",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-14T11:38:41Z",
+ "prerelease": false,
+ "asset": {
+  "name": "readeck2zotero.xpi",
+  "url": "https://github.com/core-hn/readeck2zotero/releases/download/v0.2.6/readeck2zotero.xpi",
+  "size": 6854,
+  "sha256": "e4266c021c526b92fe0728ec2660c358d831ef8fcd9cd742a2f7c31895197ac8",
+  "githubAssetId": 640198967,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-14T11:38:41Z",
+  "fetchedAt": "2026-10-15T08:33:05.281Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "readeck-import@zotero-plugin",
+  "name": "Readeck2Zotero",
+  "version": "0.2.6",
+  "description": "Importe les annotations Readeck dans Zotero",
+  "updateUrl": "https://raw.githubusercontent.com/core-hn/readeck2zotero/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 15479,
+   "sha256": "23c14530c9263dbfa593570687baf337c5cfa1418c7a14ae4946f8922ea4e9d3"
+  },
+  {
+   "path": "manifest.json",
+   "size": 501,
+   "sha256": "18172673b4f160bc4e5e87dcdd15f6c1034444592b869c712064a6e087f6c800"
+  },
+  {
+   "path": "prefs.js",
+   "size": 97,
+   "sha256": "7599962af3d0d7ab08e44cc586ec2926ebddf7e5269f8afe091061f06c523005"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 1869,
+   "sha256": "f8b4564128950f8f10ab0f4653f9d24a21ddab609643413db1e73deedcd750e8"
+  },
+  {
+   "path": "readeck.svg",
+   "size": 499,
+   "sha256": "454179c363fe428239cc7768aea87deaf134970077570c26d8a9d1247a94937a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-15T08:33:05.281Z",
+  "input": {
+   "slug": "readeck2zotero",
+   "version": "0.2.6",
+   "sha256": "e4266c021c526b92fe0728ec2660c358d831ef8fcd9cd742a2f7c31895197ac8"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "readeck.svg",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 17445,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "xhr",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 135,
+       "column": 14,
+       "snippet": "var xhr = new XMLHttpRequest();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "readeck.abbadie.ovh",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 32,
+       "column": 45,
+       "snippet": "<div class=\"hint\">Sans slash final. Ex : https://readeck.abbadie.ovh</div>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.readeck-import.serverUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 159,
+       "column": 18,
+       "snippet": "var serverUrl = Zotero.Prefs.get(PREF_URL, true) || \"\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 165,
+       "column": 16,
+       "snippet": "serverUrl = Zotero.Prefs.get(PREF_URL, true) || \"\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 310,
+       "column": 21,
+       "snippet": "var currentUrl = Zotero.Prefs.get(PREF_URL, true) || \"\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "pref-server-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.xhtml",
+       "line": 29,
+       "column": 4,
+       "snippet": "<input id=\"pref-server-url\" type=\"text\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 160,
+      "column": 18,
+      "snippet": "var apiToken = Zotero.Prefs.get(PREF_TOKEN, true) || \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 166,
+      "column": 16,
+      "snippet": "apiToken = Zotero.Prefs.get(PREF_TOKEN, true) || \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 311,
+      "column": 21,
+      "snippet": "var currentToken = Zotero.Prefs.get(PREF_TOKEN, true) || \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 328,
+      "column": 2,
+      "snippet": "Zotero.Prefs.set(PREF_TOKEN, newToken, true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.readeck-import.apiToken\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.readeck-import.apiToken"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/core-hn/readeck2zotero/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/core-hn/readeck2zotero/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-15T08:33:05.281Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-15T08:33:05.281Z",
+  "appliesTo": {
+   "slug": "readeck2zotero",
+   "version": "0.2.6",
+   "sha256": "e4266c021c526b92fe0728ec2660c358d831ef8fcd9cd742a2f7c31895197ac8"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "43d3d04162af01186ba585d901ddf66b591552fe316c4bb3e5b445fc6f969b41"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-14T11:38:41Z",
+    "lastCommitAt": "2026-10-14T11:38:35Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
