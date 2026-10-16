@@ -9,6 +9,7 @@
   "real": true,
   "concern": "low",
   "rule": "CAP-DOWNLOAD-EXEC-TOLD",
+  "label": "Downloads uv and installs Python and speech packages when you turn on voice input",
   "summary": "When you choose to install voice input (the button says about 700 MB), it downloads uv from Astral's GitHub releases and uses it to install Python and speech packages. uv is checked only against a checksum from the same place.",
   "facts": {
     "what": "For voice input only: the uv Python package manager (pinned release 0.11.30 from astral-sh's GitHub releases, checked against a .sha256 file fetched from the same release), which then installs a local Python 3.12 and speech packages (faster-whisper, sounddevice, huggingface-hub) and downloads a Whisper speech model (about 700 MB). Separately, the inherited full-document translation installer (Miniconda / uv install script piped into a shell) exists in the code but its Translate tab is hidden and unreachable.",

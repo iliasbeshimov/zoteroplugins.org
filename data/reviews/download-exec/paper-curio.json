@@ -9,6 +9,7 @@
   "real": true,
   "concern": "low",
   "rule": "CAP-DOWNLOAD-EXEC-TOLD",
+  "label": "Downloads and runs a standalone Python on Macs without Python 3.12",
   "summary": "The first time you process a collection on a Mac without Python 3.12, it downloads a standalone Python from Astral's python-build-standalone releases and runs it, as its README says. The download isn't checked against a fingerprint.",
   "facts": {
     "what": "A standalone Python 3.12 build (python-build-standalone, macOS only, install_only tar.gz for the Mac's chip) fetched from the latest astral-sh/python-build-standalone GitHub release, unpacked into the Zotero profile, then executed. It is only fetched if no Python 3.12 is already found. The plugin then also runs pip install -r requirements.txt (from the user's own paper-curation clone) into a venv built from that Python.",

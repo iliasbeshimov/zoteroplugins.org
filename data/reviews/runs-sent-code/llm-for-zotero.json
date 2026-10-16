@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "slug": "llm-for-zotero",
+  "version": "3.9.12",
+  "sha256": "92a7047d73856c5a416381f9751ceeb987b09b7c98f027b45a30be29e05de142",
+  "codeKey": "685dba5f961f",
+  "reviewedAt": "2026-10-16",
+  "method": "Read from the release file by Claude Opus 5.5: the agent's run_command and zotero_script tools, the action authorization policy, the permission-mode setting and its migration, and the mode descriptions shown in the plugin.",
+  "real": true,
+  "concern": "high",
+  "rule": "CAP-RUNS-SENT-CODE-AI-REVIEWED",
+  "label": "Its AI agent can run commands and code on your computer; by default, an AI check decides when to ask you",
+  "summary": "In agent mode the AI can run shell commands and JavaScript inside Zotero. Commands that only read (ls, find, head, tail, rg and a few others) run without asking in every mode. The rest depends on a setting: Safe asks you every time; Auto, the default, runs ordinary and reversible changes and has a second AI call decide about the rest, asking you only when it judges the action unclear or risky; Yolo never asks. Commands run as you, so they can read and change any of your files.",
+  "facts": {
+    "tools": [
+      "run_command: a shell command passed to the native shell (zsh, bash or cmd.exe)",
+      "zotero_script: JavaScript run inside Zotero, either through a library-only facade or with full ('privileged') access"
+    ],
+    "defaultMode": "auto",
+    "defaultModeQuote": {
+      "file": "content/scripts/llmforzotero.js",
+      "text": "const migrated = legacyValue === \"safe\" || legacyValue === \"auto\" || legacyValue === \"yolo\" ? legacyValue : \"auto\";"
+    },
+    "modes": {
+      "safe": "Every external write, including new-note creation, is shown for review before it runs. Reads do not require review.",
+      "auto": "Reads, ordinary writes and recoverable changes run automatically. Other actions receive model review; confirmation is requested only for unclear intent, excessive risk, or unavailable review.",
+      "yolo": "The Original Agent acts without permission prompts or approval-model calls, including ambiguous or dangerous actions."
+    },
+    "readsWithoutAsking": "authorizeOriginalAction runs any action whose plan is read_only with a known assurance before checking the mode. isReadOnlyCommand accepts pwd, echo, printf, wc, rg, find, git, head, ls, stat and tail with listed flags and no output redirection; head, tail and rg print file contents, which go to the AI model.",
+    "modelReview": "ActionAuthorizationService asks a reviewer model to return execute or confirm; an invalid or failed review becomes confirm.",
+    "privilegedScripts": "A zotero_script with access 'privileged' is planned as ambiguous (filesystem, network, delete, egress), so Auto sends it to the model review.",
+    "externalAgents": "When Claude Code, Codex or another MCP client drives the tools, that client's own permission settings apply instead of these modes."
+  }
+}
