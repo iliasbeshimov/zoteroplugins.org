@@ -293,7 +293,12 @@ const CONCERN_LEVEL: Record<string, Level> = {
 };
 const CONCERN_RANK: Record<string, number> = { high: 3, medium: 2, low: 1, none: 0, unknown: 0 };
 const LEVEL_TONE: Record<string, Tone | undefined> = { medium: "rev", high: "ser" };
-const CAP_GROUP = { high: "High concern", medium: "Medium concern", low: "Low concern", none: "Not a concern" };
+const CAP_GROUP = {
+  high: "High concern",
+  medium: "Medium concern",
+  low: "Low concern",
+  none: "Not a concern",
+};
 
 /** ["7","8","9","11 beta"] → "7–9, 11 beta". */
 function rangeOf(vs: string[]): string {
@@ -525,9 +530,9 @@ function build(
   const badges = [...(caps?.badges ?? [])].sort(
     (a, b) => CONCERN_RANK[b.concern] - CONCERN_RANK[a.concern],
   );
-  // Every medium or high finding gets its evidence, with what it means here.
+  // Every medium or high finding gets its evidence, with what it means here, and so does a download at any level, with why it's rated that way.
   const capEv: Evidence[] = [];
-  for (const b of badges.filter((b) => CONCERN_RANK[b.concern] >= 2)) {
+  for (const b of badges.filter((b) => CONCERN_RANK[b.concern] >= 2 || b.id === "download-exec")) {
     const e = pickEv(rel?.capabilities?.find((c) => c.id === b.id)?.evidence);
     if (e)
       capEv.push({

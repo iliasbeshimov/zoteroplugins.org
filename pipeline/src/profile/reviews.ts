@@ -3,17 +3,15 @@ import { join } from "node:path";
 import { CapabilityId } from "@atlas/schema";
 import { z } from "zod";
 import { paths } from "../paths.ts";
+import { classifyDownload, DownloadFacts, downloadLabelEnd, downloadWhy } from "./download.ts";
 
 /**
  * A hand review of one finding in one plugin, a file per plugin in
  * data/reviews/<capability-id>/<slug>.json. The scanner can see that a plugin has a capability but
  * not always what it is, whether the plugin tells you, or where it comes from; a review
- * establishes that from the release file and its README, and sets the finding's level. For
- * "Downloads a program and runs it":
- * - low: you're told first (README, or a button or prompt that says it downloads) and it comes from
- *   the program's own publisher over https;
- * - medium: anything else we could identify;
- * - high: it comes over unencrypted http with no check, so someone on the network can swap it.
+ * establishes that from the release file and its README, and sets the finding's level. A download
+ * review's level and rule are computed from its facts by classifyDownload (download.ts), and the
+ * file must state the same level and rule.
  * A review names the exact release files by SHA-256 and, when it has one, the capability's codeKey:
  * a later release whose code behind the finding has the same codeKey is covered too (a rebuild that
  * only renamed things), and any other release goes back to the scanner's verdict until it's
@@ -53,7 +51,13 @@ export const FindingReviewFile = z.object({
     .optional(),
 });
 /** A review as read: the capability is the name of the directory it sits in. */
-export type FindingReview = z.infer<typeof FindingReviewFile> & { capability: CapabilityId };
+export type FindingReview = z.infer<typeof FindingReviewFile> & {
+  capability: CapabilityId;
+  /** A download review's reason for its level, computed from its facts. */
+  why?: string;
+  /** What a download review's badge label ends with, computed from its facts. */
+  labelEnd?: string;
+};
 
 /** data/reviews/<capability>/<slug>.json, when there is one that validates. */
 export async function readFindingReview(
@@ -74,7 +78,22 @@ export async function readFindingReview(
     return null;
   }
   const parsed = FindingReviewFile.safeParse(json);
-  return parsed.success && parsed.data.slug === slug ? { ...parsed.data, capability } : null;
+  if (!parsed.success || parsed.data.slug !== slug) return null;
+  const review = parsed.data;
+  if (capability === "download-exec" && review.real) {
+    const facts = DownloadFacts.safeParse(review.facts);
+    if (!facts.success) return null;
+    const contentChecked = Boolean(review.contentChecked);
+    const got = classifyDownload(facts.data, contentChecked);
+    if (review.concern !== got.concern || review.rule !== got.rule) return null;
+    return {
+      ...review,
+      capability,
+      why: downloadWhy(got.kind, facts.data, contentChecked),
+      labelEnd: downloadLabelEnd(got.kind, got.concern),
+    };
+  }
+  return { ...review, capability };
 }
 
 /** Every review of a plugin, from every capability directory. */

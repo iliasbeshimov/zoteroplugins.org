@@ -268,9 +268,15 @@ describe("investigation queue", () => {
       method: "read the code",
       real: true,
       concern: "medium",
-      rule: "CAP-DOWNLOAD-EXEC-REVIEWED",
+      rule: "CAP-DOWNLOAD-EXEC-DEVELOPER",
       summary: "s",
-      facts: {},
+      facts: {
+        source: "developer-own",
+        transport: "https",
+        integrity: "none",
+        trigger: "automatic",
+        toldInReadme: "yes",
+      },
       ...over,
     });
     const analysis = (codeKey?: string) => ({

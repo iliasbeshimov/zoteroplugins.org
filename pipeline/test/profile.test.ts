@@ -621,7 +621,7 @@ describe("badge wording for package installs and sent code", () => {
     const detail = (c: string) =>
       cardFor(c).facets.capabilities.badges.find((b) => b.id === "download-exec")?.detail;
     expect(detail(code)).toBe(
-      "From gitee.com; not checked before it runs, so a swapped file would run too. We haven't yet reviewed what it downloads.",
+      "We haven't yet reviewed who publishes the file or whether anything stops it changing, so it counts as a high concern until we do. From gitee.com; not checked against a fingerprint fixed in the plugin.",
     );
   });
   it("says when it copies a browser's sign-in cookies into a browser it starts", () => {
@@ -2004,12 +2004,17 @@ describe("reviewed findings", () => {
       await Subprocess.call({ command: "/bin/chmod", arguments: ["777", path] }); }
     async function run(path) { await Subprocess.call({ command: path, arguments: [] }); }`;
   type Review = NonNullable<Parameters<typeof score>[0]["findingReviews"]>[number];
+  const why =
+    "Its developer can replace the file at any time without releasing a new version, and nothing checks it before it runs, so our check of the plugin doesn't cover what runs.";
   const review = (over: Partial<Review> = {}): Review => ({
     capability: "download-exec",
     files: ["c".repeat(64)],
     real: true,
     concern: "medium",
-    rule: "CAP-DOWNLOAD-EXEC-REVIEWED",
+    rule: "CAP-DOWNLOAD-EXEC-DEVELOPER",
+    label: "Downloads a helper program on first start",
+    why,
+    labelEnd: "; its developer can change what runs at any time",
     summary: "On first start it downloads a small helper program and runs it.",
     version: "1.0.0",
     ...over,
@@ -2019,27 +2024,52 @@ describe("reviewed findings", () => {
   // The fixture's file is b…b.
   const sha = "b".repeat(64);
   const keyOf = () => analyze(code).capabilities.find((c) => c.id === "download-exec")?.codeKey;
+  const summary = "On first start it downloads a small helper program and runs it.";
 
   it("is high until it's reviewed, and says so", () => {
     const card = cardFor(code);
     expect(dl(card)?.concern).toBe("high");
-    expect(dl(card)?.detail).toMatch(/We haven't yet reviewed what it downloads\.$/);
+    expect(dl(card)?.label).toBe("Downloads and runs a program we haven't reviewed yet");
+    expect(dl(card)?.detail).toMatch(/^We haven't yet reviewed who publishes the file/);
+    expect(dl(card)?.detail).toMatch(/\.$/);
     expect(card.facets.capabilities.drivers).toContain("CAP-DOWNLOAD-EXEC");
+  });
+
+  it("says when it comes over plain http", () => {
+    const http = `function info() { return "http://gitee.com/x/y/releases/download/binary/tool-mac"; }
+      async function get(url, path) { const res = await fetch(url); const buf = await res.arrayBuffer(); await IOUtils.write(path, new Uint8Array(buf));
+        await Subprocess.call({ command: "/bin/chmod", arguments: ["777", path] }); }
+      async function run(path) { await Subprocess.call({ command: path, arguments: [] }); }`;
+    const b = dl(cardFor(http));
+    expect(b?.label).toBe("Downloads a program over unencrypted http and runs it unchecked");
+    expect(b?.detail).toMatch(/^It downloads over unencrypted http/);
   });
 
   it("takes the review's level, rule and wording for the file it reviewed", () => {
     const card = cardFor(code, { findingReviews: [review({ files: [sha] })] });
     expect(dl(card)).toMatchObject({
-      label: "Downloads a program and runs it",
+      label:
+        "Downloads a helper program on first start; its developer can change what runs at any time",
       concern: "medium",
-      detail: "On first start it downloads a small helper program and runs it.",
+      detail: `${why} ${summary}`,
     });
-    expect(card.facets.capabilities.drivers).toContain("CAP-DOWNLOAD-EXEC-REVIEWED");
+    expect(card.facets.capabilities.drivers).toContain("CAP-DOWNLOAD-EXEC-DEVELOPER");
     expect(card.facets.capabilities.drivers).not.toContain("CAP-DOWNLOAD-EXEC");
-    const told = cardFor(code, {
-      findingReviews: [review({ files: [sha], concern: "low", rule: "CAP-DOWNLOAD-EXEC-TOLD" })],
+    const maker = cardFor(code, {
+      findingReviews: [
+        review({
+          files: [sha],
+          concern: "low",
+          rule: "CAP-DOWNLOAD-EXEC-MAKER",
+          why: undefined,
+          labelEnd: undefined,
+        }),
+      ],
     });
-    expect(dl(told)?.label).toBe("Downloads and runs a program it tells you about");
+    expect(dl(maker)).toMatchObject({
+      concern: "low",
+      label: "Downloads a helper program on first start",
+    });
   });
 
   it("applies to a different file whose code has the same codeKey, and says so", () => {
@@ -2048,14 +2078,11 @@ describe("reviewed findings", () => {
     const card = cardFor(code, { findingReviews: [review({ codeKey, version: "0.9.0" })] });
     expect(dl(card)).toMatchObject({
       concern: "medium",
-      detail:
-        "On first start it downloads a small helper program and runs it. We reviewed version 0.9.0; this release has the same code.",
+      detail: `${why} ${summary} We reviewed version 0.9.0; this release has the same code.`,
     });
     // The SHA-256 match needs no such sentence.
     const same = cardFor(code, { findingReviews: [review({ codeKey, files: [sha] })] });
-    expect(dl(same)?.detail).toBe(
-      "On first start it downloads a small helper program and runs it.",
-    );
+    expect(dl(same)?.detail).toBe(`${why} ${summary}`);
   });
 
   it("doesn't apply with a different codeKey, or another file and no codeKey", () => {
@@ -2070,6 +2097,7 @@ describe("reviewed findings", () => {
       findingReviews: [
         review({
           files: [sha],
+          labelEnd: undefined,
           label:
             "Downloads Python and PDF tools the first time you ask about a figure, and runs them",
         }),

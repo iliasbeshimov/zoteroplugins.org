@@ -20,6 +20,7 @@ import {
   settingsChangeConcern,
   unencryptedConcern,
 } from "../scan/preview.ts";
+import { HTTP_WHY } from "./download.ts";
 import { type ObservedHost, testedSummary, withObserved } from "./sandbox.ts";
 
 /**
@@ -29,7 +30,7 @@ import { type ObservedHost, testedSummary, withObserved } from "./sandbox.ts";
  * Preview rules: the overall label ignores "source match not checked yet", because that is
  * a gap in our checks rather than something the plugin did. The facet still says it.
  */
-export const RULES_VERSION = "0.8.0-preview";
+export const RULES_VERSION = "0.9.0-preview";
 
 const RANK: Record<Concern, number> = { none: 0, low: 1, unknown: 2, medium: 2, high: 3 };
 const worst = (cs: Concern[]): Concern =>
@@ -108,9 +109,8 @@ export const CAPABILITY_LABEL: Record<string, string> = {
   "remote-script": "Its pages ask for web scripts, which Zotero blocks",
   "remote-script-output": "Pages it creates load scripts from the web",
   "installs-addons": "Installs other add-ons",
-  "download-exec": "Downloads a program and runs it",
+  "download-exec": "Downloads and runs a program we haven't reviewed yet",
   "download-exec-pinned": "Downloads a program checked against a fixed fingerprint, and runs it",
-  "download-exec-told": "Downloads and runs a program it tells you about",
   "download-exec-http": "Downloads a program over unencrypted http and runs it unchecked",
   "borrowed-identity": "Signs in using another app's identity",
   "browser-credentials": "Reads your web browser's saved cookies or passwords",
@@ -430,6 +430,21 @@ function approvalSuffix(approval: string | undefined): string {
         : "";
 }
 
+/** What the scanner found about a download: whether it's pinned, checked by a same-place checksum, or over plain http. */
+function downloadScan(c: Analysis["capabilities"][number] | undefined): {
+  pinned: boolean;
+  sameSource: boolean;
+  http: boolean;
+} {
+  const d = c?.details;
+  const pinned = d?.apis?.length === 1 && d.apis[0] === "pinned to a SHA-256";
+  return {
+    pinned,
+    sameSource: !pinned && !!d?.apis?.includes("checksum from the same source"),
+    http: !pinned && !!d?.sources?.some((x) => x.endsWith(" (http)")),
+  };
+}
+
 /** The badge's second line: what, from where, which setting, drawn from the analysis. */
 function badgeDetail(
   id: string,
@@ -440,18 +455,15 @@ function badgeDetail(
   switch (id) {
     case "download-exec": {
       const src = d.sources ?? [];
-      const pinned = d.apis?.length === 1 && d.apis[0] === "pinned to a SHA-256";
-      const sameSource = !pinned && !!d.apis?.includes("checksum from the same source");
-      const plain = src.some((x) => x.endsWith("(http)"));
+      const { pinned, sameSource } = downloadScan(c);
       const from = src.length ? `From ${list(src.map((x) => x.replace(" (http)", "")))}` : "";
       const parts = [
         from,
-        plain ? "over unencrypted HTTP" : "",
         pinned
-          ? "checked against a fingerprint fixed in the plugin, so a swapped file won't run"
+          ? ""
           : sameSource
             ? "checked only against a checksum from the same place, which catches a broken download but not a swapped one"
-            : "not checked before it runs, so a swapped file would run too",
+            : "not checked against a fingerprint fixed in the plugin",
       ].filter(Boolean);
       return parts.length ? parts.join("; ").replace(/^./, (x) => x.toUpperCase()) : undefined;
     }
@@ -715,7 +727,7 @@ export interface ScoreInput {
   tested?: { record: SandboxRecord; hosts: ObservedHost[] };
   /**
    * Hand reviews of this plugin's findings (reviews.ts), one per capability: its level, what it is
-   * and, when the reviewer wrote one, its badge label. A review applies to the file it reviewed
+   * and, when the reviewer wrote one, its badge label (a download's reason and label ending are computed). A review applies to the file it reviewed
    * (`files`) and to any release whose code behind the finding has the same `codeKey`.
    */
   findingReviews?: {
@@ -725,6 +737,8 @@ export interface ScoreInput {
     rule: string;
     summary: string;
     label?: string;
+    why?: string;
+    labelEnd?: string;
     files: string[];
     codeKey?: string;
     version: string;
@@ -801,7 +815,6 @@ export function score(input: ScoreInput): TrustCard {
   const p = preview(a, input.updateHost);
   const applied = appliedReviews(input.findingReviews, a);
   for (const { review } of applied.values()) applyFindingReview(p, review);
-  const downloadReview = applied.get("download-exec")?.review;
 
   // It turns Zotero's automatic updates on for itself at every start (literature-review-with-llm).
   const forcesAutoUpdate = a.capabilities.some(
@@ -895,69 +908,83 @@ export function score(input: ScoreInput): TrustCard {
             ? "link-runs-code-asks"
             : c.id === "process-launch" && c.concern === "low"
               ? "process-launch-openers"
-              : c.id === "download-exec" && downloadReview
-                ? {
-                    low: "download-exec-told",
-                    medium: "download-exec",
-                    high: "download-exec-http",
-                  }[downloadReview.concern]
-                : c.id === "download-exec" && c.concern === "medium"
-                  ? "download-exec-pinned"
-                  : c.id === "own-server" &&
-                      found?.details?.web === "any" &&
-                      (found.details.serverActions?.length ?? 0) > 0
-                    ? found.details.needsKey
-                      ? "own-server-acts-key"
-                      : "own-server-acts"
-                    : c.id === "own-server" && c.concern === "medium"
-                      ? apis.includes("web pages can call it")
-                        ? apis.some((x) =>
-                            /nsIServerSocket|httpd|debugging server|program it runs/.test(x),
-                          )
-                          ? "own-server-web"
-                          : "own-server-web-connector"
-                        : apis.includes("listens beyond this computer") ||
-                            apis.includes("listens beyond this computer by default (a setting)")
-                          ? "own-server-network"
-                          : "own-server-setting"
-                      : c.id === "installs-translators" && c.concern === "low"
-                        ? "installs-translators-bundled"
-                        : c.id === "remote-code" &&
-                            apis.length > 0 &&
-                            apis.every((x) => x === "an AI model's reply")
-                          ? "remote-code-ai"
-                          : c.id === "runs-sent-code" && apis.includes("AI shell tool")
-                            ? `runs-sent-code-ai-shell${approvalSuffix(found?.details?.approval)}`
-                            : c.id === "runs-sent-code" && apis.includes("AI tool")
-                              ? `runs-sent-code-ai${approvalSuffix(found?.details?.approval)}`
-                              : c.id === "runs-sent-code" &&
-                                  apis.every((x) => x === "debugger clients")
-                                ? "runs-sent-code-debugger"
-                                : c.id === "runs-sent-code" && apis.includes("web pages")
-                                  ? "runs-sent-code-web"
-                                  : c.id === "server-edits-library" && found?.details?.web
-                                    ? `server-edits-library-${found.details.web === "any" ? "web" : found.details.web}${found.details.needsKey && found.details.web === "any" ? "-key" : ""}`
-                                    : c.id === "local-http-server"
-                                      ? serverVariant(apis)
-                                      : c.id === "changes-settings" &&
-                                          found?.details?.settings?.every((e) =>
-                                            ZOTERO_SETTINGS.has(e.change),
-                                          )
-                                        ? "changes-settings-zotero"
-                                        : c.id === "sends-unencrypted" && c.concern === "low"
-                                          ? "sends-unencrypted-lookups"
-                                          : c.id === "package-run" && c.concern === "high"
-                                            ? "package-run-unpinned"
-                                            : (c.id as string);
+              : c.id === "download-exec" && !applied.has("download-exec")
+                ? downloadScan(found).http
+                  ? "download-exec-http"
+                  : c.concern === "medium"
+                    ? "download-exec-pinned"
+                    : "download-exec"
+                : c.id === "own-server" &&
+                    found?.details?.web === "any" &&
+                    (found.details.serverActions?.length ?? 0) > 0
+                  ? found.details.needsKey
+                    ? "own-server-acts-key"
+                    : "own-server-acts"
+                  : c.id === "own-server" && c.concern === "medium"
+                    ? apis.includes("web pages can call it")
+                      ? apis.some((x) =>
+                          /nsIServerSocket|httpd|debugging server|program it runs/.test(x),
+                        )
+                        ? "own-server-web"
+                        : "own-server-web-connector"
+                      : apis.includes("listens beyond this computer") ||
+                          apis.includes("listens beyond this computer by default (a setting)")
+                        ? "own-server-network"
+                        : "own-server-setting"
+                    : c.id === "installs-translators" && c.concern === "low"
+                      ? "installs-translators-bundled"
+                      : c.id === "remote-code" &&
+                          apis.length > 0 &&
+                          apis.every((x) => x === "an AI model's reply")
+                        ? "remote-code-ai"
+                        : c.id === "runs-sent-code" && apis.includes("AI shell tool")
+                          ? `runs-sent-code-ai-shell${approvalSuffix(found?.details?.approval)}`
+                          : c.id === "runs-sent-code" && apis.includes("AI tool")
+                            ? `runs-sent-code-ai${approvalSuffix(found?.details?.approval)}`
+                            : c.id === "runs-sent-code" &&
+                                apis.every((x) => x === "debugger clients")
+                              ? "runs-sent-code-debugger"
+                              : c.id === "runs-sent-code" && apis.includes("web pages")
+                                ? "runs-sent-code-web"
+                                : c.id === "server-edits-library" && found?.details?.web
+                                  ? `server-edits-library-${found.details.web === "any" ? "web" : found.details.web}${found.details.needsKey && found.details.web === "any" ? "-key" : ""}`
+                                  : c.id === "local-http-server"
+                                    ? serverVariant(apis)
+                                    : c.id === "changes-settings" &&
+                                        found?.details?.settings?.every((e) =>
+                                          ZOTERO_SETTINGS.has(e.change),
+                                        )
+                                      ? "changes-settings-zotero"
+                                      : c.id === "sends-unencrypted" && c.concern === "low"
+                                        ? "sends-unencrypted-lookups"
+                                        : c.id === "package-run" && c.concern === "high"
+                                          ? "package-run-unpinned"
+                                          : (c.id as string);
       const reviewed = applied.get(c.id);
       const scanned = badgeDetail(c.id, found);
-      const detail = reviewed
-        ? reviewed.how === "codeKey"
-          ? `${reviewed.review.summary} We reviewed version ${reviewed.review.version}; this release has the same code.`
-          : reviewed.review.summary
-        : c.id === "download-exec" && scanned
-          ? `${scanned}. We haven't yet reviewed what it downloads.`
-          : scanned;
+      const carryOver =
+        reviewed?.how === "codeKey"
+          ? `We reviewed version ${reviewed.review.version}; this release has the same code.`
+          : "";
+      const facts = scanned ? `${scanned}. ` : "";
+      const detail =
+        c.id === "download-exec"
+          ? reviewed
+            ? [reviewed.review.why, reviewed.review.summary, carryOver].filter(Boolean).join(" ")
+            : downloadScan(found).http
+              ? `${HTTP_WHY} ${facts}We haven't reviewed it yet.`
+              : c.concern === "medium"
+                ? `It checks the file against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. ${facts}We haven't yet reviewed what it is.`
+                : `We haven't yet reviewed who publishes the file or whether anything stops it changing, so it counts as a high concern until we do. ${facts}`.trimEnd()
+          : reviewed
+            ? [reviewed.review.summary, carryOver].filter(Boolean).join(" ")
+            : scanned;
+      // A reviewed download has no generic label to fall back on: the unreviewed one says it's unreviewed.
+      const base =
+        reviewed?.review.label ??
+        (reviewed && c.id === "download-exec"
+          ? "Downloads and runs a program"
+          : (CAPABILITY_LABEL[variant] ?? c.id));
       // The unencrypted badge names where the data goes.
       const to =
         c.id === "sends-unencrypted" && found?.details?.unencrypted?.length
@@ -965,7 +992,7 @@ export function score(input: ScoreInput): TrustCard {
           : "";
       return {
         id: c.id as CapabilityId,
-        label: `${reviewed?.review.label ?? CAPABILITY_LABEL[variant] ?? c.id}${to}`,
+        label: `${base}${reviewed?.review.labelEnd ?? ""}${to}`,
         concern: c.concern,
         ...(c.libraries ? { libraries: c.libraries } : {}),
         ...(detail ? { detail } : {}),

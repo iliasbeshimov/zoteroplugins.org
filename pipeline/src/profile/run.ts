@@ -855,6 +855,8 @@ export function assemble(
               rule: r.rule,
               summary: r.summary,
               ...(r.label ? { label: r.label } : {}),
+              ...(r.why ? { why: r.why } : {}),
+              ...(r.labelEnd ? { labelEnd: r.labelEnd } : {}),
               files: reviewedFiles(r),
               ...(r.codeKey ? { codeKey: r.codeKey } : {}),
               version: r.version,
