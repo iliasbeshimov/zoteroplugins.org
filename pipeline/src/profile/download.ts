@@ -83,9 +83,9 @@ export function downloadWhy(kind: DownloadKind, f: DownloadFacts, contentChecked
             : ""
       }`;
     case "maker":
-      return `It comes straight from ${P} over an encrypted connection, as it would if you installed it yourself.`;
+      return `It comes straight from ${P}, over an encrypted connection, as it would if you installed it yourself.`;
     case "maker-untold":
-      return `It comes straight from ${P} over an encrypted connection, but nothing tells you before it installs it.`;
+      return `It comes straight from ${P}, over an encrypted connection, but nothing tells you before it installs it.`;
     case "developer":
       return `Its developer can replace the file at any time without releasing a new version${check}, so our check of the plugin doesn't cover what runs.`;
     case "other":

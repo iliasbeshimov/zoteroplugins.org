@@ -85,7 +85,7 @@ describe("downloadWhy", () => {
       "The file belongs to Zotero Chinese community, not this plugin's developer: they can replace it at any time, and nothing checks it before it runs, and what they put there runs on your computer.",
     );
     expect(downloadWhy("maker", facts({ publisher: "Astral, who make uv" }), false)).toBe(
-      "It comes straight from Astral, who make uv over an encrypted connection, as it would if you installed it yourself.",
+      "It comes straight from Astral, who make uv, over an encrypted connection, as it would if you installed it yourself.",
     );
   });
 
