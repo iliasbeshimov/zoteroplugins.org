@@ -99,7 +99,7 @@ Zotero plugins run with the same rights as Zotero itself. These are the capabili
 | Capability | Concern |
 |---|---|
 | Downloads and runs code: loading a script from the web, or running a network response | high |
-| Downloads and runs a program (or pipes a download into a shell), not checked against a fingerprint fixed in the plugin | high |
+| Downloads and runs a program we haven't reviewed yet, or one that comes over plain http unchecked (see below) | high |
 | Installs npm or PyPI packages without a fixed version, so whatever is newest runs | high |
 | Runs code or commands its AI assistant writes without asking you first | high |
 | Runs encrypted code we can't read | high |
@@ -117,7 +117,7 @@ Zotero plugins run with the same rights as Zotero itself. These are the capabili
 | Keeps its own tables in Zotero's database | medium |
 | Installs other add-ons or its own updates after you click, or silently from the developer's own https feed checked against a hash | medium |
 | A zotero:// link can make it install add-ons, or run code if you approve a prompt | medium |
-| Downloads a program checked against a fingerprint fixed in the plugin, and runs it | medium |
+| Downloads and runs a program its developer or someone else can change at any time (see below) | medium |
 | Adds Zotero translators it downloads | medium |
 | Signs in using another app's identity (for example Codex CLI's), or reuses a sign-in you saved in another program | medium |
 | Changes settings that aren't its own: other programs' settings files, Word macros, MCP servers, Zotero's proxy, sync or PDF sources | medium |
@@ -169,6 +169,27 @@ A command line counts when the plugin starts a shell to run it.
 Some of these come from Zotero's own guidance: Zotero has said plugins should never modify
 `zotero.sqlite`, and such plugins won't be allowed in a future official directory. Keeping separate
 tables is "relatively less bad". Zotero also keeps an official blocklist, which we show on the card.
+
+### Programs it downloads and runs
+
+A plugin that downloads a program and runs it isn't doing anything wrong in itself: many need
+Python, a PDF tool or a model runtime that's too big to ship. The program runs with your rights,
+outside the plugin we checked, so what matters is **who can change what runs, and whether anything
+checks it**. A scanner finding counts as a high concern until we review it; a review records where
+the file comes from, how it travels, what checks it, what starts the download and whether the
+README says so, and the level follows from those facts:
+
+| What we found | Concern | Why |
+|---|---|---|
+| It comes over plain http and nothing checks it | high | Anyone on the same network, such as public Wi-Fi, could swap in a program of their own. |
+| It's checked against a fingerprint written into the plugin | low, or medium until we've checked what's inside | Only a new version of the plugin can change what runs, as if the plugin shipped it. |
+| It comes from the program's own maker over https, and the README or the button that starts it tells you | low | The same as installing it yourself. |
+| It comes from the program's own maker over https, but nothing tells you | medium | You get a program installed without being told. |
+| It comes from the plugin's own developer, unchecked or checked only against a checksum from the same place | medium | You already trust the developer, but they can change what runs at any time without releasing a new version, so our check of the plugin doesn't cover it. |
+| It comes from someone else (a fork running the original developer's files, for example) | medium | Someone other than the developer you chose can change what runs at any time. |
+
+A review applies to the release file it read and to later releases whose code behind the finding
+is the same; anything else goes back to the scanner's verdict until it's reviewed again.
 
 ## Compatibility
 
