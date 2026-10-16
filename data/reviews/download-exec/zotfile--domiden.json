@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotfile--domiden",
+  "version": "5.1.2.9001",
+  "sha256": "d98f0cb102685ab5fdbddc40c16fc1ca2411c5eaa8e859a0c713dac8a9a89869",
+  "codeKey": "02abba8b5c6f",
+  "reviewedAt": "2026-10-16",
+  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "high",
+  "rule": "CAP-DOWNLOAD-EXEC-HTTP",
+  "label": "A button in its settings downloads and runs a PDF tool on Intel Macs",
+  "summary": "A button in its settings (Intel Macs only) downloads ZotFile's Poppler tool from zotfile.com and runs it; the README doesn't mention it. The file is no longer on the server, so today the button fails.",
+  "facts": {
+    "what": "A small PDF annotation-extraction helper (ExtractPDFAnnotations, built on the Poppler PDF library) for Mac Intel, downloaded as a zip, unzipped with /usr/bin/unzip into the Zotero data folder, made executable, and later run to extract PDF annotations. Size unknown (file no longer exists).",
+    "urls": [
+      "http://www.zotfile.com/PDFTools/ExtractPDFAnnotations-MacIntel.zip",
+      "http://www.zotfile.com/PDFTools/ExtractPDFAnnotations-MacIntel.version"
+    ],
+    "source": "third-party",
+    "publisher": "jlegewie, ZotFile's developer, who runs zotfile.com",
+    "transport": "http",
+    "integrity": "none",
+    "trigger": "user-clicks-install",
+    "toldInReadme": "no",
+    "readmeQuote": "",
+    "triggerQuote": {
+      "file": "chrome/locale/en-US/options.properties",
+      "text": "installPoppler=Download & Install Poppler Tool"
+    },
+    "integrityQuote": {
+      "file": "chrome/content/zotfile/options.js",
+      "text": "var download = Downloads.createDownload({source: url, target: file});"
+    },
+    "sourceQuote": {
+      "file": "chrome/content/zotfile/pdfAnnotations.js",
+      "text": "this.popplerExtractorBaseURL = 'http://www.zotfile.com/PDFTools/';"
+    },
+    "notes": "Same code and address as the original zotfile and the reviewed zotfile--grayxu: options.js, options.xul and pdfAnnotations.js have identical checksums to zotfile--grayxu's (only overlay.xul, utils.js, wildcards.js and install.rdf differ between the two forks). Call path: options.xul button id=pdf-annotations-extractor-update-button has oncommand=downloadPDFTool(); options.js downloadPDFTool() (line 635) builds url = popplerExtractorBaseURL + 'ExtractPDFAnnotations-<platform>' + '.zip' (the button is only enabled if popplerExtractorSupported, set in zotfile.js line 88 from popplerSupportedPlatforms), downloads it with Downloads.createDownload (line 645), runs /usr/bin/unzip via nsIProcess (lines 650-657), sets permissions 755 on the extracted file (lines 664-669). The scanner's finding is genuine: download, unzip, chmod, later run by pdfAnnotations.js for extraction. No hash or signature check anywhere. A commented-out https alternative exists at pdfAnnotations.js line 16 (github.com/jlegewie/zotfile/raw/gh-pages/PDFTools/) but the active line 17 is http. The README never mentions Poppler or this download (grep for poppler/PDFTools finds nothing). Address check 2026-10-16: HEAD http://www.zotfile.com/PDFTools/ExtractPDFAnnotations-MacIntel.zip returns 301 to http://zotfile.com/PDFTools/ExtractPDFAnnotations-MacIntel.zip (still http), which returns 404 Not Found. So the file is gone and today the button fails with 'Unable to download poppler.' The code is still shipped and would run anything served from that address, which is still plain http. I did not download anything. Old-style (install.rdf) add-on; its updateURL still points at jlegewie/zotfile."
+  }
+}

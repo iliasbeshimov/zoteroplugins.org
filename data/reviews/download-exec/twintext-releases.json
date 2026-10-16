@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "slug": "twintext-releases",
+  "version": "2.0.33",
+  "sha256": "60da9fc12d48c0c66585f349c51ca2dd86e281a81e3240eceae66075fd720184",
+  "codeKey": "5b10f9d8af81",
+  "reviewedAt": "2026-10-16",
+  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-FIXED",
+  "label": "Downloads and runs a Python translation engine (about 460 MB) the first time you translate a PDF",
+  "summary": "The first time you translate a PDF with the default engine (once you've started a trial or activated it), it downloads about 460 MB of Python, the BabelDOC engine and models from the developer's server and runs them as a local service, without asking; the README doesn't mention it, though the settings page says the environment is prepared on first use. If that download fails, it builds the same setup from Python packages instead, which is listed as its own finding.",
+  "facts": {
+    "what": "Downloads the 'document engine' on the first PDF translation with the default engine: a bundled-hash-checked archive of about 460 MB (Windows x64; 449-554 MB on other platforms) containing a Python 3.12.11 runtime, babeldoc 0.6.4 and its dependencies and models, split into ~8 MB blocks. It unpacks it and runs the downloaded python executable (runtime/python.exe or runtime/bin/python3.12) as a local service. If that fails it falls back to downloading uv 0.8.22, using uv to fetch Python 3.12.11 and pip-install babeldoc and dependencies, then model files.",
+    "urls": [
+      "https://1846478954.cdn.123clouddisk.com/1846478954/TwinText-Engines/native-document-9029-r1-v1/${item.file}",
+      "https://twintext.tech/runtime/uv/${UV_VERSION}/${asset.name}",
+      "https://ghfast.top/https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/${asset.name}",
+      "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/${asset.name}",
+      "https://twintext.tech/runtime/python-build-standalone",
+      "https://ghfast.top/https://github.com/astral-sh/python-build-standalone/releases/download",
+      "https://github.com/astral-sh/python-build-standalone/releases/download",
+      "https://pypi.tuna.tsinghua.edu.cn/simple",
+      "https://mirrors.aliyun.com/pypi/simple",
+      "https://pypi.org/simple",
+      "https://huggingface.co/ (and https://hf-mirror.net/ mirror) and https://openaipublic.blob.core.windows.net/encodings/${encoding}.tiktoken for models in the fallback path"
+    ],
+    "source": "developer-own",
+    "transport": "https",
+    "integrity": "pinned",
+    "trigger": "automatic-on-feature-use",
+    "toldInReadme": "no",
+    "readmeQuote": "",
+    "triggerQuote": {
+      "file": "content/scripts/core/document-engine.js",
+      "text": "if(!info.installed)await global.TwinTextLayoutService.install('babeldoc');"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/core/runtime-download.js",
+      "text": "if(!await verified(pending,entry.archive)){await IOUtils.remove(pending,{ignoreAbsent:true});throw new Error('文档引擎整包校验失败，可重试继续。');}"
+    },
+    "sourceQuote": {
+      "file": "content/scripts/core/runtime-download.js",
+      "text": "const BASE='https://1846478954.cdn.123clouddisk.com/1846478954/TwinText-Engines/native-document-9029-r1-v1/';"
+    },
+    "notes": "SCANNER LINES ARE NOT THE NETWORK DOWNLOAD. engine-installer.js:163 and :589 call Zotero.File.download(prefix+manifest.archive,...) where prefix = global.rootURI+'content/runtime/' (bundledRuntime, ~line 100): a copy out of the plugin's own XPI for the 'full package' build. This XPI has no content/runtime folder, so bundledRuntime returns null and those lines do nothing. The real download is elsewhere. Call path: PDF translation with no cached output -> native-pdf-session.js 'if(global.TwinTextDocumentEngine)await global.TwinTextDocumentEngine.ensure()' -> document-engine.js ensure(): 'if(!info.installed)await ...install('babeldoc')' -> layout-service.install -> engine-installer.install -> portableRuntime (null) -> TwinTextDownloadAuth.authorize() -> onlineRuntime -> TwinTextRuntimeDownload.acquire (runtime-download.js) -> extractRuntime -> start service running the downloaded python. Default engine is babeldoc: choice() returns 'babeldoc' unless pref twintext.documentEngine says otherwise; the settings text says 'TT 原版保真（推荐）... 首次使用会自动准备运行环境' (first use automatically prepares the runtime; keep Zotero open and online). No dialog naming the download; also a 'load document engine' button in preferences (repair). Users can pick 'TT 轻量快译（免安装）' (native engine, no download). Download needs a TwinText trial or activation: authorize() throws 'please start a valid trial or activate TwinText before downloading' if no token.\n\nWHERE THE ADDRESS COMES FROM. (1) BASE is a constant in runtime-download.js; the catalog content/engines/installer/runtime-downloads.json inside the XPI holds per-target archive sha256/bytes and a list of ~55 blocks (file=<sha256>.block, bytes, sha256); validate() throws unless catalog.baseURL===BASE. Blocks are fetched from BASE+item.file. (2) Before each fetch download-auth.js source(url) rewrites URLs under the 123clouddisk CDN prefix /1846478954/TwinText-Engines/ into a signed link: it POSTs {resource:parsed.pathname} to signer.origin+'/api/v1/downloads/link' and takes reply.response.url. That IS a server reply, but it is validated: 'signed.origin!==CDN||signed.pathname!==parsed.pathname' with exactly one query parameter auth_key matching a fixed regex, else it throws; so the server can only supply the signature, not a different host or file. (3) signer.origin is license?.serverURL(). license-manager.js serverURL(): 'const value=official || String(TwinTextConfig.getPref('licenseServerURL','')||'').trim()' with OFFICIAL_LICENSE_SERVER_URL = 'https://license.twintext.tech' set in config.js, so the user pref licenseServerURL is only used if the official constant is empty; it is not empty, so it cannot be changed from settings. https is enforced (http only for localhost, never reached). Fixed hash of manifest.json: the downloaded manifest must match entry.manifest.sha256 and manifest.sha256/bytes must equal entry.archive. (4) The fallback addresses are constants in engine-installer.js lines 5-13 (UV_RELEASES, PYTHON_MIRRORS, PYPI_INDEXES); none from settings. twintext.tech/runtime is the developer's server; ghfast.top is a third-party GitHub proxy.\n\nINTEGRITY. Primary path: pinned in the plugin's own files. Each block is checked against item.sha256 from the bundled catalog (verified() compares size and hashFile), then the assembled archive against entry.archive.sha256, deleted and error thrown on mismatch; extractRuntime rechecks fileHash(archive)!==manifest.sha256 and every extracted file's sha256 against manifest.files. So the main path is pinned. Fallback path, taken when onlineRuntime errors or returns null (engine-installer.js 486-495): uv archive is checked by sha256 constants in ASSETS (line 15-19, pinned; Windows uses a copy bundled at content/vendor/uv); Python via 'uv python install' with UV_PYTHON_INSTALL_MIRROR set to the developer mirror, ghfast.top proxy or GitHub, verified only by uv's own built-in hashes; babeldoc and dependencies are installed with 'uv pip install -r requirements.txt -c constraints-<platform>.txt --index-url <tuna|aliyun|pypi>' where the constraints pin versions but contain no --hash entries (grep 'hash' count 0), so those packages are version-pinned but not hash-pinned and come from third-party mirrors before PyPI; model files are then downloaded by download_model.py/asset_downloads.py (hashes in model-manifest.json, mirror hf-mirror.net used for huggingface URLs). I set integrity 'none' and source 'third-party' as the most concerning of the several paths because the unhashed pip fallback is reachable; for the normal primary path the right values would be pinned and developer-own. A reviewer may want to label the primary path and treat the fallback separately.\n\nWHAT RUNS. extractRuntime unzips the archive into the engine directory and returns runtime/python.exe or runtime/bin/python3.12; the installer then runs it ('probe', then the service start in layout-service.js with the Python executable) to host the engine in content/engines/babeldoc (bundled .py files). 'package-run' scanner capability corresponds to the uv/pip fallback. README.md is two lines: 'Public release and Zotero update channel for TwinText for Zotero'; it mentions nothing about downloads, so toldInReadme is no. The plugin settings page does disclose first-use preparation (tips text quoted above), but that is not the README. Separate, not scanned: the 'frontend' engine (TT 智能版面) downloads a ~204 MB layout model on first use; I did not trace it. Not a fork.",
+    "reviewerNote": "Level set by the main path: the developer's own CDN bundle, with each block's and the whole archive's SHA-256 in the bundled runtime-downloads.json and checked before use (runtime-download.js verified()), so source developer-own and integrity pinned. The fallback (uv pinned by SHA-256, uv python install, pip from mirrors with fixed versions and no hashes, models from hf-mirror.net) installs packages, which the package-run finding covers."
+  }
+}

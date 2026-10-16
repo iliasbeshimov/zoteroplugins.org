@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-mcp--54yyyu",
+  "version": "0.15.0",
+  "sha256": "438fb529d9ba60976210d96bb9ea060dec1abbbfa3cb9c46bad29d3bd705509b",
+  "codeKey": "5e0c441801f3",
+  "reviewedAt": "2026-10-16",
+  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "low",
+  "rule": "CAP-DOWNLOAD-EXEC-MAKER",
+  "label": "Downloads and runs uv's installer when you press Install zotero-cli, if you don't have uv",
+  "summary": "If you don't have uv, pressing Install zotero-cli in its setup checklist runs uv's install script, then uses uv to install the zotero-mcp-server package, which is listed as its own finding. The checklist item says it installs uv too; the README only shows the manual command.",
+  "facts": {
+    "what": "The uv installer script from astral.sh, piped into /bin/sh, which installs the uv program (only if uv is not found). uv is then used to install the Python package zotero-mcp-server (provides zotero-cli); that package install is a separate finding. Size not established (script fetched at run time).",
+    "urls": [
+      "https://astral.sh/uv/install.sh"
+    ],
+    "source": "official",
+    "publisher": "Astral, who make uv",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "user-clicks-install",
+    "toldInReadme": "partly",
+    "readmeQuote": "uv tool install zotero-mcp-server",
+    "triggerQuote": {
+      "file": "panel.js",
+      "text": "fix:{label:\"Install zotero-cli\",run:Oh(t)}"
+    },
+    "integrityQuote": {
+      "file": "panel.js",
+      "text": "\"curl -LsSf https://astral.sh/uv/install.sh | sh\""
+    },
+    "sourceQuote": {
+      "file": "panel.js",
+      "text": "uv, the installer zotero-cli uses, is not installed. Fetching it from astral.sh first."
+    },
+    "notes": "panel.js is minified; function Oh(r,e) is an async generator: if ge(r,t,'uv',...) finds no uv, it yields the message 'Fetching it from astral.sh first.' then runs /bin/sh -c 'curl -LsSf https://astral.sh/uv/install.sh | sh' with UV_NO_MODIFY_PATH=1 (10 min timeout), then runs 'uv tool install --upgrade zotero-mcp-server' (or pipx / python3 -m pip --user fallbacks if found). Trigger: the setup checklist shows an item 'zotero-cli is not installed' with detail 'One click installs it, and uv (its installer) if you do not have that.' and a button 'Install zotero-cli' (fix.run = Oh); aa() wires it to a click handler. Nothing runs without the click; no separate confirmation dialog, but the item text names uv. Uses /bin/sh so effectively Mac/Linux; on Windows it would likely fail. The shipped README only shows 'uv tool install zotero-mcp-server' as a manual step; it does not say the plugin downloads uv itself (the plugin docs/chat-plugin.md on GitHub were not available locally, so not checked). The uv install is a genuine program download-and-run, so real stays true; the pip-package part is separate. Not a fork of a reviewed plugin; none compared."
+  }
+}

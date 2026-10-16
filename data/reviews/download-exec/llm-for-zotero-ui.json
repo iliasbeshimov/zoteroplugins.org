@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "slug": "llm-for-zotero-ui",
+  "version": "3.8.33",
+  "sha256": "439dde2ee6f7c108d125da4ff40bf949c785db8cd0afc054055f92bd6246c964",
+  "codeKey": "7d89b6b49bd8",
+  "reviewedAt": "2026-10-16",
+  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-OTHER",
+  "label": "Downloads and runs Python and PDF tools the first time you ask about a figure",
+  "summary": "The first time you ask about a figure, it downloads a 265–491 MB bundle of Python and the Poppler PDF tools from the original llm-for-zotero's GitHub release and runs it, without asking; the README doesn't mention it. What's there now is standard software: we checked the macOS (Apple silicon) bundle, and every file is from conda-forge.",
+  "facts": {
+    "what": "A 'PDF figure runtime' zip (Python 3.11, Poppler and scientific libraries), 265-491 MB depending on platform, from the original llm-for-zotero author's GitHub release, unpacked into a Zotero data folder; its Python then runs the plugin's pdf_figure_extract.py",
+    "urls": [
+      "https://github.com/yilewang/llm-for-zotero/releases/download/pdf-figure-runtime-v${PDF_FIGURE_RUNTIME_VERSION}/llm-for-zotero-pdf-figure-runtime-v${PDF_FIGURE_RUNTIME_VERSION}-${platformKey}.zip"
+    ],
+    "source": "third-party",
+    "publisher": "yilewang, the developer of the original llm-for-zotero",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "automatic-on-feature-use",
+    "toldInReadme": "no",
+    "readmeQuote": "",
+    "triggerQuote": {
+      "file": "content/scripts/llmforzotero.js",
+      "text": "const runtime2 = await resolvePdfFigureExtractionRuntime();"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/llmforzotero.js",
+      "text": "const zipBytes = await downloadRuntimePackageBytes(packageUrl);"
+    },
+    "sourceQuote": {
+      "file": "content/scripts/llmforzotero.js",
+      "text": "https://github.com/yilewang/llm-for-zotero/releases/download/pdf-figure-runtime-v${PDF_FIGURE_RUNTIME_VERSION}/llm-for-zotero-pdf-figure-runtime-v${PDF_FIGURE_RUNTIME_VERSION}-${platformKey}.zip"
+    },
+    "notes": "Not recorded as a fork in the pack, but it is the same code as the already reviewed llm-for-zotero--tcxm (UI Edition) and by the same owner TCXM/tcxm. Repo in pack: github.com/tcxm/llm-for-zotero-ui; the download address points at github.com/yilewang/llm-for-zotero, the original author's repository, so source is third-party. Code check: the managed-runtime block of content/scripts/llmforzotero.js (validateManagedRuntime through resolveManagedPdfFigureExtractionRuntime, about 290 lines from line 61658) is identical to the original-based qingyun0118 copy and to llm-for-zotero.json's description, apart from bundler renames of helper identifiers (pathExists5/6, ensureDir5 and the like). Requested runtime: PDF_FIGURE_RUNTIME_VERSION = \"1\" (tag pdf-figure-runtime-v1); same as original review. Path: figure extraction (the raw source-PDF figure extractor, which spawns the downloaded python with pdf_figure_extract.py) calls resolvePdfFigureExtractionRuntime() -> resolveManagedPdfFigureExtractionRuntime() -> installManagedRuntime() -> downloadRuntimePackageBytes(url) (fetch, then Zotero.HTTP fallback), then unzips with unzipSync, writes files, marks them executable and validates. If an installed runtime exists it is reused; the download happens only when none does. No confirmation dialog is involved (the confirm() calls in the bundle are for other features such as clearing the library index). Integrity: validateManagedRuntime only checks runtime.json kind/version/platform, that paths are inside the root and that the files exist; no hash compared, the SHA-256 digest calls elsewhere in the bundle are unrelated. Not checked: the zip contents (taken from the original review, same asset). Asset sizes via gh api on yilewang/llm-for-zotero tag pdf-figure-runtime-v1: macos-arm64 264976195 B, macos-x64 308167232, linux-x64 491361590, linux-arm64 336633041, windows-x64 and arm64 318226342 each. README: no mention of the figure runtime download (the word 'runtime' there refers to Codex App Server / Claude runtime). Original review (llm-for-zotero.json) called this developer-own because it is yilewang's own plugin; for a fork it is third-party, as in llm-for-zotero--tcxm.json.",
+    "reviewerNote": "Same runtime address and download code as llm-for-zotero (pdf-figure-runtime-v1 from yilewang/llm-for-zotero); contentChecked is from that review, of the same release file."
+  },
+  "contentChecked": "macOS Apple-silicon bundle (pdf-figure-runtime-v1, sha256 d2ea2815…): all 72 packages are from conda-forge and every file matches conda-forge's published hashes; the one extra file is a 22-byte anonymous usage token Anaconda's tools write. Other platforms not checked."
+}

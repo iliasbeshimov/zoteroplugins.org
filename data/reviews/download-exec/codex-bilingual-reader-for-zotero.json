@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "slug": "codex-bilingual-reader-for-zotero",
+  "version": "1.4.5",
+  "sha256": "70d84f193240a5be440a453ef0dd08d8602c453b12b901994fab4132ff3edaa2",
+  "codeKey": "8af885d4aeb7",
+  "reviewedAt": "2026-10-16",
+  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "low",
+  "rule": "CAP-DOWNLOAD-EXEC-FIXED",
+  "label": "Downloads and runs a PDF translation engine (about 600 MB) when you press install, on Windows",
+  "summary": "On Windows, when you press the one-click install button in its settings (its label gives the size), it downloads the PDFMathTranslate-next engine (621 MB), and Node.js (93 MB) if you don't have it, and later runs them to translate PDFs; the README describes the download. We checked that both fingerprints match the files their makers publish.",
+  "facts": {
+    "what": "Downloads the PDFMathTranslate-next/BabelDOC v2.9.0 Windows engine zip (about 621 MB), extracts it with tar.exe and later runs pdf2zh.exe to translate PDFs; if no node.exe is found it also downloads Node.js v24.19.0 node.exe (about 93 MB) and runs it for the plugin's launcher script. Windows only.",
+    "urls": [
+      "https://github.com/PDFMathTranslate-next/PDFMathTranslate-next/releases/download/v2.9.0/pdf2zh-v2.9.0-BabelDOC-v0.6.4-with-assets-win64.zip",
+      "https://nodejs.org/dist/v24.19.0/win-x64/node.exe"
+    ],
+    "source": "official",
+    "publisher": "the PDFMathTranslate-next project and Node.js, who make them",
+    "transport": "https",
+    "integrity": "pinned",
+    "trigger": "user-clicks-install",
+    "toldInReadme": "yes",
+    "readmeQuote": "首次运行会从官方 Release 下载并解压约 600 MB 的 PDFMathTranslate-next/BabelDOC 独立引擎",
+    "triggerQuote": {
+      "file": "content/preferences.xhtml",
+      "text": "<button id=\"codex-bilingual-install-runtime\" label=\"一键安装/修复 PDF 翻译环境（约 600 MB）\" />"
+    },
+    "integrityQuote": {
+      "file": "content/runtime/install-preserved-pdf-runtime.ps1",
+      "text": "$engineSha256 = \"6916a2f299b029cfb75803c780528088d93e7694d5597c4250ba2dcf5598f1d8\""
+    },
+    "sourceQuote": {
+      "file": "content/runtime/install-preserved-pdf-runtime.ps1",
+      "text": "$engineUrl = \"https://github.com/PDFMathTranslate-next/PDFMathTranslate-next/releases/download/v2.9.0/pdf2zh-v2.9.0-BabelDOC-v0.6.4-with-assets-win64.zip\""
+    },
+    "notes": "Scanner found no address because the URLs are plain literals in a PowerShell script (install-preserved-pdf-runtime.ps1 lines 10-13), not in JS; it only matched the curl.exe line. Nothing is built from parts or read from a manifest. Call path: settings button #codex-bilingual-install-runtime (preferences.xhtml:95, label 'one-click install/repair PDF translation environment (about 600 MB)') -> prefsPane-init.js:188 handler (status text: downloading and installing the official PDF engine, about 600 MB) -> Zotero.CodexBilingual.installPreservedPdfRuntime (main.js:270; Windows only) copies bundled scripts to <profile>/runtime and runs powershell.exe -ExecutionPolicy Bypass -File install-preserved-pdf-runtime.ps1 (main.js:285-291). Script: Download-Verified (ps1 lines 36-45) returns early if the file already has the right hash, else runs System32\\curl.exe --fail --location and throws 'SHA-256 verification failed' unless Get-FileHash SHA256 equals the hard-coded lowercase value ($engineSha256 line 11, $nodeSha256 line 13 = 3602f2bb...d0237). The engine hash is compared before tar.exe extracts the zip (line 67); pdf2zh.exe is run only afterwards by the launcher (--check right after install, then for translations). Node.js node.exe is downloaded only if Get-Command node.exe finds none (ps1 lines 79-87), same pinned check. The optional -EngineArchivePath parameter skips download and hash, but the plugin never passes it. No other download addresses: grep of runtime/*.mjs and *.py found only proxy defaults and XML namespaces. Sizes: gh api release v2.9.0 lists pdf2zh-v2.9.0-BabelDOC-v0.6.4-with-assets-win64.zip at 621,036,226 bytes; HEAD on nodejs.org node.exe gives 92,825,416. Both exist. Not automatic: only the button starts it; there is no separate confirmation dialog, but the label names the install and the size. README (zh and en) says first use of the one-click setup downloads the roughly 600 MB engine, verifies SHA-256, and installs portable Node if missing. Fork comparison: this is the original (Mengqi97).",
+    "reviewerNote": "Checked by hand 2026-10-16: the engine SHA-256 in install-preserved-pdf-runtime.ps1 equals the GitHub release asset digest for pdf2zh-v2.9.0-BabelDOC-v0.6.4-with-assets-win64.zip, and the node.exe SHA-256 equals nodejs.org's SHASUMS256.txt for v24.19.0 win-x64."
+  }
+}

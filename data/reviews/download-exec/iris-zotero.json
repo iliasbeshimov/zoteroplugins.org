@@ -8,9 +8,9 @@
   "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
   "real": true,
   "concern": "low",
-  "rule": "CAP-DOWNLOAD-EXEC-TOLD",
+  "rule": "CAP-DOWNLOAD-EXEC-MAKER",
   "label": "Downloads uv and installs Python and speech packages when you turn on voice input",
-  "summary": "When you choose to install voice input (the button says about 700 MB), it downloads uv from Astral's GitHub releases and uses it to install Python and speech packages. uv is checked only against a checksum from the same place.",
+  "summary": "When you choose to install voice input (the button says about 700 MB), it downloads uv and uses it to install Python, speech packages and a speech model. The README says a one-time download is needed but doesn't name uv.",
   "facts": {
     "what": "For voice input only: the uv Python package manager (pinned release 0.11.30 from astral-sh's GitHub releases, checked against a .sha256 file fetched from the same release), which then installs a local Python 3.12 and speech packages (faster-whisper, sounddevice, huggingface-hub) and downloads a Whisper speech model (about 700 MB). Separately, the inherited full-document translation installer (Miniconda / uv install script piped into a shell) exists in the code but its Translate tab is hidden and unreachable.",
     "urls": [
@@ -21,6 +21,7 @@
       "https://repo.anaconda.com/miniconda/Miniconda3-latest-${arch}-${ARCH}.sh"
     ],
     "source": "official",
+    "publisher": "Astral, who make uv",
     "transport": "https",
     "integrity": "same-source-checksum",
     "trigger": "user-clicks-install",

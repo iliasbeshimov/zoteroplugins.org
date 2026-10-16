@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "slug": "z-transplit",
+  "version": "1.11.0",
+  "sha256": "8317886e7091ef88c6d6e353b2ef96eb0adb453aaaf640ca3200858c42540f6d",
+  "codeKey": "2b316b1c9553",
+  "reviewedAt": "2026-10-16",
+  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "low",
+  "rule": "CAP-DOWNLOAD-EXEC-FIXED",
+  "label": "Downloads and runs the OpenDataLoader PDF parser the first time you translate a PDF",
+  "summary": "The first time you translate a PDF's full text, it downloads the OpenDataLoader PDF parser (a 24 MB Java program), usually from a PyPI mirror in China, and runs it, showing a progress window but not asking; the README names OpenDataLoader but not the download. We checked that its fingerprint matches the parser in the project's own release. If you don't have Java, it asks first, then downloads a Java runtime from Adoptium, its maker.",
+  "facts": {
+    "what": "Two downloads for the 'Translate full text' / 'Translate and open side by side' PDF pipeline. (1) The OpenDataLoader PDF parser, opendataloader-pdf-cli 2.5.0 (a Java jar, 24,102,188 bytes; the wheel/zip carrying it is about 22.5 MB), fetched on first PDF parse because this xpi does not bundle it; the plugin extracts the jar into its data folder and runs it with `java -jar`. (2) A Java 17 runtime (Eclipse Temurin JRE, about 40-50 MB) from Adoptium, only if no Java 11+ is found, unpacked into the Zotero profile and used to run that jar.",
+    "urls": [
+      "${mirror.base}/packages/${hashPath}/opendataloader_pdf-${meta.version}-py3-none-any.whl (mirrors: https://mirrors.aliyun.com/pypi, https://pypi.tuna.tsinghua.edu.cn, https://files.pythonhosted.org)",
+      "https://github.com/opendataloader-project/opendataloader-pdf/releases/download/v${meta.version}/opendataloader-pdf-cli-${meta.version}.zip",
+      "https://api.adoptium.net/v3/assets/latest/${featureVersion}/hotspot?os=${os}&architecture=${arch}&image_type=jre&vendor=eclipse",
+      "https://api.adoptium.net/v3/binary/latest/${featureVersion}/ga/${os}/${arch}/jre/hotspot/normal/eclipse"
+    ],
+    "source": "official",
+    "publisher": "the OpenDataLoader project, which makes opendataloader-pdf",
+    "transport": "https",
+    "integrity": "pinned",
+    "trigger": "automatic-on-feature-use",
+    "toldInReadme": "partly",
+    "readmeQuote": "OpenDataLoader (local JVM) parses the layout, paragraphs are translated,",
+    "triggerQuote": {
+      "file": "content/scripts/ztransplit.js",
+      "text": "if (opts.allowDownload !== false && (packedXpiSource || baseDir) && !jarDownloadFailed.has(jarFileName)) {"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/ztransplit.js",
+      "text": "if (!hash || hash !== asset.sha256) {"
+    },
+    "sourceQuote": {
+      "file": "content/scripts/ztransplit.js",
+      "text": "{ id: \"aliyun-pypi\", base: \"https://mirrors.aliyun.com/pypi\" },"
+    },
+    "notes": "OpenDataLoader is the maker of the PDF parser jar (github.com/opendataloader-project/opendataloader-pdf), NOT the plugin's developer (repo is Liozhang/z-transplit). The scanner's 'official' source is the GitHub-release fallback only (url at ztransplit.js ~11668). Default order (OdlJarDownloader, ~11653-11671, 11807-11882): probe every source with a Range request, rank by latency, try fastest first; sources are aliyun-pypi, tuna-pypi, pypi (files.pythonhosted.org) for the wheel (only when WHEEL_PACKAGE_HASH_PATH has the version; it has 2.5.0), then the GitHub release zip. So the usual first source is a Chinese PyPI mirror (third-party by the brief's definition), which is why source is third-party. Integrity differs per download. JAR: PINNED. core/pdf/lib/PROVENANCE.json inside the xpi holds sha256 516ce47832a6726e87cb17db77c20174ca8cabbe9a6b56db1418babc7c9ddcba and bytes 24102188; runDownload throws 'no pinned SHA-256 in provenance' if absent, and installJarFromArchive (11736-11800) extracts the jar entry and does `if (hash !== meta.sha256) { throw ...jar checksum mismatch` before moving it into place; the hash is of the extracted jar, not of the zip/wheel. JRE: SAME-SOURCE CHECKSUM: queryAdoptiumLatestAsset (11278-11299) reads pkg.link and pkg.checksum from the api.adoptium.net assets JSON and downloadJRE compares sha256 of the archive to it (11493-11498); if the assets API fails it falls back to resolveAdoptiumAsset (api.adoptium.net/v3/binary/latest, ...) with NO checksum (asset.sha256 undefined, archive just written, 11499-11502). I report same-source-checksum (the weaker of the two, and the JRE has a no-check fallback). TRIGGER: also two paths. Jar: PDF parse calls getJarPath (~12480-12560), which, when the jar is absent from the xpi (release xpi ships only core/pdf/lib/ztransplit-region-text-remover.jar plus the two PROVENANCE files; the ODL jar is absent, PROVENANCE says 'the lean xpi (default) does not carry the jar, OdlJarDownloader downloads it on first parse') calls downloadPinnedJar with a progress window titled 'Downloading the OpenDataLoader parsing component'; no confirmation dialog, so automatic-on-feature-use (right-click PDF > 'Translate full text (save as attachment)' or reader 'Translate and open side by side'). Java: handleMissingJava (~69590) only runs when Java is missing (isJavaMissingCause, ~69782 and ~70054) and shows a Services.prompt.confirmEx dialog 'Java required' whose body says the plugin 'fetches the ~40 MB Java runtime and extracts it' with buttons 'Download and install' / 'Open download page' / 'Cancel' -> asks-first for that part. Most concerning kept: automatic-on-feature-use. RUN: Java is launched with `java -jar <odl jar>` (ztransplit.js ~12089) via nsIProcess. The README does not say anything is downloaded; it says 'OpenDataLoader (local JVM)' and 'Java and OpenDataLoader options' in settings, so partly. The README's install section mentions only the xpi. Release asset sizes checked with `gh api`: opendataloader-pdf-cli-2.5.0.zip is 22,504,550 bytes. Nothing was downloaded or run. The bundled region-text-remover jar (4.5 MB, own code, also run with java -jar) ships inside the xpi, so is not a download.",
+    "reviewerNote": "Level set by the parser jar: its SHA-256 (516ce478…) is in the xpi's core/pdf/lib/PROVENANCE.json and installJarFromArchive refuses a mismatch, whichever mirror served it; checked by hand 2026-10-16 that the jar inside opendataloader-pdf-cli-2.5.0.zip from the project's GitHub release has that SHA-256. The Java runtime comes from Adoptium (its maker) after a confirmEx dialog, checked against a checksum from Adoptium's API. This review is of the lean z-transplit.xpi; the -full.xpi build carries the jar and downloads nothing."
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-codex--haohaomin",
+  "version": "0.8.3",
+  "sha256": "b8786228c67598866bfbaaa67e698860308020e742f98bc3c53d73a781e45702",
+  "codeKey": "05b29b0e95c1",
+  "reviewedAt": "2026-10-16",
+  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-DEVELOPER",
+  "label": "Downloads and runs its own server when Zotero starts (a setting, on by default)",
+  "summary": "When Zotero starts (a setting, on by default), it downloads its own server (26–72 MB, with Node.js if you don't have it) from the project's GitHub release and runs it, as the README says.",
+  "facts": {
+    "what": "A zip of the plugin's own MCP server (compiled JavaScript plus PDF native dependencies), 25.7-28.3 MB per platform. If no usable Node.js is found, a full bundle that includes Node.js (63.3-71.8 MB) instead. The plugin then runs the server with Node.js.",
+    "urls": [
+      "${repository}/releases/download/v${version}/${name}",
+      "https://github.com/haohaomin/zotero-codex"
+    ],
+    "source": "developer-own",
+    "transport": "https",
+    "integrity": "same-source-checksum",
+    "trigger": "automatic",
+    "toldInReadme": "yes",
+    "readmeQuote": "打开「设置 → Zotero MCP」，插件会自动下载并检查运行组件。",
+    "triggerQuote": {
+      "file": "content/runtime.js",
+      "text": "if(state().automatic) void ensure().catch(()=>{});"
+    },
+    "integrityQuote": {
+      "file": "content/runtime.js",
+      "text": "if((await IOUtils.stat(archive)).size!==asset.size || await hash(archive)!==asset.sha256) throw new Error("
+    },
+    "sourceQuote": {
+      "file": "content/runtime-core.js",
+      "text": "const repository = 'https://github.com/haohaomin/zotero-codex';"
+    },
+    "notes": "Same download code as the reviewed zotero-codex (0.8.1): runtime.js download()/install() and runtime-core.js asset()/releaseURL() are unchanged in substance; the only diff in runtime-core.js is the repository constant (renhao12356578 -> haohaomin). runtime.js differs only by added cache-cleanup code (cacheFS, scheduleCacheCleanup, automaticCacheCleanup, a 'busy' state), which is not part of the download. The 'repository' value is a constant in content/runtime-core.js line 3, so release URLs are https://github.com/haohaomin/zotero-codex/releases/download/v0.8.3/<name>. WHOSE REPO: this is not really a fork. GitHub API: repos/haohaomin/zotero-codex has fork=false, parent=null, id 1381413114, created 2026-09-22; the original owner's address https://github.com/renhao12356578/zotero-codex now returns HTTP 301 and the API for repos/renhao12356578/zotero-codex returns the same repo (full_name haohaomin/zotero-codex); users/renhao12356578 is 404. The recent commits in haohaomin/zotero-codex are authored by renhao12356578, and LICENSE says 'Copyright (c) 2026 renhao12356578'. So it is the original project after the GitHub account moved/renamed to haohaomin (or the same person's new account); the download comes from this plugin's own repository's release. The v0.8.3 release (published 2026-10-02 by github-actions[bot]) has a runtime-manifest.json with sha256 digest 86b2e0c2f934...a734, identical at both addresses. Release assets: service zips 25.7-28.3 MB, runtime zips 63.3-71.8 MB for darwin-arm64/x64, linux-arm64/x64, win32-x64. I did not download them. Integrity: size and SHA-256 come from runtime-manifest.json fetched from the same release (runtime.js ~line 273: Core.releaseURL(version,'runtime-manifest.json')); no hash is in the plugin code, so same-source-checksum. Trigger: start() (runtime.js ~line 323) calls ensure() at plugin startup when pref autoInstall is not false (default on); the settings page has checkbox zc-auto-install with text '启动时检查并下载对应版本；关闭后仍可手动准备。' and a note '组件来自本项目 GitHub Release'. Download progress is shown in the settings panel.",
+    "reviewerNote": "Not a fork: haohaomin/zotero-codex is the same project as renhao12356578/zotero-codex after a move (the old address redirects); download code as reviewed for zotero-codex 0.8.1."
+  }
+}

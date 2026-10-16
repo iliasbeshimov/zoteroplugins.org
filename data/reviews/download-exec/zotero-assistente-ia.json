@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-assistente-ia",
+  "version": "0.8.7",
+  "sha256": "95b6a1e85a738109897d78e161fb9378f7bc6014ab20c51187476e87c22e53da",
+  "codeKey": "108359b039f9",
+  "reviewedAt": "2026-10-16",
+  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "low",
+  "rule": "CAP-DOWNLOAD-EXEC-MAKER",
+  "label": "Runs Claude Code's official installer when you ask it to install Claude Code",
+  "summary": "When you press its button to install and sign in to Claude Code and confirm, it opens a Terminal or Command Prompt window that runs Claude Code's install script, if Claude Code isn't installed yet; the README shows the same commands. It does nothing on Linux.",
+  "facts": {
+    "what": "Anthropic's official Claude Code installer script (claude.ai/install.sh on Mac/Linux, install.ps1 on Windows), piped straight into bash / PowerShell iex inside a visible Terminal or cmd window. It installs the Claude Code program (size not established; script is fetched at run time) and then runs it to sign in.",
+    "urls": [
+      "https://claude.ai/install.ps1",
+      "https://claude.ai/install.sh"
+    ],
+    "source": "official",
+    "publisher": "Anthropic, who make Claude Code",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "asks-first",
+    "toldInReadme": "yes",
+    "readmeQuote": "Instala o Claude Code: **Windows** (PowerShell) `irm https://claude.ai/install.ps1 | iex`, **macOS** `curl -fsSL https://claude.ai/install.sh | bash`",
+    "triggerQuote": {
+      "file": "content/preferences.js",
+      "text": "Services.prompt.confirm(window, this.T(\"prefs.claude.install\"), msg)"
+    },
+    "integrityQuote": {
+      "file": "content/zoteroia.js",
+      "text": "CLAUDE_INSTALL_UNIX: \"curl -fsSL https://claude.ai/install.sh | bash\","
+    },
+    "sourceQuote": {
+      "file": "content/zoteroia.js",
+      "text": "// Comandos oficiais de instalação (code.claude.com/docs/en/setup). Fixos: nunca vêm de fora."
+    },
+    "notes": "Call path: Settings button zia-claude-install (preferences.js:160) -> installClaude() (preferences.js:660) or chat panel button chat.claudeSetup (chatview.js:1863 -> _setupClaude, 2033). Both first show Services.prompt.confirm with prefs.claude.installConfirm: 'A window will open that installs Claude Code from Anthropic's official site, if it is not installed yet, and then opens the sign in...'. Then core.openClaudeSetup() (zoteroia.js:700) first looks for an existing claude executable, writes claude-code-setup.cmd / .command into the plugin work dir via claudeSetupScript (zoteroia.js:646), and opens it in cmd (start) or Terminal (open -a Terminal). Script only runs the installer if the claude binary is missing (Unix: 'if [ ! -x \"$CLAUDE_EXE\" ]; then ... curl ... | bash'; Windows: 'powershell -NoProfile -ExecutionPolicy Bypass -Command \"irm ... | iex\"'). Commands are constants, not from outside. Linux: openClaudeSetup returns opened:false, no download. The same strings are also shown to the user as a manual alternative (claudeInstallCommand, preferences.js:59-60). No hash/signature check by the plugin; the installer itself is Anthropic's. The confirm dialog names Claude Code and 'official site' but not the claude.ai address; I rate asks-first. Not a fork of a reviewed plugin; no existing review compared."
+  }
+}

@@ -1,22 +1,23 @@
 {
   "schemaVersion": 1,
   "slug": "paper-curio",
-  "version": "0.11.0",
-  "sha256": "a0ee0934c2377f592f5e2da87ded14b5ed616a6c72a1207aeebaf5195eb02cf7",
-  "codeKey": "16e94b41cf18",
-  "reviewedAt": "2026-09-30",
-  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "version": "0.11.2",
+  "sha256": "3b259f446d22dc595b89a338e66745bdbf9e63ce97a4c16b7a31128e93a68900",
+  "codeKey": "c9c5cc649586",
+  "reviewedAt": "2026-10-16",
+  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
   "real": true,
   "concern": "low",
-  "rule": "CAP-DOWNLOAD-EXEC-TOLD",
+  "rule": "CAP-DOWNLOAD-EXEC-MAKER",
   "label": "Downloads and runs a standalone Python on Macs without Python 3.12",
-  "summary": "The first time you process a collection on a Mac without Python 3.12, it downloads a standalone Python from Astral's python-build-standalone releases and runs it, as its README says. The download isn't checked against a fingerprint.",
+  "summary": "The first time you process a whole collection on a Mac without Python 3.12, it downloads a standalone Python (about 25 MB) and runs it, as its README says. It takes whatever the latest release is, then installs the paper-curation packages, which is listed as its own finding.",
   "facts": {
-    "what": "A standalone Python 3.12 build (python-build-standalone, macOS only, install_only tar.gz for the Mac's chip) fetched from the latest astral-sh/python-build-standalone GitHub release, unpacked into the Zotero profile, then executed. It is only fetched if no Python 3.12 is already found. The plugin then also runs pip install -r requirements.txt (from the user's own paper-curation clone) into a venv built from that Python.",
+    "what": "A standalone Python 3.12 build (python-build-standalone, macOS only, cpython-3.12 ...-apple-darwin-install_only.tar.gz for the Mac's chip, currently about 25 MB) fetched from the latest astral-sh/python-build-standalone GitHub release, unpacked into the Zotero profile, then executed. Only fetched when no Python 3.12 is found. The plugin then also runs pip install -r requirements.txt (from the user's paper-curation clone) into a venv built from that Python.",
     "urls": [
       "https://api.github.com/repos/astral-sh/python-build-standalone/releases/latest"
     ],
     "source": "official",
+    "publisher": "Astral, who build these standalone Pythons",
     "transport": "https",
     "integrity": "none",
     "trigger": "automatic-on-feature-use",
@@ -30,6 +31,17 @@
       "file": "chrome/content/scripts/papercurio.js",
       "text": "urllib.request.urlretrieve(url, tgz)"
     },
-    "notes": "Scanner hit is the embedded BRIDGE_PY Python string (papercurio.js line 7256); the download is in its _download_standalone function (about line 7360), reached via _ensure_py312 / ensure_env. Real trigger: right-click a collection, then 'Process this collection (review · classify · timelines)' (onRunFullCommand at about line 39743 calls runFullViaBridge then ensurePy312). Before that it asks only for a topic alias if the collection is new; no confirmation dialog names the download, and the toast text says only 'Preparing py312 env ... may install for a few minutes' (no explicit mention of downloading Python). Download happens only when no Python 3.12 is found among Homebrew/miniconda/miniforge paths, PC_PYTHON_PATH pref, or python3.12 on PATH; code refuses non-macOS ('auto-download supports macOS only'). The release asset is chosen by name match from the GitHub API listing; no hash or signature compared; extracted with tarfile.extractall. The extracted python is run immediately (version probe), then used for venv and pip install -r requirements.txt of the user's paper-curation checkout, which pulls PyPI packages (also unchecked by the plugin, no hashes seen). README declares the download in Korean (in the 'Optional dependency: paper-curation' section) and says the minimal review does not run it. Source is the Python tool's official builder (Astral's python-build-standalone), not the plugin developer. Plugin's own xpi asset sha256 verified True per pack, unrelated to this download. Nothing was downloaded or run in this review."
-  }
+    "sourceQuote": {
+      "file": "chrome/content/scripts/papercurio.js",
+      "text": "api = \"https://api.github.com/repos/astral-sh/python-build-standalone/releases/latest\""
+    },
+    "notes": "RE-REVIEW of 0.11.0 (sha a0ee0934...) against 0.11.2. RESULT: the download is unchanged. I diffed the old release's papercurio.js against the new one: the embedded BRIDGE_PY block (new lines 7189-7360, old 7256-7427), which holds _plat_tag, _find_py312_candidates, _download_standalone, _ensure_py312 and _pip_install, is byte-identical; so are the JS side ensurePy312 (new 6976-7000, old 7043-7067), runFullViaBridge and the onRunFullCommand trigger region (new ~39640-39700, old ~39735-39795); papercurio-addon.ftl is identical; the file list of the two xpis is identical. Address: same (api.github.com/repos/astral-sh/python-build-standalone/releases/latest, asset picked by name: 'cpython-3.12' and the Mac chip tag aarch64-apple-darwin / x86_64-apple-darwin, ending 'install_only.tar.gz'; new line 7303-7309, old 7370-7376). Check: same, none (no hash or signature; urlretrieve then tarfile.extractall; new lines 7317-7319, old 7384-7386). Trigger: same, right-click a collection > process the whole collection; ensurePy312 runs 'ensure_env' in the bridge before any run, a toast says 'Preparing py312 env ... first run may install for a few minutes', no dialog naming the download (only an alias prompt for new collections). The download only happens when no Python 3.12 is found among Homebrew/miniconda/miniforge paths, PC_PYTHON_PATH pref, PAPER_CURATION_PY312, python3.12 on PATH, or the managed folder. Platforms: same, macOS only ('auto-download supports macOS only; install Python 3.12 manually' raised when platform.system() != 'Darwin'). What differs in 0.11.2 is elsewhere: the whole-file diff is about 315 changed lines, the only download-related line differences being that the old file has an extra ensureBridgeScript() call site and the new file has changed line numbers (about 67 lines earlier) and a Server-Sent-Events 'data:' parsing tweak (new ~7271-7272, unrelated); the README differs only in the connections table rows and bullets (paper-curation connection handling wording), and the README paragraph telling about the download (line 100) is identical. The scanner hit is the BRIDGE_PY template string start (new line 7189); the download function is _download_standalone at new line 7293. Verified existence with gh api: latest python-build-standalone release (tag 20261013) has cpython-3.12.15 install_only assets of 25,180,390 bytes (aarch64) and 24,892,063 bytes (x86_64). Nothing was downloaded or run. All previous facts from the 0.11.0 review still hold."
+  },
+  "alsoAppliesTo": [
+    {
+      "version": "0.11.0",
+      "sha256": "a0ee0934c2377f592f5e2da87ded14b5ed616a6c72a1207aeebaf5195eb02cf7",
+      "how": "earlier release reviewed on 2026-09-30; the download code is byte-identical"
+    }
+  ]
 }

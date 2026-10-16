@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "slug": "biread",
+  "version": "0.1.4-beta",
+  "sha256": "0bb7093a8638972ef906ff8e3862deeeedfbd023481721ea58d6aa13fe46f4a6",
+  "codeKey": "aba60b414117",
+  "reviewedAt": "2026-10-16",
+  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "low",
+  "rule": "CAP-DOWNLOAD-EXEC-FIXED",
+  "label": "Downloads and runs Python with an alignment model (194 MB) when you press install, on Windows",
+  "summary": "On Windows (x64), when you press the one-click button to install the local alignment model, it downloads about 194 MB, as its README says: Python from python.org, three Python packages from PyPI, and a word-alignment model, a data file, from the Hugging Face account cstr. It then runs that Python on the plugin's own script.",
+  "facts": {
+    "what": "On Windows x64 only, downloads seven files totalling 194,108,801 bytes: the embeddable Python 3.12.10 zip (11.1 MB) from python.org, wheels for numpy, onnxruntime and tokenizers from files.pythonhosted.org (30.3 MB), and an int8 ONNX word-alignment model (149.7 MB), tokenizer.json and README from the Hugging Face repo cstr/awesome-align-onnx-int8. It unpacks them into the Zotero cache and then runs the downloaded python.exe (isolated mode, -I) on the plugin's own alignment-worker.py to test and later use the model.",
+    "urls": [
+      "https://www.python.org/ftp/python/3.12.10/python-3.12.10-embed-amd64.zip",
+      "https://files.pythonhosted.org/packages/12/33/fefe62073dc8acfd0f2b9ed7c003af2f50aa61555e113e6db02b8f79f145/numpy-2.5.4-cp312-cp312-win_amd64.whl",
+      "https://files.pythonhosted.org/packages/be/ed/b12cea136ccd7b03d924f46b8393faf7ceac21115c0c50e729faa248cf23/onnxruntime-1.31.0-cp312-cp312-win_amd64.whl",
+      "https://files.pythonhosted.org/packages/d1/6c/24f074c9a0efb98e61b20aafe6b2641922d5db24e447d5d6daffd9e17555/tokenizers-0.23.3-cp310-abi3-win_amd64.whl",
+      "https://huggingface.co/cstr/awesome-align-onnx-int8/resolve/e803a2f501474044099b539160aaca461976ecd0/model.onnx",
+      "https://huggingface.co/cstr/awesome-align-onnx-int8/resolve/e803a2f501474044099b539160aaca461976ecd0/tokenizer.json",
+      "https://huggingface.co/cstr/awesome-align-onnx-int8/resolve/e803a2f501474044099b539160aaca461976ecd0/README.md"
+    ],
+    "source": "official",
+    "publisher": "python.org and PyPI, where Python and those packages are published",
+    "transport": "https",
+    "integrity": "pinned",
+    "trigger": "user-clicks-install",
+    "toldInReadme": "yes",
+    "readmeQuote": "Optional offline ONNX alignment can be installed with the one-click installer on Windows x64 (about 194 MB from Python.org, PyPI and Hugging Face).",
+    "triggerQuote": {
+      "file": "chrome/content/scripts/biread.js",
+      "text": "const installModel = ui.button(\"\\u4E00\\u952E\\u5B89\\u88C5\\u672C\\u5730\\u6A21\\u578B\", async () => {"
+    },
+    "integrityQuote": {
+      "file": "chrome/content/scripts/biread.js",
+      "text": "valid = (await IOUtils.stat(part)).size === asset.bytes && await sha256(part) === asset.sha256;\n          if (!valid) throw new Error("
+    },
+    "sourceQuote": {
+      "file": "chrome/content/scripts/biread.js",
+      "text": "url: \"https://huggingface.co/cstr/awesome-align-onnx-int8/resolve/e803a2f501474044099b539160aaca461976ecd0/model.onnx\","
+    },
+    "notes": "The scanner's 'checksum from the same source' is wrong here: the addresses and the expected SHA-256 and byte size of every file are written in the plugin's own code (installAssets array, biread.js ~20067-20125), not fetched from the server. install() (20189) downloads each file to a .part file via Downloads.createDownload({source: asset.url}) (20231), compares size and sha256(part) to asset.sha256 and throws '校验失败' (verification failed) on mismatch (20244-20245), and only then moves/unpacks it. Addresses are fixed constants: none comes from a setting, manifest or server reply. Hugging Face URLs are pinned to commit e803a2f5... ; the PyPI URLs are exact file paths. Trigger: the 'AnnotationControls' constructor adds a settings button labelled \\u4E00\\u952E\\u5B89\\u88C5\\u672C\\u5730\\u6A21\\u578B ('one-click install local model') whose handler calls installLocalModel(); its tooltip says 'Windows x64: first download about 194 MB, auto-configured and verified'. Nothing calls installLocalModel automatically (only caller is that click handler, line ~20310). On non-Windows or non-x64 install() throws before any download. Run step: runLocalModel (19523) does Subprocess.call({command: configuration.python, arguments: [\"-I\", worker, configPath]}) where configuration.python is the downloaded python.exe, and install() itself calls verify() -> runLocalModel right after downloading. So the downloaded Python is executed. The downloaded model file is loaded by onnxruntime inside that Python. 'source' is third-party because the model files come from an unrelated Hugging Face account (cstr), the most concerning of the sources; Python itself (python.org, PyPI wheels from files.pythonhosted.org) is the official source of those projects. Python.org zip is the official Python embeddable build. Note the plugin also has a manual-config button that lets the user pick their own local-model.json (python/model/deps absolute paths) but that downloads nothing. README says about 194 MB from Python.org, PyPI and Hugging Face, and that downloads are checksum-verified; size sum of the installAssets bytes = 194,108,801 matches. Not a fork recorded in pack; code is a fork of zotero-pdf-translate but the installer is BiRead's own.",
+    "reviewerNote": "Source recorded as official for the programs that run (python.org, PyPI); the model files come from the Hugging Face account cstr, pinned to a commit and by SHA-256, and are data loaded by onnxruntime. Checked by hand: every address, size and SHA-256 is in installAssets (biread.js ~20067-20125) and install() refuses a mismatch (line 20244); the numpy, onnxruntime and tokenizers hashes equal PyPI's published digests (checked 2026-10-16)."
+  }
+}

@@ -8,9 +8,9 @@
   "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
   "real": true,
   "concern": "medium",
-  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
-  "label": "Would download and run Python and PDF tools to extract figures; the file isn't published yet",
-  "summary": "The first time it extracts a figure, it would download a Python and Poppler bundle from the developer's GitHub release and run it, without asking and without a check; the README doesn't mention it. When we last checked, on 16 October 2026, that file didn’t exist (the address returned 404), so nothing was downloaded.",
+  "rule": "CAP-DOWNLOAD-EXEC-DEVELOPER",
+  "label": "Would download and run Python and PDF tools the first time it extracts a figure",
+  "summary": "The first time it extracts a figure, it would download a Python and Poppler bundle from the developer's GitHub release and run it, without asking; the README doesn't mention it. When we last checked, on 16 October 2026, that file didn't exist (the address returned 404), so nothing has been downloaded yet.",
   "facts": {
     "what": "A Python environment bundled with the Poppler PDF tools (pdftoppm, pdftohtml, pdfinfo), delivered as a zip per platform. It is unpacked into the Zotero data directory. The plugin marks its Python and Poppler programs executable and runs Python on the plugin's own pdf_figure_extract.py script to pull figures out of PDFs.",
     "urls": [

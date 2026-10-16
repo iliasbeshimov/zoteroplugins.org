@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "slug": "texlate",
+  "version": "0.1.1",
+  "sha256": "2ea00562d6d0e9fbd3dd281d4c5b6636caacb83592557df5047fa575d5c022d6",
+  "codeKey": "8c26378945e5",
+  "reviewedAt": "2026-10-16",
+  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "low",
+  "rule": "CAP-DOWNLOAD-EXEC-FIXED",
+  "label": "Downloads uv to start its translation server the first time you translate a paper",
+  "summary": "When you translate a paper and its local server isn't running, it downloads uv (about 20 MB) without asking, showing only a status line, and uses it to start the texlate server; installing that server is listed as its own finding. The project's README explains installing uv and texlate yourself, not that the plugin does it.",
+  "facts": {
+    "what": "Downloads the uv package manager (a .tar.gz/.zip of about 17-21 MB depending on platform) from Astral's GitHub releases, unpacks it to ~/.texlate/bin, then runs it as `uvx texlate web`, which fetches and runs the PyPI package texlate as a local server.",
+    "urls": [
+      "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/${asset.file}"
+    ],
+    "source": "official",
+    "publisher": "Astral, who make uv",
+    "transport": "https",
+    "integrity": "pinned",
+    "trigger": "automatic-on-feature-use",
+    "toldInReadme": "partly",
+    "readmeQuote": "uv tool install texlate",
+    "triggerQuote": {
+      "file": "content/scripts/texlate.js",
+      "text": "if (!(e instanceof NetworkError) || !prefs.autoStart || !isLoopbackUrl(prefs.serverUrl)) {"
+    },
+    "integrityQuote": {
+      "file": "content/scripts/texlate.js",
+      "text": "if (await sha256Hex(bytes.buffer) !== asset.sha256) {"
+    },
+    "sourceQuote": {
+      "file": "content/scripts/texlate.js",
+      "text": "const url = `https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/${asset.file}`;"
+    },
+    "notes": "Call path: translating an item (texlate.js ~4682) or the diagnostics step (~4952) calls healthOrBootstrap(client, prefs). If the local server at serverUrl (default http://127.0.0.1:8765) is unreachable and prefs.autoStart (default true in prefs.js and DEFAULTS, line 4230) and the URL is loopback, ensureServer -> doEnsureServer (4113): findUv() looks for ~/.texlate/bin/uvx or uv, then uvx/uv on PATH; if none, downloadUv() (4011). Also the settings-pane button 'Start local server' (startServer, 4332) calls ensureServer; its label names starting a server, not a download. No confirmation dialog; only a status line 'Setting up the local server - downloading tools on first run, this can take a few minutes.' (locale texlate-addon.ftl flow-boot-prepare) is shown while it happens. UV_VERSION = \"0.12.23\" (3889). UV_ASSETS (3950-3973) holds a hardcoded SHA-256 per platform (darwin, linux, windows, x86_64/aarch64/i686); downloadUv compares the SHA-256 of the downloaded bytes with it and throws 'uv sha256 mismatch - refusing to install' before writing/extracting. Checked via gh api: uv release 0.12.23 exists and its published digests for uv-x86_64-apple-darwin.tar.gz (21263712 bytes) and uv-aarch64-apple-darwin.tar.gz (17044217 bytes) match the pinned values for darwin (only those two compared). The downloaded uv is then extracted with tar, chmod 755, and spawnServer (4082) runs it detached via /bin/sh nohup (or PowerShell Start-Process) as `<uv> tool run texlate web --host --port` (or `uvx texlate web ...`). That makes uv fetch the unpinned PyPI package texlate (and Python if needed) and run it as a local server: a separate finding (packages installed by uv, no hash or version pin in the plugin; the plugin does not pass a version). If uv is found on PATH it is used and nothing is downloaded, but texlate from PyPI is still run. README at the pack path is the main texlate project README (Chinese), not the Zotero plugin's zotero/README.md; it tells the user to run `uv tool install texlate` themselves and does not say the plugin downloads uv, hence 'partly'. Zotero/README.md was not available to check."
+  }
+}

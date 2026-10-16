@@ -8,15 +8,16 @@
   "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
   "real": true,
   "concern": "medium",
-  "rule": "CAP-DOWNLOAD-EXEC-REVIEWED",
+  "rule": "CAP-DOWNLOAD-EXEC-OTHER",
   "label": "Downloads and runs Python and PDF tools the first time you ask about a figure",
-  "summary": "The first time you ask about a figure, it downloads a 265–491 MB bundle of Python and the Poppler PDF tools from the original llm-for-zotero developer's (not this fork's) GitHub release and runs it, without asking. The README doesn't mention it, and the download isn't checked against a fingerprint. We checked the macOS (Apple silicon) bundle: every file is standard software from conda-forge.",
+  "summary": "The first time you ask about a figure, it downloads a 265–491 MB bundle of Python and the Poppler PDF tools from the original llm-for-zotero's GitHub release and runs it, without asking; the README doesn't mention it. What's there now is standard software: we checked the macOS (Apple silicon) bundle, and every file is from conda-forge.",
   "facts": {
     "what": "A 'PDF figure runtime' zip (Python 3.11, Poppler, scientific libraries), 265-491 MB, from the upstream developer's GitHub release; its Python then runs the plugin's pdf_figure_extract.py",
     "urls": [
       "https://github.com/yilewang/llm-for-zotero/releases/download/pdf-figure-runtime-v${PDF_FIGURE_RUNTIME_VERSION}/llm-for-zotero-pdf-figure-runtime-v${PDF_FIGURE_RUNTIME_VERSION}-${platformKey}.zip"
     ],
     "source": "third-party",
+    "publisher": "yilewang, the developer of the original llm-for-zotero",
     "transport": "https",
     "integrity": "none",
     "trigger": "automatic-on-feature-use",

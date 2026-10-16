@@ -8,9 +8,9 @@
   "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
   "real": true,
   "concern": "low",
-  "rule": "CAP-DOWNLOAD-EXEC-TOLD",
+  "rule": "CAP-DOWNLOAD-EXEC-MAKER",
   "label": "Downloads and runs a Python installer when you press Install Environment",
-  "summary": "When you press Install Environment, it downloads the Miniconda Python installer from Anaconda (or, if that fails, uv from Astral) and runs it, as its README says. Neither is checked against a fingerprint, and the uv installer script runs straight from the web.",
+  "summary": "When you press Install Environment, it downloads the Miniconda Python installer (or, if that fails, uv's install script) and runs it, as its README says. It takes the latest of each, and the uv script runs straight from the web.",
   "facts": {
     "what": "Miniconda (the Anaconda Python installer) from Anaconda's server, or if that fails the uv Python package manager via Astral's install script (piped straight into the shell, no check); then it builds a Python 3.12 environment and installs pdf2zh_next for full-document translation.",
     "urls": [
@@ -20,6 +20,7 @@
       "https://astral.sh/uv/install.ps1"
     ],
     "source": "official",
+    "publisher": "Anaconda and Astral, who make the Miniconda and uv installers",
     "transport": "https",
     "integrity": "none",
     "trigger": "user-clicks-install",
