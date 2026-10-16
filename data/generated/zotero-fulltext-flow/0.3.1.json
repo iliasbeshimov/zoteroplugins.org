@@ -1,0 +1,541 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-fulltext-flow",
+ "repo": "practiceearnestly/zotero-fulltext-flow",
+ "version": "0.3.1",
+ "tag": "v0.3.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-15T08:57:44Z",
+ "prerelease": false,
+ "asset": {
+  "name": "fulltextflow-0.3.1.xpi",
+  "url": "https://github.com/PracticeEarnestly/zotero-fulltext-flow/releases/download/v0.3.1/fulltextflow-0.3.1.xpi",
+  "size": 31098,
+  "sha256": "450bd025248d8ba1cf7ff45f43d33919374b03b1b5a4035ea2b0d9f2e3f53bc5",
+  "githubAssetId": 643296002,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-15T08:57:43Z",
+  "fetchedAt": "2026-10-16T08:28:45.923Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "fulltextflow@zotero.local",
+  "name": "FullTextFlow for Zotero",
+  "version": "0.3.1",
+  "description": "Collection-scoped full-text completion for Zotero with configurable Zotero/JLSS retrieval strategies, dual web/API session verification, remote-task diagnostics, cancellation controls, stable task-table UI, verification, and secure authentication.",
+  "homepageUrl": "https://github.com/PracticeEarnestly/zotero-fulltext-flow",
+  "updateUrl": "https://github.com/PracticeEarnestly/zotero-fulltext-flow/releases/latest/download/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1165,
+   "sha256": "01552ec2f2189e82fc7ca343116314b4cab15830688a4ba1e8475260d21e8459"
+  },
+  {
+   "path": "content/auth-window.js",
+   "size": 13949,
+   "sha256": "423805aff26ec4064df2dfdf2544c2f44edd9d1d304145ef55c6545dea9b5245"
+  },
+  {
+   "path": "content/auth-window.xhtml",
+   "size": 1555,
+   "sha256": "b88464c83851cf0a04ce4636a536667874b29b0ea95b72d45f54f0b1aa0e987e"
+  },
+  {
+   "path": "content/scripts/fulltextflow.js",
+   "size": 87133,
+   "sha256": "5d43af8b919ef9f69e67175bec9eef22c8ab08457aaa04e1ce3df96186fb6d83"
+  },
+  {
+   "path": "content/task-manager.js",
+   "size": 11847,
+   "sha256": "4a71ab856a37d1b8dbcd4edf299118aeaac368681537b6c0242697fabac1819b"
+  },
+  {
+   "path": "content/task-manager.xhtml",
+   "size": 4843,
+   "sha256": "1e1a9903c08b109282876d31817fd6072f9aa8bdbe38647d12c8902829d7bb57"
+  },
+  {
+   "path": "manifest.json",
+   "size": 753,
+   "sha256": "ba2c5ba77186174630f85faeb9027c67687e12e2277688351e05265df4dd558b"
+  },
+  {
+   "path": "prefs.js",
+   "size": 473,
+   "sha256": "6be81569fdabe5ee68f391e7aac5ef371afa1cb47e90ccd3079d20bfba44c294"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-16T08:28:45.923Z",
+  "input": {
+   "slug": "zotero-fulltext-flow",
+   "version": "0.3.1",
+   "sha256": "450bd025248d8ba1cf7ff45f43d33919374b03b1b5a4035ea2b0d9f2e3f53bc5"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 120965,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/fulltextflow.js",
+       "line": 612,
+       "column": 35,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", `${JLSS_BASE_URL}${path}`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/fulltextflow.js",
+       "line": 746,
+       "column": 37,
+       "snippet": "const attachment = await Zotero.Attachments.importFromURL({",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.jlss.vip",
+     "category": "unknown",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/fulltextflow.js",
+       "line": 5,
+       "column": 26,
+       "snippet": "const JLSS_BASE_URL = \"https://api.jlss.vip\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "jlss.vip",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/fulltextflow.js",
+       "line": 53,
+       "column": 8,
+       "snippet": "\"https://jlss.vip\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "jlyl.jlss.vip",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/auth-window.js",
+       "line": 4,
+       "column": 20,
+       "snippet": "const LOGIN_URL = \"https://jlyl.jlss.vip/jss/\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/fulltextflow.js",
+       "line": 52,
+       "column": 8,
+       "snippet": "\"https://jlyl.jlss.vip\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/fulltextflow.js",
+       "line": 1506,
+       "column": 53,
+       "snippet": "openExternal: () => Zotero.launchURL(\"https://jlyl.jlss.vip/jss/\")",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.jlss.vip",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/fulltextflow.js",
+       "line": 54,
+       "column": 8,
+       "snippet": "\"https://www.jlss.vip\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/fulltextflow.js",
+       "line": 612,
+       "column": 35,
+       "snippet": "const response = await Zotero.HTTP.request(\"POST\", `${JLSS_BASE_URL}${path}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/fulltextflow.js",
+      "line": 60,
+      "column": 34,
+      "snippet": "const legacy = String(Zotero.Prefs.get(`${PREF_PREFIX}.token`) || \"\").trim();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/fulltextflow.js",
+      "line": 65,
+      "column": 16,
+      "snippet": "Zotero.Prefs.set(`${PREF_PREFIX}.token`, \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 1,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.fullTextFlow.token\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.fullTextFlow.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/fulltextflow.js",
+      "line": 250,
+      "column": 34,
+      "snippet": "if (path && await IOUtils.exists(path))",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/fulltextflow.js",
+      "line": 333,
+      "column": 33,
+      "snippet": "if (!path || !(await IOUtils.exists(path))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/fulltextflow.js",
+      "line": 336,
+      "column": 31,
+      "snippet": "const stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/fulltextflow.js",
+      "line": 340,
+      "column": 31,
+      "snippet": "const head = await IOUtils.read(path, { maxBytes: 5 });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/fulltextflow.js",
+      "line": 388,
+      "column": 42,
+      "snippet": "if (!cachePath || !(await IOUtils.exists(cachePath)))",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/fulltextflow.js",
+      "line": 391,
+      "column": 36,
+      "snippet": "const bytes = await IOUtils.read(cachePath, { maxBytes: 120_000 });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "login-manager",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/fulltextflow.js",
+      "line": 14,
+      "column": 37,
+      "snippet": "const loginManager = Services.logins;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/fulltextflow.js",
+      "line": 27,
+      "column": 33,
+      "snippet": "const loginManager = Services.logins;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/fulltextflow.js",
+      "line": 41,
+      "column": 33,
+      "snippet": "const loginManager = Services.logins;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsILoginManager"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/PracticeEarnestly/zotero-fulltext-flow/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/PracticeEarnestly/zotero-fulltext-flow/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-16T08:28:45.923Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-16T08:28:45.923Z",
+  "appliesTo": {
+   "slug": "zotero-fulltext-flow",
+   "version": "0.3.1",
+   "sha256": "450bd025248d8ba1cf7ff45f43d33919374b03b1b5a4035ea2b0d9f2e3f53bc5"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "0978eb0ee5c8175c48d6bc20ffd6eb1a7c84a4d3f227ece4cad8b2d304477816"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "unknown",
+      "hosts": [
+       "api.jlss.vip"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts a server we couldn't identify: api.jlss.vip",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "login-manager",
+      "label": "Uses Zotero's password manager",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-15T08:57:44Z",
+    "lastCommitAt": "2026-10-15T08:57:05Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Contacts a server we couldn't identify: api.jlss.vip"
+   ]
+  }
+ }
+}
