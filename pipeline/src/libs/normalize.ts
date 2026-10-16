@@ -291,6 +291,44 @@ export function functionKey(source: string): string | null {
 }
 
 /**
+ * functionKey for code outside any function: a top-level statement (`const BRIDGE_PY = `…``, a
+ * module's setup code), read as a script and keyed the same way.
+ */
+export function statementKey(source: string): string | null {
+  let ast: Node;
+  try {
+    ast = parseJs(source) as Node;
+  } catch {
+    return null;
+  }
+  tokens = [];
+  names = 0;
+  strings = new Set();
+  cut = false;
+  sawPlainTemplate = false;
+  plainTemplates = false;
+  maxTokens = Number.POSITIVE_INFINITY;
+  wholeFunction = true;
+  try {
+    for (const s of (ast.body as Node[] | undefined) ?? []) walk(s, "", null, true);
+  } catch {
+    return null;
+  } finally {
+    maxTokens = MAX_TOKENS;
+    wholeFunction = false;
+  }
+  return tokens.length ? hashKey(tokens.join(" ")) : null;
+}
+
+/** The source ranges of a script's top-level statements, as absolute offsets. */
+export function statementRanges(ast: AcornNode, base = 0): [number, number][] {
+  return (((ast as Node).body as Node[] | undefined) ?? []).map((s) => [
+    s.start + base,
+    s.end + base,
+  ]);
+}
+
+/**
  * The source ranges of every function, method and arrow in a syntax tree, as absolute offsets
  * (`base` is where the script starts in its file). A method's range covers its name and
  * parameters, which is the text functionKey reads back.

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "slug": "paperpilot",
+  "version": "1.5.1",
+  "sha256": "1f120ec3077c1519be8304d65c3454cf4e0cc2a012b550d76e26a2461c0d1acf",
+  "codeKey": "10fa85d80540",
+  "reviewedAt": "2026-10-16",
+  "method": "Read from the release file by Claude Opus 5.5: the agent's run_command tool, its confirmation rule (getRunCommandConfirmationReason) and the command patterns it checks.",
+  "real": true,
+  "concern": "high",
+  "rule": "CAP-RUNS-SENT-CODE-AI-REVIEWED",
+  "label": "Its AI agent can run commands on your computer; it asks only for ones that look destructive",
+  "summary": "In agent mode the AI can run shell commands as you. It asks you first only when a command looks destructive (deleting, moving, installing, changing permissions or git history), pipes a download into a shell, automates other apps or system settings, or overwrites an existing file. Anything else runs without asking, including commands that read your files, run scripts or send data over the network.",
+  "facts": {
+    "confirmationRule": "run_command.shouldRequireConfirmation returns true only when getRunCommandConfirmationReason matches NETWORK_TO_SHELL_PATTERN, SYSTEM_AUTOMATION_PATTERN, DESTRUCTIVE_COMMANDS, an appending redirect, or a write to a path that already exists.",
+    "destructivePattern": "rm, rmdir, mv, rename, chmod, chown, sudo, mkfs, dd; npm/pnpm/yarn/pip/brew/apt/conda/cargo/gem installs; git init/add/commit/push/reset/checkout/clean/rebase and similar; setting the date or time.",
+    "notCovered": "curl or wget without a pipe into a shell, cat, python or node scripts, and any other program not in the patterns run without a prompt.",
+    "settings": "No setting changes this; there are no permission modes."
+  }
+}

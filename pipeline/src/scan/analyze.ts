@@ -24,7 +24,7 @@ import { type LibraryEvidence, SourceFile } from "./text.ts";
  * Static analysis of one .xpi. Deterministic for a given file and ANALYZER_VERSION: the same
  * bytes always produce the same document apart from `analyzedAt`.
  */
-export const ANALYZER_VERSION = "0.12.0";
+export const ANALYZER_VERSION = "0.13.0";
 /** The self-update detail saying it turns Zotero's automatic updates on for itself at startup. */
 export const FORCES_AUTO_UPDATE = "turns on its automatic updates at startup";
 
@@ -11516,7 +11516,8 @@ const CODE_KEY_HITS = 50;
  * A fingerprint of the code behind a finding: where it sends or fetches from, which APIs it uses,
  * and the whole of each function around a hit with local names erased. Two releases get the same
  * key when only names a bundler or minifier chose differ, so a hand review of one still holds for
- * the other. None when no hit is inside a function.
+ * the other. Code outside any function counts by its top-level statement, and a shell or other
+ * script by its whole text (SourceFile.codeKeyAt). None when no hit's code can be keyed.
  */
 function capabilityCodeKey(
   id: string,
@@ -11528,7 +11529,7 @@ function capabilityCodeKey(
   );
   const fns = new Set<string>();
   for (const h of ordered.slice(0, CODE_KEY_HITS)) {
-    const key = h.file.functionKeyAt(h.offset);
+    const key = h.file.codeKeyAt(h.offset);
     if (key) fns.add(key);
   }
   if (!fns.size) return undefined;

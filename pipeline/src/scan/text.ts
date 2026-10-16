@@ -8,8 +8,13 @@ import {
   functionRanges,
   hashKey,
   type LiteralRecord,
+  statementKey,
+  statementRanges,
 } from "../libs/normalize.ts";
 import type { AcornNode } from "../libs/parse.ts";
+
+/** Scripts a plugin ships that we read as text, not JavaScript: shell, batch, PowerShell, Python. */
+const OTHER_SCRIPT = /\.(?:sh|bash|zsh|command|bat|cmd|ps1|py)$/i;
 
 /**
  * A code file with a line index, evidence helpers, and a map of which byte ranges are bundled
@@ -192,6 +197,7 @@ export class SourceFile {
     let found: [number, number][];
     try {
       found = functionRanges(ast, base);
+      this.stmtRanges.push(...statementRanges(ast, base));
     } catch {
       return;
     }
@@ -239,6 +245,22 @@ export class SourceFile {
     return key;
   }
   private fnKeys = new Map<string, string | null>();
+  /** Top-level statements of every script parsed in this file, for code outside any function. */
+  private stmtRanges: [number, number][] = [];
+
+  /**
+   * The code a finding at `offset` sits in, keyed for codeKey: its innermost function; outside any
+   * function, its top-level statement (paper-curio's `const BRIDGE_PY = `…``); in a shell or other
+   * script we don't parse, the whole file with spacing ignored (jadense-in-zotero's install.sh).
+   */
+  codeKeyAt(offset: number): string | null {
+    const fn = this.functionKeyAt(offset);
+    if (fn) return fn;
+    const stmt = this.stmtRanges.find(([s, e]) => s <= offset && offset < e);
+    if (stmt) return statementKey(this.text.slice(stmt[0], stmt[1]));
+    if (OTHER_SCRIPT.test(this.path)) return hashKey(this.text.replace(/\s+/g, " ").trim());
+    return null;
+  }
 
   /** Libraries in the catalogue whose calls make up a real share of this file. */
   identified(): string[] {

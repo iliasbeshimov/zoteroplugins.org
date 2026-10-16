@@ -116,11 +116,37 @@ describe("a finding's codeKey", () => {
     expect(large).toBe(small);
   });
 
-  it("is left out when no hit sits inside a function", async () => {
-    const r = await scanFiles({
-      "content/index.js": 'Subprocess.call({ command: "/bin/sh", arguments: [] });',
-    });
-    expect(capIn(r, "process-launch")).toBeDefined();
-    expect(capIn(r, "process-launch")?.codeKey).toBeUndefined();
+  it("keys code outside any function by its top-level statement, ignoring local names", async () => {
+    const at = (name: string) =>
+      scanFiles({
+        "content/index.js": `const ${name} = "/bin/sh"; Subprocess.call({ command: ${name}, arguments: [] });`,
+      });
+    const a = capIn(await at("shell"), "process-launch")?.codeKey;
+    const b = capIn(await at("q"), "process-launch")?.codeKey;
+    expect(a).toBeTruthy();
+    expect(b).toBe(a);
+  });
+
+  it("keys a shell script by its whole text, ignoring spacing", async () => {
+    // jadense-in-zotero's install.sh: the download runs from a script, not from JavaScript.
+    const script = (url: string, gap: string) =>
+      `#!/bin/sh\nruntime="$HOME/.rt"\nurl="${url}"\ncurl --fail --location "$url" -o "$runtime/uv.tar.gz"${gap}\ntar -xzf "$runtime/uv.tar.gz" -C "$runtime"\n"$runtime/uv" sync\n`;
+    const keyOf = async (url: string, gap = "") => {
+      const r = await scanFiles({
+        "content/ocr/install.sh": script(url, gap),
+        "content/index.js":
+          'Subprocess.call({ command: "/bin/sh", arguments: [rootURI + "content/ocr/install.sh"] });',
+      });
+      return capIn(r, "download-exec")?.codeKey;
+    };
+    const a = await keyOf("https://github.com/astral-sh/uv/releases/download/0.9.3/uv.tar.gz");
+    const spaced = await keyOf(
+      "https://github.com/astral-sh/uv/releases/download/0.9.3/uv.tar.gz",
+      "   \n",
+    );
+    const other = await keyOf("https://example-mirror.cn/uv.tar.gz");
+    expect(a).toBeTruthy();
+    expect(spaced).toBe(a);
+    expect(other).not.toBe(a);
   });
 });
