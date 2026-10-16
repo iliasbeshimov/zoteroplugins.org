@@ -20,6 +20,10 @@ export const DownloadFacts = z
   });
 export type DownloadFacts = z.infer<typeof DownloadFacts>;
 
+/** The scanner's and the review's wording for a download checked against a hash written into the plugin. */
+export const FIXED_WHY =
+  "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs.";
+
 export type DownloadKind = "http" | "fixed" | "maker" | "maker-untold" | "developer" | "other";
 
 type Concern = "low" | "medium" | "high";
@@ -71,9 +75,9 @@ export function downloadWhy(kind: DownloadKind, f: DownloadFacts, contentChecked
     case "http":
       return HTTP_WHY;
     case "fixed":
-      return `It checks the file against a fingerprint written into the plugin, so only a new version of the plugin can change what runs.${
+      return `${FIXED_WHY}${
         f.source === "official"
-          ? ` The file comes from ${P}.`
+          ? ` The download comes from ${P}.`
           : !contentChecked
             ? " We haven't checked what's inside it."
             : ""

@@ -20,7 +20,7 @@ import {
   settingsChangeConcern,
   unencryptedConcern,
 } from "../scan/preview.ts";
-import { HTTP_WHY } from "./download.ts";
+import { FIXED_WHY, HTTP_WHY } from "./download.ts";
 import { type ObservedHost, testedSummary, withObserved } from "./sandbox.ts";
 
 /**
@@ -974,7 +974,7 @@ export function score(input: ScoreInput): TrustCard {
             : downloadScan(found).http
               ? `${HTTP_WHY} ${facts}We haven't reviewed it yet.`
               : c.concern === "medium"
-                ? `It checks the file against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. ${facts}We haven't yet reviewed what it is.`
+                ? `${FIXED_WHY} ${facts}We haven't yet reviewed what it is.`
                 : `We haven't yet reviewed who publishes the file or whether anything stops it changing, so it counts as a high concern until we do. ${facts}`.trimEnd()
           : reviewed
             ? [reviewed.review.summary, carryOver].filter(Boolean).join(" ")

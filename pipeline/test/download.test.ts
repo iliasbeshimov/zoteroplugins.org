@@ -91,11 +91,11 @@ describe("downloadWhy", () => {
 
   it("explains a fixed fingerprint", () => {
     const base =
-      "It checks the file against a fingerprint written into the plugin, so only a new version of the plugin can change what runs.";
+      "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs.";
     const pinned = facts({ integrity: "pinned" });
     expect(
       downloadWhy("fixed", { ...pinned, source: "official", publisher: "Astral" }, false),
-    ).toBe(`${base} The file comes from Astral.`);
+    ).toBe(`${base} The download comes from Astral.`);
     expect(downloadWhy("fixed", pinned, false)).toBe(
       `${base} We haven't checked what's inside it.`,
     );
