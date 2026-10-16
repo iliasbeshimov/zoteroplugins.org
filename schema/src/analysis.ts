@@ -392,6 +392,12 @@ export const Capability = z.object({
     .array(z.string())
     .optional()
     .describe("Bundled libraries (package or file names) that some of these uses sit in"),
+  codeKey: z
+    .string()
+    .optional()
+    .describe(
+      "A fingerprint of the code behind this finding, the same across releases when only names changed; a hand review applies to a later release with the same codeKey",
+    ),
   evidence: EvidenceList,
   details: z
     .object({

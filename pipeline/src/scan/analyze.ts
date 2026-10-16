@@ -9,6 +9,7 @@ import { fullAncestor } from "acorn-walk";
 import { parseInstallRdf, parseManifestJson, type XpiManifest } from "../census/xpi.ts";
 import { EMPTY_INDEX, type LibraryIndex } from "../libs/index.ts";
 import { type Config, findConfigs, type LibraryNetwork, resolveNetwork } from "../libs/network.ts";
+import { hashKey } from "../libs/normalize.ts";
 import { parseJs } from "../libs/parse.ts";
 import {
   classifyHost,
@@ -23,7 +24,7 @@ import { type LibraryEvidence, SourceFile } from "./text.ts";
  * Static analysis of one .xpi. Deterministic for a given file and ANALYZER_VERSION: the same
  * bytes always produce the same document apart from `analyzedAt`.
  */
-export const ANALYZER_VERSION = "0.11.0";
+export const ANALYZER_VERSION = "0.12.0";
 /** The self-update detail saying it turns Zotero's automatic updates on for itself at startup. */
 export const FORCES_AUTO_UPDATE = "turns on its automatic updates at startup";
 
@@ -3426,6 +3427,7 @@ function analyzeJs(
       return;
     }
   }
+  file.addFunctionRanges(ast, base);
 
   /** Whether a file offset (not a block offset) is the plugin's own code. */
   const own = (offset: number) => file.libraryAt(offset) === null;
@@ -11490,8 +11492,10 @@ function buildDocument(col: Collector, input: AnalyzeInput, version: string): An
         if (c.settings?.length) details.settings = c.settings;
         if (c.unencrypted?.length) details.unencrypted = c.unencrypted;
         if (id === "process-launch" && col.agentModes.length) details.agentModes = agentModes(col);
+        const codeKey = capabilityCodeKey(id, c.hits, details);
         return {
           id,
+          ...(codeKey ? { codeKey } : {}),
           occurrences: c.hits.length,
           inVendoredCodeOnly: c.hits.every((h) => libraryOf(h) !== null),
           ...libraryNames(c.hits),
@@ -11503,6 +11507,40 @@ function buildDocument(col: Collector, input: AnalyzeInput, version: string): An
   };
   doc.transparency.vendoredLibraries = vendoredLibraries(col);
   return Analysis.parse(doc);
+}
+
+/** The most hits of one finding whose functions go into its codeKey. */
+const CODE_KEY_HITS = 50;
+
+/**
+ * A fingerprint of the code behind a finding: where it sends or fetches from, which APIs it uses,
+ * and the whole of each function around a hit with local names erased. Two releases get the same
+ * key when only names a bundler or minifier chose differ, so a hand review of one still holds for
+ * the other. None when no hit is inside a function.
+ */
+function capabilityCodeKey(
+  id: string,
+  hits: Hit[],
+  details: Record<string, unknown>,
+): string | undefined {
+  const ordered = [...hits].sort(
+    (a, b) => a.file.path.localeCompare(b.file.path, "en") || a.offset - b.offset,
+  );
+  const fns = new Set<string>();
+  for (const h of ordered.slice(0, CODE_KEY_HITS)) {
+    const key = h.file.functionKeyAt(h.offset);
+    if (key) fns.add(key);
+  }
+  if (!fns.size) return undefined;
+  const list = (v: unknown) => (Array.isArray(v) ? ([...v] as string[]).sort() : []);
+  return hashKey(
+    JSON.stringify({
+      id,
+      sources: list(details.sources),
+      apis: list(details.apis),
+      fns: [...fns].sort(),
+    }),
+  );
 }
 
 /** The libraries found in the plugin, and for each one whether its code matched the release. */

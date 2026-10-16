@@ -36,6 +36,8 @@ export interface Snapshot {
   /** Hosts the card marks as seen when we ran it. */
   observed: string[];
   badges: string[];
+  /** Each badge's label and second line, so a change of wording shows. */
+  badgeText: string[];
   transparency: string | null;
   drivers: string[];
   asset: string | null;
@@ -78,6 +80,9 @@ export function snapshot(p: Profile): Snapshot {
       .flatMap((h) => (h.observed ?? []).map((x) => `${h.category}:${x}`))
       .sort(),
     badges: (t?.facets.capabilities.badges ?? []).map((b) => `${b.id}:${b.concern}`).sort(),
+    badgeText: (t?.facets.capabilities.badges ?? [])
+      .map((b) => `${b.id}: ${b.label}${b.detail ? ` | ${b.detail}` : ""}`)
+      .sort(),
     transparency: t?.facets.sourceTransparency.label ?? null,
     drivers: t
       ? [
@@ -260,6 +265,8 @@ export function describeChange(c: Change): string[] {
   if (observed) out.push(`seen when we ran it: ${observed}`);
   const badges = listDiff(b.badges, a.badges);
   if (badges) out.push(`badges: ${badges}`);
+  const wording = listDiff(b.badgeText ?? [], a.badgeText);
+  if (wording) out.push(`badge wording: ${wording}`);
   if (b.transparency !== a.transparency)
     out.push(`transparency: "${b.transparency}" → "${a.transparency}"`);
   const drivers = listDiff(b.drivers, a.drivers);

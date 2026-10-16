@@ -4,6 +4,8 @@ import {
   type CallRecord,
   collect,
   type FnRecord,
+  functionKey,
+  functionRanges,
   hashKey,
   type LiteralRecord,
 } from "../libs/normalize.ts";
@@ -106,6 +108,10 @@ export class SourceFile {
   private calls: CallRecord[] = [];
   private literals: LiteralRecord[] = [];
   private fns: FnRecord[] = [];
+  /** Every function's [start, end] in the file, sorted, whatever the file's size. */
+  private fnRanges: [number, number][] = [];
+  /** For each of those, the one around it, or -1. */
+  private fnParents: number[] = [];
   /** Hashes of the calls, filled in as they're needed. */
   private hashes: (string | undefined)[] = [];
   private identifiedLibraries: string[] | null = null;
@@ -177,6 +183,62 @@ export class SourceFile {
     this.memo.clear();
     this.failed.clear();
   }
+
+  /**
+   * Records where every function, method and arrow of a parsed script starts and ends. Unlike
+   * attachAst this works for a file of any size.
+   */
+  addFunctionRanges(ast: AcornNode, base: number): void {
+    let found: [number, number][];
+    try {
+      found = functionRanges(ast, base);
+    } catch {
+      return;
+    }
+    if (!found.length) return;
+    const all = this.fnRanges.concat(found);
+    all.sort((a, b) => a[0] - b[0] || b[1] - a[1]);
+    const parents: number[] = [];
+    const open: number[] = [];
+    all.forEach((r, i) => {
+      while (open.length && (all[open[open.length - 1] as number] as [number, number])[1] <= r[0])
+        open.pop();
+      parents.push(open.length ? (open[open.length - 1] as number) : -1);
+      open.push(i);
+    });
+    this.fnRanges = all;
+    this.fnParents = parents;
+  }
+
+  /** The [start, end] of the innermost function around an offset, or null at the top level. */
+  functionAt(offset: number): [number, number] | null {
+    let lo = 0;
+    let hi = this.fnRanges.length - 1;
+    let i = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if ((this.fnRanges[mid] as [number, number])[0] <= offset) {
+        i = mid;
+        lo = mid + 1;
+      } else hi = mid - 1;
+    }
+    while (i >= 0 && (this.fnRanges[i] as [number, number])[1] <= offset)
+      i = this.fnParents[i] as number;
+    return i >= 0 ? (this.fnRanges[i] as [number, number]) : null;
+  }
+
+  /** The functionKey of the innermost function around an offset, memoised per function. */
+  functionKeyAt(offset: number): string | null {
+    const range = this.functionAt(offset);
+    if (!range) return null;
+    const id = `${range[0]}:${range[1]}`;
+    const known = this.fnKeys.get(id);
+    if (known !== undefined) return known;
+    const key = functionKey(this.text.slice(range[0], range[1]));
+    this.fnKeys.set(id, key);
+    return key;
+  }
+  private fnKeys = new Map<string, string | null>();
 
   /** Libraries in the catalogue whose calls make up a real share of this file. */
   identified(): string[] {

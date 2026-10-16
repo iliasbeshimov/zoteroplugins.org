@@ -240,6 +240,27 @@ export function buildProgram(): Command {
         );
     });
 
+  const reviews = program
+    .command("reviews")
+    .description("hand reviews of findings in data/reviews/<capability-id>/");
+  reviews
+    .command("fingerprint")
+    .description("write each review's codeKey, from the release file it reviewed")
+    .option("--force", "recompute reviews that already have one")
+    .action(async (opts: { force?: boolean }) => {
+      const { join } = await import("node:path");
+      const { paths } = await import("./paths.ts");
+      const { loadConfig } = await import("./config.ts");
+      const { fingerprintReviews } = await import("./profile/fingerprint.ts");
+      await fingerprintReviews({
+        reviewsDir: join(paths.root, "data", "reviews"),
+        dataDir: join(paths.root, "data"),
+        cacheDir: loadConfig().cacheDir,
+        force: Boolean(opts.force),
+        log: console.log,
+      });
+    });
+
   program
     .command("queue")
     .description(

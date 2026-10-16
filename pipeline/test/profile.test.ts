@@ -550,9 +550,10 @@ describe("badge wording for package installs and sent code", () => {
       "runs-sent-code",
     );
     expect(assistant).toMatchObject({
-      label: "Runs code its AI assistant writes, with full access to Zotero",
+      label: "Its AI agent can run code it writes inside Zotero without asking you",
       concern: "high",
-      detail: "It can run without showing you the code first",
+      detail:
+        "Code inside Zotero can read and change your library and your files, and start other programs.",
     });
     const shell = badge(
       `const tool = { name: "run_command", requiresConfirmation: true, execute: (a) => Subprocess.call({ command: "/bin/sh", arguments: ["-c", a.command] }) };
@@ -560,12 +561,69 @@ describe("badge wording for package installs and sent code", () => {
       "runs-sent-code",
     );
     expect(shell).toMatchObject({
-      label: "Runs commands its AI assistant writes, with full access to your computer",
+      label: "Its AI agent can run commands on your computer after you approve each one",
       concern: "medium",
-      detail: "It shows you the code and asks before each run",
+      detail:
+        "Commands run as you, so they can read and change any of your files and start other programs.",
     });
   });
 
+  it("labels every AI agent variant by whether it asks", () => {
+    const code = `const tool = { spec: { name: "zotero_script" }, shouldRequireConfirmation() { return false; },
+         execute(params) { return new AsyncFunction("Zotero", params.script)(Zotero); } };
+       for (const c of message.tool_calls) run(c);
+       const sh = { name: "run_command", execute: (a) => Subprocess.call({ command: "/bin/sh", arguments: ["-c", a.command] }) };`;
+    const labelFor = (
+      apis: string[],
+      approval: "none" | "each-run" | "code-switch" | undefined,
+    ) => {
+      const analysis = analyze(code);
+      const cap = analysis.capabilities.find((c) => c.id === "runs-sent-code");
+      if (!cap) throw new Error("no runs-sent-code finding in the fixture");
+      cap.details = {
+        ...cap.details,
+        apis,
+        ...(approval ? { approval } : { approval: undefined }),
+      };
+      return cardFor(code, { analysis }).facets.capabilities.badges.find(
+        (b) => b.id === "runs-sent-code",
+      )?.label;
+    };
+    const table = {
+      "AI shell tool": [
+        "Its AI agent can run commands on your computer without asking you",
+        "Its AI agent can run commands on your computer after you approve each one",
+        "Its AI agent can run commands on your computer once you turn on a setting",
+        "Its AI agent can run commands on your computer",
+      ],
+      "AI tool": [
+        "Its AI agent can run code it writes inside Zotero without asking you",
+        "Its AI agent can run code it writes inside Zotero after you approve each one",
+        "Its AI agent can run code it writes inside Zotero once you turn on a setting",
+        "Its AI agent can run code it writes inside Zotero",
+      ],
+    };
+    for (const [api, labels] of Object.entries(table)) {
+      expect([
+        labelFor([api], "none"),
+        labelFor([api], "each-run"),
+        labelFor([api], "code-switch"),
+        labelFor([api], undefined),
+      ]).toEqual(labels);
+    }
+  });
+
+  it("says what a download is checked against, and that we haven't reviewed it", () => {
+    const code = `function info() { return "https://gitee.com/x/y/releases/download/binary/copyfiles-mac"; }
+      async function get(url, path) { const res = await fetch(url); const buf = await res.arrayBuffer(); await IOUtils.write(path, new Uint8Array(buf));
+        await Subprocess.call({ command: "/bin/chmod", arguments: ["777", path] }); }
+      async function run(path) { await Subprocess.call({ command: path, arguments: [] }); }`;
+    const detail = (c: string) =>
+      cardFor(c).facets.capabilities.badges.find((b) => b.id === "download-exec")?.detail;
+    expect(detail(code)).toBe(
+      "From gitee.com; not checked before it runs, so a swapped file would run too. We haven't yet reviewed what it downloads.",
+    );
+  });
   it("says when it copies a browser's sign-in cookies into a browser it starts", () => {
     const code = `function copyRealEdgeCookies(profile) {
         const real = \`\${getLocalAppDataPath()}\\\\Microsoft\\\\Edge\\\\User Data\`;
@@ -1760,6 +1818,7 @@ describe("hosts seen when we ran it (DS-OBSERVED)", () => {
       hosts: ["llm-provider:api.openai.com"],
       observed: [],
       badges: [],
+      badgeText: [],
       transparency: null,
       drivers: ["DS-NAMED"],
       asset: "p.xpi",
@@ -1938,33 +1997,38 @@ describe("change detection", () => {
   });
 });
 
-describe("a reviewed download-and-run finding", () => {
+describe("reviewed findings", () => {
   // zotero-copy-anything's shape: fetch a program, write it, chmod it, run it.
   const code = `function info() { return "https://gitee.com/x/y/releases/download/binary/copyfiles-mac"; }
     async function get(url, path) { const res = await fetch(url); const buf = await res.arrayBuffer(); await IOUtils.write(path, new Uint8Array(buf));
       await Subprocess.call({ command: "/bin/chmod", arguments: ["777", path] }); }
     async function run(path) { await Subprocess.call({ command: path, arguments: [] }); }`;
-  const review = (
-    over: Partial<NonNullable<Parameters<typeof score>[0]["downloadReview"]>> = {},
-  ) => ({
-    files: ["b".repeat(64)],
+  type Review = NonNullable<Parameters<typeof score>[0]["findingReviews"]>[number];
+  const review = (over: Partial<Review> = {}): Review => ({
+    capability: "download-exec",
+    files: ["c".repeat(64)],
     real: true,
-    concern: "medium" as const,
+    concern: "medium",
     rule: "CAP-DOWNLOAD-EXEC-REVIEWED",
     summary: "On first start it downloads a small helper program and runs it.",
+    version: "1.0.0",
     ...over,
   });
   const dl = (card: ReturnType<typeof score>) =>
     card.facets.capabilities.badges.find((b) => b.id === "download-exec");
+  // The fixture's file is b…b.
+  const sha = "b".repeat(64);
+  const keyOf = () => analyze(code).capabilities.find((c) => c.id === "download-exec")?.codeKey;
 
-  it("is high until it's reviewed", () => {
+  it("is high until it's reviewed, and says so", () => {
     const card = cardFor(code);
     expect(dl(card)?.concern).toBe("high");
+    expect(dl(card)?.detail).toMatch(/We haven't yet reviewed what it downloads\.$/);
     expect(card.facets.capabilities.drivers).toContain("CAP-DOWNLOAD-EXEC");
   });
 
   it("takes the review's level, rule and wording for the file it reviewed", () => {
-    const card = cardFor(code, { downloadReview: review() });
+    const card = cardFor(code, { findingReviews: [review({ files: [sha] })] });
     expect(dl(card)).toMatchObject({
       label: "Downloads a program and runs it",
       concern: "medium",
@@ -1973,16 +2037,86 @@ describe("a reviewed download-and-run finding", () => {
     expect(card.facets.capabilities.drivers).toContain("CAP-DOWNLOAD-EXEC-REVIEWED");
     expect(card.facets.capabilities.drivers).not.toContain("CAP-DOWNLOAD-EXEC");
     const told = cardFor(code, {
-      downloadReview: review({ concern: "low", rule: "CAP-DOWNLOAD-EXEC-TOLD" }),
+      findingReviews: [review({ files: [sha], concern: "low", rule: "CAP-DOWNLOAD-EXEC-TOLD" })],
     });
     expect(dl(told)?.label).toBe("Downloads and runs a program it tells you about");
   });
 
-  it("ignores a review of another file, and drops a finding the review found isn't real", () => {
+  it("applies to a different file whose code has the same codeKey, and says so", () => {
+    const codeKey = keyOf();
+    expect(codeKey).toBeTruthy();
+    const card = cardFor(code, { findingReviews: [review({ codeKey, version: "0.9.0" })] });
+    expect(dl(card)).toMatchObject({
+      concern: "medium",
+      detail:
+        "On first start it downloads a small helper program and runs it. We reviewed version 0.9.0; this release has the same code.",
+    });
+    // The SHA-256 match needs no such sentence.
+    const same = cardFor(code, { findingReviews: [review({ codeKey, files: [sha] })] });
+    expect(dl(same)?.detail).toBe(
+      "On first start it downloads a small helper program and runs it.",
+    );
+  });
+
+  it("doesn't apply with a different codeKey, or another file and no codeKey", () => {
     expect(
-      dl(cardFor(code, { downloadReview: review({ files: ["c".repeat(64)] }) }))?.concern,
-    ).toBe("high");
-    expect(dl(cardFor(code, { downloadReview: review({ real: false }) }))).toBeUndefined();
+      dl(cardFor(code, { findingReviews: [review({ codeKey: "0".repeat(12) })] })),
+    ).toMatchObject({ concern: "high" });
+    expect(dl(cardFor(code, { findingReviews: [review()] }))?.concern).toBe("high");
+  });
+
+  it("puts the reviewer's label in place of the generic one", () => {
+    const card = cardFor(code, {
+      findingReviews: [
+        review({
+          files: [sha],
+          label:
+            "Downloads Python and PDF tools the first time you ask about a figure, and runs them",
+        }),
+      ],
+    });
+    expect(dl(card)?.label).toBe(
+      "Downloads Python and PDF tools the first time you ask about a figure, and runs them",
+    );
+  });
+
+  it("drops a finding the review found isn't real, for any capability", () => {
+    expect(
+      dl(cardFor(code, { findingReviews: [review({ files: [sha], real: false })] })),
+    ).toBeUndefined();
+    const agent = `const tool = { spec: { name: "zotero_script" }, shouldRequireConfirmation() { return false; },
+         execute(params) { return new AsyncFunction("Zotero", params.script)(Zotero); } };
+       for (const c of message.tool_calls) run(c);`;
+    const sent = (c: ReturnType<typeof score>) =>
+      c.facets.capabilities.badges.find((b) => b.id === "runs-sent-code");
+    expect(sent(cardFor(agent))?.concern).toBe("high");
+    const dropped = cardFor(agent, {
+      findingReviews: [
+        review({
+          capability: "runs-sent-code",
+          files: [sha],
+          real: false,
+          rule: "CAP-SENT-CODE-REVIEWED",
+        }),
+      ],
+    });
+    expect(sent(dropped)).toBeUndefined();
+    expect(dropped.facets.capabilities.drivers).not.toContain("CAP-SENT-CODE-UNASKED");
+    const lowered = cardFor(agent, {
+      findingReviews: [
+        review({
+          capability: "runs-sent-code",
+          files: [sha],
+          concern: "low",
+          rule: "CAP-SENT-CODE-REVIEWED",
+          summary: "It only runs code you paste in yourself.",
+        }),
+      ],
+    });
+    expect(sent(lowered)).toMatchObject({
+      concern: "low",
+      detail: "It only runs code you paste in yourself.",
+    });
   });
 });
 

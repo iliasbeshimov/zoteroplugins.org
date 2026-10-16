@@ -55,9 +55,9 @@ import { detectDocLanguages, linkedReadmeLanguages, uiLocales } from "./language
 import { assignSlugs, listingKind, resolveListing } from "./listing.ts";
 import { buildProfileReport } from "./report.ts";
 import {
-  type DownloadReview,
+  type FindingReview,
   type NetworkReview,
-  readDownloadReview,
+  readFindingReviews,
   readNetworkReview,
   reviewedFiles,
   reviewedNetworkFiles,
@@ -375,8 +375,8 @@ export interface Gathered {
   curated?: Pick<PluginCurated, "responses" | "notices"> | null;
   /** The plugin sandbox's record (data/sandbox/<slug>.json), for the one file it ran. */
   sandbox?: SandboxRecord | null;
-  /** A reviewed download-and-run finding (data/reviews/download-exec/<slug>.json). */
-  downloadReview?: DownloadReview | null;
+  /** Reviewed findings (data/reviews/<capability-id>/<slug>.json). */
+  findingReviews?: FindingReview[];
   /** A reviewed finding on network code we couldn't trace (data/reviews/network/<slug>.json). */
   networkReview?: NetworkReview | null;
 }
@@ -505,7 +505,7 @@ export async function gather(
     update,
     curated: await readCurated(slug),
     sandbox: await readSandboxRecord(slug),
-    downloadReview: await readDownloadReview(slug),
+    findingReviews: await readFindingReviews(slug),
     networkReview: await readNetworkReview(slug),
   };
 }
@@ -846,8 +846,20 @@ export function assemble(
       currentZotero: current.zoteroVersion,
       computedAt: ctx.now,
       ...(record ? { tested: { record, hosts: observedHosts(record, ctx.table, developer) } } : {}),
-      ...(g.downloadReview
-        ? { downloadReview: { ...g.downloadReview, files: reviewedFiles(g.downloadReview) } }
+      ...(g.findingReviews?.length
+        ? {
+            findingReviews: g.findingReviews.map((r) => ({
+              capability: r.capability,
+              real: r.real,
+              concern: r.concern,
+              rule: r.rule,
+              summary: r.summary,
+              ...(r.label ? { label: r.label } : {}),
+              files: reviewedFiles(r),
+              ...(r.codeKey ? { codeKey: r.codeKey } : {}),
+              version: r.version,
+            })),
+          }
         : {}),
       ...(g.networkReview
         ? {

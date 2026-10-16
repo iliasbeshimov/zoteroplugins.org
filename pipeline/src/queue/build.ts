@@ -1,7 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { Analysis, PluginProfile, SandboxRecord } from "@atlas/schema";
-import { readDownloadReview } from "../profile/reviews.ts";
+import { type Analysis, CapabilityId, type PluginProfile, type SandboxRecord } from "@atlas/schema";
+import { readFindingReview, readFindingReviews, reviewedFiles } from "../profile/reviews.ts";
 import { readSandboxRecord } from "../profile/sandbox.ts";
 
 /**
@@ -13,6 +13,7 @@ import { readSandboxRecord } from "../profile/sandbox.ts";
 
 export const KINDS = [
   "modified-library",
+  "review-lapsed",
   "possible-miss",
   "sandbox-unexpected",
   "checking",
@@ -202,6 +203,28 @@ export async function buildQueue(opts: {
       });
     }
 
+    // A hand review covers one release file and, when it has one, the code behind its finding. A
+    // release that still has the finding but neither the file nor the code needs a new look.
+    for (const review of await readFindingReviews(p.slug, join(dataDir, "reviews"))) {
+      const now = p.analysis?.capabilities.find((c) => c.id === review.capability);
+      if (!now) continue;
+      if (reviewedFiles(review).includes(p.sha256)) continue;
+      if (review.codeKey && review.codeKey === now.codeKey) continue;
+      items.push({
+        ...base(p),
+        key: `review-lapsed:${p.slug}:${sha12(p)}:${review.capability}`,
+        kind: "review-lapsed",
+        priority: "high",
+        summary: `Our review of '${review.capability}' covered ${review.version}; the code behind it changed by ${p.version}: review it again`,
+        details: {
+          capability: review.capability,
+          reviewedVersion: review.version,
+          currentVersion: p.version,
+          hadCodeKey: Boolean(review.codeKey),
+        },
+      });
+    }
+
     const record = p.record;
     const unlisted = unlistedHosts(p);
     if (record && unlisted.length > 0) {
@@ -364,27 +387,46 @@ function agreementTable(plugins: Plugin[]): AgreementRow[] {
 async function ruleAccuracy(dataDir: string, plugins: Plugin[]): Promise<RuleAccuracyRow[]> {
   const rows: RuleAccuracyRow[] = [];
 
-  const downloadDir = join(dataDir, "reviews", "download-exec");
-  const download: RuleAccuracyRow = {
-    rule: "CAP-DOWNLOAD-EXEC",
-    reviewed: 0,
-    overturned: 0,
-    changedLevel: 0,
-    examples: [],
-  };
-  for (const file of await listJson(downloadDir)) {
-    const slug = file.replace(/\.json$/, "");
-    const review = await readDownloadReview(slug, downloadDir);
-    if (!review) continue;
-    download.reviewed++;
-    const overturned = !review.real;
-    const changed = review.real && review.concern === "low";
-    if (overturned) download.overturned++;
-    if (changed) download.changedLevel++;
-    if ((overturned || changed) && download.examples.length < MAX_EXAMPLES)
-      download.examples.push(slug);
+  // One row per capability with reviews; download-exec keeps its rule name and comes first.
+  const reviewsDir = join(dataDir, "reviews");
+  const byCapability = new Map<string, RuleAccuracyRow>();
+  const capabilityDirs = (await readdir(reviewsDir).catch(() => [] as string[]))
+    .filter((d) => CapabilityId.safeParse(d).success)
+    .sort((x, y) => (x === "download-exec" ? -1 : y === "download-exec" ? 1 : x < y ? -1 : 1));
+  for (const dir of capabilityDirs) {
+    const capability = CapabilityId.parse(dir);
+    const row: RuleAccuracyRow = {
+      rule: capability === "download-exec" ? "CAP-DOWNLOAD-EXEC" : `CAP-${dir.toUpperCase()}`,
+      reviewed: 0,
+      overturned: 0,
+      changedLevel: 0,
+      examples: [],
+    };
+    for (const file of await listJson(join(reviewsDir, dir))) {
+      const slug = file.replace(/\.json$/, "");
+      const review = await readFindingReview(capability, slug, reviewsDir);
+      if (!review) continue;
+      row.reviewed++;
+      const overturned = !review.real;
+      const changed = review.real && review.concern === "low";
+      if (overturned) row.overturned++;
+      if (changed) row.changedLevel++;
+      if ((overturned || changed) && row.examples.length < MAX_EXAMPLES) row.examples.push(slug);
+    }
+    byCapability.set(capability, row);
   }
-  rows.push(download);
+  // The download row is always there, as before.
+  rows.push(
+    byCapability.get("download-exec") ?? {
+      rule: "CAP-DOWNLOAD-EXEC",
+      reviewed: 0,
+      overturned: 0,
+      changedLevel: 0,
+      examples: [],
+    },
+  );
+  byCapability.delete("download-exec");
+  rows.push(...byCapability.values());
 
   // Network reviews come from another task; anything that doesn't parse is skipped.
   const networkDir = join(dataDir, "reviews", "network");

@@ -20,7 +20,6 @@ import {
   settingsChangeConcern,
   unencryptedConcern,
 } from "../scan/preview.ts";
-import type { DownloadReview } from "./reviews.ts";
 import { type ObservedHost, testedSummary, withObserved } from "./sandbox.ts";
 
 /**
@@ -30,7 +29,7 @@ import { type ObservedHost, testedSummary, withObserved } from "./sandbox.ts";
  * Preview rules: the overall label ignores "source match not checked yet", because that is
  * a gap in our checks rather than something the plugin did. The facet still says it.
  */
-export const RULES_VERSION = "0.7.1-preview";
+export const RULES_VERSION = "0.8.0-preview";
 
 const RANK: Record<Concern, number> = { none: 0, low: 1, unknown: 2, medium: 2, high: 3 };
 const worst = (cs: Concern[]): Concern =>
@@ -91,9 +90,20 @@ export const CAPABILITY_LABEL: Record<string, string> = {
     "Turns on Zotero's local API, so programs on this computer can read your library",
   "runs-sent-code": "Runs code other programs on this computer send it",
   "runs-sent-code-web": "Runs code web pages send it",
-  "runs-sent-code-ai": "Runs code its AI assistant writes, with full access to Zotero",
-  "runs-sent-code-ai-shell":
-    "Runs commands its AI assistant writes, with full access to your computer",
+  "runs-sent-code-ai": "Its AI agent can run code it writes inside Zotero",
+  "runs-sent-code-ai-unasked":
+    "Its AI agent can run code it writes inside Zotero without asking you",
+  "runs-sent-code-ai-each-run":
+    "Its AI agent can run code it writes inside Zotero after you approve each one",
+  "runs-sent-code-ai-code-switch":
+    "Its AI agent can run code it writes inside Zotero once you turn on a setting",
+  "runs-sent-code-ai-shell": "Its AI agent can run commands on your computer",
+  "runs-sent-code-ai-shell-unasked":
+    "Its AI agent can run commands on your computer without asking you",
+  "runs-sent-code-ai-shell-each-run":
+    "Its AI agent can run commands on your computer after you approve each one",
+  "runs-sent-code-ai-shell-code-switch":
+    "Its AI agent can run commands on your computer once you turn on a setting",
   "runs-sent-code-debugger": "Lets debugging tools on this computer run code in Zotero",
   "remote-script": "Its pages ask for web scripts, which Zotero blocks",
   "remote-script-output": "Pages it creates load scripts from the web",
@@ -358,23 +368,66 @@ function unencryptedDetail(entries: UnencryptedEntry[]): string | undefined {
   return upperFirst(parts.join("; "));
 }
 
+/** A hand review of one capability, as the score reads it. */
+type FindingReviewInput = NonNullable<ScoreInput["findingReviews"]>[number];
+/** A review that applies to this release, and whether by its file or by the code behind the finding. */
+interface AppliedReview {
+  review: FindingReviewInput;
+  how: "sha256" | "codeKey";
+}
+
 /**
- * A review replaces the scanner's verdict on "Downloads a program and runs it": it
- * drops the finding when the scanner misread the code, or sets its level and rule.
+ * A review replaces the scanner's verdict on one finding: it drops the finding when the scanner
+ * misread the code, or sets its level and rule.
  */
-function applyDownloadReview(p: Preview, review: NonNullable<ScoreInput["downloadReview"]>): void {
-  const i = p.capabilities.findIndex((c) => c.id === "download-exec");
+function applyFindingReview(p: Preview, review: FindingReviewInput): void {
+  const i = p.capabilities.findIndex((c) => c.id === review.capability);
   if (i < 0) return;
-  p.drivers = p.drivers.filter((d) => !d.startsWith("CAP-DOWNLOAD-EXEC"));
+  const was = p.capabilities[i] as Preview["capabilities"][number];
+  // The rule the scanner fired for it, unless another capability fired the same one.
+  const fired = p.capabilityRules[review.capability];
+  const shared = p.capabilities.some(
+    (c, j) => j !== i && fired && p.capabilityRules[c.id] === fired,
+  );
+  if (fired && !shared) p.drivers = p.drivers.filter((d) => d !== fired);
+  if (review.capability === "download-exec")
+    p.drivers = p.drivers.filter((d) => !d.startsWith("CAP-DOWNLOAD-EXEC"));
   if (!review.real) {
     p.capabilities.splice(i, 1);
     return;
   }
-  p.capabilities[i] = {
-    ...(p.capabilities[i] as Preview["capabilities"][number]),
-    concern: review.concern,
-  };
+  p.capabilities[i] = { ...was, concern: review.concern };
   p.drivers.push(review.rule);
+}
+
+/** Which of a plugin's reviews apply to the analysed release, each capability's by file or code. */
+function appliedReviews(
+  reviews: ScoreInput["findingReviews"],
+  a: Analysis,
+): Map<string, AppliedReview> {
+  const out = new Map<string, AppliedReview>();
+  for (const review of reviews ?? []) {
+    if (out.has(review.capability)) continue;
+    if (review.files.includes(a.input.sha256)) {
+      out.set(review.capability, { review, how: "sha256" });
+      continue;
+    }
+    const now = a.capabilities.find((c) => c.id === review.capability)?.codeKey;
+    if (review.codeKey && now && review.codeKey === now)
+      out.set(review.capability, { review, how: "codeKey" });
+  }
+  return out;
+}
+
+/** How an AI agent's code gets run, as the end of a label variant id. */
+function approvalSuffix(approval: string | undefined): string {
+  return approval === "none"
+    ? "-unasked"
+    : approval === "each-run"
+      ? "-each-run"
+      : approval === "code-switch"
+        ? "-code-switch"
+        : "";
 }
 
 /** The badge's second line: what, from where, which setting, drawn from the analysis. */
@@ -395,10 +448,10 @@ function badgeDetail(
         from,
         plain ? "over unencrypted HTTP" : "",
         pinned
-          ? "checked against a fingerprint written into the plugin"
+          ? "checked against a fingerprint fixed in the plugin, so a swapped file won't run"
           : sameSource
-            ? "checked only against a checksum from the same place, which catches a broken download but not a replaced one"
-            : "not checked against a fingerprint written into the plugin",
+            ? "checked only against a checksum from the same place, which catches a broken download but not a swapped one"
+            : "not checked before it runs, so a swapped file would run too",
       ].filter(Boolean);
       return parts.length ? parts.join("; ").replace(/^./, (x) => x.toUpperCase()) : undefined;
     }
@@ -445,6 +498,11 @@ function badgeDetail(
       return !text ? undefined : pkgs.length && d.pinning !== "locked" ? text : upperFirst(text);
     }
     case "runs-sent-code":
+      // What an AI agent's access means; whether it asks is in the label.
+      if (d.apis?.includes("AI shell tool"))
+        return "Commands run as you, so they can read and change any of your files and start other programs.";
+      if (d.apis?.includes("AI tool"))
+        return "Code inside Zotero can read and change your library and your files, and start other programs.";
       return d.approval === "none"
         ? "It can run without showing you the code first"
         : d.approval === "each-run"
@@ -656,12 +714,21 @@ export interface ScoreInput {
    */
   tested?: { record: SandboxRecord; hosts: ObservedHost[] };
   /**
-   * A reviewed "Downloads a program and runs it" finding (reviews.ts): its level and
-   * what it is. Used only for the exact file it reviewed.
+   * Hand reviews of this plugin's findings (reviews.ts), one per capability: its level, what it is
+   * and, when the reviewer wrote one, its badge label. A review applies to the file it reviewed
+   * (`files`) and to any release whose code behind the finding has the same `codeKey`.
    */
-  downloadReview?: Pick<DownloadReview, "real" | "concern" | "rule" | "summary"> & {
+  findingReviews?: {
+    capability: CapabilityId;
+    real: boolean;
+    concern: "low" | "medium" | "high";
+    rule: string;
+    summary: string;
+    label?: string;
     files: string[];
-  };
+    codeKey?: string;
+    version: string;
+  }[];
   /**
    * A reviewed finding on network code we couldn't trace (reviews.ts): that it sends nothing, or
    * the hosts it sends to (classified like the code's, but not "seen when we ran it"). Used only
@@ -732,10 +799,9 @@ export function score(input: ScoreInput): TrustCard {
     ? withObserved(reviewed, tested.hosts)
     : { analysis: reviewed, seen: new Set<string>() };
   const p = preview(a, input.updateHost);
-  const review = input.downloadReview?.files.includes(a.input.sha256)
-    ? input.downloadReview
-    : undefined;
-  if (review) applyDownloadReview(p, review);
+  const applied = appliedReviews(input.findingReviews, a);
+  for (const { review } of applied.values()) applyFindingReview(p, review);
+  const downloadReview = applied.get("download-exec")?.review;
 
   // It turns Zotero's automatic updates on for itself at every start (literature-review-with-llm).
   const forcesAutoUpdate = a.capabilities.some(
@@ -829,12 +895,12 @@ export function score(input: ScoreInput): TrustCard {
             ? "link-runs-code-asks"
             : c.id === "process-launch" && c.concern === "low"
               ? "process-launch-openers"
-              : c.id === "download-exec" && review
+              : c.id === "download-exec" && downloadReview
                 ? {
                     low: "download-exec-told",
                     medium: "download-exec",
                     high: "download-exec-http",
-                  }[review.concern]
+                  }[downloadReview.concern]
                 : c.id === "download-exec" && c.concern === "medium"
                   ? "download-exec-pinned"
                   : c.id === "own-server" &&
@@ -861,9 +927,9 @@ export function score(input: ScoreInput): TrustCard {
                             apis.every((x) => x === "an AI model's reply")
                           ? "remote-code-ai"
                           : c.id === "runs-sent-code" && apis.includes("AI shell tool")
-                            ? "runs-sent-code-ai-shell"
+                            ? `runs-sent-code-ai-shell${approvalSuffix(found?.details?.approval)}`
                             : c.id === "runs-sent-code" && apis.includes("AI tool")
-                              ? "runs-sent-code-ai"
+                              ? `runs-sent-code-ai${approvalSuffix(found?.details?.approval)}`
                               : c.id === "runs-sent-code" &&
                                   apis.every((x) => x === "debugger clients")
                                 ? "runs-sent-code-debugger"
@@ -883,7 +949,15 @@ export function score(input: ScoreInput): TrustCard {
                                           : c.id === "package-run" && c.concern === "high"
                                             ? "package-run-unpinned"
                                             : (c.id as string);
-      const detail = c.id === "download-exec" && review ? review.summary : badgeDetail(c.id, found);
+      const reviewed = applied.get(c.id);
+      const scanned = badgeDetail(c.id, found);
+      const detail = reviewed
+        ? reviewed.how === "codeKey"
+          ? `${reviewed.review.summary} We reviewed version ${reviewed.review.version}; this release has the same code.`
+          : reviewed.review.summary
+        : c.id === "download-exec" && scanned
+          ? `${scanned}. We haven't yet reviewed what it downloads.`
+          : scanned;
       // The unencrypted badge names where the data goes.
       const to =
         c.id === "sends-unencrypted" && found?.details?.unencrypted?.length
@@ -891,7 +965,7 @@ export function score(input: ScoreInput): TrustCard {
           : "";
       return {
         id: c.id as CapabilityId,
-        label: `${CAPABILITY_LABEL[variant] ?? c.id}${to}`,
+        label: `${reviewed?.review.label ?? CAPABILITY_LABEL[variant] ?? c.id}${to}`,
         concern: c.concern,
         ...(c.libraries ? { libraries: c.libraries } : {}),
         ...(detail ? { detail } : {}),
@@ -1028,7 +1102,15 @@ export function score(input: ScoreInput): TrustCard {
         compat,
         ...(input.manifestMismatch ? { manifestMismatch: true } : {}),
         ...(tested ? { tested: [testedCard, tested.hosts] } : {}),
-        ...(review ? { downloadReview: { ...review, files: undefined } } : {}),
+        ...(applied.size
+          ? {
+              findingReviews: [...applied.values()].map((r) => ({
+                ...r.review,
+                files: undefined,
+                how: r.how,
+              })),
+            }
+          : {}),
         ...(netReview
           ? {
               networkReview: {

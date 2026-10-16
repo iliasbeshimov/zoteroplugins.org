@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { buildQueue, type QueueState } from "../src/queue/build.ts";
+import { buildQueue, KINDS, type QueueState } from "../src/queue/build.ts";
 import { queueMarkdown } from "../src/queue/report.ts";
 
 const NOW = new Date("2026-10-01T00:00:00Z");
@@ -256,6 +256,98 @@ describe("investigation queue", () => {
     });
     expect(queue.ruleAccuracy[1]).toMatchObject({ rule: "DS-UNKNOWN-DESTINATION", overturned: 1 });
     expect(queue.ruleAccuracy.at(-1)?.rule).toBe("DS-UNKNOWN-DESTINATION (sandbox)");
+  });
+
+  describe("review-lapsed", () => {
+    const review = (over: Record<string, unknown> = {}) => ({
+      schemaVersion: 1,
+      slug: "p",
+      version: "1.0.0",
+      sha256: sha("c"),
+      reviewedAt: "2026-09-01",
+      method: "read the code",
+      real: true,
+      concern: "medium",
+      rule: "CAP-DOWNLOAD-EXEC-REVIEWED",
+      summary: "s",
+      facts: {},
+      ...over,
+    });
+    const analysis = (codeKey?: string) => ({
+      capabilities: [{ id: "download-exec", ...(codeKey ? { codeKey } : {}) }],
+      network: { hosts: [] },
+      transparency: { vendoredLibraries: [] },
+    });
+    const lapsed = async () => (await run()).queue.items.filter((i) => i.kind === "review-lapsed");
+
+    it("fires when the file and the code behind the finding both changed", async () => {
+      await plugin({ slug: "p", analysis: analysis("new-key") });
+      await write("reviews/download-exec/p.json", review({ codeKey: "old-key", version: "0.9.0" }));
+      const items = await lapsed();
+      expect(items).toHaveLength(1);
+      expect(items[0]).toMatchObject({
+        priority: "high",
+        summary:
+          "Our review of 'download-exec' covered 0.9.0; the code behind it changed by 1.0.0: review it again",
+        details: {
+          capability: "download-exec",
+          reviewedVersion: "0.9.0",
+          currentVersion: "1.0.0",
+          hadCodeKey: true,
+        },
+      });
+    });
+
+    it("fires for a review with no codeKey on a new file, and says so", async () => {
+      await plugin({ slug: "p", analysis: analysis("k") });
+      await write("reviews/download-exec/p.json", review());
+      expect((await lapsed())[0]?.details).toMatchObject({ hadCodeKey: false });
+    });
+
+    it("doesn't fire when the file or the codeKey still matches, or the finding is gone", async () => {
+      await plugin({ slug: "p", sha: sha("c"), analysis: analysis("k") });
+      await write("reviews/download-exec/p.json", review());
+      expect(await lapsed()).toEqual([]);
+      await plugin({ slug: "p", analysis: analysis("same") });
+      await write("reviews/download-exec/p.json", review({ codeKey: "same" }));
+      expect(await lapsed()).toEqual([]);
+      await write("reviews/download-exec/p.json", review({ codeKey: "other" }));
+      await plugin({
+        slug: "p",
+        analysis: {
+          capabilities: [],
+          network: { hosts: [] },
+          transparency: { vendoredLibraries: [] },
+        },
+      });
+      expect(await lapsed()).toEqual([]);
+    });
+
+    it("sits right after modified-library in the kind order", () => {
+      expect(KINDS.indexOf("review-lapsed")).toBe(KINDS.indexOf("modified-library") + 1);
+    });
+
+    it("counts reviews of other capabilities in their own rule rows", async () => {
+      await write("reviews/download-exec/p.json", review());
+      await write(
+        "reviews/runs-sent-code/q.json",
+        review({ slug: "q", real: false, rule: "CAP-SENT-CODE-REVIEWED" }),
+      );
+      await write("reviews/not-a-capability/z.json", review({ slug: "z" }));
+      const { queue } = await run();
+      expect(queue.ruleAccuracy.map((r) => r.rule)).toEqual([
+        "CAP-DOWNLOAD-EXEC",
+        "CAP-RUNS-SENT-CODE",
+        "DS-UNKNOWN-DESTINATION (sandbox)",
+      ]);
+      expect(queue.ruleAccuracy[1]).toEqual({
+        rule: "CAP-RUNS-SENT-CODE",
+        reviewed: 1,
+        overturned: 1,
+        changedLevel: 0,
+        examples: ["q"],
+      });
+    });
   });
 
   it("skips hidden plugins", async () => {

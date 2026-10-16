@@ -28,6 +28,8 @@ function detailsText(item: QueueItem): string {
       const unmatched = ((d.unmatched as unknown[] | undefined) ?? []).map(place);
       return `${d.library}${unmatched.length ? `: ${unmatched.join(", ")}` : ""}`;
     }
+    case "review-lapsed":
+      return `${d.capability}: reviewed ${d.reviewedVersion}, now ${d.currentVersion}${d.hadCodeKey ? "" : " (no codeKey)"}`;
     case "sandbox-unexpected":
       return (d.unexpected as string[]).join("; ");
     case "grade-change":

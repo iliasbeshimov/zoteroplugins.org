@@ -99,7 +99,7 @@ Zotero plugins run with the same rights as Zotero itself. These are the capabili
 | Capability | Concern |
 |---|---|
 | Downloads and runs code: loading a script from the web, or running a network response | high |
-| Downloads and runs a program (or pipes a download into a shell), not checked against a fingerprint written into the plugin | high |
+| Downloads and runs a program (or pipes a download into a shell), not checked against a fingerprint fixed in the plugin | high |
 | Installs npm or PyPI packages without a fixed version, so whatever is newest runs | high |
 | Runs code or commands its AI assistant writes without asking you first | high |
 | Runs encrypted code we can't read | high |
@@ -117,7 +117,7 @@ Zotero plugins run with the same rights as Zotero itself. These are the capabili
 | Keeps its own tables in Zotero's database | medium |
 | Installs other add-ons or its own updates after you click, or silently from the developer's own https feed checked against a hash | medium |
 | A zotero:// link can make it install add-ons, or run code if you approve a prompt | medium |
-| Downloads a program checked against a fingerprint written into the plugin, and runs it | medium |
+| Downloads a program checked against a fingerprint fixed in the plugin, and runs it | medium |
 | Adds Zotero translators it downloads | medium |
 | Signs in using another app's identity (for example Codex CLI's), or reuses a sign-in you saved in another program | medium |
 | Changes settings that aren't its own: other programs' settings files, Word macros, MCP servers, Zotero's proxy, sync or PDF sources | medium |

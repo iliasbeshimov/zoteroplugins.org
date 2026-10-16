@@ -20,6 +20,8 @@ export interface Preview {
   legalRisk: boolean;
   /** `libraries`: set when every use sits in bundled libraries, which the card names. */
   capabilities: { id: string; concern: Concern; libraries?: string[] }[];
+  /** The rule each capability fired, so a review that drops or re-rates it can remove that driver. */
+  capabilityRules: Record<string, string>;
   label: PreviewLabel;
   drivers: string[];
 }
@@ -394,6 +396,7 @@ export function preview(
   if (suspiciousUnicode) fire("ST-UNICODE", "high");
 
   const capabilities: Preview["capabilities"] = [];
+  const capabilityRules: Record<string, string> = {};
   for (const c of a.capabilities) {
     let concern: Concern = "none";
     let rule: string | null = null;
@@ -579,6 +582,7 @@ export function preview(
     if (c.inVendoredCodeOnly && RANK[concern] < RANK.medium) continue;
     // CAP-MINOR is one rule however many of its capabilities match.
     if (rule && !(rule === "CAP-MINOR" && drivers.includes(rule))) fire(rule, concern);
+    if (rule) capabilityRules[c.id] = rule;
     capabilities.push({
       id: c.id,
       concern,
@@ -602,6 +606,7 @@ export function preview(
     suspiciousUnicode,
     legalRisk: counted.some((h) => h.flags.includes("legal-risk")),
     capabilities,
+    capabilityRules,
     label,
     drivers,
   };

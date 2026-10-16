@@ -21,6 +21,7 @@ describe("atlas CLI", () => {
       "submit",
       "regress",
       "libs",
+      "reviews",
       "queue",
       "census-explorer",
     ]);

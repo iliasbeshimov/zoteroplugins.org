@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import type { AcornNode } from "./parse.ts";
+import { type AcornNode, parseJs } from "./parse.ts";
 
 /**
  * Turns code into the pieces a library fingerprint is made of: one token string for each call and
@@ -98,9 +98,13 @@ let cut = false;
 // Whether the call has a template with nothing in it to fill, and whether to write those as strings.
 let sawPlainTemplate = false;
 let plainTemplates = false;
+// A call's description is cut at MAX_TOKENS and collapses the functions inside it to `fn`; a whole
+// function's key (functionKey) has neither limit.
+let maxTokens = MAX_TOKENS;
+let wholeFunction = false;
 
 function emit(token: string) {
-  if (tokens.length >= MAX_TOKENS) cut = true;
+  if (tokens.length >= maxTokens) cut = true;
   else tokens.push(token);
 }
 
@@ -113,7 +117,7 @@ function emitString(value: string) {
 }
 
 function walk(n: Node, key: string, parent: Node | null, root: boolean): void {
-  if (tokens.length >= MAX_TOKENS) {
+  if (tokens.length >= maxTokens) {
     cut = true;
     return;
   }
@@ -193,7 +197,7 @@ function walk(n: Node, key: string, parent: Node | null, root: boolean): void {
     case "FunctionExpression":
     case "ArrowFunctionExpression":
     case "FunctionDeclaration":
-      if (root) break;
+      if (root || wholeFunction) break;
       emit("fn");
       return;
   }
@@ -242,6 +246,74 @@ function describe(call: Node): {
 /** The normalised token string of a call or `new` expression. */
 export function callKey(node: AcornNode): string {
   return describe(node as Node).key;
+}
+
+/**
+ * The key of one function's whole source text, nested functions included, so two builds of a
+ * function get the same key when only local names differ. A method (`name(a) { … }`) is read
+ * as a member of an object (or class); null when the text doesn't parse.
+ */
+export function functionKey(source: string): string | null {
+  for (const wrap of [`(${source})`, `({${source}})`, `(class{${source}})`]) {
+    let ast: Node;
+    try {
+      ast = parseJs(wrap) as Node;
+    } catch {
+      continue;
+    }
+    // The one expression (or the one member) the text wraps.
+    const body = ast.body as Node[] | undefined;
+    if (!body || body.length !== 1) continue;
+    let inner: Node | undefined = (body[0] as Node).expression;
+    if (wrap.startsWith("({")) inner = (inner?.properties as Node[] | undefined)?.[0];
+    else if (wrap.startsWith("(class")) inner = (inner?.body?.body as Node[] | undefined)?.[0];
+    if (!inner) continue;
+    tokens = [];
+    names = 0;
+    strings = new Set();
+    cut = false;
+    sawPlainTemplate = false;
+    plainTemplates = false;
+    maxTokens = Number.POSITIVE_INFINITY;
+    wholeFunction = true;
+    try {
+      walk(inner, "", null, true);
+    } catch {
+      // A tree too deep to walk.
+      return null;
+    } finally {
+      maxTokens = MAX_TOKENS;
+      wholeFunction = false;
+    }
+    return hashKey(tokens.join(" "));
+  }
+  return null;
+}
+
+/**
+ * The source ranges of every function, method and arrow in a syntax tree, as absolute offsets
+ * (`base` is where the script starts in its file). A method's range covers its name and
+ * parameters, which is the text functionKey reads back.
+ */
+export function functionRanges(ast: AcornNode, base = 0): [number, number][] {
+  const out: [number, number][] = [];
+  const stack: Node[] = [ast as Node];
+  while (stack.length) {
+    const n = stack.pop() as Node;
+    const method =
+      (n.type === "Property" && (n.method || n.kind === "get" || n.kind === "set")) ||
+      n.type === "MethodDefinition";
+    if (method) {
+      out.push([n.start + base, n.end + base]);
+      // The function value is the method itself; its children are its parameters and body.
+      if (n.computed && isNode(n.key)) stack.push(n.key);
+      if (isNode(n.value)) for (const c of children(n.value)) stack.push(c);
+      continue;
+    }
+    if (isFunction(n)) out.push([n.start + base, n.end + base]);
+    for (const c of children(n)) stack.push(c);
+  }
+  return out;
 }
 
 /** Child nodes in source order (acorn lists a template's text before its expressions). */
