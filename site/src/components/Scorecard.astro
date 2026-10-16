@@ -40,9 +40,6 @@ const NOTE_TIP: Record<string, string> = {
   "named in its code": "The address is in its code, but we didn't trace a request to it. It may be a link or unused.",
   unencrypted: "Reached over plain http://, so anyone on the network in between can read what's sent.",
   "seen when we ran it": "It contacted this address when we ran it in Zotero.",
-  low: "Low concern.",
-  medium: "Medium concern: worth reading before you install.",
-  high: "High concern: a serious problem.",
 };
 const toneVars = (t?: string | null) =>
   t && t !== "plain" && t !== "accent"
@@ -420,8 +417,11 @@ const checked = testedText(p);
     font-family: var(--font-mono);
     font-size: 12.5px;
   }
+  /* A tag about the item, not part of its name: set off by a rule. */
   .sc :global(.note) {
     font: 600 11.5px/1.2 var(--font-mono);
+    padding-left: 7px;
+    border-left: 1px solid color-mix(in oklch, currentColor 35%, transparent);
     opacity: 0.85;
   }
   .ev {

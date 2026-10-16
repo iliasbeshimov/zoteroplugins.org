@@ -293,6 +293,7 @@ const CONCERN_LEVEL: Record<string, Level> = {
 };
 const CONCERN_RANK: Record<string, number> = { high: 3, medium: 2, low: 1, none: 0, unknown: 0 };
 const LEVEL_TONE: Record<string, Tone | undefined> = { medium: "rev", high: "ser" };
+const CAP_GROUP = { high: "High concern", medium: "Medium concern", low: "Low concern", none: "Not a concern" };
 
 /** ["7","8","9","11 beta"] → "7–9, 11 beta". */
 function rangeOf(vs: string[]): string {
@@ -532,18 +533,19 @@ function build(
       : badges.length
         ? badges[0].label + (badges.length > 1 ? `, and ${badges.length - 1} more` : "")
         : "No powerful capabilities found",
-    groups: badges.length
-      ? [
-          {
-            name: null,
-            items: badges.map((b) => ({
-              t: b.label + (b.libraries?.length ? ` (from ${b.libraries.join(", ")})` : ""),
-              note: b.concern === "none" ? undefined : b.concern,
-              tone: LEVEL_TONE[b.concern],
-            })),
-          },
-        ]
-      : [],
+    // One group per concern level, so the level is a heading rather than a word inside each pill.
+    groups: (["high", "medium", "low", "none"] as const)
+      .map((c) => {
+        const items = badges.filter((b) => (b.concern === "unknown" ? "none" : b.concern) === c);
+        return {
+          name: `${CAP_GROUP[c]} (${items.length})`,
+          items: items.map((b) => ({
+            t: b.label + (b.libraries?.length ? ` (from ${b.libraries.join(", ")})` : ""),
+            tone: LEVEL_TONE[b.concern],
+          })),
+        };
+      })
+      .filter((g) => g.items.length),
     evidence: capEv,
   });
 
