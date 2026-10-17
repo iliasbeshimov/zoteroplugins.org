@@ -1,0 +1,467 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-plugin--citestamp",
+ "repo": "citestamp/zotero-plugin",
+ "version": "1.0.5",
+ "source": "update-feed",
+ "tag": null,
+ "publishedAt": "2026-10-17T07:58:57.170Z",
+ "prerelease": false,
+ "asset": {
+  "name": "citestamp-1.0.5.xpi",
+  "url": "https://citestamp.com/zotero/citestamp-1.0.5.xpi",
+  "size": 74432,
+  "sha256": "77402c7539898d640a3ae961e83fe43059137813da1885dce77780f0c1b3a3e2",
+  "githubAssetId": null,
+  "uploader": null,
+  "uploadedAt": null,
+  "fetchedAt": "2026-10-17T07:58:57.170Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "citestamp@citestamp.com",
+  "name": "CiteStamp",
+  "version": "1.0.5",
+  "description": "Citation health, inside Zotero: does a reference resolve to a real work, does it have recorded refutations or failed replications? See its signed and inferred connections and open its citation graph on citestamp.com. Plus one-click ORCID claiming. Never a truth layer.",
+  "homepageUrl": "https://citestamp.com",
+  "updateUrl": "https://citestamp.com/zotero/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.99.99"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1423,
+   "sha256": "710e1ac5a9638e76c154f6a3d2a494c9f7b677b52f2e055b66559ba97038f48d"
+  },
+  {
+   "path": "content/citestamp.js",
+   "size": 21054,
+   "sha256": "5b2954bd6b0c234379c98c9bc12a81433437e971fef469b1c08d9892311abc2e"
+  },
+  {
+   "path": "content/seal.svg",
+   "size": 801,
+   "sha256": "cd38e4a8e2e610075920d418b43fc64913d3c82089af0c29e9cc50c189101308"
+  },
+  {
+   "path": "icon.png",
+   "size": 3027,
+   "sha256": "094b99190a78a8e272a1aeacd21e6728f8d7a86209f45f10fd3f100f3463aa86"
+  },
+  {
+   "path": "lib/check-core.js",
+   "size": 45963,
+   "sha256": "d2c161b97920fd24d00e6af5cbbdf0f11804c91b121278940b38eec20f64711d"
+  },
+  {
+   "path": "locale/en-US/citestamp.ftl",
+   "size": 640,
+   "sha256": "5ed17ec52ab840956d9c2d330bef0ae817f29005d5dbfd6cbed986ec6d70aec8"
+  },
+  {
+   "path": "manifest.json",
+   "size": 746,
+   "sha256": "9902f6052bb484f2eaf29fd3a828ddf417965f7e14559d82432cf146a979f3d2"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-17T07:58:57.170Z",
+  "input": {
+   "slug": "zotero-plugin--citestamp",
+   "version": "1.0.5",
+   "sha256": "77402c7539898d640a3ae961e83fe43059137813da1885dce77780f0c1b3a3e2"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "content/seal.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "locale/en-US/citestamp.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 68440,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/check-core.js",
+       "line": 460,
+       "column": 9,
+       "snippet": "return fetch(url, { headers: { \"Accept\": \"application/json\" } }).then(function (r) {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/check-core.js",
+       "line": 28,
+       "column": 15,
+       "snippet": "var CROSSREF = \"https://api.crossref.org\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.datacite.org",
+     "category": "scholarly-api",
+     "provider": "DataCite",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/check-core.js",
+       "line": 29,
+       "column": 15,
+       "snippet": "var DATACITE = \"https://api.datacite.org\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openalex.org",
+     "category": "scholarly-api",
+     "provider": "OpenAlex",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/check-core.js",
+       "line": 27,
+       "column": 15,
+       "snippet": "var OPENALEX = \"https://api.openalex.org\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "citestamp.com",
+     "category": "developer-server",
+     "provider": "Plugin developer (name match)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/citestamp.js",
+       "line": 347,
+       "column": 81,
+       "snippet": "body.appendChild(this._link(doc, \"Open citation graph on citestamp.com →\", \"https://citestamp.com/paper/\" + graphDoi.split(\"/\").map(encodeURIComponent).join(\"/\")));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/citestamp.js",
+       "line": 350,
+       "column": 84,
+       "snippet": "body.appendChild(this._link(doc, \"Claim / sign your work on citestamp.com →\", \"https://citestamp.com/claim?paper=\" + encodeURIComponent(ref.doi)));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lib/check-core.js",
+       "line": 31,
+       "column": 11,
+       "snippet": "var SITE = \"https://citestamp.com\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 6,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/citestamp.js",
+       "line": 314,
+       "column": 78,
+       "snippet": "if (v.work.doi) { body.appendChild(this._link(doc, \"View on doi.org →\", \"https://doi.org/\" + v.work.doi)); }",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/citestamp.js",
+       "line": 343,
+       "column": 98,
+       "snippet": "tion.doi) { body.appendChild(this._link(doc, \"View closest match on doi.org →\", \"https://doi.org/\" + v.suggestion.doi)); }",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lib/check-core.js",
+       "line": 30,
+       "column": 13,
+       "snippet": "var DOIORG = \"https://doi.org\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lib/check-core.js",
+       "line": 53,
+       "column": 15,
+       "snippet": "var marks = [\"https://doi.org/\", \"http://doi.org/\", \"https://dx.doi.org/\", \"http://dx.doi.org/\"];",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lib/check-core.js",
+       "line": 53,
+       "column": 35,
+       "snippet": "var marks = [\"https://doi.org/\", \"http://doi.org/\", \"https://dx.doi.org/\", \"http://dx.doi.org/\"];",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lib/check-core.js",
+       "line": 87,
+       "column": 30,
+       "snippet": "function doiUrl(doi) { return \"https://doi.org/\" + doi; }",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dx.doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib/check-core.js",
+       "line": 53,
+       "column": 54,
+       "snippet": "var marks = [\"https://doi.org/\", \"http://doi.org/\", \"https://dx.doi.org/\", \"http://dx.doi.org/\"];",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lib/check-core.js",
+       "line": 53,
+       "column": 77,
+       "snippet": "var marks = [\"https://doi.org/\", \"http://doi.org/\", \"https://dx.doi.org/\", \"http://dx.doi.org/\"];",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://citestamp.com/zotero/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://citestamp.com/zotero/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-17T07:58:57.170Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-17T07:58:57.170Z",
+  "appliesTo": {
+   "slug": "zotero-plugin--citestamp",
+   "version": "1.0.5",
+   "sha256": "77402c7539898d640a3ae961e83fe43059137813da1885dce77780f0c1b3a3e2"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "10f0d6f21c1d51493c1642e2931478759eb2714a3fb60f609a2faea4e9e8d98b"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "other-host",
+     "label": "Updates come from citestamp.com"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "api.datacite.org",
+       "api.openalex.org",
+       "doi.org",
+       "dx.doi.org"
+      ],
+      "unconfirmed": [
+       "api.crossref.org",
+       "api.datacite.org",
+       "api.openalex.org",
+       "doi.org",
+       "dx.doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-01T13:04:54Z",
+    "lastCommitAt": "2026-10-16T21:34:45Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
