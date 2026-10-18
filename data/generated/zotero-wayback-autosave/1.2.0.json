@@ -1,0 +1,422 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-wayback-autosave",
+ "repo": "the-solipsist/zotero-wayback-autosave",
+ "version": "1.2.0",
+ "tag": "v1.2.0",
+ "releaseAuthor": "the-solipsist",
+ "publishedAt": "2026-10-14T16:36:17Z",
+ "prerelease": false,
+ "asset": {
+  "name": "wayback-autosave.xpi",
+  "url": "https://github.com/the-solipsist/zotero-wayback-autosave/releases/download/v1.2.0/wayback-autosave.xpi",
+  "size": 8964,
+  "sha256": "c81b528825afd0d3aabc76ffc2ab2b6258f0691ffff44add1c04a82e5c0de73e",
+  "githubAssetId": 640973051,
+  "uploader": "the-solipsist",
+  "uploadedAt": "2026-10-14T16:36:17Z",
+  "fetchedAt": "2026-10-18T11:19:25.469Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "wayback-autosave@pranesh",
+  "name": "Wayback Autosave",
+  "version": "1.2.0",
+  "description": "Automatically save new Zotero items to the Internet Archive Wayback Machine (Save Page Now), however they were added. Manual save via right-click menu.",
+  "homepageUrl": "https://github.com/the-solipsist",
+  "updateUrl": "https://github.com/the-solipsist/zotero-wayback-autosave/releases/latest/download/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1435,
+   "sha256": "958a70f52bc48f48d3287b4542479536d34b34a85f96e073bb854f88f76199a1"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 1476,
+   "sha256": "df2e8ae4dea9b9ec1669337cbab5b2b4f7a7761066a4884cdcb23923327acd96"
+  },
+  {
+   "path": "content/wayback.js",
+   "size": 14542,
+   "sha256": "2746cdd29b439c5b97bbc3364a47d07d6ea487b5ecd22be700fb4e520ba02c6a"
+  },
+  {
+   "path": "manifest.json",
+   "size": 693,
+   "sha256": "faa60c725eb1899b650f27bf2b6585e7d9695c7a2a64a80dd6e1ead948797476"
+  },
+  {
+   "path": "prefs.js",
+   "size": 503,
+   "sha256": "78ce81d3bf89a9948b6a0280005c5b56f7e448d667b23d8e18a9b750e4e6d721"
+  },
+  {
+   "path": "skin/default/icon.svg",
+   "size": 856,
+   "sha256": "9ad648d09c6fd851ace2a1842fb065dffa941fc3c5f2695eaafdda91dbd3a40d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "input": {
+   "slug": "zotero-wayback-autosave",
+   "version": "1.2.0",
+   "sha256": "c81b528825afd0d3aabc76ffc2ab2b6258f0691ffff44add1c04a82e5c0de73e"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "skin/default/icon.svg",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 17956,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wayback.js",
+       "line": 175,
+       "column": 15,
+       "snippet": "cap = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/wayback.js",
+       "line": 201,
+       "column": 15,
+       "snippet": "st = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/wayback.js",
+       "line": 258,
+       "column": 15,
+       "snippet": "xhr = await Zotero.HTTP.request('GET', spnBase + url, { responseType: 'text' });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "archive.org",
+     "category": "integration",
+     "provider": "Internet Archive",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wayback.js",
+       "line": 421,
+       "column": 27,
+       "snippet": "Zotero.openInViewer('https://archive.org/account/login.php');",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "web.archive.org",
+     "category": "integration",
+     "provider": "Internet Archive (Wayback Machine)",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 6,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wayback.js",
+       "line": 176,
+       "column": 12,
+       "snippet": "'POST', 'https://web.archive.org/save',",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/wayback.js",
+       "line": 202,
+       "column": 12,
+       "snippet": "'GET', `https://web.archive.org/save/status/${job.job_id}`,",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/wayback.js",
+       "line": 218,
+       "column": 11,
+       "snippet": "return `https://web.archive.org/web/${s.timestamp}/${original}`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/wayback.js",
+       "line": 255,
+       "column": 35,
+       "snippet": "const spnBase = (pref('spnBase', 'https://web.archive.org/save/') || '').replace(/\\/*$/, '/');",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 4,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.waybackautosave.spnBase\", \"https://web.archive.org/save/\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 4,
+       "column": 50,
+       "snippet": "pref(\"extensions.zotero.waybackautosave.spnBase\", \"https://web.archive.org/save/\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wayback.js",
+       "line": 258,
+       "column": 15,
+       "snippet": "xhr = await Zotero.HTTP.request('GET', spnBase + url, { responseType: 'text' });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "https://web.archive.org/save/status/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/wayback.js",
+       "line": 201,
+       "column": 15,
+       "snippet": "st = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 8,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.waybackautosave.s3secret\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.waybackautosave.s3secret"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/the-solipsist/zotero-wayback-autosave/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/the-solipsist/zotero-wayback-autosave/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-18T11:19:25.469Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the the-solipsist account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-18T11:19:25.469Z",
+  "appliesTo": {
+   "slug": "zotero-wayback-autosave",
+   "version": "1.2.0",
+   "sha256": "c81b528825afd0d3aabc76ffc2ab2b6258f0691ffff44add1c04a82e5c0de73e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "974ab52a06021df0f07770de551fb8f7e9b5a81a2bcd02928c21d908c6a3a9db"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "archive.org",
+       "web.archive.org"
+      ],
+      "unconfirmed": [
+       "archive.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-14T16:36:17Z",
+    "lastCommitAt": "2026-10-14T16:43:02Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

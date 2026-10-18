@@ -1,0 +1,289 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-papercompare",
+ "repo": "luxun-spec/zotero-papercompare",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "luxun-spec",
+ "publishedAt": "2026-10-16T01:10:36Z",
+ "prerelease": false,
+ "asset": {
+  "name": "papercompare-0.1.0.xpi",
+  "url": "https://github.com/luxun-spec/zotero-papercompare/releases/download/v0.1.0/papercompare-0.1.0.xpi",
+  "size": 14249,
+  "sha256": "6fc3dd4eae36af773d591b4eeaa05b86b0d4e188cfe3792cc4231cd9a93d626e",
+  "githubAssetId": 645714289,
+  "uploader": "luxun-spec",
+  "uploadedAt": "2026-10-16T01:10:34Z",
+  "fetchedAt": "2026-10-18T11:19:25.469Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "papercompare@local.research",
+  "name": "PaperCompare",
+  "version": "0.1.0",
+  "description": "Compare paper experiments with traceable PDF evidence. / 用可追溯的原文证据比较论文实验。",
+  "updateUrl": "https://github.com/luxun-spec/zotero-papercompare/releases/latest/download/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1234,
+   "sha256": "9a4165a6066f2473c7a4c2e29e2f7a41f1857ad922249b2003e76882db5e6573"
+  },
+  {
+   "path": "content/compare.css",
+   "size": 3720,
+   "sha256": "5bf4ed1d88fcf7f8a929b549d2a53437468f33926eac729e40f6d492e35cc001"
+  },
+  {
+   "path": "content/compare.xhtml",
+   "size": 227,
+   "sha256": "89d1dcc9c8063ccc8751a83eb04db46b0ae9f4f443d2c3092edf2ba5ed26ba0e"
+  },
+  {
+   "path": "content/plugin.js",
+   "size": 37545,
+   "sha256": "070587dd3468d98ebb60ef63c22c61d4daf1edbeb01984696829dd38b06dc840"
+  },
+  {
+   "path": "manifest.json",
+   "size": 517,
+   "sha256": "b676b7467abcfc677582c66b82ed1a306f871dca23e2d334c74771753f31f1ec"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "input": {
+   "slug": "zotero-papercompare",
+   "version": "0.1.0",
+   "sha256": "6fc3dd4eae36af773d591b4eeaa05b86b0d4e188cfe3792cc4231cd9a93d626e"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "content/compare.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 39006,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 16,
+      "column": 7,
+      "snippet": "await IOUtils.writeUTF8(PathUtils.join(Zotero.Profile.dir,'papercompare-startup-error.log'),String(error)+'\\n'+error.stack);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin.js",
+      "line": 488,
+      "column": 196,
+      "snippet": ".\" + name.split(\".\").at(-1)), await fp.show() === fp.returnCancel ? !1 : (await IOUtils.writeUTF8(fp.file, text2, { tmpPath: fp.file + \".tmp\", flush: !0 }), !0);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin.js",
+      "line": 492,
+      "column": 208,
+      "snippet": "fp.appendFilter(\"JSON\", \"*.json\"), await fp.show() === fp.returnCancel ? null : IOUtils.readUTF8(fp.file);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/plugin.js",
+      "line": 502,
+      "column": 14,
+      "snippet": "await IOUtils.writeUTF8(path, JSON.stringify(controller.state, null, 2), { tmpPath: path + \".tmp\", flush: !0 });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/luxun-spec/zotero-papercompare/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/luxun-spec/zotero-papercompare/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-18T11:19:25.469Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the luxun-spec account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-18T11:19:25.469Z",
+  "appliesTo": {
+   "slug": "zotero-papercompare",
+   "version": "0.1.0",
+   "sha256": "6fc3dd4eae36af773d591b4eeaa05b86b0d4e188cfe3792cc4231cd9a93d626e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "d44f3472a92e0a17f029682c20e6f4e42a19a265825c55c59b9b05728a84f8df"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-16T01:10:36Z",
+    "lastCommitAt": "2026-10-16T01:09:56Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

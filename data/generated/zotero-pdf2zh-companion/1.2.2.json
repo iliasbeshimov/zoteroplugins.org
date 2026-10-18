@@ -1,0 +1,488 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf2zh-companion",
+ "repo": "aaaarjimedes/zotero-pdf2zh-companion",
+ "version": "1.2.2",
+ "tag": "v2.2.0",
+ "releaseAuthor": "aaAarJimedes",
+ "publishedAt": "2026-10-13T04:37:05Z",
+ "prerelease": false,
+ "asset": {
+  "name": "pdf2zh-companion-1.2.2.xpi",
+  "url": "https://github.com/aaAarJimedes/zotero-pdf2zh-companion/releases/download/v2.2.0/pdf2zh-companion-1.2.2.xpi",
+  "size": 10503,
+  "sha256": "2307b295b98f2c788e1f006be264cc6a636e5eb013018866d693d06b81d27556",
+  "githubAssetId": 635892126,
+  "uploader": "aaAarJimedes",
+  "uploadedAt": "2026-10-13T04:33:40Z",
+  "fetchedAt": "2026-10-18T11:19:25.469Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "pdf2zh-companion@local",
+  "name": "PDF2zh 本地伴侣",
+  "version": "1.2.2",
+  "description": "为 Zotero PDF2zh 自动启动本机 Conda Server，并以两个独立阅读器左右对照原文与译文。",
+  "homepageUrl": "https://github.com/aaAarJimedes/zotero-pdf2zh-companion",
+  "updateUrl": "https://github.com/aaAarJimedes/zotero-pdf2zh-companion/releases/latest/download/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 25401,
+   "sha256": "891011f6932b0a982e86c9bea567c6bdc5a70bfc97bd6212ee986d6cb11c8508"
+  },
+  {
+   "path": "content/compare.css",
+   "size": 1053,
+   "sha256": "7eb215c5a28f111dcb54ce7c29f3c708c635c87b4565a7249589abd2563fc218"
+  },
+  {
+   "path": "content/compare.xhtml",
+   "size": 2464,
+   "sha256": "1f89263c61bb5f3ea28eebe7d8f795ce2deb5fa8e958ded928032883b94231a3"
+  },
+  {
+   "path": "content/icons/compare.svg",
+   "size": 378,
+   "sha256": "113a721362dd5ea809c4934023b0611fd32fde53afe6bf44ee7333cf89c8f98b"
+  },
+  {
+   "path": "content/icons/translate.svg",
+   "size": 527,
+   "sha256": "a454fec72944ecac481b581f038166ae977034bac70b710c0dd8533b8941682a"
+  },
+  {
+   "path": "manifest.json",
+   "size": 706,
+   "sha256": "93c2c8d85c5a507fed47eff98d446bd60af9900a896e709404318fa94c27dc93"
+  },
+  {
+   "path": "prefs.js",
+   "size": 334,
+   "sha256": "284d1f943d1da9d0cf9706e31c0344941088127002479bab04f29b6217dfb1f7"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "input": {
+   "slug": "zotero-pdf2zh-companion",
+   "version": "1.2.2",
+   "sha256": "2307b295b98f2c788e1f006be264cc6a636e5eb013018866d693d06b81d27556"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "content/compare.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/compare.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/translate.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 28199,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 323,
+       "column": 27,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", `${baseURL}/health`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 8890,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 274,
+       "column": 54,
+       "snippet": "serverURL: String(getPDF2zhPref(\"new_serverip\", \"http://127.0.0.1:8890\")),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 319,
+       "column": 55,
+       "snippet": "const baseURL = String(getPDF2zhPref(\"new_serverip\", \"http://127.0.0.1:8890\"))",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 342,
+       "column": 55,
+       "snippet": "const baseURL = String(getPDF2zhPref(\"new_serverip\", \"http://127.0.0.1:8890\"));",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/health",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 323,
+       "column": 27,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", `${baseURL}/health`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "pdf2zh-next",
+     "provider": "SiliconFlow, or the engine it's set up with",
+     "category": "translation",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 275,
+       "column": 45,
+       "snippet": "engine: String(getPDF2zhPref(\"engine\", \"pdf2zh_next\")),",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 123,
+      "column": 16,
+      "snippet": "if (!(await IOUtils.exists(file.path))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 126,
+      "column": 36,
+      "snippet": "const parsed = JSON.parse(await IOUtils.readUTF8(file.path));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 380,
+      "column": 14,
+      "snippet": "if (!(await IOUtils.exists(python))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 383,
+      "column": 14,
+      "snippet": "if (!(await IOUtils.exists(script))) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 230,
+      "column": 7,
+      "snippet": "if (!Zotero.Server?.Endpoints || statusEndpointClass) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 243,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[STATUS_ENDPOINT] = statusEndpointClass;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/pdf2zh-companion/status"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 15,
+      "column": 2,
+      "snippet": "\"resource://gre/modules/Subprocess.sys.mjs\",",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 389,
+      "column": 29,
+      "snippet": "const currentEnvironment = Subprocess.getEnvironment();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 402,
+      "column": 24,
+      "snippet": "serverProcess = await Subprocess.call({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/aaAarJimedes/zotero-pdf2zh-companion/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/aaAarJimedes/zotero-pdf2zh-companion/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-18T11:19:25.469Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the aaAarJimedes account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-18T11:19:25.469Z",
+  "appliesTo": {
+   "slug": "zotero-pdf2zh-companion",
+   "version": "1.2.2",
+   "sha256": "2307b295b98f2c788e1f006be264cc6a636e5eb013018866d693d06b81d27556"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "1f3043d6d83ceb4bf7157a87120e602a0b91f8b7637cad9b7337880d09ba0436"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "translation",
+      "hosts": [
+       "pdf2zh-next (SiliconFlow, or the engine it's set up with)"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-13T04:37:05Z",
+    "lastCommitAt": "2026-10-15T00:22:53Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

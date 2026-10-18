@@ -1,0 +1,425 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-maimemo",
+ "repo": "heart-ttt/zotero-maimemo",
+ "version": "1.0.0",
+ "tag": "v1.0.0",
+ "releaseAuthor": "Heart-ttt",
+ "publishedAt": "2026-10-15T10:50:47Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-maimemo-1.0.0.xpi",
+  "url": "https://github.com/Heart-ttt/zotero-maimemo/releases/download/v1.0.0/zotero-maimemo-1.0.0.xpi",
+  "size": 24110,
+  "sha256": "e399a23587e7838e1a2ba65f3b1b4809641b5180ff3c242eafb801027929a2fa",
+  "githubAssetId": 643551379,
+  "uploader": "Heart-ttt",
+  "uploadedAt": "2026-10-15T10:50:46Z",
+  "fetchedAt": "2026-10-18T11:19:25.469Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-maimemo@heart-ttt.github.io",
+  "name": "Zotero 墨墨单词同步",
+  "version": "1.0.0",
+  "description": "在 Zotero 阅读器里划词，加入墨墨背单词的云词本和学习计划。",
+  "updateUrl": "https://raw.githubusercontent.com/Heart-ttt/zotero-maimemo/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2378,
+   "sha256": "d9698615c5b80df0999f394ea82989623b9f83efd8d003feeda1a9cc2772c0b3"
+  },
+  {
+   "path": "content/icon.svg",
+   "size": 392,
+   "sha256": "f7c1e23cde397fe8131f919e4730fc461bf52fda449db2ae204b7d3fbb0c33d7"
+  },
+  {
+   "path": "content/preferences.css",
+   "size": 2598,
+   "sha256": "dcd2213f56719dcecec5ae2b681d9f76aabadc7ff0501802d6515a6705306cac"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 2939,
+   "sha256": "79380e924a5f162feac56f2905c91330b01a45f98a05e6d1dcd698fdba45f724"
+  },
+  {
+   "path": "content/runtime.js",
+   "size": 73873,
+   "sha256": "f7a75fa81e36c9c881f1da724c6efe414e7ab8b5abe4f64269aee5a2ac3128be"
+  },
+  {
+   "path": "manifest.json",
+   "size": 561,
+   "sha256": "ba15614c2a9594cf88a4eeccb0d9b2aa3aa7052c6e4cc22c3b45da0f55aa8a8a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "input": {
+   "slug": "zotero-maimemo",
+   "version": "1.0.0",
+   "sha256": "e399a23587e7838e1a2ba65f3b1b4809641b5180ff3c242eafb801027929a2fa"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "content/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/preferences.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 79190,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/runtime.js",
+       "line": 987,
+       "column": 31,
+       "snippet": "const response = await this.fetchImpl(url, options);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/runtime.js",
+       "line": 1096,
+       "column": 29,
+       "snippet": "const response = await this.fetchImpl(url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/runtime.js",
+       "line": 1829,
+       "column": 37,
+       "snippet": "fetchImpl: (url, options) => this.transport.fetch(url, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/runtime.js",
+       "line": 1228,
+       "column": 31,
+       "snippet": "const response = await this.http.request(options.method, String(url), {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "open.maimemo.com",
+     "category": "integration",
+     "provider": "MaiMemo (vocabulary)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/runtime.js",
+       "line": 1052,
+       "column": 65,
+       "snippet": "constructor({ token, fetchImpl = globalThis.fetch, baseUrl = \"https://open.maimemo.com/open\" }) {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 7,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 1134,
+      "column": 19,
+      "snippet": "if (!await IOUtils.exists(path)) return null;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 1135,
+      "column": 15,
+      "snippet": "return Zotero.File.getContentsAsync(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 1138,
+      "column": 14,
+      "snippet": "await Zotero.File.putContentsAsync(path, text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 1142,
+      "column": 16,
+      "snippet": "await IOUtils.writeUTF8(path, text, { mode: \"appendOrCreate\" });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 1144,
+      "column": 32,
+      "snippet": "const current = await IOUtils.exists(path) ? await Zotero.File.getContentsAsync(path) : \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 1144,
+      "column": 61,
+      "snippet": "const current = await IOUtils.exists(path) ? await Zotero.File.getContentsAsync(path) : \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 1145,
+      "column": 16,
+      "snippet": "await Zotero.File.putContentsAsync(path, current + text);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "login-manager",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 1189,
+      "column": 20,
+      "snippet": "this.logins = Services.logins;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsILoginManager"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Heart-ttt/zotero-maimemo/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Heart-ttt/zotero-maimemo/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-18T11:19:25.469Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Heart-ttt account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-18T11:19:25.469Z",
+  "appliesTo": {
+   "slug": "zotero-maimemo",
+   "version": "1.0.0",
+   "sha256": "e399a23587e7838e1a2ba65f3b1b4809641b5180ff3c242eafb801027929a2fa"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "1f2007104a398272ae1cff006722ca17cb156757f4f1b1c7174fd7cbcdd38339"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "open.maimemo.com"
+      ],
+      "unconfirmed": [
+       "open.maimemo.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "login-manager",
+      "label": "Uses Zotero's password manager",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-15T10:50:47Z",
+    "lastCommitAt": "2026-10-16T05:09:08Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

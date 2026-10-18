@@ -1,0 +1,495 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-linksync",
+ "repo": "kaifeng0922/zotero-linksync",
+ "version": "0.2.2.8",
+ "tag": "v0.2.2.8",
+ "releaseAuthor": "kaifeng0922",
+ "publishedAt": "2026-10-12T09:43:08Z",
+ "prerelease": true,
+ "asset": {
+  "name": "zotero-linksync-0.2.2.8.xpi",
+  "url": "https://github.com/kaifeng0922/zotero-linksync/releases/download/v0.2.2.8/zotero-linksync-0.2.2.8.xpi",
+  "size": 23996,
+  "sha256": "d0aca6a7f418cd4b4d94b03583494cdf011384d7cdc225d60454cb4bae008d58",
+  "githubAssetId": 633337012,
+  "uploader": "kaifeng0922",
+  "uploadedAt": "2026-10-12T09:43:00Z",
+  "fetchedAt": "2026-10-18T11:19:25.469Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-linksync@example.com",
+  "name": "Zotero LinkSync",
+  "version": "0.2.2.8",
+  "description": "Linked PDF workflows with resilient ItemTree hooks and standalone local PDF import.",
+  "homepageUrl": "https://github.com/kaifeng0922/zotero-linksync",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 11474,
+   "sha256": "7b08fec36661891652495e8b028fa1f6caf1d96bfe130b11e9f2de0d35f4e633"
+  },
+  {
+   "path": "hooks/connectorSaveSession.js",
+   "size": 17001,
+   "sha256": "55af22c7c8b7c9f666d25af00ea7ab93c01a117782fc2cfff55280cde4b99d05"
+  },
+  {
+   "path": "hooks/dropInterceptor.js",
+   "size": 5348,
+   "sha256": "f92c31a85412d9fec436f48fac0bde151b54f5928e759e7d4c934379462f56b3"
+  },
+  {
+   "path": "hooks/localPDFImport.js",
+   "size": 2852,
+   "sha256": "0c7cd7fa58d7a4bb168888c0544102b181ba00ad672424d194e292747382f363"
+  },
+  {
+   "path": "hooks/standaloneEndpoint.js",
+   "size": 15237,
+   "sha256": "f27dbddcd2ef69d3efa814875ad3592e75ca5d6f2691c50c4634a551e2d9c7cd"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1060,
+   "sha256": "bd5b619b0752fc11e318cff8acb7680ae77c881dba53ca7ef4a8e7c49a72f53a"
+  },
+  {
+   "path": "manifest.json",
+   "size": 435,
+   "sha256": "f48c11a4d07fdd935bc742f495ab30cb0bc3ec3905494097a332bbe876fcd849"
+  },
+  {
+   "path": "modules/fileTransfer.js",
+   "size": 4703,
+   "sha256": "6ad96955606bca6071cd394b831372e46e0c8e293cf199331928dad0ee87c3ec"
+  },
+  {
+   "path": "modules/integrity.js",
+   "size": 981,
+   "sha256": "50070f6326859ccedd5a060ff0eb89f77d392f145510acb8bb04d43cff8cf5f1"
+  },
+  {
+   "path": "modules/linkedAttachment.js",
+   "size": 3304,
+   "sha256": "9e5c168338885e74a1c4b55902f0487bdb6b42a21d8313bae53a7d73b7eed436"
+  },
+  {
+   "path": "modules/logger.js",
+   "size": 3223,
+   "sha256": "23b043ba2ecca47c8ae2914e2b5af6b857ac16a36e28f2e27db9fac8ae560b4a"
+  },
+  {
+   "path": "modules/nutstoreStatus.js",
+   "size": 2061,
+   "sha256": "009547629a93403ed692db3c94227bb40a9575d54f8d812164aede318e0bff7e"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "input": {
+   "slug": "zotero-linksync",
+   "version": "0.2.2.8",
+   "sha256": "d0aca6a7f418cd4b4d94b03583494cdf011384d7cdc225d60454cb4bae008d58"
+  },
+  "coverage": {
+   "filesTotal": 12,
+   "filesAnalyzed": 10,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 66184,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-lookup",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "hooks/dropInterceptor.js",
+       "line": 105,
+       "column": 31,
+       "snippet": "else if (addedItems.length) Zotero.RecognizeDocument.autoRecognizeItems(addedItems);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "hooks/standaloneEndpoint.js",
+       "line": 232,
+       "column": 4,
+       "snippet": "Zotero.RecognizeDocument.autoRecognizeItems([attachment])",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "modules/fileTransfer.js",
+       "line": 62,
+       "column": 22,
+       "snippet": "for (let resolver of Zotero.Attachments.getFileResolvers(parentItem, [\"doi\", \"url\", \"oa\"], true)) {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "modules/fileTransfer.js",
+       "line": 66,
+       "column": 21,
+       "snippet": "let result = await Zotero.Attachments.downloadFirstAvailableFile(resolvers, partialPath, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 62,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 67,
+      "column": 7,
+      "snippet": "await Zotero.File.putContentsAsync(PathUtils.join(state.logDir, \"lifecycle-runtime.json\"),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 191,
+      "column": 13,
+      "snippet": "if (!(await IOUtils.exists(linkedBase))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "hooks/connectorSaveSession.js",
+      "line": 71,
+      "column": 8,
+      "snippet": "base = Zotero.File.getValidFileName(base || \"Full Text PDF\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "hooks/connectorSaveSession.js",
+      "line": 72,
+      "column": 8,
+      "snippet": "return Zotero.File.truncateFileName(base + \".pdf\", 180);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "hooks/connectorSaveSession.js",
+      "line": 340,
+      "column": 13,
+      "snippet": "if (await IOUtils.exists(storageDir)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "hooks/connectorSaveSession.js",
+      "line": 341,
+      "column": 27,
+      "snippet": "for (let path of await IOUtils.getChildren(storageDir)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "hooks/dropInterceptor.js",
+      "line": 97,
+      "column": 30,
+      "snippet": "source_preserved: await IOUtils.exists(staged.sourcePath),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "hooks/localPDFImport.js",
+      "line": 51,
+      "column": 28,
+      "snippet": "source_preserved: await IOUtils.exists(path),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "hooks/standaloneEndpoint.js",
+      "line": 53,
+      "column": 9,
+      "snippet": "name = Zotero.File.getValidFileName(name || \"Full Text.pdf\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "hooks/standaloneEndpoint.js",
+      "line": 54,
+      "column": 9,
+      "snippet": "return Zotero.File.truncateFileName(name, 180);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 76,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/connector/saveStandaloneAttachment\"]?.prototype.init,",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "hooks/connectorSaveSession.js",
+      "line": 76,
+      "column": 19,
+      "snippet": "let constructor = Zotero.Server?.Endpoints?.[\"/connector/ping\"];",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "hooks/standaloneEndpoint.js",
+      "line": 74,
+      "column": 17,
+      "snippet": "let endpoints = Zotero.Server.Endpoints;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "hooks/standaloneEndpoint.js",
+      "line": 114,
+      "column": 1,
+      "snippet": "endpoints[STANDALONE_ENDPOINT_PATH] = InterceptedSaveStandaloneAttachment;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/connector/saveStandaloneAttachment"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "hooks/standaloneEndpoint.js",
+      "line": 114,
+      "column": 1,
+      "snippet": "endpoints[STANDALONE_ENDPOINT_PATH] = InterceptedSaveStandaloneAttachment;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "hooks/standaloneEndpoint.js",
+      "line": 219,
+      "column": 19,
+      "snippet": "await attachment.saveTx({ notifierQueue });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/connector/saveStandaloneAttachment"
+     ],
+     "web": "any"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-18T11:19:25.469Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the kaifeng0922 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-18T11:19:25.469Z",
+  "appliesTo": {
+   "slug": "zotero-linksync",
+   "version": "0.2.2.8",
+   "sha256": "d0aca6a7f418cd4b4d94b03583494cdf011384d7cdc225d60454cb4bae008d58"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "d0f01262ed1a55b2b424c2c9889db46b57e3fc1d24ee228c31aacb6e01633f43"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "server-edits-library",
+      "label": "Any website you visit can change your library through it",
+      "concern": "high"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "high",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-SERVER-EDITS-WEB"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-12T09:43:08Z",
+    "lastCommitAt": "2026-10-12T10:28:52Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "installProblem": "no-update-url",
+    "label": "Zotero won't install this file: its manifest has no update address, which Zotero requires",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "high-concern",
+   "ruleId": "OV-HIGH",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Any website you visit can change your library through it"
+   ]
+  }
+ }
+}

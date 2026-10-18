@@ -1,0 +1,525 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-reading-bridge",
+ "repo": "volatile-static/zotero-reading-bridge",
+ "version": "0.5.0",
+ "tag": "v0.5.0",
+ "releaseAuthor": "volatile-static",
+ "publishedAt": "2026-10-17T22:16:00Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-reading-bridge.xpi",
+  "url": "https://github.com/volatile-static/zotero-reading-bridge/releases/download/v0.5.0/zotero-reading-bridge.xpi",
+  "size": 65800,
+  "sha256": "a6f16e4c6617cc45837257dd0fc9ea360a6a2ab411f8869f8a90e6e32a72b397",
+  "githubAssetId": 651747964,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-17T22:16:38Z",
+  "fetchedAt": "2026-10-18T11:19:25.469Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-reading-bridge@volatile.static",
+  "name": "Zotero Reading Bridge",
+  "version": "0.5.0",
+  "description": "Read-only local MCP endpoint that lets AI clients such as Codex and Claude Desktop read your Zotero library and current selection.",
+  "updateUrl": "https://github.com/volatile-static/zotero-reading-bridge/releases/latest/download/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "11.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1391,
+   "sha256": "577f822580aff97028824f83281614caba06de33770024b3c4dd5d76bd9a68f9"
+  },
+  {
+   "path": "content/bridge.js",
+   "size": 182146,
+   "sha256": "d034b6ceda2dd0dd6993783b901df61012ce44ab6d4617509267e79eed3653c3"
+  },
+  {
+   "path": "content/icons/icon.svg",
+   "size": 1400,
+   "sha256": "a106616824a15c41f567468cceece91733a350081451686ffb7bba5d0ecacf65"
+  },
+  {
+   "path": "content/preferences.js",
+   "size": 2985,
+   "sha256": "7d4cb38a70900fbb3c4854e083c5d4005a603c6796cc99e00b0ef633d073a44f"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 1960,
+   "sha256": "dc3105e2e64907fcb87e5d845263dd9b8c9a4e0aa9363273308c041fc9bd9142"
+  },
+  {
+   "path": "LICENSE",
+   "size": 35688,
+   "sha256": "8d04377269a9016cbab26d5c754a843314e3c346c8ac78b07251decb8aeacd61"
+  },
+  {
+   "path": "locale/en-US/zotero-reading-bridge.ftl",
+   "size": 2998,
+   "sha256": "350803ff858c36d49352784031ee78de51fb5d9c674bc30cb02bd83576564714"
+  },
+  {
+   "path": "locale/zh-CN/zotero-reading-bridge.ftl",
+   "size": 2922,
+   "sha256": "03267beca417f259a769aa053ef5d309602319fb19e8666f7ae4564ebfbaf351"
+  },
+  {
+   "path": "manifest.json",
+   "size": 645,
+   "sha256": "646e68153fe3789e92ac31ac35887e4d46f58714e77deaae1684f57d836e3094"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "input": {
+   "slug": "zotero-reading-bridge",
+   "version": "0.5.0",
+   "sha256": "a6f16e4c6617cc45837257dd0fc9ea360a6a2ab411f8869f8a90e6e32a72b397"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "content/icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/zotero-reading-bridge.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/zotero-reading-bridge.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 188482,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/bridge.js",
+       "line": 3948,
+       "column": 29,
+       "snippet": "const result = await api.downloadFirstAvailableFile(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/bridge.js",
+       "line": 475,
+       "column": 11,
+       "snippet": "return `http://${LOOPBACK_HOST}:${port}${path}`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/preferences.js",
+       "line": 10,
+       "column": 11,
+       "snippet": "return `http://${LOOPBACK_HOST}:${port}${path}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/bridge.js",
+       "line": 343,
+       "column": 79,
+       "snippet": "url: { type: \"string\", minLength: 1, maxLength: 8192, description: \"Public HTTP(S) article page, https://doi.org/... URL, or PDF URL.\" },",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "http://<expr>:<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.js",
+       "line": 10,
+       "column": 11,
+       "snippet": "return `http://${LOOPBACK_HOST}:${port}${path}`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/preferences.js",
+      "line": 47,
+      "column": 8,
+      "snippet": "Zotero.Utilities.Internal.copyTextToClipboard(value);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/bridge.js",
+      "line": 1510,
+      "column": 19,
+      "snippet": "return await IOUtils.readUTF8(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/bridge.js",
+      "line": 2599,
+      "column": 25,
+      "snippet": "const info = await IOUtils.stat(cachePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/bridge.js",
+      "line": 2610,
+      "column": 38,
+      "snippet": "const data = base64Encode(await IOUtils.read(cachePath));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/bridge.js",
+      "line": 3963,
+      "column": 29,
+      "snippet": "const sample = await IOUtils.read(path, { maxBytes: 1024 });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/bridge.js",
+      "line": 3967,
+      "column": 29,
+      "snippet": "const bytes = (await IOUtils.stat(path)).size;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/bridge.js",
+      "line": 3971,
+      "column": 24,
+      "snippet": "remove: (path) => IOUtils.remove(path, { ignoreAbsent: true }),",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/bridge.js",
+      "line": 1138,
+      "column": 22,
+      "snippet": "const endpoints = Zotero.Server.Endpoints;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/bridge.js",
+      "line": 1143,
+      "column": 6,
+      "snippet": "endpoints[path] = ZoteroReadingBridgeEndpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/bridge/mcp"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "own-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/bridge.js",
+      "line": 1247,
+      "column": 47,
+      "snippet": "const httpd = ChromeUtils.importESModule(\"chrome://remote/content/server/httpd.sys.mjs\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "httpd.js"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/volatile-static/zotero-reading-bridge/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/volatile-static/zotero-reading-bridge/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-18T11:19:25.469Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-18T11:19:25.469Z",
+  "appliesTo": {
+   "slug": "zotero-reading-bridge",
+   "version": "0.5.0",
+   "sha256": "a6f16e4c6617cc45837257dd0fc9ea360a6a2ab411f8869f8a90e6e32a72b397"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "15174c0f3e9918f38899d02ae15dfbb8d664593469f946468be680b698e86137"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ],
+      "unconfirmed": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "own-server",
+      "label": "Runs its own server for programs on this computer",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-17T22:16:00Z",
+    "lastCommitAt": "2026-10-17T22:15:55Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

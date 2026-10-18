@@ -1,0 +1,348 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-research-companion",
+ "repo": "jackdhch/zotero-research-companion",
+ "version": "0.2.2",
+ "tag": "v0.2.2",
+ "releaseAuthor": "jackdhch",
+ "publishedAt": "2026-10-16T06:00:13Z",
+ "prerelease": false,
+ "asset": {
+  "name": "research-companion-0.2.2.xpi",
+  "url": "https://github.com/jackdhch/zotero-research-companion/releases/download/v0.2.2/research-companion-0.2.2.xpi",
+  "size": 11021,
+  "sha256": "9278f0968963f6d746a414633273fb161d70fdb57bd6551910759456fbb51ed9",
+  "githubAssetId": 646319851,
+  "uploader": "jackdhch",
+  "uploadedAt": "2026-10-16T06:00:12Z",
+  "fetchedAt": "2026-10-18T11:19:25.469Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "research-companion@jackdhch",
+  "name": "研究伴读 for Zotero",
+  "version": "0.2.2",
+  "description": "右侧栏用中文显示论文和你研究的关系；一键把论文调研清单导入成分类和标签。独立项目，与 Zotero 官方无关。",
+  "updateUrl": "https://raw.githubusercontent.com/jackdhch/zotero-research-companion/main/update.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 836,
+   "sha256": "e5b4a4fcaed25af8d6753016604cf13cdcd47827737961e7987a53ddb1e5eb54"
+  },
+  {
+   "path": "content/icon16.svg",
+   "size": 204,
+   "sha256": "a687745b03119b8e5fec07b9c83c21f8af39e5c189906b2d80449900bc68caad"
+  },
+  {
+   "path": "content/icon20.svg",
+   "size": 204,
+   "sha256": "9304117dc65711335e0b9c14ad7bf276df815c22bc0f7e89f6cf1ee4ceff2308"
+  },
+  {
+   "path": "content/lib.js",
+   "size": 3605,
+   "sha256": "92178cf2942fc9ee3a7a4e6119d75b70f9dab8ea6d3cb67e5ef8677e671d5d30"
+  },
+  {
+   "path": "content/rc.js",
+   "size": 17031,
+   "sha256": "2325630bb8f105e2484a1e00d05f12baa1049fa357e961d0f41e030d99cb85b2"
+  },
+  {
+   "path": "locale/en-US/research-companion.ftl",
+   "size": 328,
+   "sha256": "41cf47becdaa201c016d93b75e923e519f1dc763a21c0a7032de649cc4022f50"
+  },
+  {
+   "path": "locale/zh-CN/research-companion.ftl",
+   "size": 303,
+   "sha256": "ffecfc8568a7fc112cc887e2a6a6070184afaf5d7a124ad0ccabcf44f2a07b3c"
+  },
+  {
+   "path": "manifest.json",
+   "size": 632,
+   "sha256": "f34af59ec1b535b641153e7d43b6b898672b85df45ea913865a1f3073240e7fa"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "input": {
+   "slug": "zotero-research-companion",
+   "version": "0.2.2",
+   "sha256": "9278f0968963f6d746a414633273fb161d70fdb57bd6551910759456fbb51ed9"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "content/icon16.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icon20.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/research-companion.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/research-companion.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 21472,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/rc.js",
+      "line": 73,
+      "column": 34,
+      "snippet": "try { return JSON.parse(await Zotero.File.getContentsAsync(path)); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/rc.js",
+      "line": 98,
+      "column": 10,
+      "snippet": "await Zotero.File.putContentsAsync(this.donePath, JSON.stringify([...list]));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/rc.js",
+      "line": 103,
+      "column": 35,
+      "snippet": "this.data = JSON.parse(await Zotero.File.getContentsAsync(this.dataPath));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/rc.js",
+      "line": 312,
+      "column": 35,
+      "snippet": "try { queue = JSON.parse(await Zotero.File.getContentsAsync(this.queuePath)); } catch (e) {}",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/rc.js",
+      "line": 326,
+      "column": 18,
+      "snippet": "await Zotero.File.putContentsAsync(this.queuePath, JSON.stringify(queue, null, 1));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/rc.js",
+      "line": 333,
+      "column": 16,
+      "snippet": "await Zotero.File.putContentsAsync(this.queuePath, JSON.stringify(queue, null, 1));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/rc.js",
+      "line": 387,
+      "column": 14,
+      "snippet": "await Zotero.File.putContentsAsync(path, JSON.stringify({ itemID: att.id, paragraphs: paras, tables }, null, 1));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/rc.js",
+      "line": 398,
+      "column": 43,
+      "snippet": "if (!path || !/\\.pdf$/i.test(path) || !Zotero.File.pathToFile(path).exists()) return false;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/jackdhch/zotero-research-companion/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/jackdhch/zotero-research-companion/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-18T11:19:25.469Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the jackdhch account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-18T11:19:25.469Z",
+  "appliesTo": {
+   "slug": "zotero-research-companion",
+   "version": "0.2.2",
+   "sha256": "9278f0968963f6d746a414633273fb161d70fdb57bd6551910759456fbb51ed9"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "f1042b1be854dae37021f0ab41b5db7c2012bfb47220ee67d9eb28a55d44f2cb"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-16T06:00:13Z",
+    "lastCommitAt": "2026-10-16T06:00:06Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

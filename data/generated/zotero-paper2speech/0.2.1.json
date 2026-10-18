@@ -1,0 +1,310 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paper2speech",
+ "repo": "weicheng14159/zotero_paper2speech",
+ "version": "0.2.1",
+ "tag": "v0.2.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-16T02:32:46Z",
+ "prerelease": false,
+ "asset": {
+  "name": "paper-2-speech.xpi",
+  "url": "https://github.com/WeiCheng14159/zotero_paper2speech/releases/download/v0.2.1/paper-2-speech.xpi",
+  "size": 9087,
+  "sha256": "1d1e858c03a455111300e216c990051e5c54143b655cd2fd0fdaf98a74f88d91",
+  "githubAssetId": 645887566,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-16T02:32:48Z",
+  "fetchedAt": "2026-10-18T11:19:25.469Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-paper2speech@zotero.local",
+  "name": "Paper2Speech",
+  "version": "0.2.1",
+  "description": "Read selected Zotero papers aloud with built-in macOS speech",
+  "updateUrl": "https://github.com/WeiCheng14159/zotero_paper2speech/releases/download/release/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1065,
+   "sha256": "eacfb9dd5f23b5c81ab311d2895b95f89c5efe2b971da44ceec3ce685ed6c9a5"
+  },
+  {
+   "path": "content/icons/icon.svg",
+   "size": 427,
+   "sha256": "c69372ed256dca4dacc8c5b4312e1ae1f13d1f477fa68cc3ed6a5e49637f4825"
+  },
+  {
+   "path": "content/icons/play.svg",
+   "size": 213,
+   "sha256": "6d72a612272cfa18a0564867b8d0ca5e24ac7b5e79348f71c8a613ac2553cfd1"
+  },
+  {
+   "path": "content/icons/stop.svg",
+   "size": 166,
+   "sha256": "7290853efd5d0e1618e0c2df7be37f609ec7a47bf5f3f18ef739d67d52f8a9c9"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 1711,
+   "sha256": "6c1f3150f52954c654717de00415860afdf8469c04087bcb7c3fbef1c9660107"
+  },
+  {
+   "path": "content/scripts/zotero-paper2speech.js",
+   "size": 20928,
+   "sha256": "d721f82e15d7163aa39156ef90a62d33d0a0664549007f4c47c9cd4d99984cc1"
+  },
+  {
+   "path": "manifest.json",
+   "size": 544,
+   "sha256": "0096be9a5a274d61a10fc119cdf2c55ea724435c818a377b9c5ca437d08d9f41"
+  },
+  {
+   "path": "prefs.js",
+   "size": 114,
+   "sha256": "6cb85f01f3cd952679181d06b9580fa3b1b9745046c7caa747600b6471bc161b"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "input": {
+   "slug": "zotero-paper2speech",
+   "version": "0.2.1",
+   "sha256": "1d1e858c03a455111300e216c990051e5c54143b655cd2fd0fdaf98a74f88d91"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "content/icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/play.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/stop.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 23818,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [
+    {
+     "pattern": "chrome://<expr>/content/icons/<expr>.svg",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/zotero-paper2speech.js",
+       "line": 449,
+       "column": 14,
+       "snippet": "`chrome://${config.addonRef}/content/icons/${action === \"read\" ? \"play\" : \"stop\"}.svg`",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "process-launch",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/zotero-paper2speech.js",
+      "line": 100,
+      "column": 38,
+      "snippet": "return ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\").Subprocess;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ],
+     "programs": [
+      "say"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 16,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/WeiCheng14159/zotero_paper2speech/releases/download/release/update.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/WeiCheng14159/zotero_paper2speech/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-18T11:19:25.469Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-18T11:19:25.469Z",
+  "appliesTo": {
+   "slug": "zotero-paper2speech",
+   "version": "0.2.1",
+   "sha256": "1d1e858c03a455111300e216c990051e5c54143b655cd2fd0fdaf98a74f88d91"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "cb0b22c673ccf02ee724953d7c2bcf8d9c0e140e270b47a451d2fcadf6acd429"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include say"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-16T02:32:46Z",
+    "lastCommitAt": "2026-10-16T10:24:26Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

@@ -1,0 +1,539 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-arxiv-html",
+ "repo": "oliverdudgeon/zotero-arxiv-html",
+ "version": "1.0.0",
+ "tag": "v1.0.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-12T14:15:57Z",
+ "prerelease": false,
+ "asset": {
+  "name": "ar-xiv-html-for-zotero.xpi",
+  "url": "https://github.com/OliverDudgeon/zotero-arxiv-html/releases/download/v1.0.0/ar-xiv-html-for-zotero.xpi",
+  "size": 37385,
+  "sha256": "31fd34506e71efe0442f8f5fa5dcbab786cd401122192416fac4149b9a4812a3",
+  "githubAssetId": 633989459,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-12T14:15:58Z",
+  "fetchedAt": "2026-10-18T11:19:25.469Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-arxiv-html@oliverdudgeon.github.io",
+  "name": "arXiv HTML for Zotero",
+  "version": "1.0.0",
+  "description": "Attach the arXiv HTML (experimental) version of a paper as a web page snapshot",
+  "homepageUrl": "https://github.com/OliverDudgeon/zotero-arxiv-html#readme",
+  "updateUrl": "https://github.com/OliverDudgeon/zotero-arxiv-html/releases/download/release/update.json",
+  "strictMinVersion": "7.999",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1663,
+   "sha256": "1bb326fbefc94224daea26d207ecf88cd1f78b8ed8a392c391452929b62355a5"
+  },
+  {
+   "path": "content/icons/icon.svg",
+   "size": 303,
+   "sha256": "114dae2b86ff45b27549bf356429554292836ab323c5d394faff40a54294c085"
+  },
+  {
+   "path": "content/scripts/arxivhtml.js",
+   "size": 140903,
+   "sha256": "411f656e18e3a1e62ac7580a5d3fe003dbde75691e945aa57b576213a7d531dc"
+  },
+  {
+   "path": "locale/en-US/arxivhtml-addon.ftl",
+   "size": 534,
+   "sha256": "cb8ba4ca1d924c79536d86a4e8e7d2ba037d08f1b29d42e0900e263d35ab615d"
+  },
+  {
+   "path": "locale/en-US/arxivhtml-mainWindow.ftl",
+   "size": 64,
+   "sha256": "f07cfc3cdb3f6c5ae1bf383d6037bd9a7649cec26af0954db10589de95c2fb5e"
+  },
+  {
+   "path": "manifest.json",
+   "size": 672,
+   "sha256": "26ccd6670f40c5676c36ce05e835a08b3871c6b0027514ef927fe81848f6a46d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "input": {
+   "slug": "zotero-arxiv-html",
+   "version": "1.0.0",
+   "sha256": "31fd34506e71efe0442f8f5fa5dcbab786cd401122192416fac4149b9a4812a3"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "content/icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/arxivhtml-addon.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/arxivhtml-mainWindow.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 142566,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "content/scripts/arxivhtml.js"
+     ],
+     "identifiedBy": "package-json"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/arxivhtml.js",
+       "line": 3652,
+       "column": 24,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/arxivhtml.js",
+       "line": 3660,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url, { responseType: \"text\" });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/arxivhtml.js",
+       "line": 3618,
+       "column": 11,
+       "snippet": "return `https://arxiv.org/html/${id}${version2 ? `v${version2}` : \"\"}`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/arxivhtml.js",
+       "line": 3621,
+       "column": 11,
+       "snippet": "return `https://arxiv.org/abs/${id}`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "chrome://<expr>/content/icons/icon.svg",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/arxivhtml.js",
+       "line": 4098,
+       "column": 6,
+       "snippet": "`chrome://${config.addonRef}/content/icons/icon.svg`",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 3,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/arxivhtml.js",
+      "line": 490,
+      "column": 49,
+      "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/arxivhtml.js",
+      "line": 490,
+      "column": 95,
+      "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/arxivhtml.js",
+      "line": 536,
+      "column": 43,
+      "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard",
+      "osascript (fixed command)"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/arxivhtml.js",
+      "line": 28,
+      "column": 13,
+      "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/arxivhtml.js",
+      "line": 31,
+      "column": 6,
+      "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v, true);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.debug-bridge.password"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/arxivhtml.js",
+      "line": 64,
+      "column": 24,
+      "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "AsyncFunction"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/arxivhtml.js",
+      "line": 525,
+      "column": 38,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/arxivhtml.js",
+      "line": 525,
+      "column": 82,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "link-installs-addons",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/arxivhtml.js",
+      "line": 129,
+      "column": 6,
+      "snippet": "Services.io.getProtocolHandler(\"zotero\").wrappedJSObject._extensions[\"zotero://plugin\"] = pluginBridgeExtension;",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "zotero://plugin"
+     ],
+     "asksFirst": false
+    }
+   },
+   {
+    "id": "link-runs-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/arxivhtml.js",
+      "line": 85,
+      "column": 6,
+      "snippet": "Services.io.getProtocolHandler(\"zotero\").wrappedJSObject._extensions[\"zotero://ztoolkit-debug\"] = debugBridgeExtension;",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "zotero://ztoolkit-debug (asks first)"
+     ],
+     "asksFirst": true
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/OliverDudgeon/zotero-arxiv-html/releases/download/release/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/OliverDudgeon/zotero-arxiv-html/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-18T11:19:25.469Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-18T11:19:25.469Z",
+  "appliesTo": {
+   "slug": "zotero-arxiv-html",
+   "version": "1.0.0",
+   "sha256": "31fd34506e71efe0442f8f5fa5dcbab786cd401122192416fac4149b9a4812a3"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "7e7d41746ab2c0a02b9bcf0286a941607d5083bf23c89c5f35f83ad4ce8eba15"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "arxiv.org"
+      ],
+      "unconfirmed": [
+       "arxiv.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "link-installs-addons",
+      "label": "A zotero:// link (a web page can open one) can make it install add-ons without asking you",
+      "concern": "medium",
+      "libraries": [
+       "zotero-plugin-toolkit"
+      ],
+      "detail": "zotero://plugin"
+     },
+     {
+      "id": "link-runs-code",
+      "label": "A zotero:// link can make it run code if you approve a prompt",
+      "concern": "medium",
+      "libraries": [
+       "zotero-plugin-toolkit"
+      ],
+      "detail": "zotero://ztoolkit-debug"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-LINK-INSTALL",
+     "CAP-LINK-CODE"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-12T14:15:57Z",
+    "lastCommitAt": "2026-10-12T14:13:54Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from zotero-plugin-toolkit)",
+    "A zotero:// link can make it run code if you approve a prompt (from zotero-plugin-toolkit)"
+   ]
+  }
+ }
+}

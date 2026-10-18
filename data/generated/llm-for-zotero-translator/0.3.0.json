@@ -1,0 +1,727 @@
+{
+ "schemaVersion": 1,
+ "slug": "llm-for-zotero-translator",
+ "repo": "vithrive/llm-for-zotero-translator",
+ "version": "0.3.0",
+ "tag": "release",
+ "releaseAuthor": "Vithrive",
+ "publishedAt": "2026-10-16T07:29:56Z",
+ "prerelease": false,
+ "asset": {
+  "name": "llm-for-zotero-translator.xpi",
+  "url": "https://github.com/Vithrive/llm-for-zotero-translator/releases/download/release/llm-for-zotero-translator.xpi",
+  "size": 46580,
+  "sha256": "10c58cd6a4fcdcb5d0ef3e1d8a83efb4a97d3b1ab60c150cd1edc20e3886897e",
+  "githubAssetId": 646861903,
+  "uploader": "Vithrive",
+  "uploadedAt": "2026-10-16T09:42:08Z",
+  "fetchedAt": "2026-10-18T11:19:25.469Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "llm-for-zotero-translator@cszr",
+  "name": "LLM for Zotero Translator",
+  "version": "0.3.0",
+  "description": "Translate MinerU parsed markdown into Chinese in the Zotero PDF reader, with an AI provider/model settings pane matching llm-for-zotero (companion add-on for llm-for-zotero)",
+  "homepageUrl": "https://github.com/Vithrive/llm-for-zotero-translator",
+  "updateUrl": "https://github.com/Vithrive/llm-for-zotero-translator/releases/download/release/update.json",
+  "strictMinVersion": "7.999",
+  "strictMaxVersion": "100.*.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1901,
+   "sha256": "1219cafe08603d63bba64c48cdb097f979f6c8bd1fb88aa332aafd14072f2a7c"
+  },
+  {
+   "path": "chrome/content/icons/icon.png",
+   "size": 28352,
+   "sha256": "d2eda5b7ec463194482fb247167eba556d6dcc1fb9329c0f62068db8c75ed9d3"
+  },
+  {
+   "path": "chrome/content/preferences.xhtml",
+   "size": 4813,
+   "sha256": "b8d27a1b90c254191c51bd6a49da5f601bfa85ec5cf101708ad6137cd4a268c3"
+  },
+  {
+   "path": "chrome/content/scripts/llm-for-zotero-translator.js",
+   "size": 52441,
+   "sha256": "ca3f5d0e28dca26bb1e2cd88da3cb9f435861740088f419a7deed94d55154793"
+  },
+  {
+   "path": "manifest.json",
+   "size": 720,
+   "sha256": "97d057a69331bbadb00142ae5b2dbdd98c12a0dd47e1c935c1dfb1b73bf18db2"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "input": {
+   "slug": "llm-for-zotero-translator",
+   "version": "0.3.0",
+   "sha256": "10c58cd6a4fcdcb5d0ef3e1d8a83efb4a97d3b1ab60c150cd1edc20e3886897e"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "chrome/content/icons/icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 59155,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 4,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 546,
+       "column": 6,
+       "snippet": "fetch(url, options).then(",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 1274,
+       "column": 29,
+       "snippet": "const response = await fetch(base + \"/models\", {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.anthropic.com",
+     "category": "llm-provider",
+     "provider": "Anthropic",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 73,
+       "column": 15,
+       "snippet": "apiBase: \"https://api.anthropic.com/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 54,
+       "column": 15,
+       "snippet": "apiBase: \"https://api.deepseek.com\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.minimax.io",
+     "category": "llm-provider",
+     "provider": "MiniMax",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 79,
+       "column": 15,
+       "snippet": "apiBase: \"https://api.minimax.io/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.moonshot.ai",
+     "category": "llm-provider",
+     "provider": "Moonshot (Kimi)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 104,
+       "column": 15,
+       "snippet": "apiBase: \"https://api.moonshot.ai/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openai.com",
+     "category": "llm-provider",
+     "provider": "OpenAI",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 61,
+       "column": 15,
+       "snippet": "apiBase: \"https://api.openai.com/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.siliconflow.cn",
+     "category": "llm-provider",
+     "provider": "SiliconFlow",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 116,
+       "column": 15,
+       "snippet": "apiBase: \"https://api.siliconflow.cn/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.x.ai",
+     "category": "llm-provider",
+     "provider": "xAI",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 92,
+       "column": 15,
+       "snippet": "apiBase: \"https://api.x.ai/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.xiaomimimo.com",
+     "category": "llm-provider",
+     "provider": "Xiaomi MiMo",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 110,
+       "column": 15,
+       "snippet": "apiBase: \"https://api.xiaomimimo.com/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dashscope.aliyuncs.com",
+     "category": "llm-provider",
+     "provider": "Alibaba Qwen (DashScope)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 98,
+       "column": 15,
+       "snippet": "apiBase: \"https://dashscope.aliyuncs.com/compatible-mode/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "generativelanguage.googleapis.com",
+     "category": "llm-provider",
+     "provider": "Google Gemini",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 67,
+       "column": 15,
+       "snippet": "apiBase: \"https://generativelanguage.googleapis.com/v1beta/openai\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 1184,
+       "column": 24,
+       "snippet": "const PANE_HELP_URL = \"https://github.com/Vithrive/llm-for-zotero-translator\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "localhost",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 128,
+       "column": 15,
+       "snippet": "apiBase: \"http://localhost:11434/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 135,
+       "column": 15,
+       "snippet": "apiBase: \"http://localhost:1234/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 1255,
+       "column": 13,
+       "snippet": "return \"自定义：请填写 OpenAI 兼容接口基址，例如 http://localhost:8000/v1\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "open.bigmodel.cn",
+     "category": "llm-provider",
+     "provider": "Zhipu (GLM)",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 85,
+       "column": 15,
+       "snippet": "apiBase: \"https://open.bigmodel.cn/api/paas/v4\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "opencode.ai",
+     "category": "llm-provider",
+     "provider": "OpenCode Zen",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 122,
+       "column": 15,
+       "snippet": "apiBase: \"https://opencode.ai/zen/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/models",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 1274,
+       "column": 29,
+       "snippet": "const response = await fetch(base + \"/models\", {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "baseUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+       "line": 227,
+       "column": 41,
+       "snippet": "baseUrl: resolveApiBase(preset.id, getPref(\"baseUrl\", DEFAULTS.baseUrl)),",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "lft-api-base",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.xhtml",
+       "line": 78,
+       "column": 6,
+       "snippet": "<html:input id=\"lft-api-base\" class=\"lft-input\" type=\"text\" placeholder=\"https://api.deepseek.com\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+      "line": 222,
+      "column": 21,
+      "snippet": "apiKey: String(getPref(\"apiKey\", DEFAULTS.apiKey)),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+      "line": 1408,
+      "column": 6,
+      "snippet": "setPref(\"apiKey\", String(apiKeyInput.value || \"\").trim()));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+      "line": 248,
+      "column": 24,
+      "snippet": "return String(await Zotero.File.getContentsAsync(path));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+      "line": 252,
+      "column": 10,
+      "snippet": "await Zotero.File.putContentsAsync(path, text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+      "line": 829,
+      "column": 38,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/llm-for-zotero-translator.js",
+      "line": 830,
+      "column": 8,
+      "snippet": "Components.interfaces.nsIFile,",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/Vithrive/llm-for-zotero-translator/releases/download/release/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/Vithrive/llm-for-zotero-translator/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-18T11:19:25.469Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Vithrive account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-18T11:19:25.469Z",
+  "appliesTo": {
+   "slug": "llm-for-zotero-translator",
+   "version": "0.3.0",
+   "sha256": "10c58cd6a4fcdcb5d0ef3e1d8a83efb4a97d3b1ab60c150cd1edc20e3886897e"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "5967be4a389753489d929e90045e5fda2b34fa47821d2ca7fc5a47d3a6ea18f1"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.anthropic.com",
+       "api.deepseek.com",
+       "api.minimax.io",
+       "api.moonshot.ai",
+       "api.openai.com",
+       "api.siliconflow.cn",
+       "api.x.ai",
+       "api.xiaomimimo.com",
+       "dashscope.aliyuncs.com",
+       "generativelanguage.googleapis.com",
+       "open.bigmodel.cn",
+       "opencode.ai"
+      ],
+      "unconfirmed": [
+       "api.anthropic.com",
+       "api.deepseek.com",
+       "api.minimax.io",
+       "api.moonshot.ai",
+       "api.openai.com",
+       "api.siliconflow.cn",
+       "api.x.ai",
+       "api.xiaomimimo.com",
+       "dashscope.aliyuncs.com",
+       "generativelanguage.googleapis.com",
+       "open.bigmodel.cn",
+       "opencode.ai"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ],
+      "unconfirmed": [
+       "localhost"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-16T07:29:56Z",
+    "lastCommitAt": "2026-10-16T09:42:02Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

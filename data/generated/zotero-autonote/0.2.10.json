@@ -1,0 +1,399 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-autonote",
+ "repo": "tianlanvera/zotero-autonote",
+ "version": "0.2.10",
+ "tag": "v0.2.10",
+ "releaseAuthor": "tianlanvera",
+ "publishedAt": "2026-10-13T05:35:29Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-autonote-0.2.10.xpi",
+  "url": "https://github.com/tianlanvera/zotero-autonote/releases/download/v0.2.10/zotero-autonote-0.2.10.xpi",
+  "size": 8309,
+  "sha256": "5deafb7a4fae4f2f2e0fb9bc62bb8c4a967ebcfb2f6ad7e3db46d76ff274e188",
+  "githubAssetId": 636012607,
+  "uploader": "tianlanvera",
+  "uploadedAt": "2026-10-13T05:35:22Z",
+  "fetchedAt": "2026-10-18T11:19:25.469Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-autonote@example.com",
+  "name": "Zotero AutoNote",
+  "version": "0.2.10",
+  "description": "Automatically creates AI notes for Zotero items with PDFs, with manual generation for any regular item.",
+  "homepageUrl": "https://github.com/tianlanvera/zotero-autonote",
+  "updateUrl": "https://raw.githubusercontent.com/tianlanvera/zotero-autonote/main/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "autonote.js",
+   "size": 19585,
+   "sha256": "02b5df3e1149bc5818876608ef5e8b5fea4f97f66420474474bb0af7ceddab10"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 745,
+   "sha256": "57322fd9a661e67d3e4d45ae7aed50ba95d75702c39780d7be749b70e07dd2a0"
+  },
+  {
+   "path": "icon.svg",
+   "size": 277,
+   "sha256": "765767915222368b59d58c179051cecc8d768cf532e07e50a99d694ffa851d67"
+  },
+  {
+   "path": "manifest.json",
+   "size": 622,
+   "sha256": "490f663b9bb47aa1e97cf8cf07cf0d8960c0f167537b53538d9689a1349f9561"
+  },
+  {
+   "path": "preferences.css",
+   "size": 215,
+   "sha256": "551f38e5f105060db6d2e81529b185853c1810fb2f154ee1efd0f5cd726d9ad3"
+  },
+  {
+   "path": "preferences.js",
+   "size": 49,
+   "sha256": "ce783b71256393068c2d2edf41ed7315557690fcbe0e869503ef30eecbbda425"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 2083,
+   "sha256": "6f75dadd7456d8270020d67d98bd07a018069b61833ebf6d6d6e7496733ba45e"
+  },
+  {
+   "path": "prefs.js",
+   "size": 807,
+   "sha256": "6d5d572fbd5654859ec374d01781c9a81bcacaf9d2862bb440dc61bc5c28e9c8"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.8.0",
+  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "input": {
+   "slug": "zotero-autonote",
+   "version": "0.2.10",
+   "sha256": "5deafb7a4fae4f2f2e0fb9bc62bb8c4a967ebcfb2f6ad7e3db46d76ff274e188"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "preferences.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 23269,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "autonote.js",
+       "line": 466,
+       "column": 25,
+       "snippet": "let response = await fetch(endpoint, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-autonote.endpoint\", \"https://api.deepseek.com/chat/completions\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 44,
+       "snippet": "pref(\"extensions.zotero-autonote.endpoint\", \"https://api.deepseek.com/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "endpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "autonote.js",
+       "line": 461,
+       "column": 19,
+       "snippet": "let endpoint = this.getPref(\"endpoint\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero-autonote.endpoint",
+     "defaultValue": "https://api.deepseek.com/chat/completions",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 13,
+       "column": 58,
+       "snippet": "<html:input id=\"zotero-autonote-endpoint\" type=\"text\" preference=\"extensions.zotero-autonote.endpoint\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 2,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-autonote.endpoint\", \"https://api.deepseek.com/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.09.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "autonote.js",
+      "line": 133,
+      "column": 9,
+      "snippet": "if (!this.getPref(\"apiKey\")) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "autonote.js",
+      "line": 314,
+      "column": 17,
+      "snippet": "let apiKey = this.getPref(\"apiKey\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "autonote.js",
+      "line": 462,
+      "column": 17,
+      "snippet": "let apiKey = this.getPref(\"apiKey\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 3,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-autonote.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "apiKey",
+      "extensions.zotero-autonote.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/tianlanvera/zotero-autonote/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/tianlanvera/zotero-autonote/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-18T11:19:25.469Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the tianlanvera account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.6.1-preview",
+  "computedAt": "2026-10-18T11:19:25.469Z",
+  "appliesTo": {
+   "slug": "zotero-autonote",
+   "version": "0.2.10",
+   "sha256": "5deafb7a4fae4f2f2e0fb9bc62bb8c4a967ebcfb2f6ad7e3db46d76ff274e188"
+  },
+  "inputs": {
+   "analyzerVersion": "0.8.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.09.13",
+   "currentZotero": "10.0.6",
+   "inputHash": "245136038f5ac99a8d448f3988eddebe09ba7a1fa7dfa3f838d2aed1c49c2554"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-13T05:35:29Z",
+    "lastCommitAt": "2026-10-13T05:37:56Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
