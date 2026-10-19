@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "slug": "zotero-assistente-ia",
-  "version": "0.8.7",
-  "sha256": "95b6a1e85a738109897d78e161fb9378f7bc6014ab20c51187476e87c22e53da",
-  "codeKey": "108359b039f9",
-  "reviewedAt": "2026-10-16",
+  "version": "0.9.1",
+  "sha256": "4c7f04a1bfd0685866df9b5f911a95bd27035b6cf7ecb84ecb593eb88b4d3685",
+  "codeKey": "0c95e6983279",
+  "reviewedAt": "2026-10-19",
   "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
   "real": true,
   "concern": "low",
@@ -37,5 +37,12 @@
       "text": "// Comandos oficiais de instalação (code.claude.com/docs/en/setup). Fixos: nunca vêm de fora."
     },
     "notes": "Call path: Settings button zia-claude-install (preferences.js:160) -> installClaude() (preferences.js:660) or chat panel button chat.claudeSetup (chatview.js:1863 -> _setupClaude, 2033). Both first show Services.prompt.confirm with prefs.claude.installConfirm: 'A window will open that installs Claude Code from Anthropic's official site, if it is not installed yet, and then opens the sign in...'. Then core.openClaudeSetup() (zoteroia.js:700) first looks for an existing claude executable, writes claude-code-setup.cmd / .command into the plugin work dir via claudeSetupScript (zoteroia.js:646), and opens it in cmd (start) or Terminal (open -a Terminal). Script only runs the installer if the claude binary is missing (Unix: 'if [ ! -x \"$CLAUDE_EXE\" ]; then ... curl ... | bash'; Windows: 'powershell -NoProfile -ExecutionPolicy Bypass -Command \"irm ... | iex\"'). Commands are constants, not from outside. Linux: openClaudeSetup returns opened:false, no download. The same strings are also shown to the user as a manual alternative (claudeInstallCommand, preferences.js:59-60). No hash/signature check by the plugin; the installer itself is Anthropic's. The confirm dialog names Claude Code and 'official site' but not the claude.ai address; I rate asks-first. Not a fork of a reviewed plugin; no existing review compared."
-  }
+  },
+  "alsoAppliesTo": [
+    {
+      "version": "0.8.7",
+      "sha256": "95b6a1e85a738109897d78e161fb9378f7bc6014ab20c51187476e87c22e53da",
+      "how": "earlier release reviewed on 2026-10-16; the same install commands and confirmation dialogs"
+    }
+  ]
 }
