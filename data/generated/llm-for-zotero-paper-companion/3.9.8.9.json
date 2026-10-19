@@ -823,8 +823,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "llm-for-zotero-paper-companion",
    "version": "3.9.8.9",
@@ -1447,56 +1447,125 @@
      "files": [
       "content/scripts/llmforzotero.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "fflate",
      "files": [
       "content/scripts/llmforzotero.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "highlight.js",
      "files": [
       "content/scripts/llmforzotero.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 84276,
+       "snippet": "deprecated(\"10.7.0\", \"Please use highlight(code, options) instead.\\nhttps://github.com/highlightjs/highlight.js/issues/2277\");"
+      },
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 84675,
+       "snippet": "console.warn(\"https://github.com/highlightjs/highlight.js/wiki/security\");"
+      }
+     ]
     },
     {
      "name": "katex",
      "files": [
       "content/scripts/llmforzotero.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
     },
     {
      "name": "marked",
      "files": [
       "content/scripts/llmforzotero.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 90672,
+       "snippet": "if (n.message += `"
+      }
+     ]
     },
     {
      "name": "mermaid",
      "files": [
       "content/vendor/mermaid/mermaid.min.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "release"
     },
     {
      "name": "parse5",
      "files": [
       "content/scripts/llmforzotero.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 97115,
+       "snippet": "QUIRKS_MODE_SYSTEM_ID = \"http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd\";"
+      }
+     ]
+    },
+    {
+     "name": "vditor",
+     "files": [
+      "content/vendor/mermaid/mermaid.min.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
     },
     {
      "name": "zotero-plugin-toolkit",
      "files": [
       "content/scripts/llmforzotero.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 258204,
+       "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);"
+      },
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 258207,
+       "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v2, true);"
+      },
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 258240,
+       "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);"
+      },
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 258666,
+       "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);"
+      },
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 258666,
+       "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);"
+      }
+     ]
     }
    ]
   },
@@ -2530,8 +2599,6 @@
      "usage": "request",
      "inVendoredCode": false,
      "libraries": [
-      "highlight.js",
-      "marked",
       "mermaid"
      ],
      "occurrences": 18,
@@ -2582,7 +2649,7 @@
        "line": 84276,
        "column": 33,
        "snippet": "deprecated(\"10.7.0\", \"Please use highlight(code, options) instead.\\nhttps://github.com/highlightjs/highlight.js/issues/2277\");",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -2590,7 +2657,7 @@
        "line": 84675,
        "column": 27,
        "snippet": "console.warn(\"https://github.com/highlightjs/highlight.js/wiki/security\");",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -2598,7 +2665,7 @@
        "line": 90672,
        "column": 29,
        "snippet": "if (n.message += `",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -2830,10 +2897,7 @@
      "category": "unknown",
      "flags": [],
      "usage": "unknown",
-     "inVendoredCode": true,
-     "libraries": [
-      "parse5"
-     ],
+     "inVendoredCode": false,
      "occurrences": 1,
      "evidence": [
       {
@@ -2842,7 +2906,7 @@
        "line": 97115,
        "column": 30,
        "snippet": "QUIRKS_MODE_SYSTEM_ID = \"http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd\";",
-       "inVendoredCode": true
+       "inVendoredCode": false
       }
      ]
     }
@@ -3408,13 +3472,14 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "borrowed-identity",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "e764face426a",
     "evidence": [
      {
       "kind": "code",
@@ -3444,9 +3509,7 @@
     "id": "clipboard",
     "occurrences": 15,
     "inVendoredCodeOnly": false,
-    "libraries": [
-     "zotero-plugin-toolkit"
-    ],
+    "codeKey": "0b9290598276",
     "evidence": [
      {
       "kind": "code",
@@ -3518,7 +3581,7 @@
       "line": 258666,
       "column": 49,
       "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
-      "inVendoredCode": true
+      "inVendoredCode": false
      },
      {
       "kind": "code",
@@ -3526,7 +3589,7 @@
       "line": 258666,
       "column": 95,
       "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
-      "inVendoredCode": true
+      "inVendoredCode": false
      }
     ],
     "details": {
@@ -3540,9 +3603,7 @@
     "id": "credential-storage",
     "occurrences": 11,
     "inVendoredCodeOnly": false,
-    "libraries": [
-     "zotero-plugin-toolkit"
-    ],
+    "codeKey": "d729003527e3",
     "evidence": [
      {
       "kind": "code",
@@ -3598,7 +3659,7 @@
       "line": 258204,
       "column": 13,
       "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);",
-      "inVendoredCode": true
+      "inVendoredCode": false
      },
      {
       "kind": "code",
@@ -3606,7 +3667,7 @@
       "line": 258207,
       "column": 6,
       "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v2, true);",
-      "inVendoredCode": true
+      "inVendoredCode": false
      },
      {
       "kind": "code",
@@ -3645,6 +3706,7 @@
     "id": "db-write",
     "occurrences": 546,
     "inVendoredCodeOnly": false,
+    "codeKey": "7cdad7ed21ca",
     "evidence": [
      {
       "kind": "code",
@@ -3756,6 +3818,7 @@
     "id": "download-exec",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "7d89b6b49bd8",
     "evidence": [
      {
       "kind": "code",
@@ -3788,9 +3851,9 @@
     "occurrences": 5,
     "inVendoredCodeOnly": false,
     "libraries": [
-     "mermaid",
-     "zotero-plugin-toolkit"
+     "mermaid"
     ],
+    "codeKey": "6e7af361bb90",
     "evidence": [
      {
       "kind": "code",
@@ -3814,7 +3877,7 @@
       "line": 258240,
       "column": 24,
       "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);",
-      "inVendoredCode": true
+      "inVendoredCode": false
      },
      {
       "kind": "code",
@@ -3846,9 +3909,7 @@
     "id": "filesystem",
     "occurrences": 40,
     "inVendoredCodeOnly": false,
-    "libraries": [
-     "zotero-plugin-toolkit"
-    ],
+    "codeKey": "f4cda59aa954",
     "evidence": [
      {
       "kind": "code",
@@ -3947,6 +4008,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "adb1b436c0a9",
     "evidence": [
      {
       "kind": "code",
@@ -3971,6 +4033,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "99e69161fe8b",
     "evidence": [
      {
       "kind": "code",
@@ -3992,6 +4055,7 @@
     "id": "local-http-server",
     "occurrences": 5,
     "inVendoredCodeOnly": false,
+    "codeKey": "6e311e0d95e9",
     "evidence": [
      {
       "kind": "code",
@@ -4047,6 +4111,7 @@
     "id": "process-launch",
     "occurrences": 24,
     "inVendoredCodeOnly": false,
+    "codeKey": "ab4adbde24f6",
     "evidence": [
      {
       "kind": "code",
@@ -4155,6 +4220,7 @@
     "id": "reused-app-login",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "463d24d0aba6",
     "evidence": [
      {
       "kind": "code",
@@ -4175,6 +4241,7 @@
     "id": "runs-sent-code",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "ec7898be1984",
     "evidence": [
      {
       "kind": "code",
@@ -4223,6 +4290,7 @@
     "id": "server-edits-library",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "22b45ec35c5b",
     "evidence": [
      {
       "kind": "code",
@@ -4268,19 +4336,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "llm-for-zotero-paper-companion",
    "version": "3.9.8.9",
    "sha256": "e6a4b1c45ecad99108e0ef13892d8f7f26258f6d8eddbf6281c922203cd04ba1"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "9fffec5cfff1b08d26871745513e91fea5954ffbbb316038fee72e51aa121ecb"
+   "inputHash": "cb97f9d4bf91ed2929f69093656f5b0267a5131a00389d42f718afcc998858f4"
   },
   "facets": {
    "sourceTransparency": {
@@ -4402,16 +4470,10 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "From yilewang/llm-for-zotero on GitHub; not checked against a fingerprint written into the plugin"
-     },
-     {
       "id": "runs-sent-code",
-      "label": "Runs commands its AI assistant writes, with full access to your computer",
+      "label": "Its AI agent can run commands on your computer without asking you",
       "concern": "high",
-      "detail": "It can run without showing you the code first"
+      "detail": "Commands run as you, so they can read and change any of your files and start other programs."
      },
      {
       "id": "borrowed-identity",
@@ -4424,6 +4486,12 @@
       "label": "Keeps its own tables in Zotero's database",
       "concern": "medium",
       "detail": "Tables: llm_for_zotero_agent_coverage, llm_for_zotero_agent_run_events, llm_for_zotero_attachment_refs, llm_for_zotero_conversation_fork_links, llm_for_zotero_conversation_registry and 3 more"
+     },
+     {
+      "id": "download-exec",
+      "label": "Downloads and runs Python and PDF tools the first time you ask about a figure; someone other than its developer can change what runs at any time",
+      "concern": "medium",
+      "detail": "The file belongs to yilewang, the developer of the original llm-for-zotero, not this plugin's developer: they can replace it at any time, and nothing checks it before it runs, and what they put there runs on your computer. The first time you ask about a figure, it downloads a 265–491 MB bundle of Python and the Poppler PDF tools from the original llm-for-zotero's GitHub release and runs it, without asking; the README doesn't mention it. What's there now is standard software: we checked the macOS (Apple silicon) bundle, and every file is from conda-forge."
      },
      {
       "id": "link-installs-addons",
@@ -4491,12 +4559,12 @@
      "CAP-BORROWED-IDENTITY",
      "CAP-MINOR",
      "CAP-DB-WRITE-OWN",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-LINK-INSTALL",
      "CAP-LINK-CODE",
      "CAP-AGENT-FEWER-PROMPTS",
      "CAP-REUSED-APP-LOGIN",
-     "CAP-SENT-CODE-UNASKED"
+     "CAP-SENT-CODE-UNASKED",
+     "CAP-DOWNLOAD-EXEC-OTHER"
     ]
    },
    "requirements": {
@@ -4541,8 +4609,7 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it",
-    "Runs commands its AI assistant writes, with full access to your computer"
+    "Its AI agent can run commands on your computer without asking you"
    ]
   }
  }

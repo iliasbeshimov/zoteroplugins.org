@@ -117,8 +117,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-03T09:26:34.166Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-codex--haohaomin",
    "version": "0.8.3",
@@ -324,13 +324,14 @@
     }
    ],
    "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "clipboard",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "d31beae17977",
     "evidence": [
      {
       "kind": "code",
@@ -359,6 +360,7 @@
     "id": "download-exec",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "05b29b0e95c1",
     "evidence": [
      {
       "kind": "code",
@@ -379,6 +381,7 @@
     "id": "enables-local-api",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "28832e76f2e2",
     "evidence": [
      {
       "kind": "code",
@@ -399,6 +402,7 @@
     "id": "filesystem",
     "occurrences": 39,
     "inVendoredCodeOnly": false,
+    "codeKey": "5eb38291dd06",
     "evidence": [
      {
       "kind": "code",
@@ -493,6 +497,7 @@
     "id": "local-http-server",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "1654478538a5",
     "evidence": [
      {
       "kind": "code",
@@ -516,6 +521,7 @@
     "id": "process-launch",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "84535070adcd",
     "evidence": [
      {
       "kind": "code",
@@ -582,19 +588,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-14T08:56:17.192Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-codex--haohaomin",
    "version": "0.8.3",
    "sha256": "b8786228c67598866bfbaaa67e698860308020e742f98bc3c53d73a781e45702"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "2e8546991ded1eec73533d7b2de940fd776b481d35736954ccc6109bcfcdc966"
+   "inputHash": "293a0034a6ddf28d5150aeb43722f3b6bf4a1d6dde52fac61eed31b08db545b2"
   },
   "facets": {
    "sourceTransparency": {
@@ -642,9 +648,9 @@
     "badges": [
      {
       "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "Checked only against a checksum from the same place, which catches a broken download but not a replaced one"
+      "label": "Downloads and runs its own server when Zotero starts (a setting, on by default); its developer can change what runs at any time",
+      "concern": "medium",
+      "detail": "Its developer can replace the file at any time without releasing a new version, and the only check is a checksum from the same place, which a replaced file passes too, so our check of the plugin doesn't cover what runs. When Zotero starts (a setting, on by default), it downloads its own server (26–72 MB, with Node.js if you don't have it) from the project's GitHub release and runs it, as the README says."
      },
      {
       "id": "process-launch",
@@ -673,11 +679,11 @@
       "concern": "none"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-DEVELOPER"
     ]
    },
    "requirements": {
@@ -716,13 +722,14 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it"
+    "Downloads and runs its own server when Zotero starts (a setting, on by default); its developer can change what runs at any time",
+    "Launches programs on your computer"
    ]
   }
  }

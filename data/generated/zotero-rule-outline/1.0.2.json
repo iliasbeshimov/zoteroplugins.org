@@ -1032,8 +1032,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-07T10:31:21.613Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-rule-outline",
    "version": "1.0.2",
@@ -1840,14 +1840,34 @@
     "files": []
    },
    "suspiciousUnicode": [],
-   "vendoredLibraries": []
+   "vendoredLibraries": [
+    {
+     "name": "pdf-lib",
+     "files": [
+      "content/engine.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
+    },
+    {
+     "name": "pdfjs-dist",
+     "files": [
+      "content/engine.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
+    }
+   ]
   },
   "network": {
    "apis": [
     {
      "api": "fetch",
      "occurrences": 12,
-     "inVendoredCodeOnly": false,
+     "inVendoredCodeOnly": true,
+     "libraries": [
+      "pdfjs-dist"
+     ],
      "evidence": [
       {
        "kind": "code",
@@ -1855,7 +1875,7 @@
        "line": 2,
        "column": 25651,
        "snippet": "rray(r[s]);n.set(a,i),i+=a.byteLength}return n}async function _f(r){let e=await fetch(r);if(!e.ok)throw new Error(`Failed to fetch file \"${r}\" with \"${e.statusText}\".`);return new Uint8Array(await e.a",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -1863,7 +1883,7 @@
        "line": 3,
        "column": 7156,
        "snippet": "\"function\"&&r instanceof Request||typeof URL==\"function\"&&r instanceof URL)&&(r=fetch(r));let{instance:t,module:n}=await tE(await r,e);return ow(t,n)}function iE(r,e,t,n,i,s,a){a=a!==1?0:a;let c=t/i,l",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -1871,7 +1891,7 @@
        "line": 3,
        "column": 34560,
        "snippet": "rl,l=\"\",h,u;if(n||i){try{l=new URL(\".\",c).href}catch{}h=async Te=>{var bt=await fetch(Te,{credentials:\"same-origin\"});if(bt.ok)return bt.arrayBuffer();throw new Error(bt.status+\" : \"+bt.url)}}var f=co",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -1879,7 +1899,7 @@
        "line": 3,
        "column": 59526,
        "snippet": "rl,l=\"\",h,u;if(n||i){try{l=new URL(\".\",c).href}catch{}h=async ae=>{var ge=await fetch(ae,{credentials:\"same-origin\"});if(ge.ok)return ge.arrayBuffer();throw new Error(ge.status+\" : \"+ge.url)}}var f=co",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -1887,7 +1907,7 @@
        "line": 55,
        "column": 21697,
        "snippet": "/this.PDF};async function eu(r,e=\"text\"){if(Oh(r,document.baseURI)){let t=await fetch(r);if(!t.ok)throw new Error(t.statusText);switch(e){case\"arraybuffer\":return t.arrayBuffer();case\"blob\":return t.b",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -1895,14 +1915,17 @@
        "line": 56,
        "column": 182737,
        "snippet": "ted range response-origin \"${r}\" to match \"${e}\".`)}function DA(r,e,t,n){return fetch(r,{method:\"GET\",headers:e,signal:n.signal,mode:\"cors\",credentials:t?\"include\":\"same-origin\",redirect:\"follow\"})}fu",
-       "inVendoredCode": false
+       "inVendoredCode": true
       }
      ]
     },
     {
      "api": "xhr",
      "occurrences": 3,
-     "inVendoredCodeOnly": false,
+     "inVendoredCodeOnly": true,
+     "libraries": [
+      "pdfjs-dist"
+     ],
      "evidence": [
       {
        "kind": "code",
@@ -1910,7 +1933,7 @@
        "line": 3,
        "column": 19066,
        "snippet": "ZeroToOneRange(){return me(this,\"usesZeroToOneRange\",!1)}};function cw(r){let e=new XMLHttpRequest;return e.open(\"GET\",r,!1),e.responseType=\"arraybuffer\",e.send(null),e.response}var No=class r extends",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -1918,7 +1941,7 @@
        "line": 55,
        "column": 21899,
        "snippet": "b();case\"json\":return t.json()}return t.text()}return new Promise((t,n)=>{let i=new XMLHttpRequest;i.open(\"GET\",r,!0),i.responseType=e,i.onreadystatechange=()=>{if(i.readyState===XMLHttpRequest.DONE){",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -1926,7 +1949,7 @@
        "line": 56,
        "column": 185257,
        "snippet": ":/i.test(this.url),this.headers=EA(this.isHttp,e.httpHeaders)}_request(e){let t=new XMLHttpRequest,n={validateStatus:null,onHeadersReceived:e.onHeadersReceived,onDone:e.onDone,onError:e.onError,onProg",
-       "inVendoredCode": false
+       "inVendoredCode": true
       }
      ]
     }
@@ -1937,7 +1960,10 @@
      "category": "unknown",
      "flags": [],
      "usage": "unknown",
-     "inVendoredCode": false,
+     "inVendoredCode": true,
+     "libraries": [
+      "pdfjs-dist"
+     ],
      "occurrences": 2,
      "evidence": [
       {
@@ -1946,7 +1972,7 @@
        "line": 55,
        "column": 24281,
        "snippet": "L(o)}catch{try{return new URL(decodeURIComponent(o))}catch{try{return new URL(o,\"https://foo.bar\")}catch{try{return new URL(decodeURIComponent(o),\"https://foo.bar\")}catch{return null}}}}})(r);if(!n)re",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -1954,7 +1980,7 @@
        "line": 55,
        "column": 24347,
        "snippet": "urn new URL(o,\"https://foo.bar\")}catch{try{return new URL(decodeURIComponent(o),\"https://foo.bar\")}catch{return null}}}}})(r);if(!n)return e;let i=o=>{try{let c=decodeURIComponent(o);return c.includes",
-       "inVendoredCode": false
+       "inVendoredCode": true
       }
      ]
     },
@@ -1964,7 +1990,11 @@
      "provider": "GitHub",
      "flags": [],
      "usage": "unknown",
-     "inVendoredCode": false,
+     "inVendoredCode": true,
+     "libraries": [
+      "pdf-lib",
+      "pdfjs-dist"
+     ],
      "occurrences": 5,
      "evidence": [
       {
@@ -1973,7 +2003,7 @@
        "line": 1,
        "column": 81854,
        "snippet": "4-2025 Denis Pushkarev (zloirock.ru), 2025 CoreJS Company (core-js.io)\",license:\"https://github.com/zloirock/core-js/blob/v3.47.0/LICENSE\",source:\"https://github.com/zloirock/core-js\"})},7642(r,e,t){v",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -1981,7 +2011,7 @@
        "line": 1,
        "column": 81920,
        "snippet": ".io)\",license:\"https://github.com/zloirock/core-js/blob/v3.47.0/LICENSE\",source:\"https://github.com/zloirock/core-js\"})},7642(r,e,t){var n=t(6518),i=t(3440),s=t(9039),a=t(4916),o=!a(\"difference\",funct",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -1989,7 +2019,7 @@
        "line": 53,
        "column": 50175,
        "snippet": "4-2025 Denis Pushkarev (zloirock.ru), 2025 CoreJS Company (core-js.io)\",license:\"https://github.com/zloirock/core-js/blob/v3.47.0/LICENSE\",source:\"https://github.com/zloirock/core-js\"})},7642(r,e,t){v",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -1997,7 +2027,7 @@
        "line": 53,
        "column": 50241,
        "snippet": ".io)\",license:\"https://github.com/zloirock/core-js/blob/v3.47.0/LICENSE\",source:\"https://github.com/zloirock/core-js\"})},7642(r,e,t){var n=t(6518),i=t(3440),s=t(9039),a=t(4916),o=!a(\"difference\",funct",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -2005,7 +2035,7 @@
        "line": 103,
        "column": 44285,
        "snippet": "rn t++,[3,1];case 4:return[2]}})})},r.prototype.updateInfoDict=function(){var e=\"pdf-lib (https://github.com/Hopding/pdf-lib)\",t=new Date,n=this.getInfoDict();this.setProducer(e),this.setModificationD",
-       "inVendoredCode": false
+       "inVendoredCode": true
       }
      ]
     }
@@ -2020,19 +2050,23 @@
        "line": 55,
        "column": 10514,
        "snippet": "ng\"&&(t.addDefaultProtocol&&r.startsWith(\"www.\")&&r.match(/\\./g)?.length>=2&&(r=`http://${r}`),t.tryConvertEncoding))try{r=dD(r)}catch{}let n=e?URL.parse(r,e):URL.parse(r);return cD(n)?n:null}function",
-       "inVendoredCode": false
+       "inVendoredCode": true
       }
      ]
     }
    ],
    "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "dynamic-code",
     "occurrences": 3,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "pdfjs-dist"
+    ],
+    "codeKey": "5757f099e777",
     "evidence": [
      {
       "kind": "code",
@@ -2040,7 +2074,7 @@
       "line": 2,
       "column": 1942,
       "snippet": "ts=function(s){if(i){try{return n.process.getBuiltinModule(s)}catch{}try{return Function('return require(\"'+s+'\")')()}catch{}}}},9432(r,e,t){t(7594)},9433(r,e,t){var n=t(4576),i=Object.defineProperty;",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -2048,7 +2082,7 @@
       "line": 6,
       "column": 151384,
       "snippet": ".isEvalSupported&&_r.isEvalSupported){let x=new gx().compile(c,i,s);if(x)return new Function(\"src\",\"srcOffset\",\"dest\",\"destOffset\",x)}ut(\"Unable to compile PS function\");let l=s.length>>1,h=i.length>>",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -2056,7 +2090,7 @@
       "line": 55,
       "column": 2492,
       "snippet": "ts=function(s){if(i){try{return n.process.getBuiltinModule(s)}catch{}try{return Function('return require(\"'+s+'\")')()}catch{}}}},9432(r,e,t){t(5213)},9433(r,e,t){var n=t(4576),i=Object.defineProperty;",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -2104,19 +2138,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-rule-outline",
    "version": "1.0.2",
    "sha256": "1e1cb8cf25204b15234b46eb26c7704b33632c3871b5f9a05fbfcc53b901a1c9"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "6fb054c65d87e93d6709791efb2b496d6b9f417806b50e6423b7d3667c4b68ba"
+   "inputHash": "b22b74773aa51085e24965fc4f628bf760bf6582242569fb0bf733c0190807e6"
   },
   "facets": {
    "sourceTransparency": {
@@ -2138,27 +2172,19 @@
     ]
    },
    "dataSharing": {
-    "value": "unknown-endpoints",
+    "value": "bundled-library-only",
     "hosts": [],
-    "concern": "medium",
-    "label": "Uses the network; we couldn't tell where",
+    "concern": "low",
+    "label": "Network code only in bundled libraries: pdfjs-dist",
     "legalRisk": false,
     "drivers": [
-     "DS-UNKNOWN-DESTINATION"
+     "DS-LIBRARY-ONLY"
     ]
    },
    "capabilities": {
-    "badges": [
-     {
-      "id": "dynamic-code",
-      "label": "Runs code it assembles while running",
-      "concern": "low"
-     }
-    ],
-    "concern": "low",
-    "drivers": [
-     "CAP-MINOR"
-    ]
+    "badges": [],
+    "concern": "none",
+    "drivers": []
    },
    "requirements": {
     "badges": [],
@@ -2196,14 +2222,9 @@
    }
   },
   "overall": {
-   "label": "review-details",
-   "ruleId": "OV-REVIEW",
-   "drivers": [
-    "dataSharing"
-   ],
-   "reasons": [
-    "Uses the network; we couldn't tell where"
-   ]
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
   }
  }
 }

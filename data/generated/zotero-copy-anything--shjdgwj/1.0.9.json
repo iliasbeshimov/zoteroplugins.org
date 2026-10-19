@@ -103,8 +103,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-copy-anything--shjdgwj",
    "version": "1.0.9",
@@ -179,7 +179,8 @@
      "files": [
       "content/scripts/zoterocopyanything.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
     }
    ]
   },
@@ -379,7 +380,7 @@
     }
    ],
    "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
@@ -389,6 +390,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "36ebb586e3bb",
     "evidence": [
      {
       "kind": "code",
@@ -429,6 +431,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "f3a1eff10821",
     "evidence": [
      {
       "kind": "code",
@@ -460,6 +463,7 @@
     "id": "download-exec",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "3f9d64935bdc",
     "evidence": [
      {
       "kind": "code",
@@ -486,6 +490,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "be3b45094502",
     "evidence": [
      {
       "kind": "code",
@@ -509,6 +514,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "d367a1a8fceb",
     "evidence": [
      {
       "kind": "code",
@@ -607,6 +613,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "adb1b436c0a9",
     "evidence": [
      {
       "kind": "code",
@@ -631,6 +638,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "99e69161fe8b",
     "evidence": [
      {
       "kind": "code",
@@ -652,6 +660,7 @@
     "id": "process-launch",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "a77ac736a2c7",
     "evidence": [
      {
       "kind": "code",
@@ -718,19 +727,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-copy-anything--shjdgwj",
    "version": "1.0.9",
    "sha256": "090d1eeee0020854ee57f4d8237d5c32ac3b6b16924cd5e9f7a058279f855178"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "82b4da9240e5f42b35b7486c7719929b6306296f6a2a44e665b13159e3328cef"
+   "inputHash": "26562c21856f18a3103355aa62973835ec9cb5e4265292a99940e81e37a84c81"
   },
   "facets": {
    "sourceTransparency": {
@@ -778,9 +787,9 @@
     "badges": [
      {
       "id": "download-exec",
-      "label": "Downloads a program and runs it",
+      "label": "Downloads a helper program on first start and runs it when you copy attachments; someone other than its developer can change what runs at any time",
       "concern": "medium",
-      "detail": "On first start it downloads a small helper program from the original developer's gitee.com page, then runs it when you copy attachments. The README says so, but the file isn't checked, and we can't read the program itself."
+      "detail": "The file belongs to windheartyolo, the developer of the original zotero-copy-anything, not this plugin's developer: they can replace it at any time, and nothing checks it before it runs, and what they put there runs on your computer. On first start it downloads a small helper program from the original developer's gitee.com page, then runs it when you copy attachments. The README says so; we can't read the program itself."
      },
      {
       "id": "link-installs-addons",
@@ -818,7 +827,7 @@
      "CAP-LINK-INSTALL",
      "CAP-LINK-CODE",
      "CAP-PROCESS",
-     "CAP-DOWNLOAD-EXEC-REVIEWED"
+     "CAP-DOWNLOAD-EXEC-OTHER"
     ]
    },
    "requirements": {
@@ -863,7 +872,7 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it",
+    "Downloads a helper program on first start and runs it when you copy attachments; someone other than its developer can change what runs at any time",
     "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from zotero-plugin-toolkit)",
     "A zotero:// link can make it run code if you approve a prompt (from zotero-plugin-toolkit)",
     "Launches programs on your computer"

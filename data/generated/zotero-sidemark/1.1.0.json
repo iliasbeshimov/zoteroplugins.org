@@ -278,8 +278,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-sidemark",
    "version": "1.1.0",
@@ -454,32 +454,56 @@
    "suspiciousUnicode": [],
    "vendoredLibraries": [
     {
-     "name": "highlight",
+     "name": "highlight.js",
      "files": [
       "content/vendor/highlight.min.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "release"
     },
     {
      "name": "katex",
      "files": [
       "content/vendor/katex.min.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "release"
     },
     {
      "name": "marked",
      "files": [
       "content/vendor/marked.min.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "release"
     },
     {
      "name": "mermaid",
      "files": [
+      "content/vendor/katex.min.js",
+      "content/vendor/marked.min.js",
       "content/vendor/mermaid.min.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/vendor/mermaid.min.js",
+       "line": 6,
+       "snippet": "w new Error(i.status+\" \"+i.statusText);return i.text()}function PIt(i,s){return fetch(i,s).then(NIt)}function BIt(i){return(s,u)=>PIt(s,u).then(d=>new DOMParser().parseFromString(d,i))}var FIt=BIt(\"im"
+      }
+     ]
+    },
+    {
+     "name": "vditor",
+     "files": [
+      "content/vendor/highlight.min.js",
+      "content/vendor/katex.min.js",
+      "content/vendor/marked.min.js",
+      "content/vendor/mermaid.min.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
     }
    ]
   },
@@ -489,9 +513,6 @@
      "api": "fetch",
      "occurrences": 10,
      "inVendoredCodeOnly": false,
-     "libraries": [
-      "mermaid"
-     ],
      "evidence": [
       {
        "kind": "code",
@@ -531,7 +552,7 @@
        "line": 6,
        "column": 58194,
        "snippet": "w new Error(i.status+\" \"+i.statusText);return i.text()}function PIt(i,s){return fetch(i,s).then(NIt)}function BIt(i){return(s,u)=>PIt(s,u).then(d=>new DOMParser().parseFromString(d,i))}var FIt=BIt(\"im",
-       "inVendoredCode": true
+       "inVendoredCode": false
       }
      ]
     }
@@ -580,7 +601,7 @@
      "usage": "unknown",
      "inVendoredCode": true,
      "libraries": [
-      "highlight",
+      "highlight.js",
       "marked"
      ],
      "occurrences": 3,
@@ -684,13 +705,14 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "filesystem",
     "occurrences": 50,
     "inVendoredCodeOnly": false,
+    "codeKey": "fabdaac9f3bf",
     "evidence": [
      {
       "kind": "code",
@@ -821,19 +843,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-sidemark",
    "version": "1.1.0",
    "sha256": "fac6ca89828f6b2a96bac324ac67d2eb6d865c76e642527fd08320337f3eddb4"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "22eac49978ac564f9a52c8f2c262738fa3fcbc51a3794ff3863b94e0f8020784"
+   "inputHash": "7bb1be3627b1492f23443c33f431fb093d4cc7316d4d305cc6e003bde2c82923"
   },
   "facets": {
    "sourceTransparency": {

@@ -332,8 +332,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-07T10:31:21.613Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "papertranslate-zotero-plugin",
    "version": "0.5.2",
@@ -427,11 +427,20 @@
    "suspiciousUnicode": [],
    "vendoredLibraries": [
     {
+     "name": "dompurify",
+     "files": [
+      "chrome/content/vendor/dompurify/purify.min.js"
+     ],
+     "identifiedBy": "file-name",
+     "match": "release"
+    },
+    {
      "name": "marked",
      "files": [
       "chrome/content/vendor/marked/marked.umd.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "release"
     },
     {
      "name": "mathjax",
@@ -439,21 +448,35 @@
       "chrome/content/modules/ui/mathJax.mjs",
       "chrome/content/vendor/mathjax/es5/ui/safe.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "not-in-catalogue"
     },
     {
-     "name": "purify",
+     "name": "mermaid",
      "files": [
-      "chrome/content/vendor/dompurify/purify.min.js"
+      "chrome/content/vendor/dompurify/purify.min.js",
+      "chrome/content/vendor/marked/marked.umd.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "hash",
+     "match": "release"
     },
     {
      "name": "tex-svg-full",
      "files": [
       "chrome/content/vendor/mathjax/es5/tex-svg-full.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "not-in-catalogue"
+    },
+    {
+     "name": "vditor",
+     "files": [
+      "chrome/content/vendor/dompurify/purify.min.js",
+      "chrome/content/vendor/marked/marked.umd.js",
+      "chrome/content/vendor/mathjax/es5/tex-svg-full.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
     }
    ]
   },
@@ -894,13 +917,14 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "clipboard",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "a2e6fcf8dde3",
     "evidence": [
      {
       "kind": "code",
@@ -970,6 +994,7 @@
     "id": "filesystem",
     "occurrences": 69,
     "inVendoredCodeOnly": false,
+    "codeKey": "4243e2556082",
     "evidence": [
      {
       "kind": "code",
@@ -1099,19 +1124,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "papertranslate-zotero-plugin",
    "version": "0.5.2",
    "sha256": "e79982eb3f128952a6eb8d21f2a1e04f2bd05f12fdbf019bc821a5ec87468d55"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "0b288ec9435206dc8e098e6acca70c6d47c505c829aa0df1bc168eb97184d982"
+   "inputHash": "f2011f113a1592bc678828d6ef28c54a5da03c4fdf2b868c21b96acb146c733a"
   },
   "facets": {
    "sourceTransparency": {

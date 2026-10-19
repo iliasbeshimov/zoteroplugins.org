@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "zopilot",
  "repo": "qyangcv/zopilot",
  "repoName": "qyangcv/zopilot",
@@ -132,19 +132,19 @@
  "addonIdSharedWith": [],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zopilot",
    "version": "0.8.3",
    "sha256": "9901e7cfb4b3365b2dc2c009ddd77d0acb4dc18f31ab8c7f9400164da294a370"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "00cbbec3aba4898050d56598bdce1f16f160ddd134924b9fb8fb3603f3afca0f"
+   "inputHash": "42758e135ad13e914c603773ff7eab3e764bc86b668cab95d78126eb7edd0afd"
   },
   "facets": {
    "sourceTransparency": {
@@ -194,7 +194,6 @@
        "api.moonshot.cn",
        "api.xiaomimimo.com",
        "api.z.ai",
-       "auth.openai.com",
        "dashscope.aliyuncs.com",
        "openrouter.ai"
       ]
@@ -217,9 +216,9 @@
     "badges": [
      {
       "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "From qyangcv/zopilot on GitHub; checked only against a checksum from the same place, which catches a broken download but not a replaced one"
+      "label": "Downloads and runs a PDF helper program when you press Install under Dependencies; its developer can change what runs at any time",
+      "concern": "medium",
+      "detail": "Its developer can replace the file at any time without releasing a new version, and the only check is a checksum from the same place, which a replaced file passes too, so our check of the plugin doesn't cover what runs. When you press Install under Dependencies in its settings, it downloads a 97–128 MB PDF helper program from the developer's GitHub release and runs it. We can't read the program itself. We reviewed version 0.8.0; this release has the same code."
      },
      {
       "id": "process-launch",
@@ -252,11 +251,11 @@
       "concern": "none"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-DEVELOPER"
     ]
    },
    "requirements": {
@@ -295,13 +294,14 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it"
+    "Downloads and runs a PDF helper program when you press Install under Dependencies; its developer can change what runs at any time",
+    "Launches programs on your computer"
    ]
   }
  },
@@ -321,6 +321,7 @@
    "MiniMax",
    "Moonshot (Kimi)",
    "OpenAI",
+   "OpenAI sign-in",
    "OpenRouter",
    "Xiaomi MiMo",
    "Zhipu (GLM)"

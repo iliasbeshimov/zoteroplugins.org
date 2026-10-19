@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "z-transplit",
  "repo": "liozhang/z-transplit",
  "repoName": "Liozhang/z-transplit",
@@ -109,7 +109,7 @@
     "supports": [
      10
     ],
-    "label": "high-concern",
+    "label": "review-details",
     "releaseFile": "z-transplit/1.11.0.json"
    }
   ],
@@ -141,19 +141,19 @@
  "addonIdSharedWith": [],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "z-transplit",
    "version": "1.11.0",
    "sha256": "aefb0c4ecad94f69c4f55a678e48ef9989f3e1294e7946e59f071fef09e8c3ff"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "3e86de703926b7cc5f468919ee8ab48cac7c9a74709aaa12331c17e966fad712"
+   "inputHash": "8f2da49e72fd8dc035a1c58bfdaae68ec1178ca873ff2452a0aca4e4256a7ff2"
   },
   "facets": {
    "sourceTransparency": {
@@ -214,12 +214,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "From opendataloader-project/opendataloader-pdf on GitHub; checked only against a checksum from the same place, which catches a broken download but not a replaced one"
-     },
-     {
       "id": "process-launch",
       "label": "Launches programs on your computer",
       "concern": "medium",
@@ -236,6 +230,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads and runs the OpenDataLoader PDF parser the first time you translate a PDF",
+      "concern": "low",
+      "detail": "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. The download comes from the OpenDataLoader project, which makes opendataloader-pdf. The first time you translate a PDF's full text, it downloads the OpenDataLoader PDF parser (a 24 MB Java program), usually from a PyPI mirror in China, and runs it, showing a progress window but not asking; the README names OpenDataLoader but not the download. We checked that its fingerprint matches the parser in the project's own release. If you don't have Java, it asks first, then downloads a Java runtime from Adoptium, its maker. We reviewed version 1.11.0; this release has the same code."
+     },
+     {
       "id": "dynamic-code",
       "label": "Runs code it assembles while running",
       "concern": "low"
@@ -246,11 +246,11 @@
       "concern": "low"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-FIXED"
     ]
    },
    "requirements": {
@@ -289,13 +289,13 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it"
+    "Launches programs on your computer"
    ]
   }
  },

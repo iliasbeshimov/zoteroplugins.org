@@ -858,8 +858,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "papermachines",
    "version": "0.4.11",
@@ -1270,7 +1270,15 @@
       "chrome/content/papermachines/processors/support/d3.js",
       "chrome/content/papermachines/processors/support/d3.v2.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "chrome/content/papermachines/processors/support/d3.v2.js",
+       "line": 489,
+       "snippet": "var req = new XMLHttpRequest;"
+      }
+     ]
     }
    ]
   },
@@ -1294,10 +1302,7 @@
     {
      "api": "xhr",
      "occurrences": 1,
-     "inVendoredCodeOnly": true,
-     "libraries": [
-      "d3"
-     ],
+     "inVendoredCodeOnly": false,
      "evidence": [
       {
        "kind": "code",
@@ -1305,7 +1310,7 @@
        "line": 489,
        "column": 12,
        "snippet": "var req = new XMLHttpRequest;",
-       "inVendoredCode": true
+       "inVendoredCode": false
       }
      ]
     },
@@ -1402,7 +1407,9 @@
      "host": "spotlight.dbpedia.org",
      "category": "scholarly-api",
      "provider": "DBpedia Spotlight",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -1448,7 +1455,9 @@
      "host": "ws.geonames.org",
      "category": "scholarly-api",
      "provider": "GeoNames",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -1488,7 +1497,7 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
@@ -1526,6 +1535,7 @@
     "libraries": [
      "d3"
     ],
+    "codeKey": "98584d2a01de",
     "evidence": [
      {
       "kind": "code",
@@ -1546,6 +1556,7 @@
     "id": "filesystem",
     "occurrences": 26,
     "inVendoredCodeOnly": false,
+    "codeKey": "a4c2890528be",
     "evidence": [
      {
       "kind": "code",
@@ -1641,6 +1652,7 @@
     "id": "installs-translators",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "5072dc3e8b66",
     "evidence": [
      {
       "kind": "code",
@@ -1661,6 +1673,7 @@
     "id": "own-database",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "b524ed716c5c",
     "evidence": [
      {
       "kind": "code",
@@ -1681,6 +1694,7 @@
     "id": "process-launch",
     "occurrences": 7,
     "inVendoredCodeOnly": false,
+    "codeKey": "3a6063e42551",
     "evidence": [
      {
       "kind": "code",
@@ -1812,19 +1826,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "papermachines",
    "version": "0.4.11",
    "sha256": "4548f667d3238be971b9ea1a87166677b7c878e7c8c205de098575ead55d3690"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "9fa9ab93d58d2bb9b4035e34b85aac8d5126f84684f23bdceeabc87fc9e77ff0"
+   "inputHash": "451c67e98e998759d2657295319cc5ce53e76a605a0ef8c49a4da14022199dba"
   },
   "facets": {
    "sourceTransparency": {
@@ -1861,6 +1875,10 @@
        "dbpedia.org",
        "jstor.org",
        "sws.geonames.org"
+      ],
+      "unencrypted": [
+       "spotlight.dbpedia.org",
+       "ws.geonames.org"
       ]
      }
     ],

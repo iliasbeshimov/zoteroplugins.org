@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "colorful-bionic--joydddd",
  "repo": "joydddd/colorful-bionic",
  "repoName": "joydddd/Colorful-Bionic",
@@ -130,19 +130,19 @@
  ],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "colorful-bionic--joydddd",
    "version": "1.1.0",
    "sha256": "eae62daaa1648bc9dbbca332628376df6511a1d6f7d0015ef8e1070044667b5a"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "d843bae6b15904471dfd70b2de9beea51c1b60dc320ba79fabf266f37359eaec"
+   "inputHash": "52173690b4441de6f345fa92ea2e85377815a6773ef2b63dd6680936b9790c2a"
   },
   "facets": {
    "sourceTransparency": {
@@ -180,7 +180,6 @@
       "label": "A zotero:// link (a web page can open one) can make it install add-ons without asking you",
       "concern": "medium",
       "libraries": [
-       "pdf.js",
        "zotero-plugin-toolkit"
       ],
       "detail": "zotero://plugin"
@@ -190,14 +189,24 @@
       "label": "A zotero:// link can make it run code if you approve a prompt",
       "concern": "medium",
       "libraries": [
-       "pdf.js",
        "zotero-plugin-toolkit"
       ],
       "detail": "zotero://ztoolkit-debug"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "dynamic-code",
+      "label": "Runs code it assembles while running",
+      "concern": "low"
      }
     ],
     "concern": "medium",
     "drivers": [
+     "CAP-MINOR",
      "CAP-LINK-INSTALL",
      "CAP-LINK-CODE"
     ]
@@ -244,8 +253,8 @@
     "capabilities"
    ],
    "reasons": [
-    "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from pdf.js, zotero-plugin-toolkit)",
-    "A zotero:// link can make it run code if you approve a prompt (from pdf.js, zotero-plugin-toolkit)"
+    "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from zotero-plugin-toolkit)",
+    "A zotero:// link can make it run code if you approve a prompt (from zotero-plugin-toolkit)"
    ]
   }
  },
@@ -261,7 +270,7 @@
  "requirementsHints": {
   "aiServices": [],
   "otherServices": [],
-  "storesCredentials": false,
+  "storesCredentials": true,
   "localModels": false,
   "launchesPrograms": false
  },

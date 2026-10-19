@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "aidea-zotero",
  "repo": "visterainer/aidea-zotero",
  "repoName": "Visterainer/aidea-zotero",
@@ -157,19 +157,19 @@
  ],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "aidea-zotero",
    "version": "3.6.1",
    "sha256": "8c4531880f78c7365de3abaa0ce9911c619e423e7529d26d0b789d5db2c63173"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "ab1a05eaae94504ff0bcc319d4849927fb2e7adc206f2b0403075d623df006ce"
+   "inputHash": "8e2dda7ad8001bef36fca4ab1237e81675375430d549a4fc7654dc4d06c99dcf"
   },
   "facets": {
    "sourceTransparency": {
@@ -242,12 +242,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "Not checked against a fingerprint written into the plugin"
-     },
-     {
       "id": "package-run",
       "label": "Installs and runs npm or PyPI packages without a fixed version",
       "concern": "high",
@@ -311,6 +305,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads and runs a Python installer when you press Install Environment",
+      "concern": "low",
+      "detail": "It comes straight from Anaconda and Astral, who make the Miniconda and uv installers, over an encrypted connection, as it would if you installed it yourself. When you press Install Environment, it downloads the Miniconda Python installer (or, if that fails, uv's install script) and runs it, as its README says. It takes the latest of each, and the uv script runs straight from the web. We reviewed version 3.6.0; this release has the same code."
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -327,12 +327,12 @@
      "CAP-CHANGES-SETTINGS",
      "CAP-MINOR",
      "CAP-DB-WRITE-OWN",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-LINK-INSTALL",
      "CAP-LINK-CODE",
      "CAP-PACKAGE-UNPINNED",
      "CAP-PROCESS",
-     "CAP-REUSED-APP-LOGIN"
+     "CAP-REUSED-APP-LOGIN",
+     "CAP-DOWNLOAD-EXEC-MAKER"
     ]
    },
    "requirements": {
@@ -377,7 +377,6 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it",
     "Installs and runs npm or PyPI packages without a fixed version"
    ]
   }

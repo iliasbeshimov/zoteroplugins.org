@@ -103,8 +103,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-pdf-translate--sasaju",
    "version": "1.1.0-23",
@@ -169,7 +169,68 @@
     "files": []
    },
    "suspiciousUnicode": [],
-   "vendoredLibraries": []
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "chrome/content/scripts/zoteropdftranslate.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "chrome/content/scripts/zoteropdftranslate.js",
+       "line": 5,
+       "snippet": "\"extensions.zotero.ZoteroPDFTranslate\",addonInstance:\"PDFTranslate\",releasepage:\"https://github.com/windingwind/zotero-pdf-translate/releases/latest/download/zotero-pdf-translate.xpi\",updateJSON:\"http"
+      },
+      {
+       "file": "chrome/content/scripts/zoteropdftranslate.js",
+       "line": 5,
+       "snippet": "ero-pdf-translate/releases/latest/download/zotero-pdf-translate.xpi\",updateJSON:\"https://raw.githubusercontent.com/windingwind/zotero-pdf-translate/main/update.json\"}});function g(t){return Zotero.Pre"
+      },
+      {
+       "file": "chrome/content/scripts/zoteropdftranslate.js",
+       "line": 154,
+       "snippet": "terfaces.nsIClipboard.kGlobalClipboard)}catch(e){if(this.filePath&&Zotero.isMac)Zotero.Utilities.Internal.exec(\"/usr/bin/osascript\",[\"-e\",`set the clipboard to POSIX file \"${this.filePath}\"`]);else th"
+      },
+      {
+       "file": "chrome/content/scripts/zoteropdftranslate.js",
+       "line": 205,
+       "snippet": "-10-12`,o=`POST&%2F&${encodeURIComponent(r)}`,l=ie(await qa(o,`${n}&`)),u=await Zotero.HTTP.request(\"POST\",\"https://mt.aliyuncs.com/\",{headers:{\"Content-Type\":\"application/x-www-form-urlencoded\"},body"
+      },
+      {
+       "file": "chrome/content/scripts/zoteropdftranslate.js",
+       "line": 205,
+       "snippet": "eURIComponent(r)}`,l=ie(await qa(o,`${n}&`)),u=await Zotero.HTTP.request(\"POST\",\"https://mt.aliyuncs.com/\",{headers:{\"Content-Type\":\"application/x-www-form-urlencoded\"},body:`${r}&Signature=${encodeUR"
+      },
+      {
+       "file": "chrome/content/scripts/zoteropdftranslate.js",
+       "line": 205,
+       "snippet": ".raw+s+n,!1);`${t.langfrom.split(\"-\")[0]}${t.langto.split(\"-\")[0]}`;let o=await Zotero.HTTP.request(\"GET\",`http://api.fanyi.baidu.com/api/trans/vip/translate?q=${encodeURIComponent(t.raw)}&appid=${a}&"
+      },
+      {
+       "file": "chrome/content/scripts/zoteropdftranslate.js",
+       "line": 205,
+       "snippet": ".split(\"-\")[0]}${t.langto.split(\"-\")[0]}`;let o=await Zotero.HTTP.request(\"GET\",`http://api.fanyi.baidu.com/api/trans/vip/translate?q=${encodeURIComponent(t.raw)}&appid=${a}&from=${t.langfrom.split(\"-"
+      },
+      {
+       "file": "chrome/content/scripts/zoteropdftranslate.js",
+       "line": 205,
+       "snippet": "aw+s+i+n,!1);`${t.langfrom.split(\"-\")[0]}${t.langto.split(\"-\")[0]}`;let o=await Zotero.HTTP.request(\"GET\",`http://api.fanyi.baidu.com/api/trans/vip/fieldtranslate?q=${encodeURIComponent(t.raw)}&appid="
+      },
+      {
+       "file": "chrome/content/scripts/zoteropdftranslate.js",
+       "line": 205,
+       "snippet": ".split(\"-\")[0]}${t.langto.split(\"-\")[0]}`;let o=await Zotero.HTTP.request(\"GET\",`http://api.fanyi.baidu.com/api/trans/vip/fieldtranslate?q=${encodeURIComponent(t.raw)}&appid=${a}&from=${t.langfrom.spl"
+      },
+      {
+       "file": "chrome/content/scripts/zoteropdftranslate.js",
+       "line": 205,
+       "snippet": "default:()=>Wr});var Wr,Ti=P(()=>{\"use strict\";Wr=async function(t){let e=await Zotero.HTTP.request(\"GET\",`https://cn.bing.com/dict/search?q=${encodeURIComponent(t.raw)}/`,{responseType:\"text\"});if(e?"
+      }
+     ]
+    }
+   ]
   },
   "network": {
    "apis": [
@@ -361,7 +422,9 @@
      "host": "api.fanyi.baidu.com",
      "category": "translation",
      "provider": "Baidu Translate",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 2,
@@ -388,7 +451,9 @@
      "host": "api.interpreter.caiyunai.com",
      "category": "translation",
      "provider": "Caiyun",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -407,7 +472,9 @@
      "host": "api.microsofttranslator.com",
      "category": "translation",
      "provider": "Microsoft Translator",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -426,7 +493,9 @@
      "host": "api.niutrans.com",
      "category": "translation",
      "provider": "NiuTrans",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -555,7 +624,9 @@
      "host": "capi.dict.cn",
      "category": "translation",
      "provider": "Dict.cn",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -593,7 +664,9 @@
      "host": "dict.cn",
      "category": "translation",
      "provider": "Dict.cn",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -687,7 +760,9 @@
      "host": "fanyi.youdao.com",
      "category": "translation",
      "provider": "Youdao",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -1293,13 +1368,17 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "clipboard",
     "occurrences": 6,
     "inVendoredCodeOnly": false,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "2e06b5ea9551",
     "evidence": [
      {
       "kind": "code",
@@ -1307,7 +1386,7 @@
       "line": 154,
       "column": 2598,
       "snippet": "});var Vn=L(za=>{\"use strict\";Object.defineProperty(za,\"__esModule\",{value:!0});za.ClipboardHelper=void 0;var gr=R(),dt=class{constructor(){this.filePath=\"\",this.transferable=Components.classes[\"@mozi",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -1315,7 +1394,7 @@
       "line": 154,
       "column": 2845,
       "snippet": "Components.interfaces.nsITransferable),this.clipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(e",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -1323,7 +1402,7 @@
       "line": 154,
       "column": 2891,
       "snippet": "ipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(e,a=\"text/unicode\"){let n=Components.classes[\"@",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -1339,7 +1418,7 @@
       "line": 154,
       "column": 4511,
       "snippet": "et the clipboard to POSIX file \"${this.filePath}\"`]);else throw e}return this}};za.ClipboardHelper=dt});var Zn=L(ja=>{\"use strict\";Object.defineProperty(ja,\"__esModule\",{value:!0});ja.ExtraFieldTool=v",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -1347,7 +1426,7 @@
       "line": 293,
       "column": 2546,
       "snippet": "alog=ri.DialogHelper,this.ProgressWindow=ti.ProgressWindowHelper,this.Clipboard=ni.ClipboardHelper}unregisterAll(){(0,Ca.unregister)(this)}};async function Fr(){await Promise.all([Zotero.initializatio",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -1383,7 +1462,11 @@
    {
     "id": "dynamic-code",
     "occurrences": 1,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "f58942041634",
     "evidence": [
      {
       "kind": "code",
@@ -1391,7 +1474,7 @@
       "line": 4,
       "column": 173,
       "snippet": "{if(o.run)try{let d=Object.getPrototypeOf(async function(){}).constructor;await new d(\"Zotero,window\",o.run)(i,s)}catch(d){i.debug(d),s.console.log(d)}if(o.file)try{Services.scriptloader.loadSubScript",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -1403,7 +1486,11 @@
    {
     "id": "filesystem",
     "occurrences": 2,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "13a035bbc646",
     "evidence": [
      {
       "kind": "code",
@@ -1411,7 +1498,7 @@
       "line": 154,
       "column": 3973,
       "snippet": "is.transferable.setTransferData(u,d,0),this}addFile(e){let a=Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);return a.initWithPath(e),this.transferable.ad",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -1419,7 +1506,7 @@
       "line": 154,
       "column": 4017,
       "snippet": "addFile(e){let a=Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);return a.initWithPath(e),this.transferable.addDataFlavor(\"application/x-moz-file\"),this.t",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -1436,6 +1523,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "d201f0128774",
     "evidence": [
      {
       "kind": "code",
@@ -1460,6 +1548,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "3fb6539a772f",
     "evidence": [
      {
       "kind": "code",
@@ -1499,6 +1588,7 @@
     "id": "sends-unencrypted",
     "occurrences": 7,
     "inVendoredCodeOnly": false,
+    "codeKey": "a1256344c487",
     "evidence": [
      {
       "kind": "code",
@@ -1624,19 +1714,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-pdf-translate--sasaju",
    "version": "1.1.0-23",
    "sha256": "424a4b875dd1d1d3776db9731ef7cd03578b16942504355766ea3f60adbd206c"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "59c60003fa6ba50c81f31f32da601ade17354622e56db3d37fdb90c7cceb713d"
+   "inputHash": "67877254b152006187353ccdd0f67807199529402a6eec9a0190256fd7943810"
   },
   "facets": {
    "sourceTransparency": {
@@ -1709,6 +1799,15 @@
        "itrans.xfyun.cn",
        "niutrans.com",
        "www2.deepl.com"
+      ],
+      "unencrypted": [
+       "api.fanyi.baidu.com",
+       "api.interpreter.caiyunai.com",
+       "api.microsofttranslator.com",
+       "api.niutrans.com",
+       "capi.dict.cn",
+       "dict.cn",
+       "fanyi.youdao.com"
       ]
      }
     ],
@@ -1753,16 +1852,6 @@
      {
       "id": "credential-storage",
       "label": "Stores API keys or passwords",
-      "concern": "low"
-     },
-     {
-      "id": "dynamic-code",
-      "label": "Runs code it assembles while running",
-      "concern": "low"
-     },
-     {
-      "id": "filesystem",
-      "label": "Works with files on your computer",
       "concern": "low"
      }
     ],

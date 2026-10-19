@@ -67,8 +67,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-ai-literature-workflow",
    "version": "0.1.7",
@@ -97,21 +97,44 @@
    "failedBytes": 0
   },
   "transparency": {
-   "verdict": "minified",
+   "verdict": "readable",
    "obfuscation": {
     "detected": false,
     "confidence": "high",
     "signals": []
    },
-   "minifiedFiles": [
-    "content/bridge.js"
-   ],
+   "minifiedFiles": [],
    "sourceMaps": {
     "present": false,
     "files": []
    },
    "suspiciousUnicode": [],
-   "vendoredLibraries": []
+   "vendoredLibraries": [
+    {
+     "name": "marked",
+     "files": [
+      "content/bridge.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
+    },
+    {
+     "name": "mermaid",
+     "files": [
+      "content/bridge.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
+    },
+    {
+     "name": "vditor",
+     "files": [
+      "content/bridge.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
+    }
+   ]
   },
   "network": {
    "apis": [],
@@ -122,7 +145,10 @@
      "provider": "GitHub",
      "flags": [],
      "usage": "unknown",
-     "inVendoredCode": false,
+     "inVendoredCode": true,
+     "libraries": [
+      "marked"
+     ],
      "occurrences": 1,
      "evidence": [
       {
@@ -131,20 +157,21 @@
        "line": 258,
        "column": 8420,
        "snippet": ".postprocess(c)),c}catch(u){return i(u)}}}onError(e,t){return n=>{if(n.message+=`",
-       "inVendoredCode": false
+       "inVendoredCode": true
       }
      ]
     }
    ],
    "dynamicUrls": [],
    "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "filesystem",
     "occurrences": 9,
     "inVendoredCodeOnly": false,
+    "codeKey": "e25298140513",
     "evidence": [
      {
       "kind": "code",
@@ -265,19 +292,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-18T11:19:25.469Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-ai-literature-workflow",
    "version": "0.1.7",
    "sha256": "586c45ddb9814759bf520a4cfa91be929a6fddd6435cb9993bf9e27af97759b8"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "07896f7c2052c7db05fe8925e7ccd67b3c44ebe1fc039f0628fe32c50991b788"
+   "inputHash": "bb2e8d3d1c5047e45080138d7ddb24e0709eabadc0c0c674db7527c587e6f2b0"
   },
   "facets": {
    "sourceTransparency": {
@@ -292,7 +319,7 @@
     },
     "partialAnalysis": null,
     "concern": "unknown",
-    "label": "Minified (compressed) code; not yet checked against the published source",
+    "label": "Readable code; not yet checked against the published source",
     "drivers": [
      "ST-NOT-CHECKED"
     ]

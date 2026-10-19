@@ -98,8 +98,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-ai-notes",
    "version": "0.4.1",
@@ -150,7 +150,63 @@
     "files": []
    },
    "suspiciousUnicode": [],
-   "vendoredLibraries": []
+   "vendoredLibraries": [
+    {
+     "name": "jszip",
+     "files": [
+      "bootstrap.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "bootstrap.js",
+       "line": 8,
+       "snippet": "`,n=PathUtils.join(PathUtils.tempDir,i),e=JSON.stringify(t,null,2);return await Zotero.File.putContentsAsync(n,e,\"utf-8\"),Zotero.debug(`Zotero AI Notes evidence data:"
+      },
+      {
+       "file": "bootstrap.js",
+       "line": 20,
+       "snippet": ",Wt=class{async findLogins(){return await Services.logins.initializationPromise,Services.logins.findLogins(rn,null,on)}async getApiKey(){return(await this.findLogins()).find(e=>e.username===ce)?.passw"
+      },
+      {
+       "file": "bootstrap.js",
+       "line": 20,
+       "snippet": "it this.findLogins(),e=n.find(o=>o.username===ce),r=this.createLogin(i);e?await Services.logins.modifyLogin(e,r):await Services.logins.addLoginAsync(r);for(let o of n)o!==e&&await Services.logins.remo"
+      },
+      {
+       "file": "bootstrap.js",
+       "line": 20,
+       "snippet": "name===ce),r=this.createLogin(i);e?await Services.logins.modifyLogin(e,r):await Services.logins.addLoginAsync(r);for(let o of n)o!==e&&await Services.logins.removeLogin(o)}async clearApiKey(){let i=aw"
+      },
+      {
+       "file": "bootstrap.js",
+       "line": 20,
+       "snippet": "fyLogin(e,r):await Services.logins.addLoginAsync(r);for(let o of n)o!==e&&await Services.logins.removeLogin(o)}async clearApiKey(){let i=await this.findLogins();for(let n of i)await Services.logins.re"
+      },
+      {
+       "file": "bootstrap.js",
+       "line": 20,
+       "snippet": "Login(o)}async clearApiKey(){let i=await this.findLogins();for(let n of i)await Services.logins.removeLogin(n)}createLogin(i){let n=Cc[\"@mozilla.org/login-manager/loginInfo;1\"].createInstance(Ci.nsILo"
+      },
+      {
+       "file": "bootstrap.js",
+       "line": 20,
+       "snippet": "createInstance(Ci.nsILoginInfo);return n.init(rn,null,on,ce,i,\"\",\"\"),n}};var dn=\"https://generativelanguage.googleapis.com/v1beta/openai/\",hn=\"gemini-3.1-flash-lite\",fn=\"gemini\",pn={gemini:{label:\"Goo"
+      },
+      {
+       "file": "bootstrap.js",
+       "line": 20,
+       "snippet": "mini\",baseURL:dn,model:hn},openai:{label:\"OpenAI / OpenAI \\u517C\\u5BB9\",baseURL:\"https://api.openai.com/v1/\",model:\"gpt-4.1-mini\"},deepseek:{label:\"DeepSeek\",baseURL:\"https://api.deepseek.com/v1/\",mod"
+      },
+      {
+       "file": "bootstrap.js",
+       "line": 20,
+       "snippet": "://api.openai.com/v1/\",model:\"gpt-4.1-mini\"},deepseek:{label:\"DeepSeek\",baseURL:\"https://api.deepseek.com/v1/\",model:\"deepseek-chat\"},custom:{label:\"\\u81EA\\u5B9A\\u4E49 OpenAI \\u517C\\u5BB9\\u670D\\u52A1\""
+      }
+     ]
+    }
+   ]
   },
   "network": {
    "apis": [],
@@ -262,7 +318,10 @@
      "provider": "GitHub Pages",
      "flags": [],
      "usage": "unknown",
-     "inVendoredCode": false,
+     "inVendoredCode": true,
+     "libraries": [
+      "jszip"
+     ],
      "occurrences": 1,
      "evidence": [
       {
@@ -271,7 +330,7 @@
        "line": 2,
        "column": 32583,
        "snippet": "ADER)?new Error(\"Corrupted zip: can't find end of central directory\"):new Error(\"Can't find end of central directory : is this a zip file ? If it is, see https://stuk.github.io/jszip/documentation/how",
-       "inVendoredCode": false
+       "inVendoredCode": true
       }
      ]
     }
@@ -314,13 +373,17 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "dynamic-code",
     "occurrences": 1,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "jszip"
+    ],
+    "codeKey": "4eb8a3bbc92f",
     "evidence": [
      {
       "kind": "code",
@@ -328,7 +391,7 @@
       "line": 2,
       "column": 90289,
       "snippet": "ction(I){setTimeout(_,0,I)},w.setImmediate=function(I){typeof I!=\"function\"&&(I=new Function(\"\"+I));for(var x=new Array(arguments.length-1),D=0;D<x.length;D++)x[D]=arguments[D+1];var N={callback:I,arg",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -341,6 +404,7 @@
     "id": "filesystem",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "bd10fe1f2703",
     "evidence": [
      {
       "kind": "code",
@@ -362,6 +426,7 @@
     "id": "login-manager",
     "occurrences": 6,
     "inVendoredCodeOnly": false,
+    "codeKey": "89f94e6f2d0a",
     "evidence": [
      {
       "kind": "code",
@@ -457,19 +522,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-ai-notes",
    "version": "0.4.1",
    "sha256": "127e0115508be832a22c9a23da9bea51a11ef049c6815ad23d6af400083e71f7"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "19a8288a58aae23912f5358e4199a1c45b6e5a81e2f51bc142d25ca210520a1c"
+   "inputHash": "6bd24947347b00286329f1467f3a6f757c60b9ee68cf53b58e3dd423f5723bc8"
   },
   "facets": {
    "sourceTransparency": {
@@ -508,11 +573,6 @@
    },
    "capabilities": {
     "badges": [
-     {
-      "id": "dynamic-code",
-      "label": "Runs code it assembles while running",
-      "concern": "low"
-     },
      {
       "id": "filesystem",
       "label": "Works with files on your computer",

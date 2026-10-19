@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "zotero-ai-sidebar",
  "repo": "xuhan-rgb/zotero-ai-sidebar",
  "repoName": "xuhan-rgb/zotero-ai-sidebar",
@@ -145,19 +145,19 @@
  ],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-ai-sidebar",
    "version": "0.8.17",
    "sha256": "d2749830fa80b5d7691ea4be304732bdeb2a402a32faa14e14a2862850252d68"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "6bb343466760c9564435eb357fb10847526fcee24900ce7e1e884ef2cd7a05dd"
+   "inputHash": "c702fb8490d219a48a65459e979540a68f24b846f8f468f24f7666fadbcdbed8"
   },
   "facets": {
    "sourceTransparency": {
@@ -213,7 +213,6 @@
       ],
       "unconfirmed": [
        "api.anthropic.com",
-       "auth.openai.com",
        "chat.deepseek.com",
        "chat.z.ai",
        "chatglm.cn",
@@ -251,9 +250,9 @@
     "badges": [
      {
       "id": "download-exec",
-      "label": "Downloads a program checked against a fixed fingerprint, and runs it",
+      "label": "Downloads and runs its Web Agent helper (3.3 MB) when you press Install Web Agent; we haven't checked what's inside it",
       "concern": "medium",
-      "detail": "Checked against a fingerprint written into the plugin"
+      "detail": "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. We haven't checked what's inside it. When you press Install, Repair or Upgrade in its Web account dialog, it downloads a 3.3 MB Web Agent zip from the developer's GitHub release, as the README says, and runs it with your own Node.js as a local helper that controls a browser."
      },
      {
       "id": "link-installs-addons",
@@ -301,12 +300,12 @@
     ],
     "concern": "medium",
     "drivers": [
-     "CAP-DOWNLOAD-EXEC-PINNED",
      "CAP-MINOR",
      "CAP-LINK-INSTALL",
      "CAP-LINK-CODE",
      "CAP-INTERCEPT",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-FIXED"
     ]
    },
    "requirements": {
@@ -351,7 +350,7 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program checked against a fixed fingerprint, and runs it",
+    "Downloads and runs its Web Agent helper (3.3 MB) when you press Install Web Agent; we haven't checked what's inside it",
     "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from zotero-plugin-toolkit)",
     "A zotero:// link can make it run code if you approve a prompt (from zotero-plugin-toolkit)",
     "Watches Zotero's network traffic",
@@ -374,6 +373,7 @@
    "Moonshot (Kimi)",
    "OpenAI",
    "OpenAI ChatGPT",
+   "OpenAI sign-in",
    "Zhipu ChatGLM (web chat)",
    "Zhipu Z.ai (web chat)"
   ],

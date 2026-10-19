@@ -537,8 +537,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-02T10:04:47.009Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "reta-ai-chat",
    "version": "1.0.3.1",
@@ -839,13 +839,15 @@
    "failedBytes": 0
   },
   "transparency": {
-   "verdict": "readable",
+   "verdict": "minified",
    "obfuscation": {
     "detected": false,
     "confidence": "high",
     "signals": []
    },
-   "minifiedFiles": [],
+   "minifiedFiles": [
+    "lib/katex/contrib/render-a11y-string.min.js"
+   ],
    "sourceMaps": {
     "present": true,
     "files": [
@@ -855,6 +857,14 @@
    },
    "suspiciousUnicode": [],
    "vendoredLibraries": [
+    {
+     "name": "dompurify",
+     "files": [
+      "lib/purify.min.js"
+     ],
+     "identifiedBy": "file-name",
+     "match": "release"
+    },
     {
      "name": "katex",
      "files": [
@@ -877,21 +887,43 @@
       "lib/katex/katex.min.js",
       "lib/katex/katex.mjs"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "release"
     },
     {
      "name": "marked",
      "files": [
       "lib/marked.umd.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "release"
     },
     {
-     "name": "purify",
+     "name": "mermaid",
      "files": [
+      "lib/katex/katex.js",
+      "lib/katex/katex.min.js",
+      "lib/katex/katex.mjs",
+      "lib/marked.umd.js",
       "lib/purify.min.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "hash",
+     "match": "release"
+    },
+    {
+     "name": "vditor",
+     "files": [
+      "lib/katex/contrib/mhchem.js",
+      "lib/katex/contrib/mhchem.min.js",
+      "lib/katex/contrib/mhchem.mjs",
+      "lib/katex/katex.js",
+      "lib/katex/katex.min.js",
+      "lib/katex/katex.mjs",
+      "lib/marked.umd.js",
+      "lib/purify.min.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
     }
    ]
   },
@@ -1051,13 +1083,14 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "clipboard",
     "occurrences": 4,
     "inVendoredCodeOnly": false,
+    "codeKey": "327ae7ad5384",
     "evidence": [
      {
       "kind": "code",
@@ -1125,6 +1158,7 @@
     "id": "filesystem",
     "occurrences": 10,
     "inVendoredCodeOnly": false,
+    "codeKey": "020bc05619be",
     "evidence": [
      {
       "kind": "code",
@@ -1254,19 +1288,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "reta-ai-chat",
    "version": "1.0.3.1",
    "sha256": "a3fe27c62b97a1c8a1678a58596c40dd5e83ce48183f58f84f15191ced587a69"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "5ef36445542055251746dbf6d06c29e71dda53fa4eceebdd2fda68cb2c5c1736"
+   "inputHash": "7559d11477f15a17ed0bf18202a6d9e468228972303c561c60b91c618b070704"
   },
   "facets": {
    "sourceTransparency": {
@@ -1282,7 +1316,7 @@
     },
     "partialAnalysis": null,
     "concern": "unknown",
-    "label": "Readable code; not yet checked against the published source",
+    "label": "Minified (compressed) code; not yet checked against the published source",
     "drivers": [
      "ST-NOT-CHECKED"
     ]

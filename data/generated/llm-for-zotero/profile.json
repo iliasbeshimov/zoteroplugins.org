@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "llm-for-zotero",
  "repo": "yilewang/llm-for-zotero",
  "repoName": "yilewang/llm-for-zotero",
@@ -170,19 +170,19 @@
  ],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "llm-for-zotero",
    "version": "3.9.12",
    "sha256": "92a7047d73856c5a416381f9751ceeb987b09b7c98f027b45a30be29e05de142"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "d34dbdef85a76bdc1da1f8a957ef4c4eb03873a36d54d638c450408f7645a0d5"
+   "inputHash": "12feadf53a87ced0089b296e72d3c50e23a99c1005f179159ec2b1582a9170aa"
   },
   "facets": {
    "sourceTransparency": {
@@ -316,16 +316,10 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "From yilewang/llm-for-zotero on GitHub; not checked against a fingerprint written into the plugin"
-     },
-     {
       "id": "runs-sent-code",
-      "label": "Runs commands its AI assistant writes, with full access to your computer",
+      "label": "Its AI agent can run commands and code on your computer; by default, an AI check decides when to ask you",
       "concern": "high",
-      "detail": "It can run without showing you the code first"
+      "detail": "In agent mode the AI can run shell commands and JavaScript inside Zotero. Commands that only read (ls, find, head, tail, rg and a few others) run without asking in every mode. The rest depends on a setting: Safe asks you every time; Auto, the default, runs ordinary and reversible changes and has a second AI call decide about the rest, asking you only when it judges the action unclear or risky; Yolo never asks. Commands run as you, so they can read and change any of your files."
      },
      {
       "id": "borrowed-identity",
@@ -338,6 +332,12 @@
       "label": "Keeps its own tables in Zotero's database",
       "concern": "medium",
       "detail": "Tables: contextual, llm_for_zotero_claude_conversations, llm_for_zotero_conversation_fork_links, llm_for_zotero_conversation_registry, llm_for_zotero_global_conversations and 1 more"
+     },
+     {
+      "id": "download-exec",
+      "label": "Downloads and runs Python and PDF tools the first time you ask about a figure; its developer can change what runs at any time",
+      "concern": "medium",
+      "detail": "Its developer can replace the file at any time without releasing a new version, and nothing checks it before it runs, so our check of the plugin doesn't cover what runs. The first time you ask about a figure, it downloads a 265–491 MB bundle of Python and the Poppler PDF tools from the developer's GitHub release and runs it, without asking; the README doesn't mention it. What's there now is standard software: we checked the macOS (Apple silicon) bundle, and every file is from conda-forge. We reviewed version 3.9.9; this release has the same code."
      },
      {
       "id": "link-installs-addons",
@@ -405,12 +405,12 @@
      "CAP-BORROWED-IDENTITY",
      "CAP-MINOR",
      "CAP-DB-WRITE-OWN",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-LINK-INSTALL",
      "CAP-LINK-CODE",
      "CAP-AGENT-FEWER-PROMPTS",
      "CAP-REUSED-APP-LOGIN",
-     "CAP-SENT-CODE-UNASKED"
+     "CAP-DOWNLOAD-EXEC-DEVELOPER",
+     "CAP-RUNS-SENT-CODE-AI-REVIEWED"
     ]
    },
    "requirements": {
@@ -455,8 +455,7 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it",
-    "Runs commands its AI assistant writes, with full access to your computer"
+    "Its AI agent can run commands and code on your computer; by default, an AI check decides when to ask you"
    ]
   }
  },

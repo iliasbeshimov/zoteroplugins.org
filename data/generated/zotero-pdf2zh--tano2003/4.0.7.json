@@ -108,8 +108,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-pdf2zh--tano2003",
    "version": "4.0.7",
@@ -184,7 +184,8 @@
      "files": [
       "content/scripts/pdf2zh.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
     }
    ]
   },
@@ -805,7 +806,7 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
@@ -815,6 +816,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "e98050e5c746",
     "evidence": [
      {
       "kind": "code",
@@ -855,6 +857,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "f3a1eff10821",
     "evidence": [
      {
       "kind": "code",
@@ -886,6 +889,7 @@
     "id": "download-exec",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "4fc6d75f6a53",
     "evidence": [
      {
       "kind": "code",
@@ -909,6 +913,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "be3b45094502",
     "evidence": [
      {
       "kind": "code",
@@ -932,6 +937,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "e4ff33351352",
     "evidence": [
      {
       "kind": "code",
@@ -1029,6 +1035,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "adb1b436c0a9",
     "evidence": [
      {
       "kind": "code",
@@ -1053,6 +1060,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "99e69161fe8b",
     "evidence": [
      {
       "kind": "code",
@@ -1074,6 +1082,7 @@
     "id": "process-launch",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "a81aa69a1393",
     "evidence": [
      {
       "kind": "code",
@@ -1137,19 +1146,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-pdf2zh--tano2003",
    "version": "4.0.7",
    "sha256": "484aa0ab19b245d3326683e8cd8f23a6fe1c4dc68ed9a0859d889ad1c32680b7"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "00577a9c8c3caae56c427a8a2ab81eb6cd16f3c9c93522d67fac85cd8dcc08a6"
+   "inputHash": "3e7d784ecf919924d12ea71900ca405b8f6f988387cac480c9122a45b3594ff0"
   },
   "facets": {
    "sourceTransparency": {
@@ -1228,9 +1237,9 @@
     "badges": [
      {
       "id": "download-exec",
-      "label": "Downloads a program and runs it",
+      "label": "Downloads and runs a translation program the first time you translate a PDF; its developer can change what runs at any time",
       "concern": "medium",
-      "detail": "The first time you translate a PDF, it downloads a 180–206 MB translation program from the developer's GitHub release and runs it. The README doesn't mention it, the file is checked only against a checksum from the same place, and we can't read the program itself."
+      "detail": "Its developer can replace the file at any time without releasing a new version, and the only check is a checksum from the same place, which a replaced file passes too, so our check of the plugin doesn't cover what runs. The first time you translate a PDF, it downloads a 180–206 MB translation program from the developer's GitHub release and runs it. The README doesn't mention it, and we can't read the program itself."
      },
      {
       "id": "link-installs-addons",
@@ -1267,7 +1276,7 @@
      "CAP-LINK-INSTALL",
      "CAP-LINK-CODE",
      "CAP-PROCESS",
-     "CAP-DOWNLOAD-EXEC-REVIEWED"
+     "CAP-DOWNLOAD-EXEC-DEVELOPER"
     ]
    },
    "requirements": {
@@ -1312,7 +1321,7 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it",
+    "Downloads and runs a translation program the first time you translate a PDF; its developer can change what runs at any time",
     "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from zotero-plugin-toolkit)",
     "A zotero:// link can make it run code if you approve a prompt (from zotero-plugin-toolkit)",
     "Launches programs on your computer"

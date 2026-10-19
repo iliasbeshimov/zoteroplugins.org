@@ -218,8 +218,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-02T10:04:47.009Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-ai-sidebar--huangkiki",
    "version": "0.3.5",
@@ -386,28 +386,65 @@
      "files": [
       "content/scripts/zotero-ai-sidebar.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "katex",
      "files": [
       "content/scripts/zotero-ai-sidebar.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
+    },
+    {
+     "name": "mermaid",
+     "files": [
+      "content/scripts/zotero-ai-sidebar.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
     },
     {
      "name": "openai",
      "files": [
       "content/scripts/zotero-ai-sidebar.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/scripts/zotero-ai-sidebar.js",
+       "line": 5110,
+       "snippet": "this.tokenExchangeUrl = \"https://auth.openai.com/oauth/token\";"
+      },
+      {
+       "file": "content/scripts/zotero-ai-sidebar.js",
+       "line": 5136,
+       "snippet": "const response = await this.fetch(this.tokenExchangeUrl, {"
+      },
+      {
+       "file": "content/scripts/zotero-ai-sidebar.js",
+       "line": 10270,
+       "snippet": "baseURL: baseURL || `https://api.openai.com/v1`"
+      }
+     ]
+    },
+    {
+     "name": "vditor",
+     "files": [
+      "content/scripts/zotero-ai-sidebar.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
     },
     {
      "name": "zotero-plugin-toolkit",
      "files": [
       "content/scripts/zotero-ai-sidebar.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
     }
    ]
   },
@@ -415,7 +452,7 @@
    "apis": [
     {
      "api": "fetch",
-     "occurrences": 9,
+     "occurrences": 10,
      "inVendoredCodeOnly": false,
      "libraries": [
       "@anthropic-ai/sdk",
@@ -428,6 +465,14 @@
        "line": 35,
        "column": 4,
        "snippet": "fetch: window?.fetch?.bind(window),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/zotero-ai-sidebar.js",
+       "line": 5136,
+       "column": 29,
+       "snippet": "const response = await this.fetch(this.tokenExchangeUrl, {",
        "inVendoredCode": false
       },
       {
@@ -526,9 +571,6 @@
      ],
      "usage": "unknown",
      "inVendoredCode": false,
-     "libraries": [
-      "openai"
-     ],
      "occurrences": 2,
      "evidence": [
       {
@@ -537,7 +579,7 @@
        "line": 10270,
        "column": 28,
        "snippet": "baseURL: baseURL || `https://api.openai.com/v1`",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -603,11 +645,8 @@
       "account-oauth",
       "blocked-in-mainland-china"
      ],
-     "usage": "unknown",
-     "inVendoredCode": true,
-     "libraries": [
-      "openai"
-     ],
+     "usage": "request",
+     "inVendoredCode": false,
      "occurrences": 1,
      "evidence": [
       {
@@ -616,7 +655,7 @@
        "line": 5110,
        "column": 30,
        "snippet": "this.tokenExchangeUrl = \"https://auth.openai.com/oauth/token\";",
-       "inVendoredCode": true
+       "inVendoredCode": false
       }
      ]
     },
@@ -935,7 +974,7 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
@@ -945,6 +984,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "bf29f4336d8c",
     "evidence": [
      {
       "kind": "code",
@@ -985,6 +1025,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "f3a1eff10821",
     "evidence": [
      {
       "kind": "code",
@@ -1019,6 +1060,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "be3b45094502",
     "evidence": [
      {
       "kind": "code",
@@ -1042,6 +1084,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "69995cf903c5",
     "evidence": [
      {
       "kind": "code",
@@ -1099,6 +1142,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "adb1b436c0a9",
     "evidence": [
      {
       "kind": "code",
@@ -1123,6 +1167,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "99e69161fe8b",
     "evidence": [
      {
       "kind": "code",
@@ -1144,6 +1189,7 @@
     "id": "process-launch",
     "occurrences": 3,
     "inVendoredCodeOnly": false,
+    "codeKey": "0c3582c9e514",
     "evidence": [
      {
       "kind": "code",
@@ -1218,19 +1264,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-ai-sidebar--huangkiki",
    "version": "0.3.5",
    "sha256": "1bc4e78bf5083623d2320081c4378c2396def24e4838f325bfc6c76a5da2f52e"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "9b297431f8681987989e5d0fc2cb492da0787dc348e15e92493d60d521dc0f40"
+   "inputHash": "0d28c618ea0741a506eb0d99dcda724cb281e4f8ea444cda3caf94d6feb4d29e"
   },
   "facets": {
    "sourceTransparency": {
@@ -1273,8 +1319,7 @@
       ],
       "unconfirmed": [
        "api.anthropic.com",
-       "api.openai.com",
-       "auth.openai.com"
+       "api.openai.com"
       ]
      },
      {

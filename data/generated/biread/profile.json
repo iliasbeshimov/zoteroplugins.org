@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "biread",
  "repo": "wweiyiwang/biread",
  "repoName": "WWeiyiWang/BiRead",
@@ -129,19 +129,19 @@
  "addonIdSharedWith": [],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "biread",
    "version": "0.1.27-beta",
    "sha256": "695db789f385df4d8661653fd048d6d3fbbb07adf22252529759763532fae6dd"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "7e537fdac3af6902085c28e076f813dc1511cfd95804df06a26b4b0194762125"
+   "inputHash": "98f91d886150e0bc128c481df37b7a76bdd210536d076e0d55574fe03c597c23"
   },
   "facets": {
    "sourceTransparency": {
@@ -252,12 +252,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "Checked only against a checksum from the same place, which catches a broken download but not a replaced one"
-     },
-     {
       "id": "process-launch",
       "label": "Launches programs on your computer",
       "concern": "medium"
@@ -274,17 +268,23 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads and runs Python with an alignment model (194 MB) when you press install, on Windows",
+      "concern": "low",
+      "detail": "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. The download comes from python.org and PyPI, where Python and those packages are published. On Windows (x64), when you press the one-click button to install the local alignment model, it downloads about 194 MB, as its README says: Python from python.org, three Python packages from PyPI, and a word-alignment model, a data file, from the Hugging Face account cstr. It then runs that Python on the plugin's own script. We reviewed version 0.1.4-beta; this release has the same code."
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-PROCESS",
-     "CAP-SENDS-UNENCRYPTED"
+     "CAP-SENDS-UNENCRYPTED",
+     "CAP-DOWNLOAD-EXEC-FIXED"
     ]
    },
    "requirements": {
@@ -323,13 +323,14 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it"
+    "Launches programs on your computer",
+    "Sends your text or keys unencrypted (http://) to api.fanyi.baidu.com, api.interpreter.caiyunai.com and 2 more"
    ]
   }
  },

@@ -57,8 +57,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-folder-import--yunoinsky",
    "version": "0.0.14",
@@ -97,14 +97,16 @@
      "files": [
       "content/folder-import.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "uzip",
      "files": [
       "content/folder-import.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "zotero-plugin",
@@ -112,14 +114,38 @@
       "bootstrap.js",
       "content/folder-import.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/folder-import.js",
+       "line": 6399,
+       "snippet": "\"homepage\": \"https://github.com/retorquere/zotero-plugin/wiki\","
+      },
+      {
+       "file": "content/folder-import.js",
+       "line": 6528,
+       "snippet": "\"url\": \"https://github.com/retorquere/zotero-plugin/issues\""
+      },
+      {
+       "file": "content/folder-import.js",
+       "line": 6582,
+       "snippet": "const response = await fetch(\"https://0x0.st\", {"
+      },
+      {
+       "file": "content/folder-import.js",
+       "line": 6582,
+       "snippet": "const response = await fetch(\"https://0x0.st\", {"
+      }
+     ]
     },
     {
      "name": "zotero-plugin-toolkit",
      "files": [
       "content/folder-import.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
     }
    ]
   },
@@ -128,10 +154,7 @@
     {
      "api": "fetch",
      "occurrences": 2,
-     "inVendoredCodeOnly": true,
-     "libraries": [
-      "zotero-plugin"
-     ],
+     "inVendoredCodeOnly": false,
      "evidence": [
       {
        "kind": "code",
@@ -139,7 +162,7 @@
        "line": 6582,
        "column": 29,
        "snippet": "const response = await fetch(\"https://0x0.st\", {",
-       "inVendoredCode": true
+       "inVendoredCode": false
       }
      ]
     },
@@ -176,10 +199,7 @@
       "public-relay"
      ],
      "usage": "request",
-     "inVendoredCode": true,
-     "libraries": [
-      "zotero-plugin"
-     ],
+     "inVendoredCode": false,
      "occurrences": 1,
      "evidence": [
       {
@@ -188,7 +208,7 @@
        "line": 6582,
        "column": 35,
        "snippet": "const response = await fetch(\"https://0x0.st\", {",
-       "inVendoredCode": true
+       "inVendoredCode": false
       }
      ]
     },
@@ -198,10 +218,7 @@
      "provider": "GitHub",
      "flags": [],
      "usage": "unknown",
-     "inVendoredCode": true,
-     "libraries": [
-      "zotero-plugin"
-     ],
+     "inVendoredCode": false,
      "occurrences": 2,
      "evidence": [
       {
@@ -210,7 +227,7 @@
        "line": 6399,
        "column": 16,
        "snippet": "\"homepage\": \"https://github.com/retorquere/zotero-plugin/wiki\",",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -218,14 +235,14 @@
        "line": 6528,
        "column": 13,
        "snippet": "\"url\": \"https://github.com/retorquere/zotero-plugin/issues\"",
-       "inVendoredCode": true
+       "inVendoredCode": false
       }
      ]
     }
    ],
    "dynamicUrls": [],
    "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
@@ -235,6 +252,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "b85c1f1e060c",
     "evidence": [
      {
       "kind": "code",
@@ -275,6 +293,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "77697dbca5c6",
     "evidence": [
      {
       "kind": "code",
@@ -298,6 +317,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "f94e26dce0fb",
     "evidence": [
      {
       "kind": "code",
@@ -397,6 +417,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "d4a2f0205d6b",
     "evidence": [
      {
       "kind": "code",
@@ -421,6 +442,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "9cf31f7bebeb",
     "evidence": [
      {
       "kind": "code",
@@ -442,6 +464,7 @@
     "id": "process-launch",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "4e1a389b6b27",
     "evidence": [
      {
       "kind": "code",
@@ -505,19 +528,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-14T08:56:17.192Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-folder-import--yunoinsky",
    "version": "0.0.14",
    "sha256": "59a8e8e10693422498b7d4528987cef8c91cb1defb47cb88c6d4cd7f3fa69d87"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "3d695e1bcdcd172378dc29177724e6c0f9cd92e8fbb971238827c6f72ac9eadf"
+   "inputHash": "41a6bbc805cfae6b023e4256f6c77809abdf361a0aa322c70907f5359a05a2e0"
   },
   "facets": {
    "sourceTransparency": {

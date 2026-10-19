@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "jadense-in-zotero",
  "repo": "jadense-ai/jadense-in-zotero",
  "repoName": "jadense-ai/jadense-in-zotero",
@@ -131,19 +131,19 @@
  "addonIdSharedWith": [],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "jadense-in-zotero",
    "version": "0.6.12",
    "sha256": "6cd890b2928a2ed62c6fa972172358197d5d43fa3c6210cad5459768a7d0d5be"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "7913ef31e82f22c41c1387d4e1a1106a84282c57a4567303c453bb41aac36019"
+   "inputHash": "49d5e8cf016e596abfcbee322c51245d7a3034f84290755c134c9014f183b085"
   },
   "facets": {
    "sourceTransparency": {
@@ -283,12 +283,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "Not checked against a fingerprint written into the plugin"
-     },
-     {
       "id": "package-run",
       "label": "Installs and runs software packages from npm or PyPI",
       "concern": "medium",
@@ -301,9 +295,20 @@
       "detail": "Programs it names include python, taskkill, uv"
      },
      {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
       "id": "credential-storage",
       "label": "Stores API keys or passwords",
       "concern": "low"
+     },
+     {
+      "id": "download-exec",
+      "label": "Downloads uv and installs Python packages when you turn on local OCR or PDF translation",
+      "concern": "low",
+      "detail": "It comes straight from Astral, who make uv, over an encrypted connection, as it would if you installed it yourself. When you press Enable local OCR, or prepare PDF translation, in its settings, it downloads uv, as its README says, and uses it to install Python packages. We reviewed version 0.6.3; this release has the same code."
      },
      {
       "id": "filesystem",
@@ -316,12 +321,12 @@
       "concern": "low"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-PACKAGE-RUN",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-MAKER"
     ]
    },
    "requirements": {
@@ -360,13 +365,16 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
+    "dataSharing",
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it"
+    "Its code names a developer's server: jadense.cn",
+    "Installs and runs software packages from npm or PyPI",
+    "Launches programs on your computer"
    ]
   }
  },

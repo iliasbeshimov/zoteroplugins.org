@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "texlate",
  "repo": "wncfht/texlate",
  "repoName": "WncFht/texlate",
@@ -143,19 +143,19 @@
  "addonIdSharedWith": [],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "texlate",
    "version": "0.1.1",
    "sha256": "2ea00562d6d0e9fbd3dd281d4c5b6636caacb83592557df5047fa575d5c022d6"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "7b7ebb5ded45ce442498ef92489ce7a5019120e4eafaf9fd75d369d5cc3f2382"
+   "inputHash": "69574ed71bcf5d3d5c16e01ad1c8991528f40c1b150bff2948ca397eabfe3eec"
   },
   "facets": {
    "sourceTransparency": {
@@ -214,12 +214,6 @@
       "detail": "Installs packages without a fixed version"
      },
      {
-      "id": "download-exec",
-      "label": "Downloads a program checked against a fixed fingerprint, and runs it",
-      "concern": "medium",
-      "detail": "From astral-sh/uv on GitHub; checked against a fingerprint written into the plugin"
-     },
-     {
       "id": "link-installs-addons",
       "label": "A zotero:// link (a web page can open one) can make it install add-ons without asking you",
       "concern": "medium",
@@ -249,6 +243,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads uv to start its translation server the first time you translate a paper",
+      "concern": "low",
+      "detail": "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. The download comes from Astral, who make uv. When you translate a paper and its local server isn't running, it downloads uv (about 20 MB) without asking, showing only a status line, and uses it to start the texlate server; installing that server is listed as its own finding. The project's README explains installing uv and texlate yourself, not that the plugin does it."
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -257,11 +257,11 @@
     "concern": "high",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC-PINNED",
      "CAP-LINK-INSTALL",
      "CAP-LINK-CODE",
      "CAP-PACKAGE-UNPINNED",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-FIXED"
     ]
    },
    "requirements": {

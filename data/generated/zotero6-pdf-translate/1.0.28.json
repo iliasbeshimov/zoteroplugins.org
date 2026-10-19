@@ -102,8 +102,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero6-pdf-translate",
    "version": "1.0.28",
@@ -174,14 +174,23 @@
      "files": [
       "chrome/content/scripts/index.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "zotero-plugin-toolkit",
      "files": [
       "chrome/content/scripts/index.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "chrome/content/scripts/index.js",
+       "line": 7852,
+       "snippet": "key: Zotero2.Prefs.get(pref.id),"
+      }
+     ]
     }
    ]
   },
@@ -356,7 +365,9 @@
      "host": "api.fanyi.baidu.com",
      "category": "translation",
      "provider": "Baidu Translate",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 2,
@@ -383,7 +394,9 @@
      "host": "api.interpreter.caiyunai.com",
      "category": "translation",
      "provider": "Caiyun",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -402,7 +415,9 @@
      "host": "api.microsofttranslator.com",
      "category": "translation",
      "provider": "Microsoft Translator",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -566,7 +581,9 @@
      "host": "capi.dict.cn",
      "category": "translation",
      "provider": "Dict.cn",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -604,7 +621,9 @@
      "host": "dict.cn",
      "category": "translation",
      "provider": "Dict.cn",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -698,7 +717,9 @@
      "host": "fanyi.youdao.com",
      "category": "translation",
      "provider": "Youdao",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -1258,7 +1279,7 @@
        "line": 7852,
        "column": 17,
        "snippet": "key: Zotero2.Prefs.get(pref.id),",
-       "inVendoredCode": true
+       "inVendoredCode": false
       }
      ]
     },
@@ -1292,7 +1313,7 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
@@ -1302,6 +1323,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "e8e4ccc19115",
     "evidence": [
      {
       "kind": "code",
@@ -1357,6 +1379,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "2e59f6553aa9",
     "evidence": [
      {
       "kind": "code",
@@ -1461,6 +1484,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "74965160d570",
     "evidence": [
      {
       "kind": "code",
@@ -1484,6 +1508,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "29ea9a960af1",
     "evidence": [
      {
       "kind": "code",
@@ -1523,6 +1548,7 @@
     "id": "sends-unencrypted",
     "occurrences": 6,
     "inVendoredCodeOnly": false,
+    "codeKey": "844b87f639d6",
     "evidence": [
      {
       "kind": "code",
@@ -1632,19 +1658,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero6-pdf-translate",
    "version": "1.0.28",
    "sha256": "f75a1cdd3a2a87854692462f11984ba342bda71056bbd149bb4fa14cbca38228"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "83c857441585d736606cc1c0b4aac799dbf2cfdc24eb167c22eb52517c3aab3f"
+   "inputHash": "07b9872357b40094b9a8f4dde7c89c7d0a7380fe7f54855b538c31a1115962b0"
   },
   "facets": {
    "sourceTransparency": {
@@ -1713,6 +1739,14 @@
        "audio.dict.cn",
        "itrans.xfyun.cn",
        "niutrans.com"
+      ],
+      "unencrypted": [
+       "api.fanyi.baidu.com",
+       "api.interpreter.caiyunai.com",
+       "api.microsofttranslator.com",
+       "capi.dict.cn",
+       "dict.cn",
+       "fanyi.youdao.com"
       ]
      }
     ],

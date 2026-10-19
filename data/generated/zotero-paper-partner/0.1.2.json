@@ -57,8 +57,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-10T10:08:56.513Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-paper-partner",
    "version": "0.1.2",
@@ -125,7 +125,7 @@
      "category": "llm-provider",
      "provider": "DeepSeek",
      "flags": [],
-     "usage": "unknown",
+     "usage": "request",
      "inVendoredCode": false,
      "occurrences": 2,
      "evidence": [
@@ -162,15 +162,30 @@
        "inVendoredCode": false
       }
      ]
+    },
+    {
+     "prefKey": "extensions.paper-partner.apiEndpoint",
+     "defaultValue": "https://api.deepseek.com/v1/chat/completions",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 280,
+       "column": 25,
+       "snippet": "const endpoint = getPref(\"apiEndpoint\");",
+       "inVendoredCode": false
+      }
+     ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "credential-storage",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "8a3c6720e617",
     "evidence": [
      {
       "kind": "code",
@@ -237,19 +252,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-paper-partner",
    "version": "0.1.2",
    "sha256": "b359e7346cbb7e28c5ffc590c4b430ffa0622b029397ae3991589d96091c3883"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "6e645ccf61cc18ef70a0af3b79bb5d13e1aa526f89e93fa0a9f2e9efbe215546"
+   "inputHash": "9d378ded1b9e09a824c5f3a6096fe51cdb12358d350216750cb92bd8d24b65e0"
   },
   "facets": {
    "sourceTransparency": {
@@ -277,14 +292,11 @@
       "category": "llm-provider",
       "hosts": [
        "api.deepseek.com"
-      ],
-      "unconfirmed": [
-       "api.deepseek.com"
       ]
      }
     ],
     "concern": "low",
-    "label": "Its code only names services we could identify",
+    "label": "Only contacts services we could identify",
     "legalRisk": false,
     "drivers": [
      "DS-NAMED"

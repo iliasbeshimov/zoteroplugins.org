@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T18:08:06.873Z",
  "slug": "zotero-assistente-ia",
  "repo": "serbernardo/zotero-assistente-ia",
  "repoName": "serbernardo/zotero-assistente-ia",
@@ -128,19 +128,19 @@
  "addonIdSharedWith": [],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T18:08:06.873Z",
   "appliesTo": {
    "slug": "zotero-assistente-ia",
    "version": "0.9.1",
    "sha256": "4c7f04a1bfd0685866df9b5f911a95bd27035b6cf7ecb84ecb593eb88b4d3685"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "0fe9d79f1757b4fe7c0ed4222d5ef402748fd310efb8c137a5b29e7bd122c71a"
+   "inputHash": "bc550a9b5f54e4b8d9c72ed1bbc076fbbfffe93f375f67d6faa4a8bcdd00ed91"
   },
   "facets": {
    "sourceTransparency": {
@@ -193,12 +193,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "Not checked against a fingerprint written into the plugin"
-     },
-     {
       "id": "package-run",
       "label": "Installs and runs npm or PyPI packages without a fixed version",
       "concern": "high",
@@ -226,6 +220,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Runs Claude Code's official installer when you ask it to install Claude Code",
+      "concern": "low",
+      "detail": "It comes straight from Anthropic, who make Claude Code, over an encrypted connection, as it would if you installed it yourself. When you press its button to install and sign in to Claude Code and confirm, it opens a Terminal or Command Prompt window that runs Claude Code's install script, if Claude Code isn't installed yet; the README shows the same commands. It does nothing on Linux."
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -240,9 +240,9 @@
     "drivers": [
      "CAP-CHANGES-SETTINGS",
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-PACKAGE-UNPINNED",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-MAKER"
     ]
    },
    "requirements": {
@@ -287,7 +287,6 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it",
     "Installs and runs npm or PyPI packages without a fixed version"
    ]
   }

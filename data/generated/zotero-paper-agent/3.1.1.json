@@ -183,8 +183,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-paper-agent",
    "version": "3.1.1",
@@ -319,84 +319,103 @@
      "files": [
       "content/js/crypto-js.min.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "release"
     },
     {
      "name": "entities",
      "files": [
       "content/scripts/zoteropaperagent.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "flexsearch",
      "files": [
       "content/scripts/zoteropaperagent.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "jszip",
      "files": [
       "content/scripts/zoteropaperagent.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
     },
     {
      "name": "linkify-it",
      "files": [
       "content/scripts/zoteropaperagent.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "markdown-it",
      "files": [
       "content/scripts/zoteropaperagent.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
     },
     {
      "name": "mdurl",
      "files": [
       "content/scripts/zoteropaperagent.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "openai",
      "files": [
       "content/scripts/zoteropaperagent.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/scripts/zoteropaperagent.js",
+       "line": 19349,
+       "snippet": "baseURL: baseURL || `https://api.openai.com/v1`"
+      }
+     ]
     },
     {
      "name": "punycode.js",
      "files": [
       "content/scripts/zoteropaperagent.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "uc.micro",
      "files": [
       "content/scripts/zoteropaperagent.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "uuid",
      "files": [
       "content/scripts/zoteropaperagent.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
     },
     {
      "name": "zotero-plugin-toolkit",
      "files": [
       "content/scripts/zoteropaperagent.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
     }
    ]
   },
@@ -462,10 +481,7 @@
       "blocked-in-mainland-china"
      ],
      "usage": "unknown",
-     "inVendoredCode": true,
-     "libraries": [
-      "openai"
-     ],
+     "inVendoredCode": false,
      "occurrences": 1,
      "evidence": [
       {
@@ -474,7 +490,7 @@
        "line": 19349,
        "column": 28,
        "snippet": "baseURL: baseURL || `https://api.openai.com/v1`",
-       "inVendoredCode": true
+       "inVendoredCode": false
       }
      ]
     },
@@ -816,7 +832,7 @@
     }
    ],
    "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
@@ -826,6 +842,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "84a44052caeb",
     "evidence": [
      {
       "kind": "code",
@@ -866,6 +883,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "f3a1eff10821",
     "evidence": [
      {
       "kind": "code",
@@ -901,6 +919,7 @@
      "flexsearch",
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "392eef99b8ee",
     "evidence": [
      {
       "kind": "code",
@@ -933,6 +952,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "419f202a5a2c",
     "evidence": [
      {
       "kind": "code",
@@ -1030,6 +1050,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "adb1b436c0a9",
     "evidence": [
      {
       "kind": "code",
@@ -1054,6 +1075,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "99e69161fe8b",
     "evidence": [
      {
       "kind": "code",
@@ -1075,6 +1097,7 @@
     "id": "local-http-server",
     "occurrences": 4,
     "inVendoredCodeOnly": false,
+    "codeKey": "b45199237685",
     "evidence": [
      {
       "kind": "code",
@@ -1142,19 +1165,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-paper-agent",
    "version": "3.1.1",
    "sha256": "1e4d574c1df0b280bd666186ea58f4aa6232be9cb805677fb757111d525681f7"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "7dcd12655db638b3a8e417e967a5a73bfb518198695a00a55e4748de6894d98c"
+   "inputHash": "5b34b90d2d93c22493aee53866c1506eddd346353665ec5b32dd548e790664a2"
   },
   "facets": {
    "sourceTransparency": {

@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "codex-bilingual-reader-for-zotero",
  "repo": "mengqi97/codex-bilingual-reader-for-zotero",
  "repoName": "Mengqi97/codex-bilingual-reader-for-zotero",
@@ -146,19 +146,19 @@
  ],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "codex-bilingual-reader-for-zotero",
    "version": "1.4.5",
    "sha256": "70d84f193240a5be440a453ef0dd08d8602c453b12b901994fab4132ff3edaa2"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "fdf8a1653a6e5b4060e677955ce9db917d923d7985c53b2c9d3601258201f1f9"
+   "inputHash": "9cc197656d31cab7b76221de4b08f9c5ebd510cee5bb2c5531507d5f0786cad8"
   },
   "facets": {
    "sourceTransparency": {
@@ -233,12 +233,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads a program checked against a fixed fingerprint, and runs it",
-      "concern": "medium",
-      "detail": "Checked against a fingerprint written into the plugin"
-     },
-     {
       "id": "process-launch",
       "label": "Launches programs on your computer",
       "concern": "medium",
@@ -255,6 +249,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads and runs a PDF translation engine (about 600 MB) when you press install, on Windows",
+      "concern": "low",
+      "detail": "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. The download comes from the PDFMathTranslate-next project and Node.js, who make them. On Windows, when you press the one-click install button in its settings (its label gives the size), it downloads the PDFMathTranslate-next engine (621 MB), and Node.js (93 MB) if you don't have it, and later runs them to translate PDFs; the README describes the download. We checked that both fingerprints match the files their makers publish."
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -263,8 +263,8 @@
     "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC-PINNED",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-FIXED"
     ]
    },
    "requirements": {
@@ -309,7 +309,6 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program checked against a fixed fingerprint, and runs it",
     "Launches programs on your computer"
    ]
   },

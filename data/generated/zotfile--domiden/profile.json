@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-17T07:58:57.170Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "zotfile--domiden",
  "repo": "domiden/zotfile",
  "repoName": "domiden/zotfile",
@@ -129,19 +129,19 @@
  ],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-17T07:58:57.170Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotfile--domiden",
    "version": "5.1.2.9001",
    "sha256": "d98f0cb102685ab5fdbddc40c16fc1ca2411c5eaa8e859a0c713dac8a9a89869"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "b004bb3e459e04a0a2db6f155642963143543bf3888201d23099ad24dec836f7"
+   "inputHash": "d9cf75dae64432cb39873d1695c7149bddf2469e2dc071a7e138a393e8777029"
   },
   "facets": {
    "sourceTransparency": {
@@ -190,9 +190,9 @@
     "badges": [
      {
       "id": "download-exec",
-      "label": "Downloads a program and runs it",
+      "label": "A button in its settings downloads and runs a PDF tool on Intel Macs; it comes over plain http, so anyone on your network could swap it",
       "concern": "high",
-      "detail": "From www.zotfile.com; over unencrypted HTTP; not checked against a fingerprint written into the plugin"
+      "detail": "It downloads over unencrypted http and nothing checks the file, so anyone on the same network, such as public Wi-Fi, could swap in a program of their own. A button in its settings (Intel Macs only) downloads ZotFile's Poppler tool from zotfile.com and runs it; the README doesn't mention it. The file is no longer on the server, so today the button fails."
      },
      {
       "id": "process-launch",
@@ -206,6 +206,11 @@
       "concern": "low"
      },
      {
+      "id": "dynamic-code",
+      "label": "Runs code it assembles while running",
+      "concern": "low"
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -214,8 +219,8 @@
     "concern": "high",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-HTTP"
     ]
    },
    "requirements": {
@@ -260,7 +265,7 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it"
+    "A button in its settings downloads and runs a PDF tool on Intel Macs; it comes over plain http, so anyone on your network could swap it"
    ]
   }
  },

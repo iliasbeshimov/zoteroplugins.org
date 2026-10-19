@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "twintext-releases",
  "repo": "yiyangbyts/twintext-releases",
  "repoName": "yiyangbyts/twintext-releases",
@@ -119,19 +119,19 @@
  "addonIdSharedWith": [],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "twintext-releases",
    "version": "2.0.34",
    "sha256": "bc66f868439da3dd89d37edf9ed8f5c09daf0c4d072934a18004cb6b3a7eb2a1"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "b340d8c63f7ab88f6f9a52189bada7a07149be2ede15edc3ef6c0378e8723ca3"
+   "inputHash": "b235c036edef32cc285d387d892d733da181ac3033c22807b3b1c4394d671626"
   },
   "facets": {
    "sourceTransparency": {
@@ -196,9 +196,9 @@
     "badges": [
      {
       "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "Checked only against a checksum from the same place, which catches a broken download but not a replaced one"
+      "label": "Downloads and runs a Python translation engine (about 460 MB) the first time you translate a PDF; we haven't checked what's inside it",
+      "concern": "medium",
+      "detail": "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. We haven't checked what's inside it. The first time you translate a PDF with the default engine (once you've started a trial or activated it), it downloads about 460 MB of Python, the BabelDOC engine and models from the developer's server and runs them as a local service, without asking; the README doesn't mention it, though the settings page says the environment is prepared on first use. If that download fails, it builds the same setup from Python packages instead, which is listed as its own finding. We reviewed version 2.0.33; this release has the same code."
      },
      {
       "id": "package-run",
@@ -243,12 +243,12 @@
       "concern": "low"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-PACKAGE-RUN",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-FIXED"
     ]
    },
    "requirements": {
@@ -287,13 +287,15 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it"
+    "Downloads and runs a Python translation engine (about 460 MB) the first time you translate a PDF; we haven't checked what's inside it",
+    "Installs and runs software packages from npm or PyPI",
+    "Launches programs on your computer"
    ]
   }
  },

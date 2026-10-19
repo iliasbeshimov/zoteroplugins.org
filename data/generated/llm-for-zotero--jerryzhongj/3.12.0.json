@@ -703,8 +703,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "llm-for-zotero--jerryzhongj",
    "version": "3.12.0",
@@ -1243,42 +1243,107 @@
      "files": [
       "content/scripts/llmforzotero.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "highlight.js",
      "files": [
       "content/scripts/llmforzotero.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 58157,
+       "snippet": "deprecated(\"10.7.0\", \"Please use highlight(code, options) instead.\\nhttps://github.com/highlightjs/highlight.js/issues/2277\");"
+      },
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 58556,
+       "snippet": "console.warn(\"https://github.com/highlightjs/highlight.js/wiki/security\");"
+      }
+     ]
     },
     {
      "name": "katex",
      "files": [
       "content/scripts/llmforzotero.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
     },
     {
      "name": "marked",
      "files": [
       "content/scripts/llmforzotero.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 64553,
+       "snippet": "if (n.message += `"
+      }
+     ]
     },
     {
      "name": "mermaid",
      "files": [
       "content/vendor/mermaid/mermaid.min.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "release"
+    },
+    {
+     "name": "vditor",
+     "files": [
+      "content/vendor/mermaid/mermaid.min.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
     },
     {
      "name": "zotero-plugin-toolkit",
      "files": [
       "content/scripts/llmforzotero.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 208226,
+       "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);"
+      },
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 208229,
+       "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v2, true);"
+      },
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 208262,
+       "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);"
+      },
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 208688,
+       "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);"
+      },
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 208688,
+       "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);"
+      },
+      {
+       "file": "content/scripts/llmforzotero.js",
+       "line": 208734,
+       "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);"
+      }
+     ]
     }
    ]
   },
@@ -2433,8 +2498,6 @@
      "usage": "request",
      "inVendoredCode": false,
      "libraries": [
-      "highlight.js",
-      "marked",
       "mermaid"
      ],
      "occurrences": 18,
@@ -2469,7 +2532,7 @@
        "line": 58157,
        "column": 33,
        "snippet": "deprecated(\"10.7.0\", \"Please use highlight(code, options) instead.\\nhttps://github.com/highlightjs/highlight.js/issues/2277\");",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -2477,7 +2540,7 @@
        "line": 58556,
        "column": 27,
        "snippet": "console.warn(\"https://github.com/highlightjs/highlight.js/wiki/security\");",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -2485,7 +2548,7 @@
        "line": 64553,
        "column": 29,
        "snippet": "if (n.message += `",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -3339,13 +3402,14 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "borrowed-identity",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "67b656b3cd93",
     "evidence": [
      {
       "kind": "code",
@@ -3375,9 +3439,7 @@
     "id": "clipboard",
     "occurrences": 14,
     "inVendoredCodeOnly": false,
-    "libraries": [
-     "zotero-plugin-toolkit"
-    ],
+    "codeKey": "235ea668fb71",
     "evidence": [
      {
       "kind": "code",
@@ -3441,7 +3503,7 @@
       "line": 208688,
       "column": 49,
       "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
-      "inVendoredCode": true
+      "inVendoredCode": false
      },
      {
       "kind": "code",
@@ -3449,7 +3511,7 @@
       "line": 208688,
       "column": 95,
       "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
-      "inVendoredCode": true
+      "inVendoredCode": false
      },
      {
       "kind": "code",
@@ -3457,7 +3519,7 @@
       "line": 208734,
       "column": 43,
       "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
-      "inVendoredCode": true
+      "inVendoredCode": false
      }
     ],
     "details": {
@@ -3471,9 +3533,7 @@
     "id": "credential-storage",
     "occurrences": 13,
     "inVendoredCodeOnly": false,
-    "libraries": [
-     "zotero-plugin-toolkit"
-    ],
+    "codeKey": "5e668c9d2e77",
     "evidence": [
      {
       "kind": "code",
@@ -3545,7 +3605,7 @@
       "line": 208226,
       "column": 13,
       "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);",
-      "inVendoredCode": true
+      "inVendoredCode": false
      },
      {
       "kind": "code",
@@ -3553,7 +3613,7 @@
       "line": 208229,
       "column": 6,
       "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v2, true);",
-      "inVendoredCode": true
+      "inVendoredCode": false
      }
     ],
     "details": {
@@ -3576,6 +3636,7 @@
     "id": "db-write",
     "occurrences": 427,
     "inVendoredCodeOnly": false,
+    "codeKey": "5c270ec38e6f",
     "evidence": [
      {
       "kind": "code",
@@ -3688,6 +3749,7 @@
     "id": "download-exec",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "7d89b6b49bd8",
     "evidence": [
      {
       "kind": "code",
@@ -3720,9 +3782,9 @@
     "occurrences": 5,
     "inVendoredCodeOnly": false,
     "libraries": [
-     "mermaid",
-     "zotero-plugin-toolkit"
+     "mermaid"
     ],
+    "codeKey": "4eac6adc9676",
     "evidence": [
      {
       "kind": "code",
@@ -3746,7 +3808,7 @@
       "line": 208262,
       "column": 24,
       "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);",
-      "inVendoredCode": true
+      "inVendoredCode": false
      },
      {
       "kind": "code",
@@ -3778,9 +3840,7 @@
     "id": "filesystem",
     "occurrences": 34,
     "inVendoredCodeOnly": false,
-    "libraries": [
-     "zotero-plugin-toolkit"
-    ],
+    "codeKey": "c438351b8384",
     "evidence": [
      {
       "kind": "code",
@@ -3879,6 +3939,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "adb1b436c0a9",
     "evidence": [
      {
       "kind": "code",
@@ -3903,6 +3964,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "99e69161fe8b",
     "evidence": [
      {
       "kind": "code",
@@ -3924,6 +3986,7 @@
     "id": "local-http-server",
     "occurrences": 5,
     "inVendoredCodeOnly": false,
+    "codeKey": "f3dc5d5edf6e",
     "evidence": [
      {
       "kind": "code",
@@ -3979,6 +4042,7 @@
     "id": "process-launch",
     "occurrences": 29,
     "inVendoredCodeOnly": false,
+    "codeKey": "09a5454d8a24",
     "evidence": [
      {
       "kind": "code",
@@ -4075,6 +4139,7 @@
     "id": "reused-app-login",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "463d24d0aba6",
     "evidence": [
      {
       "kind": "code",
@@ -4095,6 +4160,7 @@
     "id": "runs-sent-code",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "be18f3d4d1d0",
     "evidence": [
      {
       "kind": "code",
@@ -4143,6 +4209,7 @@
     "id": "server-edits-library",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "6e8f922ac5ce",
     "evidence": [
      {
       "kind": "code",
@@ -4188,19 +4255,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-16T08:28:45.923Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "llm-for-zotero--jerryzhongj",
    "version": "3.12.0",
    "sha256": "c4eec47093856d5001ee32778d9452ee2a80b006e9bd62c8a6eecc1bee36141b"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "d18b52532389f0dbb894e257b275742532477e453b711593293471228e4553eb"
+   "inputHash": "400797370a2ccef430b16edb303c10c859c0875ff06e365f7265d56b80b0f39d"
   },
   "facets": {
    "sourceTransparency": {
@@ -4325,9 +4392,9 @@
     "badges": [
      {
       "id": "runs-sent-code",
-      "label": "Runs commands its AI assistant writes, with full access to your computer",
+      "label": "Its AI agent can run commands on your computer without asking you",
       "concern": "high",
-      "detail": "It can run without showing you the code first"
+      "detail": "Commands run as you, so they can read and change any of your files and start other programs."
      },
      {
       "id": "borrowed-identity",
@@ -4343,9 +4410,9 @@
      },
      {
       "id": "download-exec",
-      "label": "Downloads a program and runs it",
+      "label": "Downloads and runs Python and PDF tools the first time you ask about a figure; someone other than its developer can change what runs at any time",
       "concern": "medium",
-      "detail": "The first time you ask about a figure, it downloads a 265–491 MB bundle of Python and the Poppler PDF tools from the original llm-for-zotero developer's (not this fork's) GitHub release and runs it, without asking. The README doesn't mention it, and the download isn't checked against a fingerprint. We checked the macOS (Apple silicon) bundle: every file is standard software from conda-forge."
+      "detail": "The file belongs to yilewang, the developer of the original llm-for-zotero, not this plugin's developer: they can replace it at any time, and nothing checks it before it runs, and what they put there runs on your computer. The first time you ask about a figure, it downloads a 265–491 MB bundle of Python and the Poppler PDF tools from the original llm-for-zotero's GitHub release and runs it, without asking; the README doesn't mention it. What's there now is standard software: we checked the macOS (Apple silicon) bundle, and every file is from conda-forge."
      },
      {
       "id": "link-installs-addons",
@@ -4418,7 +4485,7 @@
      "CAP-PROCESS",
      "CAP-REUSED-APP-LOGIN",
      "CAP-SENT-CODE-UNASKED",
-     "CAP-DOWNLOAD-EXEC-REVIEWED"
+     "CAP-DOWNLOAD-EXEC-OTHER"
     ]
    },
    "requirements": {
@@ -4463,7 +4530,7 @@
     "capabilities"
    ],
    "reasons": [
-    "Runs commands its AI assistant writes, with full access to your computer"
+    "Its AI agent can run commands on your computer without asking you"
    ]
   }
  }

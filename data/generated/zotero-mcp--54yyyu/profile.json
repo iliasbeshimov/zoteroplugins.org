@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "zotero-mcp--54yyyu",
  "repo": "54yyyu/zotero-mcp",
  "repoName": "54yyyu/zotero-mcp",
@@ -138,19 +138,19 @@
  "addonIdSharedWith": [],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-mcp--54yyyu",
    "version": "0.15.1",
    "sha256": "76d672e1a8c12306b0bd0f93443be5c12729a9e8ad138cd8c79e192d34ab96ea"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "f62718366f84f2352a293c00060e6af42668b0646db91ba6c091e10762497c39"
+   "inputHash": "fc7763ae49150528761252bf8addc729e31b9d66f80b531486d8a67232b7b0b7"
   },
   "facets": {
    "sourceTransparency": {
@@ -192,12 +192,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "Not checked against a fingerprint written into the plugin"
-     },
-     {
       "id": "package-run",
       "label": "Installs and runs npm or PyPI packages without a fixed version",
       "concern": "high",
@@ -220,6 +214,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads and runs uv's installer when you press Install zotero-cli, if you don't have uv",
+      "concern": "low",
+      "detail": "It comes straight from Astral, who make uv, over an encrypted connection, as it would if you installed it yourself. If you don't have uv, pressing Install zotero-cli in its setup checklist runs uv's install script, then uses uv to install the zotero-mcp-server package, which is listed as its own finding. The checklist item says it installs uv too; the README only shows the manual command. We reviewed version 0.15.0; this release has the same code."
+     },
+     {
       "id": "enables-local-api",
       "label": "Turns on Zotero's local API, so programs on this computer can read your library",
       "concern": "low"
@@ -238,9 +238,9 @@
     "concern": "high",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-PACKAGE-UNPINNED",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-MAKER"
     ]
    },
    "requirements": {
@@ -285,7 +285,6 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it",
     "Installs and runs npm or PyPI packages without a fixed version"
    ]
   }

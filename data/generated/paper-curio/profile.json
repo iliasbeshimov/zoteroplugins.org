@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-10-19T09:08:26.572Z",
+ "generatedAt": "2026-10-19T17:56:04.208Z",
  "slug": "paper-curio",
  "repo": "jehyunlee/paper-curio",
  "repoName": "jehyunlee/paper-curio",
@@ -65,15 +65,14 @@
   "supports": [
    7,
    8,
-   9,
-   10
+   9
   ],
-  "minVersion": "10.0",
-  "maxVersion": "10.*",
+  "minVersion": "6.999",
+  "maxVersion": "9.*",
   "current": {
    "major": 10,
    "zoteroVersion": "10.0.6",
-   "status": "compatible"
+   "status": "incompatible"
   },
   "previous": {
    "major": 9,
@@ -93,31 +92,19 @@
   "publishedAt": "2026-10-18T07:11:35Z",
   "prerelease": false,
   "asset": {
-   "name": "paper-curio-zotero10.xpi",
-   "url": "https://github.com/jehyunlee/paper-curio/releases/download/v0.11.5/paper-curio-zotero10.xpi",
-   "size": 915305,
-   "sha256": "9146e551ee6c9850add17d12f3a7479caa9c285848e5d862dd421534d75bcd9b"
+   "name": "paper-curio-zotero9.xpi",
+   "url": "https://github.com/jehyunlee/paper-curio/releases/download/v0.11.5/paper-curio-zotero9.xpi",
+   "size": 915307,
+   "sha256": "ddcbfedfc7e13377c4af8bbf85891aa17530a22e04e41a9479a5cab2f23c7960"
   },
   "otherAssets": [
    {
-    "name": "paper-curio-zotero9.xpi",
-    "url": "https://github.com/jehyunlee/paper-curio/releases/download/v0.11.5/paper-curio-zotero9.xpi"
+    "name": "paper-curio-zotero10.xpi",
+    "url": "https://github.com/jehyunlee/paper-curio/releases/download/v0.11.5/paper-curio-zotero10.xpi"
    }
   ],
   "autoUpdates": true,
-  "builds": [
-   {
-    "asset": "paper-curio-zotero9.xpi",
-    "version": "0.11.5",
-    "supports": [
-     7,
-     8,
-     9
-    ],
-    "label": "high-concern",
-    "releaseFile": "paper-curio/0.11.5.json"
-   }
-  ],
+  "builds": [],
   "updates": {
    "kind": "this-project",
    "url": "https://github.com/jehyunlee/paper-curio/releases/download/release/update.json",
@@ -140,7 +127,7 @@
     "note": "The update address offers this version"
    }
   },
-  "releaseFile": "paper-curio/0.11.5+9146e551.json"
+  "releaseFile": "paper-curio/0.11.5.json"
  },
  "fork": null,
  "forks": [],
@@ -148,19 +135,19 @@
  "addonIdSharedWith": [],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-19T09:08:26.572Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "paper-curio",
    "version": "0.11.5",
-   "sha256": "9146e551ee6c9850add17d12f3a7479caa9c285848e5d862dd421534d75bcd9b"
+   "sha256": "ddcbfedfc7e13377c4af8bbf85891aa17530a22e04e41a9479a5cab2f23c7960"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "5d9fe43bfe73a3e17312845394f9ed15e6f47f65af0fe8fd65960f5510e7d94f"
+   "inputHash": "cd7889d346d44392ab008f14e310771a4b5a5a7fcd046486f269ed71cacdd00b"
   },
   "facets": {
    "sourceTransparency": {
@@ -223,12 +210,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "Not checked against a fingerprint written into the plugin"
-     },
-     {
       "id": "package-run",
       "label": "Installs and runs npm or PyPI packages without a fixed version",
       "concern": "high",
@@ -250,6 +231,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads and runs a standalone Python on Macs without Python 3.12",
+      "concern": "low",
+      "detail": "It comes straight from Astral, who build these standalone Pythons, over an encrypted connection, as it would if you installed it yourself. The first time you process a whole collection on a Mac without Python 3.12, it downloads a standalone Python (about 25 MB) and runs it, as its README says. It takes whatever the latest release is, then installs the paper-curation packages, which is listed as its own finding. We reviewed version 0.11.2; this release has the same code."
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -258,9 +245,9 @@
     "concern": "high",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-PACKAGE-UNPINNED",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-MAKER"
     ]
    },
    "requirements": {
@@ -277,12 +264,12 @@
     "current": {
      "zoteroVersion": "10.0.6",
      "major": 10,
-     "status": "compatible"
+     "status": "incompatible"
     },
     "previous": {
      "zoteroVersion": "9.0.6",
      "major": 9,
-     "status": "incompatible"
+     "status": "compatible"
     },
     "next": {
      "zoteroVersion": "11.0-dev.5+dac1ad489",
@@ -290,8 +277,8 @@
      "status": "incompatible"
     },
     "blockedByZotero": null,
-    "label": "Works with Zotero 10",
-    "concern": "none"
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
    },
    "reviewStatus": {
     "state": "automated-only",
@@ -305,7 +292,6 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it",
     "Installs and runs npm or PyPI packages without a fixed version"
    ]
   }
@@ -321,7 +307,8 @@
  },
  "requirementsHints": {
   "aiServices": [
-   "Google Gemini"
+   "Google Gemini",
+   "OpenAI"
   ],
   "otherServices": [
    "DOI resolver",

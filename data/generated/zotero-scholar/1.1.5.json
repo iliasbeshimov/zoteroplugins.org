@@ -103,8 +103,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-scholar",
    "version": "1.1.5",
@@ -173,7 +173,58 @@
     "files": []
    },
    "suspiciousUnicode": [],
-   "vendoredLibraries": []
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "chrome/content/scripts/zoteroScholar.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "chrome/content/scripts/zoteroScholar.js",
+       "line": 147,
+       "snippet": "terfaces.nsIClipboard.kGlobalClipboard)}catch(e){if(this.filePath&&Zotero.isMac)Zotero.Utilities.Internal.exec(\"/usr/bin/osascript\",[\"-e\",`set the clipboard to POSIX file \"${this.filePath}\"`]);else th"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroScholar.js",
+       "line": 195,
+       "snippet": "ld(\"archiveID\");i?e=i.toString():(e=r.getField(\"DOI\").toString(),t=\"doi\");let o=`https://api.semanticscholar.org/graph/v1/paper/${t===\"arxiv\"?e:`doi:${e}`}?fields=citationCount,publicationVenue`;retur"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroScholar.js",
+       "line": 195,
+       "snippet": "\"arxiv\"?e:`doi:${e}`}?fields=citationCount,publicationVenue`;return await(await fetch(o)).json()}var T={addonName:\"Zotero Scholar\",addonID:\"zoteroScholar@my.com\",addonRef:\"zoteroScholar\",addonInstance"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroScholar.js",
+       "line": 195,
+       "snippet": "tance:\"AddonTemplate\",prefsPrefix:\"extensions.zotero.addontemplate\",releasePage:\"https://github.com/liunuozhi/zotero-scholar/releases\",updateJSON:\"https://raw.githubusercontent.com/liunuozhi/zotero-sc"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroScholar.js",
+       "line": 195,
+       "snippet": "\",releasePage:\"https://github.com/liunuozhi/zotero-scholar/releases\",updateJSON:\"https://raw.githubusercontent.com/liunuozhi/zotero-scholar/main/update.json\",updateBetaJSON:\"https://raw.githubusercont"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroScholar.js",
+       "line": 195,
+       "snippet": "githubusercontent.com/liunuozhi/zotero-scholar/main/update.json\",updateBetaJSON:\"https://raw.githubusercontent.com/liunuozhi/zotero-scholar/main/update-beta.json\"};function ht(r,e,t){let i=t.value;ret"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroScholar.js",
+       "line": 195,
+       "snippet": ".${String(e)}`,o),o}},t}var q=class{static async registerRightClickMenu(){let e=`chrome://${T.addonRef}/content/icons/favicon@0.5x.png`;ztoolkit.Menu.register(\"item\",{tag:\"menuitem\",id:\"query-citation"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroScholar.js",
+       "line": 195,
+       "snippet": "=!1,r.basicOptions.api.pluginID=T.addonID,r.ProgressWindow.setIconURI(\"default\",`chrome://${T.addonRef}/content/icons/favicon.png`)}async function Vr(){await Promise.all([Zotero.initializationPromise,"
+      }
+     ]
+    }
+   ]
   },
   "network": {
    "apis": [
@@ -289,13 +340,17 @@
     }
    ],
    "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "clipboard",
     "occurrences": 6,
     "inVendoredCodeOnly": false,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "ac29731ed802",
     "evidence": [
      {
       "kind": "code",
@@ -303,7 +358,7 @@
       "line": 147,
       "column": 13749,
       "snippet": "});var xt=v(ge=>{\"use strict\";Object.defineProperty(ge,\"__esModule\",{value:!0});ge.ClipboardHelper=void 0;var Hi=y(),Oe=class extends Hi.BasicTool{constructor(){super(),this.filePath=\"\",this.transfera",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -311,7 +366,7 @@
       "line": 147,
       "column": 14025,
       "snippet": "Components.interfaces.nsITransferable),this.clipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(e",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -319,7 +374,7 @@
       "line": 147,
       "column": 14071,
       "snippet": "ipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(e,t=\"text/plain\"){let i=Components.classes[\"@mo",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -335,7 +390,7 @@
       "line": 147,
       "column": 15729,
       "snippet": "et the clipboard to POSIX file \"${this.filePath}\"`]);else throw e}return this}};ge.ClipboardHelper=Oe});var Tt=v(be=>{\"use strict\";Object.defineProperty(be,\"__esModule\",{value:!0});be.FilePickerHelper",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -343,7 +398,7 @@
       "line": 195,
       "column": 12797,
       "snippet": ",this.Shortcut=new gr.ShortcutManager(this),this.Clipboard=(0,P.makeHelperTool)(br.ClipboardHelper,this),this.FilePicker=(0,P.makeHelperTool)(yr.FilePickerHelper,this),this.Patch=(0,P.makeHelperTool)(",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -356,7 +411,11 @@
    {
     "id": "dynamic-code",
     "occurrences": 1,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "80583b39bc0a",
     "evidence": [
      {
       "kind": "code",
@@ -364,7 +423,7 @@
       "line": 4,
       "column": 173,
       "snippet": "{if(n.run)try{let c=Object.getPrototypeOf(async function(){}).constructor;await new c(\"Zotero,window\",n.run)(s,o)}catch(c){s.debug(c),o.console.log(c)}if(n.file)try{Services.scriptloader.loadSubScript",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -376,7 +435,11 @@
    {
     "id": "filesystem",
     "occurrences": 2,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "13a035bbc646",
     "evidence": [
      {
       "kind": "code",
@@ -384,7 +447,7 @@
       "line": 147,
       "column": 15191,
       "snippet": "is.transferable.setTransferData(l,d,0),this}addFile(e){let t=Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);return t.initWithPath(e),this.transferable.ad",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -392,7 +455,7 @@
       "line": 147,
       "column": 15235,
       "snippet": "addFile(e){let t=Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);return t.initWithPath(e),this.transferable.addDataFlavor(\"application/x-moz-file\"),this.t",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -409,6 +472,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "d201f0128774",
     "evidence": [
      {
       "kind": "code",
@@ -433,6 +497,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "3fb6539a772f",
     "evidence": [
      {
       "kind": "code",
@@ -489,19 +554,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-scholar",
    "version": "1.1.5",
    "sha256": "e808aabac4f6203db5ea7f6c065ea5e45f30e274c460023e28545b300f796e06"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "777e65936829129c074043cc2becaf674b27a1c07c9495f316acadc2e4b761d1"
+   "inputHash": "3b0394e2755235d50015e4b3db7026893bab914a67050f0e90a0be6ffa6efda6"
   },
   "facets": {
    "sourceTransparency": {
@@ -565,16 +630,6 @@
      {
       "id": "clipboard",
       "label": "Uses the clipboard",
-      "concern": "low"
-     },
-     {
-      "id": "dynamic-code",
-      "label": "Runs code it assembles while running",
-      "concern": "low"
-     },
-     {
-      "id": "filesystem",
-      "label": "Works with files on your computer",
       "concern": "low"
      }
     ],

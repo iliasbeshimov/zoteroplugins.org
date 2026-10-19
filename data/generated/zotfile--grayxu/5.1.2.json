@@ -513,8 +513,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotfile--grayxu",
    "version": "5.1.2",
@@ -673,14 +673,7 @@
    "suspiciousUnicode": [],
    "vendoredLibraries": [
     {
-     "name": "pdf.js",
-     "files": [
-      "chrome/content/zotfile/pdfextract/pdfjs/src/pdf.js"
-     ],
-     "identifiedBy": "file-name"
-    },
-    {
-     "name": "pdfjs",
+     "name": "pdfjs-dist",
      "files": [
       "chrome/content/zotfile/pdfextract/pdfjs/src/core/annotation.js",
       "chrome/content/zotfile/pdfextract/pdfjs/src/core/arithmetic_decoder.js",
@@ -720,12 +713,46 @@
       "chrome/content/zotfile/pdfextract/pdfjs/src/display/webgl.js",
       "chrome/content/zotfile/pdfextract/pdfjs/src/doc_helper.js",
       "chrome/content/zotfile/pdfextract/pdfjs/src/getPDFAnnotations.js",
+      "chrome/content/zotfile/pdfextract/pdfjs/src/pdf.js",
       "chrome/content/zotfile/pdfextract/pdfjs/src/shared/cffStandardStrings.js",
       "chrome/content/zotfile/pdfextract/pdfjs/src/shared/fonts_utils.js",
       "chrome/content/zotfile/pdfextract/pdfjs/src/shared/util.js",
       "chrome/content/zotfile/pdfextract/pdfjs/src/worker_loader.js"
      ],
-     "identifiedBy": "file-name"
+     "identifiedBy": "file-name",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "chrome/content/zotfile/pdfextract/pdfjs/src/core/chunked_stream.js",
+       "line": 290,
+       "snippet": "return new XMLHttpRequest();"
+      },
+      {
+       "file": "chrome/content/zotfile/pdfextract/pdfjs/src/core/cmap.js",
+       "line": 376,
+       "snippet": "var request = new XMLHttpRequest();"
+      },
+      {
+       "file": "chrome/content/zotfile/pdfextract/pdfjs/src/core/cmap.js",
+       "line": 926,
+       "snippet": "var request = new XMLHttpRequest();"
+      },
+      {
+       "file": "chrome/content/zotfile/pdfextract/pdfjs/src/core/network.js",
+       "line": 56,
+       "snippet": "return new XMLHttpRequest();"
+      },
+      {
+       "file": "chrome/content/zotfile/pdfextract/pdfjs/src/core/worker.js",
+       "line": 220,
+       "snippet": "var xhr = new XMLHttpRequest();"
+      },
+      {
+       "file": "chrome/content/zotfile/pdfextract/pdfjs/src/display/font_loader.js",
+       "line": 369,
+       "snippet": "this.compiledGlyphs[character] = new Function('c', 'size', js);"
+      }
+     ]
     }
    ]
   },
@@ -749,9 +776,9 @@
     {
      "api": "xhr",
      "occurrences": 6,
-     "inVendoredCodeOnly": true,
+     "inVendoredCodeOnly": false,
      "libraries": [
-      "pdfjs"
+      "pdfjs-dist"
      ],
      "evidence": [
       {
@@ -760,7 +787,7 @@
        "line": 290,
        "column": 15,
        "snippet": "return new XMLHttpRequest();",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -768,7 +795,7 @@
        "line": 376,
        "column": 18,
        "snippet": "var request = new XMLHttpRequest();",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -776,7 +803,7 @@
        "line": 926,
        "column": 18,
        "snippet": "var request = new XMLHttpRequest();",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -784,7 +811,7 @@
        "line": 56,
        "column": 15,
        "snippet": "return new XMLHttpRequest();",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -792,7 +819,7 @@
        "line": 220,
        "column": 16,
        "snippet": "var xhr = new XMLHttpRequest();",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -825,7 +852,9 @@
      "host": "www.zotfile.com",
      "category": "developer-server",
      "provider": "ZotFile",
-     "flags": [],
+     "flags": [
+      "unencrypted"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 6,
@@ -902,13 +931,14 @@
    ],
    "dynamicUrls": [],
    "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "clipboard",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "f7f788d63b1d",
     "evidence": [
      {
       "kind": "code",
@@ -937,6 +967,7 @@
     "id": "download-exec",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "02abba8b5c6f",
     "evidence": [
      {
       "kind": "code",
@@ -959,10 +990,11 @@
    {
     "id": "dynamic-code",
     "occurrences": 2,
-    "inVendoredCodeOnly": true,
+    "inVendoredCodeOnly": false,
     "libraries": [
-     "pdfjs"
+     "pdfjs-dist"
     ],
+    "codeKey": "5a8f83eff332",
     "evidence": [
      {
       "kind": "code",
@@ -978,7 +1010,7 @@
       "line": 369,
       "column": 41,
       "snippet": "this.compiledGlyphs[character] = new Function('c', 'size', js);",
-      "inVendoredCode": true
+      "inVendoredCode": false
      }
     ],
     "details": {
@@ -991,9 +1023,7 @@
     "id": "filesystem",
     "occurrences": 105,
     "inVendoredCodeOnly": false,
-    "libraries": [
-     "pdfjs"
-    ],
+    "codeKey": "7e43348db098",
     "evidence": [
      {
       "kind": "code",
@@ -1089,6 +1119,7 @@
     "id": "process-launch",
     "occurrences": 3,
     "inVendoredCodeOnly": false,
+    "codeKey": "268d0598c3ed",
     "evidence": [
      {
       "kind": "code",
@@ -1164,19 +1195,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-17T07:58:57.170Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotfile--grayxu",
    "version": "5.1.2",
    "sha256": "be62552ea360c5b23a784dd3a83289b3fbbf05d7a66a0d9a0037f2f0bf3d60a7"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "3ca5a53623d973ab511ccd5f4fba8ff7f18aa66a626e0cce928340201e451860"
+   "inputHash": "a73b2369d2b23237918e9cb2e31295a938b6ea1de56a70386138b782d1e58ca6"
   },
   "facets": {
    "sourceTransparency": {
@@ -1207,6 +1238,9 @@
       ],
       "unconfirmed": [
        "zotfile.com"
+      ],
+      "unencrypted": [
+       "www.zotfile.com"
       ]
      }
     ],
@@ -1221,9 +1255,9 @@
     "badges": [
      {
       "id": "download-exec",
-      "label": "Downloads a program over unencrypted http and runs it unchecked",
+      "label": "A button in its settings downloads and runs a PDF tool on Intel Macs; it comes over plain http, so anyone on your network could swap it",
       "concern": "high",
-      "detail": "A button in its settings (Intel Macs only) downloads ZotFile's Poppler tool from zotfile.com over unencrypted http and runs it without any check, so someone on your network could swap in their own program. The file is no longer on the server, so today the button fails."
+      "detail": "It downloads over unencrypted http and nothing checks the file, so anyone on the same network, such as public Wi-Fi, could swap in a program of their own. A button in its settings (Intel Macs only) downloads ZotFile's Poppler tool from zotfile.com and runs it; the README doesn't mention it. The file is no longer on the server, so today the button fails."
      },
      {
       "id": "process-launch",
@@ -1234,6 +1268,11 @@
      {
       "id": "clipboard",
       "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "dynamic-code",
+      "label": "Runs code it assembles while running",
       "concern": "low"
      },
      {
@@ -1291,7 +1330,7 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program over unencrypted http and runs it unchecked"
+    "A button in its settings downloads and runs a PDF tool on Intel Macs; it comes over plain http, so anyone on your network could swap it"
    ]
   }
  }

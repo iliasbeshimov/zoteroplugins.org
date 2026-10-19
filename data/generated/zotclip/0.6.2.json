@@ -98,8 +98,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotclip",
    "version": "0.6.2",
@@ -164,7 +164,68 @@
     "files": []
    },
    "suspiciousUnicode": [],
-   "vendoredLibraries": []
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "content/scripts/zotclip.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/scripts/zotclip.js",
+       "line": 5,
+       "snippet": "Instance:\"ZotClip\",prefsPrefix:\"extensions.zotero.zotclip\"};function ge(){return`chrome://${g.addonRef}/content/icons/favicon.svg`}var se=new Map,ii=\"http://www.w3.org/1999/xhtml\",si=`chrome://${g.add"
+      },
+      {
+       "file": "content/scripts/zotclip.js",
+       "line": 5,
+       "snippet": "/content/icons/favicon.svg`}var se=new Map,ii=\"http://www.w3.org/1999/xhtml\",si=`chrome://${g.addonRef}/content/task-card.css?session=${Date.now()}`;function he(e,t=\"task\"){return se.get(e)?.get(t)}fu"
+      },
+      {
+       "file": "content/scripts/zotclip.js",
+       "line": 5,
+       "snippet": "toLowerCase()}var Mo=g.prefsPrefix,Io=[{id:\"deepseek\",label:\"DeepSeek\",endpoint:\"https://api.deepseek.com/v1/chat/completions\",models:[{value:\"deepseek-v4-flash\",label:\"DeepSeek V4 Flash\"},{value:\"dee"
+      },
+      {
+       "file": "content/scripts/zotclip.js",
+       "line": 5,
+       "snippet": "eyRequired:!0,endpointEditable:!1},{id:\"openrouter\",label:\"OpenRouter\",endpoint:\"https://openrouter.ai/api/v1/chat/completions\",models:[{value:\"openai/gpt-4o-mini\",label:\"GPT-4o Mini\"},{value:\"deepsee"
+      },
+      {
+       "file": "content/scripts/zotclip.js",
+       "line": 5,
+       "snippet": "ic\",apiKeyRequired:!0,endpointEditable:!1},{id:\"ollama\",label:\"Ollama\",endpoint:\"http://localhost:11434\",models:[],modelSource:\"ollama-dynamic\",apiKeyRequired:!1,apiKeyPlaceholder:\"pref-ollama-api-key"
+      },
+      {
+       "file": "content/scripts/zotclip.js",
+       "line": 5,
+       "snippet": "key-placeholder\",endpointEditable:!0},{id:\"lmstudio\",label:\"LM Studio\",endpoint:\"http://localhost:1234\",models:[],modelSource:\"lmstudio-dynamic\",apiKeyRequired:!1,apiKeyPlaceholder:\"pref-lmstudio-api-"
+      },
+      {
+       "file": "content/scripts/zotclip.js",
+       "line": 14,
+       "snippet": "?`${t}/v1/chat/completions`:\"\"}var Bo={ollama:{pref:\"aiEndpointOllama\",fallback:\"http://localhost:11434\"},lmstudio:{pref:\"aiEndpointLmstudio\",fallback:\"http://localhost:1234\"}};function ze(e){let t=Bo"
+      },
+      {
+       "file": "content/scripts/zotclip.js",
+       "line": 14,
+       "snippet": "fallback:\"http://localhost:11434\"},lmstudio:{pref:\"aiEndpointLmstudio\",fallback:\"http://localhost:1234\"}};function ze(e){let t=Bo[e];return t?String(S(t.pref)||t.fallback).trim():e===\"custom\"?ai():I(e"
+      },
+      {
+       "file": "content/scripts/zotclip.js",
+       "line": 14,
+       "snippet": "ustom\"};async function Ot(e){return await Services.logins.initializationPromise,Services.logins.findLogins(Wo,\"\",e)}var Ft=zo({async read(e){return(await Ot(e))[0]?.password??\"\"},async write(e,t){let"
+      },
+      {
+       "file": "content/scripts/zotclip.js",
+       "line": 14,
+       "snippet": "ce(Components.interfaces.nsILoginInfo);r.init(Wo,null,e,g.addonID,t,\"\",\"\"),o[0]?Services.logins.modifyLogin(o[0],r):await Services.logins.addLoginAsync(r)},async remove(e){for(let t of await Ot(e))Ser"
+      }
+     ]
+    }
+   ]
   },
   "network": {
    "apis": [
@@ -386,13 +447,14 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "clipboard",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "46d6cc36e705",
     "evidence": [
      {
       "kind": "code",
@@ -420,7 +482,11 @@
    {
     "id": "credential-storage",
     "occurrences": 2,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "f3a1eff10821",
     "evidence": [
      {
       "kind": "code",
@@ -428,7 +494,7 @@
       "line": 1,
       "column": 438,
       "snippet": "DebugBridgePassword(t){this._disableDebugBridgePassword=t}get password(){return P.getZotero().Prefs.get(ne.passwordPref,!0)}set password(t){P.getZotero().Prefs.set(ne.passwordPref,t,!0)}constructor(){",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -436,7 +502,7 @@
       "line": 1,
       "column": 498,
       "snippet": "t password(){return P.getZotero().Prefs.get(ne.passwordPref,!0)}set password(t){P.getZotero().Prefs.set(ne.passwordPref,t,!0)}constructor(){this._disableDebugBridgePassword=!1,this.initializeDebugBrid",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -451,7 +517,11 @@
    {
     "id": "dynamic-code",
     "occurrences": 1,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "5ae6f85a60d5",
     "evidence": [
      {
       "kind": "code",
@@ -459,7 +529,7 @@
       "line": 4,
       "column": 166,
       "snippet": "word,d){if(s.run)try{let l=Object.getPrototypeOf(async()=>{}).constructor;await new l(\"Zotero,window\",s.run)(r,n)}catch(l){r.debug(l),n.console.log(l)}if(s.file)try{Services.scriptloader.loadSubScript",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -472,6 +542,7 @@
     "id": "filesystem",
     "occurrences": 11,
     "inVendoredCodeOnly": false,
+    "codeKey": "ad6cc3b75260",
     "evidence": [
      {
       "kind": "code",
@@ -567,6 +638,7 @@
     "id": "login-manager",
     "occurrences": 5,
     "inVendoredCodeOnly": false,
+    "codeKey": "b314c0338639",
     "evidence": [
      {
       "kind": "code",
@@ -619,6 +691,7 @@
     "id": "native-code",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "5fbf71a5b409",
     "evidence": [
      {
       "kind": "code",
@@ -639,6 +712,7 @@
     "id": "process-launch",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "26862293c40b",
     "evidence": [
      {
       "kind": "code",
@@ -694,19 +768,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotclip",
    "version": "0.6.2",
    "sha256": "f576e2da0ce4fbee5d1cd094d2fac9282ded649c9dd70ca287e8ab6d8e3a1dc1"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "903ba8ac51982d7b23593b91e9714489bf5e5fa0e59a38dd6a75bdc55bb715ae"
+   "inputHash": "0d56f3556491b601ccae2e885e1dcdf74c7a6ef66a72da0862a53882554282aa"
   },
   "facets": {
    "sourceTransparency": {
@@ -772,16 +846,6 @@
      {
       "id": "clipboard",
       "label": "Uses the clipboard",
-      "concern": "low"
-     },
-     {
-      "id": "credential-storage",
-      "label": "Stores API keys or passwords",
-      "concern": "low"
-     },
-     {
-      "id": "dynamic-code",
-      "label": "Runs code it assembles while running",
       "concern": "low"
      },
      {

@@ -93,8 +93,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-09-27T05:20:16.255Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-19T17:56:04.208Z",
   "input": {
    "slug": "zotero-mdnotes--edd-gao",
    "version": "0.2.3",
@@ -195,7 +195,9 @@
      "host": "flomoapp.com",
      "category": "integration",
      "provider": "flomo",
-     "flags": [],
+     "flags": [
+      "fixed-account"
+     ],
      "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
@@ -241,13 +243,14 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "filesystem",
     "occurrences": 12,
     "inVendoredCodeOnly": false,
+    "codeKey": "c124e0b66aa2",
     "evidence": [
      {
       "kind": "code",
@@ -377,19 +380,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-19T17:56:04.208Z",
   "appliesTo": {
    "slug": "zotero-mdnotes--edd-gao",
    "version": "0.2.3",
    "sha256": "c705447bf36d139bd19ebd0e4fd3e250a1fdcaf9dfa2791f54509cda4bec4208"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "e3292a5e4d7d5f50af6917c8163cd7b61e7f67460f3e7d5b58a3cb315d0cf512"
+   "inputHash": "305ed9de3a0018d3ace2f14f316b6699585736992fba594aba7334af3d01c852"
   },
   "facets": {
    "sourceTransparency": {
@@ -411,10 +414,10 @@
     ]
    },
    "dataSharing": {
-    "value": "named-third-parties",
+    "value": "developer-servers",
     "hosts": [
      {
-      "category": "integration",
+      "category": "developer-server",
       "hosts": [
        "flomoapp.com"
       ]
@@ -429,11 +432,11 @@
       ]
      }
     ],
-    "concern": "low",
-    "label": "Only contacts services we could identify",
+    "concern": "medium",
+    "label": "Sends data into an account written into its code: flomoapp.com",
     "legalRisk": false,
     "drivers": [
-     "DS-NAMED"
+     "DS-DEVELOPER"
     ]
    },
    "capabilities": {
@@ -485,9 +488,14 @@
    }
   },
   "overall": {
-   "label": "low-concern",
-   "ruleId": "OV-LOW",
-   "drivers": []
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Sends data into an account written into its code: flomoapp.com"
+   ]
   }
  }
 }
