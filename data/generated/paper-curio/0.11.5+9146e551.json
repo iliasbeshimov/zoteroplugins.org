@@ -303,8 +303,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-18T11:19:25.469Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-20T08:45:10.546Z",
   "input": {
    "slug": "paper-curio",
    "version": "0.11.5",
@@ -539,49 +539,101 @@
      "files": [
       "chrome/content/scripts/papercurio.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "@esbuild-plugins/node-globals-polyfill",
      "files": [
       "chrome/content/scripts/papercurio.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "@google/generative-ai",
      "files": [
       "chrome/content/scripts/papercurio.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
     },
     {
      "name": "katex",
      "files": [
       "chrome/content/scripts/papercurio.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
     },
     {
      "name": "marked",
      "files": [
       "chrome/content/scripts/papercurio.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "chrome/content/scripts/papercurio.js",
+       "line": 9007,
+       "snippet": "console.warn(\"marked(): sanitize and sanitizer parameters are deprecated since version 0.7.0, should not be used and will be removed in the future. Read more here: https://marked.js.org/#/USING_"
+      }
+     ]
+    },
+    {
+     "name": "mermaid",
+     "files": [
+      "chrome/content/scripts/papercurio.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
     },
     {
      "name": "openai",
      "files": [
       "chrome/content/scripts/papercurio.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "chrome/content/scripts/papercurio.js",
+       "line": 30394,
+       "snippet": "fetch: _fetch,"
+      },
+      {
+       "file": "chrome/content/scripts/papercurio.js",
+       "line": 30436,
+       "snippet": "throw new Error(\"The `fileFromPath` function is only supported in Node. See the README for more details: https://www.github.com/openai/openai-node#file-uploads\");"
+      },
+      {
+       "file": "chrome/content/scripts/papercurio.js",
+       "line": 31394,
+       "snippet": "this.fetch.call(void 0, url, fetchOptions).finally(() => {"
+      },
+      {
+       "file": "chrome/content/scripts/papercurio.js",
+       "line": 36350,
+       "snippet": "baseURL: baseURL || `https://api.openai.com/v1`"
+      }
+     ]
+    },
+    {
+     "name": "vditor",
+     "files": [
+      "chrome/content/scripts/papercurio.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "release"
     },
     {
      "name": "zotero-plugin-toolkit",
      "files": [
       "chrome/content/scripts/papercurio.js"
      ],
-     "identifiedBy": "package-json"
+     "identifiedBy": "package-json",
+     "match": "release"
     }
    ]
   },
@@ -589,12 +641,11 @@
    "apis": [
     {
      "api": "fetch",
-     "occurrences": 4,
+     "occurrences": 5,
      "inVendoredCodeOnly": false,
      "libraries": [
       "@anthropic-ai/sdk",
-      "@google/generative-ai",
-      "openai"
+      "@google/generative-ai"
      ],
      "evidence": [
       {
@@ -608,10 +659,18 @@
       {
        "kind": "code",
        "file": "chrome/content/scripts/papercurio.js",
+       "line": 30394,
+       "column": 6,
+       "snippet": "fetch: _fetch,",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/scripts/papercurio.js",
        "line": 31394,
        "column": 8,
        "snippet": "this.fetch.call(void 0, url, fetchOptions).finally(() => {",
-       "inVendoredCode": true
+       "inVendoredCode": false
       },
       {
        "kind": "code",
@@ -699,10 +758,7 @@
       "blocked-in-mainland-china"
      ],
      "usage": "unknown",
-     "inVendoredCode": true,
-     "libraries": [
-      "openai"
-     ],
+     "inVendoredCode": false,
      "occurrences": 1,
      "evidence": [
       {
@@ -711,7 +767,7 @@
        "line": 36350,
        "column": 28,
        "snippet": "baseURL: baseURL || `https://api.openai.com/v1`",
-       "inVendoredCode": true
+       "inVendoredCode": false
       }
      ]
     },
@@ -879,7 +935,7 @@
      "inVendoredCode": false,
      "libraries": [
       "@anthropic-ai/sdk",
-      "marked"
+      "mermaid"
      ],
      "occurrences": 5,
      "evidence": [
@@ -930,10 +986,7 @@
      "category": "unknown",
      "flags": [],
      "usage": "unknown",
-     "inVendoredCode": true,
-     "libraries": [
-      "marked"
-     ],
+     "inVendoredCode": false,
      "occurrences": 1,
      "evidence": [
       {
@@ -942,7 +995,7 @@
        "line": 9007,
        "column": 19,
        "snippet": "console.warn(\"marked(): sanitize and sanitizer parameters are deprecated since version 0.7.0, should not be used and will be removed in the future. Read more here: https://marked.js.org/#/USING_",
-       "inVendoredCode": true
+       "inVendoredCode": false
       }
      ]
     },
@@ -952,10 +1005,7 @@
      "provider": "GitHub",
      "flags": [],
      "usage": "unknown",
-     "inVendoredCode": true,
-     "libraries": [
-      "openai"
-     ],
+     "inVendoredCode": false,
      "occurrences": 1,
      "evidence": [
       {
@@ -964,7 +1014,7 @@
        "line": 30436,
        "column": 24,
        "snippet": "throw new Error(\"The `fileFromPath` function is only supported in Node. See the README for more details: https://www.github.com/openai/openai-node#file-uploads\");",
-       "inVendoredCode": true
+       "inVendoredCode": false
       }
      ]
     }
@@ -1037,7 +1087,7 @@
     }
    ],
    "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
@@ -1047,6 +1097,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "2c71b0cd210f",
     "evidence": [
      {
       "kind": "code",
@@ -1095,6 +1146,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "ca23a0abc75b",
     "evidence": [
      {
       "kind": "code",
@@ -1198,6 +1250,7 @@
     "id": "download-exec",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "c9c5cc649586",
     "evidence": [
      {
       "kind": "code",
@@ -1221,6 +1274,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "ccebd4967739",
     "evidence": [
      {
       "kind": "code",
@@ -1252,6 +1306,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "a27b264ada08",
     "evidence": [
      {
       "kind": "code",
@@ -1346,6 +1401,7 @@
     "id": "package-run",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
+    "codeKey": "f07dec43ef5b",
     "evidence": [
      {
       "kind": "code",
@@ -1370,6 +1426,7 @@
     "id": "process-launch",
     "occurrences": 3,
     "inVendoredCodeOnly": false,
+    "codeKey": "913f0db87a46",
     "evidence": [
      {
       "kind": "code",
@@ -1441,19 +1498,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-18T11:19:25.469Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-20T08:45:10.546Z",
   "appliesTo": {
    "slug": "paper-curio",
    "version": "0.11.5",
    "sha256": "9146e551ee6c9850add17d12f3a7479caa9c285848e5d862dd421534d75bcd9b"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "5d9fe43bfe73a3e17312845394f9ed15e6f47f65af0fe8fd65960f5510e7d94f"
+   "inputHash": "1c2a51665f3c54c1f5b1876e8ae7295b226a5c34e96275817da8f3d32d21c30c"
   },
   "facets": {
    "sourceTransparency": {
@@ -1516,12 +1573,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads a program and runs it",
-      "concern": "high",
-      "detail": "Not checked against a fingerprint written into the plugin"
-     },
-     {
       "id": "package-run",
       "label": "Installs and runs npm or PyPI packages without a fixed version",
       "concern": "high",
@@ -1543,6 +1594,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads and runs a standalone Python on Macs without Python 3.12",
+      "concern": "low",
+      "detail": "It comes straight from Astral, who build these standalone Pythons, over an encrypted connection, as it would if you installed it yourself. The first time you process a whole collection on a Mac without Python 3.12, it downloads a standalone Python (about 25 MB) and runs it, as its README says. It takes whatever the latest release is, then installs the paper-curation packages, which is listed as its own finding. We reviewed version 0.11.2; this release has the same code."
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -1551,9 +1608,9 @@
     "concern": "high",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-PACKAGE-UNPINNED",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-MAKER"
     ]
    },
    "requirements": {
@@ -1598,7 +1655,6 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program and runs it",
     "Installs and runs npm or PyPI packages without a fixed version"
    ]
   }

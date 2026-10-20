@@ -14,7 +14,7 @@
   "sha256": "89bad777f1daccb5fe603b46485e04c92c8e724b37b405b69cd5f861396f7324",
   "githubAssetId": null,
   "uploader": null,
-  "uploadedAt": "2026-10-19T09:09:40.000Z",
+  "uploadedAt": "2026-10-20T08:48:04.000Z",
   "fetchedAt": "2026-10-12T11:06:33.103Z"
  },
  "manifest": {
@@ -73,8 +73,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-12T11:06:33.103Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-20T08:45:10.546Z",
   "input": {
    "slug": "scholar-sidekick-zotero",
    "version": "0.1.2",
@@ -145,7 +145,7 @@
      "category": "developer-server",
      "provider": "Plugin developer (name match)",
      "flags": [],
-     "usage": "unknown",
+     "usage": "request",
      "inVendoredCode": false,
      "occurrences": 1,
      "evidence": [
@@ -161,14 +161,30 @@
     }
    ],
    "dynamicUrls": [],
-   "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.scholar-sidekick.baseUrl",
+     "defaultValue": "https://scholar-sidekick.com",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/main.js",
+       "line": 2,
+       "column": 1293,
+       "snippet": "tId:null,transformVersion:null,verifyVersion:null};async function m(e){let r=`${f(\"baseUrl\").replace(/\\/+$/,\"\")}${e.path}`,i={\"X-Scholar-Client\":fe,...ge()};e.body!==void 0&&(i[\"Content-Type\"]=\"applic",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "filesystem",
     "occurrences": 1,
     "inVendoredCodeOnly": false,
+    "codeKey": "adbdf482f08f",
     "evidence": [
      {
       "kind": "code",
@@ -225,19 +241,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-20T08:45:10.546Z",
   "appliesTo": {
    "slug": "scholar-sidekick-zotero",
    "version": "0.1.2",
    "sha256": "89bad777f1daccb5fe603b46485e04c92c8e724b37b405b69cd5f861396f7324"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "893ec05c5d369908201db3cc23c244b0b1fb20f71379595c3fe79a90089a1c48"
+   "inputHash": "c16974fb376616ea98c3aa35a767e136383918c79b992d1106a55b03692fe2f7"
   },
   "facets": {
    "sourceTransparency": {
@@ -258,13 +274,20 @@
     ]
    },
    "dataSharing": {
-    "value": "unknown-endpoints",
-    "hosts": [],
+    "value": "developer-servers",
+    "hosts": [
+     {
+      "category": "developer-server",
+      "hosts": [
+       "scholar-sidekick.com"
+      ]
+     }
+    ],
     "concern": "medium",
-    "label": "Uses the network; we couldn't tell where",
+    "label": "Contacts the developer's server: scholar-sidekick.com",
     "legalRisk": false,
     "drivers": [
-     "DS-UNKNOWN-DESTINATION"
+     "DS-DEVELOPER"
     ]
    },
    "capabilities": {
@@ -322,7 +345,7 @@
     "dataSharing"
    ],
    "reasons": [
-    "Uses the network; we couldn't tell where"
+    "Contacts the developer's server: scholar-sidekick.com"
    ]
   }
  }

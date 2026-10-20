@@ -150,8 +150,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-13T10:51:02.942Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-20T08:45:10.546Z",
   "input": {
    "slug": "onedict",
    "version": "0.2.0",
@@ -232,13 +232,74 @@
     "files": []
    },
    "suspiciousUnicode": [],
-   "vendoredLibraries": []
+   "vendoredLibraries": [
+    {
+     "name": "openai",
+     "files": [
+      "assets/chunks/app.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "assets/chunks/app.js",
+       "line": 60,
+       "snippet": "fetch(link.href, fetchOpts);"
+      },
+      {
+       "file": "assets/chunks/app.js",
+       "line": 4151,
+       "snippet": "return canParseURL(`http://[${value}]`);"
+      },
+      {
+       "file": "assets/chunks/app.js",
+       "line": 16487,
+       "snippet": "this.tokenExchangeUrl = \"https://auth.openai.com/oauth/token\";"
+      },
+      {
+       "file": "assets/chunks/app.js",
+       "line": 34618,
+       "snippet": "providerRuntime?.baseURL ?? residencyBaseURL ?? (baseURL || (usesX509Identity ? \"https://mtls.api.openai.com/v1\" : `https://api.openai.com/v1`))"
+      },
+      {
+       "file": "assets/chunks/app.js",
+       "line": 34618,
+       "snippet": "cyBaseURL ?? (baseURL || (usesX509Identity ? \"https://mtls.api.openai.com/v1\" : `https://api.openai.com/v1`))"
+      },
+      {
+       "file": "assets/chunks/app.js",
+       "line": 35973,
+       "snippet": "var card_default = \"/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */\\n@layer properties {\\n @supports (((-webkit-hyphens: none)) and (not (margin-trim: inline))) or ((-moz-orient: in"
+      },
+      {
+       "file": "assets/chunks/app.js",
+       "line": 37034,
+       "snippet": "fetch(request, init).then((response) => {"
+      },
+      {
+       "file": "assets/chunks/app.js",
+       "line": 37337,
+       "snippet": "var prefixUrlRenamedErrorMessage = \"The `prefixUrl` option has been renamed `prefix` in v2 and enhanced to allow slashes in input. See also the new `baseUrl` option for improved flexibility with stand"
+      },
+      {
+       "file": "assets/chunks/app.js",
+       "line": 37973,
+       "snippet": "const response = effectiveTimeout === void 0 ? await fetch(request, nonRequestOptions) : await timeout(request, nonRequestOptions, this.#abortController, {"
+      },
+      {
+       "file": "assets/chunks/app.js",
+       "line": 37975,
+       "snippet": "fetch"
+      }
+     ]
+    }
+   ]
   },
   "network": {
    "apis": [
     {
      "api": "fetch",
-     "occurrences": 9,
+     "occurrences": 8,
      "inVendoredCodeOnly": false,
      "evidence": [
       {
@@ -247,14 +308,6 @@
        "line": 60,
        "column": 2,
        "snippet": "fetch(link.href, fetchOpts);",
-       "inVendoredCode": false
-      },
-      {
-       "kind": "code",
-       "file": "assets/chunks/app.js",
-       "line": 16541,
-       "column": 25,
-       "snippet": "const response = await this.fetch(this.tokenExchangeUrl, {",
        "inVendoredCode": false
       },
       {
@@ -318,7 +371,10 @@
      "category": "unknown",
      "flags": [],
      "usage": "unknown",
-     "inVendoredCode": false,
+     "inVendoredCode": true,
+     "libraries": [
+      "openai"
+     ],
      "occurrences": 1,
      "evidence": [
       {
@@ -327,7 +383,7 @@
        "line": 16149,
        "column": 8,
        "snippet": "[\"ae\", \"https://ae.api.openai.com/v1\"]",
-       "inVendoredCode": false
+       "inVendoredCode": true
       }
      ]
     },
@@ -340,6 +396,9 @@
      ],
      "usage": "unknown",
      "inVendoredCode": false,
+     "libraries": [
+      "openai"
+     ],
      "occurrences": 3,
      "evidence": [
       {
@@ -348,7 +407,7 @@
        "line": 16146,
        "column": 12,
        "snippet": "[\"global\", \"https://api.openai.com/v1\"],",
-       "inVendoredCode": false
+       "inVendoredCode": true
       },
       {
        "kind": "code",
@@ -376,7 +435,7 @@
       "account-oauth",
       "blocked-in-mainland-china"
      ],
-     "usage": "request",
+     "usage": "unknown",
      "inVendoredCode": false,
      "occurrences": 1,
      "evidence": [
@@ -457,7 +516,10 @@
      "category": "unknown",
      "flags": [],
      "usage": "unknown",
-     "inVendoredCode": false,
+     "inVendoredCode": true,
+     "libraries": [
+      "openai"
+     ],
      "occurrences": 1,
      "evidence": [
       {
@@ -466,7 +528,7 @@
        "line": 15550,
        "column": 111,
        "snippet": "void 0 && globalThis.navigator.product === \"ReactNative\") throw new OpenAIError(`The default react-native fetch implementation does not support streaming. Please use expo/fetch: https://docs.expo.dev/",
-       "inVendoredCode": false
+       "inVendoredCode": true
       }
      ]
     },
@@ -475,7 +537,10 @@
      "category": "unknown",
      "flags": [],
      "usage": "unknown",
-     "inVendoredCode": false,
+     "inVendoredCode": true,
+     "libraries": [
+      "openai"
+     ],
      "occurrences": 1,
      "evidence": [
       {
@@ -484,7 +549,7 @@
        "line": 16148,
        "column": 8,
        "snippet": "[\"eu\", \"https://eu.api.openai.com/v1\"],",
-       "inVendoredCode": false
+       "inVendoredCode": true
       }
      ]
     },
@@ -544,7 +609,7 @@
      "category": "translation",
      "provider": "Jisho (Japanese dictionary)",
      "flags": [],
-     "usage": "unknown",
+     "usage": "request",
      "inVendoredCode": false,
      "occurrences": 3,
      "evidence": [
@@ -615,7 +680,10 @@
      "category": "unknown",
      "flags": [],
      "usage": "unknown",
-     "inVendoredCode": false,
+     "inVendoredCode": true,
+     "libraries": [
+      "openai"
+     ],
      "occurrences": 1,
      "evidence": [
       {
@@ -624,7 +692,7 @@
        "line": 16147,
        "column": 8,
        "snippet": "[\"us\", \"https://us.api.openai.com/v1\"],",
-       "inVendoredCode": false
+       "inVendoredCode": true
       }
      ]
     },
@@ -677,7 +745,7 @@
     }
    ],
    "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [],
   "diff": null
@@ -700,19 +768,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-20T08:45:10.546Z",
   "appliesTo": {
    "slug": "onedict",
    "version": "0.2.0",
    "sha256": "36192ad2c891b03f4b5f1d0f6b48a0a2092bce5b601dbc6e69c2aa97e6ea393b"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "3c29d79d1d63ad238daa3fc5354c73ebc1b0c7e8ad4fcc557ea21e928bfbc2e4"
+   "inputHash": "db8ed7f4d6a4c8c73e23bf152d6017b830edf87203f461e157069071adfeed61"
   },
   "facets": {
    "sourceTransparency": {
@@ -742,7 +810,8 @@
        "auth.openai.com"
       ],
       "unconfirmed": [
-       "api.openai.com"
+       "api.openai.com",
+       "auth.openai.com"
       ]
      },
      {
@@ -765,7 +834,6 @@
       "unconfirmed": [
        "cn.bing.com",
        "dict.youdao.com",
-       "jisho.org",
        "zdic.net"
       ]
      }
