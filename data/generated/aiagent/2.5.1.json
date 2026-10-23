@@ -1,0 +1,451 @@
+{
+ "schemaVersion": 1,
+ "slug": "aiagent",
+ "repo": "fkkzz/aiagent",
+ "version": "2.5.1",
+ "tag": "v2.5.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-22T10:00:12Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-quick-read-2.5.1.xpi",
+  "url": "https://github.com/FKkzz/AIAgent/releases/download/v2.5.1/zotero-quick-read-2.5.1.xpi",
+  "size": 17577,
+  "sha256": "d3971cbbb7ee485a9205c9e1b34195d88c6ab46d2d9bd4831177eb860f3972af",
+  "githubAssetId": 665422502,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-22T10:00:10Z",
+  "fetchedAt": "2026-10-23T08:45:42.057Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-quick-read@fkkzz.github.io",
+  "name": "Zotero 论文 AI 速读",
+  "version": "2.5.1",
+  "description": "将新就绪的 PDF 提交给本机 Zotero Quick Read 后台，并安全写回子笔记与标签。",
+  "homepageUrl": "https://github.com/FKkzz/AIAgent",
+  "updateUrl": "https://raw.githubusercontent.com/FKkzz/AIAgent/main/updates.json",
+  "strictMinVersion": "9.0.6",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 53812,
+   "sha256": "2e8162219baef89c578db2f8609ccd6e00f2325f9e749a30fd615f652326a10d"
+  },
+  {
+   "path": "locale/en-US/zotero-quick-read.ftl",
+   "size": 3457,
+   "sha256": "e235b2103aa28e482784644241cfe6f90cd23c9efb31824a632352142fa427c6"
+  },
+  {
+   "path": "locale/zh-CN/zotero-quick-read.ftl",
+   "size": 3300,
+   "sha256": "1491db87ceef242791ad6df229af3f63672741686c28ae32c84ecbf421f71344"
+  },
+  {
+   "path": "manifest.json",
+   "size": 534,
+   "sha256": "95f5262c00ec19f386f9b94945d79cddb2bd1c61dd158cbe7d9be45d5cc3f867"
+  },
+  {
+   "path": "prefs.js",
+   "size": 390,
+   "sha256": "57c2df32c4a89af760bc0589f2a1daa6f92add048ac075a949808cbbeb1b00bc"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-23T08:45:42.057Z",
+  "input": {
+   "slug": "aiagent",
+   "version": "2.5.1",
+   "sha256": "d3971cbbb7ee485a9205c9e1b34195d88c6ab46d2d9bd4831177eb860f3972af"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/zotero-quick-read.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/zotero-quick-read.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 54202,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 325,
+       "column": 16,
+       "snippet": "xhr = await Zotero.HTTP.request(method, baseURL + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 23120,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 15,
+       "column": 26,
+       "snippet": "const DEFAULT_BACKEND = \"http://127.0.0.1:23120\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zoteroQuickRead.backendURL\", \"http://127.0.0.1:23120\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 46,
+       "snippet": "pref(\"extensions.zoteroQuickRead.backendURL\", \"http://127.0.0.1:23120\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 325,
+       "column": 16,
+       "snippet": "xhr = await Zotero.HTTP.request(method, baseURL + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "backendURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 303,
+       "column": 38,
+       "snippet": "const baseURL = validateBackendURL(getStringPref(\"backendURL\", DEFAULT_BACKEND));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1270,
+       "column": 29,
+       "snippet": "const urlValue = { value: getStringPref(\"backendURL\", DEFAULT_BACKEND) };",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zoteroQuickRead.backendURL",
+     "defaultValue": "http://127.0.0.1:23120",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.zoteroQuickRead.backendURL\", \"http://127.0.0.1:23120\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "232221686920",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 239,
+      "column": 41,
+      "snippet": "const preferenceToken = validateToken(getStringPref(\"apiToken\", \"\"), true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1309,
+      "column": 4,
+      "snippet": "setStringPref(\"apiToken\", newToken);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.zoteroQuickRead.apiToken\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "apiToken",
+      "extensions.zoteroQuickRead.apiToken"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "1c9b5cbd7a9c",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 250,
+      "column": 15,
+      "snippet": "if (await IOUtils.exists(tokenPath)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 251,
+      "column": 44,
+      "snippet": "const fileToken = validateToken(await IOUtils.readUTF8(tokenPath), false);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 786,
+      "column": 18,
+      "snippet": "first = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 798,
+      "column": 20,
+      "snippet": "second = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/FKkzz/AIAgent/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/FKkzz/AIAgent/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-23T08:45:42.057Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-23T08:45:42.057Z",
+  "appliesTo": {
+   "slug": "aiagent",
+   "version": "2.5.1",
+   "sha256": "d3971cbbb7ee485a9205c9e1b34195d88c6ab46d2d9bd4831177eb860f3972af"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.6",
+   "inputHash": "780c9780e2bd20fbb7ce67d4dd485d320d8f23b54b4026291455106f7ef75ba9"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers version 2.5.1, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-22T10:00:12Z",
+    "lastCommitAt": "2026-10-22T09:57:40Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
