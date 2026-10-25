@@ -168,8 +168,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-25T10:47:48.823Z",
   "input": {
    "slug": "zotseek-online",
    "version": "1.21.2",
@@ -262,7 +262,70 @@
     "files": []
    },
    "suspiciousUnicode": [],
-   "vendoredLibraries": []
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "content/scripts/index.js",
+      "content/scripts/search-dialog-vtable.js",
+      "content/scripts/similar-documents-dialog.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/scripts/index.js",
+       "line": 16,
+       "snippet": "terfaces.nsIClipboard.kGlobalClipboard)}catch(n){if(this.filePath&&Zotero.isMac)Zotero.Utilities.Internal.exec(\"/usr/bin/osascript\",[\"-e\",`set the clipboard to POSIX file \"${this.filePath}\"`]);else th"
+      },
+      {
+       "file": "content/scripts/index.js",
+       "line": 252,
+       "snippet": "eturn}this.logger.info(\"Found old zs_ tables, starting migration...\");try{await Zotero.DB.queryAsync(`"
+      },
+      {
+       "file": "content/scripts/index.js",
+       "line": 273,
+       "snippet": "${ne}embeddings`);this.logger.info(`Found ${r} records to migrate`),r>0&&(await Zotero.DB.queryAsync(`"
+      },
+      {
+       "file": "content/scripts/index.js",
+       "line": 280,
+       "snippet": "'${ne}metadata' LIMIT 1`)===1&&(this.logger.info(\"Migrating metadata...\"),await Zotero.DB.queryAsync(`"
+      },
+      {
+       "file": "content/scripts/index.js",
+       "line": 283,
+       "snippet": "sfully\"))}this.logger.info(\"Dropping old tables from Zotero database...\"),await Zotero.DB.queryAsync(`DROP TABLE IF EXISTS ${ne}embeddings`),await Zotero.DB.queryAsync(`DROP TABLE IF EXISTS ${ne}metad"
+      },
+      {
+       "file": "content/scripts/index.js",
+       "line": 283,
+       "snippet": "e...\"),await Zotero.DB.queryAsync(`DROP TABLE IF EXISTS ${ne}embeddings`),await Zotero.DB.queryAsync(`DROP TABLE IF EXISTS ${ne}metadata`);try{await Zotero.DB.queryAsync(`DROP INDEX IF EXISTS ${ne}idx"
+      },
+      {
+       "file": "content/scripts/index.js",
+       "line": 283,
+       "snippet": "gs`),await Zotero.DB.queryAsync(`DROP TABLE IF EXISTS ${ne}metadata`);try{await Zotero.DB.queryAsync(`DROP INDEX IF EXISTS ${ne}idx_item_id`),await Zotero.DB.queryAsync(`DROP INDEX IF EXISTS ${ne}idx_"
+      },
+      {
+       "file": "content/scripts/index.js",
+       "line": 283,
+       "snippet": ");try{await Zotero.DB.queryAsync(`DROP INDEX IF EXISTS ${ne}idx_item_id`),await Zotero.DB.queryAsync(`DROP INDEX IF EXISTS ${ne}idx_library_id`),await Zotero.DB.queryAsync(`DROP INDEX IF EXISTS ${ne}i"
+      },
+      {
+       "file": "content/scripts/index.js",
+       "line": 283,
+       "snippet": "`),await Zotero.DB.queryAsync(`DROP INDEX IF EXISTS ${ne}idx_library_id`),await Zotero.DB.queryAsync(`DROP INDEX IF EXISTS ${ne}idx_content_hash`)}catch{}this.logger.info(\"Old tables dropped successfu"
+      },
+      {
+       "file": "content/scripts/index.js",
+       "line": 283,
+       "snippet": "already exists, skipping`):(this.logger.debug(`Adding column: ${o.name}`),await Zotero.DB.queryAsync(`ALTER TABLE ${u}.embeddings ADD COLUMN ${o.name} ${o.type}`));await Zotero.DB.queryAsync(`"
+      }
+     ]
+    }
+   ]
   },
   "network": {
    "apis": [
@@ -814,13 +877,17 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "clipboard",
     "occurrences": 9,
     "inVendoredCodeOnly": false,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "aaefc72010e1",
     "evidence": [
      {
       "kind": "code",
@@ -828,7 +895,7 @@
       "line": 16,
       "column": 2434,
       "snippet": "Components.interfaces.nsITransferable),this.clipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(n",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -836,7 +903,7 @@
       "line": 16,
       "column": 2480,
       "snippet": "ipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(n,e=\"text/plain\"){let t=Components.classes[\"@mo",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -852,7 +919,7 @@
       "line": 5,
       "column": 2432,
       "snippet": "Components.interfaces.nsITransferable),this.clipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(n",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -860,7 +927,7 @@
       "line": 5,
       "column": 2478,
       "snippet": "ipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(n,e=\"text/plain\"){let t=Components.classes[\"@mo",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -876,7 +943,7 @@
       "line": 5,
       "column": 2432,
       "snippet": "Components.interfaces.nsITransferable),this.clipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(i",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -884,7 +951,7 @@
       "line": 5,
       "column": 2478,
       "snippet": "ipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(i,e=\"text/plain\"){let t=Components.classes[\"@mo",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -906,6 +973,10 @@
     "id": "credential-storage",
     "occurrences": 12,
     "inVendoredCodeOnly": false,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "eb4f48d9654e",
     "evidence": [
      {
       "kind": "code",
@@ -913,7 +984,7 @@
       "line": 12,
       "column": 7808,
       "snippet": "DebugBridgePassword(e){this._disableDebugBridgePassword=e}get password(){return Z.getZotero().Prefs.get(Ae.passwordPref,!0)}set password(e){Z.getZotero().Prefs.set(Ae.passwordPref,e,!0)}constructor(){",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -921,7 +992,7 @@
       "line": 12,
       "column": 7868,
       "snippet": "t password(){return Z.getZotero().Prefs.get(Ae.passwordPref,!0)}set password(e){Z.getZotero().Prefs.set(Ae.passwordPref,e,!0)}constructor(){this._disableDebugBridgePassword=!1,this.initializeDebugBrid",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -953,7 +1024,7 @@
       "line": 1,
       "column": 7792,
       "snippet": "DebugBridgePassword(e){this._disableDebugBridgePassword=e}get password(){return S.getZotero().Prefs.get(F.passwordPref,!0)}set password(e){S.getZotero().Prefs.set(F.passwordPref,e,!0)}constructor(){th",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -961,7 +1032,7 @@
       "line": 1,
       "column": 7851,
       "snippet": "et password(){return S.getZotero().Prefs.get(F.passwordPref,!0)}set password(e){S.getZotero().Prefs.set(F.passwordPref,e,!0)}constructor(){this._disableDebugBridgePassword=!1,this.initializeDebugBridg",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -977,7 +1048,7 @@
       "line": 1,
       "column": 7791,
       "snippet": "DebugBridgePassword(e){this._disableDebugBridgePassword=e}get password(){return w.getZotero().Prefs.get(Z.passwordPref,!0)}set password(e){w.getZotero().Prefs.set(Z.passwordPref,e,!0)}constructor(){th",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -985,7 +1056,7 @@
       "line": 1,
       "column": 7850,
       "snippet": "et password(){return w.getZotero().Prefs.get(Z.passwordPref,!0)}set password(e){w.getZotero().Prefs.set(Z.passwordPref,e,!0)}constructor(){this._disableDebugBridgePassword=!1,this.initializeDebugBridg",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -1003,6 +1074,7 @@
     "id": "db-write",
     "occurrences": 294,
     "inVendoredCodeOnly": false,
+    "codeKey": "e1f7e66705e1",
     "evidence": [
      {
       "kind": "code",
@@ -1113,7 +1185,11 @@
    {
     "id": "dynamic-code",
     "occurrences": 3,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "e28d3bf01ace",
     "evidence": [
      {
       "kind": "code",
@@ -1121,7 +1197,7 @@
       "line": 15,
       "column": 166,
       "snippet": "word,l){if(o.run)try{let c=Object.getPrototypeOf(async()=>{}).constructor;await new c(\"Zotero,window\",o.run)(r,i)}catch(c){r.debug(c),i.console.log(c)}if(o.file)try{Services.scriptloader.loadSubScript",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -1129,7 +1205,7 @@
       "line": 4,
       "column": 166,
       "snippet": "word,l){if(o.run)try{let d=Object.getPrototypeOf(async()=>{}).constructor;await new d(\"Zotero,window\",o.run)(r,i)}catch(d){r.debug(d),i.console.log(d)}if(o.file)try{Services.scriptloader.loadSubScript",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -1137,7 +1213,7 @@
       "line": 4,
       "column": 166,
       "snippet": "word,l){if(o.run)try{let d=Object.getPrototypeOf(async()=>{}).constructor;await new d(\"Zotero,window\",o.run)(r,n)}catch(d){r.debug(d),n.console.log(d)}if(o.file)try{Services.scriptloader.loadSubScript",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -1151,6 +1227,10 @@
     "id": "filesystem",
     "occurrences": 45,
     "inVendoredCodeOnly": false,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "2d5b053048d5",
     "evidence": [
      {
       "kind": "code",
@@ -1190,7 +1270,7 @@
       "line": 16,
       "column": 3584,
       "snippet": "is.transferable.setTransferData(a,l,0),this}addFile(n){let e=Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);return e.initWithPath(n),this.transferable.ad",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -1198,7 +1278,7 @@
       "line": 16,
       "column": 3628,
       "snippet": "addFile(n){let e=Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);return e.initWithPath(n),this.transferable.addDataFlavor(\"application/x-moz-file\"),this.t",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -1245,6 +1325,7 @@
     "id": "local-http-server",
     "occurrences": 6,
     "inVendoredCodeOnly": false,
+    "codeKey": "69dad52bb73d",
     "evidence": [
      {
       "kind": "code",
@@ -1347,19 +1428,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-13T10:51:02.942Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-25T10:47:48.823Z",
   "appliesTo": {
    "slug": "zotseek-online",
    "version": "1.21.2",
    "sha256": "2d26dc249e3083f446628ed67f00d33623a2785552e7690a5f75f29c3182305e"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
+   "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.6",
-   "inputHash": "96e6734c69e1994d1c99ffc69666ee3a4cfef9250afea31dfd7da6235fc71087"
+   "inputHash": "bcac7b1415fcfc115715df942dd719f5ec0ce09fe415e6303d083c6fec8bf68b"
   },
   "facets": {
    "sourceTransparency": {
@@ -1438,11 +1519,6 @@
      {
       "id": "credential-storage",
       "label": "Stores API keys or passwords",
-      "concern": "low"
-     },
-     {
-      "id": "dynamic-code",
-      "label": "Runs code it assembles while running",
       "concern": "low"
      },
      {

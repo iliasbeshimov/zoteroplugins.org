@@ -1,0 +1,499 @@
+{
+ "schemaVersion": 1,
+ "slug": "plugins4zotero",
+ "repo": "dviralsh/plugins4zotero",
+ "version": "0.6.0",
+ "tag": "zotero-helper-0.6.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-25T06:18:27Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-helper-0.6.0.xpi",
+  "url": "https://github.com/dviralsh/Plugins4Zotero/releases/download/zotero-helper-0.6.0/zotero-helper-0.6.0.xpi",
+  "size": 18600,
+  "sha256": "12ca69408c4c5873ddf59d493704f1159d3c99db2ab87f3b75b7654efc910d5a",
+  "githubAssetId": 674270686,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-25T06:18:26Z",
+  "fetchedAt": "2026-10-25T10:47:48.823Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zoterohelper@plugins4zotero",
+  "name": "ZoteroHelper",
+  "version": "0.6.0",
+  "description": "Reader tools: Hebrew translation of selected text, local AI summary via Ollama, and \"Link instead of duplicate\" for newly added items.",
+  "updateUrl": "https://github.com/dviralsh/Plugins4Zotero/releases/download/updates/zotero-helper.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "99.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 5216,
+   "sha256": "8f300b951a2ac4e5a143c82346a49ba6aca33f2c8f21a7400401be14ee11f75f"
+  },
+  {
+   "path": "linkdup.js",
+   "size": 22960,
+   "sha256": "6f510158e9bf3ef3fe711b34ff1dbd18f168623b0cc92b1f5bf958f90ce31fc9"
+  },
+  {
+   "path": "manifest.json",
+   "size": 549,
+   "sha256": "b474b5ebeb1f67784f3af4fbb8b7dee0cfb805cc06705232e710ff613829587e"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 3617,
+   "sha256": "c16c56d7aaa5b4505accdcab8d3f1b65757f64fa09ddff46e87a40c5d24c5bef"
+  },
+  {
+   "path": "README.md",
+   "size": 4515,
+   "sha256": "dac765e2e085d717fc6881490fef0dc1bc850cf1864d5de92b556f595c4314c9"
+  },
+  {
+   "path": "summary.js",
+   "size": 12025,
+   "sha256": "ea58f2eb3bd47550aa435c28b58d05f74d470dc81a1bdf622c2e4c768cc6b222"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-25T10:47:48.823Z",
+  "input": {
+   "slug": "plugins4zotero",
+   "version": "0.6.0",
+   "sha256": "12ca69408c4c5873ddf59d493704f1159d3c99db2ab87f3b75b7654efc910d5a"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 43818,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 169,
+       "column": 19,
+       "snippet": "const req = await Zotero.HTTP.request(\"GET\", url, { responseType: \"json\", timeout: 10000 });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "summary.js",
+       "line": 63,
+       "column": 20,
+       "snippet": "const req = await Zotero.HTTP.request(body ? \"POST\" : \"GET\", host + path, opts);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.mymemory.translated.net",
+     "category": "translation",
+     "provider": "MyMemory",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 149,
+       "column": 27,
+       "snippet": "const r = await request(\"https://api.mymemory.translated.net/get?q=\" + q + \"&langpair=Autodetect|he\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "clients5.google.com",
+     "category": "translation",
+     "provider": "Google Translate (web)",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 144,
+       "column": 27,
+       "snippet": "const r = await request(\"https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=auto&tl=\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "localhost",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "summary.js",
+       "line": 15,
+       "column": 15,
+       "snippet": "DEFAULT_HOST: \"http://localhost:11434\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "translate.googleapis.com",
+     "category": "translation",
+     "provider": "Google Translate",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 139,
+       "column": 27,
+       "snippet": "const r = await request(\"https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "summary.js",
+       "line": 63,
+       "column": 20,
+       "snippet": "const req = await Zotero.HTTP.request(body ? \"POST\" : \"GET\", host + path, opts);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.plugins4zotero.hebrewtranslate.ollamaHost",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "summary.js",
+       "line": 57,
+       "column": 22,
+       "snippet": "const host = String(Summary.getPref(Summary.PREF_HOST, Summary.DEFAULT_HOST)).replace(/\\/+$/, \"\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "summary.js",
+       "line": 196,
+       "column": 22,
+       "snippet": "const host = String(Summary.getPref(Summary.PREF_HOST, Summary.DEFAULT_HOST));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "summary.js",
+       "line": 269,
+       "column": 35,
+       "snippet": "\"Could not reach Ollama at \" + Summary.getPref(Summary.PREF_HOST, Summary.DEFAULT_HOST)",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "1cbb64b62d24",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "summary.js",
+      "line": 188,
+      "column": 13,
+      "snippet": "if (await IOUtils.exists(c)) return c;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "0b9d32be44f0",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "summary.js",
+      "line": 172,
+      "column": 52,
+      "snippet": "const { Subprocess } = ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "summary.js",
+      "line": 175,
+      "column": 17,
+      "snippet": "return await Subprocess.pathSearch(name);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "summary.js",
+      "line": 207,
+      "column": 52,
+      "snippet": "const { Subprocess } = ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "summary.js",
+      "line": 209,
+      "column": 21,
+      "snippet": "const proc = await Subprocess.call({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ],
+     "programs": [
+      "ollama"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/dviralsh/Plugins4Zotero/releases/download/updates/zotero-helper.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/dviralsh/Plugins4Zotero/releases/download/updates/zotero-helper.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-25T10:47:48.823Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-25T10:47:48.823Z",
+  "appliesTo": {
+   "slug": "plugins4zotero",
+   "version": "0.6.0",
+   "sha256": "12ca69408c4c5873ddf59d493704f1159d3c99db2ab87f3b75b7654efc910d5a"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.6",
+   "inputHash": "6eb14ea0353e91cfc696665a8de72febd82451313fa675f2b3c156a698165374"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ],
+      "unconfirmed": [
+       "localhost"
+      ]
+     },
+     {
+      "category": "translation",
+      "hosts": [
+       "api.mymemory.translated.net",
+       "clients5.google.com",
+       "translate.googleapis.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include ollama"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-25T06:18:27Z",
+    "lastCommitAt": "2026-10-25T06:18:08Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

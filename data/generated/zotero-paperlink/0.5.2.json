@@ -1,0 +1,387 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-paperlink",
+ "repo": "zhuzihan728/zotero-paperlink",
+ "version": "0.5.2",
+ "tag": "v0.5.2",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-19T10:52:54Z",
+ "prerelease": false,
+ "asset": {
+  "name": "paperlink-0.5.2.xpi",
+  "url": "https://github.com/zhuzihan728/zotero-paperlink/releases/download/v0.5.2/paperlink-0.5.2.xpi",
+  "size": 22779,
+  "sha256": "33714abbe93bb7da2000eb36287ce0304b67f7bca9e31e4bd912d7fbb42c043a",
+  "githubAssetId": 656007567,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-19T10:52:54Z",
+  "fetchedAt": "2026-10-25T10:47:48.823Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "paperlink@local.research",
+  "name": "PaperLink",
+  "version": "0.5.2",
+  "description": "When the Zotero Connector saves a paper, link the PDF you already downloaded instead of storing a second copy, then check for duplicate entries.",
+  "homepageUrl": "https://github.com/zhuzihan728/zotero-paperlink",
+  "updateUrl": "https://raw.githubusercontent.com/zhuzihan728/zotero-paperlink/main/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2383,
+   "sha256": "a442c6779ef172a2718d0dc74d2dea8ab29df5eebbba33bfd49925efb37d4a9f"
+  },
+  {
+   "path": "content/match.js",
+   "size": 13941,
+   "sha256": "73b4bfc13c1331e89b421e961c2591c3f73da1ba988209426a22de1f4e7f4f39"
+  },
+  {
+   "path": "content/paperlink.js",
+   "size": 37351,
+   "sha256": "52deafbcb143ec8017fad365f11191a874d4d1122175e629b996435dce845832"
+  },
+  {
+   "path": "content/preferences.js",
+   "size": 1319,
+   "sha256": "5c10d71edd530bc09320d42acb4092e312a830d41317a72aea5e4f029cee437f"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 3165,
+   "sha256": "b4acedf2ce18d00c944bb9e8c8dec64a8e19809fa696a59697dd69b5e91242cd"
+  },
+  {
+   "path": "locale/en-US/paperlink.ftl",
+   "size": 1904,
+   "sha256": "bdf0761246a5190e4330c803ad4f454801e54b5e7e717d06f388c30dd03b5d50"
+  },
+  {
+   "path": "locale/zh-CN/paperlink.ftl",
+   "size": 1874,
+   "sha256": "cdb3d732af4dc29eaddd91b81717501a58962af76c0b40ce0a8689a8fc7b65ce"
+  },
+  {
+   "path": "manifest.json",
+   "size": 591,
+   "sha256": "f6ae2c8865079978c24741e3734bc0912a6a5fe92642ef69c59609016221ffda"
+  },
+  {
+   "path": "prefs.js",
+   "size": 1384,
+   "sha256": "6b02eb9d97c70aadbbf102694d9775b2a346de8dc9b12c2dc2df652d8f70589d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-25T10:47:48.823Z",
+  "input": {
+   "slug": "zotero-paperlink",
+   "version": "0.5.2",
+   "sha256": "33714abbe93bb7da2000eb36287ce0304b67f7bca9e31e4bd912d7fbb42c043a"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/paperlink.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/paperlink.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 59543,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/paperlink.js",
+       "line": 590,
+       "column": 26,
+       "snippet": "try { att = await Zotero.Attachments.addAvailableFile(item); }",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 15,
+    "inVendoredCodeOnly": false,
+    "codeKey": "5b7d93d746b1",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/paperlink.js",
+      "line": 199,
+      "column": 50,
+      "snippet": "try { return Services.dirsvc.get(\"DfltDwnld\", Components.interfaces.nsIFile).path; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/paperlink.js",
+      "line": 200,
+      "column": 66,
+      "snippet": "catch (e) { return PathUtils.join(Services.dirsvc.get(\"Home\", Components.interfaces.nsIFile).path, \"Downloads\"); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/paperlink.js",
+      "line": 204,
+      "column": 45,
+      "snippet": "const home = Services.dirsvc.get(\"Home\", Components.interfaces.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/paperlink.js",
+      "line": 217,
+      "column": 29,
+      "snippet": "try { children = await IOUtils.getChildren(dir, { ignoreAbsent: true }); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/paperlink.js",
+      "line": 226,
+      "column": 27,
+      "snippet": "try { info = await IOUtils.stat(path); } catch (e) { continue; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/paperlink.js",
+      "line": 246,
+      "column": 25,
+      "snippet": "const data = await IOUtils.readJSON(cachePath());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/paperlink.js",
+      "line": 256,
+      "column": 12,
+      "snippet": "await IOUtils.writeJSON(cachePath(), { version: 1, files: Object.fromEntries(cache) },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/paperlink.js",
+      "line": 267,
+      "column": 25,
+      "snippet": "const head = await IOUtils.read(file.path, { maxBytes: HEAD_BYTES });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/paperlink.js",
+      "line": 270,
+      "column": 27,
+      "snippet": "const tail = await IOUtils.read(file.path, { offset: Math.max(HEAD_BYTES, file.size - TAIL_BYTES) });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/paperlink.js",
+      "line": 341,
+      "column": 26,
+      "snippet": "try { size = (await IOUtils.stat(path)).size; } catch (e) { continue; }",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/zhuzihan728/zotero-paperlink/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/zhuzihan728/zotero-paperlink/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-25T10:47:48.823Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-25T10:47:48.823Z",
+  "appliesTo": {
+   "slug": "zotero-paperlink",
+   "version": "0.5.2",
+   "sha256": "33714abbe93bb7da2000eb36287ce0304b67f7bca9e31e4bd912d7fbb42c043a"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.6",
+   "inputHash": "642faee5155957fdf838071a971e1ef8fe26f3008b15f4aff54c90c81c84c7d6"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-19T10:52:54Z",
+    "lastCommitAt": "2026-10-19T10:52:29Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

@@ -1,0 +1,299 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-page-view",
+ "repo": "kvarnelis/zotero-page-view",
+ "version": "0.3.12",
+ "tag": "v0.3.12",
+ "releaseAuthor": "kvarnelis",
+ "publishedAt": "2026-10-24T12:06:12Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-page-view.xpi",
+  "url": "https://github.com/kvarnelis/zotero-page-view/releases/download/v0.3.12/zotero-page-view.xpi",
+  "size": 25105,
+  "sha256": "73a4fc4763733ab9863dd44e12c7ef7ce016cf30b7dc5b8a1a2e9d6b0068e39c",
+  "githubAssetId": 672172216,
+  "uploader": "kvarnelis",
+  "uploadedAt": "2026-10-24T12:06:12Z",
+  "fetchedAt": "2026-10-25T10:47:48.823Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zys-reader@kazys.local",
+  "name": "Page View for Zotero",
+  "version": "0.3.12",
+  "description": "Adds true single-page PDF reading mode to Zotero's built-in reader.",
+  "homepageUrl": "https://github.com/kvarnelis/zotero-page-view",
+  "updateUrl": "https://raw.githubusercontent.com/kvarnelis/zotero-page-view/main/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1212,
+   "sha256": "66bc0426cbb20e7e7ab8fa363a40e31eb2cc72f01d6b744b1118c9f436cc960c"
+  },
+  {
+   "path": "chrome.manifest",
+   "size": 28,
+   "sha256": "fcf5663d82e65358d802996d6a57c78c9f54f465fa5533ff956c967e265b0986"
+  },
+  {
+   "path": "content/icons/focus-mode.svg",
+   "size": 313,
+   "sha256": "eeba104d0564a8d8ca1975c7d9e1dbc8c5d7fffb0687da52d1e6784e23fcce5e"
+  },
+  {
+   "path": "content/icons/single-page.svg",
+   "size": 297,
+   "sha256": "def4c9239dc7d3afaf70f5d01368c848fa381cc97d2c25c475ec1b6d3aebe7e8"
+  },
+  {
+   "path": "content/single-page-reader.css",
+   "size": 2437,
+   "sha256": "e92f8fc8af90427b1ea495fd4b18dafce3e833ae0ff5c32364cc35a87296f252"
+  },
+  {
+   "path": "content/single-page-reader.js",
+   "size": 97995,
+   "sha256": "c5202946905b560c492b9f0149ea8f77ccfeb8368cb65cdade57036b867f897b"
+  },
+  {
+   "path": "manifest.json",
+   "size": 529,
+   "sha256": "d56e1bfae8c5a25b2093ab612daf00a38862c3af3904a58aa7d32a5987e4f2b2"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-25T10:47:48.823Z",
+  "input": {
+   "slug": "zotero-page-view",
+   "version": "0.3.12",
+   "sha256": "73a4fc4763733ab9863dd44e12c7ef7ce016cf30b7dc5b8a1a2e9d6b0068e39c"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/focus-mode.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/single-page.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/single-page-reader.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 99207,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "local-http-server",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "058200bc5fe2",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/single-page-reader.js",
+      "line": 342,
+      "column": 7,
+      "snippet": "if (!Zotero.Server?.Endpoints) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/single-page-reader.js",
+      "line": 373,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[this.DIAG_ENDPOINT_PATH] = Endpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zys-reader/diag"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/kvarnelis/zotero-page-view/main/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/kvarnelis/zotero-page-view/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-25T10:47:48.823Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the kvarnelis account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-25T10:47:48.823Z",
+  "appliesTo": {
+   "slug": "zotero-page-view",
+   "version": "0.3.12",
+   "sha256": "73a4fc4763733ab9863dd44e12c7ef7ce016cf30b7dc5b8a1a2e9d6b0068e39c"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.6",
+   "inputHash": "2e5ad1c08e7e99ecc240cf2eaed82f3eddf549cb805220c2090cb812285e0945"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "none",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-24T12:06:12Z",
+    "lastCommitAt": "2026-10-24T17:58:25Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

@@ -1,0 +1,405 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-notebooklm-pane",
+ "repo": "kvarnelis/zotero-notebooklm-pane",
+ "version": "0.4.4",
+ "tag": "v0.4.4",
+ "releaseAuthor": "kvarnelis",
+ "publishedAt": "2026-10-24T12:06:03Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-notebooklm-pane.xpi",
+  "url": "https://github.com/kvarnelis/zotero-notebooklm-pane/releases/download/v0.4.4/zotero-notebooklm-pane.xpi",
+  "size": 17420,
+  "sha256": "ab2e596bb6095578eaa3561f451ca57f5ffd9b760b2459af379d7713156f447f",
+  "githubAssetId": 672171879,
+  "uploader": "kvarnelis",
+  "uploadedAt": "2026-10-24T12:06:02Z",
+  "fetchedAt": "2026-10-25T10:47:48.823Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zys-notebook@kazys.local",
+  "name": "NotebookLM Pane for Zotero",
+  "version": "0.4.4",
+  "description": "Embeds Google NotebookLM in the Zotero item pane: upload sources, chat, and studio without leaving Zotero.",
+  "homepageUrl": "https://github.com/kvarnelis/zotero-notebooklm-pane",
+  "updateUrl": "https://raw.githubusercontent.com/kvarnelis/zotero-notebooklm-pane/main/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1613,
+   "sha256": "7613dec25be74df2d213a0f9b6909e48b369f9b43c220a4f0b313b5fa2ad0cc4"
+  },
+  {
+   "path": "chrome.manifest",
+   "size": 30,
+   "sha256": "4bc38d2c06408edd8e4b16d86a1012b1a5fd7c2fbf6f711fbde7d3ac4a8a8969"
+  },
+  {
+   "path": "content/actors/notebookChild.mjs",
+   "size": 1664,
+   "sha256": "97f0221cae63c6a81495518a94890dca8fc2edd7263faaa7a0d41685611f28da"
+  },
+  {
+   "path": "content/icons/notebook-full.svg",
+   "size": 804,
+   "sha256": "7c38e70d863b8ee912c8efba1c2c3307da113ccbd9f33d9bd36da9d350925275"
+  },
+  {
+   "path": "content/icons/notebook.svg",
+   "size": 443,
+   "sha256": "1fdfe9a8d0ac7de33fc31bf86cd9ee50870b9c93040c5f7079861c8c46687c95"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 1477,
+   "sha256": "cb1ca4a087b733a34b23a039390e1f20251384142fc81c6bf788480570609dc2"
+  },
+  {
+   "path": "content/scripts/notebook.js",
+   "size": 42353,
+   "sha256": "c3d82e760eb2d0d5f57d60b548b402a8a1534e3b226a2da022647fe93f5f8c06"
+  },
+  {
+   "path": "content/styles/notebook.css",
+   "size": 2720,
+   "sha256": "7e0ec4de635bccf0574c52dceda3790378dac2bb12b6eba65b985913f7ba3add"
+  },
+  {
+   "path": "manifest.json",
+   "size": 587,
+   "sha256": "54913efbba47a2a5929ff519e232ca46fd72f12c61c44536750e8caf94df8442"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-25T10:47:48.823Z",
+  "input": {
+   "slug": "zotero-notebooklm-pane",
+   "version": "0.4.4",
+   "sha256": "ab2e596bb6095578eaa3561f451ca57f5ffd9b760b2459af379d7713156f447f"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/notebook-full.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/notebook.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/styles/notebook.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 47107,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "remote-page",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/notebook.js",
+       "line": 1263,
+       "column": 3,
+       "snippet": "state.browser.loadURI(Services.io.newURI(url), {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "notebooklm.google.com",
+     "category": "llm-provider",
+     "provider": "Google NotebookLM",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/notebook.js",
+       "line": 25,
+       "column": 11,
+       "snippet": "HOME_URL: \"https://notebooklm.google.com/\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "zysNotebook.lastURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/notebook.js",
+       "line": 1227,
+       "column": 23,
+       "snippet": "this.loadURL(state, this.getPref(this.PREF_LAST_URL, this.HOME_URL));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/notebook.js",
+       "line": 1253,
+       "column": 7,
+       "snippet": ": this.getPref(this.PREF_LAST_URL, this.HOME_URL)",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "02687612bfbc",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/notebook.js",
+      "line": 879,
+      "column": 3,
+      "snippet": "Zotero.Utilities.Internal.copyTextToClipboard(first.path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "566d3fa3f078",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/notebook.js",
+      "line": 146,
+      "column": 7,
+      "snippet": "if (!Zotero.Server?.Endpoints) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/notebook.js",
+      "line": 212,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[this.ENDPOINT_PATH] = Endpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zys-notebook/diag"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/kvarnelis/zotero-notebooklm-pane/main/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/kvarnelis/zotero-notebooklm-pane/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-25T10:47:48.823Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the kvarnelis account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-25T10:47:48.823Z",
+  "appliesTo": {
+   "slug": "zotero-notebooklm-pane",
+   "version": "0.4.4",
+   "sha256": "ab2e596bb6095578eaa3561f451ca57f5ffd9b760b2459af379d7713156f447f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.6",
+   "inputHash": "3b096932e367b9de4a65959503300837b554ecebc2bd19aec7fac945f2b74b35"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "notebooklm.google.com"
+      ],
+      "unconfirmed": [
+       "notebooklm.google.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-24T12:06:03Z",
+    "lastCommitAt": "2026-10-24T17:58:22Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

@@ -1,0 +1,296 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-compact-pane",
+ "repo": "kvarnelis/zotero-compact-pane",
+ "version": "0.3.2",
+ "tag": "v0.3.2",
+ "releaseAuthor": "kvarnelis",
+ "publishedAt": "2026-10-24T12:06:22Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-compact-pane.xpi",
+  "url": "https://github.com/kvarnelis/zotero-compact-pane/releases/download/v0.3.2/zotero-compact-pane.xpi",
+  "size": 8537,
+  "sha256": "9f5051d7cd7f7cb70142c5c45b3023100ee7fd116e4a21535d03d6984b21a8ab",
+  "githubAssetId": 672172570,
+  "uploader": "kvarnelis",
+  "uploadedAt": "2026-10-24T12:06:22Z",
+  "fetchedAt": "2026-10-25T10:47:48.823Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zys-pane@kazys.local",
+  "name": "Compact Pane for Zotero",
+  "version": "0.3.2",
+  "description": "Compact Zotero metadata display, attachment path copy, and small item-pane safety utilities.",
+  "homepageUrl": "https://github.com/kvarnelis/zotero-compact-pane",
+  "updateUrl": "https://raw.githubusercontent.com/kvarnelis/zotero-compact-pane/main/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1193,
+   "sha256": "551d19994c70f831093ec2d9a7e464a179e92ec29d485cf6a0b311df2ebf9663"
+  },
+  {
+   "path": "chrome.manifest",
+   "size": 26,
+   "sha256": "1d2af833a263f520fdabca11278c80a63c0ca83035f12d0f361410ff366e36f5"
+  },
+  {
+   "path": "content/icons/compact-fields.svg",
+   "size": 304,
+   "sha256": "a903e59e72df0dd1c3a764b449e6a9b2ebff86b2d27b16d28089c311b345b44f"
+  },
+  {
+   "path": "content/icons/expand-fields.svg",
+   "size": 305,
+   "sha256": "8325ed895a07210e1a54ca4ab18476f7861678095341cde6ea011e9b150652d9"
+  },
+  {
+   "path": "content/scripts/zotero-k-pane.js",
+   "size": 24344,
+   "sha256": "1ac19f8b81dd50e2f1a79c145dd08bb915969252196ab610d59a5e258ddf3385"
+  },
+  {
+   "path": "content/styles/pane.css",
+   "size": 91,
+   "sha256": "f875e2bbc3102bafb1e38e8fc24accb133b9cb3e3d431004f556cd9159059892"
+  },
+  {
+   "path": "manifest.json",
+   "size": 560,
+   "sha256": "f0943facd3e5730b1123d8a4b92c83c7391af28e7a44c09bd67976767ec47dba"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-25T10:47:48.823Z",
+  "input": {
+   "slug": "zotero-compact-pane",
+   "version": "0.3.2",
+   "sha256": "9f5051d7cd7f7cb70142c5c45b3023100ee7fd116e4a21535d03d6984b21a8ab"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/compact-fields.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/expand-fields.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/styles/pane.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 25537,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "132c37a61bcf",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/zotero-k-pane.js",
+      "line": 570,
+      "column": 40,
+      "snippet": "const clipboard = Components.classes[\"@mozilla.org/widget/clipboardhelper;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/zotero-k-pane.js",
+      "line": 571,
+      "column": 16,
+      "snippet": ".getService(Components.interfaces.nsIClipboardHelper);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/kvarnelis/zotero-compact-pane/main/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/kvarnelis/zotero-compact-pane/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-25T10:47:48.823Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the kvarnelis account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-25T10:47:48.823Z",
+  "appliesTo": {
+   "slug": "zotero-compact-pane",
+   "version": "0.3.2",
+   "sha256": "9f5051d7cd7f7cb70142c5c45b3023100ee7fd116e4a21535d03d6984b21a8ab"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.6",
+   "inputHash": "3d5a9b523ea0a5782624a631ea22bd70180d07c95b31768e44eaa73eac723112"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-24T12:06:22Z",
+    "lastCommitAt": "2026-10-24T17:58:17Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

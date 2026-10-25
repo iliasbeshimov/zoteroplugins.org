@@ -1,0 +1,328 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-quiet-theme",
+ "repo": "kvarnelis/zotero-quiet-theme",
+ "version": "0.3.2",
+ "tag": "v0.3.2",
+ "releaseAuthor": "kvarnelis",
+ "publishedAt": "2026-10-24T12:06:31Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-quiet-theme.xpi",
+  "url": "https://github.com/kvarnelis/zotero-quiet-theme/releases/download/v0.3.2/zotero-quiet-theme.xpi",
+  "size": 10044,
+  "sha256": "dfab7311e642624115c3a6f58e92074b49b8cf03acd78ba8394a22bcc71614bc",
+  "githubAssetId": 672172863,
+  "uploader": "kvarnelis",
+  "uploadedAt": "2026-10-24T12:06:31Z",
+  "fetchedAt": "2026-10-25T10:47:48.823Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zys-theme@kazys.local",
+  "name": "Quiet Theme for Zotero",
+  "version": "0.3.2",
+  "description": "Switch Zotero native appearance and manage a quiet userChrome overlay.",
+  "homepageUrl": "https://github.com/kvarnelis/zotero-quiet-theme",
+  "updateUrl": "https://raw.githubusercontent.com/kvarnelis/zotero-quiet-theme/main/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1235,
+   "sha256": "cb07c7f4b43373e2bf12da09751fd581b3683b57f0a3530cdb7ebb6a22671e82"
+  },
+  {
+   "path": "chrome.manifest",
+   "size": 27,
+   "sha256": "1425fbd7bd68bbc71f9d947f7922ed25e11cd3e95e1ee89b7c11f72547b7833f"
+  },
+  {
+   "path": "content/scripts/theme-manager.js",
+   "size": 15240,
+   "sha256": "4e922785ff960521eba23d7634694eb42d6fa9fea95fcd606e495669de07af5c"
+  },
+  {
+   "path": "content/theme/zotero-k.userChrome.css",
+   "size": 22750,
+   "sha256": "e6aba3b01b4a388d542a0cf06676d058b0859e5b6a0b5a695bc193e395498e91"
+  },
+  {
+   "path": "manifest.json",
+   "size": 536,
+   "sha256": "d608b5201141ae72e7e8a474c66b64851e493c67cfc5175e5f50b16c8e17aa68"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-25T10:47:48.823Z",
+  "input": {
+   "slug": "zotero-quiet-theme",
+   "version": "0.3.2",
+   "sha256": "dfab7311e642624115c3a6f58e92074b49b8cf03acd78ba8394a22bcc71614bc"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/theme/zotero-k.userChrome.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 16475,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "codeKey": "0ea32ceeb207",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/theme-manager.js",
+      "line": 307,
+      "column": 8,
+      "snippet": "await Zotero.File.createDirectoryIfMissingAsync(paths.chromeDir);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/theme-manager.js",
+      "line": 312,
+      "column": 9,
+      "snippet": "await Zotero.File.putContentsAsync(backupPath, current);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/theme-manager.js",
+      "line": 323,
+      "column": 8,
+      "snippet": "await Zotero.File.putContentsAsync(paths.userChrome, css);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/theme-manager.js",
+      "line": 337,
+      "column": 10,
+      "snippet": "await Zotero.File.putContentsAsync(paths.userChrome, backup);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/theme-manager.js",
+      "line": 353,
+      "column": 35,
+      "snippet": "|| Services.dirsvc.get(\"ProfD\", Components.interfaces.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/theme-manager.js",
+      "line": 392,
+      "column": 9,
+      "snippet": "return Zotero.File.getContentsAsync(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/theme-manager.js",
+      "line": 413,
+      "column": 8,
+      "snippet": "await Zotero.File.putContentsAsync(userJS, next);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/theme-manager.js",
+      "line": 423,
+      "column": 9,
+      "snippet": "await Zotero.File.putContentsAsync(userJS, stripped.replace(/\\s+$/u, \"\") + \"\\n\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/kvarnelis/zotero-quiet-theme/main/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/kvarnelis/zotero-quiet-theme/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-25T10:47:48.823Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the kvarnelis account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-25T10:47:48.823Z",
+  "appliesTo": {
+   "slug": "zotero-quiet-theme",
+   "version": "0.3.2",
+   "sha256": "dfab7311e642624115c3a6f58e92074b49b8cf03acd78ba8394a22bcc71614bc"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.6",
+   "inputHash": "126eae01e5409a8cb66223fc5ecebd93ed166e4aebdd09ef39b043042a309dec"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-24T12:06:31Z",
+    "lastCommitAt": "2026-10-24T17:58:14Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
