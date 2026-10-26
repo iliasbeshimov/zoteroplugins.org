@@ -1,0 +1,398 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-nature-reader",
+ "repo": "sjc88661/zotero-nature-reader",
+ "version": "0.3.7",
+ "tag": "v0.2.13",
+ "releaseAuthor": "sjc88661",
+ "publishedAt": "2026-10-25T14:41:40Z",
+ "prerelease": false,
+ "asset": {
+  "name": "obsidian-literature-bridge-0.3.7.xpi",
+  "url": "https://github.com/sjc88661/zotero-nature-reader/releases/download/v0.2.13/obsidian-literature-bridge-0.3.7.xpi",
+  "size": 34971,
+  "sha256": "840b47ba2ef68203d657228fd8075848122d4cd5deb3bba9de2c9696d81f8d24",
+  "githubAssetId": 675283094,
+  "uploader": "sjc88661",
+  "uploadedAt": "2026-10-25T14:41:40Z",
+  "fetchedAt": "2026-10-26T09:11:57.711Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "obsidian-literature-bridge@codex.local",
+  "name": "Obsidian 文献笔记 · Awesome GPT Bridge",
+  "version": "0.3.7",
+  "description": "将全文双语精读、阅读导引、DSH 与 Awesome GPT 讨论及 Zotero PDF 标注自动归档到同一篇 Obsidian 文献笔记。",
+  "updateUrl": "https://127.0.0.1/obsidian-literature-bridge/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "11.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1635,
+   "sha256": "d911cd7cd4785c5f27cb6031f1ba8b72b4c941255a308acefaf114d17bafbcb2"
+  },
+  {
+   "path": "content/adapter.js",
+   "size": 4594,
+   "sha256": "afa80e73b486754c917ba66e2f5425e0205fe9434a53c8ebc562a630e1bbdfa2"
+  },
+  {
+   "path": "content/annotations.js",
+   "size": 6354,
+   "sha256": "0c5a27c389c7a25716c777f90dc6cae290b47af73cf1b24804cab2d04d6c135c"
+  },
+  {
+   "path": "content/core.js",
+   "size": 27821,
+   "sha256": "9bfb054c42638f863d9142229c94ee9acc6b43feaaf10e47f6bfc473832924c6"
+  },
+  {
+   "path": "content/manager.js",
+   "size": 4642,
+   "sha256": "ca5c52cd3116920d1ae9578685db99b793e5e182baa00c9a88fd58332a6bc199"
+  },
+  {
+   "path": "content/manager.xhtml",
+   "size": 3359,
+   "sha256": "75570c77353b5fb03270b941dfbd3f2a37e0f44666ca4e6b73650e92f7f986f5"
+  },
+  {
+   "path": "content/paper-metadata.js",
+   "size": 2732,
+   "sha256": "4082b875486afd03165df45ab9a0ce1656304597327af069961819b74d96377c"
+  },
+  {
+   "path": "content/reading-layout.js",
+   "size": 13164,
+   "sha256": "8ec44d93f469fbd6e76b13f41ef256915d1ea21a627b7dc9ce12003eec959c5e"
+  },
+  {
+   "path": "content/runtime.js",
+   "size": 20933,
+   "sha256": "e471bd49647f0a5471127fe1b6b284044cc2c047a8ebc5a336af056a35dff237"
+  },
+  {
+   "path": "content/store.js",
+   "size": 13182,
+   "sha256": "a01c558c3e3df390958767dee5836f0b375d3d2d116bf254447b0c9e3d20ac80"
+  },
+  {
+   "path": "manifest.json",
+   "size": 572,
+   "sha256": "f0299d4608c216dfa7f8ae51e06cf9c140ff0004262eafd3d0624c3bf94e8c51"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-26T09:11:57.711Z",
+  "input": {
+   "slug": "zotero-nature-reader",
+   "version": "0.3.7",
+   "sha256": "840b47ba2ef68203d657228fd8075848122d4cd5deb3bba9de2c9696d81f8d24"
+  },
+  "coverage": {
+   "filesTotal": 11,
+   "filesAnalyzed": 10,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 98416,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/core.js",
+       "line": 48,
+       "column": 25,
+       "snippet": "if (doi) result.push(`[DOI](https://doi.org/${encodeURIComponent(doi)})`);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "obsidian://open?vault=<expr>&file=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/runtime.js",
+       "line": 303,
+       "column": 23,
+       "snippet": "Zotero.launchURL(`obsidian://open?vault=${encodeURIComponent(PathUtils.filename(settings.vaultPath.replace(/[\\\\/]+$/, \"\")))}&file=${encodeURIComponent(target.relativePath)}`);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 19,
+    "inVendoredCodeOnly": false,
+    "codeKey": "c9a8574c13ba",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 30,
+      "column": 24,
+      "snippet": "exists: path => IOUtils.exists(path),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 31,
+      "column": 22,
+      "snippet": "read: path => IOUtils.readUTF8(path),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 32,
+      "column": 23,
+      "snippet": "mkdir: path => IOUtils.makeDirectory(path, { createAncestors: true, ignoreExisting: true }),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 34,
+      "column": 16,
+      "snippet": "await IOUtils.makeDirectory(PathUtils.parent(path), { createAncestors: true, ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 37,
+      "column": 18,
+      "snippet": "await IOUtils.writeUTF8(temporary, text, { flush: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 38,
+      "column": 18,
+      "snippet": "await IOUtils.move(temporary, path, { noOverwrite: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 40,
+      "column": 18,
+      "snippet": "await IOUtils.writeUTF8(path, text, { tmpPath: temporary, flush: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 44,
+      "column": 16,
+      "snippet": "await IOUtils.makeDirectory(PathUtils.parent(target), { createAncestors: true, ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 45,
+      "column": 35,
+      "snippet": "const sourceStat = await IOUtils.stat(source);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/runtime.js",
+      "line": 46,
+      "column": 20,
+      "snippet": "if (await IOUtils.exists(target)) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://127.0.0.1/obsidian-literature-bridge/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://127.0.0.1/obsidian-literature-bridge/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-26T09:11:57.711Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the sjc88661 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-26T09:11:57.711Z",
+  "appliesTo": {
+   "slug": "zotero-nature-reader",
+   "version": "0.3.7",
+   "sha256": "840b47ba2ef68203d657228fd8075848122d4cd5deb3bba9de2c9696d81f8d24"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.6",
+   "inputHash": "87fedd2df6d2c10880c7398497354a0ca46bb321ab3a7d538bce676348e49e93"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found; its code names known services",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-25T14:41:40Z",
+    "lastCommitAt": "2026-10-25T14:40:38Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

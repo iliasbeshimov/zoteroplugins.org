@@ -1,0 +1,276 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-citation-count",
+ "repo": "adoream/zotero-citation-count",
+ "version": "0.1.2",
+ "tag": "v0.1.2",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-26T04:39:38Z",
+ "prerelease": false,
+ "asset": {
+  "name": "doi-citation-count-0.1.2-legacy.xpi",
+  "url": "https://github.com/Adoream/zotero-citation-count/releases/download/v0.1.2/doi-citation-count-0.1.2-legacy.xpi",
+  "size": 4074,
+  "sha256": "494be09d014c13514c5aeccc9bdd446d16d7661eb445073837dea8e1bef2093f",
+  "githubAssetId": 677026305,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-26T04:39:37Z",
+  "fetchedAt": "2026-10-26T09:11:57.711Z"
+ },
+ "manifest": {
+  "format": "install.rdf",
+  "legacy": true,
+  "addonId": "doi-citation-count@rua-local",
+  "name": "DOI Citation Count",
+  "version": "0.1.2",
+  "description": "Fetch citation counts by DOI using api.rua.dev.",
+  "strictMinVersion": "3.0",
+  "strictMaxVersion": "6.*"
+ },
+ "files": [
+  {
+   "path": "chrome.manifest",
+   "size": 320,
+   "sha256": "c24bd29c63ad165c3a10657ef02975e45e1992d52c84c1ac56232b83f307b5d9"
+  },
+  {
+   "path": "install.rdf",
+   "size": 909,
+   "sha256": "f959ee7793a89a34fbfee0f43e4f474944f50fd923229db1113027563663e9de"
+  },
+  {
+   "path": "lib.js",
+   "size": 3237,
+   "sha256": "8487260a7066728cd66fd17752b4c5bf1f795ffbd13317d90a6946e99c3f135d"
+  },
+  {
+   "path": "overlay.js",
+   "size": 5133,
+   "sha256": "6fccae4001702d8d0636ca4f1d4547f6083e42b1fd43f59b7dcf421c50011bad"
+  },
+  {
+   "path": "overlay.xul",
+   "size": 331,
+   "sha256": "b5f02e1d7a6706969cf2f0ca43a5d6820943acf755707a473a0a8ef54eddbf85"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-26T09:11:57.711Z",
+  "input": {
+   "slug": "zotero-citation-count",
+   "version": "0.1.2",
+   "sha256": "494be09d014c13514c5aeccc9bdd446d16d7661eb445073837dea8e1bef2093f"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "chrome.manifest",
+     "reason": "not-code"
+    },
+    {
+     "path": "install.rdf",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 8701,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "xhr",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "overlay.js",
+       "line": 52,
+       "column": 18,
+       "snippet": "request = new window.XMLHttpRequest();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.rua.dev",
+     "category": "unknown",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "overlay.js",
+       "line": 53,
+       "column": 28,
+       "snippet": "request.open('GET', 'https://api.rua.dev/v1/publications?scraper=citationcount&doi=' + encodeURIComponent(doi), true);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://api.rua.dev/v1/publications?scraper=citationcount&doi=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "overlay.js",
+       "line": 53,
+       "column": 8,
+       "snippet": "request.open('GET', 'https://api.rua.dev/v1/publications?scraper=citationcount&doi=' + encodeURIComponent(doi), true);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-26T09:11:57.711Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-26T09:11:57.711Z",
+  "appliesTo": {
+   "slug": "zotero-citation-count",
+   "version": "0.1.2",
+   "sha256": "494be09d014c13514c5aeccc9bdd446d16d7661eb445073837dea8e1bef2093f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.6",
+   "inputHash": "5c97ae48c6cf2f97aaa8b9cdcdc20c25974be4924cfc8db2e7101f792ac45076"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "unknown",
+      "hosts": [
+       "api.rua.dev"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts a server we couldn't identify: api.rua.dev",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-26T04:39:38Z",
+    "lastCommitAt": "2026-10-26T04:39:08Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 6",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Contacts a server we couldn't identify: api.rua.dev"
+   ]
+  }
+ }
+}
