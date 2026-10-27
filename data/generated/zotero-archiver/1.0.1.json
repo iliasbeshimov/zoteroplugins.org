@@ -1,0 +1,423 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-archiver",
+ "repo": "aspray166/zotero-archiver",
+ "version": "1.0.1",
+ "tag": "v1.0.1",
+ "releaseAuthor": "Aspray166",
+ "publishedAt": "2026-10-26T13:54:07Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-archiver.xpi",
+  "url": "https://github.com/Aspray166/zotero-archiver/releases/download/v1.0.1/zotero-archiver.xpi",
+  "size": 13048,
+  "sha256": "8cff132abef1fb4576ad87a36bf029fd964f3fe124e3528dc0d3932cd54d9756",
+  "githubAssetId": 678329968,
+  "uploader": "Aspray166",
+  "uploadedAt": "2026-10-26T13:56:01Z",
+  "fetchedAt": "2026-10-27T09:13:07.272Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-archiver@example.com",
+  "name": "Zotero Archiver",
+  "version": "1.0.1",
+  "description": "归档论文到独立命名归档库（完整保留标签/笔记/附件），支持定期自动归档备份、切换文库、恢复回主库、批量删除已归档论文。",
+  "homepageUrl": "https://github.com/Aspray166/zotero-archiver",
+  "updateUrl": "https://raw.githubusercontent.com/Aspray166/zotero-archiver/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2064,
+   "sha256": "c8474cca1041971e01938efeffdbc0035ea9135a71272d958888f255ea34148d"
+  },
+  {
+   "path": "icon.svg",
+   "size": 401,
+   "sha256": "8fd59fe4144fb42cc05f6e7ec1dfacd31e05aa09dac09a73ade47335d0b15ba1"
+  },
+  {
+   "path": "manifest.json",
+   "size": 707,
+   "sha256": "6c0c25b56935b86661abd6e0bf34cb8ae380b94ad71d5cc7c46a794c287fbea7"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 1254,
+   "sha256": "88fae05b7ce4e868ef22f821518e43be02734ab35d8ee6958a79aa66df80fe08"
+  },
+  {
+   "path": "prefs.js",
+   "size": 305,
+   "sha256": "005c393ba5c8cab793ba3a7cd2c7197c1e0f1e4f2a25c9728d0141be0f841df5"
+  },
+  {
+   "path": "zotero-archiver.js",
+   "size": 42936,
+   "sha256": "b188aff0c68cc2192d312908039fe4489f5a1c7f685083332990d192453891f4"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-27T09:13:07.272Z",
+  "input": {
+   "slug": "zotero-archiver",
+   "version": "1.0.1",
+   "sha256": "8cff132abef1fb4576ad87a36bf029fd964f3fe124e3528dc0d3932cd54d9756"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 46559,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "db-write",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "f84534f1f431",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 847,
+      "column": 30,
+      "snippet": "await Zotero.DB.queryAsync(",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "sqlStatements": [
+      "INSERT"
+     ],
+     "sqlTables": [
+      "collectionItems"
+     ],
+     "apis": [
+      "Zotero.DB"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 17,
+    "inVendoredCodeOnly": false,
+    "codeKey": "88a9d46c3fef",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 194,
+      "column": 47,
+      "snippet": "return Services.dirsvc.get(\"TmpD\", Components.interfaces.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 220,
+      "column": 37,
+      "snippet": "var children = await IOUtils.getChildren(win(this._archiveRoot()));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 360,
+      "column": 34,
+      "snippet": "var bytes = await IOUtils.read(win(xpiPath));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 361,
+      "column": 22,
+      "snippet": "await IOUtils.write(win(dest), bytes);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 379,
+      "column": 28,
+      "snippet": "try { await IOUtils.remove(win(profileDir + \"/addonStartup.json.lz4\")); } catch (e) { /* ignore */ }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 409,
+      "column": 39,
+      "snippet": "var f = Components.classes[\"@mozilla.org/file/local;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 410,
+      "column": 32,
+      "snippet": ".createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 415,
+      "column": 30,
+      "snippet": "_mkdir(path) { return IOUtils.makeDirectory(win(path), { createAncestors: true, ignoreExisting: true }); },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 416,
+      "column": 36,
+      "snippet": "_write(path, data) { return IOUtils.writeUTF8(win(path), data); },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 417,
+      "column": 29,
+      "snippet": "_read(path) { return IOUtils.readUTF8(win(path)); },",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "1ea1f3cd866d",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 472,
+      "column": 46,
+      "snippet": "var proc = Components.classes[\"@mozilla.org/process/util;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-archiver.js",
+      "line": 473,
+      "column": 36,
+      "snippet": ".createInstance(Components.interfaces.nsIProcess);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIProcess"
+     ],
+     "programs": [
+      "powershell"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Aspray166/zotero-archiver/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Aspray166/zotero-archiver/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-27T09:13:07.272Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Aspray166 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-27T09:13:07.272Z",
+  "appliesTo": {
+   "slug": "zotero-archiver",
+   "version": "1.0.1",
+   "sha256": "8cff132abef1fb4576ad87a36bf029fd964f3fe124e3528dc0d3932cd54d9756"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.6",
+   "inputHash": "0de150017adbe813e30ff2913c41b1b36c339d2ab9a28d457ab067150341a4a9"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "db-write",
+      "label": "Writes to Zotero's database directly",
+      "concern": "high",
+      "detail": "Tables: collectionItems"
+     },
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include powershell"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "high",
+    "drivers": [
+     "CAP-DB-WRITE-ZOTERO",
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-26T13:54:07Z",
+    "lastCommitAt": "2026-10-26T13:53:59Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "high-concern",
+   "ruleId": "OV-HIGH",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Writes to Zotero's database directly"
+   ]
+  }
+ }
+}
