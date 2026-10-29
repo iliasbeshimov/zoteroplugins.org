@@ -1,0 +1,470 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-default-attachment",
+ "repo": "pikapei/zotero-default-attachment",
+ "version": "1.1.0",
+ "tag": "v1.1.0",
+ "releaseAuthor": "PikaPei",
+ "publishedAt": "2026-10-28T13:20:38Z",
+ "prerelease": false,
+ "asset": {
+  "name": "default-attachment.xpi",
+  "url": "https://github.com/PikaPei/zotero-default-attachment/releases/download/v1.1.0/default-attachment.xpi",
+  "size": 40931,
+  "sha256": "83c4755050a3b40380af4c9fe68d1c19edc9573f8ff4130f9e9f1b769b3dd983",
+  "githubAssetId": 685048224,
+  "uploader": "PikaPei",
+  "uploadedAt": "2026-10-28T13:13:11Z",
+  "fetchedAt": "2026-10-29T10:10:22.964Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "default-attachment@zotero-plugin",
+  "name": "Default Attachment",
+  "version": "1.1.0",
+  "description": "Set the default attachment for Zotero items with multiple files",
+  "updateUrl": "https://github.com/PikaPei/zotero-default-attachment/releases/download/release/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1405,
+   "sha256": "e44afe7470c378624a6ba75260788249bc9880abccbde04d3116849f94c48483"
+  },
+  {
+   "path": "content/icons/set_default_48.png",
+   "size": 2109,
+   "sha256": "1a85e04269ea5037c488d4c0afce561e565365d4e19aa4624bc49bed6c1d1c55"
+  },
+  {
+   "path": "content/icons/set_default_96.png",
+   "size": 6805,
+   "sha256": "8e5dde0a96f910d1bba7e065ba479c1b245705d9d382e4c66a8f7752dcba6637"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 1164,
+   "sha256": "fce2b0f89a15157088433675ffb14ae92a0771705c2a2513053ce30c1347efb0"
+  },
+  {
+   "path": "content/scripts/defaultattachment.js",
+   "size": 125161,
+   "sha256": "ddfd5df4ab05bab1ca9eb5e15c3f778f8a5486e43b5ac38654707888e5d0b878"
+  },
+  {
+   "path": "manifest.json",
+   "size": 572,
+   "sha256": "64afe0a44cf8dc320915b41655c8b2e4ccf238d02c8f3b695c1ed69713b083ce"
+  },
+  {
+   "path": "prefs.js",
+   "size": 189,
+   "sha256": "b8b2dbff7c413802eadf5dbc5e1119fc9618687cb5cf4099dd10c600918f61cb"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-10-29T10:10:22.964Z",
+  "input": {
+   "slug": "zotero-default-attachment",
+   "version": "1.1.0",
+   "sha256": "83c4755050a3b40380af4c9fe68d1c19edc9573f8ff4130f9e9f1b769b3dd983"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "content/icons/set_default_48.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/icons/set_default_96.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 127919,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "content/scripts/defaultattachment.js"
+     ],
+     "identifiedBy": "package-json",
+     "match": "release"
+    }
+   ]
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 3,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "0eff631f621f",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/defaultattachment.js",
+      "line": 472,
+      "column": 49,
+      "snippet": "this.clipboardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/defaultattachment.js",
+      "line": 472,
+      "column": 95,
+      "snippet": "boardService = Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/defaultattachment.js",
+      "line": 518,
+      "column": 43,
+      "snippet": "if (this.filePath && Zotero.isMac) Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [`-e`, `set the clipboard to POSIX file \"${this.filePath}\"`]);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard",
+      "osascript (fixed command)"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "f3a1eff10821",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/defaultattachment.js",
+      "line": 28,
+      "column": 13,
+      "snippet": "return BasicTool.getZotero().Prefs.get(DebugBridge2.passwordPref, true);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/defaultattachment.js",
+      "line": 31,
+      "column": 6,
+      "snippet": "BasicTool.getZotero().Prefs.set(DebugBridge2.passwordPref, v, true);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.debug-bridge.password"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "be3b45094502",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/defaultattachment.js",
+      "line": 64,
+      "column": 24,
+      "snippet": "const f = new AsyncFunction(\"Zotero,window\", params.run);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "AsyncFunction"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "0babf58be0ea",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/defaultattachment.js",
+      "line": 507,
+      "column": 38,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": true
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/defaultattachment.js",
+      "line": 507,
+      "column": 82,
+      "snippet": "const file = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "link-installs-addons",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "adb1b436c0a9",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/defaultattachment.js",
+      "line": 129,
+      "column": 6,
+      "snippet": "Services.io.getProtocolHandler(\"zotero\").wrappedJSObject._extensions[\"zotero://plugin\"] = pluginBridgeExtension;",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "zotero://plugin"
+     ],
+     "asksFirst": false
+    }
+   },
+   {
+    "id": "link-runs-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "99e69161fe8b",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/defaultattachment.js",
+      "line": 85,
+      "column": 6,
+      "snippet": "Services.io.getProtocolHandler(\"zotero\").wrappedJSObject._extensions[\"zotero://ztoolkit-debug\"] = debugBridgeExtension;",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "apis": [
+      "zotero://ztoolkit-debug (asks first)"
+     ],
+     "asksFirst": true
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/PikaPei/zotero-default-attachment/releases/download/release/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/PikaPei/zotero-default-attachment/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-10-29T10:10:22.964Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the PikaPei account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-10-29T10:10:22.964Z",
+  "appliesTo": {
+   "slug": "zotero-default-attachment",
+   "version": "1.1.0",
+   "sha256": "83c4755050a3b40380af4c9fe68d1c19edc9573f8ff4130f9e9f1b769b3dd983"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.6",
+   "inputHash": "122e02ea1610c70af8390aa315d1a6c85bfc2909802d1abf0c99e3fc766c650f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "link-installs-addons",
+      "label": "A zotero:// link (a web page can open one) can make it install add-ons without asking you",
+      "concern": "medium",
+      "libraries": [
+       "zotero-plugin-toolkit"
+      ],
+      "detail": "zotero://plugin"
+     },
+     {
+      "id": "link-runs-code",
+      "label": "A zotero:// link can make it run code if you approve a prompt",
+      "concern": "medium",
+      "libraries": [
+       "zotero-plugin-toolkit"
+      ],
+      "detail": "zotero://ztoolkit-debug"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-LINK-INSTALL",
+     "CAP-LINK-CODE"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-28T13:20:38Z",
+    "lastCommitAt": "2026-10-28T13:07:37Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.6",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from zotero-plugin-toolkit)",
+    "A zotero:// link can make it run code if you approve a prompt (from zotero-plugin-toolkit)"
+   ]
+  }
+ }
+}
