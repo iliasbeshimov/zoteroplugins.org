@@ -1,0 +1,667 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-ai-agent",
+ "repo": "cantikapf/zotero-ai-agent",
+ "version": "0.7.6",
+ "tag": "v0.7.6",
+ "releaseAuthor": "cantikapf",
+ "publishedAt": "2026-11-01T02:16:01Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-ai-agent-0.7.6.xpi",
+  "url": "https://github.com/cantikapf/zotero-ai-agent/releases/download/v0.7.6/zotero-ai-agent-0.7.6.xpi",
+  "size": 23968,
+  "sha256": "33e87d5329618074cf519d7845e4df87cbc2e7abd68d562b8e6f68722314da14",
+  "githubAssetId": 697081542,
+  "uploader": "cantikapf",
+  "uploadedAt": "2026-11-01T02:18:02Z",
+  "fetchedAt": "2026-11-01T13:32:34.080Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-ai-agent@cantikapf.github.io",
+  "name": "Zotero AI Agent",
+  "version": "0.7.6",
+  "description": "Ultra-lightweight AI Agent plugin for Zotero 7 with 9router and Hermes integration",
+  "updateUrl": "https://raw.githubusercontent.com/cantikapf/zotero-ai-agent/master/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "7.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 75407,
+   "sha256": "c22cdf97c0ff315c3032148782697e96a953f5fefb4e644eee8256ca7d912683"
+  },
+  {
+   "path": "install-info.json",
+   "size": 65,
+   "sha256": "68dcd39673bc3a7c4556e67c466138b7deb54f6fc5536cd6394eaf89a5ca2015"
+  },
+  {
+   "path": "manifest.json",
+   "size": 509,
+   "sha256": "08c83986027df50e34e272f1e2349b9dd52fe80c7c5836ffe59579756756ab90"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 4528,
+   "sha256": "0837f9026cd3169a7e0ad8dc6c33210688fc545f16220c0b143c30e8509c6075"
+  },
+  {
+   "path": "prefs.js",
+   "size": 717,
+   "sha256": "f17566185398cc615f1e80363cb00f5e7d5cdda71ca839a3c31f56193e573653"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-01T13:32:34.080Z",
+  "input": {
+   "slug": "zotero-ai-agent",
+   "version": "0.7.6",
+   "sha256": "33e87d5329618074cf519d7845e4df87cbc2e7abd68d562b8e6f68722314da14"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "install-info.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 80652,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 282,
+       "column": 29,
+       "snippet": "const response = await doFetch(url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 597,
+       "column": 27,
+       "snippet": "const response = await fetch(url, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1495,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 20128,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 508,
+       "column": 13,
+       "snippet": "baseUrl: \"http://127.0.0.1:20128/v1\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 4,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-ai-agent.baseUrl\", \"http://127.0.0.1:20128/v1\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 4,
+       "column": 43,
+       "snippet": "pref(\"extensions.zotero-ai-agent.baseUrl\", \"http://127.0.0.1:20128/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 128,
+       "column": 17,
+       "snippet": "var CROSSREF = \"https://api.crossref.org/works\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 315,
+       "column": 8,
+       "snippet": "`${CROSSREF}?query.bibliographic=${term}&rows=${limit * 2}&select=DOI,title,author,issued,container-title,type,is-referenced-by-count`,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.datacite.org",
+     "category": "scholarly-api",
+     "provider": "DataCite",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 129,
+       "column": 17,
+       "snippet": "var DATACITE = \"https://api.datacite.org/dois\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 298,
+       "column": 18,
+       "snippet": "const url = `${DATACITE}?query=${encodeURIComponent(words.slice(0, take).join(\" \"))}&page[size]=${limit}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 235,
+       "column": 11,
+       "snippet": "url: `https://doi.org/${doi}`,",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 258,
+       "column": 11,
+       "snippet": "url: `https://doi.org/${doi}`,",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero-ai-agent.baseUrl",
+     "defaultValue": "http://127.0.0.1:20128/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 14,
+       "column": 18,
+       "snippet": "preference=\"extensions.zotero-ai-agent.baseUrl\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 4,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-ai-agent.baseUrl\", \"http://127.0.0.1:20128/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "zaa-baseUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preferences.xhtml",
+       "line": 12,
+       "column": 6,
+       "snippet": "<html:input id=\"zaa-baseUrl\" type=\"text\" style=\"width: 30em\"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "013be1e54da1",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1818,
+      "column": 30,
+      "snippet": "bridgeServer.setAuthToken(Zotero.Prefs.get(PREF_BRIDGE_TOKEN, true));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 6,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-ai-agent.apiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 9,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-ai-agent.bridgeToken\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero-ai-agent.apiKey",
+      "extensions.zotero-ai-agent.bridgeToken"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "0b8f0c3e1993",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 714,
+      "column": 25,
+      "snippet": "const json = await win.eval(`(async () => { ${body} })()`);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1270,
+      "column": 8,
+      "snippet": "win.eval(`(() => {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "win.eval"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "bfa145f6accf",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1528,
+      "column": 26,
+      "snippet": "return String(await Zotero.File.getContentsAsync(path) || \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1569,
+      "column": 32,
+      "snippet": "existing = String(await Zotero.File.getContentsAsync(path) || \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1591,
+      "column": 12,
+      "snippet": "await Zotero.File.putContentsAsync(path, body);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "codeKey": "8b43cb053f17",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1834,
+      "column": 48,
+      "snippet": "if (typeof Zotero.Server !== \"undefined\" && Zotero.Server.Endpoints) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1842,
+      "column": 6,
+      "snippet": "Zotero.Server.Endpoints[ACTIVE_SESSION_PATH] = activeEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1849,
+      "column": 6,
+      "snippet": "Zotero.Server.Endpoints[CHAT_PATH] = chatEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1859,
+      "column": 66,
+      "snippet": "if (activeEndpoint && typeof Zotero.Server !== \"undefined\" && Zotero.Server.Endpoints) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1863,
+      "column": 64,
+      "snippet": "if (chatEndpoint && typeof Zotero.Server !== \"undefined\" && Zotero.Server.Endpoints) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/agent-bridge/active",
+      "/agent-bridge/chat"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "runs-sent-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "c3cad227b69f",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 714,
+      "column": 25,
+      "snippet": "const json = await win.eval(`(async () => { ${body} })()`);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "local endpoint"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/cantikapf/zotero-ai-agent/master/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/cantikapf/zotero-ai-agent/master/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-01T13:32:34.080Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the cantikapf account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-01T13:32:34.080Z",
+  "appliesTo": {
+   "slug": "zotero-ai-agent",
+   "version": "0.7.6",
+   "sha256": "33e87d5329618074cf519d7845e4df87cbc2e7abd68d562b8e6f68722314da14"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "20a59ca4d76adc04a87d0b7780617ba8597e50f1c57a8cd88150b03928777d0f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "api.datacite.org",
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "runs-sent-code",
+      "label": "Runs code other programs on this computer send it",
+      "concern": "medium"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "dynamic-code",
+      "label": "Runs code it assembles while running",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-SENT-CODE"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-01T02:16:01Z",
+    "lastCommitAt": "2026-11-01T03:48:56Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Runs code other programs on this computer send it"
+   ]
+  }
+ }
+}

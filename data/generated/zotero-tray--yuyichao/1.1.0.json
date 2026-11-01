@@ -1,0 +1,416 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-tray--yuyichao",
+ "repo": "yuyichao/zotero-tray",
+ "version": "1.1.0",
+ "tag": "v1.1.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-28T19:00:57Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-tray.xpi",
+  "url": "https://github.com/yuyichao/zotero-tray/releases/download/v1.1.0/zotero-tray.xpi",
+  "size": 19693,
+  "sha256": "6a03e9f1e731158cbbeb687fe9ce36baa4245849917fb6fc190ee97d4d3dce45",
+  "githubAssetId": 686023199,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-28T19:00:57Z",
+  "fetchedAt": "2026-11-01T13:32:34.080Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-tray@yyc1992",
+  "name": "Zotero Tray",
+  "version": "1.1.0",
+  "description": "Keep Zotero running in the system tray (StatusNotifierItem) when the main window is closed.",
+  "homepageUrl": "https://github.com/yuyichao/zotero-tray",
+  "updateUrl": "https://raw.githubusercontent.com/yuyichao/zotero-tray/master/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 672,
+   "sha256": "c163060a7929e50d9e8174306a445214d334e1f3a0d3d7c9aae4e1c0383358e7"
+  },
+  {
+   "path": "gdbus.js",
+   "size": 25686,
+   "sha256": "868722f326d642fb03d414f982acbe5a98c4573013adeed8df841e1c19e43006"
+  },
+  {
+   "path": "manifest.json",
+   "size": 498,
+   "sha256": "ac9e9daed352676812e890508014e0b303fa2c40199afeeb27ce88ed4c76bc4e"
+  },
+  {
+   "path": "poll-worker.js",
+   "size": 900,
+   "sha256": "4094c84ce55f41e0bae275d02937618359f0b33a6af07525853df039851e4f86"
+  },
+  {
+   "path": "prefs.js",
+   "size": 258,
+   "sha256": "74e46472f8429b7e87aa668cce00c6c7dcb82915072da9066b7e1c97ee3ff1f0"
+  },
+  {
+   "path": "tray-item.js",
+   "size": 19975,
+   "sha256": "d02a159f4123363c584642e310b785364f92fbcaa323f7a50e7a98607895fe0f"
+  },
+  {
+   "path": "zotero-tray.js",
+   "size": 18743,
+   "sha256": "70c8d3e04745740e7182807bc33391e44c3fb8ff2bf0f6fa9309157c9e6b07b5"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-01T13:32:34.080Z",
+  "input": {
+   "slug": "zotero-tray--yuyichao",
+   "version": "1.1.0",
+   "sha256": "6a03e9f1e731158cbbeb687fe9ce36baa4245849917fb6fc190ee97d4d3dce45"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 66234,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [
+    {
+     "pattern": "resource://<expr>/poll-worker.js",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "zotero-tray.js",
+       "line": 36,
+       "column": 15,
+       "snippet": "GDBus.init(`resource://${RESOURCE_HOST}/poll-worker.js`);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "codeKey": "948caca7b808",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "tray-item.js",
+      "line": 539,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(file, script);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "tray-item.js",
+      "line": 541,
+      "column": 6,
+      "snippet": "IOUtils.remove(file).catch(() => {});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "tray-item.js",
+      "line": 571,
+      "column": 4,
+      "snippet": "IOUtils.remove(raise.file).catch(() => {});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "zotero-tray.js",
+      "line": 493,
+      "column": 61,
+      "snippet": "let iconDir = PathUtils.join(Services.dirsvc.get(\"GreD\", Ci.nsIFile).path, \"icons\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "native-code",
+    "occurrences": 162,
+    "inVendoredCodeOnly": false,
+    "codeKey": "e613fabe86dd",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "gdbus.js",
+      "line": 17,
+      "column": 46,
+      "snippet": "let { ctypes } = ChromeUtils.importESModule(\"resource://gre/modules/ctypes.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "gdbus.js",
+      "line": 18,
+      "column": 12,
+      "snippet": "let abi = ctypes.default_abi;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "gdbus.js",
+      "line": 19,
+      "column": 12,
+      "snippet": "let ptr = ctypes.voidptr_t;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "gdbus.js",
+      "line": 20,
+      "column": 12,
+      "snippet": "let str = ctypes.char.ptr;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "gdbus.js",
+      "line": 21,
+      "column": 17,
+      "snippet": "let gboolean = ctypes.int;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "gdbus.js",
+      "line": 22,
+      "column": 14,
+      "snippet": "let guint = ctypes.unsigned_int;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "gdbus.js",
+      "line": 23,
+      "column": 15,
+      "snippet": "let GError = new ctypes.StructType(\"GError\", [",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "gdbus.js",
+      "line": 24,
+      "column": 14,
+      "snippet": "{ domain: ctypes.uint32_t },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "gdbus.js",
+      "line": 25,
+      "column": 12,
+      "snippet": "{ code: ctypes.int },",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "gdbus.js",
+      "line": 30,
+      "column": 27,
+      "snippet": "let AsyncReadyCallback = ctypes.FunctionType(abi, ctypes.void_t, [ptr, ptr, ptr]);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "js-ctypes"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/yuyichao/zotero-tray/master/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/yuyichao/zotero-tray/master/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-01T13:32:34.080Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-01T13:32:34.080Z",
+  "appliesTo": {
+   "slug": "zotero-tray--yuyichao",
+   "version": "1.1.0",
+   "sha256": "6a03e9f1e731158cbbeb687fe9ce36baa4245849917fb6fc190ee97d4d3dce45"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "6320d84ef5b0d8b04a85b38c59e94848a3511fdd24ce4e6f8cabc2ff07082cb3"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "native-code",
+      "label": "Loads native code",
+      "concern": "medium"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-28T19:00:57Z",
+    "lastCommitAt": "2026-10-28T19:00:34Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Loads native code"
+   ]
+  }
+ }
+}

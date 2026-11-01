@@ -1,0 +1,428 @@
+{
+ "schemaVersion": 1,
+ "slug": "titledrop",
+ "repo": "offmor/titledrop",
+ "version": "1.0",
+ "tag": "v1.0",
+ "releaseAuthor": "offmor",
+ "publishedAt": "2026-10-29T12:27:35Z",
+ "prerelease": false,
+ "asset": {
+  "name": "titledrop-1.0.xpi",
+  "url": "https://github.com/offmor/TitleDrop/releases/download/v1.0/titledrop-1.0.xpi",
+  "size": 22353,
+  "sha256": "627fed4937ae69409f821e7bb223e713cc1262cda7b73ecbc1fba75aa4c61e2b",
+  "githubAssetId": 688554385,
+  "uploader": "offmor",
+  "uploadedAt": "2026-10-29T12:53:02Z",
+  "fetchedAt": "2026-11-01T13:32:34.080Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "titledrop@local",
+  "name": "TitleDrop",
+  "version": "1.0",
+  "description": "Drop a paper. Keep its title. Automatic PDF naming with local extraction and identifier checks.",
+  "homepageUrl": "https://github.com/offmor/TitleDrop",
+  "updateUrl": "https://github.com/offmor/TitleDrop/releases/latest/download/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1808,
+   "sha256": "f5ef7e475a02bef93fde41412a652242feb60a8e708dcbfbcb27be8e03bf5854"
+  },
+  {
+   "path": "core.js",
+   "size": 7165,
+   "sha256": "327cdebe78b2cf898856409fa436cc5028f2848b5fe717d6adce15b409d741bc"
+  },
+  {
+   "path": "dashboard.js",
+   "size": 358,
+   "sha256": "9d27b086e1a58c399a7a647ce2ac60be728b3432f1a3701dc4596ac2d5172e28"
+  },
+  {
+   "path": "dashboard.xhtml",
+   "size": 531,
+   "sha256": "e8503c23975068233899426694024ca2e58835bd531133c06acf71fb70fccab4"
+  },
+  {
+   "path": "icon.svg",
+   "size": 492,
+   "sha256": "cd797b45fc13b9924be9b311e14abf1b627e6b7b6820ddd9614f878462f27af9"
+  },
+  {
+   "path": "main.js",
+   "size": 26928,
+   "sha256": "dd45e415ad5ef3308c64ff70431fe51ddb3f52c8467252602de7f96774f2e313"
+  },
+  {
+   "path": "manifest.json",
+   "size": 577,
+   "sha256": "5d33aa0cd3a2315466c8d7494f8003f960448f805cf1bfa4d74fc7cbb113d158"
+  },
+  {
+   "path": "settings.xhtml",
+   "size": 309,
+   "sha256": "9554aa33a50cd333e321b0f4f7da9451c7c16b46bea2f7e047ea838f8606828b"
+  },
+  {
+   "path": "storage.js",
+   "size": 989,
+   "sha256": "372ea3df40eb68a520c3d2fb0a5879149ac498ff374b13fc208c1910b1490c54"
+  },
+  {
+   "path": "ui.css",
+   "size": 10108,
+   "sha256": "8d9d8fc902b42c84887e8a0094c40e2fc6cc40e16b177e3fac8a8579b79cb1d3"
+  },
+  {
+   "path": "ui.js",
+   "size": 17954,
+   "sha256": "0d3007048ba4ec24f79700cf4618442b3a615833cb95e2b5f15d0af6238f1a71"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-01T13:32:34.080Z",
+  "input": {
+   "slug": "titledrop",
+   "version": "1.0",
+   "sha256": "627fed4937ae69409f821e7bb223e713cc1262cda7b73ecbc1fba75aa4c61e2b"
+  },
+  "coverage": {
+   "filesTotal": 11,
+   "filesAnalyzed": 8,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "ui.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 56042,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "main.js",
+       "line": 241,
+       "column": 27,
+       "snippet": "const response = await Zotero.HTTP.request('GET', url, {timeout:12000, responseType:'text'});",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "main.js",
+       "line": 263,
+       "column": 53,
+       "snippet": "const response = JSON.parse(await this.request('https://api.crossref.org/works/' + encodeURIComponent(doi)));",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "main.js",
+       "line": 220,
+       "column": 78,
+       "snippet": "fields: a.ids.arxiv ? {repository:'arXiv', archiveID:a.ids.arxiv, url:'https://arxiv.org/abs/' + a.ids.arxiv} : {}};",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "main.js",
+       "line": 247,
+       "column": 38,
+       "snippet": "const html = await this.request('https://arxiv.org/abs/' + encodeURIComponent(id));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "main.js",
+       "line": 257,
+       "column": 54,
+       "snippet": "fields:{repository:'arXiv', archiveID:id, url:'https://arxiv.org/abs/' + id, date:meta('citation_date')[0] || ''},",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "main.js",
+       "line": 268,
+       "column": 85,
+       "snippet": "fields:{DOI:doi, date, publicationTitle:m['container-title']?.[0] || '', url:'https://doi.org/' + doi},",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "9681b18a3056",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "storage.js",
+      "line": 7,
+      "column": 13,
+      "snippet": "if(await IOUtils.exists(this.path))return IOUtils.readJSON(this.path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "storage.js",
+      "line": 7,
+      "column": 46,
+      "snippet": "if(await IOUtils.exists(this.path))return IOUtils.readJSON(this.path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "storage.js",
+      "line": 20,
+      "column": 14,
+      "snippet": "await IOUtils.writeJSON(this.path,next,{tmpPath:this.path+'.tmp'});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "ui.js",
+      "line": 189,
+      "column": 10,
+      "snippet": "await Zotero.File.putContentsAsync(fp.file,JSON.stringify(report,null,2));this.status(win.document,'Report saved. It contains local paper titles and filenames.');",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "user-chosen",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/offmor/TitleDrop/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/offmor/TitleDrop/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-01T13:32:34.080Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the offmor account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-01T13:32:34.080Z",
+  "appliesTo": {
+   "slug": "titledrop",
+   "version": "1.0",
+   "sha256": "627fed4937ae69409f821e7bb223e713cc1262cda7b73ecbc1fba75aa4c61e2b"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "a974e9fbca9739e482de6028641f3bd8178c6a5a8839c5d8ef0bc55ac41b8004"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "arxiv.org",
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-29T12:27:35Z",
+    "lastCommitAt": "2026-10-29T12:51:33Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

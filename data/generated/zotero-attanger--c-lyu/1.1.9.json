@@ -148,8 +148,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-11T10:18:00.092Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-01T13:32:34.080Z",
   "input": {
    "slug": "zotero-attanger--c-lyu",
    "version": "1.1.9",
@@ -254,7 +254,68 @@
     "files": []
    },
    "suspiciousUnicode": [],
-   "vendoredLibraries": []
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "chrome/content/scripts/zoteroattanger.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "chrome/content/scripts/zoteroattanger.js",
+       "line": 147,
+       "snippet": "terfaces.nsIClipboard.kGlobalClipboard)}catch(e){if(this.filePath&&Zotero.isMac)Zotero.Utilities.Internal.exec(\"/usr/bin/osascript\",[\"-e\",`set the clipboard to POSIX file \"${this.filePath}\"`]);else th"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroattanger.js",
+       "line": 195,
+       "snippet": "nce:\"ZoteroAttanger\",prefsPrefix:\"extensions.zotero.zoteroattanger\",releasePage:\"https://github.com/muisedestiny/zotero-attanger/releases\",updateJSON:\"https://raw.githubusercontent.com/muisedestiny/zo"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroattanger.js",
+       "line": 195,
+       "snippet": "leasePage:\"https://github.com/muisedestiny/zotero-attanger/releases\",updateJSON:\"https://raw.githubusercontent.com/muisedestiny/zotero-attanger/main/update.json\"};function It(){let r=new(typeof Locali"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroattanger.js",
+       "line": 195,
+       "snippet": "Title()));let e=await gt(\"sourceDir\",\"source path\");if(!e)return;let t=[];await Zotero.File.iterateDirectory(e,async function(o){!o.isDir&&/\\.(caj|pdf)$/i.test(o.name)&&t.push(o)}),ztoolkit.log(\"found"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroattanger.js",
+       "line": 195,
+       "snippet": "t a=1/0,n;for(let l of t){let d=l.name.replace(/\\..+?$/,\"\");try{if(!/pdf/i.test(Zotero.File.getExtension(l.path)))throw new Error(\"This is not a PDF file.\");ztoolkit.log(\"check file:\",l.name+\": \");let"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroattanger.js",
+       "line": 195,
+       "snippet": "le({file:n.path,libraryID:o.libraryID,parentItemID:o.id});te(l),l.parentItemID||Zotero.RecognizeDocument.autoRecognizeItems([l]),mt(n.path),t=t.filter(d=>d!==n)}}}async function Ze(r,e=\"pdf\"){let t=Zo"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroattanger.js",
+       "line": 195,
+       "snippet": "ewAttachment(ids)\")}Zotero.Prefs.set(`fileHandler.${e}`,o)}function vo(r){let t=Zotero.File.pathToFile(r).directoryEntries,i={lastModifiedTime:0,path:void 0};for(;t.hasMoreElements();){let o=t.getNext"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroattanger.js",
+       "line": 195,
+       "snippet": "Time:0,path:void 0};for(;t.hasMoreElements();){let o=t.getNext().QueryInterface(Components.interfaces.nsIFile);o.isDirectory()||o.isHidden()||o.isFile()&&o.lastModifiedTime>i.lastModifiedTime&&(i=o)}r"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroattanger.js",
+       "line": 195,
+       "snippet": "t a=PathUtils.filename(s),n=PathUtils.joinRelative(e,a);if(s==n)return;if(await IOUtils.exists(n)){await Zotero.Promise.delay(1e3);let c=new ztoolkit.ProgressWindow(\"Attanger\",{closeTime:-1,closeOther"
+      },
+      {
+       "file": "chrome/content/scripts/zoteroattanger.js",
+       "line": 195,
+       "snippet": "dded to the filename.\",icon:addon.data.icons.moveFile}).show();c.addDescription('<a href=\"https://zotero.org\">Click to enter a specified suffix.</a>'),await Qt(()=>!!(c.lines&&c.lines[0]._itemText));l"
+      }
+     ]
+    }
+   ]
   },
   "network": {
    "apis": [
@@ -508,13 +569,17 @@
     }
    ],
    "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "clipboard",
     "occurrences": 6,
     "inVendoredCodeOnly": false,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "0ea9b1e39d98",
     "evidence": [
      {
       "kind": "code",
@@ -522,7 +587,7 @@
       "line": 147,
       "column": 13749,
       "snippet": "});var Mt=k(we=>{\"use strict\";Object.defineProperty(we,\"__esModule\",{value:!0});we.ClipboardHelper=void 0;var pr=w(),Ye=class extends pr.BasicTool{constructor(){super(),this.filePath=\"\",this.transfera",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -530,7 +595,7 @@
       "line": 147,
       "column": 14025,
       "snippet": "Components.interfaces.nsITransferable),this.clipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(e",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -538,7 +603,7 @@
       "line": 147,
       "column": 14071,
       "snippet": "ipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(e,t=\"text/unicode\"){let i=Components.classes[\"@",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -554,7 +619,7 @@
       "line": 147,
       "column": 15678,
       "snippet": "et the clipboard to POSIX file \"${this.filePath}\"`]);else throw e}return this}};we.ClipboardHelper=Ye});var Kt=k(ke=>{\"use strict\";Object.defineProperty(ke,\"__esModule\",{value:!0});ke.FilePickerHelper",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -562,7 +627,7 @@
       "line": 195,
       "column": 12800,
       "snippet": ",this.Shortcut=new Br.ShortcutManager(this),this.Clipboard=(0,L.makeHelperTool)(Er.ClipboardHelper,this),this.FilePicker=(0,L.makeHelperTool)(Dr.FilePickerHelper,this),this.Patch=(0,L.makeHelperTool)(",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -575,7 +640,11 @@
    {
     "id": "dynamic-code",
     "occurrences": 1,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "80583b39bc0a",
     "evidence": [
      {
       "kind": "code",
@@ -583,7 +652,7 @@
       "line": 4,
       "column": 173,
       "snippet": "{if(n.run)try{let c=Object.getPrototypeOf(async function(){}).constructor;await new c(\"Zotero,window\",n.run)(o,s)}catch(c){o.debug(c),s.console.log(c)}if(n.file)try{Services.scriptloader.loadSubScript",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -596,6 +665,10 @@
     "id": "filesystem",
     "occurrences": 19,
     "inVendoredCodeOnly": false,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "25ff41214cdb",
     "evidence": [
      {
       "kind": "code",
@@ -603,7 +676,7 @@
       "line": 147,
       "column": 15140,
       "snippet": "is.transferable.setTransferData(l,d,0),this}addFile(e){let t=Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);return t.initWithPath(e),this.transferable.ad",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -611,7 +684,7 @@
       "line": 147,
       "column": 15184,
       "snippet": "addFile(e){let t=Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);return t.initWithPath(e),this.transferable.addDataFlavor(\"application/x-moz-file\"),this.t",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -694,6 +767,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "d201f0128774",
     "evidence": [
      {
       "kind": "code",
@@ -718,6 +792,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "3fb6539a772f",
     "evidence": [
      {
       "kind": "code",
@@ -774,19 +849,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-11T10:18:00.092Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-01T13:32:34.080Z",
   "appliesTo": {
    "slug": "zotero-attanger--c-lyu",
    "version": "1.1.9",
    "sha256": "9068bbcb50398879291c2f96a12a2b7bebe4eec437f30c506dc08b0bcc1ec5a2"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
-   "currentZotero": "10.0.5",
-   "inputHash": "42c976fc93e65ca4cfa4f60c6855d1ad203c02b9419a6b1ac72d0f990eebb881"
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "ea214eca15585a7301995ae6cad49f8eec0d189923614fc284e5fe3575efa0bb"
   },
   "facets": {
    "sourceTransparency": {
@@ -798,7 +873,7 @@
     "updates": {
      "kind": "other-listed-project",
      "label": "Updates come from muisedestiny/zotero-attanger, another listed project with the same add-on ID",
-     "check": "Zotero will update it on Zotero 7 to version 1.5.0 from muisedestiny/zotero-attanger on GitHub (rated: Review the details)"
+     "check": "Zotero will update it on Zotero 7 to version 1.5.5 from muisedestiny/zotero-attanger on GitHub (rated: Review the details)"
     },
     "partialAnalysis": null,
     "concern": "unknown",
@@ -850,11 +925,6 @@
       "concern": "low"
      },
      {
-      "id": "dynamic-code",
-      "label": "Runs code it assembles while running",
-      "concern": "low"
-     },
-     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -879,7 +949,7 @@
    },
    "compatibility": {
     "current": {
-     "zoteroVersion": "10.0.5",
+     "zoteroVersion": "10.0.7",
      "major": 10,
      "status": "incompatible"
     },

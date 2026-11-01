@@ -1,0 +1,345 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-open-router",
+ "repo": "luciferer/zotero-open-router",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "luciferer",
+ "publishedAt": "2026-11-01T05:40:43Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-open-router-0.1.0.xpi",
+  "url": "https://github.com/luciferer/zotero-open-router/releases/download/v0.1.0/zotero-open-router-0.1.0.xpi",
+  "size": 12471,
+  "sha256": "447370d513e530e894ee671fe00126fa04fcb1a757b77b6e6c641fb0377c1ea3",
+  "githubAssetId": 697443069,
+  "uploader": "luciferer",
+  "uploadedAt": "2026-11-01T05:40:44Z",
+  "fetchedAt": "2026-11-01T13:32:34.080Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-open-router@luciferer.github.io",
+  "name": "Zotero Open Router",
+  "version": "0.1.0",
+  "description": "Customize default double-click vs. Option+Double-Click attachment routing, prioritize main article PDFs over supplementary PDFs, preview .md/.csv/.tsv/.json/.txt/.zip in internal Zotero tabs, and open attachments in dedicated external apps.",
+  "homepageUrl": "https://github.com/luciferer/zotero-open-router",
+  "updateUrl": "https://github.com/luciferer/zotero-open-router/releases/latest/download/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "11.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 31717,
+   "sha256": "c571658fa6a8af09e1846a8fe4e21a6afdd7dcedea035f25490afc2b173a2448"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1066,
+   "sha256": "1065c6a7110c9df54e903258f11ae102d2fef3e71fb128cf83547f087a2b529e"
+  },
+  {
+   "path": "manifest.json",
+   "size": 718,
+   "sha256": "9ab5464fd8358026fd086cf46c4ad71c41f515cfac0094ca5615414e35f5fff5"
+  },
+  {
+   "path": "README.md",
+   "size": 4669,
+   "sha256": "4bd8f9621f49ca85f36005264fc84d8920948e15008f8fd3f6aa772a96e5866d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-01T13:32:34.080Z",
+  "input": {
+   "slug": "zotero-open-router",
+   "version": "0.1.0",
+   "sha256": "447370d513e530e894ee671fe00126fa04fcb1a757b77b6e6c641fb0377c1ea3"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 31717,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "codeKey": "be08c2969fbc",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 311,
+      "column": 28,
+      "snippet": "if (appPath && (await IOUtils.exists(appPath))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 329,
+      "column": 23,
+      "snippet": "if (!path || !(await IOUtils.exists(path))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 523,
+      "column": 23,
+      "snippet": "const st = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 536,
+      "column": 22,
+      "snippet": "rawText = await IOUtils.readUTF8(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 829,
+      "column": 25,
+      "snippet": "if (path && (await IOUtils.exists(path))) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "3808e1863164",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 321,
+      "column": 10,
+      "snippet": "await Zotero.Utilities.Internal.exec(\"/usr/bin/open\", [\"-R\", path]);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 341,
+      "column": 10,
+      "snippet": "await Zotero.Utilities.Internal.exec(\"/usr/bin/open\", [\"-a\", appPath, path]);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 345,
+      "column": 10,
+      "snippet": "await Zotero.Utilities.Internal.exec(appPath, [path]);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Zotero.Utilities.Internal.exec",
+      "system openers only"
+     ],
+     "programs": [
+      "open"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/luciferer/zotero-open-router/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/luciferer/zotero-open-router/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-01T13:32:34.080Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the luciferer account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-01T13:32:34.080Z",
+  "appliesTo": {
+   "slug": "zotero-open-router",
+   "version": "0.1.0",
+   "sha256": "447370d513e530e894ee671fe00126fa04fcb1a757b77b6e6c641fb0377c1ea3"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "90206a8576ea26b26d1ca0954b88bbcb627f70522f8b6f3278d28cd1fbc14483"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "process-launch",
+      "label": "Opens files or links with your system's own apps",
+      "concern": "low",
+      "detail": "Programs it names include open"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-01T05:40:43Z",
+    "lastCommitAt": "2026-11-01T05:40:36Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

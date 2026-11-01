@@ -1,0 +1,516 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf-summarizer",
+ "repo": "grahmgaydos/zotero-pdf-summarizer",
+ "version": "1.0.1",
+ "tag": "v1.0.1",
+ "releaseAuthor": "grahmgaydos",
+ "publishedAt": "2026-10-30T00:47:58Z",
+ "prerelease": false,
+ "asset": {
+  "name": "pdf-auto-summariser-1.0.1.xpi",
+  "url": "https://github.com/grahmgaydos/Zotero-PDF-Summarizer/releases/download/v1.0.1/pdf-auto-summariser-1.0.1.xpi",
+  "size": 63724,
+  "sha256": "7100f9eeb5d2a9f6e0c354e32c7da9fb6ad0acb0aa099c3fc1a411278e93bdd1",
+  "githubAssetId": 690420757,
+  "uploader": "grahmgaydos",
+  "uploadedAt": "2026-10-30T00:47:51Z",
+  "fetchedAt": "2026-11-01T13:32:34.080Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "pdf-auto-summariser@grahmgaydos.dev",
+  "name": "PDF Auto-Summariser",
+  "version": "1.0.1",
+  "description": "Automatically generates an abstract for newly added PDFs using a local model (Ollama/LM Studio) or a cloud API (Anthropic/OpenAI/OpenRouter).",
+  "homepageUrl": "https://github.com/grahmgaydos/Zotero-PDF-Summarizer",
+  "updateUrl": "https://raw.githubusercontent.com/grahmgaydos/Zotero-PDF-Summarizer/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "11.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2038,
+   "sha256": "8e5c4d87ad7501f70b47c18a7d203541e186785866a7894f84d0150178190336"
+  },
+  {
+   "path": "content/index.js",
+   "size": 187657,
+   "sha256": "57b0ee8859ec67d7a1b39903608cb14ac3569ff0e2ce9c52bd568c2a17ec152c"
+  },
+  {
+   "path": "content/prefs-page.js",
+   "size": 1613,
+   "sha256": "23d437a7172eedc541e92395791a658cedab9b20203e83f9d1bf4d681eb4a3d7"
+  },
+  {
+   "path": "content/prefs.xhtml",
+   "size": 5037,
+   "sha256": "5c4628933af7e233bf11e6ae7c86d9ca83e37459c37fa20734fd809b9867c2a4"
+  },
+  {
+   "path": "locale/en-US/pdf-auto-summariser.ftl",
+   "size": 1351,
+   "sha256": "862510a203d04d2867349f22b30b57e310ab62bd886b958b8a2851e45ce9a171"
+  },
+  {
+   "path": "manifest.json",
+   "size": 625,
+   "sha256": "cbdce2924392aaae9b409bbe30c86737b465f03c3ce10d02f6119cf4025b266f"
+  },
+  {
+   "path": "prefs.js",
+   "size": 1657,
+   "sha256": "bea48842276ff46b34e52d75a3a89133b0c543f869983be6b4e130bb23ab76e4"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-01T13:32:34.080Z",
+  "input": {
+   "slug": "zotero-pdf-summarizer",
+   "version": "1.0.1",
+   "sha256": "7100f9eeb5d2a9f6e0c354e32c7da9fb6ad0acb0aa099c3fc1a411278e93bdd1"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/pdf-auto-summariser.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 198002,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 82,
+       "column": 19,
+       "snippet": "return await fetch(url, { ...init, signal: signal ?? AbortSignal.timeout(REQUEST_TIMEOUT_MS) });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.anthropic.com",
+     "category": "llm-provider",
+     "provider": "Anthropic",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 214,
+       "column": 66,
+       "snippet": "const url = isAnthropicUrl(prefs.endpoint) ? prefs.endpoint : \"https://api.anthropic.com/v1/messages\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 891,
+       "column": 28,
+       "snippet": "const link = meta.doi ? ` https://doi.org/${meta.doi}` : meta.url ? ` ${meta.url}` : \"\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "localhost",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 40,
+       "column": 32,
+       "snippet": "endpoint: get(\"endpoint\", \"http://localhost:11434/v1/chat/completions\"),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 5,
+       "column": 0,
+       "snippet": "pref(\"extensions.pdf-auto-summariser.endpoint\", \"http://localhost:11434/v1/chat/completions\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 5,
+       "column": 48,
+       "snippet": "pref(\"extensions.pdf-auto-summariser.endpoint\", \"http://localhost:11434/v1/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.pdf-auto-summariser.endpoint",
+     "defaultValue": "http://localhost:11434/v1/chat/completions",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/prefs.xhtml",
+       "line": 36,
+       "column": 20,
+       "snippet": "preference=\"extensions.pdf-auto-summariser.endpoint\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 5,
+       "column": 0,
+       "snippet": "pref(\"extensions.pdf-auto-summariser.endpoint\", \"http://localhost:11434/v1/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 7,
+      "column": 0,
+      "snippet": "pref(\"extensions.pdf-auto-summariser.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.pdf-auto-summariser.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 17,
+    "inVendoredCodeOnly": false,
+    "codeKey": "e0f0aae60d8c",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 658,
+      "column": 15,
+      "snippet": "if (!await IOUtils.exists(dir)) return false;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 662,
+      "column": 23,
+      "snippet": "const text = await IOUtils.readUTF8(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 669,
+      "column": 10,
+      "snippet": "await IOUtils.makeDirectory(dir, { createAncestors: true, ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 674,
+      "column": 42,
+      "snippet": "const existing = existingPath ? await IOUtils.readUTF8(existingPath) : null;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 676,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(path, content);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 683,
+      "column": 15,
+      "snippet": "if (!await IOUtils.exists(dir)) return [];",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 685,
+      "column": 30,
+      "snippet": "for (const child of await IOUtils.getChildren(dir)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 697,
+      "column": 15,
+      "snippet": "if (!await IOUtils.exists(vault)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 777,
+      "column": 14,
+      "snippet": "if (await IOUtils.exists(preferred) && await keyOf(preferred) === zoteroKey) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 780,
+      "column": 30,
+      "snippet": "for (const child of await IOUtils.getChildren(dir)) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/grahmgaydos/Zotero-PDF-Summarizer/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/grahmgaydos/Zotero-PDF-Summarizer/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-01T13:32:34.080Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the grahmgaydos account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-01T13:32:34.080Z",
+  "appliesTo": {
+   "slug": "zotero-pdf-summarizer",
+   "version": "1.0.1",
+   "sha256": "7100f9eeb5d2a9f6e0c354e32c7da9fb6ad0acb0aa099c3fc1a411278e93bdd1"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "e08692c649c5c0eb1032369d6383a36623461dfdde5c1c2c534e7f452ee80405"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.anthropic.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-30T00:47:58Z",
+    "lastCommitAt": "2026-10-30T00:43:50Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

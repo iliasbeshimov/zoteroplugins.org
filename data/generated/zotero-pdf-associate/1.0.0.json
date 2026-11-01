@@ -1,0 +1,335 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf-associate",
+ "repo": "rsln-creator/zotero-pdf-associate",
+ "version": "1.0.0",
+ "tag": "v1.0.0",
+ "releaseAuthor": "RSLN-creator",
+ "publishedAt": "2026-10-25T15:07:15Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-pdf-associate-1.0.0.xpi",
+  "url": "https://github.com/RSLN-creator/zotero-pdf-associate/releases/download/v1.0.0/zotero-pdf-associate-1.0.0.xpi",
+  "size": 2535,
+  "sha256": "aef7cb9838fc2644df258040d1f4dffacb1bc31c0699236b55ee7b397a17fcc5",
+  "githubAssetId": 675339417,
+  "uploader": "RSLN-creator",
+  "uploadedAt": "2026-10-25T15:07:15Z",
+  "fetchedAt": "2026-11-01T13:32:34.080Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-pdf-associate@rsyhn.dev",
+  "name": "PDF Associate",
+  "version": "1.0.0",
+  "description": "双击任意 PDF：按内容哈希打开库内已有副本，否则复制进所在文件夹同名的分类。Double-click any PDF: open its existing library copy by content hash, or import it into a collection named after its folder.",
+  "homepageUrl": "https://github.com/RSLN-creator/zotero-pdf-associate",
+  "updateUrl": "https://raw.githubusercontent.com/RSLN-creator/zotero-pdf-associate/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 4503,
+   "sha256": "ff8482b77d8a79f93dd5d61e8e22b6e69a76ab8daab72e7c71388d83a4ab46f9"
+  },
+  {
+   "path": "manifest.json",
+   "size": 706,
+   "sha256": "9db4da45c69501597e18cd658bd49799a398810524fe129050e7f77d864a9d68"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-01T13:32:34.080Z",
+  "input": {
+   "slug": "zotero-pdf-associate",
+   "version": "1.0.0",
+   "sha256": "aef7cb9838fc2644df258040d1f4dffacb1bc31c0699236b55ee7b397a17fcc5"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 4503,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "068056a24428",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 35,
+      "column": 28,
+      "snippet": "if (!(await IOUtils.exists(path))) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 38,
+      "column": 35,
+      "snippet": "const stat = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 42,
+      "column": 60,
+      "snippet": "const head = new TextDecoder().decode(await IOUtils.read(path, { maxBytes: 5 }));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 51,
+      "column": 38,
+      "snippet": "if (!p || !(await IOUtils.exists(p))) item = null;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "9e67139a3e21",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 21,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[ROUTE] = class {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/pdfassociate/open"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 13,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/RSLN-creator/zotero-pdf-associate/main/update.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/RSLN-creator/zotero-pdf-associate/main/update.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "608c8c918157",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 21,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[ROUTE] = class {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 102,
+      "column": 24,
+      "snippet": "await collection.saveTx();",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/pdfassociate/open"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-01T13:32:34.080Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the RSLN-creator account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-01T13:32:34.080Z",
+  "appliesTo": {
+   "slug": "zotero-pdf-associate",
+   "version": "1.0.0",
+   "sha256": "aef7cb9838fc2644df258040d1f4dffacb1bc31c0699236b55ee7b397a17fcc5"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "3d9e67054ae645450313342879b324969c8e502a2ea6096547d49905fe5ac348"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address doesn't list this add-on, so Zotero won't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-25T15:07:15Z",
+    "lastCommitAt": "2026-10-25T15:07:07Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

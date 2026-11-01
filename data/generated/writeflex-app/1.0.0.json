@@ -1,0 +1,371 @@
+{
+ "schemaVersion": 1,
+ "slug": "writeflex-app",
+ "repo": "techczech/writeflex-app",
+ "version": "1.0.0",
+ "tag": "v0.28.0-alpha.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-30T16:32:03Z",
+ "prerelease": true,
+ "asset": {
+  "name": "writeflex-zotero-1.0.0.xpi",
+  "url": "https://github.com/techczech/writeflex-app/releases/download/v0.28.0-alpha.1/writeflex-zotero-1.0.0.xpi",
+  "size": 61851,
+  "sha256": "6b4cd3ce0e695f31e52c34508be2088fd60267288304c0b4304f8aa76958a7fb",
+  "githubAssetId": 692491854,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-30T15:14:59Z",
+  "fetchedAt": "2026-11-01T13:32:34.080Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "writeflex@dominiklukes.net",
+  "name": "WriteFlex for Zotero",
+  "version": "1.0.0",
+  "description": "Saves highlights made in WriteFlex's Reading Room into your Zotero library while Zotero is open.",
+  "updateUrl": "https://raw.githubusercontent.com/techczech/writeflex-app/main/zotero-plugin/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "11.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 61124,
+   "sha256": "93b019001311e768522dac4c69d0bc0109bdcd0a529e2c5803bc4bf99b0522a4"
+  },
+  {
+   "path": "manifest.json",
+   "size": 503,
+   "sha256": "bc61b3f806426ae6613b472e225d218fa624fdc31ba0ed18ee94d79acd77c89a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-01T13:32:34.080Z",
+  "input": {
+   "slug": "writeflex-app",
+   "version": "1.0.0",
+   "sha256": "6b4cd3ce0e695f31e52c34508be2088fd60267288304c0b4304f8aa76958a7fb"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 61124,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "c1cc33ad5f16",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1179,
+      "column": 4,
+      "snippet": "Zotero.Prefs.set(TOKEN_PREF, WriteFlexZotero.newToken((bytes) => crypto.getRandomValues(bytes)), true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1200,
+      "column": 19,
+      "snippet": "const existing = Zotero.Prefs.get(TOKEN_PREF, true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1203,
+      "column": 2,
+      "snippet": "Zotero.Prefs.set(TOKEN_PREF, token, true);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.writeflex.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "codeKey": "f38847221eb4",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1215,
+      "column": 8,
+      "snippet": "await IOUtils.makeDirectory(directory, { createAncestors: false, ignoreExisting: true, permissions: 0o700 });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1216,
+      "column": 8,
+      "snippet": "await IOUtils.setPermissions(directory, 0o700, false);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1224,
+      "column": 8,
+      "snippet": "await IOUtils.writeUTF8(path, body, { tmpPath: path + '.tmp' });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1225,
+      "column": 8,
+      "snippet": "await IOUtils.setPermissions(path, 0o600, false);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1268,
+      "column": 10,
+      "snippet": "await IOUtils.remove(PathUtils.join(bridgeDirectory(), 'bridge.json'), { ignoreAbsent: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "b0f1afb252b6",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1242,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[WriteFlexZotero.PING_PATH] = ping;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1243,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[WriteFlexZotero.ANNOTATIONS_PATH] = annotations;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1244,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[WriteFlexZotero.READ_PATH] = read;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/writeflex/annotations",
+      "/writeflex/annotations/read",
+      "/writeflex/ping"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/techczech/writeflex-app/main/zotero-plugin/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/techczech/writeflex-app/main/zotero-plugin/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-01T13:32:34.080Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-01T13:32:34.080Z",
+  "appliesTo": {
+   "slug": "writeflex-app",
+   "version": "1.0.0",
+   "sha256": "6b4cd3ce0e695f31e52c34508be2088fd60267288304c0b4304f8aa76958a7fb"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "f6d4f3db505a91dac9614e3728632b0b21d668fee9406ee9bda05f52f279b001"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers version 1.0.0, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-30T16:32:03Z",
+    "lastCommitAt": "2026-10-30T15:03:13Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

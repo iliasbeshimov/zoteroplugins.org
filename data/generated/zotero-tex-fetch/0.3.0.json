@@ -1,0 +1,400 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-tex-fetch",
+ "repo": "colefaraday/zotero-tex-fetch",
+ "version": "0.3.0",
+ "tag": "v0.3.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-10-30T07:09:10Z",
+ "prerelease": false,
+ "asset": {
+  "name": "tex-fetch.xpi",
+  "url": "https://github.com/ColeFaraday/zotero-tex-fetch/releases/download/v0.3.0/tex-fetch.xpi",
+  "size": 10829,
+  "sha256": "3190853b614f3d0d9e1a70a148362bb42d90ac8eeb278bf6810c83c8fe764c54",
+  "githubAssetId": 691269821,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-10-30T07:09:11Z",
+  "fetchedAt": "2026-11-01T13:32:34.080Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "tex-fetch@colefaraday",
+  "name": "tex-fetch",
+  "version": "0.3.0",
+  "description": "Attach the arXiv LaTeX source of papers as a single flattened .tex file",
+  "homepageUrl": "https://github.com/ColeFaraday/zotero-tex-fetch",
+  "updateUrl": "https://github.com/ColeFaraday/zotero-tex-fetch/releases/download/release/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1259,
+   "sha256": "fb9dbfe0363d28ef4fcdf3d8877f01bdc3a39f7f127bc98223de48c01c971153"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 434,
+   "sha256": "abb654a6a9e0a83566bcf561aa6f935ea18c0db37f73d946f8fe50f0165e0ea4"
+  },
+  {
+   "path": "content/scripts/texfetch.js",
+   "size": 29919,
+   "sha256": "448842527af243f9818f1ed9b9ed9bd738367d84ac2eee19b234e06a5a829633"
+  },
+  {
+   "path": "manifest.json",
+   "size": 524,
+   "sha256": "cbc68baee6810d7e48f631ea65471a6145086a2fb8d966b6bbfaf5b61b804cf6"
+  },
+  {
+   "path": "prefs.js",
+   "size": 52,
+   "sha256": "d37026256bdf79182107c21bdfbf1a85e06a0c7d63cbe6fcd2b32c5e80163155"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-01T13:32:34.080Z",
+  "input": {
+   "slug": "zotero-tex-fetch",
+   "version": "0.3.0",
+   "sha256": "3190853b614f3d0d9e1a70a148362bb42d90ac8eeb278bf6810c83c8fe764c54"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 31664,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/texfetch.js",
+       "line": 149,
+       "column": 26,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/texfetch.js",
+       "line": 411,
+       "column": 24,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/texfetch.js",
+       "line": 489,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", `https://arxiv.org/src/${arxivId}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/texfetch.js",
+       "line": 489,
+       "column": 49,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", `https://arxiv.org/src/${arxivId}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "export.arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/texfetch.js",
+       "line": 146,
+       "column": 18,
+       "snippet": "const url = \"https://export.arxiv.org/api/query?max_results=\" + batch.length + \"&id_list=\" + batch.join(\",\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "inspirehep.net",
+     "category": "scholarly-api",
+     "provider": "INSPIRE-HEP",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/texfetch.js",
+       "line": 409,
+       "column": 16,
+       "snippet": "const url = \"https://inspirehep.net/api/literature?size=100&fields=arxiv_eprints,dois,texkeys&q=\" + encodeURIComponent(query);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://arxiv.org/src/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/texfetch.js",
+       "line": 489,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", `https://arxiv.org/src/${arxivId}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "980f856f8405",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/texfetch.js",
+      "line": 539,
+      "column": 12,
+      "snippet": "await Zotero.File.putContentsAsync(tmpFile.path, text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/texfetch.js",
+      "line": 557,
+      "column": 12,
+      "snippet": "await Zotero.File.putContentsAsync(path, text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/texfetch.js",
+      "line": 561,
+      "column": 12,
+      "snippet": "await Zotero.File.createDirectoryIfMissingAsync(file.path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/scripts/texfetch.js",
+      "line": 563,
+      "column": 12,
+      "snippet": "await Zotero.File.putContentsAsync(file.path, text);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/ColeFaraday/zotero-tex-fetch/releases/download/release/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/ColeFaraday/zotero-tex-fetch/releases/download/release/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-01T13:32:34.080Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-01T13:32:34.080Z",
+  "appliesTo": {
+   "slug": "zotero-tex-fetch",
+   "version": "0.3.0",
+   "sha256": "3190853b614f3d0d9e1a70a148362bb42d90ac8eeb278bf6810c83c8fe764c54"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "4ccdaea7067004f342f07bbc4d62789919364129cc083ab43f95d9baaacf3ff5"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "arxiv.org",
+       "export.arxiv.org",
+       "inspirehep.net"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-30T07:09:10Z",
+    "lastCommitAt": "2026-10-30T07:08:30Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

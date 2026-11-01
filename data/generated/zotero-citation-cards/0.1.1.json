@@ -1,0 +1,518 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-citation-cards",
+ "repo": "shamus-li/zotero-citation-cards",
+ "version": "0.1.1",
+ "tag": "v0.1.1",
+ "releaseAuthor": "shamus-li",
+ "publishedAt": "2026-10-26T04:10:02Z",
+ "prerelease": false,
+ "asset": {
+  "name": "citation-cards.xpi",
+  "url": "https://github.com/shamus-li/zotero-citation-cards/releases/download/v0.1.1/citation-cards.xpi",
+  "size": 42712,
+  "sha256": "0a1d95e24442db9d695e3c53c19ef78a9d6c4396f85ef39291c3e4e41fc116c7",
+  "githubAssetId": 676968652,
+  "uploader": "shamus-li",
+  "uploadedAt": "2026-10-26T04:10:01Z",
+  "fetchedAt": "2026-11-01T13:32:34.080Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "citation-cards@shamus-li.github.io",
+  "name": "Citation Cards",
+  "version": "0.1.1",
+  "description": "Click an in-text citation in the PDF reader to see the cited paper's title, abstract and links.",
+  "homepageUrl": "https://github.com/shamus-li/zotero-citation-cards",
+  "updateUrl": "https://github.com/shamus-li/zotero-citation-cards/releases/latest/download/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "11.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1082,
+   "sha256": "3f847f917e171cecc2d79695cc87e5d89bb9ac525515606919ba404363a663dc"
+  },
+  {
+   "path": "citations.js",
+   "size": 32773,
+   "sha256": "ebdc116ba37a8cc53afdbd47142aab37994b15fd077ec2b22fb909390b6c0aff"
+  },
+  {
+   "path": "citecard.js",
+   "size": 14224,
+   "sha256": "5328f6d598db43662bc4ff8932495976b18860f8ff8aece2d15df007222e43fb"
+  },
+  {
+   "path": "content.js",
+   "size": 61040,
+   "sha256": "e6991ae9b4375f5996f76cd3910070644a30a4b31d6a3c13781ec3b283453d90"
+  },
+  {
+   "path": "lookup.js",
+   "size": 13286,
+   "sha256": "f1b09db4c039e60249279fe75053861ef23df8c8ce491a4ae702ef385d837512"
+  },
+  {
+   "path": "manifest.json",
+   "size": 546,
+   "sha256": "af506ad084d72338c86c7fe274a5ca441260b6fb01cddc0fb3fb676ccf7bfb65"
+  },
+  {
+   "path": "preferences.js",
+   "size": 1289,
+   "sha256": "1b3a07c07c38f1d95888479831ed1db7333f28d70c08a6dee94eff7b56ee8860"
+  },
+  {
+   "path": "prefs.js",
+   "size": 45,
+   "sha256": "98b0715834937e5f78ac31ba1a6520939c4ccd3d7e4d82c16f0503ab78e2359e"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 1225,
+   "sha256": "e4704fe730890dea7ee38fee47b52f64e5f7eb853d02971b90abd921bee0da7e"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-01T13:32:34.080Z",
+  "input": {
+   "slug": "zotero-citation-cards",
+   "version": "0.1.1",
+   "sha256": "0a1d95e24442db9d695e3c53c19ef78a9d6c4396f85ef39291c3e4e41fc116c7"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 8,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 124964,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "citecard.js",
+       "line": 299,
+       "column": 20,
+       "snippet": "xhr = await Zotero.HTTP.request('GET', url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "citecard.js",
+       "line": 340,
+       "column": 22,
+       "snippet": "let xhr = await Zotero.HTTP.request('GET', url, { responseType: type, timeout: 15000 });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "citecard.js",
+       "line": 162,
+       "column": 20,
+       "snippet": "let translate = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "citecard.js",
+       "line": 175,
+       "column": 6,
+       "snippet": "Zotero.Attachments.addAvailableFile(item).catch(e => this.log('PDF search failed: ' + e));",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "accounts.google.com",
+     "category": "integration",
+     "provider": "Google sign-in",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "citecard.js",
+       "line": 262,
+       "column": 8,
+       "snippet": ": 'https://accounts.google.com/ServiceLogin?hl=en&continue=' + encodeURIComponent(CiteCardLookup.SCHOLAR + '/');",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openalex.org",
+     "category": "scholarly-api",
+     "provider": "OpenAlex",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lookup.js",
+       "line": 68,
+       "column": 27,
+       "snippet": "work = await request('https://api.openalex.org/works/doi:' + encodeURIComponent(lookupDOI)",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lookup.js",
+       "line": 161,
+       "column": 31,
+       "snippet": "let json = await request('https://api.openalex.org/works?per-page=10&search=' + encodeURIComponent(query)",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lookup.js",
+       "line": 287,
+       "column": 57,
+       "snippet": "titleURL: doi ? 'https://doi.org/' + doi : arxiv ? 'https://arxiv.org/abs/' + arxiv : work.id,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lookup.js",
+       "line": 287,
+       "column": 22,
+       "snippet": "titleURL: doi ? 'https://doi.org/' + doi : arxiv ? 'https://arxiv.org/abs/' + arxiv : work.id,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "export.arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lookup.js",
+       "line": 175,
+       "column": 28,
+       "snippet": "let xml = await request('https://export.arxiv.org/api/query?id_list=' + encodeURIComponent(id), 'text');",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "openalex.org",
+     "category": "scholarly-api",
+     "provider": "OpenAlex",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lookup.js",
+       "line": 281,
+       "column": 83,
+       "snippet": "links.push({ label: 'Cited by ' + work.cited_by_count.toLocaleString(), url: 'https://openalex.org/works?filter=cites:' + work.id.split('/').pop() });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "scholar.google.com",
+     "category": "scholarly-api",
+     "provider": "Google Scholar",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content.js",
+       "line": 315,
+       "column": 11,
+       "snippet": "return 'https://scholar.google.com/scholar?q=' + encodeURIComponent(query);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "lookup.js",
+       "line": 8,
+       "column": 11,
+       "snippet": "SCHOLAR: 'https://scholar.google.com',",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 1,
+      "column": 0,
+      "snippet": "pref(\"extensions.citecard.openalexKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.citecard.openalexKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/shamus-li/zotero-citation-cards/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/shamus-li/zotero-citation-cards/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-01T13:32:34.080Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the shamus-li account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-01T13:32:34.080Z",
+  "appliesTo": {
+   "slug": "zotero-citation-cards",
+   "version": "0.1.1",
+   "sha256": "0a1d95e24442db9d695e3c53c19ef78a9d6c4396f85ef39291c3e4e41fc116c7"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "130ac8823f282dde942e9cfc61b56c8b13cd7cc38a8e195ca24dd8c89b2d50fa"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "accounts.google.com"
+      ],
+      "unconfirmed": [
+       "accounts.google.com"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.openalex.org",
+       "arxiv.org",
+       "doi.org",
+       "export.arxiv.org",
+       "openalex.org",
+       "scholar.google.com"
+      ],
+      "unconfirmed": [
+       "api.openalex.org",
+       "arxiv.org",
+       "doi.org",
+       "export.arxiv.org",
+       "openalex.org",
+       "scholar.google.com"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-10-26T04:10:02Z",
+    "lastCommitAt": "2026-10-27T18:35:12Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
