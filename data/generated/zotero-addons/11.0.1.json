@@ -463,8 +463,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.13.0",
-  "analyzedAt": "2026-10-27T09:13:07.272Z",
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-03T21:27:11.131Z",
   "input": {
    "slug": "zotero-addons",
    "version": "11.0.1",
@@ -1684,18 +1684,18 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.0-preview",
-  "computedAt": "2026-10-30T10:15:22.921Z",
+  "computedAt": "2026-11-03T21:27:11.131Z",
   "appliesTo": {
    "slug": "zotero-addons",
    "version": "11.0.1",
    "sha256": "a89d00d059c37361da10bf3a8414d89fec99e74aabebecc6afc3cd15998aa61f"
   },
   "inputs": {
-   "analyzerVersion": "0.13.0",
+   "analyzerVersion": "0.13.1",
    "provenanceCheckerVersion": "lite-0.4",
    "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.7",
-   "inputHash": "93878a9d060e9bc17c77c0c7b6ec464af286af67ec621f0b5509ab905768ef8e"
+   "inputHash": "e261c5310ce3a1ee17e3a0cc0b34b414f5b22f27cf91c646d87000cc22a4d246"
   },
   "facets": {
    "sourceTransparency": {
@@ -1763,9 +1763,9 @@
      },
      {
       "id": "link-runs-code",
-      "label": "A zotero:// link (a web page can open one) can make it run code without asking you",
-      "concern": "high",
-      "detail": "zotero://zoteroaddoncollection"
+      "label": "A zotero:// link (a web page can open one) can make it run code its developer signed, without asking you",
+      "concern": "medium",
+      "detail": "Its zotero://zoteroaddoncollection link runs JavaScript only when the link carries a signature that matches a public key written into the plugin, so only someone holding the developer's private key can make one; that key isn't in the plugin. Nothing in a signed link expires, so any web page can reopen a link the developer signed once, and the developer can run code in your Zotero without releasing a new version."
      },
      {
       "id": "dynamic-code",
@@ -1777,7 +1777,7 @@
     "drivers": [
      "CAP-MINOR",
      "CAP-INSTALLS-ADDONS-UNASKED",
-     "CAP-LINK-CODE"
+     "CAP-LINK-CODE-SIGNED"
     ]
    },
    "requirements": {
@@ -1822,8 +1822,7 @@
     "capabilities"
    ],
    "reasons": [
-    "Installs other add-ons",
-    "A zotero:// link (a web page can open one) can make it run code without asking you"
+    "Installs other add-ons"
    ]
   }
  }
