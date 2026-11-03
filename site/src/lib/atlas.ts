@@ -146,8 +146,15 @@ export interface Plugin {
   jobs: string[];
   categories: string[];
   hidden: boolean;
-  /** Why it's hidden from lists ("fork", "legacy", "no-release"), when it is. */
+  /** Why it's hidden from lists ("fork", "legacy", "no-release", "retired"), when it is. */
   hiddenReason: string | null;
+  /** Set when its developer retired it: the page says why and offers no install. */
+  retired: {
+    date: string;
+    reason: string;
+    url: string;
+    alternative: { name: string; url: string; slug: string | null } | null;
+  } | null;
   addonId: string | null;
   currentOk: boolean;
   currentMajor: number;
@@ -184,6 +191,8 @@ export interface Plugin {
   responses: {
     who: string;
     date: string;
+    about: string;
+    version: string | null;
     text: string;
     url: string;
     status: string;
@@ -838,7 +847,8 @@ function build(
     version: p.install?.version ?? "",
     released: fmtDate(p.install?.publishedAt ?? m.lastReleaseAt),
     size,
-    installUrl: blocked || noRelease || installProblem ? null : (p.install?.asset.url ?? null),
+    installUrl:
+      blocked || noRelease || installProblem || p.retired ? null : (p.install?.asset.url ?? null),
     grade,
     gradeWord: gx.word,
     gradeLong: gx.long,
@@ -849,6 +859,16 @@ function build(
     categories: jobs.map((j) => JOB_BY_SLUG[j].title),
     hidden: p.listing.hiddenByDefault,
     hiddenReason: p.listing.hiddenReason ?? null,
+    retired: p.retired
+      ? {
+          date: fmtDate(p.retired.date),
+          reason: p.retired.reason,
+          url: p.retired.url,
+          alternative: p.retired.alternative
+            ? { ...p.retired.alternative, slug: p.retired.alternative.slug ?? null }
+            : null,
+        }
+      : null,
     addonId: p.addonId ?? null,
     currentOk,
     currentMajor,
@@ -892,6 +912,8 @@ function build(
     responses: (p.responses ?? []).map((r) => ({
       who: r.from,
       date: fmtDate(r.date),
+      about: r.about,
+      version: r.version ?? null,
       text: r.text,
       url: r.url,
       status: r.status,

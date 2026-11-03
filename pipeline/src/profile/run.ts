@@ -371,8 +371,8 @@ export interface Gathered {
   alternates: string[];
   /** What the update address offers today; `target` is the file when it isn't this release's. */
   update?: { check: UpdateCheck; target: Artifact | null } | null;
-  /** Developer responses and notices from data/plugins/<slug>.yaml. */
-  curated?: Pick<PluginCurated, "responses" | "notices"> | null;
+  /** Developer responses, notices and retirement from data/plugins/<slug>.yaml. */
+  curated?: Pick<PluginCurated, "responses" | "notices" | "retired"> | null;
   /** The plugin sandbox's record (data/sandbox/<slug>.json), for the one file it ran. */
   sandbox?: SandboxRecord | null;
   /** Reviewed findings (data/reviews/<capability-id>/<slug>.json). */
@@ -392,7 +392,8 @@ async function readCurated(slug: string): Promise<Gathered["curated"]> {
   const parsed = PluginCurated.safeParse(parseYaml(text));
   if (!parsed.success)
     throw new Error(`data/plugins/${slug}.yaml: ${parsed.error.issues[0]?.message ?? "invalid"}`);
-  return { responses: parsed.data.responses, notices: parsed.data.notices };
+  const { responses, notices, retired } = parsed.data;
+  return { responses, notices, ...(retired ? { retired } : {}) };
 }
 
 /** Everything that needs GitHub or the .xpi files: the release, its analysed files, the README. */
@@ -917,11 +918,14 @@ export function assemble(
     repo: row.repo.toLowerCase(),
     repoName: row.repo,
     name: displayName(row),
-    listing: {
-      kind,
-      hiddenByDefault: listing?.hiddenByDefault ?? false,
-      hiddenReason: listing?.hiddenReason ?? null,
-    },
+    // A plugin its developer retired keeps its page but leaves the lists.
+    listing: g.curated?.retired
+      ? { kind, hiddenByDefault: true, hiddenReason: "retired" }
+      : {
+          kind,
+          hiddenByDefault: listing?.hiddenByDefault ?? false,
+          hiddenReason: listing?.hiddenReason ?? null,
+        },
     links: {
       repo: `https://github.com/${row.repo}`,
       homepage: primary?.doc.manifest.homepageUrl ?? null,
@@ -1043,6 +1047,7 @@ export function assemble(
     integrityEvents,
     ...(g.curated?.responses.length ? { responses: g.curated.responses } : {}),
     ...(g.curated?.notices.length ? { notices: g.curated.notices } : {}),
+    ...(g.curated?.retired ? { retired: g.curated.retired } : {}),
     content: existing?.content ?? null,
     categories: existing?.categories ?? null,
     requirements: existing?.requirements ?? null,

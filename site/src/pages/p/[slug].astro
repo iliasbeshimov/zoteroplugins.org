@@ -27,10 +27,36 @@ const data = p.areas.find((a) => a.key === "data")!;
 const job0 = p.jobs[0] ? JOB_BY_SLUG[p.jobs[0]] : null;
 const blocked = !!p.banner;
 const canInstall = !!p.installUrl;
-const installLabel = blocked ? "Blocked by Zotero" : !canInstall ? "No installable release" : `Install v${p.version}`;
+const installLabel = blocked
+  ? "Blocked by Zotero"
+  : p.retired
+    ? "Retired by its developer"
+    : !canInstall
+      ? "No installable release"
+      : `Install v${p.version}`;
 const installNote = canInstall
   ? `Downloads a .xpi file (${p.size}). In Zotero, open Tools → Plugins and install it from the file.`
-  : "There's no release file current Zotero can install. The source stays linked for reference.";
+  : p.retired
+    ? "Its developer has retired it, so we don't offer it for install. The source stays linked for reference."
+    : "There's no release file current Zotero can install. The source stays linked for reference.";
+const alt = p.retired?.alternative;
+const altHref = alt ? (alt.slug && all[alt.slug] ? `/p/${alt.slug}` : alt.url) : null;
+const RESPONSE_STATUS: Record<string, string> = {
+  open: "We're checking",
+  corrected: "We corrected our checks",
+  fixed: "Fixed by the developer",
+  "finding-stands": "Our finding stands",
+  noted: "Noted",
+};
+const RESPONSE_ABOUT: Record<string, string> = {
+  "source-transparency": "source transparency",
+  "data-sharing": "data sharing",
+  capabilities: "capabilities",
+  compatibility: "compatibility",
+  updates: "updates",
+  other: "the listing",
+};
+const paras = (t: string) => t.split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean);
 const stats = [
   ["Stars", p.stars, "People who starred the repository on GitHub: a rough measure of interest."],
   ["Downloads", p.downloads, "All-time downloads of its release files from GitHub. Installs from elsewhere aren't counted."],
@@ -51,6 +77,24 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
         </span>
         <span>
           <strong>On Zotero's official blocklist.</strong> {p.banner}
+        </span>
+      </div>
+    )
+  }
+  {
+    p.retired && (
+      <div role="note" class="banner retired">
+        <span class="bi">
+          <StatusIcon kind="info" size={20} color="var(--rev-fg)" />
+        </span>
+        <span>
+          <strong>Retired by its developer.</strong> {p.retired.reason}{" "}
+          {alt && altHref && (
+            <>
+              They point to <a href={altHref}>{alt.name}</a> instead.{" "}
+            </>
+          )}
+          <a href={p.retired.url}>Their note</a>, {p.retired.date}.
         </span>
       </div>
     )
@@ -223,18 +267,36 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
       </section>
 
       <section>
-        <h2>The developer's response</h2>
+        <h2>{p.responses.length > 1 ? "The developer's responses" : "The developer's response"}</h2>
         {
           p.responses.length ? (
-            p.responses.map((r) => (
-              <figure class="resp">
-                <blockquote>“{r.text}”</blockquote>
-                <figcaption class="mono-sm">
-                  {r.who} · <a href={r.url}>{r.date}</a>
-                </figcaption>
-                {r.reply && <p class="muted">Our reply: {r.reply}</p>}
-              </figure>
-            ))
+            <>
+              {p.responses.map((r) => (
+                <figure class="resp">
+                  <span class="rstatus mono-sm" data-status={r.status}>
+                    {RESPONSE_STATUS[r.status] ?? r.status}
+                  </span>
+                  <blockquote>
+                    {paras(r.text).map((t) => (
+                      <p>{t}</p>
+                    ))}
+                  </blockquote>
+                  <figcaption class="mono-sm">
+                    {r.who} · <a href={r.url}>{r.date}</a> · about {RESPONSE_ABOUT[r.about] ?? r.about}
+                    {r.version && <> in v{r.version}</>}
+                  </figcaption>
+                  {r.reply && (
+                    <div class="reply">
+                      <strong>Our reply</strong>
+                      {paras(r.reply).map((t) => (
+                        <p>{t}</p>
+                      ))}
+                    </div>
+                  )}
+                </figure>
+              ))}
+              <a href={RESPOND_URL} class="small">Respond as the developer</a>
+            </>
           ) : (
             <div class="nodev">
               <span class="muted" style="max-width:48ch">
@@ -319,6 +381,16 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     color: var(--ser-on);
     font-size: 15px;
     line-height: 1.45;
+  }
+  .banner.retired {
+    background: var(--rev-bg);
+    color: var(--ink);
+    border-bottom: 1px solid var(--rev-line);
+  }
+  .banner.retired a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
   .bi {
     flex: none;
@@ -712,8 +784,48 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
   }
   blockquote {
     margin: 0;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+  blockquote p,
+  .reply p {
+    margin: 0 0 0.6em;
+  }
+  blockquote p:last-child,
+  .reply p:last-child {
+    margin-bottom: 0;
+  }
+  .rstatus {
+    align-self: flex-start;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-2);
+  }
+  .rstatus[data-status="fixed"],
+  .rstatus[data-status="corrected"] {
+    border-color: var(--few-line);
+    background: var(--few-bg);
+    color: var(--few-fg);
+  }
+  .rstatus[data-status="finding-stands"] {
+    border-color: var(--rev-line);
+    background: var(--rev-bg);
+    color: var(--rev-fg);
+  }
+  .reply {
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-2);
+    font-size: 15px;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+  .reply strong {
+    display: block;
+    color: var(--ink);
+    margin-bottom: 4px;
   }
   .nodev {
     display: flex;

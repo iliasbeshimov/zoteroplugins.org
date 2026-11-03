@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { shownPlugins } from "../src/lib/atlas.ts";
+import { allPlugins, shownPlugins } from "../src/lib/atlas.ts";
 import { createIndex, search } from "../src/lib/search.ts";
 
 /** The search over the real catalogue: what people type must find something sensible. */
@@ -46,6 +46,24 @@ describe("search over the catalogue", () => {
         hits.some((s) => fits.test(text(s))),
         `${q} → ${hits.join(", ")}`,
       ).toBe(true);
+    }
+  });
+});
+
+/** Plugins whose developer retired them (data/plugins/<slug>.yaml): a page, but no list or install. */
+describe("retired plugins", () => {
+  const retired = allPlugins().filter((p) => p.retired);
+
+  it("stay out of the lists and offer no install", () => {
+    expect(retired.length).toBeGreaterThan(0);
+    for (const p of retired) {
+      expect(p.hidden, p.slug).toBe(true);
+      expect(p.hiddenReason, p.slug).toBe("retired");
+      expect(p.installUrl, p.slug).toBeNull();
+      expect(
+        shownPlugins().some((x) => x.slug === p.slug),
+        p.slug,
+      ).toBe(false);
     }
   });
 });

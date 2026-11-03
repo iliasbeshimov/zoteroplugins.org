@@ -41,12 +41,30 @@ export const DeveloperResponse = z.object({
   text: z.string().min(1).max(2000).describe("The developer's words, published as written"),
   url: z.url().describe("The public issue it came from"),
   status: z
-    .enum(["open", "corrected", "finding-stands", "noted"])
+    .enum(["open", "corrected", "fixed", "finding-stands", "noted"])
     .describe(
-      "open: we're checking; corrected: the analyzer or rules changed and the card with them; finding-stands: we kept the finding (see reply); noted: context, not a dispute",
+      "open: we're checking; corrected: the analyzer or rules changed and the card with them; fixed: the developer changed the plugin and the card now describes the release with the fix; finding-stands: we kept the finding (see reply); noted: context, not a dispute",
     ),
   reply: z.string().max(2000).optional().describe("What we checked and what changed, if anything"),
   repliedAt: IsoDate.optional(),
+});
+
+/**
+ * The developer has retired the plugin (it no longer works, or they point people elsewhere). Its
+ * page stays, with a banner saying so; it's hidden from lists and offers no install.
+ */
+export const Retirement = z.object({
+  date: IsoDate,
+  reason: z
+    .string()
+    .min(1)
+    .max(500)
+    .describe("Why the developer retired it, in their words or close to them"),
+  url: z.url().describe("Where the developer said so: an issue, the README"),
+  alternative: z
+    .object({ name: z.string().min(1), url: z.url(), slug: Slug.optional() })
+    .optional()
+    .describe("What the developer points to instead; `slug` when it's a listed plugin"),
 });
 
 // ---------------------------------------------------------------------------
@@ -97,6 +115,7 @@ export const PluginCurated = z.object({
     .default([]),
   reviews: z.array(Review).default([]),
   responses: z.array(DeveloperResponse).default([]),
+  retired: Retirement.optional(),
   internalNotes: z.string().optional().describe("Not published."),
 });
 

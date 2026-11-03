@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Category, IsoDate, IsoDateTime, RepoKey, SchemaVersion, Sha256, Slug } from "./common.ts";
-import { DeveloperResponse } from "./plugin.ts";
+import { DeveloperResponse, Retirement } from "./plugin.ts";
 import { ProvenanceLevel } from "./provenance.ts";
 import { PluginContent, Requirements } from "./requirements.ts";
 import { TrustCard } from "./trust-card.ts";
@@ -18,7 +18,7 @@ export const ListingKind = z.enum([
   "no-release", // in a curated list, but no .xpi on GitHub
 ]);
 
-export const HiddenReason = z.enum(["fork", "legacy", "no-release"]);
+export const HiddenReason = z.enum(["fork", "legacy", "no-release", "retired"]);
 
 /** Script-level language detection; `latin` is Latin-script text that isn't clearly English. */
 export const DocLanguage = z.enum(["en", "zh", "ja", "ko", "ru", "latin"]);
@@ -287,6 +287,9 @@ export const PluginProfile = z.object({
     .array(DeveloperResponse)
     .optional()
     .describe("Developers' responses to the card, with our replies (data/plugins/<slug>.yaml)"),
+  retired: Retirement.optional().describe(
+    "Set when the developer has retired the plugin (data/plugins/<slug>.yaml)",
+  ),
   notices: z
     .array(
       z.object({
