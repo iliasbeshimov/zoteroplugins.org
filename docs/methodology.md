@@ -50,7 +50,7 @@ don't change it: a plugin can be well behaved and still not work with your Zoter
 | Finding | Concern |
 |---|---|
 | Obfuscated code: two kinds of obfuscator signal, or one backed by a second file or dense escapes | high |
-| Hidden characters that change how code reads (direction overrides, long invisible runs) | high |
+| Hidden characters that change how code reads (direction overrides, long invisible runs); an override that is a string on its own with only data after it on the line, such as a key in a language detector's dictionary, doesn't count | high |
 | Updates replace it with a newer version that has serious concerns (and this file doesn't) | high |
 | Parts of the code may be obfuscated (one signal in one file) | medium |
 | The release file was replaced after it was published: we saw it change, or it doesn't match the fingerprint the project's own update address gives for that version and was uploaded more than two minutes after that was written and after the release was published (not sooner, which one workflow run can do; not when the release was published from the developer's account rather than by a workflow: the file may simply have been added late) | medium |

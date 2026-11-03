@@ -24,7 +24,7 @@ import { type LibraryEvidence, redactSecrets, SourceFile } from "./text.ts";
  * Static analysis of one .xpi. Deterministic for a given file and ANALYZER_VERSION: the same
  * bytes always produce the same document apart from `analyzedAt`.
  */
-export const ANALYZER_VERSION = "0.13.0";
+export const ANALYZER_VERSION = "0.13.1";
 /** The self-update detail saying it turns Zotero's automatic updates on for itself at startup. */
 export const FORCES_AUTO_UPDATE = "turns on its automatic updates at startup";
 
@@ -9103,6 +9103,18 @@ function scanUnicode(col: Collector, file: SourceFile, ranges: Ranges) {
     col.unicode.set(kind, u);
   };
   const inRegex = (offset: number) => regexRanges.some(([a, b]) => offset >= a && offset < b);
+  // An override that is a whole string by itself, with nothing but literals and punctuation after
+  // it on the line, is a lookup table's key or value (TinyLD's `"‮": "1i",`): no code follows it to
+  // be shown out of order.
+  const tableEntry = (at: number, len: number) => {
+    const q = text[at - 1];
+    if ((q !== '"' && q !== "'") || text[at + len] !== q) return false;
+    const end = text.indexOf("\n", at);
+    const rest = text
+      .slice(at + len + 1, end < 0 ? undefined : end)
+      .replace(/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/g, "");
+    return /^[\s\d.:,\]}-]*$/.test(rest);
+  };
   // Trojan Source needs a direction override that is still open when the line ends; balanced
   // pairs (RTL text in a string) and lone closers are ordinary.
   let openOnLine: { cp: number; offset: number }[] = [];
@@ -9127,7 +9139,8 @@ function scanUnicode(col: Collector, file: SourceFile, ranges: Ranges) {
       !inRegex(i) &&
       text[i - 1] !== "-" &&
       text[i + ch.length] !== "-" &&
-      /[A-Za-z]/.test(text.slice(i + ch.length, i + ch.length + 8))
+      /[A-Za-z]/.test(text.slice(i + ch.length, i + ch.length + 8)) &&
+      !tableEntry(i, ch.length)
     )
       openOnLine.push({ cp, offset: i });
     else if (BIDI_CLOSE.has(cp)) openOnLine.pop();

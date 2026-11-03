@@ -320,6 +320,16 @@ describe("second-pass precision rules", () => {
     expect(trojan.analysis.transparency.suspiciousUnicode.map((u) => u.kind)).toEqual([
       "bidi-control",
     ]);
+    // TinyLD's language dictionary keys characters, the override among them (paper-voice).
+    const dictionary = scan({
+      "vendor/tinyld.js": 'const uniques = {\n    "․": "1e",\n    "‮": "1i",\n    "№ ": 18,\n};',
+    });
+    expect(dictionary.analysis.transparency.suspiciousUnicode).toEqual([]);
+    // The same lone override with code after it on the line still counts.
+    const lone = scan({ "content/f.js": 'const k = "‮"; if (isAdmin) grant();' });
+    expect(lone.analysis.transparency.suspiciousUnicode.map((u) => u.kind)).toEqual([
+      "bidi-control",
+    ]);
   });
 
   it("reports the table an index or trigger writes to", () => {
