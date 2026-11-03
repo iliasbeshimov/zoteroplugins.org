@@ -402,7 +402,8 @@ function doExport() { Zotero.write("x"); }`,
 
 describe("evidence snippets never republish a hard-coded key", () => {
   it("redacts known key formats and long strings assigned to key-like names", () => {
-    expect(redactSecrets('const k = "AIzaSyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";')).toBe(
+    // Built at runtime so GitHub secret scanning doesn't flag the fixture.
+    expect(redactSecrets(`const k = "${"AIzaSy" + "A".repeat(33)}";`)).toBe(
       'const k = "[redacted key]";',
     );
     expect(
