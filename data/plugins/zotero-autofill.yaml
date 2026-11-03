@@ -1,0 +1,32 @@
+schemaVersion: 1
+slug: zotero-autofill
+repo: cuny-ai-lab/zotero-autofill
+status: listed
+responses:
+  - date: "2026-10-28"
+    from: smorello87
+    about: capabilities
+    version: "1.0.0"
+    text: |-
+      Thanks for the card. It was accurate for 1.0.0, and we've addressed each finding in 1.1.1, released October 27, 2026.
+
+      Capabilities: the two medium findings, the zotero://plugin and zotero://ztoolkit-debug handlers, came from zotero-plugin-toolkit, which registers them on its own. The plugin never used either. Toolkit 6.0.0 still includes them, so from 1.1.0 our build swaps the toolkit's two bridge modules for inert stand-ins. Neither handler is in the released file, and the build fails if either string reappears.
+
+      Updates: 1.0.0 was uploaded by hand and the release/update.json the manifest points to was never published. 1.1.1 is built and published by our GitHub Actions release workflow, and the update address now serves 1.1.1.
+
+      Source transparency: the 1.1.1 XPI has a GitHub build-provenance attestation tying it to tag v1.1.1 at commit 6ee7e68, so you can check that the release file was built from the public source with `gh attestation verify zotero-metadata-assistant.xpi --repo CUNY-AI-Lab/zotero-autofill`.
+
+      Compatibility: 1.1.1 supports Zotero 7 through 10.0.x. Zotero 10's multi-selection broke bibliography import when several collections were selected, and that's fixed. Our integration tests pass against Zotero 10.0.6.
+
+      We'd be grateful if you'd grade 1.1.1, including the live Zotero 10 test.
+    url: https://github.com/iliasbeshimov/zoteroplugins.org/issues/3
+    status: fixed
+    reply: |-
+      Thanks for the detailed write-up. The card now describes 1.1.1: neither zotero:// handler is in the release file, the update address serves 1.1.1, and it works with Zotero 7 through 10.
+
+      We also ran 1.1.1 in Zotero 10 (10.0.3) in our sandbox. It loaded, we opened its settings and clicked its three menu items, and everything it did is on its card; it contacted only api.crossref.org and api.semanticscholar.org. With that live test, the grade is A+.
+
+      On the toolkit: 6.0.0 removes zotero://plugin and registers zotero://ztoolkit-debug only if a plugin calls DebugBridge.register() itself, so on 6.x the esbuild stand-ins shouldn't be needed. The check:bundle guard is worth keeping either way.
+
+      Our source check doesn't read GitHub build attestations yet. Yours is stronger evidence than what we check today, so attestation checks are on our list.
+    repliedAt: "2026-11-03"

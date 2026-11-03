@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-11-03T20:31:03.178Z",
+ "generatedAt": "2026-11-03T20:56:40.636Z",
  "slug": "zotero-autofill",
  "repo": "cuny-ai-lab/zotero-autofill",
  "repoName": "CUNY-AI-Lab/zotero-autofill",
@@ -130,7 +130,7 @@
  "trust": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.0-preview",
-  "computedAt": "2026-11-03T20:31:03.178Z",
+  "computedAt": "2026-11-03T20:56:40.636Z",
   "appliesTo": {
    "slug": "zotero-autofill",
    "version": "1.1.1",
@@ -141,7 +141,7 @@
    "provenanceCheckerVersion": "lite-0.4",
    "hostsTableVersion": "2026.10.01",
    "currentZotero": "10.0.7",
-   "inputHash": "57826ab1d4d5f1733d9547ead3b007a4bd2cea7b02b5d5299d2f9283a93f30ed"
+   "inputHash": "c21ab8a5e15c9b868eb22f9f022189fe311241637713437161d219a0dbd08ced"
   },
   "facets": {
    "sourceTransparency": {
@@ -186,6 +186,10 @@
        "api.crossref.org",
        "api.semanticscholar.org",
        "openlibrary.org"
+      ],
+      "observed": [
+       "api.crossref.org",
+       "api.semanticscholar.org"
       ]
      }
     ],
@@ -193,7 +197,8 @@
     "label": "Only contacts services we could identify",
     "legalRisk": false,
     "drivers": [
-     "DS-NAMED"
+     "DS-NAMED",
+     "DS-OBSERVED"
     ]
    },
    "capabilities": {
@@ -248,6 +253,37 @@
    "label": "low-concern",
    "ruleId": "OV-LOW",
    "drivers": []
+  },
+  "tested": {
+   "zotero": "10.0.3",
+   "testedAt": "2026-11-03T20:54:02Z",
+   "verdict": "as-described",
+   "exercised": {
+    "itemsSelected": 3,
+    "readerOpened": true,
+    "settingsPane": true,
+    "menuItems": 3,
+    "dialogs": 0
+   },
+   "contacted": [
+    "api.crossref.org",
+    "api.semanticscholar.org"
+   ],
+   "sentTo": [
+    {
+     "host": "api.crossref.org",
+     "sent": [
+      "identifiers"
+     ]
+    },
+    {
+     "host": "api.semanticscholar.org",
+     "sent": [
+      "identifiers"
+     ]
+    }
+   ],
+   "unexpected": []
   }
  },
  "provenance": {
@@ -274,6 +310,19 @@
   "launchesPrograms": false
  },
  "integrityEvents": [],
+ "responses": [
+  {
+   "date": "2026-10-28",
+   "from": "smorello87",
+   "about": "capabilities",
+   "version": "1.0.0",
+   "text": "Thanks for the card. It was accurate for 1.0.0, and we've addressed each finding in 1.1.1, released October 27, 2026.\n\nCapabilities: the two medium findings, the zotero://plugin and zotero://ztoolkit-debug handlers, came from zotero-plugin-toolkit, which registers them on its own. The plugin never used either. Toolkit 6.0.0 still includes them, so from 1.1.0 our build swaps the toolkit's two bridge modules for inert stand-ins. Neither handler is in the released file, and the build fails if either string reappears.\n\nUpdates: 1.0.0 was uploaded by hand and the release/update.json the manifest points to was never published. 1.1.1 is built and published by our GitHub Actions release workflow, and the update address now serves 1.1.1.\n\nSource transparency: the 1.1.1 XPI has a GitHub build-provenance attestation tying it to tag v1.1.1 at commit 6ee7e68, so you can check that the release file was built from the public source with `gh attestation verify zotero-metadata-assistant.xpi --repo CUNY-AI-Lab/zotero-autofill`.\n\nCompatibility: 1.1.1 supports Zotero 7 through 10.0.x. Zotero 10's multi-selection broke bibliography import when several collections were selected, and that's fixed. Our integration tests pass against Zotero 10.0.6.\n\nWe'd be grateful if you'd grade 1.1.1, including the live Zotero 10 test.",
+   "url": "https://github.com/iliasbeshimov/zoteroplugins.org/issues/3",
+   "status": "fixed",
+   "reply": "Thanks for the detailed write-up. The card now describes 1.1.1: neither zotero:// handler is in the release file, the update address serves 1.1.1, and it works with Zotero 7 through 10.\n\nWe also ran 1.1.1 in Zotero 10 (10.0.3) in our sandbox. It loaded, we opened its settings and clicked its three menu items, and everything it did is on its card; it contacted only api.crossref.org and api.semanticscholar.org. With that live test, the grade is A+.\n\nOn the toolkit: 6.0.0 removes zotero://plugin and registers zotero://ztoolkit-debug only if a plugin calls DebugBridge.register() itself, so on 6.x the esbuild stand-ins shouldn't be needed. The check:bundle guard is worth keeping either way.\n\nOur source check doesn't read GitHub build attestations yet. Yours is stronger evidence than what we check today, so attestation checks are on our list.",
+   "repliedAt": "2026-11-03"
+  }
+ ],
  "content": null,
  "categories": null,
  "requirements": null
