@@ -4,7 +4,8 @@ import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import Base from "../layouts/Base.astro";
 import { CURRENT_ZOTERO_MAJOR, GRADES, shownPlugins } from "../lib/atlas.ts";
-import { REPORT_URL, RESPOND_URL } from "../lib/links.ts";
+import { checkChanges } from "../lib/checkChanges.ts";
+import { REPO, REPORT_URL, RESPOND_URL } from "../lib/links.ts";
 
 const cur = CURRENT_ZOTERO_MAJOR();
 const plugins = shownPlugins();
@@ -15,6 +16,7 @@ const toc = [
   ["live", "The live test"],
   ["versions", "Versions"],
   ["disagree", "Disagreeing"],
+  ["changes", "Changes to the checks"],
 ];
 const checks = [
   ["Code transparency", "Can the code be read, and was the release file built from the public source?"],
@@ -25,6 +27,9 @@ const checks = [
   ["Maintenance", "How recently it was released, and by how many people.", true],
   ["Languages", "Documentation and interface languages.", true],
 ] as const;
+const changes = checkChanges();
+const recent = changes.slice(0, 5);
+const earlier = changes.slice(5);
 const live = [
   `We install the exact release file in a fresh copy of Zotero ${cur}, with a small sample library.`,
   "We select items, open the reader and the plugin's settings, and click its menu items.",
@@ -123,6 +128,45 @@ const live = [
           <span>Developers can respond to any card, and their response is published next to it with our reply. Anyone can report a problem we missed.</span>
           <span class="links"><a href={RESPOND_URL}>Respond as the developer</a><a href={REPORT_URL}>Report a problem</a></span>
         </div>
+      </section>
+
+      <section id="changes">
+        <h2>Changes to the checks</h2>
+        <p class="prose">
+          When the analysis or the rules change, every card is recomputed, and any grade that moves is listed in the <a href="/log">grade log</a> as "Our checks changed". This is what changed, newest first. The analyzer reads the code; the rules turn its findings into a grade.
+        </p>
+        <ol class="changes">
+          {
+            recent.map((c) => (
+              <li>
+                <span class="cm mono-sm">
+                  {c.shown} · analyzer {c.analyzer} · rules {c.rules}
+                </span>
+                <span>{c.what}</span>
+              </li>
+            ))
+          }
+        </ol>
+        {
+          earlier.length > 0 && (
+            <details class="earlier">
+              <summary>Earlier changes ({earlier.length})</summary>
+              <ol class="changes">
+                {earlier.map((c) => (
+                  <li>
+                    <span class="cm mono-sm">
+                      {c.shown} · analyzer {c.analyzer} · rules {c.rules}
+                    </span>
+                    <span>{c.what}</span>
+                  </li>
+                ))}
+              </ol>
+            </details>
+          )
+        }
+        <p class="prose small">
+          The full method, rule by rule: <a href={`${REPO}/blob/main/docs/methodology.md`}>docs/methodology.md</a> on GitHub.
+        </p>
       </section>
     </article>
   </div>
@@ -311,6 +355,35 @@ const live = [
   .links a {
     font-size: 14.5px;
     font-weight: 600;
+  }
+  .changes {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .changes li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 15.5px;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+  .cm {
+    color: var(--ink-2);
+  }
+  .earlier summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 12px 0;
+  }
+  .prose.small {
+    font-size: 15px;
+    color: var(--ink-2);
   }
   @media (max-width: 860px) {
     .wrap {

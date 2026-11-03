@@ -3,9 +3,9 @@ import { dirname, join } from "node:path";
 import { bySlug, fmtDate, type Grade, RANK } from "./atlas.ts";
 
 /**
- * The public log of grade changes, newest first. The pipeline doesn't write it yet (only the latest
- * release of each plugin is graded today), so until data/generated/grade-log.json exists
- * the log is empty and the pages say so.
+ * The public log of grade changes, newest first, from data/generated/grade-log.json, which the
+ * pipeline appends to whenever a listed plugin gets its first grade or its grade moves
+ * (pipeline/src/profile/gradeLog.ts). Without the file the log is empty and the pages say so.
  */
 export interface GradeChange {
   slug: string;

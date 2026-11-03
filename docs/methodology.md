@@ -300,6 +300,14 @@ for others too, so we fix the analysis for everyone and the card changes with it
 
 | Date | Analyzer | Rules | What changed |
 |---|---|---|---|
+| 2026-11-03 | 0.13.1 | 0.9.0-preview | A text-direction control character inside a lookup table (a language dictionary, for example) no longer counts as hidden code: with only data after it, nothing is shown out of order. Keys in addresses a plugin builds at runtime are redacted in the evidence, like other keys. |
+| 2026-10-16 | 0.13.0 | 0.9.0-preview | A program a plugin downloads and runs is rated by who can change it and whether anything checks it, and the card gives the reason. Until we've reviewed one, the finding stays high. |
+| 2026-10-16 | 0.13.0 | 0.8.0-preview | A review also carries over for code outside any function and for shell scripts a plugin ships, as long as that code is unchanged. |
+| 2026-10-16 | 0.12.0 | 0.8.0-preview | A review of a finding now applies to later releases whose code behind it is unchanged, and any finding can be reviewed, not only downloads. Plainer wording for AI assistants that run code (whether they ask you first) and for downloaded programs. |
+| 2026-10-01 | 0.11.0 | 0.7.1-preview | More addresses traced: ones stored on a class, and defaults behind a settings helper. A default server counts as where data goes, and the address is marked as one you can change. |
+| 2026-10-01 | 0.10.0 | 0.7.1-preview | Bundled libraries: the settings that decide where a library connects are read, so its own servers count only when the plugin turns them on, and the card says what a library loads for your content (an editor that shows videos, for example). |
+| 2026-10-01 | 0.9.0 | 0.7.0-preview | Code counts as a known library's only where it matches that library's official release. A name or banner alone no longer exempts it; the rest is checked as the plugin's own. |
+| 2026-10-01 | 0.8.0 | 0.7.0-preview | A plugin whose network code we can't trace is no longer graded B straight away. A quiet run in a test copy of Zotero, or a review of its network code, settles it; until then it shows as not graded yet ("still checking"). |
 | 2026-09-26 | 0.8.0 | 0.6.1-preview | Tested in Zotero: when we've run a plugin's release file, the card says what the test did and found, and the hosts it sent data to are added to data sharing, marked "seen when we ran it", and count as requests we traced; pages it only loaded are listed but don't count as sharing, except on a usage-tracking service. |
 | 2026-09-26 | 0.7.0 | 0.5.0-preview | New findings: endpoints on Zotero's server and who can reach them, settings changed in Zotero and other programs, documents handed to other programs, browsers' and other apps' saved logins, where installs come from, data sent unencrypted. Packages rated by pinning, AI-written code by approval, the toolkit's zotero:// links only when set up. |
 | 2026-09-26 | 0.6.4 | 0.4.1-preview | A second precision check (all ten labels right); keys saved in loops, download sources as requests, server sockets told apart from stream pumps. |
@@ -310,5 +318,9 @@ for others too, so we fix the analysis for everyone and the card changes with it
 | 2026-09-26 | 0.4.0 | 0.2.0-preview | Fixes from an independent review of the scoring: the build current Zotero installs, database writes through variables, bundled libraries attribute findings but never remove them, update addresses shown on their own line. |
 | 2026-09-25 | 0.3.2 | 0.1.0-preview | First run over every listed plugin. |
 
-The thresholds behind the obfuscation and coverage checks, and how they sit against every plugin
-we analyse, are in [the calibration note](reports/calibration-2026-09-26.md).
+Three thresholds decide whether code can be graded at all and whether it counts as obfuscated:
+more than 20% of the code unreadable by the parser means not enough data for a grade; 50 or more
+`_0x`-style names making up at least 2% of a file's names, or escaped characters making up 30% or
+more of a file's string text (in files with at least 2,000 characters of it), are obfuscation
+signals. Checked against every plugin on 2026-09-26, each sits in a wide gap between ordinary code
+and obfuscator output, so small changes to them wouldn't change any grade.
