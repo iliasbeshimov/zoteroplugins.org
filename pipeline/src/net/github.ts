@@ -114,14 +114,15 @@ export class GitHub {
 
   /**
    * GraphQL call, cached by query text for `maxAgeMs`. Returns `data` even when some aliases fail
-   * (GitHub reports missing repositories as per-alias errors).
+   * (GitHub reports missing repositories as per-alias errors). Only answers whose errors are all
+   * NOT_FOUND are cached: any other error means GitHub dropped part of the answer.
    */
   async graphql<T>(
     query: string,
     maxAgeMs = 20 * 60 * 60 * 1000,
-  ): Promise<{ data: T | null; errors: { message: string; path?: string[] }[] }> {
+  ): Promise<{ data: T | null; errors: GraphqlError[] }> {
     const key = `graphql:${query}`;
-    const cached = await this.cache.get<{ data: T | null; errors: [] }>(key, maxAgeMs);
+    const cached = await this.cache.get<{ data: T | null; errors: GraphqlError[] }>(key, maxAgeMs);
     if (cached) return cached;
     const res = await fetchWithRetry(`${API}/graphql`, {
       method: "POST",
@@ -129,15 +130,26 @@ export class GitHub {
       body: JSON.stringify({ query }),
     });
     if (!res.ok) throw new Error(`GraphQL HTTP ${res.status}: ${(await res.text()).slice(0, 300)}`);
-    const body = (await res.json()) as {
-      data: T | null;
-      errors?: { message: string; path?: string[] }[];
-    };
+    const body = (await res.json()) as { data: T | null; errors?: GraphqlError[] };
     const result = { data: body.data, errors: body.errors ?? [] };
-    if (body.data) await this.cache.set(key, result);
+    if (body.data && partialErrors(result.errors).length === 0) await this.cache.set(key, result);
     return result;
   }
 }
+
+export interface GraphqlError {
+  message: string;
+  type?: string;
+  path?: (string | number)[];
+}
+
+/**
+ * Errors that mean part of the answer is missing, as opposed to NOT_FOUND for a deleted or private
+ * repository. An oversized query gets RESOURCE_LIMITS_EXCEEDED and nulls in place of the fields
+ * GitHub dropped, which would otherwise read as "this release has no files".
+ */
+export const partialErrors = (errors: GraphqlError[]) =>
+  errors.filter((e) => e.type !== "NOT_FOUND");
 
 export function nextLink(link: string | null): string | null {
   return link?.match(/<([^>]+)>;\s*rel="next"/)?.[1] ?? null;

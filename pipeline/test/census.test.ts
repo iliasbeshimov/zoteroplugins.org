@@ -7,6 +7,7 @@ import {
   type ZoteroVersions,
 } from "../src/census/compat.ts";
 import { parseCsv, toCsv } from "../src/census/csv.ts";
+import { fetchLight } from "../src/census/metadata.ts";
 import { maintenanceOf, pickRelease } from "../src/census/run.ts";
 import { repoKeyFromUrl } from "../src/census/sources.ts";
 import {
@@ -15,6 +16,7 @@ import {
   readXpiManifests,
   type XpiManifest,
 } from "../src/census/xpi.ts";
+import type { GitHub, GraphqlError } from "../src/net/github.ts";
 import { buildZip, memoryReader } from "./helpers/zip.ts";
 
 const zv: ZoteroVersions = {
@@ -381,5 +383,69 @@ describe("history", () => {
       ["2026-09-24", "5", "1"],
       ["2026-09-25", "6", "1"],
     ]);
+  });
+});
+
+describe("batched GitHub queries", () => {
+  /**
+   * Answers like GitHub: a batch that includes `heavy/repo` with anything else exceeds the
+   * resource limits, so every release asset in it comes back null with RESOURCE_LIMITS_EXCEEDED
+   * (jorgepb96/nodus did this to 19 neighbours, 2026-11). `gone/repo` doesn't exist.
+   */
+  const fakeGitHub = () => {
+    const batches: string[][] = [];
+    const gh = {
+      graphql: async (query: string) => {
+        const repos = [
+          ...query.matchAll(/(r\d+): repository\(owner: "([^"]+)", name: "([^"]+)"\)/g),
+        ];
+        const keys = repos.map((m) => `${m[2]}/${m[3]}`);
+        batches.push(keys);
+        const tooBig = keys.includes("heavy/repo") && keys.length > 1;
+        const data: Record<string, unknown> = {};
+        const errors: GraphqlError[] = [];
+        for (const [i, m] of repos.entries()) {
+          const key = keys[i] as string;
+          if (key === "gone/repo") {
+            data[m[1] as string] = null;
+            errors.push({
+              type: "NOT_FOUND",
+              message: "Could not resolve",
+              path: [m[1] as string],
+            });
+            continue;
+          }
+          data[m[1] as string] = {
+            nameWithOwner: key,
+            stargazerCount: 1,
+            isFork: false,
+            releases: {
+              nodes: [{ releaseAssets: { nodes: [tooBig ? null : { name: "plugin.xpi" }] } }],
+            },
+          };
+          if (tooBig) {
+            errors.push({ type: "RESOURCE_LIMITS_EXCEEDED", message: "Resource limits exceeded" });
+          }
+        }
+        return { data, errors };
+      },
+    };
+    return { gh: gh as unknown as GitHub, batches };
+  };
+
+  it("splits a batch GitHub only partly answered instead of reading it as 'no .xpi'", async () => {
+    const { gh, batches } = fakeGitHub();
+    const keys = ["a/one", "b/two", "heavy/repo", "c/three"];
+    const light = await fetchLight(gh, keys, () => {});
+    for (const key of keys) expect(light.get(key)?.hasXpi, key).toBe(true);
+    expect(batches.length).toBeGreaterThan(1);
+  });
+
+  it("treats a missing repository as missing, without splitting the batch", async () => {
+    const { gh, batches } = fakeGitHub();
+    const light = await fetchLight(gh, ["a/one", "gone/repo"], () => {});
+    expect(light.get("gone/repo")).toBeNull();
+    expect(light.get("a/one")?.hasXpi).toBe(true);
+    expect(batches).toHaveLength(1);
   });
 });

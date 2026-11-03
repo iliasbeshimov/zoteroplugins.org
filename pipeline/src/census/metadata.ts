@@ -1,4 +1,4 @@
-import { type GitHub, lastPage } from "../net/github.ts";
+import { type GitHub, lastPage, partialErrors } from "../net/github.ts";
 
 /**
  * GitHub metadata via batched GraphQL (GitHub resolves renamed repos to their current name).
@@ -72,12 +72,16 @@ async function batched<T>(
       })
       .join("\n");
     try {
-      const { data } = await gh.graphql<Record<string, T | null>>(`query { ${body} }`);
+      const { data, errors } = await gh.graphql<Record<string, T | null>>(`query { ${body} }`);
+      // One repo with hundreds of releases can push a batch over GitHub's resource limits; GitHub
+      // then blanks every release asset in the batch, and all its repos would read as "no .xpi".
+      const partial = partialErrors(errors)[0];
+      if (partial) throw new Error(`${partial.type ?? "error"}: ${partial.message}`);
       chunk.forEach((key, i) => {
         out.set(key, data?.[`r${i}`] ?? null);
       });
     } catch (error) {
-      // Heavy batches occasionally time out on GitHub's side; split and retry.
+      // Heavy batches time out or exceed GitHub's limits; split and retry.
       if (chunk.length === 1) {
         log(`  ${label}: giving up on ${chunk[0]}: ${(error as Error).message}`);
         out.set(chunk[0] as string, null);
