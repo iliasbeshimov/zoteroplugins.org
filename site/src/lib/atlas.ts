@@ -334,11 +334,15 @@ function loadSummaries(): Record<string, Summary> {
   if (!existsSync(f)) return {};
   return (JSON.parse(readFileSync(f, "utf8")) as { summaries: Record<string, Summary> }).summaries;
 }
-/** "Ways people ask" for each plugin, keyed by owner/repo, for the search index. */
+/**
+ * "Ways people ask" for each plugin, for the search index. Keyed by owner/repo in lower case:
+ * GitHub names ignore case, and a repo renamed in case only keeps its phrases.
+ */
 function loadPhrases(): Record<string, string[]> {
   const f = `${ROOT}search/phrases.json`;
   if (!existsSync(f)) return {};
-  return (JSON.parse(readFileSync(f, "utf8")) as { phrases: Record<string, string[]> }).phrases;
+  const { phrases } = JSON.parse(readFileSync(f, "utf8")) as { phrases: Record<string, string[]> };
+  return Object.fromEntries(Object.entries(phrases).map(([k, v]) => [k.toLowerCase(), v]));
 }
 
 interface Requirement {
@@ -902,7 +906,7 @@ function build(
       does: summary?.does ?? "",
       topics: p.about.topics.join(" "),
       jobs: jobs.map((j) => JOB_BY_SLUG[j].title).join(" "),
-      ask: (phrases[p.repoName] ?? phrases[p.repo] ?? []).join("; "),
+      ask: (phrases[p.repoName.toLowerCase()] ?? phrases[p.repo.toLowerCase()] ?? []).join("; "),
       dl: p.popularity.downloads ?? 0,
     },
     toFix,
