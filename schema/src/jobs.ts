@@ -1,4 +1,4 @@
-import type { PluginProfile } from "@atlas/schema";
+import type { PluginProfile } from "./profile.ts";
 
 /**
  * The jobs people come with ("I want to cite in Word"), which the home page and category pages

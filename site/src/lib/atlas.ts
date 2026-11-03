@@ -6,9 +6,11 @@ import {
   GRADE_RANK,
   type Grade,
   gradeOf,
+  JOB_BY_SLUG,
+  jobsFor,
   type PluginProfile,
 } from "@atlas/schema";
-import { JOB_BY_SLUG, jobsFor } from "./jobs.ts";
+
 import type { SearchDoc } from "./search.ts";
 
 /**

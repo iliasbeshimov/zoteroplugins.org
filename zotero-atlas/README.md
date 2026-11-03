@@ -1,0 +1,82 @@
+# Zotero Atlas
+
+A Zotero plugin that finds and installs plugins from [zoteroplugins.org](https://zoteroplugins.org)
+inside Zotero, and keeps an eye on the ones you have. Home: [zoteroatlas.com](https://zoteroatlas.com).
+
+## What it does
+
+- **Find.** Tools → Zotero Atlas lists every plugin in the directory, filtered to your Zotero
+  version by default, with each plugin's grade and the one line that explains it. Search, or
+  pick a job (reading, citing, AI, translation, organising, metadata, interface, files).
+- **Install the file we checked.** Install hands the release file to Zotero's own installer with
+  the SHA-256 of the file we analysed. Zotero refuses the file if it doesn't match, so what you
+  get is exactly what the card describes. A file we haven't analysed can't be installed from here.
+- **Watch what you have.** Once a day it compares your installed plugins with the directory and
+  tells you when one drops a grade, when the update Zotero would apply is graded worse than what
+  you have, when Zotero's blocklist blocks it, or when Zotero has disabled it because it doesn't
+  work with your version. Where a version that works, or a cleaner one, is listed, it offers it.
+  "Your plugins" shows all of this in one place.
+
+Every grade comes from the directory's published checks: see
+[how plugins are graded](https://zoteroplugins.org/how-we-grade). The plugin itself is listed and
+graded there like any other.
+
+## What it sends, and what it never sends
+
+**It never sends your library, notes, files, Zotero account, email or anything that identifies
+you.**
+
+The first time it runs it asks one question, with "Don't send" as the default. If you choose
+**Send my plugin list**, it sends one thing: the list of plugins installed in this Zotero, with
+their versions and whether each is enabled, under a random ID created on this computer, together
+with your Zotero version, operating system and this plugin's version. That goes to zoteroatlas.com
+when you turn it on, when the list changes, and once a week. We publish the totals so everyone can
+see which plugins people actually use. Choose **Don't send** later, in Zotero's settings under
+Zotero Atlas, and the plugin asks the server to delete the record. "Show what would be sent" in
+the settings shows the exact message. The server's code is in [server/](server/); it stores
+nothing from the request but those fields, no IP address.
+
+Whatever you choose, the plugin fetches the directory's catalogue once a day from GitHub
+(raw.githubusercontent.com, the directory's public repository) and, when you click Install,
+Zotero downloads the plugin file from GitHub. Nothing else is contacted.
+
+It stores three settings (`extensions.zotero-atlas.usage`, `.id`, `.state`) and the catalogue in
+`zotero-atlas/catalog.json` in your Zotero data directory. Uninstalling removes all of it.
+
+## Its own grade
+
+On zoteroplugins.org this plugin is graded **B**, because sending usage data to a developer's
+server rates "medium" under the directory's rules, whether or not it's opt-in, and because it
+installs other add-ons. That's the same rule every plugin gets. The grade is set by the same
+pipeline as every other plugin's and nothing on its card is edited by hand.
+
+## Check what you install
+
+All the plugin's code is in [src/](src/): `bootstrap.js` (what it does), `content/` (the window),
+`settings.xhtml` and `settings.js` (the settings pane), `prefs.js` (the defaults) and
+`manifest.json`. The plugin file is those files zipped as they are, with nothing compiled or bundled:
+
+- **Unzip it and compare** (rename the `.xpi` to `.zip` if your computer won't open it): the files
+  are exactly the ones in `src/` at that release's tag.
+- **Rebuild it:** `python3 build.py` on the tagged commit makes a byte-identical file on any
+  system. Compare its SHA-256 with the downloaded file's (`shasum -a 256 <file>` on a Mac or
+  Linux, `Get-FileHash <file>` in Windows PowerShell).
+- **Check where it was built:** each release's files are built by [the release
+  workflow](.github/workflows/release.yml) from the tagged commit and come with GitHub's build
+  attestation: `gh attestation verify <file> --repo iliasbeshimov/zotero-atlas`.
+
+## Updates
+
+Zotero checks this project's releases for updates, as it does for other plugins, and installs an
+update only if it matches the SHA-256 in that release's `updates.json`. Turn automatic updates
+off for this plugin in Tools → Plugins if you'd rather update by hand.
+
+## Development
+
+```sh
+node test.cjs          # offline checks of the plugin's behaviour, with Zotero mocked
+python3 build.py       # dist/zotero-atlas-<version>.xpi and dist/updates.json
+```
+
+Needs Zotero 7.0 or later. The catalogue it reads is written by the directory's pipeline
+(`atlas catalog`); its shape is published as `catalog.schema.json` in the directory's repository.

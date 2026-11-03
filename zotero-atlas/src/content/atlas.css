@@ -1,0 +1,251 @@
+:root {
+  color-scheme: light dark;
+  --bg: #fff;
+  --fg: #1d1d1f;
+  --muted: #6b6b70;
+  --line: #e2e2e6;
+  --row: #f7f7f9;
+  --accent: #2160c4;
+  --a-plus: #0f7b3a;
+  --a: #2a8c4a;
+  --b: #b7791f;
+  --c: #c0392b;
+  --none: #8a8a90;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1e1e20;
+    --fg: #e8e8ea;
+    --muted: #a0a0a6;
+    --line: #3a3a40;
+    --row: #26262a;
+    --accent: #7aa7ff;
+    --a-plus: #4cc47a;
+    --a: #5fcf85;
+    --b: #e0a93a;
+    --c: #ef6a5c;
+    --none: #9a9aa0;
+  }
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font:
+    13px / 1.45 system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.tabs {
+  display: flex;
+  gap: 6px;
+}
+.tab {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--fg);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font: inherit;
+  cursor: pointer;
+}
+.tab.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.count:empty {
+  display: none;
+}
+.count {
+  margin-left: 4px;
+  padding: 0 6px;
+  border-radius: 9px;
+  background: var(--c);
+  color: #fff;
+  font-size: 11px;
+}
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+button {
+  font: inherit;
+}
+section {
+  flex: 1;
+  overflow: auto;
+  padding: 10px 14px;
+}
+section[hidden] {
+  display: none;
+}
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.toolbar input[type="search"] {
+  flex: 1;
+  min-width: 180px;
+  padding: 5px 8px;
+  font: inherit;
+}
+.toolbar select {
+  font: inherit;
+  padding: 4px;
+}
+.fit {
+  color: var(--muted);
+  white-space: nowrap;
+}
+.lead {
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+.row {
+  display: flex;
+  gap: 12px;
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--line);
+}
+.row:hover {
+  background: var(--row);
+}
+.row .main {
+  flex: 1;
+  min-width: 0;
+}
+.row .act {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  white-space: nowrap;
+}
+.row .act button {
+  padding: 4px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--fg);
+  cursor: pointer;
+}
+.row .act button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.row .act button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.row .act .note {
+  color: var(--muted);
+  font-size: 11px;
+  max-width: 200px;
+  text-align: right;
+  white-space: normal;
+}
+.title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.name {
+  font-weight: 600;
+  color: var(--fg);
+  text-decoration: none;
+  cursor: pointer;
+}
+.name:hover {
+  text-decoration: underline;
+}
+.ver,
+.meta {
+  color: var(--muted);
+}
+.grade {
+  display: inline-block;
+  min-width: 20px;
+  text-align: center;
+  padding: 0 5px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 18px;
+}
+.g-A\+ {
+  background: var(--a-plus);
+}
+.g-A {
+  background: var(--a);
+}
+.g-B {
+  background: var(--b);
+}
+.g-C {
+  background: var(--c);
+}
+.g-none {
+  background: var(--none);
+}
+.summary {
+  margin: 2px 0 0;
+}
+.why {
+  margin-top: 4px;
+  color: var(--muted);
+}
+.why a,
+.links a {
+  color: var(--accent);
+  cursor: pointer;
+  margin-right: 10px;
+}
+.flag {
+  display: block;
+  margin-top: 3px;
+}
+.flag.loud {
+  color: var(--c);
+  font-weight: 600;
+}
+.flag.quiet {
+  color: var(--b);
+}
+.empty {
+  color: var(--muted);
+  padding: 20px 0;
+  text-align: center;
+}
+.more-row {
+  text-align: center;
+  padding: 10px;
+}
+footer {
+  padding: 6px 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+}

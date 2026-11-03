@@ -37,6 +37,7 @@ import {
 } from "../scan/analyze.ts";
 import { type HostTable, loadHostTable } from "../scan/hosts.ts";
 import { download, type ReleaseAsset, unzip } from "../scan/run.ts";
+import { writeCatalog } from "./catalog.ts";
 import {
   ACTIONS_BOT,
   type Blocklist,
@@ -304,6 +305,7 @@ export async function runProfile(
     join(paths.generated, "index.json"),
     `${JSON.stringify(profiles.map(indexEntry), null, 1)}\n`,
   );
+  await writeCatalog(profiles, ctx.now, log);
   await mkdir(join(paths.root, "docs", "reports"), { recursive: true });
   await writeFile(
     join(paths.root, "docs", "reports", "profiles-latest.md"),

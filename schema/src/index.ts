@@ -1,4 +1,5 @@
 import { Analysis } from "./analysis.ts";
+import { Catalog } from "./catalog.ts";
 import { PluginCurated, PluginRecord } from "./plugin.ts";
 import { PluginProfile } from "./profile.ts";
 import { Provenance } from "./provenance.ts";
@@ -9,6 +10,7 @@ import { SandboxRecord } from "./sandbox.ts";
 import { TrustCard } from "./trust-card.ts";
 
 export * from "./analysis.ts";
+export * from "./catalog.ts";
 export * from "./common.ts";
 export * from "./plugin.ts";
 export * from "./profile.ts";
@@ -32,5 +34,7 @@ export const documentSchemas = {
   review: Review,
   "trust-card": TrustCard,
   "sandbox-record": SandboxRecord,
+  catalog: Catalog,
 } as const;
 export * from "./grade.ts";
+export * from "./jobs.ts";

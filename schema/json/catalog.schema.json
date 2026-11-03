@@ -1,0 +1,442 @@
+{
+  "$id": "https://github.com/iliasacademia/zoteroatlas/schema/json/catalog.schema.json",
+  "title": "catalog",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+    },
+    "currentZotero": {
+      "type": "string",
+      "description": "The Zotero version the grades and 'current' were computed for"
+    },
+    "rulesVersion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "site": {
+      "type": "string",
+      "format": "uri"
+    },
+    "plugins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100,
+            "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "description": "The add-on ID Zotero knows the plugin by",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "repo": {
+            "type": "string",
+            "format": "uri"
+          },
+          "page": {
+            "type": "string",
+            "format": "uri",
+            "description": "The plugin's page on the site, with the full card"
+          },
+          "summary": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "jobs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The site's job slugs (reading, citing, ai, …)"
+          },
+          "grade": {
+            "type": "string",
+            "enum": [
+              "A+",
+              "A",
+              "B",
+              "C",
+              "–"
+            ]
+          },
+          "because": {
+            "type": "string",
+            "description": "The card's 'because …' line, without 'because'"
+          },
+          "version": {
+            "type": "string"
+          },
+          "publishedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "supports": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "description": "Zotero majors the release works with; empty when Zotero won't install it"
+          },
+          "current": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "zotero": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "compatible",
+                      "incompatible",
+                      "unknown"
+                    ]
+                  }
+                },
+                "required": [
+                  "zotero",
+                  "status"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Whether the Zotero version current when the catalogue was written installs and runs it"
+          },
+          "file": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The release file's name"
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "The GitHub release asset"
+                  },
+                  "sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "description": "The file we analysed; the plugin installs only a file with this hash"
+                  },
+                  "supports": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "description": "Zotero majors its manifest range covers"
+                  },
+                  "min": {
+                    "description": "strict_min_version, compared the way Zotero does",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "max": {
+                    "description": "strict_max_version",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "url",
+                  "sha256",
+                  "supports",
+                  "min",
+                  "max"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The build current Zotero installs"
+          },
+          "builds": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The release file's name"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The GitHub release asset"
+                },
+                "sha256": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "description": "The file we analysed; the plugin installs only a file with this hash"
+                },
+                "supports": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "description": "Zotero majors its manifest range covers"
+                },
+                "min": {
+                  "description": "strict_min_version, compared the way Zotero does",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "max": {
+                  "description": "strict_max_version",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "name",
+                "url",
+                "sha256",
+                "supports",
+                "min",
+                "max"
+              ]
+            },
+            "description": "The release's other builds, e.g. for an older Zotero"
+          },
+          "update": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "grade": {
+                    "type": "string",
+                    "enum": [
+                      "A+",
+                      "A",
+                      "B",
+                      "C",
+                      "–"
+                    ]
+                  }
+                },
+                "required": [
+                  "version",
+                  "grade"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "What the plugin's own update address offers today, when it's a different file from this one"
+          },
+          "blocked": {
+            "description": "Why Zotero's official blocklist blocks this version",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "tested": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "zotero": {
+                    "type": "string"
+                  },
+                  "verdict": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "zotero",
+                  "verdict"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Our live test of this exact file"
+          },
+          "needs": {
+            "type": "object",
+            "properties": {
+              "apiKey": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "optional",
+                  "required",
+                  "unknown"
+                ]
+              },
+              "services": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "AI services it can use"
+              },
+              "localModel": {
+                "type": "boolean",
+                "description": "Can use a model on this computer"
+              },
+              "launchesPrograms": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "apiKey",
+              "services",
+              "localModel",
+              "launchesPrograms"
+            ]
+          },
+          "downloads": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stars": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "maintenance": {
+            "type": "string"
+          },
+          "lastReleaseAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "docsChineseOnly": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "slug",
+          "name",
+          "id",
+          "repo",
+          "page",
+          "summary",
+          "jobs",
+          "grade",
+          "because",
+          "version",
+          "publishedAt",
+          "supports",
+          "current",
+          "file",
+          "builds",
+          "update",
+          "blocked",
+          "tested",
+          "needs",
+          "downloads",
+          "stars",
+          "maintenance",
+          "lastReleaseAt",
+          "docsChineseOnly"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "generatedAt",
+    "currentZotero",
+    "rulesVersion",
+    "site",
+    "plugins"
+  ]
+}

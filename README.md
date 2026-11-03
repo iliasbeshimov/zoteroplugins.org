@@ -17,6 +17,8 @@ data/
   plugins/     <slug>.yaml: curated, human-edited listing and review data
   generated/   <slug>/plugin.json and <slug>/<version>.json: machine output, committed for audit
 docs/       methodology: how plugins are checked and graded
+zotero-atlas/        the Zotero Atlas plugin: finds and installs plugins from the directory inside Zotero
+install-link-blocker/ the Install Link Blocker plugin
 ```
 
 `.cache/` (git-ignored) holds downloaded `.xpi` files, API responses and READMEs, content-addressed
@@ -35,6 +37,7 @@ pnpm atlas census           # find every Zotero plugin on GitHub (no LLM)
 pnpm atlas profile          # profile + scorecard for every listed plugin (no LLM)
 pnpm atlas profile -p zotero-pdf-translate   # one plugin
 pnpm atlas regress          # before changing the analyzer or rules: every label change, offline
+pnpm atlas catalog          # data/generated/catalog.json, what the Zotero Atlas plugin reads
 pnpm site:dev               # local site
 pnpm verify                 # lint, type check, tests, schema check, site build (same as CI)
 pnpm schema:generate        # after editing schema/src/*

@@ -171,6 +171,17 @@ export function buildProgram(): Command {
       else await updateGradeLog(profiles, today);
     });
 
+  program
+    .command("catalog")
+    .description(
+      "write data/generated/catalog.json, what the Zotero Atlas plugin reads, from the profiles (no network)",
+    )
+    .action(async () => {
+      const { loadAllProfiles } = await import("./profile/run.ts");
+      const { writeCatalog } = await import("./profile/catalog.ts");
+      await writeCatalog(await loadAllProfiles(), new Date().toISOString());
+    });
+
   const submit = program
     .command("submit")
     .description("plugins people submit on the site: queue, decide, profile");
