@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-gpt",
+  "version": "3.1.142",
+  "sha256": "f30bbfd04dfbc0dc7144a6a3286c0d315c366b21c0d85374bbcbbc43e63bbd75",
+  "codeKey": "ab662a28203d",
+  "reviewedAt": "2026-11-03",
+  "method": "Read from the release file by Claude Opus 5.5: the zotero://meet-awesome-gpt handler (doAction), decryptCode and getAesKey; then read the same handler in 3.1.200, the version its update channel serves.",
+  "real": true,
+  "concern": "high",
+  "rule": "CAP-LINK-CODE",
+  "label": "A zotero:// link (a web page can open one) can make it run anyone's code without asking you",
+  "summary": "Its zotero://meet-awesome-gpt link runs the JavaScript it carries, after decrypting it with a key made from a phrase written into the plugin, so anyone who reads the plugin can make a working link and any web page can open it. Version 3.1.200, which Zotero updates it to from Gitee, no longer runs code from this link: it only opens the item a citation link points to.",
+  "facts": {
+    "handler": "zotero://meet-awesome-gpt, registered when the plugin starts; reads iv and data from the link",
+    "check": "none that proves who made the link: data is decrypted with AES-GCM under a key that is the SHA-256 of a phrase written into the plugin, so the same key is in every copy",
+    "runs": "new AsyncFunction(\"Zotero\", \"window\", source) with Zotero's full privileges, no prompt",
+    "keyInPlugin": true,
+    "replay": "no expiry, nonce or origin check",
+    "quotes": [
+      {
+        "file": "chrome/content/scripts/zoterogpt.js",
+        "text": "window.crypto.subtle.digest(\"SHA-256\",r.encode(this.SECRET_PHRASE))"
+      },
+      {
+        "file": "chrome/content/scripts/zoterogpt.js",
+        "text": "await new c(\"Zotero\",\"window\",s)(i,l)"
+      },
+      {
+        "file": "chrome/content/scripts/zoterogpt.js",
+        "text": "r._extensions[\"zotero://meet-awesome-gpt\"]=t"
+      }
+    ],
+    "laterVersions": "3.1.200 (sha256 29f0be7a437d304768e866db37e3bdcf4d24e6f21ebf636b37cfe875ad8c7b3f, from the Gitee update channel) keeps the handler and the phrase but accepts only a canvas-citation JSON or a Zotero.Reader.open(id, {position}) string matched by a regular expression, and opens that item; anything else is rejected. The scanner stops flagging this handler from 3.1.181.",
+    "notes": "The finding's other link, zotero://ztoolkit-debug, asks before running code. The developer was asked on 2026-11-03 to replace the GitHub release file (MuiseDestiny/zotero-gpt#526)."
+  }
+}
