@@ -441,6 +441,23 @@ describe("batched GitHub queries", () => {
     expect(batches.length).toBeGreaterThan(1);
   });
 
+  it("leaves out a repository GitHub keeps failing on, so the census keeps its last row", async () => {
+    const { gh } = fakeGitHub();
+    const light = await fetchLight(
+      {
+        graphql: async () => ({
+          data: {
+            r0: { nameWithOwner: "heavy/repo", stargazerCount: 1, isFork: false, releases: null },
+          },
+          errors: [{ type: "RESOURCE_LIMITS_EXCEEDED", message: "Resource limits exceeded" }],
+        }),
+      } as unknown as typeof gh,
+      ["heavy/repo"],
+      () => {},
+    );
+    expect(light.has("heavy/repo")).toBe(false);
+  });
+
   it("treats a missing repository as missing, without splitting the batch", async () => {
     const { gh, batches } = fakeGitHub();
     const light = await fetchLight(gh, ["a/one", "gone/repo"], () => {});

@@ -55,6 +55,7 @@ const present = <T>(nodes: (T | null)[] | null | undefined): T[] =>
   (nodes ?? []).filter((n): n is T => n !== null);
 const lit = (s: string) => JSON.stringify(s);
 
+/** Each key's repository: null when GitHub says it doesn't exist, missing when GitHub kept failing. */
 async function batched<T>(
   gh: GitHub,
   keys: string[],
@@ -85,11 +86,12 @@ async function batched<T>(
     } catch (error) {
       // Heavy batches time out or exceed GitHub's limits; split and retry.
       if (chunk.length === 1) {
-        // Hundreds of releases with 20 files each can be too big even alone (bydb/mindgraph-notes),
-        // and giving up would mark the repo unavailable until the next full census.
+        // Hundreds of releases with 20 files each can be too big even alone (bydb/mindgraph-notes):
+        // ask for fewer first.
         if (lighter && asked !== lighter) return run(chunk, lighter);
+        // Left out, not null: null means GitHub says there's no such repository, and the census
+        // would carry it as unavailable for good. Left out, the census keeps its last row.
         log(`  ${label}: giving up on ${chunk[0]}: ${(error as Error).message}`);
-        out.set(chunk[0] as string, null);
         return;
       }
       const mid = Math.ceil(chunk.length / 2);

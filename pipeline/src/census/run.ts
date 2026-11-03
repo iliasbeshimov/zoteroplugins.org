@@ -111,14 +111,30 @@ const maxDate = (...dates: (string | null | undefined)[]) =>
 
 export type CensusMode = "full" | "refresh";
 
+/** The last census's rows by lower-case repo, or none before the first census. */
+async function lastRows(outDir: string): Promise<Map<string, CensusRow>> {
+  try {
+    const prev = JSON.parse(await readFile(join(outDir, "census.json"), "utf8")) as {
+      rows: CensusRow[];
+    };
+    return new Map(prev.rows.map((r) => [r.repo.toLowerCase(), r]));
+  } catch {
+    return new Map();
+  }
+}
+
 /**
  * full: discover candidates from every source, then measure them (weekly).
- * refresh: re-measure the repos from the last census without re-running discovery (nightly).
+ * refresh: re-measure the repos from the last census without re-running discovery (nightly);
+ * with `only`, just those repos, keeping every other row as it was.
  */
 export async function runCensus(
   mode: CensusMode = "full",
   log: (msg: string) => void = console.log,
+  only?: string[],
 ): Promise<void> {
+  const onlyKeys = only && new Set(only.map((k) => k.toLowerCase()));
+  if (onlyKeys && mode !== "refresh") throw new Error("--only works with --mode refresh");
   const config = loadConfig();
   const token = requireGithubToken(config);
   const cache = new DiskCache(join(config.cacheDir, "http"));
@@ -158,6 +174,12 @@ export async function runCensus(
     for (const key of keys) {
       const l = light.get(key);
       const sources = discovery.candidates.get(key) ?? new Set<SourceId>();
+      // GitHub kept failing on it: measure it anyway, pass B decides.
+      if (l === undefined) {
+        sourcesOf.set(key, new Set(sources));
+        hasXpi.set(key, true);
+        continue;
+      }
       if (!l) {
         unavailable.push(key);
         continue;
@@ -198,7 +220,8 @@ export async function runCensus(
     const seeds = await loadSeeds(config.userAgent);
     discovery = { candidates: new Map(), ...seeds, queries: prev.queries };
     for (const r of prev.rows) {
-      if (r.verdict === "repo-unavailable") carriedRows.push(r);
+      if (r.verdict === "repo-unavailable" || (onlyKeys && !onlyKeys.has(r.repo.toLowerCase())))
+        carriedRows.push(r);
       else sourcesOf.set(r.repo.toLowerCase(), new Set(r.sources));
     }
     base = {
@@ -211,8 +234,18 @@ export async function runCensus(
   }
   const selected = [...sourcesOf.keys()].sort();
 
-  const rows = await measureRepos(gh, selected, sourcesOf, discovery, zv, now, log);
+  const skipped: string[] = [];
+  const rows = await measureRepos(gh, selected, sourcesOf, discovery, zv, now, log, skipped);
   rows.push(...carriedRows);
+  // A repo GitHub kept failing on keeps its last row rather than reading as "no release".
+  if (skipped.length) {
+    const last = await lastRows(outDir);
+    for (const key of skipped) {
+      const row = last.get(key);
+      if (row) rows.push(row);
+      log(`  ${key}: not measured, ${row ? "kept its last row" : "left out until the next run"}`);
+    }
+  }
 
   rows.sort((a, b) => (b.stars ?? -1) - (a.stars ?? -1) || a.repo.localeCompare(b.repo, "en"));
 
@@ -249,18 +282,22 @@ export async function runCensus(
 /**
  * Full metadata, download counts, the manifests inside each latest release's .xpi files and the
  * contributor count, as census rows. Shared by the census and by single submissions (submit/run.ts).
+ * A repository GitHub kept failing on gets no row; its key goes in `skipped`.
  */
 export async function measureRepos(
   gh: GitHub,
-  keys: string[],
+  allKeys: string[],
   sourcesOf: Map<string, Set<SourceId>>,
   discovery: Discovery,
   zv: ZoteroVersions,
   now: number,
   log: (msg: string) => void,
+  skipped: string[] = [],
 ): Promise<CensusRow[]> {
   log("Pass B: full metadata and download counts");
-  const full = await fetchFull(gh, keys, log);
+  const full = await fetchFull(gh, allKeys, log);
+  const keys = allKeys.filter((k) => full.has(k));
+  skipped.push(...allKeys.filter((k) => !full.has(k)));
 
   log("Reading manifests from release files (HTTP range requests)");
   const manifestCache = new DiskCache(join(loadConfig().cacheDir, "manifests"));

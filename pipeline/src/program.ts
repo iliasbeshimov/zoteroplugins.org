@@ -107,9 +107,17 @@ export function buildProgram(): Command {
         .choices(["full", "refresh"])
         .default("full"),
     )
-    .action(async (opts: { mode: "full" | "refresh" }) => {
+    .option(
+      "--only <repos>",
+      "with --mode refresh: re-measure only these owner/name repos (comma-separated), keeping every other row",
+    )
+    .action(async (opts: { mode: "full" | "refresh"; only?: string }) => {
       const { runCensus } = await import("./census/run.ts");
-      await runCensus(opts.mode);
+      await runCensus(
+        opts.mode,
+        console.log,
+        opts.only?.split(",").map((r) => r.trim()),
+      );
     });
 
   program
