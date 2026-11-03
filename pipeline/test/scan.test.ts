@@ -413,6 +413,25 @@ describe("evidence snippets never republish a hard-coded key", () => {
       'this.apiKey = \\"[redacted key]\\";',
     );
   });
+  it("redacts a key in a URL pattern built at runtime", () => {
+    // Built at runtime so GitHub secret scanning doesn't flag the fixture.
+    const key = `AIzaSy${"B".repeat(33)}`;
+    const r = scan({
+      "content/index.js": `
+        async function search(q) {
+          return await fetch(\`https://customsearch.googleapis.com/customsearch/v1?q=\${encodeURIComponent(q)}&key=${key}&num=3\`);
+        }
+        function regional(region) { return \`https://\${region}.example.com/v1?key=${key}\`; }`,
+    });
+    const patterns = r.analysis.network.dynamicUrls.map((d) => d.pattern);
+    expect(patterns).toEqual(
+      expect.arrayContaining([
+        "https://customsearch.googleapis.com/customsearch/v1?q=<expr>&key=[redacted key]&num=3",
+        "https://<expr>.example.com/v1?key=[redacted key]",
+      ]),
+    );
+    expect(JSON.stringify(r)).not.toContain(key);
+  });
   it("leaves ordinary code alone", () => {
     const code = 'fetch("https://api.openai.com/v1/chat/completions", { method: "POST" })';
     expect(redactSecrets(code)).toBe(code);

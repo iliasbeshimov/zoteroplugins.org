@@ -743,7 +743,7 @@ function matchingBrace(text: string, open: number): number {
  * repo). Replace anything shaped like a credential so we never republish someone's key; the
  * analysis itself still runs on the raw text.
  */
-const SECRET_PATTERNS: RegExp[] = [
+export const SECRET_PATTERNS: readonly RegExp[] = [
   /AIza[0-9A-Za-z_-]{35}/g, // Google API keys
   /sk-ant-[A-Za-z0-9_-]{20,}/g, // Anthropic
   /sk-(?:proj-)?[A-Za-z0-9_-]{32,}/g, // OpenAI-style keys (also DeepSeek, SiliconFlow, Moonshot...)

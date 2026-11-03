@@ -18,7 +18,7 @@ import {
   type HostTable,
   hostOf,
 } from "./hosts.ts";
-import { type LibraryEvidence, SourceFile } from "./text.ts";
+import { type LibraryEvidence, redactSecrets, SourceFile } from "./text.ts";
 
 /**
  * Static analysis of one .xpi. Deterministic for a given file and ANALYZER_VERSION: the same
@@ -4373,8 +4373,11 @@ function analyzeJs(
           if (text === "@mozilla.org/xmlextras/xmlhttprequest;1") col.api("xhr", hit(n));
         }
         if (n.type === "TemplateLiteral" && text.match(/:\/\/([^/]*)/)?.[1]?.includes(EXPR)) {
-          // Host built at runtime, e.g. `https://${region}.example.com/…`
-          col.dynamicUrls.set(text.replaceAll(EXPR, "<expr>").slice(0, 200), [hit(n)]);
+          // Host built at runtime, e.g. `https://${region}.example.com/…`. The pattern is published,
+          // so a key in its query string is redacted (before truncating, which could hide its shape).
+          col.dynamicUrls.set(redactSecrets(text.replaceAll(EXPR, "<expr>")).slice(0, 200), [
+            hit(n),
+          ]);
         }
         // A template can get its scheme and host from a constant: `${API_BASE}/v1/chat`.
         if (
@@ -5858,7 +5861,7 @@ function analyzeJs(
       }
     const pattern = textOf(arg);
     if (pattern?.includes(EXPR) || (pattern === null && arg.type !== "Literal")) {
-      const shown = (pattern ?? EXPR).replaceAll(EXPR, "<expr>").slice(0, 200);
+      const shown = redactSecrets((pattern ?? EXPR).replaceAll(EXPR, "<expr>")).slice(0, 200);
       if (shown !== "<expr>")
         col.dynamicUrls.set(shown, [...(col.dynamicUrls.get(shown) ?? []), hit(k.n)]);
     }
