@@ -1,0 +1,546 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-reading-partner",
+ "repo": "grahmgaydos/zotero-reading-partner",
+ "version": "0.1.2",
+ "tag": "v0.1.2",
+ "releaseAuthor": "grahmgaydos",
+ "publishedAt": "2026-11-03T11:41:22Z",
+ "prerelease": false,
+ "asset": {
+  "name": "reading-partner-0.1.2.xpi",
+  "url": "https://github.com/grahmgaydos/zotero-reading-partner/releases/download/v0.1.2/reading-partner-0.1.2.xpi",
+  "size": 95117,
+  "sha256": "2139f5ad4a87cd9076ed951b42c810e34d0cdf62b0143838f7b9804a9a84e057",
+  "githubAssetId": 705395666,
+  "uploader": "grahmgaydos",
+  "uploadedAt": "2026-11-03T11:41:00Z",
+  "fetchedAt": "2026-11-03T20:31:03.178Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "reading-partner@grahmgaydos.dev",
+  "name": "Reading Partner",
+  "version": "0.1.2",
+  "description": "A dialogue partner in the PDF reader's side pane. It reads the paper alongside your highlights and notes, and lets you pin points from the conversation onto passages as highlight comments.",
+  "homepageUrl": "https://github.com/grahmgaydos/zotero-reading-partner",
+  "updateUrl": "https://raw.githubusercontent.com/grahmgaydos/zotero-reading-partner/main/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "11.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2069,
+   "sha256": "1c54b34621cfc3abcc93b4b17c42709d5e42ebe5c81586e726cf49c927b6a240"
+  },
+  {
+   "path": "content/icon.svg",
+   "size": 604,
+   "sha256": "81f8d204ef71f004268f31a1395bfb073cf440966175adb2ea1c4fbbadf046ed"
+  },
+  {
+   "path": "content/index.js",
+   "size": 294713,
+   "sha256": "110f2ae893e1ad1163a96c8dc14bffdc2f004fb94b051804b5644f5265d6b3a2"
+  },
+  {
+   "path": "content/prefs-page.js",
+   "size": 3177,
+   "sha256": "deaedfa7c2d968f8af3a26b504b5d11c0e730804540bc2cc1349784406d548f7"
+  },
+  {
+   "path": "content/prefs.xhtml",
+   "size": 6708,
+   "sha256": "2c40517d406df1db8c03eba98aa1b7f808d267541f336c474127d7a203075020"
+  },
+  {
+   "path": "locale/en-US/reading-partner.ftl",
+   "size": 125,
+   "sha256": "0e253308993ebc9a569bb5cbf3d5746dd2bd986e9ec4ab357a5b60d3ec459389"
+  },
+  {
+   "path": "manifest.json",
+   "size": 743,
+   "sha256": "a3bfa52ace2452b0be9b8bf570061adcd43daafacfc8e36c43c1e3c29464e76f"
+  },
+  {
+   "path": "prefs.js",
+   "size": 1113,
+   "sha256": "9e8b830b7aa037c9f150ce4317a62c5115e7d4ba2070cba54c990077ecc31ddd"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-03T20:31:03.178Z",
+  "input": {
+   "slug": "zotero-reading-partner",
+   "version": "0.1.2",
+   "sha256": "2139f5ad4a87cd9076ed951b42c810e34d0cdf62b0143838f7b9804a9a84e057"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "content/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/reading-partner.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 307780,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 243,
+       "column": 22,
+       "snippet": "const res = await fetch(url, { method: \"POST\", headers, body: JSON.stringify(body), signal });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.anthropic.com",
+     "category": "llm-provider",
+     "provider": "Anthropic",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 203,
+       "column": 80,
+       "snippet": "const url = prefs.endpoint.includes(\"api.anthropic.com\") ? prefs.endpoint : \"https://api.anthropic.com/v1/messages\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/prefs-page.js",
+       "line": 46,
+       "column": 27,
+       "snippet": "anthropic: { endpoint: \"https://api.anthropic.com/v1/messages\", model: \"claude-sonnet-5-5\" },",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openai.com",
+     "category": "llm-provider",
+     "provider": "OpenAI",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/prefs-page.js",
+       "line": 45,
+       "column": 24,
+       "snippet": "openai: { endpoint: \"https://api.openai.com/v1/chat/completions\", model: \"\" },",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "localhost",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 5,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/index.js",
+       "line": 57,
+       "column": 32,
+       "snippet": "endpoint: get(\"endpoint\", \"http://localhost:11434/v1/chat/completions\"),",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/prefs-page.js",
+       "line": 43,
+       "column": 24,
+       "snippet": "ollama: { endpoint: \"http://localhost:11434/v1/chat/completions\", model: \"llama3.1:8b\" },",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/prefs-page.js",
+       "line": 44,
+       "column": 26,
+       "snippet": "lmstudio: { endpoint: \"http://localhost:1234/v1/chat/completions\", model: \"\" },",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 7,
+       "column": 0,
+       "snippet": "pref(\"extensions.reading-partner.endpoint\", \"http://localhost:11434/v1/chat/completions\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 7,
+       "column": 44,
+       "snippet": "pref(\"extensions.reading-partner.endpoint\", \"http://localhost:11434/v1/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.reading-partner.endpoint",
+     "defaultValue": "http://localhost:11434/v1/chat/completions",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/prefs.xhtml",
+       "line": 37,
+       "column": 50,
+       "snippet": "<html:input type=\"text\" id=\"rpp-endpoint\" preference=\"extensions.reading-partner.endpoint\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 7,
+       "column": 0,
+       "snippet": "pref(\"extensions.reading-partner.endpoint\", \"http://localhost:11434/v1/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 9,
+      "column": 0,
+      "snippet": "pref(\"extensions.reading-partner.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.reading-partner.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 21,
+    "inVendoredCodeOnly": false,
+    "codeKey": "bb34aacb1c1d",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 839,
+      "column": 19,
+      "snippet": "if (!await IOUtils.exists(path)) return;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 840,
+      "column": 27,
+      "snippet": "const text = await IOUtils.readUTF8(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 846,
+      "column": 16,
+      "snippet": "await IOUtils.move(path, aside);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 869,
+      "column": 14,
+      "snippet": "await IOUtils.makeDirectory(PathUtils.parent(path), { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 870,
+      "column": 14,
+      "snippet": "await IOUtils.writeUTF8(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 1036,
+      "column": 15,
+      "snippet": "if (!await IOUtils.exists(vault)) throw new Error(`Vault folder not found: ${vault}`);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 1080,
+      "column": 10,
+      "snippet": "await IOUtils.makeDirectory(target.dir, { createAncestors: true, ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 1105,
+      "column": 12,
+      "snippet": "await IOUtils.writeUTF8(path, insertEntry(await IOUtils.readUTF8(path), entry, today), {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 1105,
+      "column": 54,
+      "snippet": "await IOUtils.writeUTF8(path, insertEntry(await IOUtils.readUTF8(path), entry, today), {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/index.js",
+      "line": 1135,
+      "column": 14,
+      "snippet": "await IOUtils.writeUTF8(path, content, { mode: \"create\" });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/grahmgaydos/zotero-reading-partner/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/grahmgaydos/zotero-reading-partner/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-03T20:31:03.178Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the grahmgaydos account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-03T20:31:03.178Z",
+  "appliesTo": {
+   "slug": "zotero-reading-partner",
+   "version": "0.1.2",
+   "sha256": "2139f5ad4a87cd9076ed951b42c810e34d0cdf62b0143838f7b9804a9a84e057"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "0f10f8cc781f17a9a163cf792fad9d3d9152f3b7a1372930abae717182a767f1"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.anthropic.com",
+       "api.openai.com"
+      ],
+      "unconfirmed": [
+       "api.openai.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-03T11:41:22Z",
+    "lastCommitAt": "2026-11-03T11:41:27Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

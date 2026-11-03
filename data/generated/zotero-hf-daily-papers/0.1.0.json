@@ -98,8 +98,8 @@
  ],
  "analysis": {
   "schemaVersion": 1,
-  "analyzerVersion": "0.8.0",
-  "analyzedAt": "2026-10-04T13:06:20.885Z",
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-03T20:31:03.178Z",
   "input": {
    "slug": "zotero-hf-daily-papers",
    "version": "0.1.0",
@@ -160,7 +160,68 @@
     "files": []
    },
    "suspiciousUnicode": [],
-   "vendoredLibraries": []
+   "vendoredLibraries": [
+    {
+     "name": "zotero-plugin-toolkit",
+     "files": [
+      "content/scripts/hfdailypapers.js"
+     ],
+     "identifiedBy": "hash",
+     "match": "partial",
+     "unmatched": [
+      {
+       "file": "content/scripts/hfdailypapers.js",
+       "line": 5,
+       "snippet": "terfaces.nsIClipboard.kGlobalClipboard)}catch(e){if(this.filePath&&Zotero.isMac)Zotero.Utilities.Internal.exec(\"/usr/bin/osascript\",[\"-e\",`set the clipboard to POSIX file \"${this.filePath}\"`]);else th"
+      },
+      {
+       "file": "content/scripts/hfdailypapers.js",
+       "line": 253,
+       "snippet": "f-reset-rules-confirm\"))&&(n.value=Fe,C(\"topicRules\",Fe),await l()))()})}var jt=\"https://huggingface.co/api\",Ze=`${jt}/daily_papers`,qt=2e4,oe=2,Gt=1e3,Vt=/^\\d{4}-\\d{2}-\\d{2}$/,E=class extends Error{c"
+      },
+      {
+       "file": "content/scripts/hfdailypapers.js",
+       "line": 253,
+       "snippet": "st failed`);for(let i=0;i<=oe;i++){i>0&&await Xt(Gt*2**(i-1));let s;try{s=await Zotero.HTTP.request(\"GET\",e,{responseType:\"json\",timeout:qt})}catch(r){if(n=new E(`${t}: request failed (${Yt(r)}) ${e}`"
+      },
+      {
+       "file": "content/scripts/hfdailypapers.js",
+       "line": 253,
+       "snippet": "po||void 0,projectPage:e.projectPage||void 0,numComments:t,thumbnail:n,paperUrl:`https://huggingface.co/papers/${e.id}`}}async function G(e){if(e&&!We(e))throw new E(`Invalid date \"${e}\" for daily_pap"
+      },
+      {
+       "file": "content/scripts/hfdailypapers.js",
+       "line": 255,
+       "snippet": "me:t.slice(0,-1).join(\" \"),lastName:t[t.length-1]}}async function dn(e,t){let n=`https://arxiv.org/pdf/${e.arxivId}`;await Zotero.Attachments.importFromURL({url:n,parentItemID:t,contentType:\"applicati"
+      },
+      {
+       "file": "content/scripts/hfdailypapers.js",
+       "line": 255,
+       "snippet": "gth-1]}}async function dn(e,t){let n=`https://arxiv.org/pdf/${e.arxivId}`;await Zotero.Attachments.importFromURL({url:n,parentItemID:t,contentType:\"application/pdf\",title:\"Full Text PDF\"})}async funct"
+      },
+      {
+       "file": "content/scripts/hfdailypapers.js",
+       "line": 255,
+       "snippet": "${e.arxivId}`),n.setField(\"DOI\",`10.48550/arXiv.${e.arxivId}`),n.setField(\"url\",`https://arxiv.org/abs/${e.arxivId}`),n.setField(\"extra\",ln(e)),n.setTags(He(e));let i=await Xe(e,t);return i.length>0&&"
+      },
+      {
+       "file": "content/scripts/hfdailypapers.js",
+       "line": 255,
+       "snippet": "h}}function k(e){return e&&!Components.utils.isDeadWrapper(e)&&!e.closed}var hn=`chrome://${x.addonRef}/content/papers.xhtml`,fn=\"chrome,centerscreen,resizable=yes,dialog=no,width=1000,height=740\";asy"
+      },
+      {
+       "file": "content/scripts/hfdailypapers.js",
+       "line": 255,
+       "snippet": ":\"click\",listener:()=>Zotero.launchURL(o)}]}))};return s(h(\"window-link-arxiv\"),`https://arxiv.org/abs/${t.arxivId}`),t.githubRepo&&s(h(\"window-link-github\"),bn(t.githubRepo)),t.projectPage&&s(h(\"wind"
+      },
+      {
+       "file": "content/scripts/hfdailypapers.js",
+       "line": 255,
+       "snippet": "-link-project\"),t.projectPage),i}function bn(e){return/^https?:\\/\\//i.test(e)?e:`https://github.com/${e}`}function yn(e){let t=e.authors;if(t.length===0)return\"\";let n=t.slice(0,5).join(\", \");return t"
+      }
+     ]
+    }
+   ]
   },
   "network": {
    "apis": [
@@ -316,13 +377,17 @@
     }
    ],
    "configurableEndpoints": [],
-   "hostsTableVersion": "2026.09.13"
+   "hostsTableVersion": "2026.10.01"
   },
   "capabilities": [
    {
     "id": "clipboard",
     "occurrences": 3,
     "inVendoredCodeOnly": false,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "ec2d38734600",
     "evidence": [
      {
       "kind": "code",
@@ -330,7 +395,7 @@
       "line": 5,
       "column": 2880,
       "snippet": "Components.interfaces.nsITransferable),this.clipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(e",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -338,7 +403,7 @@
       "line": 5,
       "column": 2926,
       "snippet": "ipboardService=Components.classes[\"@mozilla.org/widget/clipboard;1\"].getService(Components.interfaces.nsIClipboard),this.transferable.init(null)}addText(e,t=\"text/plain\"){let n=Components.classes[\"@mo",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -359,7 +424,11 @@
    {
     "id": "credential-storage",
     "occurrences": 2,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "f3a1eff10821",
     "evidence": [
      {
       "kind": "code",
@@ -367,7 +436,7 @@
       "line": 1,
       "column": 444,
       "snippet": "DebugBridgePassword(t){this._disableDebugBridgePassword=t}get password(){return y.getZotero().Prefs.get(z.passwordPref,!0)}set password(t){y.getZotero().Prefs.set(z.passwordPref,t,!0)}constructor(){th",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -375,7 +444,7 @@
       "line": 1,
       "column": 503,
       "snippet": "et password(){return y.getZotero().Prefs.get(z.passwordPref,!0)}set password(t){y.getZotero().Prefs.set(z.passwordPref,t,!0)}constructor(){this._disableDebugBridgePassword=!1,this.initializeDebugBridg",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -390,7 +459,11 @@
    {
     "id": "dynamic-code",
     "occurrences": 1,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "5ae9c55f0e8d",
     "evidence": [
      {
       "kind": "code",
@@ -398,7 +471,7 @@
       "line": 4,
       "column": 166,
       "snippet": "word,a){if(o.run)try{let c=Object.getPrototypeOf(async()=>{}).constructor;await new c(\"Zotero,window\",o.run)(i,s)}catch(c){i.debug(c),s.console.log(c)}if(o.file)try{Services.scriptloader.loadSubScript",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -410,7 +483,11 @@
    {
     "id": "filesystem",
     "occurrences": 2,
-    "inVendoredCodeOnly": false,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin-toolkit"
+    ],
+    "codeKey": "13a035bbc646",
     "evidence": [
      {
       "kind": "code",
@@ -418,7 +495,7 @@
       "line": 5,
       "column": 4030,
       "snippet": "is.transferable.setTransferData(l,a,0),this}addFile(e){let t=Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);return t.initWithPath(e),this.transferable.ad",
-      "inVendoredCode": false
+      "inVendoredCode": true
      },
      {
       "kind": "code",
@@ -426,7 +503,7 @@
       "line": 5,
       "column": 4074,
       "snippet": "addFile(e){let t=Components.classes[\"@mozilla.org/file/local;1\"].createInstance(Components.interfaces.nsIFile);return t.initWithPath(e),this.transferable.addDataFlavor(\"application/x-moz-file\"),this.t",
-      "inVendoredCode": false
+      "inVendoredCode": true
      }
     ],
     "details": {
@@ -443,6 +520,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "eb9e71d4e966",
     "evidence": [
      {
       "kind": "code",
@@ -467,6 +545,7 @@
     "libraries": [
      "zotero-plugin-toolkit"
     ],
+    "codeKey": "b4beeaa2bc71",
     "evidence": [
      {
       "kind": "code",
@@ -523,19 +602,19 @@
  "dataFlow": null,
  "trustCard": {
   "schemaVersion": 1,
-  "rulesVersion": "0.6.1-preview",
-  "computedAt": "2026-10-04T13:06:20.885Z",
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-03T20:31:03.178Z",
   "appliesTo": {
    "slug": "zotero-hf-daily-papers",
    "version": "0.1.0",
    "sha256": "0cb30e9de0afa70be263b3de975f35a5947b50d4405c66f2e36644a9b2c321db"
   },
   "inputs": {
-   "analyzerVersion": "0.8.0",
+   "analyzerVersion": "0.13.0",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.09.13",
-   "currentZotero": "10.0.5",
-   "inputHash": "cf128064f62161fd3ebcb724cc9a0d865c9c21369791e72a5a4f813e4c41bd6b"
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "f806354c2af3f5199d88cf1fb2eb2c9ee7008d2ec175e1f9b21f915485617d5e"
   },
   "facets": {
    "sourceTransparency": {
@@ -606,21 +685,6 @@
       "id": "clipboard",
       "label": "Uses the clipboard",
       "concern": "low"
-     },
-     {
-      "id": "credential-storage",
-      "label": "Stores API keys or passwords",
-      "concern": "low"
-     },
-     {
-      "id": "dynamic-code",
-      "label": "Runs code it assembles while running",
-      "concern": "low"
-     },
-     {
-      "id": "filesystem",
-      "label": "Works with files on your computer",
-      "concern": "low"
      }
     ],
     "concern": "medium",
@@ -637,12 +701,12 @@
    "maintenance": {
     "status": "active",
     "lastReleaseAt": "2026-08-21T14:33:34Z",
-    "lastCommitAt": "2026-08-21T14:30:38Z",
+    "lastCommitAt": "2026-10-22T14:07:36Z",
     "concern": "none"
    },
    "compatibility": {
     "current": {
-     "zoteroVersion": "10.0.5",
+     "zoteroVersion": "10.0.7",
      "major": 10,
      "status": "incompatible"
     },

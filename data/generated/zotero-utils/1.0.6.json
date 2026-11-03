@@ -1,0 +1,670 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-utils",
+ "repo": "lvansnippenburg/zotero-utils",
+ "version": "1.0.6",
+ "tag": "1.0.6",
+ "releaseAuthor": "lvansnippenburg",
+ "publishedAt": "2026-11-03T16:30:10Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-utils.xpi",
+  "url": "https://github.com/lvansnippenburg/zotero-utils/releases/download/1.0.6/zotero-utils.xpi",
+  "size": 18125,
+  "sha256": "c00cd0f8bd26974744abd51e723e4f6d0f28f2589fbe977060bfb3b9515745a0",
+  "githubAssetId": 706286914,
+  "uploader": "lvansnippenburg",
+  "uploadedAt": "2026-11-03T16:29:42Z",
+  "fetchedAt": "2026-11-03T20:31:03.178Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-utils@vansnippenburg.nl",
+  "name": "Zotero Utils",
+  "version": "1.0.6",
+  "description": "Combined Zotero utilities: annotation translation/export and PDF summarization using Gemini API or a local OpenAI-compatible LLM server",
+  "updateUrl": "https://vansnippenburg.nl/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "11.1.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1425,
+   "sha256": "cf9370955ef52023bb4d94b2fc602d0a82c18ba6f2db9c213a59ad24266d1dd4"
+  },
+  {
+   "path": "chrome/content/preferences.xhtml",
+   "size": 6805,
+   "sha256": "ddda769edabf1d8616379675e452fb8ada56f0867f397c88373e0a88e8297a3a"
+  },
+  {
+   "path": "content/ZoteroUtils.js",
+   "size": 46729,
+   "sha256": "30b7c9525cf441f9e95b68d62c2c099f10eb3d4cdb2463f8cad1ab0221269b9f"
+  },
+  {
+   "path": "license.md",
+   "size": 702,
+   "sha256": "db4bf6ed215d2626b94e85a46efe2e2f76153f30936607d0f4137d6456e7a336"
+  },
+  {
+   "path": "manifest.json",
+   "size": 496,
+   "sha256": "97628405f1ec192310341abee1e6bf6c865c28123390d6bf85821ba3391ea48d"
+  },
+  {
+   "path": "prefs.js",
+   "size": 932,
+   "sha256": "8d3399c1b2f684e047426b1764bbcc60c215f87a139983e32b11a5cca201a916"
+  },
+  {
+   "path": "README.md",
+   "size": 4133,
+   "sha256": "a41ef25b2e9618880d19c38676a2b744c41007ef8ac22173082002a747fa4f4a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.0",
+  "analyzedAt": "2026-11-03T20:31:03.178Z",
+  "input": {
+   "slug": "zotero-utils",
+   "version": "1.0.6",
+   "sha256": "c00cd0f8bd26974744abd51e723e4f6d0f28f2589fbe977060bfb3b9515745a0"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "license.md",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 55891,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/ZoteroUtils.js",
+       "line": 699,
+       "column": 18,
+       "snippet": "xhr = await Zotero.HTTP.request(\"POST\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/ZoteroUtils.js",
+       "line": 768,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"POST\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/ZoteroUtils.js",
+       "line": 896,
+       "column": 20,
+       "snippet": "xhr = await Zotero.HTTP.request(\"POST\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 8000,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/ZoteroUtils.js",
+       "line": 624,
+       "column": 48,
+       "snippet": "const endpoint = (get(\"localEndpoint\") || \"http://127.0.0.1:8000/v1\").trim().replace(/\\/+$/, \"\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 5,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-utils.localEndpoint\", \"http://127.0.0.1:8000/v1\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 5,
+       "column": 46,
+       "snippet": "pref(\"extensions.zotero-utils.localEndpoint\", \"http://127.0.0.1:8000/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "aistudio.google.com",
+     "category": "documentation",
+     "provider": "Google AI Studio (console)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.xhtml",
+       "line": 109,
+       "column": 36,
+       "snippet": "Get an API key from: <a href=\"https://aistudio.google.com/\" target=\"_blank\">https://aistudio.google.com/</a>.",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.xhtml",
+       "line": 109,
+       "column": 82,
+       "snippet": "Get an API key from: <a href=\"https://aistudio.google.com/\" target=\"_blank\">https://aistudio.google.com/</a>.",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "generativelanguage.googleapis.com",
+     "category": "llm-provider",
+     "provider": "Google Gemini",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/ZoteroUtils.js",
+       "line": 635,
+       "column": 44,
+       "snippet": "const endpoint = (get(\"apiEndpoint\") || \"https://generativelanguage.googleapis.com/v1beta/openai\").trim().replace(/\\/+$/, \"\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/ZoteroUtils.js",
+       "line": 741,
+       "column": 16,
+       "snippet": "const url = \"https://generativelanguage.googleapis.com/v1beta/models/\" + model + \":generateContent?key=\" + apiKey;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 11,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-utils.apiEndpoint\", \"https://generativelanguage.googleapis.com/v1beta/openai\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 11,
+       "column": 44,
+       "snippet": "pref(\"extensions.zotero-utils.apiEndpoint\", \"https://generativelanguage.googleapis.com/v1beta/openai\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero-utils.apiEndpoint",
+     "defaultValue": "https://generativelanguage.googleapis.com/v1beta/openai",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.xhtml",
+       "line": 83,
+       "column": 16,
+       "snippet": "preference=\"extensions.zotero-utils.apiEndpoint\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 11,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-utils.apiEndpoint\", \"https://generativelanguage.googleapis.com/v1beta/openai\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero-utils.localEndpoint",
+     "defaultValue": "http://127.0.0.1:8000/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.xhtml",
+       "line": 31,
+       "column": 16,
+       "snippet": "preference=\"extensions.zotero-utils.localEndpoint\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 5,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero-utils.localEndpoint\", \"http://127.0.0.1:8000/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "gemini-endpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.xhtml",
+       "line": 80,
+       "column": 6,
+       "snippet": "<html:input",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "local-endpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "chrome/content/preferences.xhtml",
+       "line": 28,
+       "column": 6,
+       "snippet": "<html:input",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.10.01"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "075806cbce45",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/ZoteroUtils.js",
+      "line": 1123,
+      "column": 25,
+      "snippet": "Components.classes[\"@mozilla.org/widget/clipboardhelper;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/ZoteroUtils.js",
+      "line": 1124,
+      "column": 20,
+      "snippet": ".getService(Components.interfaces.nsIClipboardHelper)",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 7,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-utils.localApiKey\", \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 10,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-utils.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero-utils.apiKey",
+      "extensions.zotero-utils.localApiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 7,
+    "inVendoredCodeOnly": false,
+    "codeKey": "ac8f795588f4",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/ZoteroUtils.js",
+      "line": 534,
+      "column": 27,
+      "snippet": "const data = await IOUtils.read(filePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/ZoteroUtils.js",
+      "line": 555,
+      "column": 27,
+      "snippet": "const data = await IOUtils.read(filePath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/ZoteroUtils.js",
+      "line": 959,
+      "column": 48,
+      "snippet": "const homeDir = Services.dirsvc.get(\"Home\", Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/ZoteroUtils.js",
+      "line": 970,
+      "column": 14,
+      "snippet": "if (await IOUtils.exists(filePath)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/ZoteroUtils.js",
+      "line": 974,
+      "column": 10,
+      "snippet": "await Zotero.File.putContentsAsync(filePath, markdown);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/ZoteroUtils.js",
+      "line": 1295,
+      "column": 41,
+      "snippet": "const osascript = Components.classes[\"@mozilla.org/file/local;1\"].createInstance(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/ZoteroUtils.js",
+      "line": 1296,
+      "column": 6,
+      "snippet": "Components.interfaces.nsIFile,",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "99ab31a23c9d",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/ZoteroUtils.js",
+      "line": 1299,
+      "column": 39,
+      "snippet": "const process = Components.classes[\"@mozilla.org/process/util;1\"].createInstance(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/ZoteroUtils.js",
+      "line": 1300,
+      "column": 6,
+      "snippet": "Components.interfaces.nsIProcess,",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIProcess"
+     ],
+     "programs": [
+      "osascript"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://vansnippenburg.nl/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://vansnippenburg.nl/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-03T20:31:03.178Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the lvansnippenburg account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-03T20:31:03.178Z",
+  "appliesTo": {
+   "slug": "zotero-utils",
+   "version": "1.0.6",
+   "sha256": "c00cd0f8bd26974744abd51e723e4f6d0f28f2589fbe977060bfb3b9515745a0"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.0",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.10.01",
+   "currentZotero": "10.0.7",
+   "inputHash": "c86c1246557c642541be84f361fa73a10567c2f42a33ea020024697fe966a4b6"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "other-host",
+     "label": "Updates come from vansnippenburg.nl",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "generativelanguage.googleapis.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include osascript"
+     },
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-03T16:30:10Z",
+    "lastCommitAt": "2026-11-03T16:28:13Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}
