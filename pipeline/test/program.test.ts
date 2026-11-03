@@ -18,6 +18,7 @@ describe("atlas CLI", () => {
       "census",
       "scan",
       "profile",
+      "grade-log",
       "submit",
       "regress",
       "libs",

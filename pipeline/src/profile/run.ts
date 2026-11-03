@@ -51,6 +51,7 @@ import {
   unclaimedLabel,
   updateHostOf,
 } from "./checks.ts";
+import { updateGradeLog } from "./gradeLog.ts";
 import { detectDocLanguages, linkedReadmeLanguages, uiLocales } from "./languages.ts";
 import { assignSlugs, listingKind, resolveListing } from "./listing.ts";
 import { buildProfileReport } from "./report.ts";
@@ -298,6 +299,7 @@ export async function runProfile(
 
   await writeFile(SLUGS_FILE, `${JSON.stringify(registry, null, 1)}\n`);
   const profiles = await loadAllProfiles();
+  await updateGradeLog(profiles, ctx.now.slice(0, 10), log);
   await writeFile(
     join(paths.generated, "index.json"),
     `${JSON.stringify(profiles.map(indexEntry), null, 1)}\n`,
@@ -1761,7 +1763,7 @@ export async function loadReleaseDocs(
   return out;
 }
 
-async function loadAllProfiles(): Promise<Profile[]> {
+export async function loadAllProfiles(): Promise<Profile[]> {
   const out: Profile[] = [];
   let dirs: string[] = [];
   try {

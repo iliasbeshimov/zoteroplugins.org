@@ -33,3 +33,4 @@ export const documentSchemas = {
   "trust-card": TrustCard,
   "sandbox-record": SandboxRecord,
 } as const;
+export * from "./grade.ts";

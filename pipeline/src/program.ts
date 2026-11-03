@@ -148,6 +148,21 @@ export function buildProgram(): Command {
       },
     );
 
+  program
+    .command("grade-log")
+    .description(
+      "log grade changes since the last run (data/generated/grade-log.json); --rebuild replays git history since launch",
+    )
+    .option("--rebuild", "rebuild the whole log from every committed snapshot of data/generated")
+    .action(async (opts: { rebuild?: boolean }) => {
+      const { loadAllProfiles } = await import("./profile/run.ts");
+      const { rebuildGradeLog, updateGradeLog } = await import("./profile/gradeLog.ts");
+      const profiles = await loadAllProfiles();
+      const today = new Date().toISOString().slice(0, 10);
+      if (opts.rebuild) await rebuildGradeLog(profiles, today);
+      else await updateGradeLog(profiles, today);
+    });
+
   const submit = program
     .command("submit")
     .description("plugins people submit on the site: queue, decide, profile");

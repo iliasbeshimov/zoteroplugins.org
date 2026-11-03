@@ -13,7 +13,10 @@ const plugins = shownPlugins();
 const tries = ["cite in Word", "translate PDFs", "summarise a paper", "find duplicates"];
 const cats = JOBS.map((j) => ({ ...j, n: plugins.filter((p) => p.jobs.includes(j.slug)).length }));
 const top = plugins.filter((p) => p.grade === "A+").slice(0, 6);
-const changes = gradeLog().slice(0, 4);
+// Moves up or down; plugins graded for the first time are in the full log under "New".
+const changes = gradeLog()
+  .filter((c) => c.dir !== "new")
+  .slice(0, 4);
 ---
 
 <Base

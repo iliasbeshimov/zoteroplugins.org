@@ -1,6 +1,13 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import type { PluginProfile } from "@atlas/schema";
+import {
+  becauseClause,
+  becauseOf,
+  GRADE_RANK,
+  type Grade,
+  gradeOf,
+  type PluginProfile,
+} from "@atlas/schema";
 import { JOB_BY_SLUG, jobsFor } from "./jobs.ts";
 import type { SearchDoc } from "./search.ts";
 
@@ -21,7 +28,8 @@ function findData(): string {
 const ROOT = findData();
 const GENERATED = `${ROOT}generated/`;
 
-export type Grade = "A+" | "A" | "B" | "C" | "–";
+export type { Grade };
+export { becauseClause };
 export type Tone = "few" | "rev" | "ser" | "nd";
 export type Level = "low" | "medium" | "high" | "unknown" | "info";
 
@@ -63,7 +71,7 @@ export const GRADES: { g: Grade; word: string; long: string; sub: string; tone: 
   },
 ];
 const G = Object.fromEntries(GRADES.map((x) => [x.g, x])) as Record<Grade, (typeof GRADES)[number]>;
-export const RANK: Record<Grade, number> = { "A+": 4, A: 3, B: 2, C: 1, "–": 0 };
+export const RANK = GRADE_RANK;
 
 export interface Item {
   t: string;
@@ -218,22 +226,6 @@ function fmtSize(bytes: number): string {
   return `${mb < 0.1 ? mb.toFixed(2) : mb < 10 ? mb.toFixed(1) : Math.round(mb)} MB`;
 }
 export const capFirst = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-
-const VERBS = new Set(
-  "Launches Contacts Runs Downloads Sends Installs Uses Loads Keeps Changes Signs Hands Reuses Writes Watches Opens Lets Turns Adds Reads Stores Decrypts Borrows Disables Imports Injects Starts Makes Asks Registers".split(
-    " ",
-  ),
-);
-/** A card reason ("Launches programs on your computer") as the rest of "because …". */
-export function becauseClause(reason: string): string {
-  if (/^Obfuscated code/.test(reason))
-    return reason.replace(/^Obfuscated code/, "its code is obfuscated");
-  if (/^Release file replaced/.test(reason))
-    return reason.replace(/^Release file replaced/, "its release file was replaced");
-  const first = reason.split(/\s/)[0] ?? "";
-  const lower = reason.charAt(0).toLowerCase() + reason.slice(1);
-  return VERBS.has(first) ? `it ${lower}` : lower;
-}
 
 const LANG: Record<string, string> = {
   en: "English",
@@ -391,25 +383,6 @@ const toEv = (what: string, e: CodeEv): Evidence => ({
 
 // ---------- the view model ----------
 
-function gradeOf(p: PluginProfile): Grade {
-  const t = p.trust;
-  if (!t) return "–";
-  switch (t.overall.label) {
-    case "high-concern":
-      return "C";
-    case "review-details":
-      return "B";
-    case "insufficient-data":
-    case "checking":
-      return "–";
-    case "low-concern": {
-      const cur = t.inputs.currentZotero.split(".")[0];
-      const tested = t.tested;
-      return tested?.verdict === "as-described" && tested.zotero.split(".")[0] === cur ? "A+" : "A";
-    }
-  }
-}
-
 function build(
   p: PluginProfile,
   summaries: Record<string, Summary>,
@@ -433,19 +406,7 @@ function build(
   const summary = summaries[p.repoName] ?? summaries[p.repo];
 
   // because / next
-  let because: string;
-  if (grade === "A+")
-    because = "every code check came out low, and our live test in Zotero found nothing unexpected";
-  else if (grade === "A") because = "every code check came out low";
-  else if (t?.overall.label === "checking")
-    because = "we're still checking where its network code sends data";
-  else if (grade === "–")
-    because = p.scan.reason ? becauseClause(p.scan.reason) : "we couldn't analyse its code yet";
-  else {
-    because = reasons[0] ? becauseClause(reasons[0]) : "of the findings below";
-    if (reasons.length > 1)
-      because += `, and ${reasons.length - 1} more finding${reasons.length > 2 ? "s" : ""}`;
-  }
+  const because = becauseOf(p, grade);
   const next =
     grade === "A+"
       ? "Top of the ladder. The A+ lapses if a later release fails a check or the live test."
