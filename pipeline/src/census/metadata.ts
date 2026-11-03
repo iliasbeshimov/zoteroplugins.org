@@ -62,13 +62,15 @@ async function batched<T>(
   fields: string,
   log: (msg: string) => void,
   label: string,
+  /** What to ask for when one repo alone is too big for `fields` (fewer releases). */
+  lighter?: string,
 ): Promise<Map<string, T | null>> {
   const out = new Map<string, T | null>();
-  const run = async (chunk: string[]): Promise<void> => {
+  const run = async (chunk: string[], asked = fields): Promise<void> => {
     const body = chunk
       .map((key, i) => {
         const [owner, name] = key.split("/");
-        return `r${i}: repository(owner: ${lit(owner ?? "")}, name: ${lit(name ?? "")}) { ${fields} }`;
+        return `r${i}: repository(owner: ${lit(owner ?? "")}, name: ${lit(name ?? "")}) { ${asked} }`;
       })
       .join("\n");
     try {
@@ -83,6 +85,9 @@ async function batched<T>(
     } catch (error) {
       // Heavy batches time out or exceed GitHub's limits; split and retry.
       if (chunk.length === 1) {
+        // Hundreds of releases with 20 files each can be too big even alone (bydb/mindgraph-notes),
+        // and giving up would mark the repo unavailable until the next full census.
+        if (lighter && asked !== lighter) return run(chunk, lighter);
         log(`  ${label}: giving up on ${chunk[0]}: ${(error as Error).message}`);
         out.set(chunk[0] as string, null);
         return;
@@ -136,12 +141,12 @@ export async function fetchLight(
 }
 
 const ASSET_FIELDS = "name size downloadCount updatedAt downloadUrl";
-const FULL_FIELDS = `
+const fullFields = (releases: number) => `
   nameWithOwner url stargazerCount forkCount isFork isArchived pushedAt createdAt description
   homepageUrl parent { nameWithOwner } licenseInfo { spdxId }
   repositoryTopics(first: 20) { nodes { topic { name } } }
   defaultBranchRef { target { ... on Commit { committedDate history { totalCount } } } }
-  releases(first: 50, orderBy: {field: CREATED_AT, direction: DESC}) {
+  releases(first: ${releases}, orderBy: {field: CREATED_AT, direction: DESC}) {
     totalCount pageInfo { hasNextPage endCursor }
     nodes { tagName publishedAt isPrerelease isDraft
       releaseAssets(first: 20) { nodes { ${ASSET_FIELDS} } } }
@@ -221,7 +226,7 @@ export async function fetchFull(
   keys: string[],
   log: (msg: string) => void,
 ): Promise<Map<string, RepoFull | null>> {
-  const raw = await batched<FullRaw>(gh, keys, 20, FULL_FIELDS, log, "pass B");
+  const raw = await batched<FullRaw>(gh, keys, 20, fullFields(50), log, "pass B", fullFields(10));
   const out = new Map<string, RepoFull | null>();
   for (const [key, r] of raw) {
     if (!r) {

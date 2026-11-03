@@ -7,7 +7,7 @@ import {
   type ZoteroVersions,
 } from "../src/census/compat.ts";
 import { parseCsv, toCsv } from "../src/census/csv.ts";
-import { fetchLight } from "../src/census/metadata.ts";
+import { fetchFull, fetchLight } from "../src/census/metadata.ts";
 import { maintenanceOf, pickRelease } from "../src/census/run.ts";
 import { repoKeyFromUrl } from "../src/census/sources.ts";
 import {
@@ -447,5 +447,61 @@ describe("batched GitHub queries", () => {
     expect(light.get("gone/repo")).toBeNull();
     expect(light.get("a/one")?.hasXpi).toBe(true);
     expect(batches).toHaveLength(1);
+  });
+
+  it("asks a repo too big on its own for fewer releases instead of giving up on it", async () => {
+    const asked: string[] = [];
+    const gh = {
+      graphql: async (query: string) => {
+        const releases = Number(query.match(/releases\(first: (\d+)/)?.[1]);
+        asked.push(`${releases}`);
+        // bydb/mindgraph-notes: 270 releases of 20 files; 50 of them exceed the limits.
+        if (releases > 20) {
+          return {
+            data: { r0: null },
+            errors: [{ type: "RESOURCE_LIMITS_EXCEEDED", message: "Resource limits exceeded" }],
+          };
+        }
+        const asset = { name: "p.xpi", size: 1, downloadCount: 5, updatedAt: "", downloadUrl: "" };
+        return {
+          data: {
+            r0: {
+              nameWithOwner: "huge/repo",
+              url: "https://github.com/huge/repo",
+              stargazerCount: 1,
+              forkCount: 0,
+              isFork: false,
+              isArchived: false,
+              pushedAt: null,
+              createdAt: "2026-01-01T00:00:00Z",
+              description: null,
+              homepageUrl: null,
+              parent: null,
+              licenseInfo: null,
+              repositoryTopics: { nodes: [] },
+              defaultBranchRef: null,
+              releases: {
+                totalCount: 270,
+                pageInfo: { hasNextPage: false, endCursor: null },
+                nodes: [
+                  {
+                    tagName: "v2",
+                    publishedAt: "2026-11-01T00:00:00Z",
+                    isPrerelease: false,
+                    isDraft: false,
+                    releaseAssets: { nodes: [asset] },
+                  },
+                ],
+              },
+            },
+          },
+          errors: [],
+        };
+      },
+    } as unknown as GitHub;
+    const full = await fetchFull(gh, ["huge/repo"], () => {});
+    expect(asked).toEqual(["50", "10"]);
+    expect(full.get("huge/repo")?.releases[0]?.assets[0]?.name).toBe("p.xpi");
+    expect(full.get("huge/repo")?.releaseCount).toBe(270);
   });
 });
