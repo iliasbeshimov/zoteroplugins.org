@@ -22,6 +22,7 @@ FILES = [
     "content/atlas.css",
     "content/atlas.js",
     "content/atlas.xhtml",
+    "icon.svg",
     "manifest.json",
     "prefs.js",
     "settings.js",

@@ -1,4 +1,13 @@
+<p align="center"><img src="src/icon.svg" width="96" height="96" alt=""></p>
+
 # Zotero Atlas
+
+[![Plugins Atlas grade](https://zoteroplugins.org/badge/zotero-atlas.svg)](https://zoteroplugins.org/p/zotero-atlas)
+[![Release](https://img.shields.io/github/v/release/iliasbeshimov/zotero-atlas?label=release&color=2f6fdb)](https://github.com/iliasbeshimov/zotero-atlas/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/iliasbeshimov/zotero-atlas/total?label=downloads&color=3a9e4a)](https://github.com/iliasbeshimov/zotero-atlas/releases)
+[![Works with Zotero 7 to 11](https://img.shields.io/badge/Zotero-7%20to%2011-cc2936)](https://www.zotero.org/download/)
+[![Reproducible build, attested](https://img.shields.io/badge/build-reproducible%2C%20attested-5b3fc4)](#check-what-you-install)
+[![MIT](https://img.shields.io/github/license/iliasbeshimov/zotero-atlas?color=777)](LICENSE)
 
 A Zotero plugin that finds and installs plugins from [zoteroplugins.org](https://zoteroplugins.org)
 inside Zotero, and keeps an eye on the ones you have. Home: [zoteroatlas.com](https://zoteroatlas.com).
@@ -53,8 +62,8 @@ pipeline as every other plugin's and nothing on its card is edited by hand.
 ## Check what you install
 
 All the plugin's code is in [src/](src/): `bootstrap.js` (what it does), `content/` (the window),
-`settings.xhtml` and `settings.js` (the settings pane), `prefs.js` (the defaults) and
-`manifest.json`. The plugin file is those files zipped as they are, with nothing compiled or bundled:
+`settings.xhtml` and `settings.js` (the settings pane), `prefs.js` (the defaults), `manifest.json`
+and `icon.svg`. The plugin file is those files zipped as they are, with nothing compiled or bundled:
 
 - **Unzip it and compare** (rename the `.xpi` to `.zip` if your computer won't open it): the files
   are exactly the ones in `src/` at that release's tag.
