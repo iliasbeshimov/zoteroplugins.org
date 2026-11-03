@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "slug": "zotero-addons",
+  "version": "11.0.1",
+  "sha256": "a89d00d059c37361da10bf3a8414d89fec99e74aabebecc6afc3cd15998aa61f",
+  "codeKey": "44feed77c979",
+  "reviewedAt": "2026-11-03",
+  "method": "Read from the release file by Claude Opus 5.5: the zotero://zoteroaddoncollection handler, its execJS action, verifySignature and importKey, and the public key it verifies against; searched the bundle for a private key.",
+  "real": true,
+  "concern": "medium",
+  "rule": "CAP-LINK-CODE-SIGNED",
+  "label": "A zotero:// link (a web page can open one) can make it run code its developer signed, without asking you",
+  "summary": "Its zotero://zoteroaddoncollection link runs JavaScript only when the link carries a signature that matches a public key written into the plugin, so only someone holding the developer's private key can make one; that key isn't in the plugin. Nothing in a signed link expires, so any web page can reopen a link the developer signed once, and the developer can run code in your Zotero without releasing a new version.",
+  "facts": {
+    "handler": "zotero://zoteroaddoncollection, registered at startup (registerConfigScheme in onStartup); actions configSource, install and execJS",
+    "check": "execJS verifies an RSA-PSS (SHA-256, salt 64) signature over the base64 source against publicKeyBase64, an RSA public key written into the plugin, and throws before running anything if it fails",
+    "runs": "new AsyncFunction(source) with Zotero's full privileges, no prompt",
+    "privateKeyInPlugin": false,
+    "replay": "the signature covers only the source: no expiry, nonce or origin check, so a signed link can be reopened by any page",
+    "quotes": [
+      {
+        "file": "content/scripts/zoteroaddons.js",
+        "text": "const verify = await verifySignature("
+      },
+      {
+        "file": "content/scripts/zoteroaddons.js",
+        "text": "throw new Error(\"execJS verify failed\");"
+      },
+      {
+        "file": "content/scripts/zoteroaddons.js",
+        "text": "const f = new AsyncFunction(jsSource);"
+      }
+    ],
+    "notes": "encryptExecJsCommand(source, privateKey) is the developer's signing helper; it takes the private key as an argument and no PEM private key or pkcs8 key material appears in the bundle. The install action (handleInstall) is the separate installs-addons finding."
+  }
+}
