@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy · Zotero Atlas</title>
+  <meta name="description" content="What the Zotero Atlas plugin sends, what it never sends, what the server keeps, and how to turn it off and delete your record.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="canonical" href="https://zoteroatlas.com/privacy">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/icon.svg" alt="">Zotero Atlas</a>
+      <nav>
+        <a href="/#what">What it does</a>
+        <a href="/#why">Why</a>
+        <a href="/#grade">Its grade</a>
+        <a href="/privacy">Privacy</a>
+        <a href="https://github.com/iliasbeshimov/zotero-atlas">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="wrap">
+      <h1>Privacy</h1>
+      <p class="muted">What the plugin sends, what it never sends, what the server keeps, and how to stop. Written to be checked against the code: the plugin is in <a href="https://github.com/iliasbeshimov/zotero-atlas/tree/main/src">src/</a>, the server in <a href="https://github.com/iliasbeshimov/zotero-atlas/tree/main/server">server/</a>.</p>
+
+      <p class="never">Zotero Atlas never sends your library, notes, files, Zotero account, email or anything that identifies you.</p>
+
+      <div class="prose">
+        <h2>The one thing it can send</h2>
+        <p>The first time it runs it asks one question, with <strong>Don't send</strong> as the default. If you choose <strong>Send my plugin list</strong>, it sends one message to zoteroatlas.com:</p>
+<pre><code>{
+  "id": "4c9d3b2e-…",          a random ID made on this computer
+  "atlas": "0.1.0",            this plugin's version
+  "zotero": "7.0.32",          your Zotero version
+  "os": "mac",                 "mac", "windows" or "linux"
+  "event": "weekly",           "first-run", "changed" or "weekly"
+  "plugins": [                 every plugin installed in this Zotero
+    { "id": "zoterostyle@polygon.org", "version": "5.0.0", "enabled": true },
+    …
+  ]
+}</code></pre>
+        <p>It is sent when you turn the choice on, when the list of plugins changes, and once a week. The ID is a random UUID the plugin generates on your computer; it is not derived from your hardware, your Zotero account or anything else, and it is the only thing that links one report to the next. <strong>Show what would be sent</strong>, in Zotero's settings under Zotero Atlas, shows your exact message.</p>
+
+        <h2>What the server keeps</h2>
+        <p>Per reporting install: the random ID, when it first and last reported, the Zotero version, the operating system, the plugin's version, and the plugin list, replaced on every report. Nothing else from the request is kept: no IP address, no user agent, no headers. An install not heard from for 180 days is deleted by a nightly job.</p>
+        <p>Cloudflare, which runs the server, sees requests the way any web host does. We keep none of that, and the server code that decides what is stored is public.</p>
+        <p>What is published: <a href="/api/v1/totals.json">totals</a>, meaning how many installs reported in the last 30 days and how many of them have each plugin. Counts only.</p>
+
+        <h2>Turning it off, and deleting your record</h2>
+        <p>Open Zotero's settings, choose <strong>Zotero Atlas</strong>, and pick <strong>Don't send</strong>. The plugin then asks the server to delete the record for its ID and stops sending. Uninstalling the plugin does the same and also removes everything it stored on your computer.</p>
+
+        <h2>What happens whatever you choose</h2>
+        <ul class="tight">
+          <li>Once a day the plugin fetches the directory's catalogue, a single public file, from <code>raw.githubusercontent.com</code>, the directory's repository on GitHub. The request carries no account and no identifier beyond what any download carries.</li>
+          <li>When you click Install, Zotero downloads the plugin's release file from GitHub, as it would for any plugin you install.</li>
+          <li>Zotero checks this project's GitHub releases for updates to Atlas itself, as it does for every plugin. You can turn that off per plugin in Tools → Plugins.</li>
+          <li>Nothing else is contacted.</li>
+        </ul>
+
+        <h2>What it stores on your computer</h2>
+        <p>Three settings in Zotero's preferences (<code>extensions.zotero-atlas.usage</code>, <code>.id</code>, <code>.state</code>) and a copy of the catalogue at <code>zotero-atlas/catalog.json</code> in your Zotero data directory. Uninstalling removes all of it.</p>
+
+        <h2>This website</h2>
+        <p>zoteroatlas.com sets no cookies, runs no analytics, and loads nothing from third parties: the fonts are your system's, and the scripts and styles are served from here. The one image from elsewhere is the live grade badge, loaded from zoteroplugins.org, which we also run. Cloudflare, which hosts the site, sees requests the way any host does. The front page asks this site's own <code>/api/v1/totals.json</code> for the published counts; nothing about you is sent with that.</p>
+
+        <h2>Questions</h2>
+        <p>Open an issue at <a href="https://github.com/iliasbeshimov/zotero-atlas/issues">github.com/iliasbeshimov/zotero-atlas/issues</a>.</p>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="links">
+        <a href="https://github.com/iliasbeshimov/zotero-atlas">Source</a>
+        <a href="https://github.com/iliasbeshimov/zotero-atlas/issues">Report a problem</a>
+        <a href="/">Home</a>
+        <a href="https://zoteroplugins.org">zoteroplugins.org</a>
+      </div>
+      <p>Zotero Atlas is made by the people who run zoteroplugins.org. It is not affiliated with Zotero or the Corporation for Digital Scholarship. Zotero is a trademark of the Corporation for Digital Scholarship.</p>
+    </div>
+  </footer>
+</body>
+</html>

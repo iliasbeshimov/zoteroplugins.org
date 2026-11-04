@@ -17,7 +17,7 @@ data/
   plugins/     <slug>.yaml: curated, human-edited listing and review data
   generated/   <slug>/plugin.json and <slug>/<version>.json: machine output, committed for audit
 docs/       methodology: how plugins are checked and graded
-zotero-atlas/        the Zotero Atlas plugin: finds and installs plugins from the directory inside Zotero
+zotero-atlas/        the Zotero Atlas plugin: finds and installs plugins from the directory inside Zotero (site/ is zoteroatlas.com)
 install-link-blocker/ the Install Link Blocker plugin
 ```
 

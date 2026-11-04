@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zotero Atlas · the plugin directory, inside Zotero</title>
+  <meta name="description" content="A Zotero plugin that finds and installs plugins from zoteroplugins.org inside Zotero and keeps watching the ones you have. It never sends your library or anything that identifies you.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="canonical" href="https://zoteroatlas.com/">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/icon.svg" alt="">Zotero Atlas</a>
+      <nav>
+        <a href="#what">What it does</a>
+        <a href="#why">Why</a>
+        <a href="#grade">Its grade</a>
+        <a href="/privacy">Privacy</a>
+        <a href="https://github.com/iliasbeshimov/zotero-atlas">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div class="kicker"><img src="/icon.svg" alt="">A plugin for Zotero 7 and later</div>
+      <h1>The plugin directory, inside Zotero.</h1>
+      <p class="lede">Zotero Atlas finds and installs plugins from <a href="https://zoteroplugins.org">zoteroplugins.org</a> without leaving Zotero, installs exactly the file the directory checked, and keeps watching the plugins you have. Free, open source, and graded by the same rules as every other plugin.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/iliasbeshimov/zotero-atlas/releases/latest">Download the latest release</a>
+        <a class="btn" href="https://zoteroplugins.org/p/zotero-atlas">Its card on zoteroplugins.org</a>
+      </div>
+      <p class="meta"><span>Zotero 7 to 11</span><span>MIT licence</span><span>Reproducible build</span><span>Nothing sent unless you say so</span></p>
+      <div class="howto">Download the <code>.xpi</code> file, then in Zotero open <strong>Tools → Plugins</strong>, click the gear and choose <strong>Install Plugin From File</strong>. Afterwards it lives under <strong>Tools → Zotero Atlas</strong>.</div>
+    </div>
+
+    <section id="what">
+      <div class="wrap">
+        <div class="sh"><h2>What it does</h2></div>
+        <div class="cards three">
+          <div class="card">
+            <h3>Find</h3>
+            <p>Lists every plugin in the directory, about 1,500 of them, filtered to your Zotero version by default, with each plugin's grade and the one line that explains it. Search, or pick a job: reading, citing, AI, translation, organising, metadata, interface, files.</p>
+          </div>
+          <div class="card">
+            <h3>Install the file that was checked</h3>
+            <p>Install hands the release file to Zotero's own installer together with the SHA-256 of the file the directory analysed. Zotero refuses the file if it doesn't match, so what you get is exactly what the card describes. A file nobody has analysed can't be installed from here.</p>
+          </div>
+          <div class="card">
+            <h3>Watch what you have</h3>
+            <p>Once a day it compares your installed plugins with the directory and tells you when one drops a grade, when the update Zotero would apply is graded worse than what you have, when Zotero's blocklist blocks it, or when it has stopped working with your Zotero. Where a cleaner version is listed, it offers it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why">
+      <div class="wrap">
+        <div class="sh"><h2>Why we built it</h2></div>
+        <div class="prose">
+          <p>Zotero has no plugin store. People find plugins through a wiki page, forum threads and GitHub, and install files they have no way to check. Most plugins are fine. Some ask for far more than they need, some quietly send data to servers nobody mentioned, and a plugin that was fine when you installed it can change hands or change behaviour in an update you never read.</p>
+          <p><a href="https://zoteroplugins.org">zoteroplugins.org</a> already reads every plugin's latest release and gives it one grade, with the findings in plain language. But a grade on a website helps only at the moment you look. Atlas puts the same grades where the decisions happen: when you choose a plugin, when you install it, and every day after, when an update arrives that you didn't ask to see.</p>
+          <p>We would rather people got their plugins from somewhere that checks them than from a link in a forum thread. That is the whole idea.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="values">
+      <div class="wrap">
+        <div class="sh"><h2>What we hold to</h2></div>
+        <div class="cards">
+          <div class="card">
+            <div class="n">01</div>
+            <h3>Nothing about you</h3>
+            <p>It never sends your library, notes, files, Zotero account, email or anything that identifies you. There is no account, no sign-in, and no identifier that could be tied back to a person.</p>
+          </div>
+          <div class="card">
+            <div class="n">02</div>
+            <h3>Opt in, off by default</h3>
+            <p>The only thing it can ever send is your list of installed plugins, and only if you choose "Send my plugin list". The default answer is "Don't send". Change your mind later and it asks the server to delete the record.</p>
+          </div>
+          <div class="card">
+            <div class="n">03</div>
+            <h3>Install what was checked, not what's there today</h3>
+            <p>Every install carries the hash of the file the directory analysed. If the file at the address has changed since, Zotero refuses it. That closes the gap between "we read this" and "you installed that".</p>
+          </div>
+          <div class="card">
+            <div class="n">04</div>
+            <h3>The same rules as everyone</h3>
+            <p>Atlas is listed and graded on zoteroplugins.org by the same pipeline as the other plugins. Nothing on its card is edited by hand, and the card says who makes it. See <a href="#grade">its grade</a> below.</p>
+          </div>
+          <div class="card">
+            <div class="n">05</div>
+            <h3>Nothing hidden</h3>
+            <p>The plugin is a few plain JavaScript files zipped as they are, with nothing compiled or bundled. Anyone can rebuild it byte for byte from the tagged source, and each release carries GitHub's build attestation. The server's code is public too.</p>
+          </div>
+          <div class="card">
+            <div class="n">06</div>
+            <h3>Public totals</h3>
+            <p>Whatever people choose to send is published as counts: how many installs reported, and how many have each plugin. Everyone can see which plugins people actually use, and nobody can see who.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="grade">
+      <div class="wrap">
+        <div class="sh"><h2>Its own grade: B</h2><span class="mono-sm">Set by the directory's pipeline, not by us</span></div>
+        <div class="grade">
+          <div class="tile">
+            <div class="letter">B</div>
+            <div class="label">Use with care</div>
+            <div class="sub">Read why before installing</div>
+            <div class="ladder"><span>A+</span><span>A</span><span class="on">B</span><span>C</span></div>
+            <a href="https://zoteroplugins.org/p/zotero-atlas"><img src="https://zoteroplugins.org/badge/zotero-atlas.svg" alt="Live grade badge from zoteroplugins.org"></a>
+          </div>
+          <div class="prose">
+            <p>On zoteroplugins.org, Zotero Atlas is graded <strong>B</strong>. Two findings put it there, and both are the point of the plugin:</p>
+            <div class="finding"><span class="tag">medium</span><b>Sends usage data to zoteroatlas.com.</b> Under the directory's rules, a plugin that can send usage data to its developer's server rates "medium", whether the sending is opt-in or not. Atlas can, so it does.</div>
+            <div class="finding"><span class="tag">medium</span><b>Installs other add-ons.</b> Installing software is a powerful capability, and the rules rate it medium however carefully it is done: here from a hash-checked catalogue, after asking you.</div>
+            <div class="ok"><span class="tag">low</span>Everything else came out low: readable code uploaded by the project's own GitHub build, updates from the project's repository, no credentials stored, and it works with the current Zotero.</div>
+            <p>An A would need both findings gone, which means a plugin that neither installs anything nor can report anything. We would rather say plainly what it does and take the B. It is the grade we would give anyone else with the same code.</p>
+            <p>We did not bend the rules for ourselves. The grade is computed by the same pipeline, from the same release file, with the same thresholds as the other plugins, and the card carries a note that the directory's own team makes it. If a rule ever changes, the change applies to every plugin and shows up in the public <a href="https://zoteroplugins.org/log">grade log</a>. The card also notes that Atlas hasn't yet been through the directory's live test in a running Zotero; that test is what separates A+ from A, and doesn't change a B.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <div class="wrap">
+        <div class="sh"><h2>What it sends, and what it never sends</h2><a class="mono-sm" href="/privacy">Full privacy page →</a></div>
+        <p class="never">It never sends your library, notes, files, Zotero account, email or anything that identifies you.</p>
+        <div class="two">
+          <div>
+            <h3>The one thing it can send, if you say so</h3>
+            <p class="muted">Your list of installed plugins, with versions and whether each is enabled, under a random ID made on your computer, plus your Zotero version, operating system and the plugin's version. It goes to zoteroatlas.com when you turn it on, when the list changes, and once a week. This is the whole message:</p>
+<pre><code>{
+  "id": "4c9d3b2e-…",          random, made on your computer
+  "atlas": "0.1.0",
+  "zotero": "7.0.32",
+  "os": "mac",
+  "event": "weekly",
+  "plugins": [
+    { "id": "zoterostyle@polygon.org", "version": "5.0.0", "enabled": true },
+    …
+  ]
+}</code></pre>
+          </div>
+          <div>
+            <h3>Whatever you choose</h3>
+            <ul class="tight muted">
+              <li>It fetches the directory's catalogue once a day from GitHub, the directory's public repository. No account, no identifier.</li>
+              <li>When you click Install, Zotero downloads the plugin file from GitHub, as it would for any plugin.</li>
+              <li>Nothing else is contacted. The server keeps no IP address and no user agent, and deletes an install not heard from in 180 days.</li>
+              <li>"Show what would be sent" in Zotero's settings shows your exact message. Uninstalling removes everything the plugin stored.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="numbers" hidden>
+      <div class="wrap">
+        <div class="sh"><h2>What people send us</h2><span class="mono-sm">Last 30 days · updated <span data-at></span></span></div>
+        <div class="stats">
+          <div class="stat"><div class="v" data-installs>–</div><div class="k">installs that chose to report</div></div>
+          <div class="stat"><div class="v" data-plugins>–</div><div class="k">distinct plugins among them</div></div>
+        </div>
+        <p class="muted" style="margin-top:14px">Counts only. The full totals are published at <a href="/api/v1/totals.json">/api/v1/totals.json</a>.</p>
+      </div>
+    </section>
+
+    <section id="check">
+      <div class="wrap">
+        <div class="sh"><h2>Check what you install</h2></div>
+        <div class="cards three">
+          <div class="card">
+            <h3>Unzip and compare</h3>
+            <p>The <code>.xpi</code> is a zip of the files in the repository's <code>src/</code> folder, unchanged. Rename it to <code>.zip</code> if your computer won't open it and compare with the tagged source.</p>
+          </div>
+          <div class="card">
+            <h3>Rebuild it</h3>
+            <p><code>python3 build.py</code> on the tagged commit makes a byte-identical file on any system. Compare its SHA-256 with the download's.</p>
+          </div>
+          <div class="card">
+            <h3>Check where it was built</h3>
+            <p>Each release is built by the public release workflow from the tagged commit and carries GitHub's attestation: <code>gh attestation verify &lt;file&gt; --repo iliasbeshimov/zotero-atlas</code>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="links">
+        <a href="https://github.com/iliasbeshimov/zotero-atlas">Source</a>
+        <a href="https://github.com/iliasbeshimov/zotero-atlas/issues">Report a problem</a>
+        <a href="/privacy">Privacy</a>
+        <a href="https://zoteroplugins.org">zoteroplugins.org</a>
+        <a href="https://zoteroplugins.org/how-we-grade">How plugins are graded</a>
+      </div>
+      <p>Zotero Atlas is made by the people who run zoteroplugins.org. It is not affiliated with Zotero or the Corporation for Digital Scholarship. Zotero is a trademark of the Corporation for Digital Scholarship. This site sets no cookies and loads nothing from third parties.</p>
+    </div>
+  </footer>
+  <script src="/site.js"></script>
+</body>
+</html>
