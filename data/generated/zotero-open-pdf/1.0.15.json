@@ -1,0 +1,416 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-open-pdf",
+ "repo": "retorquere/zotero-open-pdf",
+ "version": "1.0.15",
+ "tag": "v1.0.15",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-11-03T21:38:25Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-open-pdf-1.0.15.xpi",
+  "url": "https://github.com/retorquere/zotero-open-pdf/releases/download/v1.0.15/zotero-open-pdf-1.0.15.xpi",
+  "size": 44857,
+  "sha256": "bd9bec60c17a5a85c22ed1f2915b6f7c456a486303d1e2a4bd4ad79419fe863b",
+  "githubAssetId": 707181655,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-11-03T21:38:26Z",
+  "fetchedAt": "2026-11-05T11:11:03.965Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-open-pdf@iris-advies.com",
+  "name": "Open PDF for Zotero",
+  "version": "1.0.15",
+  "description": "Open PDF",
+  "updateUrl": "https://github.com/retorquere/zotero-open-pdf/releases/download/release/updates.json",
+  "strictMinVersion": "8.0.1",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 3154,
+   "sha256": "872539b40dfd21f3d5f80a2dcb3565d4ec3bed249801cfb1880f3abf06d92938"
+  },
+  {
+   "path": "icons/epub.svg",
+   "size": 4399,
+   "sha256": "759b7f494a336bf415f03a1e73d4e51a194394d852a7d4fe950ed158a31fb169"
+  },
+  {
+   "path": "icons/pdf.svg",
+   "size": 1325,
+   "sha256": "0d19cde6b93728fcccddf50d57d1494ecbd82dfae4fb8e68d46f7fb2c13619ad"
+  },
+  {
+   "path": "icons/snapshot.svg",
+   "size": 11138,
+   "sha256": "ff53c234af696520511961c7b96d0681ab31463f50b077a8de6d10e1e10a3744"
+  },
+  {
+   "path": "lib.js",
+   "size": 168403,
+   "sha256": "510427f97d25bcbcce2edbc7e5bc790b2345d77922b8921b0ec8be2fa5a170c7"
+  },
+  {
+   "path": "manifest.json",
+   "size": 386,
+   "sha256": "d0905f9ca6136251568ebe04e592420e5ae335f9355c26709e5854326c2c2126"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-05T11:11:03.965Z",
+  "input": {
+   "slug": "zotero-open-pdf",
+   "version": "1.0.15",
+   "sha256": "bd9bec60c17a5a85c22ed1f2915b6f7c456a486303d1e2a4bd4ad79419fe863b"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "icons/epub.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "icons/pdf.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "icons/snapshot.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 171557,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "jose",
+     "files": [
+      "lib.js"
+     ],
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
+    },
+    {
+     "name": "shell-quote",
+     "files": [
+      "lib.js"
+     ],
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
+    },
+    {
+     "name": "zotero-plugin",
+     "files": [
+      "lib.js"
+     ],
+     "identifiedBy": "package-json",
+     "match": "release"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 3,
+     "inVendoredCodeOnly": true,
+     "libraries": [
+      "jose",
+      "zotero-plugin"
+     ],
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib.js",
+       "line": 2901,
+       "column": 27,
+       "snippet": "const response = await fetchImpl(url, {",
+       "inVendoredCode": true
+      },
+      {
+       "kind": "code",
+       "file": "lib.js",
+       "line": 3284,
+       "column": 29,
+       "snippet": "const response = await fetch(`https://filebin.net/${this.name}/${this.filename}`, {",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "filebin.net",
+     "category": "integration",
+     "provider": "Filebin (public file drop)",
+     "flags": [
+      "public-relay",
+      "encrypted-upload"
+     ],
+     "usage": "request",
+     "inVendoredCode": true,
+     "libraries": [
+      "zotero-plugin"
+     ],
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib.js",
+       "line": 3284,
+       "column": 35,
+       "snippet": "const response = await fetch(`https://filebin.net/${this.name}/${this.filename}`, {",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://filebin.net/<expr>/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "lib.js",
+       "line": 3284,
+       "column": 29,
+       "snippet": "const response = await fetch(`https://filebin.net/${this.name}/${this.filename}`, {",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": true,
+    "libraries": [
+     "zotero-plugin"
+    ],
+    "codeKey": "cc9de4c3b14c",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "lib.js",
+      "line": 3269,
+      "column": 36,
+      "snippet": "return new Uint8Array(await IOUtils.read(zipFile.path));",
+      "inVendoredCode": true
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "b4382cf677b6",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "lib.js",
+      "line": 3534,
+      "column": 36,
+      "snippet": "const proc = Components.classes[\"@mozilla.org/process/util;1\"].createInstance(Components.interfaces.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "lib.js",
+      "line": 3534,
+      "column": 82,
+      "snippet": "const proc = Components.classes[\"@mozilla.org/process/util;1\"].createInstance(Components.interfaces.nsIProcess);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIProcess"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/retorquere/zotero-open-pdf/releases/download/release/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/retorquere/zotero-open-pdf/releases/download/release/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-05T11:11:03.965Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.0-preview",
+  "computedAt": "2026-11-05T11:11:03.965Z",
+  "appliesTo": {
+   "slug": "zotero-open-pdf",
+   "version": "1.0.15",
+   "sha256": "bd9bec60c17a5a85c22ed1f2915b6f7c456a486303d1e2a4bd4ad79419fe863b"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.7",
+   "inputHash": "b7a71786de116bcc6c97c588496a8ba06ff8ee3f6ef58c6fd8e641dd237477cb"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "filebin.net"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-03T21:38:25Z",
+    "lastCommitAt": "2026-11-03T21:37:23Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}
