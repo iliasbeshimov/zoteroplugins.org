@@ -17,6 +17,13 @@ const top = plugins.filter((p) => p.grade === "A+").slice(0, 6);
 const changes = gradeLog()
   .filter((c) => c.dir !== "new")
   .slice(0, 4);
+// Written about us. The link's utm_ parameters tell the article's site the visit came from here.
+const press = {
+  name: "Citation Styler",
+  quote: "No advertising, no paid listings, and nobody can buy a better rating.",
+  url: "https://citationstyler.com/en/knowledge/zotero-plugins-atlas-the-directory-that-rates-plugins/",
+};
+const pressLink = `${press.url}?utm_source=zoteroplugins.org&utm_medium=referral&utm_campaign=as-seen-on`;
 ---
 
 <Base
@@ -55,6 +62,15 @@ const changes = gradeLog()
       <a href="/how-we-grade" class="how">How we grade</a>
     </div>
   </div>
+
+  <aside class="press" aria-label="In the press">
+    <a class="who" href={pressLink}>
+      <span class="lab">As seen on</span>
+      <span class="logo" role="img" aria-label={press.name}></span>
+    </a>
+    <q cite={press.url}>{press.quote}</q>
+    <a class="read" href={pressLink}>Read the article</a>
+  </aside>
 
   <Findings plugins={plugins} currentMajor={CURRENT_ZOTERO_MAJOR()} />
 
@@ -213,6 +229,52 @@ const changes = gradeLog()
     font-size: 14px;
     font-weight: 600;
   }
+  .press {
+    box-sizing: border-box;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 30px var(--gutter);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 36px;
+  }
+  .who {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+  .lab {
+    font-size: 15px;
+    color: var(--ink-3);
+  }
+  /* The publisher's logo is white; used as a mask it takes the text colour in both themes. */
+  .logo {
+    display: block;
+    width: 149px;
+    height: 40px;
+    background: var(--ink-2);
+    -webkit-mask: url("/press/citation-styler.png") center / contain no-repeat;
+    mask: url("/press/citation-styler.png") center / contain no-repeat;
+  }
+  .who:hover .logo {
+    background: var(--ink);
+  }
+  .press q {
+    flex: 1 1 360px;
+    min-width: 0;
+    font-size: 21px;
+    line-height: 1.35;
+    font-style: italic;
+    color: var(--ink);
+  }
+  .read {
+    font-size: 16px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
   .wrap {
     max-width: 1280px;
     margin: 0 auto;
@@ -317,6 +379,10 @@ const changes = gradeLog()
     }
     .search input {
       font-size: 17px;
+    }
+    .press q {
+      flex-basis: 100%;
+      font-size: 18px;
     }
     .tries {
       flex-wrap: nowrap;
