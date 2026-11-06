@@ -11,6 +11,7 @@ import SameIdRow from "../../components/SameIdRow.astro";
 import { allPlugins, alternatives, bySlug, type Plugin, sameIdGroupOf, sameIdText } from "../../lib/atlas.ts";
 import { JOB_BY_SLUG } from "@atlas/schema";
 import { REPORT_URL, RESPOND_URL } from "../../lib/links.ts";
+import { similarFloor, similarPlugins } from "../../lib/similar.ts";
 
 export function getStaticPaths() {
   return allPlugins().map((p) => ({ params: { slug: p.slug }, props: { p } }));
@@ -18,7 +19,7 @@ export function getStaticPaths() {
 
 const { p } = Astro.props as { p: Plugin };
 const all = bySlug();
-const alts = alternatives(p, 4);
+const similar = similarPlugins(p);
 const sid = sameIdGroupOf(p);
 const sidText = sid ? sameIdText(sid, p) : null;
 const sidTop = sid ? sid.plugins.filter((x) => x.slug !== p.slug && !x.hidden).slice(0, 3) : [];
@@ -242,8 +243,45 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
         }
       </section>
 
+      {
+        similar.shown.length > 0 && (
+          <section id="similar">
+            <div class="sh"><h2>Other plugins that do this</h2><span class="mono-sm">Matched on what they do</span></div>
+            <p class="muted">For the same job, work with Zotero {p.currentMajor} and graded {similarFloor(p)} or better. Closest match first.</p>
+            <ul class="sim">
+              {similar.shown.map((s) => (
+                <li>
+                  <GradeTag grade={s.p.grade} size="sm" />
+                  <div class="sim-body">
+                    <a href={`/p/${s.p.slug}`} class="sim-name">{s.p.name}</a>
+                    <p class="sim-does">{s.p.oneLiner}</p>
+                    <span class="sim-meta">
+                      {[s.matched && `Matches “${s.matched}”`, `${s.p.downloads} downloads`, s.p.maint, `Zotero ${s.p.worksRange}`].filter(Boolean).join(" · ")}
+                    </span>
+                  </div>
+                  {s.labels.length > 0 && (
+                    <span class="sim-labels">
+                      {s.labels.map((l) => <span class="sim-label">{l}</span>)}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <div class="sim-foot">
+              <a href={`/compare?p=${[p, ...similar.shown.map((s) => s.p)].map((x) => x.slug).join(",")}`} class="btn">
+                Compare all {similar.shown.length + 1} side by side
+              </a>
+              <details class="sim-how">
+                <summary>How we pick these</summary>
+                <p>By how closely what they do matches this plugin, using descriptions and the phrases people search with. Copies and forks of this plugin are listed under Forks and copies instead. No plugin pays to appear here.</p>
+              </details>
+            </div>
+          </section>
+        )
+      }
+
       <section>
-        <h2>Forks and alternatives</h2>
+        <h2>Forks and copies</h2>
         {p.forkOf && <p>Fork of {forkSlug ? <a href={`/p/${forkSlug}`} style="font-weight:650">{p.forkOf.name}</a> : <strong>{p.forkOf.name}</strong>}.</p>}
         {
           sid && sidText && (
@@ -275,27 +313,6 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
           )
         }
         <p class="muted">{p.forksCount ? `${p.forksCount} listed fork${p.forksCount > 1 ? "s" : ""}.` : "No forks listed."}</p>
-        {
-          alts.length > 0 && (
-            <>
-              <span class="eyebrow">Plugins for the same job</span>
-              <ul class="alts">
-                {alts.map((a) => (
-                  <li>
-                    <span class="an">
-                      <a href={`/p/${a.slug}`}>{a.name}</a>
-                      <span>{a.categories.join(" · ")}</span>
-                    </span>
-                    <span class="ag" style={`color:var(--${a.gradeTone}-fg)`}>
-                      <GradeTag grade={a.grade} size="xs" />
-                      {a.gradeLong}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )
-        }
       </section>
 
       <section>
@@ -748,7 +765,7 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     list-style: none;
   }
   .sameid > summary::-webkit-details-marker { display: none; }
-  .sameid .more { display: block; margin-top: 6px; font-weight: 600; color: var(--accent-ink); }
+  .sameid .more { display: block; margin-top: 6px; font-weight: 600; color: var(--accent-fg); }
   .sameid[open] .more { display: none; }
   .sid-body { display: flex; flex-direction: column; gap: 14px; margin-top: 14px; }
   .sid-points { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; line-height: 1.5; }
@@ -767,42 +784,99 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     display: flex;
     padding-top: 2px;
   }
-  .alts {
+  .sim {
     margin: 0;
     padding: 0;
     list-style: none;
     display: flex;
     flex-direction: column;
-    border-top: 1px solid var(--line);
   }
-  .alts li {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 14px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 0;
+  .sim li {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+    gap: 8px 16px;
+    align-items: start;
+    padding: 16px 0;
     border-bottom: 1px solid var(--line);
   }
-  .an {
+  .sim li > :first-child {
+    margin-top: 2px;
+  }
+  .sim-body {
     display: flex;
     flex-direction: column;
+    gap: 4px;
     min-width: 0;
   }
-  .an a {
-    font-weight: 680;
-    color: var(--ink);
+  .sim-name {
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
   }
-  .an span {
-    font-size: 13.5px;
+  .sim-name:hover {
+    text-decoration: underline;
+  }
+  .sim-does {
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  .sim-meta {
+    font: 500 12.5px/1.45 var(--font-mono);
+    color: var(--ink-3);
+    overflow-wrap: anywhere;
+  }
+  .sim-labels {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .sim-label {
+    font-size: 12.5px;
+    font-weight: 650;
+    line-height: 1;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--few-bg);
+    color: var(--few-fg);
+    border: 1px solid var(--few-line);
+    white-space: nowrap;
+  }
+  .sim-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 18px;
+  }
+  .sim-how {
+    font-size: 14.5px;
     color: var(--ink-2);
   }
-  .ag {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    font-size: 14px;
-    font-weight: 620;
+  .sim-how summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--accent-fg);
+  }
+  .sim-how p {
+    margin-top: 8px;
+    max-width: 60ch;
+    line-height: 1.5;
+  }
+  @media (max-width: 720px) {
+    .sim li {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+    .sim-labels {
+      grid-column: 2;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+    .sim-foot .btn {
+      width: 100%;
+    }
   }
   .resp {
     margin: 0;
