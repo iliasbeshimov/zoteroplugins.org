@@ -1,15 +1,20 @@
 ---
-// Google Analytics, through Google Tag Manager, loads only after the visitor accepts. The choice
-// is kept in localStorage, never a cookie. Declining after accepting deletes Google's cookies and
-// reloads the page, so the tag is gone. Any element with data-consent-open reopens the question
-// (the about page's privacy section has one).
+// Google Analytics, through Google Tag Manager. In the EEA, the UK and Switzerland it loads only
+// after the visitor accepts; elsewhere it loads unless the browser sends Global Privacy Control
+// or the visitor has turned it off. The country comes from Cloudflare's /cdn-cgi/trace on this
+// site (from the visitor's IP; only the country is read, and it's kept for the session). If the
+// country can't be told, the visitor is asked.
+//
+// An answer is kept in localStorage, never a cookie. Turning it off while it's loaded deletes
+// Google's cookies and reloads the page, so the tag is gone. Any element with data-consent-open
+// reopens the question (the about page's privacy section has one).
 ---
 
 <div class="consent" id="consent" role="region" aria-label="Analytics" hidden>
   <p>
-    <strong>Google Analytics stays off unless you accept.</strong>
-    If you do, it counts your visit: Google gets your IP address, your browser and the pages you view
-    here, searches included, and sets its cookies. <a href="/about#privacy">More about this</a>
+    <strong data-consent-head>Google Analytics stays off unless you accept.</strong>
+    When it's on, it counts your visit: Google gets your IP address, your browser and the pages you
+    view here, searches included, and sets its cookies. <a href="/about#privacy">More about this</a>
   </p>
   <div class="actions">
     <button type="button" class="btn" data-consent="denied">Decline</button>
@@ -20,28 +25,33 @@
 <script>
   const KEY = "zp-analytics"; // "granted" or "denied"; absent until the visitor answers
   const GTM_ID = "GTM-K65TVR9W";
+  // Where the visitor is asked first: the EEA (with the EU's outermost regions and Åland), the UK
+  // with Gibraltar and the Crown Dependencies, and Switzerland.
+  const ASK = new Set(
+    (
+      "AT BE BG HR CY CZ DK EE FI FR DE GR HU IE IT LV LT LU MT NL PL PT RO SK SI ES SE IS LI NO " +
+      "AX GF GP MQ RE YT MF GB GI GG JE IM CH"
+    ).split(" "),
+  );
   const box = document.getElementById("consent");
+  const head = box?.querySelector<HTMLElement>("[data-consent-head]");
+  let loaded = false;
 
-  const get = () => {
+  const store = (s: Storage, k: string, v?: string) => {
     try {
-      return localStorage.getItem(KEY);
+      if (v === undefined) return s.getItem(k);
+      s.setItem(k, v);
     } catch {
-      return null;
+      // Storage blocked: the answer holds for this page only.
     }
-  };
-  const set = (v: string) => {
-    try {
-      localStorage.setItem(KEY, v);
-    } catch {
-      // Storage blocked: the choice holds for this page only.
-    }
+    return null;
   };
 
-  // Google's own snippet, run only after "Accept".
+  // Google's own snippet, run only when analytics may load.
   function load() {
-    const w = window as unknown as { dataLayer?: unknown[]; zpGtm?: boolean };
-    if (w.zpGtm) return;
-    w.zpGtm = true;
+    const w = window as unknown as { dataLayer?: unknown[] };
+    if (loaded) return;
+    loaded = true;
     const dataLayer = (w.dataLayer = w.dataLayer || []);
     function gtag(..._args: unknown[]) {
       // The Arguments object, not an array: that's what the tag reads.
@@ -65,28 +75,62 @@
     }
   }
 
-  const choice = get();
-  if (choice === "granted") load();
-  else if (choice !== "denied" && box) box.hidden = false;
+  // The visitor's country as Cloudflare sees it, or "" when it can't be told.
+  async function country() {
+    const kept = store(sessionStorage, "zp-loc");
+    if (kept !== null) return kept;
+    let loc = "";
+    try {
+      const r = await fetch("/cdn-cgi/trace", { cache: "no-store" });
+      if (r.ok) loc = /^loc=([A-Z]{2})$/m.exec(await r.text())?.[1] ?? "";
+    } catch {
+      // Not on Cloudflare (local dev) or blocked: ask.
+    }
+    if (loc === "XX" || loc === "T1") loc = ""; // unknown, or Tor
+    store(sessionStorage, "zp-loc", loc);
+    return loc;
+  }
+
+  function ask(text?: string) {
+    if (!box) return;
+    if (head && text) head.textContent = text;
+    box.hidden = false;
+  }
+
+  async function start() {
+    const choice = store(localStorage, KEY);
+    if (choice === "granted") return load();
+    const gpc = (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl;
+    let on = false;
+    if (choice !== "denied" && !gpc) {
+      const loc = await country();
+      if (!loc || ASK.has(loc)) ask();
+      else on = true;
+    }
+    if (on) load();
+    // Not loading: drop any Google cookies left over, such as one the tag rewrote while the page
+    // that turned it off was unloading.
+    else clearCookies();
+  }
+  start();
 
   box?.addEventListener("click", (e) => {
     const v = (e.target as Element).closest<HTMLElement>("[data-consent]")?.dataset.consent;
     if (!v) return;
-    const was = get();
-    set(v);
+    store(localStorage, KEY, v);
     box.hidden = true;
     if (v === "granted") load();
-    else if (was === "granted") {
+    else if (loaded) {
       clearCookies();
       location.reload();
     }
   });
 
   document.addEventListener("click", (e) => {
-    if (!(e.target as Element).closest?.("[data-consent-open]") || !box) return;
+    if (!(e.target as Element).closest?.("[data-consent-open]")) return;
     e.preventDefault();
-    box.hidden = false;
-    box.querySelector<HTMLElement>("button")?.focus();
+    ask(loaded ? "Google Analytics is on." : "Google Analytics is off.");
+    box?.querySelector<HTMLElement>("button")?.focus();
   });
 </script>
 
