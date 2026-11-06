@@ -1,0 +1,142 @@
+---
+// Google Analytics, through Google Tag Manager, loads only after the visitor accepts. The choice
+// is kept in localStorage, never a cookie. Declining after accepting deletes Google's cookies and
+// reloads the page, so the tag is gone. Any element with data-consent-open reopens the question
+// (the about page's privacy section has one).
+---
+
+<div class="consent" id="consent" role="region" aria-label="Analytics" hidden>
+  <p>
+    <strong>Google Analytics stays off unless you accept.</strong>
+    If you do, it counts your visit: Google gets your IP address, your browser and the pages you view
+    here, searches included, and sets its cookies. <a href="/about#privacy">More about this</a>
+  </p>
+  <div class="actions">
+    <button type="button" class="btn" data-consent="denied">Decline</button>
+    <button type="button" class="btn" data-consent="granted">Accept</button>
+  </div>
+</div>
+
+<script>
+  const KEY = "zp-analytics"; // "granted" or "denied"; absent until the visitor answers
+  const GTM_ID = "GTM-K65TVR9W";
+  const box = document.getElementById("consent");
+
+  const get = () => {
+    try {
+      return localStorage.getItem(KEY);
+    } catch {
+      return null;
+    }
+  };
+  const set = (v: string) => {
+    try {
+      localStorage.setItem(KEY, v);
+    } catch {
+      // Storage blocked: the choice holds for this page only.
+    }
+  };
+
+  // Google's own snippet, run only after "Accept".
+  function load() {
+    const w = window as unknown as { dataLayer?: unknown[]; zpGtm?: boolean };
+    if (w.zpGtm) return;
+    w.zpGtm = true;
+    const dataLayer = (w.dataLayer = w.dataLayer || []);
+    function gtag(..._args: unknown[]) {
+      // The Arguments object, not an array: that's what the tag reads.
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    const s = document.createElement("script");
+    s.async = true;
+    s.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`;
+    document.head.append(s);
+  }
+
+  // Google Analytics' cookies, set on this host or the registrable domain.
+  function clearCookies() {
+    const host = location.hostname;
+    const domains = ["", `; domain=${host}`, `; domain=.${host.replace(/^www\./, "")}`];
+    for (const c of document.cookie.split(";")) {
+      const name = c.split("=")[0].trim();
+      if (!/^(_ga|_gid|_gat|_gcl)/.test(name)) continue;
+      for (const d of domains) document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${d}`;
+    }
+  }
+
+  const choice = get();
+  if (choice === "granted") load();
+  else if (choice !== "denied" && box) box.hidden = false;
+
+  box?.addEventListener("click", (e) => {
+    const v = (e.target as Element).closest<HTMLElement>("[data-consent]")?.dataset.consent;
+    if (!v) return;
+    const was = get();
+    set(v);
+    box.hidden = true;
+    if (v === "granted") load();
+    else if (was === "granted") {
+      clearCookies();
+      location.reload();
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!(e.target as Element).closest?.("[data-consent-open]") || !box) return;
+    e.preventDefault();
+    box.hidden = false;
+    box.querySelector<HTMLElement>("button")?.focus();
+  });
+</script>
+
+<style>
+  .consent {
+    position: fixed;
+    z-index: 30;
+    left: 16px;
+    bottom: 16px;
+    max-width: 520px;
+    margin-right: 16px;
+    padding: 16px 18px;
+    background: var(--surface);
+    color: var(--ink-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 14px;
+    box-shadow: var(--shadow-2);
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  .consent[hidden] {
+    display: none;
+  }
+  .consent p {
+    margin: 0;
+  }
+  .consent strong {
+    display: block;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .actions .btn {
+    min-width: 104px;
+  }
+  @media (max-width: 720px) {
+    .consent {
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      margin-right: 0;
+      max-width: none;
+    }
+    .actions .btn {
+      flex: 1;
+    }
+  }
+</style>
