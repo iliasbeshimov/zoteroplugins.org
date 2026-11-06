@@ -72,10 +72,10 @@ const testTip = p.liveTest
       }
     </div>
   </div>
-  <div class="verdict" style={`background:var(--${tone}-bg);border-color:var(--${tone}-line)`}>
+  <div class={`verdict tone-${tone}`}>
     <Tip text={`Atlas grade ${p.grade}: ${gradeSub}.`} class="vhead plain tip-start">
       <GradeTag grade={p.grade} size="sm" />
-      <strong style={`color:var(--${tone}-fg)`}>{p.gradeWord}</strong>
+      <strong>{p.gradeWord}</strong>
     </Tip>
     <span class="why"><span class="muted">because </span>{p.because}</span>
     <span class="ver">{p.version ? `v${p.version} · ` : ""}<Tip text={testTip} class="tip-start">{testedText(p, true)}</Tip></span>
@@ -219,6 +219,34 @@ const testTip = p.liveTest
     font-size: 16px;
     font-weight: 700;
     letter-spacing: -0.01em;
+  }
+  .verdict.tone-few {
+    background: var(--few-bg);
+    border-color: var(--few-line);
+  }
+  .tone-few strong {
+    color: var(--few-fg);
+  }
+  .verdict.tone-rev {
+    background: var(--rev-bg);
+    border-color: var(--rev-line);
+  }
+  .tone-rev strong {
+    color: var(--rev-fg);
+  }
+  .verdict.tone-ser {
+    background: var(--ser-bg);
+    border-color: var(--ser-line);
+  }
+  .tone-ser strong {
+    color: var(--ser-fg);
+  }
+  .verdict.tone-nd {
+    background: var(--nd-bg);
+    border-color: var(--nd-line);
+  }
+  .tone-nd strong {
+    color: var(--nd-fg);
   }
   .why {
     font-size: 13px;

@@ -9,7 +9,7 @@ interface Props {
 const { grade: raw, variant = "tag", size = "sm", brand = "Zotero Plugins" } = Astro.props;
 const TOK: Record<string, string> = { "A+": "ap", A: "a", B: "b", C: "c" };
 const WORD: Record<string, string> = { "A+": "Recommended, tested in Zotero", A: "Recommended", B: "Use with care", C: "Not recommended", "–": "Not graded yet" };
-const SZ: Record<string, [number, number, number]> = { xs: [20, 12, 7], sm: [26, 14, 9], md: [34, 17, 11], lg: [48, 24, 14], xl: [72, 38, 20] };
+const SIZES = ["xs", "sm", "md", "lg", "xl"];
 const LAD: Record<string, [number, number, number, number, number]> = { xs: [18, 11, 48, 3, 6], sm: [18, 11, 48, 3, 6], md: [28, 14, 80, 5, 8], lg: [38, 19, 120, 6, 10], xl: [38, 19, 120, 6, 10] };
 const arrowR = (n: number) => `polygon(0 0,calc(100% - ${n}px) 0,100% 50%,calc(100% - ${n}px) 100%,0 100%)`;
 const arrowL = (n: number) => `polygon(${n}px 0,100% 0,100% 100%,${n}px 100%,0 50%)`;
@@ -17,10 +17,9 @@ const grade = TOK[raw] ? raw : "–";
 const t = TOK[grade];
 const none = !t;
 const aria = none ? "Atlas grade: not graded yet" : `Atlas grade ${grade}: ${WORD[grade]}`;
-const [h, fs, n] = SZ[size] ?? SZ.sm;
-const tagStyle = none
-  ? `height:${h}px;min-width:${Math.round(h * 1.3)}px;padding:0 ${Math.round(h * 0.3)}px;font-size:${fs}px`
-  : `height:${h}px;min-width:${Math.round(h * 1.55)}px;padding:0 ${Math.round(h * 0.3) + n}px 0 ${Math.round(h * 0.3)}px;font-size:${fs}px;background:var(--g-${t});color:var(--g-${t}-on);clip-path:${arrowR(n)}`;
+// The tag's size and colour are classes (gs-<size>, gt-<grade>, defined below) rather than an
+// inline style, since lists render one tag per card.
+const sizeClass = `gs-${SIZES.includes(size) ? size : "sm"}`;
 const [lh, lfs, w0, gap, ln] = LAD[size] ?? LAD.md;
 const rungs = ["A+", "A", "B", "C"].map((g, i) => ({
   g,
@@ -32,7 +31,7 @@ const pointer = `height:${lh + 6}px;padding:0 ${Math.round(lh * 0.4)}px 0 ${ln +
 
 {
   variant === "tag" && (
-    <span role="img" aria-label={aria} class:list={["tag", { none }]} style={tagStyle}>
+    <span role="img" aria-label={aria} class:list={["tag", sizeClass, none ? "none" : `gt-${t}`]}>
       {none ? "–" : grade}
     </span>
   )
@@ -76,6 +75,85 @@ const pointer = `height:${lh + 6}px;padding:0 ${Math.round(lh * 0.4)}px 0 ${ln +
   .tag.none {
     border: 1.5px dashed var(--nd-line);
     color: var(--nd-fg);
+  }
+  /* Sizes: height, font size and arrow depth (xs 20/12/7, sm 26/14/9, md 34/17/11, lg 48/24/14,
+     xl 72/38/20); at least 1.55× the height wide (1.3× when not graded), padded 0.3× the height,
+     plus the arrow on the right. */
+  .tag.gs-xs {
+    height: 20px;
+    min-width: 31px;
+    padding: 0 13px 0 6px;
+    font-size: 12px;
+    clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%);
+  }
+  .tag.none.gs-xs {
+    min-width: 26px;
+    padding: 0 6px;
+    clip-path: none;
+  }
+  .tag.gs-sm {
+    height: 26px;
+    min-width: 40px;
+    padding: 0 17px 0 8px;
+    font-size: 14px;
+    clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%);
+  }
+  .tag.none.gs-sm {
+    min-width: 34px;
+    padding: 0 8px;
+    clip-path: none;
+  }
+  .tag.gs-md {
+    height: 34px;
+    min-width: 53px;
+    padding: 0 21px 0 10px;
+    font-size: 17px;
+    clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 50%, calc(100% - 11px) 100%, 0 100%);
+  }
+  .tag.none.gs-md {
+    min-width: 44px;
+    padding: 0 10px;
+    clip-path: none;
+  }
+  .tag.gs-lg {
+    height: 48px;
+    min-width: 74px;
+    padding: 0 28px 0 14px;
+    font-size: 24px;
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%);
+  }
+  .tag.none.gs-lg {
+    min-width: 62px;
+    padding: 0 14px;
+    clip-path: none;
+  }
+  .tag.gs-xl {
+    height: 72px;
+    min-width: 112px;
+    padding: 0 42px 0 22px;
+    font-size: 38px;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%);
+  }
+  .tag.none.gs-xl {
+    min-width: 94px;
+    padding: 0 22px;
+    clip-path: none;
+  }
+  .tag.gt-ap {
+    background: var(--g-ap);
+    color: var(--g-ap-on);
+  }
+  .tag.gt-a {
+    background: var(--g-a);
+    color: var(--g-a-on);
+  }
+  .tag.gt-b {
+    background: var(--g-b);
+    color: var(--g-b-on);
+  }
+  .tag.gt-c {
+    background: var(--g-c);
+    color: var(--g-c-on);
   }
   .ladder {
     display: inline-grid;

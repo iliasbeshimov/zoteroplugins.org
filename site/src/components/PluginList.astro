@@ -20,6 +20,10 @@ interface Props {
 }
 const { plugins, currentMajor, search = false, compare = false } = Astro.props;
 const cnCount = plugins.filter((p) => p.chineseDocs).length;
+// Each grade's count with no filters on, so the buttons don't change width when the script fills
+// them in (which moved the cards below them once the page had painted).
+const gradeCount: Record<string, number> = {};
+for (const p of plugins) gradeCount[p.grade] = (gradeCount[p.grade] ?? 0) + 1;
 const toggles = [
   ["local", "Can use a local model"],
   ["nokey", "Works without an API key"],
@@ -85,7 +89,7 @@ const versions: [string, string][] = [
         <button type="button" class="gbtn" aria-pressed="false" data-grade-btn={g.g} style={`--on-bg:var(--${g.tone}-bg);--on-bd:var(--${g.tone}-fg)`}>
           <GradeTag grade={g.g} size="xs" />
           {g.g === "A+" ? "Tested in Zotero" : g.word}
-          <span class="n" data-grade-n />
+          <span class="n" data-grade-n>{gradeCount[g.g] ?? 0}</span>
         </button>
       ))
     }
