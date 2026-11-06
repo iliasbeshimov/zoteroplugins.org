@@ -1,0 +1,296 @@
+---
+import Guide from "../layouts/Guide.astro";
+import { allPlugins, CURRENT_ZOTERO_MAJOR, type Plugin, shownPlugins } from "../lib/atlas.ts";
+import { breadcrumb, gradeCounts, modifiedAt, num, PUBLISHER } from "../lib/guides.ts";
+import { SITE } from "../lib/links.ts";
+
+const path = "/are-zotero-plugins-safe";
+const h1 = "Are Zotero plugins safe?";
+const cur = CURRENT_ZOTERO_MAJOR();
+const plugins = shownPlugins();
+const c = gradeCounts();
+const blocked = allPlugins().filter((p) => p.banner).length;
+
+// What plugins reach, from the capability and data checks.
+const has = (id: string) => plugins.filter((p) => p.capIds.includes(id)).length;
+const files = has("filesystem");
+const programs = has("process-launch");
+const online = plugins.filter(
+  (p) => p.dataValue && !["no-network-found", "bundled-library-only"].includes(p.dataValue),
+).length;
+
+// B grades whose only findings are the two links zotero-plugin-toolkit 5 adds.
+const toolkitOnly = plugins.filter((p) => p.grade === "B" && p.toFix.length > 0 && p.toFix.every((t) => t.guide)).length;
+
+/**
+ * The findings that lower grades, grouped the way someone deciding whether to install would ask
+ * about them. Counts are plugins, not findings; a plugin can be in several groups.
+ */
+const GROUPS: { re: RegExp; t: string; why: string; more?: [string, string] }[] = [
+  {
+    re: /zotero:\/\/ link/,
+    t: "A web page can trigger it through a zotero:// link",
+    why: "Web pages can open zotero:// links. Most of these come from zotero-plugin-toolkit 5, a library many plugins are built with. It adds two links the plugin may never use: one installs add-ons without asking, the other runs code after asking. Toolkit 6 removed them.",
+    more: ["/developers/toolkit-6", "How developers remove them"],
+  },
+  {
+    re: /^Launches programs/,
+    t: "Launches programs on your computer",
+    why: "Sometimes that's the job, such as opening a file in another app. The card links to the code that does it.",
+  },
+  {
+    re: /^Updates are set to come from|Updates itself outside/,
+    t: "Its updates could come from someone else",
+    why: "Zotero installs updates from the address a plugin names. If someone else could control that address, or the plugin updates itself outside Zotero's updater, a new version could arrive that nobody has checked.",
+  },
+  {
+    re: /npm or PyPI/,
+    t: "Installs software packages from npm or PyPI",
+    why: "Packages it downloads aren't part of the release we checked. Without a fixed version, what it runs can change on any day.",
+  },
+  {
+    re: /Loads native code|compiled program it ships/,
+    t: "Runs native or compiled code",
+    why: "Compiled code can't be read like the rest of a plugin, so our checks can't see what it does.",
+  },
+  {
+    re: /couldn't tell where|we couldn't identify/,
+    t: "Sends data somewhere we couldn't identify",
+    why: "It contacts a server that isn't a service we could name, or uses the network in a way we couldn't trace.",
+  },
+  {
+    re: /public relay|hosting platform/,
+    t: "Sends data through a public relay or hosting platform",
+    why: "The server isn't run by the developer or a service we could name, so we can't tell who can read what's sent.",
+  },
+  {
+    re: /Zotero's database/,
+    t: "Changes Zotero's database itself",
+    why: "Your whole library is in that database, so we flag plugins that add their own tables to it or write to it directly.",
+  },
+  {
+    re: /local server|other computers on your network/,
+    t: "Runs a server other programs can reach",
+    why: "A local server lets other programs ask the plugin to act. Some don't check where requests come from, so any website you visit could use them.",
+  },
+  {
+    re: /Downloads and runs|Downloads a program/,
+    t: "Downloads and runs a program",
+    why: "What it downloads isn't part of the release we checked.",
+  },
+  {
+    re: /Obfuscated|encrypted code/,
+    t: "Code scrambled or encrypted so nobody can read it",
+    why: "Code made unreadable on purpose can't be checked by anyone. We grade it C.",
+  },
+  {
+    re: /unencrypted/,
+    t: "Sends your text or keys without encryption",
+    why: "Over plain http://, anyone on the network in between can read what's sent.",
+  },
+];
+const groups = GROUPS.map((g) => {
+  const ps = plugins.filter((p) => p.toFix.some((t) => g.re.test(t.t)));
+  return { ...g, n: ps.length, eg: ps[0] as Plugin | undefined };
+})
+  .filter((g) => g.n > 0)
+  .sort((a, b) => b.n - a.n);
+
+const steps: [string, string][] = [
+  ["Look it up here.", "Search for the plugin by name, or by what you want it to do."],
+  ["Read the grade and the line after \"because\".", "That's the most serious finding, and the card links to the file and line it came from."],
+  ["Open \"Where your data goes\".", "It lists the servers we found in the code. It matters most for plugins that read your papers or notes."],
+  ["Check \"Works with\" and when it was last updated.", `A plugin that doesn't list Zotero ${cur} may not load, and one nobody maintains won't get fixes.`],
+  ["Install the version the card names.", "The grade belongs to that release. Each new release is checked again, and grade changes go in the public log."],
+];
+
+const description = `Most are, but check first. Of ${num(c.graded)} Zotero plugins we graded from their code, ${num(c.a)} got an A or A+, ${num(c.b)} a B and ${num(c.c)} a C. What we check and why.`;
+const graph = [
+  {
+    "@type": "Article",
+    "@id": `${SITE}${path}`,
+    url: `${SITE}${path}`,
+    headline: h1,
+    description,
+    about: { "@type": "Thing", name: "Zotero plugins" },
+    dateModified: modifiedAt(path),
+    author: PUBLISHER,
+    publisher: PUBLISHER,
+  },
+  breadcrumb(h1, path),
+];
+---
+
+<Guide title={`${h1} · Zotero Plugins Atlas`} description={description} h1={h1} crumb={h1} graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      Most are, but some aren't, so it's worth checking before you install one. A plugin runs inside Zotero: it can read your library and files, and some send what they read to servers or launch other programs. Of the {num(c.graded)} plugins we've graded, {num(c.a)} got an A or A+, {num(c.b)} a B and {num(c.c)} a C.
+    </p>
+  </Fragment>
+
+  <section>
+    <h2>What the grades mean</h2>
+    <ul class="grades">
+      <li><strong>A or A+ ({num(c.a)})</strong><span>Nothing in the code is more than a low concern. An A+ also behaved as described when we ran it in Zotero {cur} ({num(c.aPlus)} plugins).</span></li>
+      <li><strong>B ({num(c.b)})</strong><span>At least one finding is worth reading before you install. It isn't a verdict that the plugin is unsafe: for {num(toolkitOnly)} of them, the only finding is two zotero:// links added by a library the plugin is built with.</span></li>
+      <li><strong>C ({num(c.c)})</strong><span>We found something serious, such as code scrambled so nobody can check it.</span></li>
+    </ul>
+    <p class="prose small">
+      {num(c.none)} more aren't graded yet{blocked > 0 ? `, and ${num(blocked)} are on Zotero's official blocklist, so Zotero won't install them` : ""}.
+    </p>
+  </section>
+
+  <section>
+    <h2>What a plugin can do</h2>
+    <p class="prose">
+      Among the {num(plugins.length)} plugins we list, {num(files)} work with files on your computer, {num(online)} contact servers on the internet, and {num(programs)} can launch other programs. Most do it because that's their job: a translation plugin has to reach a translation service. Our checks show which plugins do what, and where your data goes.
+    </p>
+  </section>
+
+  <section>
+    <h2>What we check</h2>
+    <p class="prose">
+      We download each plugin's latest release and read its code. Three things set the grade: whether the code can be read, where your data goes, and what powerful capabilities it uses. The single worst finding sets it. For an A+, we also install it in a fresh copy of Zotero and record every server it contacts. <a href="/how-we-grade">How we grade</a> has the details.
+    </p>
+  </section>
+
+  <section>
+    <h2>The problems we find most often</h2>
+    <p class="prose">Among the B and C grades. A plugin can have more than one.</p>
+    <ol class="probs">
+      {
+        groups.map((g) => (
+          <li>
+            <span class="pn">{num(g.n)}</span>
+            <div class="pb">
+              <strong>{g.t}</strong>
+              <span>{g.why}</span>
+              {(g.more || g.eg) && (
+                <span class="pl">
+                  {g.eg && (
+                    <>
+                      For example <a href={`/p/${g.eg.slug}`}>{g.eg.name}</a>
+                    </>
+                  )}
+                  {g.more && <a href={g.more[0]}>{g.more[1]}</a>}
+                </span>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section>
+    <h2>How to check a plugin before you install it</h2>
+    <ol class="steps">
+      {
+        steps.map(([t, d], i) => (
+          <li>
+            <span class="n">{i + 1}</span>
+            <span>
+              <strong>{t}</strong> {d}
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="go">
+      <a href="/browse?grade=A%2B%2CA" class="btn btn-primary">Show only A and A+ plugins</a>
+      <a href="/best" class="btn">The best-graded plugin for each job</a>
+    </div>
+  </section>
+</Guide>
+
+<style>
+  .grades,
+  .probs,
+  .steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    max-width: 780px;
+  }
+  .grades li {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .grades span {
+    color: var(--ink-2);
+  }
+  .probs li {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .pn {
+    font: 700 22px/1.2 var(--font-mono);
+    color: var(--accent-fg);
+  }
+  .pb {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+  .pb strong {
+    font-size: 17px;
+  }
+  .pb > span {
+    color: var(--ink-2);
+  }
+  .pb .pl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    font-size: 14.5px;
+  }
+  .steps {
+    gap: 12px;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 12px;
+    align-items: baseline;
+    font-size: 16.5px;
+    line-height: 1.5;
+  }
+  .steps .n {
+    font: 700 14px/1 var(--font-mono);
+    color: var(--accent-fg);
+  }
+  .steps li > span:last-child {
+    color: var(--ink-2);
+  }
+  .steps strong {
+    color: var(--ink);
+  }
+  .go {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  @media (max-width: 600px) {
+    .grades li {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .probs li {
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 12px;
+    }
+  }
+</style>

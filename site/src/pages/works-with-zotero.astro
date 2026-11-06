@@ -1,0 +1,115 @@
+---
+import CompactCard from "../components/CompactCard.astro";
+import Guide from "../layouts/Guide.astro";
+import { CURRENT_ZOTERO_MAJOR, RANK, shownPlugins } from "../lib/atlas.ts";
+import { collectionPage, num } from "../lib/guides.ts";
+import { JOBS } from "@atlas/schema";
+
+const path = "/works-with-zotero";
+const cur = CURRENT_ZOTERO_MAJOR();
+const h1 = `Plugins that work with Zotero ${cur}`;
+const listed = shownPlugins();
+const works = listed.filter((p) => p.currentOk);
+const recommended = works.filter((p) => RANK[p.grade] >= RANK.A).length;
+/** The most downloaded are shown here; the rest are a filter away on the browse page. */
+const SHOWN = 50;
+const top = works.slice(0, SHOWN);
+const byJob = JOBS.map((j) => ({ j, n: works.filter((p) => p.jobs.includes(j.slug)).length }));
+const browseAll = `/browse?zotero=${cur}`;
+
+const description = `${num(works.length)} of the ${num(listed.length)} Zotero plugins we list install and run in Zotero ${cur}, the current version. ${num(recommended)} are graded A or A+.`;
+const graph = collectionPage({ path, name: h1, description, plugins: works });
+---
+
+<Guide title={`${h1} · Zotero Plugins Atlas`} description={description} h1={h1} crumb={`Zotero ${cur} plugins`} graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      {num(works.length)} of the {num(listed.length)} plugins we list install and run in Zotero {cur}, the current version. {num(recommended)} of them are graded A or A+. Each card's "Works with" line shows every version a plugin supports.
+    </p>
+  </Fragment>
+
+  <section>
+    <h2>By job</h2>
+    <ul class="jobs">
+      {
+        byJob.map(({ j, n }) => (
+          <li>
+            <a href={`/browse?zotero=${cur}&job=${j.slug}`}>
+              <strong>{j.title}</strong>
+              <span class="n">{num(n)}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <div class="rule-head"><h2>Most downloaded</h2><a href={browseAll}>All {num(works.length)}</a></div>
+    <ol class="cards">
+      {
+        top.map((p) => (
+          <li>
+            <CompactCard p={p} />
+          </li>
+        ))
+      }
+    </ol>
+    <a href={browseAll} class="btn more">See all {num(works.length)} plugins for Zotero {cur}</a>
+  </section>
+</Guide>
+
+<style>
+  .jobs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .jobs a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .jobs a:hover {
+    border-color: var(--line-strong);
+  }
+  .jobs .n {
+    font: 600 14px var(--font-mono);
+    color: var(--ink-2);
+  }
+  .rule-head h2 {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .cards {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .more {
+    align-self: flex-start;
+  }
+  @media (max-width: 860px) {
+    .jobs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 480px) {
+    .jobs {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

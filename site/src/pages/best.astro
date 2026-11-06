@@ -1,0 +1,102 @@
+---
+import PluginRow from "../components/PluginRow.astro";
+import Guide from "../layouts/Guide.astro";
+import { CURRENT_ZOTERO_MAJOR, shownPlugins } from "../lib/atlas.ts";
+import { breadcrumb, itemList, jobsWithBest, MIN_DOWNLOADS, modifiedAt, num, PUBLISHER } from "../lib/guides.ts";
+import { SITE } from "../lib/links.ts";
+
+const path = "/best";
+const h1 = "The best-graded Zotero plugins for each job";
+const cur = CURRENT_ZOTERO_MAJOR();
+const plugins = shownPlugins();
+const lists = jobsWithBest()
+  .filter((l) => l.plugins.length > 0)
+  .map((l) => ({ ...l, n: plugins.filter((p) => p.jobs.includes(l.job.slug)).length }));
+
+const description = `The best-graded Zotero plugins for citing, reading, AI, translation and more: highest grade first, then most downloaded. All work with Zotero ${cur}.`;
+const graph = [
+  {
+    "@type": "CollectionPage",
+    "@id": `${SITE}${path}`,
+    url: `${SITE}${path}`,
+    name: h1,
+    description,
+    dateModified: modifiedAt(path),
+    isPartOf: { "@type": "WebSite", name: "Zotero Plugins Atlas", url: `${SITE}/` },
+    publisher: PUBLISHER,
+    hasPart: lists.map((l) => ({ name: `${l.job.title}: best-graded plugins`, ...itemList(l.plugins) })),
+  },
+  breadcrumb("Best-graded plugins", path),
+];
+---
+
+<Guide title="Best-graded Zotero plugins for each job · Zotero Plugins Atlas" description={description} h1={h1} crumb="Best-graded plugins" graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      For each job people use plugins for, the plugins with the best grade that work with Zotero {cur}, most downloaded first within a grade. No plugin pays to appear, and the lists change when grades do.
+    </p>
+  </Fragment>
+
+  <nav aria-label="Jobs" class="jumps">
+    {lists.map((l) => <a href={`#${l.job.slug}`}>{l.job.title}</a>)}
+  </nav>
+
+  {
+    lists.map((l) => (
+      <section id={l.job.slug}>
+        <div class="rule-head">
+          <h2>{l.job.title}</h2>
+          <a href={`/c/${l.job.slug}`}>All {num(l.n)}</a>
+        </div>
+        <ol class="rows">
+          {l.plugins.map((p) => (
+            <PluginRow p={p} because />
+          ))}
+        </ol>
+      </section>
+    ))
+  }
+
+  <section>
+    <h2>How we pick them</h2>
+    <p class="prose">
+      From the plugins we list, we take those that work with Zotero {cur}, are graded B or better, and have at least {MIN_DOWNLOADS} downloads, which leaves out days-old experiments. A better grade comes first. Within a grade, more downloads come first. A plugin that does several jobs can appear under each of them. Jobs are matched from each plugin's name, description and topics, so a few may sit under a job you wouldn't expect. Grades come from a check of each plugin's code, as described in <a href="/how-we-grade">How we grade</a>.
+    </p>
+  </section>
+</Guide>
+
+<style>
+  .jumps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: -12px;
+  }
+  .jumps a {
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 14.5px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .jumps a:hover {
+    border-color: var(--line-strong);
+  }
+  section {
+    scroll-margin-top: 16px;
+  }
+  .rule-head h2 {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+</style>

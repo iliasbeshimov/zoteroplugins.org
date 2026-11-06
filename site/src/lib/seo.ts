@@ -13,12 +13,21 @@ import { SITE } from "./links.ts";
 export const indexable = (p: Plugin): boolean =>
   !p.hidden || p.hiddenReason === "legacy" || p.hiddenReason === "retired";
 
+/** The guide pages (lib/guides.ts), which answer the questions people search for. */
+const GUIDE_PATHS = [
+  "/are-zotero-plugins-safe",
+  "/best",
+  "/works-with-zotero",
+  "/ai-without-api-key",
+  "/zotero-6-plugins",
+];
 /** Pages that aren't plugin cards, in the order they appear in the sitemap. */
 const PAGES = [
   "/",
   "/browse",
   ...JOBS.map((j) => `/c/${j.slug}`),
   "/how-we-grade",
+  ...GUIDE_PATHS,
   "/install",
   "/log",
   "/developers",
@@ -26,7 +35,13 @@ const PAGES = [
   "/about",
 ];
 /** Pages whose content moves with the data (lists, counts, the log). */
-const DATA_PAGES = new Set(["/", "/browse", "/log", ...JOBS.map((j) => `/c/${j.slug}`)]);
+const DATA_PAGES = new Set([
+  "/",
+  "/browse",
+  "/log",
+  ...JOBS.map((j) => `/c/${j.slug}`),
+  ...GUIDE_PATHS,
+]);
 
 export interface SitemapEntry {
   loc: string;

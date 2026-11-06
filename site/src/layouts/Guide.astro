@@ -1,0 +1,119 @@
+---
+import JsonLd from "../components/JsonLd.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Base from "./Base.astro";
+
+/**
+ * A guide page: a question answered in its first paragraph, then the detail. The answer goes in
+ * the `lead` slot so search and answer engines find it right under the heading.
+ */
+interface Props {
+  title: string;
+  description: string;
+  h1: string;
+  /** The breadcrumb's last step. */
+  crumb: string;
+  /** JSON-LD nodes for the page's @graph. */
+  graph: Record<string, unknown>[];
+}
+const { title, description, h1, crumb, graph } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <SiteHeader search />
+  <main class="guide">
+    <nav aria-label="Breadcrumb" class="crumb"><a href="/">Home</a><span>›</span><span>{crumb}</span></nav>
+    <div class="intro">
+      <h1>{h1}</h1>
+      <div class="lead"><slot name="lead" /></div>
+    </div>
+    <slot />
+  </main>
+  <SiteFooter />
+  <JsonLd data={{ "@context": "https://schema.org", "@graph": graph }} />
+</Base>
+
+<style>
+  .guide {
+    max-width: 1184px;
+    margin: 0 auto;
+    padding: 36px var(--gutter) 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .crumb {
+    font-size: 14px;
+    color: var(--ink-2);
+    display: flex;
+    gap: 8px;
+    margin-bottom: -24px;
+  }
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 780px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 52px;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    font-weight: 780;
+    text-wrap: balance;
+  }
+  .lead :global(p) {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .lead {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .guide :global(section) {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+  }
+  .guide :global(h2) {
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: -0.025em;
+    font-weight: 720;
+    border-top: 2px solid var(--ink);
+    padding-top: 14px;
+  }
+  .guide :global(.prose) {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.55;
+    max-width: 780px;
+    text-wrap: pretty;
+  }
+  .guide :global(.small) {
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+  @media (max-width: 860px) {
+    .guide {
+      padding-top: 24px;
+      gap: 32px;
+    }
+    h1 {
+      font-size: 36px;
+    }
+    .lead :global(p) {
+      font-size: 18px;
+    }
+    .guide :global(h2) {
+      font-size: 24px;
+    }
+  }
+</style>

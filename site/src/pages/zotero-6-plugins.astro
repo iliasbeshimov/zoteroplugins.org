@@ -1,0 +1,197 @@
+---
+import PluginRow from "../components/PluginRow.astro";
+import Guide from "../layouts/Guide.astro";
+import { allPlugins, bySlug, CURRENT_ZOTERO_MAJOR, type Plugin, RANK } from "../lib/atlas.ts";
+import { collectionPage, num } from "../lib/guides.ts";
+import { similarPlugins } from "../lib/similar.ts";
+
+const path = "/zotero-6-plugins";
+const h1 = "Zotero 6 plugins and what to use now";
+const cur = CURRENT_ZOTERO_MAJOR();
+const all = allPlugins();
+const slugs = bySlug();
+const legacy = all.filter((p) => p.legacy).sort((a, b) => b.downloadsN - a.downloadsN);
+
+/**
+ * What to use instead, in order of how sure we are: the plugin its developer points to, an updated
+ * fork that works with the current Zotero (graded B or better), then plugins that do the same job
+ * (the "Other plugins that do this" match from its card).
+ */
+type Replacement = { p: Plugin | null; name: string; href: string; how: string };
+function replacements(p: Plugin): Replacement[] {
+  const out: Replacement[] = [];
+  const alt = p.retired?.alternative;
+  if (alt) {
+    const known = alt.slug ? slugs[alt.slug] : undefined;
+    out.push({ p: known ?? null, name: alt.name, href: known ? `/p/${known.slug}` : alt.url, how: "Named by its developer" });
+  }
+  const forks = all
+    .filter((x) => x.forkOf?.slug === p.slug && x.currentOk && !x.legacy && !x.retired && !x.removed && x.installUrl && RANK[x.grade] >= RANK.B)
+    .sort((a, b) => RANK[b.grade] - RANK[a.grade] || b.downloadsN - a.downloadsN)
+    .slice(0, 2);
+  for (const f of forks) out.push({ p: f, name: f.name, href: `/p/${f.slug}`, how: "Updated fork" });
+  for (const s of similarPlugins(p).shown)
+    if (!out.some((r) => r.p?.slug === s.p.slug)) out.push({ p: s.p, name: s.p.name, href: `/p/${s.p.slug}`, how: "Does the same job" });
+  return out;
+}
+const rows = legacy.map((p) => ({ p, repl: replacements(p) }));
+const withRepl = rows.filter((r) => r.repl.length > 0);
+const without = rows.filter((r) => r.repl.length === 0);
+const top = legacy[0];
+
+const description = `Plugins made for Zotero 6 don't load in Zotero 7 or later. ${num(legacy.length)} old plugins${top ? `, from ${top.name} down,` : ""} and what works in Zotero ${cur} instead.`;
+const graph = collectionPage({ path, name: h1, description, plugins: legacy });
+---
+
+<Guide title={`${h1} · Zotero Plugins Atlas`} description={description} h1={h1} crumb="Zotero 6 plugins" graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      Plugins made for Zotero 6 and earlier use the old plugin format, which Zotero 7 and later can't load. We list {num(legacy.length)} of them. For {num(withRepl.length)} we found something that works with Zotero {cur}: a plugin its developer points to, an updated fork, or another plugin that does the same job.
+    </p>
+  </Fragment>
+
+  <section>
+    <h2>Why your old plugins stopped working</h2>
+    <p class="prose">
+      Zotero 7 changed how plugins are built, so each plugin had to be updated for the new format. The ones below never were, so Zotero won't load them. Their cards stay up so you can see what they did and what to use instead. Copying an old plugin's file into a newer Zotero won't help.
+    </p>
+  </section>
+
+  <section>
+    <h2>With something to use instead ({num(withRepl.length)})</h2>
+    <ol class="legacy">
+      {
+        withRepl.map(({ p, repl }) => (
+          <li>
+            <div class="lh">
+              <a href={`/p/${p.slug}`} class="ln">{p.name}</a>
+              <span class="ld">{p.repo} · {p.downloads} downloads · Zotero 6</span>
+            </div>
+            <p class="lo">{p.oneLiner}</p>
+            <span class="eyebrow">Use instead</span>
+            <ul class="repl">
+              {repl.map((r) =>
+                r.p ? (
+                  <PluginRow p={r.p} label={r.how} />
+                ) : (
+                  <li class="ext">
+                    <a href={r.href}>{r.name}</a> <span class="muted">· {r.how}</span>
+                  </li>
+                ),
+              )}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section>
+    <h2>No replacement found yet ({num(without.length)})</h2>
+    <p class="prose small">
+      We haven't found a plugin that works with Zotero {cur} and does the same job. Search <a href={`/browse?zotero=${cur}`}>plugins for Zotero {cur}</a> by what you need, or check whether Zotero itself now does it.
+    </p>
+    <ul class="plain">
+      {
+        without.map(({ p }) => (
+          <li>
+            <a href={`/p/${p.slug}`}>{p.name}</a>
+            <span class="ld">{p.repo} · {p.downloads} downloads</span>
+            <span class="lo">{p.oneLiner}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Guide>
+
+<style>
+  .legacy,
+  .repl,
+  .plain {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .legacy {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .legacy > li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 22px 10px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    min-width: 0;
+  }
+  .lh {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+  }
+  .ln {
+    font-size: 21px;
+    font-weight: 720;
+    letter-spacing: -0.015em;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .ln:hover {
+    text-decoration: underline;
+  }
+  .ld {
+    font: 500 12.5px/1.45 var(--font-mono);
+    color: var(--ink-3);
+    overflow-wrap: anywhere;
+  }
+  .lo {
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  .legacy .eyebrow {
+    margin-top: 6px;
+  }
+  .repl :global(li:last-child) {
+    border-bottom: 0;
+  }
+  .ext {
+    padding: 12px 0;
+    font-size: 15.5px;
+  }
+  .plain {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 32px;
+  }
+  .plain li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    min-width: 0;
+  }
+  .plain a {
+    font-weight: 650;
+    overflow-wrap: anywhere;
+  }
+  .plain .lo {
+    font-size: 14.5px;
+  }
+  @media (max-width: 760px) {
+    .plain {
+      grid-template-columns: 1fr;
+    }
+    .legacy > li {
+      padding: 16px 16px 6px;
+    }
+  }
+</style>

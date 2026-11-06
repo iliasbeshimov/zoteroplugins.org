@@ -1,0 +1,91 @@
+---
+import type { Plugin } from "../lib/atlas.ts";
+import GradeTag from "./GradeTag.astro";
+
+/** One plugin in a guide's list: grade, name, what it does, and why it got its grade. */
+interface Props {
+  p: Plugin;
+  /** Why it's in this list, e.g. "Updated fork". */
+  label?: string;
+  /** Show the "because" line under the description (for B and C: an A's says the same on every row). */
+  because?: boolean;
+}
+const { p, label, because = false } = Astro.props;
+const meta = [p.worksWith.length ? `Zotero ${p.worksRange}` : "", `${p.downloads} downloads`, p.maint].filter(Boolean).join(" · ");
+---
+
+<li class="row">
+  <GradeTag grade={p.grade} size="sm" />
+  <div class="body">
+    <a href={`/p/${p.slug}`} class="name">{p.name}</a>
+    <p class="does">{p.oneLiner}</p>
+    {because && (p.grade === "B" || p.grade === "C") && <p class="why"><span class="muted">{p.grade} because </span>{p.because}</p>}
+    <span class="meta">{meta}</span>
+  </div>
+  {label && <span class="label">{label}</span>}
+</li>
+
+<style>
+  .row {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+    gap: 8px 16px;
+    align-items: start;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .row > :first-child {
+    margin-top: 2px;
+  }
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .name {
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .name:hover {
+    text-decoration: underline;
+  }
+  .does,
+  .why {
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  .why {
+    font-size: 14.5px;
+  }
+  .meta {
+    font: 500 12.5px/1.45 var(--font-mono);
+    color: var(--ink-3);
+    overflow-wrap: anywhere;
+  }
+  .label {
+    font-size: 12.5px;
+    font-weight: 650;
+    line-height: 1;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    color: var(--ink);
+    border: 1px solid var(--line-strong);
+    white-space: nowrap;
+  }
+  @media (max-width: 600px) {
+    .row {
+      grid-template-columns: 44px minmax(0, 1fr);
+    }
+    .label {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+</style>

@@ -1,4 +1,5 @@
 ---
+import { GUIDES } from "../lib/guides.ts";
 import { REPO, REPORT_URL, RESPOND_URL } from "../lib/links.ts";
 
 const cols = [
@@ -7,6 +8,7 @@ const cols = [
     l: [["Browse", "/browse"], ["How to install a plugin", "/install"], ["Grade log", "/log"], ["Submit a plugin", "/submit"]],
   },
   { t: "Trust", l: [["How we grade", "/how-we-grade"], ["Report a problem", REPORT_URL]] },
+  { t: "Guides", l: GUIDES.map((g) => [g.name, g.path]) },
   {
     t: "Developers",
     l: [["Your plugin's checklist", "/developers"], ["Respond to a card", RESPOND_URL], ["Badges", "/developers#badge"], ["Plugin data (JSON)", "/api/plugins.json"]],
@@ -38,7 +40,7 @@ const cols = [
     background: var(--surface);
     padding: 32px var(--gutter);
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 24px;
     font-size: 14px;
   }

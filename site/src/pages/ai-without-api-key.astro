@@ -1,0 +1,88 @@
+---
+import PluginList from "../components/PluginList.astro";
+import Guide from "../layouts/Guide.astro";
+import { CURRENT_ZOTERO_MAJOR, shownPlugins } from "../lib/atlas.ts";
+import { collectionPage, num } from "../lib/guides.ts";
+import { JOB_BY_SLUG } from "@atlas/schema";
+
+const path = "/ai-without-api-key";
+const h1 = "Zotero AI plugins that work without an API key";
+const ai = shownPlugins().filter((p) => p.jobs.includes("ai"));
+// The same rule as the browse page's "Works without an API key" filter.
+const nokey = ai.filter((p) => p.keyNeed === "none" || p.keyNeed === "optional");
+const none = nokey.filter((p) => p.keyNeed === "none").length;
+const optional = nokey.filter((p) => p.keyNeed === "optional").length;
+const local = nokey.filter((p) => p.localModel).length;
+const localButKey = ai.filter((p) => p.localModel && p.keyNeed === "required").length;
+const unknown = ai.filter((p) => p.keyNeed === "unknown").length;
+
+const description = `${num(nokey.length)} Zotero AI plugins work without an API key: ${num(none)} need none at all and ${num(optional)} only for some services. ${num(local)} can use a local model.`;
+const graph = collectionPage({ path, name: h1, description, plugins: nokey });
+---
+
+<Guide title={`Zotero AI plugins without an API key · Zotero Plugins Atlas`} description={description} h1={h1} crumb="AI plugins without an API key" graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      {num(nokey.length)} of the {num(ai.length)} AI plugins we list work without an API key. {num(none)} need no key at all, and {num(optional)} work without one but need a key for some services. {num(local)} of them can use a local model, such as one running in Ollama, so your text needn't leave your computer.
+    </p>
+  </Fragment>
+
+  <section>
+    <h2>What the labels mean</h2>
+    <dl class="defs">
+      <div>
+        <dt>No API key needed</dt>
+        <dd>Nothing in it needs a key you supply. It may still send your text to a service, so check "Where your data goes" on its card.</dd>
+      </div>
+      <div>
+        <dt>API key optional</dt>
+        <dd>It works without one, but some of the services it offers need a key. The card lists which.</dd>
+      </div>
+      <div>
+        <dt>Can use a local model</dt>
+        <dd>It can use a model running on your own computer, such as Ollama, so your text needn't leave it.</dd>
+      </div>
+    </dl>
+    <p class="prose small">
+      Each answer has to quote the plugin's own documentation or code, and a second, independent check has to agree. {num(localButKey)} more AI plugins can use a local model but still ask for a key, and for {num(unknown)} we couldn't tell, so they aren't listed here. Every AI plugin is in <a href="/c/ai">{JOB_BY_SLUG.ai.title}</a>.
+    </p>
+  </section>
+
+  <section>
+    <h2>The plugins</h2>
+    <PluginList plugins={nokey} currentMajor={CURRENT_ZOTERO_MAJOR()} compare />
+  </section>
+</Guide>
+
+<style>
+  .defs {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .defs div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+  .defs dt {
+    font-weight: 700;
+    font-size: 16.5px;
+  }
+  .defs dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  @media (max-width: 860px) {
+    .defs {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
