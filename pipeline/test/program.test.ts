@@ -20,6 +20,7 @@ describe("atlas CLI", () => {
       "profile",
       "grade-log",
       "catalog",
+      "moved",
       "submit",
       "regress",
       "libs",

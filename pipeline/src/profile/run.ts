@@ -55,6 +55,7 @@ import {
 import { updateGradeLog } from "./gradeLog.ts";
 import { detectDocLanguages, linkedReadmeLanguages, uiLocales } from "./languages.ts";
 import { assignSlugs, listingKind, resolveListing } from "./listing.ts";
+import { applyMoved, findMoved } from "./moved.ts";
 import { buildProfileReport } from "./report.ts";
 import {
   type FindingReview,
@@ -298,6 +299,8 @@ export async function runProfile(
     if (++done % 50 === 0) log(`  ${done}/${selected.length}`);
   });
 
+  // A full online run: old cards for repos that moved on GitHub go, and their addresses redirect.
+  if (!ctx.offline && !opts.plugin && !opts.limit) await moveRenamedCards(ctx.gh, census.rows, log);
   await writeFile(SLUGS_FILE, `${JSON.stringify(registry, null, 1)}\n`);
   const profiles = await loadAllProfiles();
   await updateGradeLog(profiles, ctx.now.slice(0, 10), log);
@@ -1812,6 +1815,44 @@ export async function loadReleaseDocs(
     if (doc?.asset?.sha256) out.set(doc.asset.sha256, { file, doc });
   }
   return out;
+}
+
+/**
+ * Cards whose repo the census no longer lists, asked about by name: one GitHub now answers under
+ * another listed repo's name is removed and redirected to that card (moved.ts).
+ */
+export async function moveRenamedCards(
+  gh: GitHub,
+  rows: CensusRow[],
+  log: (msg: string) => void = console.log,
+): Promise<void> {
+  const cards = (await loadAllProfiles()).map((p) => ({ slug: p.slug, repo: p.repo }));
+  const inCensus = new Set(rows.map((r) => r.repo.toLowerCase()));
+  const moves = await findMoved(
+    cards,
+    inCensus,
+    async (repo) => {
+      const r = await gh.rest<{ full_name?: string }>(`/repos/${repo}`);
+      return r.status === 200 ? (r.data?.full_name ?? null) : null;
+    },
+    new Date().toISOString().slice(0, 10),
+  );
+  await applyMoved(paths.generated, moves);
+  if (moves.length) {
+    const gone = new Set(moves.map((m) => m.slug));
+    const file = join(paths.generated, "index.json");
+    const index = (await readJson<{ slug: string }[]>(file)) ?? [];
+    await writeFile(
+      file,
+      `${JSON.stringify(
+        index.filter((e) => !gone.has(e.slug)),
+        null,
+        1,
+      )}\n`,
+    );
+  }
+  for (const m of moves) log(`  moved: ${m.slug} → ${m.target} (${m.from} is now ${m.to})`);
+  log(`${moves.length} cards moved to their repo's new name`);
 }
 
 export async function loadAllProfiles(): Promise<Profile[]> {

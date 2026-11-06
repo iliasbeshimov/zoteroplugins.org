@@ -182,6 +182,28 @@ export function buildProgram(): Command {
       await writeCatalog(await loadAllProfiles(), new Date().toISOString());
     });
 
+  program
+    .command("moved")
+    .description(
+      "remove cards for repos that moved on GitHub to a repo with its own card, and redirect them (the nightly profile run does this too)",
+    )
+    .action(async () => {
+      const { loadConfig, requireGithubToken } = await import("./config.ts");
+      const { GitHub } = await import("./net/github.ts");
+      const { DiskCache } = await import("./net/http.ts");
+      const { join } = await import("node:path");
+      const { prepare, moveRenamedCards, loadAllProfiles } = await import("./profile/run.ts");
+      const { writeCatalog } = await import("./profile/catalog.ts");
+      const config = loadConfig();
+      const gh = new GitHub(
+        requireGithubToken(config),
+        config.userAgent,
+        new DiskCache(join(config.cacheDir, "http")),
+      );
+      await moveRenamedCards(gh, (await prepare()).census.rows);
+      await writeCatalog(await loadAllProfiles(), new Date().toISOString());
+    });
+
   const submit = program
     .command("submit")
     .description("plugins people submit on the site: queue, decide, profile");
