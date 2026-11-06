@@ -1,5 +1,6 @@
 import { readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import type { PluginProfile as Profile } from "@atlas/schema";
 
 /**
  * Cards for repos that moved on GitHub. A renamed or transferred repo leaves the census under its
@@ -28,28 +29,70 @@ export interface Redirects {
 
 export const REDIRECTS_FILE = "redirects.json";
 
+/** GitHub's answer for a repo: its HTTP status and, when it answered, its current owner/name. */
+export interface RepoAnswer {
+  status: number;
+  name: string | null;
+}
+
+/** GitHub answers these for a repository that's deleted, made private or taken down. */
+const GONE = new Set([404, 410, 451]);
+
 /**
- * Old cards whose repo GitHub now answers under another name that has a card. Only repos the
- * census no longer lists are asked about. `currentName` gives GitHub's owner/name for a repo, or
- * null when it's gone or GitHub didn't answer.
+ * Cards whose repo the census no longer lists, asked about by name: one GitHub now answers under
+ * another name that has a card has moved; one GitHub says is gone was removed (its page stays,
+ * hidden, with no install: D47). Anything else (no answer, a rate limit, a repo that's still there
+ * under its name) leaves the card as it is.
  */
-export async function findMoved(
+export async function followLostCards(
   cards: { slug: string; repo: string }[],
   inCensus: Set<string>,
-  currentName: (repo: string) => Promise<string | null>,
+  lookup: (repo: string) => Promise<RepoAnswer>,
   date: string,
-): Promise<Moved[]> {
+): Promise<{ moves: Moved[]; removed: string[] }> {
   const slugOf = new Map(cards.map((c) => [c.repo.toLowerCase(), c.slug]));
-  const out: Moved[] = [];
+  const moves: Moved[] = [];
+  const removed: string[] = [];
   for (const c of cards) {
     if (inCensus.has(c.repo.toLowerCase())) continue;
-    const now = await currentName(c.repo);
-    if (!now || now.toLowerCase() === c.repo.toLowerCase()) continue;
-    const target = slugOf.get(now.toLowerCase());
+    const r = await lookup(c.repo);
+    if (GONE.has(r.status)) {
+      removed.push(c.slug);
+      continue;
+    }
+    if (r.status !== 200 || !r.name || r.name.toLowerCase() === c.repo.toLowerCase()) continue;
+    const target = slugOf.get(r.name.toLowerCase());
     if (!target || target === c.slug) continue;
-    out.push({ from: c.repo, to: now, slug: c.slug, target, date });
+    moves.push({ from: c.repo, to: r.name, slug: c.slug, target, date });
   }
-  return out;
+  return { moves, removed };
+}
+
+/**
+ * Marks the cards whose repo is gone: hidden from lists and counts as "removed", with the day we
+ * found it gone. A card already marked keeps its first date. Returns the slugs newly marked.
+ */
+export async function markRemoved(
+  generatedDir: string,
+  slugs: string[],
+  date: string,
+): Promise<string[]> {
+  const marked: string[] = [];
+  for (const slug of slugs) {
+    const file = join(generatedDir, slug, "profile.json");
+    let p: Profile;
+    try {
+      p = JSON.parse(await readFile(file, "utf8")) as Profile;
+    } catch {
+      continue;
+    }
+    if (p.removed) continue;
+    p.removed = { since: date };
+    p.listing = { ...p.listing, hiddenByDefault: true, hiddenReason: "removed" };
+    await writeFile(file, `${JSON.stringify(p, null, 1)}\n`);
+    marked.push(slug);
+  }
+  return marked;
 }
 
 export async function readRedirects(generatedDir: string): Promise<Redirects> {

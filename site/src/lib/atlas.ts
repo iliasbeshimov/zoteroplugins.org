@@ -156,7 +156,7 @@ export interface Plugin {
   jobs: string[];
   categories: string[];
   hidden: boolean;
-  /** Why it's hidden from lists ("fork", "legacy", "no-release", "retired"), when it is. */
+  /** Why it's hidden from lists ("fork", "legacy", "no-release", "retired", "removed"). */
   hiddenReason: string | null;
   /** Set when its developer retired it: the page says why and offers no install. */
   retired: {
@@ -165,6 +165,11 @@ export interface Plugin {
     url: string;
     alternative: { name: string; url: string; slug: string | null } | null;
   } | null;
+  /**
+   * Set when its GitHub repository is gone: the page says so and offers no install.
+   * `updatesStopped` when its update address was in that repository.
+   */
+  removed: { since: string; updatesStopped: boolean } | null;
   addonId: string | null;
   currentOk: boolean;
   currentMajor: number;
@@ -815,7 +820,9 @@ function build(
     released: fmtDate(p.install?.publishedAt ?? m.lastReleaseAt),
     size,
     installUrl:
-      blocked || noRelease || installProblem || p.retired ? null : (p.install?.asset.url ?? null),
+      blocked || noRelease || installProblem || p.retired || p.removed
+        ? null
+        : (p.install?.asset.url ?? null),
     grade,
     gradeWord: gx.word,
     gradeLong: gx.long,
@@ -834,6 +841,12 @@ function build(
           alternative: p.retired.alternative
             ? { ...p.retired.alternative, slug: p.retired.alternative.slug ?? null }
             : null,
+        }
+      : null,
+    removed: p.removed
+      ? {
+          since: fmtDate(p.removed.since),
+          updatesStopped: inRepo(p.install?.updates?.url, p.repo),
         }
       : null,
     addonId: p.addonId ?? null,
@@ -891,6 +904,14 @@ function build(
 
 let cache: Plugin[] | null = null;
 /** Every profiled plugin, most downloaded first. `hidden` ones (forks, legacy, no release) have pages but stay out of lists. */
+/** Whether an address is a file in this GitHub repository (a release download or a raw file). */
+function inRepo(url: string | null | undefined, repo: string): boolean {
+  if (!url) return false;
+  const u = url.toLowerCase();
+  const r = repo.toLowerCase();
+  return u.includes(`//github.com/${r}/`) || u.includes(`//raw.githubusercontent.com/${r}/`);
+}
+
 export function allPlugins(): Plugin[] {
   if (cache) return cache;
   const summaries = loadSummaries();

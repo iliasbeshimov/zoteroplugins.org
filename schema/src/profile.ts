@@ -18,7 +18,7 @@ export const ListingKind = z.enum([
   "no-release", // in a curated list, but no .xpi on GitHub
 ]);
 
-export const HiddenReason = z.enum(["fork", "legacy", "no-release", "retired"]);
+export const HiddenReason = z.enum(["fork", "legacy", "no-release", "retired", "removed"]);
 
 /** Script-level language detection; `latin` is Latin-script text that isn't clearly English. */
 export const DocLanguage = z.enum(["en", "zh", "ja", "ko", "ru", "latin"]);
@@ -290,6 +290,14 @@ export const PluginProfile = z.object({
   retired: Retirement.optional().describe(
     "Set when the developer has retired the plugin (data/plugins/<slug>.yaml)",
   ),
+  removed: z
+    .object({
+      since: IsoDate.describe("When we found its GitHub repository gone"),
+    })
+    .optional()
+    .describe(
+      "Set when the plugin's GitHub repository is gone (GitHub answers 404, 410 or 451): the page stays, hidden from lists, with no install",
+    ),
   notices: z
     .array(
       z.object({

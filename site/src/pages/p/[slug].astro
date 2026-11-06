@@ -31,14 +31,33 @@ const installLabel = blocked
   ? "Blocked by Zotero"
   : p.retired
     ? "Retired by its developer"
-    : !canInstall
-      ? "No installable release"
-      : `Install v${p.version}`;
+    : p.removed
+      ? "Removed from GitHub"
+      : !canInstall
+        ? "No installable release"
+        : `Install v${p.version}`;
 const installNote = canInstall
   ? `Downloads a .xpi file (${p.size}). In Zotero, open Tools → Plugins and install it from the file.`
   : p.retired
     ? "Its developer has retired it, so we don't offer it for install. The source stays linked for reference."
-    : "There's no release file current Zotero can install. The source stays linked for reference.";
+    : p.removed
+      ? "Its GitHub repository is gone, so there's nothing left to install."
+      : "There's no release file current Zotero can install. The source stays linked for reference.";
+// A plugin whose GitHub repository is gone: when we found out, what we last checked, and what
+// that means for people who have it.
+const removedText = p.removed
+  ? [
+      `Its repository was gone when we checked on ${p.removed.since}.`,
+      p.version
+        ? `The last version we checked was ${p.version}, released ${p.released}${p.grade === "–" ? "" : `, graded ${p.grade}`}.`
+        : "",
+      p.removed.updatesStopped
+        ? "We no longer offer it for install, and its updates came from that repository, so they've stopped too."
+        : "We no longer offer it for install.",
+    ]
+      .filter(Boolean)
+      .join(" ")
+  : "";
 const alt = p.retired?.alternative;
 const altHref = alt ? (alt.slug && all[alt.slug] ? `/p/${alt.slug}` : alt.url) : null;
 const RESPONSE_STATUS: Record<string, string> = {
@@ -95,6 +114,19 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
             </>
           )}
           <a href={p.retired.url}>Their note</a>, {p.retired.date}.
+        </span>
+      </div>
+    )
+  }
+
+  {
+    p.removed && (
+      <div role="note" class="banner retired">
+        <span class="bi">
+          <StatusIcon kind="info" size={20} color="var(--rev-fg)" />
+        </span>
+        <span>
+          <strong>Removed from GitHub.</strong> {removedText}
         </span>
       </div>
     )
