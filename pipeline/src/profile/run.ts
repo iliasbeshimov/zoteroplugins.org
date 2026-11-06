@@ -443,8 +443,15 @@ export async function gather(
       }
       // Every build in the release (per Zotero major, per OS, per language), within reason.
       // Offline, only builds we have stored.
+      // Offline, a card for its update address's file keeps that file whatever it's called
+      // (zoteroquicklook's update address serves zoteroquicklook.zoteroplugin).
+      const served = ctx.offline && existing?.install?.fromUpdateAddress;
       const xpis = release.assets
-        .filter((a) => a.name.toLowerCase().endsWith(".xpi"))
+        .filter(
+          (a) =>
+            a.name.toLowerCase().endsWith(".xpi") ||
+            (served && a.digest === `sha256:${existing?.install?.asset.sha256}`),
+        )
         .filter(
           (a) =>
             !ctx.offline ||
