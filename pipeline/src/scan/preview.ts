@@ -62,7 +62,7 @@ const INSTALL_CONCERN: Record<string, Concern> = {
   "network:silent": "high",
   // An address a zotero:// link or another program supplies, shown and confirmed first.
   "link:asked": "medium",
-  // …installed as it arrives; or a link that changes where it installs from (zotero-addons).
+  // …installed as it arrives.
   "link:silent": "high",
   // An address hidden in its code (base64: zotero-style).
   hidden: "high",
@@ -76,7 +76,7 @@ function installKey(r: InstallRoute, self: boolean): string {
   const asked = r.asks !== "none";
   if (r.from === "hidden") return "hidden";
   if (["file", "backup", "library"].includes(r.from)) return asked ? "local:asked" : "local:silent";
-  if (["link", "message", "link-source"].includes(r.from))
+  if (["link", "message"].includes(r.from))
     return r.asks === "confirm" ? "link:asked" : "link:silent";
   if (asked) return self && r.hash ? "self:asked:checked" : "network:asked";
   return r.hash && r.https !== false && !r.via?.length
@@ -84,8 +84,28 @@ function installKey(r: InstallRoute, self: boolean): string {
     : "network:silent";
 }
 
-/** How one way of installing add-ons is rated. */
-export function installRouteConcern(r: InstallRoute, self: boolean): Concern {
+const worst = (cs: Concern[]): Concern =>
+  cs.reduce<Concern>((w, x) => (RANK[x] > RANK[w] ? x : w), "none");
+
+/**
+ * How one way of installing add-ons is rated. A zotero:// link that changes the catalogue it
+ * installs from (zotero-addons) installs nothing by itself: whoever writes the link picks the
+ * catalogue, and installs from it then go the way the plugin's catalogue installs go. So it rates
+ * as those would from an address anyone could hold, with no hash counted: medium while each one
+ * waits for a click, high when one runs by itself, one step lower behind an off-by-default setting.
+ * `routes` are the plugin's other ways; without a catalogue among them it rates medium.
+ */
+export function installRouteConcern(
+  r: InstallRoute,
+  self: boolean,
+  routes: InstallRoute[] = [],
+): Concern {
+  if (r.from === "link-source") {
+    const after = routes
+      .filter((x) => x.from === "catalogue")
+      .map((x) => installRouteConcern({ ...x, hash: false }, self));
+    return after.length ? worst(after) : "medium";
+  }
   const concern = INSTALL_CONCERN[installKey(r, self)] ?? "medium";
   return r.setting ? ONE_STEP_DOWN[concern] : concern;
 }
@@ -94,9 +114,7 @@ export function installRouteConcern(r: InstallRoute, self: boolean): Concern {
 function installConcern(c: Analysis["capabilities"][number]): Concern {
   const routes = c.details?.installs ?? [];
   if (!routes.length) return "medium";
-  return routes
-    .map((r) => installRouteConcern(r, c.id === "self-installs"))
-    .reduce((w, x) => (RANK[x] > RANK[w] ? x : w), "none");
+  return worst(routes.map((r) => installRouteConcern(r, c.id === "self-installs", routes)));
 }
 
 type SettingsEntry = NonNullable<

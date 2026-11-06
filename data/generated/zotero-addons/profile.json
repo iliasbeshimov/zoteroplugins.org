@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-11-05T11:11:03.965Z",
+ "generatedAt": "2026-11-06T01:36:18.211Z",
  "slug": "zotero-addons",
  "repo": "syt2/zotero-addons",
  "repoName": "syt2/zotero-addons",
@@ -155,8 +155,8 @@
  "addonIdSharedWith": [],
  "trust": {
   "schemaVersion": 1,
-  "rulesVersion": "0.9.0-preview",
-  "computedAt": "2026-11-05T11:11:03.965Z",
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-06T01:36:18.211Z",
   "appliesTo": {
    "slug": "zotero-addons",
    "version": "11.0.1",
@@ -167,7 +167,7 @@
    "provenanceCheckerVersion": "lite-0.4",
    "hostsTableVersion": "2026.11.03",
    "currentZotero": "10.0.7",
-   "inputHash": "4ff6de635e968c2d699b40280fceb450eeb310e262ae27c3a0c8b16c9dd37fd3"
+   "inputHash": "aabc507b4bf8e1fc663d453100b7299dff5982ed1d346c7fc191fd69f3ede1f6"
   },
   "facets": {
    "sourceTransparency": {
@@ -230,8 +230,8 @@
      {
       "id": "installs-addons",
       "label": "Installs other add-ons",
-      "concern": "high",
-      "detail": "A zotero:// link can change where it installs from, without asking; from its catalogue at cdn.jsdelivr.net, gitee.com, raw.githubusercontent.com via gh-proxy.org, ghfast.top, ghproxy.net and 1 more, by itself while its \"autoUpdate\" setting is on (it's off by default), not checked against a hash, plain http addresses accepted; from an address a zotero:// link supplies, after asking you; and 1 more way"
+      "concern": "medium",
+      "detail": "From its catalogue at cdn.jsdelivr.net, gitee.com, raw.githubusercontent.com via gh-proxy.org, ghfast.top, ghproxy.net and 1 more, by itself while its \"autoUpdate\" setting is on (it's off by default), not checked against a hash, plain http addresses accepted; a zotero:// link can change where it installs from, without asking; from an address a zotero:// link supplies, after asking you; and 1 more way"
      },
      {
       "id": "link-runs-code",
@@ -245,10 +245,10 @@
       "concern": "low"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-INSTALLS-ADDONS-UNASKED",
+     "CAP-INSTALLS-ADDONS",
      "CAP-LINK-CODE-SIGNED"
     ]
    },
@@ -288,13 +288,16 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
+    "dataSharing",
     "capabilities"
    ],
    "reasons": [
-    "Installs other add-ons"
+    "Its code names a developer's server: artalk.zotero.store",
+    "Installs other add-ons",
+    "A zotero:// link (a web page can open one) can make it run code its developer signed, without asking you"
    ]
   }
  },

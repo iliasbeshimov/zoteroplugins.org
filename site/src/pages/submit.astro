@@ -9,8 +9,13 @@ import Base from "../layouts/Base.astro";
 import { fmtDate } from "../lib/atlas.ts";
 import { inReview } from "../lib/submissions.ts";
 
-// Cloudflare's always-pass test key until the real one is set at build time.
-const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA";
+// The site key is public (it's in the page). Every build but `astro dev` uses the real one:
+// the Pages secret only accepts its tokens, so a build that fell back to Cloudflare's test key
+// turned every submission away as a bot. `astro dev` keeps the always-pass test key.
+const SITE_KEY = "0x4AAAAAAFLUiYqWzSW4lRSQ";
+const TEST_KEY = "1x00000000000000000000AA";
+const siteKey =
+  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || (import.meta.env.DEV ? TEST_KEY : SITE_KEY);
 const reviewing = inReview().slice(0, 20);
 ---
 

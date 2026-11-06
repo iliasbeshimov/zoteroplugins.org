@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { analyzeXpi, type XpiEntry } from "../src/scan/analyze.ts";
 import { classifyHost, type HostTable, loadHostTable } from "../src/scan/hosts.ts";
-import { preview } from "../src/scan/preview.ts";
+import { installRouteConcern, preview } from "../src/scan/preview.ts";
 import { redactSecrets } from "../src/scan/text.ts";
 
 let table: HostTable;
@@ -446,5 +446,45 @@ describe("evidence snippets never republish a hard-coded key", () => {
     const code = 'fetch("https://api.openai.com/v1/chat/completions", { method: "POST" })';
     expect(redactSecrets(code)).toBe(code);
     expect(redactSecrets('getPref("apiKey")')).toBe('getPref("apiKey")');
+  });
+});
+
+describe("a zotero:// link that switches the catalogue it installs from", () => {
+  type Route = Parameters<typeof installRouteConcern>[0];
+  const link: Route = { from: "link-source", asks: "none" };
+  const catalogue = { from: "catalogue", hosts: ["example.org"] } as const;
+
+  it("rates medium while installs from the catalogue wait for a click (zotero-addons)", () => {
+    const routes: Route[] = [
+      { ...catalogue, hosts: [...catalogue.hosts], asks: "click", hash: false, https: false },
+      {
+        ...catalogue,
+        hosts: [...catalogue.hosts],
+        asks: "none",
+        auto: true,
+        hash: false,
+        setting: "autoUpdate",
+      },
+      link,
+    ];
+    expect(installRouteConcern(link, false, routes)).toBe("medium");
+  });
+
+  it("rates high when the catalogue installs by itself, even checked against its hash", () => {
+    // The link picks the catalogue, and with it the hash the file is checked against.
+    const silent: Route = {
+      ...catalogue,
+      hosts: [...catalogue.hosts],
+      asks: "none",
+      auto: true,
+      hash: true,
+      https: true,
+    };
+    expect(installRouteConcern(silent, false)).toBe("medium");
+    expect(installRouteConcern(link, false, [silent, link])).toBe("high");
+  });
+
+  it("rates medium when no catalogue install was found", () => {
+    expect(installRouteConcern(link, false, [link])).toBe("medium");
   });
 });

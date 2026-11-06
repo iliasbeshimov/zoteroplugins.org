@@ -2414,7 +2414,9 @@ describe("where add-ons it installs come from (C44)", () => {
         { from: "link-source", asks: "none" },
       ]),
     );
-    expect(r.card.capabilities).toContainEqual({ id: "installs-addons", concern: "high" });
+    // The link only switches the catalogue: installs from it still wait for a click, and the one
+    // that doesn't waits for an off-by-default setting.
+    expect(r.card.capabilities).toContainEqual({ id: "installs-addons", concern: "medium" });
   });
 
   it("rates an install an AI tool asks for behind an off-by-default setting a step lower (zotero-agent)", async () => {

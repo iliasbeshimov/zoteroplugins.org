@@ -109,13 +109,13 @@ Zotero plugins run with the same rights as Zotero itself. These are the capabili
 | Reads your web browser's saved cookies or passwords | high |
 | Any website can change your library, or use every endpoint on Zotero's built-in server, through it | high |
 | Any website you visit can make its own local server change your library, run code, or send your saved API key to an address the website picks: the server doesn't check where requests come from | high |
-| Installs add-ons or its own updates without asking, through mirrors or proxies, over plain http, unchecked, from a link or another program (other than zotero-plugin-toolkit's install link, below), or from a hidden address | high |
+| Installs add-ons or its own updates without asking, through mirrors or proxies, over plain http, unchecked, from a link or another program (other than zotero-plugin-toolkit's install link, below), or from a hidden address; or a zotero:// link can switch the catalogue it installs from, and installs from that catalogue run by themselves | high |
 | Trusts a certificate, loosens another program's permission prompts, turns off Zotero's updates, or sets up a program to start by itself without asking | high |
 | Launches programs on your computer; loads native code | medium |
 | Runs a compiled program it ships, which we can't read | medium |
 | Installs and runs npm or PyPI packages at a fixed version | medium |
 | Keeps its own tables in Zotero's database | medium |
-| Installs other add-ons or its own updates after you click, or silently from the developer's own https feed checked against a hash | medium |
+| Installs other add-ons or its own updates after you click, or silently from the developer's own https feed checked against a hash; a zotero:// link can switch the catalogue it installs from, while installs from that catalogue wait for a click or for a setting that's off by default | medium |
 | A zotero:// link can make it install add-ons, run code if you approve a prompt, or run only code its developer signed (checked by hand) | medium |
 | Downloads and runs a program its developer or someone else can change at any time (see below) | medium |
 | Adds Zotero translators it downloads | medium |
@@ -300,6 +300,7 @@ for others too, so we fix the analysis for everyone and the card changes with it
 
 | Date | Analyzer | Rules | What changed |
 |---|---|---|---|
+| 2026-11-03 | 0.13.1 | 0.9.1-preview | A zotero:// link that switches the catalogue a plugin installs from is rated by what installing from that catalogue then does: medium while each install waits for a click or for a setting that's off by default, high when installs run by themselves. Before, it rated high like a link that installs an add-on without asking, which was stricter than the toolkit's install link (medium) even though the user still has to click. |
 | 2026-11-03 | 0.13.1 | 0.9.0-preview | A text-direction control character inside a lookup table (a language dictionary, for example) no longer counts as hidden code: with only data after it, nothing is shown out of order. Keys in addresses a plugin builds at runtime are redacted in the evidence, like other keys. |
 | 2026-10-16 | 0.13.0 | 0.9.0-preview | A program a plugin downloads and runs is rated by who can change it and whether anything checks it, and the card gives the reason. Until we've reviewed one, the finding stays high. |
 | 2026-10-16 | 0.13.0 | 0.8.0-preview | A review also carries over for code outside any function and for shell scripts a plugin ships, as long as that code is unchanged. |

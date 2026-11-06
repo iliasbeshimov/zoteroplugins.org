@@ -30,7 +30,7 @@ import { type ObservedHost, testedSummary, withObserved } from "./sandbox.ts";
  * Preview rules: the overall label ignores "source match not checked yet", because that is
  * a gap in our checks rather than something the plugin did. The facet still says it.
  */
-export const RULES_VERSION = "0.9.0-preview";
+export const RULES_VERSION = "0.9.1-preview";
 
 const RANK: Record<Concern, number> = { none: 0, low: 1, unknown: 2, medium: 2, high: 3 };
 const worst = (cs: Concern[]): Concern =>
@@ -303,7 +303,8 @@ function installSource(r: InstallRoute): string {
 function installDetail(routes: InstallRoute[], self: boolean): string | undefined {
   const groups = new Map<string, InstallRoute[]>();
   const ranked = [...routes].sort(
-    (x, y) => RANK[installRouteConcern(y, self)] - RANK[installRouteConcern(x, self)],
+    (x, y) =>
+      RANK[installRouteConcern(y, self, routes)] - RANK[installRouteConcern(x, self, routes)],
   );
   for (const r of ranked)
     groups.set(installSource(r), [...(groups.get(installSource(r)) ?? []), r]);
