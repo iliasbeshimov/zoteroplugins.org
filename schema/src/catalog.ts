@@ -69,6 +69,19 @@ export const CatalogEntry = z.object({
   maintenance: z.string(),
   lastReleaseAt: IsoDateTime.nullable(),
   docsChineseOnly: z.boolean(),
+  ratings: z
+    .object({
+      count: z.int().nonnegative().describe("Published ratings of every version"),
+      average: z.number().nullable(),
+      version: z
+        .object({ count: z.int().nonnegative(), average: z.number().nullable() })
+        .nullable()
+        .describe("Ratings of the version listed here"),
+    })
+    .nullish()
+    .describe(
+      "Published ratings from Zotero Atlas and zoteroplugins.org; never part of the grade. Absent in catalogues written before ratings",
+    ),
 });
 
 export const Catalog = z.object({

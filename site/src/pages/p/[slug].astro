@@ -1,6 +1,7 @@
 ---
 import GradeTag from "../../components/GradeTag.astro";
 import InstallSheet from "../../components/InstallSheet.astro";
+import Ratings from "../../components/Ratings.astro";
 import Scorecard from "../../components/Scorecard.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
@@ -9,6 +10,7 @@ import Tip from "../../components/Tip.astro";
 import Base from "../../layouts/Base.astro";
 import SameIdRow from "../../components/SameIdRow.astro";
 import { allPlugins, alternatives, bySlug, type Plugin, sameIdGroupOf, sameIdText } from "../../lib/atlas.ts";
+import { REVIEWS_OPEN, ratingsOf } from "../../lib/ratings.ts";
 import { indexable } from "../../lib/seo.ts";
 import { checkedOn, pluginDescription, pluginLd, pluginTitle, verdictSentence } from "../../lib/meta.ts";
 import { JOB_BY_SLUG } from "@atlas/schema";
@@ -373,6 +375,14 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
           )
         }
       </section>
+      {
+        (REVIEWS_OPEN || ratingsOf(p.slug)) && (
+          <section id="reviews">
+            <h2>Ratings and reviews</h2>
+            <Ratings slug={p.slug} name={p.name} version={p.version ?? null} />
+          </section>
+        )
+      }
     </main>
 
     <aside>

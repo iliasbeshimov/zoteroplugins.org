@@ -46,8 +46,13 @@
 }</code></pre>
         <p>It is sent when you turn the choice on, when the list of plugins changes, and once a week. The ID is a random UUID the plugin generates on your computer; it is not derived from your hardware, your Zotero account or anything else, and it is the only thing that links one report to the next. <strong>Show what would be sent</strong>, in Zotero's settings under Zotero Atlas, shows your exact message.</p>
 
+        <h2>Ratings and reviews</h2>
+        <p>Nothing is sent until you click <strong>Post</strong> on a rating. Then it sends the plugin and version you rate, your stars and your review if you wrote one, your Zotero version and operating system, this plugin's version, and a scrambled ID for this Zotero, so rating again replaces your rating. That ID is a slow hash of a random key Zotero makes for its database; the key itself is never sent, and nothing is stored on your computer for it. While <strong>Send my plugin list</strong> is chosen, the rating also carries that list's random ID, so the rating can say how long you had the plugin.</p>
+        <p>Reviews are public, shown as "Zotero Atlas user" with your Zotero version. Links are removed. <strong>We never store your IP address.</strong> For ratings, the server keeps a scrambled code made from it, and the name of your network's operator, for 30 days to catch fake reviews. The code is made with a secret key that's replaced every month; after 30 days the code is cleared and its key deleted, and even we can't match it to anything. Every rating is checked before it's published; how fake ones are spotted isn't published, so it can't be gamed.</p>
+        <p>You can also review plugins on <a href="https://zoteroplugins.org">zoteroplugins.org</a>, with an email address that you confirm by a link. The address is never shown and never stored: it's used to send the link, and we keep only a fingerprint of it, so one address gets one review per plugin. The service that delivers the email sees the address, as any mail service does.</p>
+
         <h2>What the server keeps</h2>
-        <p>Per reporting install: the random ID, the Zotero version, the operating system, the plugin's version, and the plugin list, replaced on every report; and the date of every report with its reason (first run, list changed, weekly). Nothing else from the request is kept: no IP address, no user agent, no headers. A nightly job deletes all of it for an install not heard from for 180 days.</p>
+        <p>Per reporting install: the random ID, the Zotero version, the operating system, the plugin's version, and the plugin list, replaced on every report, except that a plugin you remove is remembered for 30 days so a rating can say how long it was used; and the date of every report with its reason (first run, list changed, weekly). Nothing else from the request is kept: no IP address, no user agent, no headers. A nightly job deletes all of it for an install not heard from for 180 days. Choosing <strong>Don't send</strong> deletes it at once; your ratings stay, without the link to your plugin list.</p>
         <p>Cloudflare, which runs the server, sees requests the way any web host does. We keep none of that, and the server code that decides what is stored is public.</p>
         <p>What is published: <a href="/api/v1/totals.json">totals</a>, meaning how many installs reported in the last 30 days and how many of them have each plugin. Counts only.</p>
 
@@ -59,11 +64,12 @@
           <li>Once a day the plugin fetches the directory's catalogue, a single public file, from <code>raw.githubusercontent.com</code>, the directory's repository on GitHub. The request carries no account and no identifier beyond what any download carries.</li>
           <li>When you click Install, Zotero downloads the plugin's release file from GitHub, as it would for any plugin you install.</li>
           <li>Zotero checks this project's GitHub releases for updates to Atlas itself, as it does for every plugin. You can turn that off per plugin in Tools → Plugins.</li>
+          <li>When you post a rating, it goes to zoteroatlas.com, as described above.</li>
           <li>Nothing else is contacted.</li>
         </ul>
 
         <h2>What it stores on your computer</h2>
-        <p>Three settings in Zotero's preferences (<code>extensions.zotero-atlas.usage</code>, <code>.id</code>, <code>.state</code>) and a copy of the catalogue at <code>zotero-atlas/catalog.json</code> in your Zotero data directory. Uninstalling removes all of it.</p>
+        <p>Three settings in Zotero's preferences (<code>extensions.zotero-atlas.usage</code>, <code>.id</code>, <code>.state</code>, which also remembers the ratings you posted and the plugins you removed in the last 30 days) and a copy of the catalogue at <code>zotero-atlas/catalog.json</code> in your Zotero data directory. Uninstalling removes all of it.</p>
 
         <h2>This website</h2>
         <p>zoteroatlas.com sets no cookies, runs no analytics, and loads nothing from third parties: the fonts are your system's, and the scripts and styles are served from here. The one image from elsewhere is the live grade badge, loaded from zoteroplugins.org, which we also run. Cloudflare, which hosts the site, sees requests the way any host does. The front page asks this site's own <code>/api/v1/totals.json</code> for the published counts; nothing about you is sent with that.</p>

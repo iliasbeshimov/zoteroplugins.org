@@ -17,6 +17,10 @@
  *   operating system and this plugin's version. Sent at first run, when that list changes, and
  *   once a week. Choosing "Don't send" sends one request to delete the record. Nothing from your
  *   library, no account, nothing that identifies you.
+ * - zoteroatlas.com, when you post a rating: the plugin and version you rate, your stars and
+ *   review, the Zotero version, the operating system and this plugin's version, a scrambled ID
+ *   for this Zotero (so rating again replaces your rating) and, while "Send my plugin list" is
+ *   chosen, the random ID above (so the rating can say how long you had the plugin).
  *
  * What it stores: three settings (extensions.zotero-atlas.usage, .id, .state) and the catalogue
  * in <Zotero data directory>/zotero-atlas/catalog.json. Uninstalling removes all of it.
@@ -26,6 +30,7 @@ const ID = "atlas@zoteroatlas.com";
 const CATALOG_URL =
   "https://raw.githubusercontent.com/iliasbeshimov/zoteroplugins.org/main/data/generated/catalog.json";
 const USAGE_URL = "https://zoteroatlas.com/api/v1/plugins";
+const RATINGS_URL = "https://zoteroatlas.com/api/v1/ratings";
 const SITE = "https://zoteroplugins.org";
 const HOME = "https://zoteroatlas.com";
 const PREF = {
@@ -38,6 +43,10 @@ const WEEK = 7 * DAY;
 const START_DELAY = 20 * 1000; // after startup, before the first check: let Zotero settle
 const ASK_DELAY = 8 * 1000; // after the main window opens, before the first-run screen
 const RANK = { "A+": 4, A: 3, B: 2, C: 1, "–": 0 };
+const RATER_SALT = "zotero-atlas ratings v1";
+const RATER_ROUNDS = 600000;
+const REMOVED_FOR = 30 * DAY; // a removed plugin can still be rated for this long
+const MAX_REVIEW = 1000;
 
 const ASK_TEXT =
   "Zotero Atlas never sends your library, notes, files, Zotero account, email or anything " +
@@ -158,6 +167,9 @@ function clearPrefs() {
  * catalogEtag, catalogAt: the catalogue's freshness. sentAt, sentHash: the last usage report.
  * seen: { addonId: { grade, version } } as last reviewed, so a grade drop can be told.
  * noticed: { key: time } notices already shown, so each shows once.
+ * removed: { addonId: { slug, name, version, at } } plugins removed in the last 30 days, so
+ *   they can still be rated.
+ * rated: { "slug|version": { stars, at } } ratings posted from this Zotero.
  */
 function state() {
   try {
@@ -336,12 +348,35 @@ async function review(force) {
       noticed[key] = Date.now();
       fresh.push({ flag: f, text: text(f) });
     }
-    seen[a.id] = { grade: e.grade, version: e.version, ...(from || {}) };
+    seen[a.id] = {
+      grade: e.grade,
+      version: e.version,
+      slug: e.slug,
+      name: e.name,
+      installed: a.version,
+      ...(from || {}),
+    };
   }
-  for (const id of Object.keys(seen)) if (!addons.some((a) => a.id === id)) delete seen[id];
+  // A plugin gone since the last look is remembered for a month, so it can still be rated: the
+  // people who remove a plugin at once are the ones who most need to say why.
+  const removed = st.removed || {};
+  for (const id of Object.keys(seen)) {
+    if (addons.some((a) => a.id === id)) continue;
+    const s = seen[id];
+    if (s.slug)
+      removed[id] = {
+        slug: s.slug,
+        name: s.name,
+        version: s.installed || s.version,
+        at: Date.now(),
+      };
+    delete seen[id];
+  }
+  for (const [id, r] of Object.entries(removed))
+    if (addons.some((a) => a.id === id) || Date.now() - r.at > REMOVED_FOR) delete removed[id];
   for (const [key, at] of Object.entries(noticed))
     if (Date.now() - at > 90 * DAY) delete noticed[key];
-  saveState({ seen, noticed });
+  saveState({ seen, noticed, removed });
   return { items, fresh, zotero: zv, catalog: data, fetchedAt: catalog.fetchedAt };
 }
 
@@ -437,6 +472,92 @@ async function installPlugin(entry, build, window) {
     timer = setTimeout(check, 5000);
   }
   return result;
+}
+
+// ---------------------------------------------------------------------------------------------
+// Ratings: stars and an optional review, sent only when you click Post
+
+let rater = null;
+
+const hex = (buf) =>
+  Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, "0")).join("");
+
+/**
+ * The ID this Zotero's ratings are posted under: a slow, salted hash of the key Zotero made for
+ * this database (Zotero.Users.getLocalUserKey()), never the key itself, which for a library that
+ * doesn't sync appears in item addresses. The same Zotero gives the same ID, so rating again
+ * replaces a rating, and nothing is stored for it.
+ */
+async function raterId(win) {
+  if (rater) return rater;
+  const key = Zotero.Users.getLocalUserKey();
+  const w = win || Zotero.getMainWindow();
+  if (!key || !w?.crypto?.subtle || !w.TextEncoder) throw new Error("no rater key");
+  const enc = new w.TextEncoder();
+  const subtle = w.crypto.subtle;
+  const base = await subtle.importKey("raw", enc.encode(key), "PBKDF2", false, ["deriveBits"]);
+  const bits = await subtle.deriveBits(
+    { name: "PBKDF2", hash: "SHA-256", salt: enc.encode(RATER_SALT), iterations: RATER_ROUNDS },
+    base,
+    256,
+  );
+  rater = hex(bits);
+  return rater;
+}
+
+/** Exactly what a rating sends. */
+async function ratingPayload({ slug, addon, version: rated, stars, text }, win) {
+  const body = {
+    rater: await raterId(win),
+    slug,
+    addon,
+    version: rated,
+    stars,
+    text: text || null,
+    os: os(),
+    zotero: Zotero.version,
+    atlas: version,
+  };
+  if (pref(PREF.usage) === "yes" && pref(PREF.id)) body.install = pref(PREF.id);
+  return body;
+}
+
+async function rate(r, win) {
+  const stars = Number(r.stars);
+  if (!Number.isInteger(stars) || stars < 1 || stars > 5)
+    return { ok: false, message: "Choose from one to five stars." };
+  const text = typeof r.text === "string" ? r.text.trim().slice(0, MAX_REVIEW) : "";
+  let body;
+  try {
+    body = await ratingPayload({ ...r, stars, text }, win);
+  } catch (e) {
+    Zotero.debug(`Zotero Atlas: no rating ID: ${e}`);
+    return { ok: false, message: "Zotero isn't ready to rate yet. Try again in a moment." };
+  }
+  try {
+    await Zotero.HTTP.request("POST", RATINGS_URL, {
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" },
+      timeout: 20000,
+      errorDelayMax: 0,
+    });
+  } catch (e) {
+    const status = e?.status ?? e?.xmlhttp?.status ?? 0;
+    Zotero.debug(`Zotero Atlas: rating not sent: ${e}`);
+    return {
+      ok: false,
+      message:
+        status === 429
+          ? "Too many ratings from your network in the last hour. Please try again later."
+          : status >= 400 && status < 500
+            ? "zoteroatlas.com didn't accept this rating."
+            : "Couldn't reach zoteroatlas.com. Check your connection and try again.",
+    };
+  }
+  const rated = state().rated || {};
+  rated[`${r.slug}|${r.version}`] = { stars, at: Date.now() };
+  saveState({ rated });
+  return { ok: true, message: "Thanks. Your rating is in." };
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -591,6 +712,12 @@ const Atlas = {
   install: installPlugin,
   openWindow,
   openPage: (url) => Zotero.launchURL(url),
+  ratings: {
+    rate,
+    rated: (slug, v) => state().rated?.[`${slug}|${v}`] || null,
+    removed: () => Object.entries(state().removed || {}).map(([id, r]) => ({ id, ...r })),
+    payload: ratingPayload,
+  },
   usage: {
     choice: () => pref(PREF.usage),
     set: (choice) => setPref(PREF.usage, choice === "yes" ? "yes" : "no"),

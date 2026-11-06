@@ -3,6 +3,7 @@ import { Catalog } from "./catalog.ts";
 import { PluginCurated, PluginRecord } from "./plugin.ts";
 import { PluginProfile } from "./profile.ts";
 import { Provenance } from "./provenance.ts";
+import { PublicRatings } from "./ratings.ts";
 import { Release } from "./release.ts";
 import { PluginContent, Requirements } from "./requirements.ts";
 import { Review } from "./review.ts";
@@ -15,6 +16,7 @@ export * from "./common.ts";
 export * from "./plugin.ts";
 export * from "./profile.ts";
 export * from "./provenance.ts";
+export * from "./ratings.ts";
 export * from "./release.ts";
 export * from "./requirements.ts";
 export * from "./review.ts";
@@ -35,6 +37,7 @@ export const documentSchemas = {
   "trust-card": TrustCard,
   "sandbox-record": SandboxRecord,
   catalog: Catalog,
+  ratings: PublicRatings,
 } as const;
 export * from "./grade.ts";
 export * from "./jobs.ts";

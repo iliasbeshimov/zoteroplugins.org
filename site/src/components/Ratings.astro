@@ -1,0 +1,398 @@
+---
+/**
+ * A plugin's ratings and reviews, and the form to write one. The form posts to
+ * zoteroatlas.com, which sends a confirmation link; nothing is published until that link is opened
+ * and the review has been checked. Turnstile loads only when someone opens the form.
+ */
+import { MIN_SHOWN, REVIEWS_OPEN, ratingsOf, starsText, usedFor } from "../lib/ratings.ts";
+
+interface Props {
+  slug: string;
+  name: string;
+  version: string | null;
+}
+const { slug, name, version } = Astro.props;
+const r = ratingsOf(slug);
+const v = version && r ? (r.versions[version] ?? null) : null;
+const shown = v && v.count >= MIN_SHOWN ? v : null;
+const max = shown ? Math.max(...shown.stars, 1) : 1;
+const day = (d: string) =>
+  new Date(`${d}T12:00:00Z`).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+const SITE_KEY = "0x4AAAAAAFLUiYqWzSW4lRSQ";
+const TEST_KEY = "1x00000000000000000000AA";
+const siteKey =
+  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || (import.meta.env.DEV ? TEST_KEY : SITE_KEY);
+---
+
+<p class="lead muted">
+  What people who use it say. This is separate from the grade, which is what the code does, and
+  never changes it.
+</p>
+
+{
+  !r ? (
+    <p>No ratings yet.</p>
+  ) : (
+    <div class="summary">
+      {shown ? (
+        <div class="avg">
+          <span class="big">{shown.average?.toFixed(1)}</span>
+          <span class="stars" aria-label={`${shown.average?.toFixed(1)} out of 5 stars`}>
+            {starsText(Math.round(shown.average ?? 0))}
+          </span>
+          <span class="muted small">
+            {shown.count} ratings of v{version}
+          </span>
+        </div>
+      ) : (
+        <p class="few">
+          {v ? `Too few ratings of v${version} yet (${v.count}).` : `No ratings of v${version} yet.`}
+        </p>
+      )}
+      {shown && (
+        <div class="bars" aria-hidden="true">
+          {[5, 4, 3, 2, 1].map((n) => (
+            <div class="bar">
+              <span>{n}</span>
+              <span class="track">
+                <span class="fill" style={`width:${Math.round((shown.stars[n - 1] / max) * 100)}%`} />
+              </span>
+              <span class="muted">{shown.stars[n - 1]}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      <p class="muted small">
+        {r.all.count} rating{r.all.count === 1 ? "" : "s"} across all versions
+        {r.all.average !== null && r.all.count >= MIN_SHOWN ? `, ${r.all.average.toFixed(1)} on average` : ""}.
+        From Zotero Atlas and this site; every one is checked before it's published.
+      </p>
+    </div>
+  )
+}
+
+{
+  r && r.reviews.length > 0 && (
+    <ol class="reviews">
+      {r.reviews.slice(0, 20).map((rv) => (
+        <li>
+          <div class="who">
+            <span class="stars" aria-label={`${rv.stars} out of 5 stars`}>
+              {starsText(rv.stars)}
+            </span>
+            <strong>{rv.by}</strong>
+            <span class="tag">{rv.from === "website" ? "email confirmed" : "from Zotero Atlas"}</span>
+          </div>
+          <div class="muted small">
+            {[`v${rv.version}`, rv.zotero ? `Zotero ${rv.zotero}` : null, usedFor(rv.usedDays), day(rv.posted)]
+              .filter(Boolean)
+              .join(" · ")}
+          </div>
+          <p class="text">{rv.text}</p>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
+{
+  REVIEWS_OPEN && version && (
+    <details class="write" data-slug={slug} data-version={version} data-sitekey={siteKey}>
+      <summary class="btn">Write a review</summary>
+      <form novalidate>
+        <fieldset class="pick">
+          <legend>Your rating of {name} v{version}</legend>
+          {[1, 2, 3, 4, 5].map((n) => (
+            <label>
+              <input type="radio" name="stars" value={n} required />
+              <span aria-hidden="true">{starsText(n)}</span>
+              <span class="sr">{n} star{n === 1 ? "" : "s"}</span>
+            </label>
+          ))}
+        </fieldset>
+        <label class="field">
+          <span>Your review <span class="muted small">(optional)</span></span>
+          <textarea name="text" rows="4" maxlength="1000" placeholder="What did you use it for? What worked, what didn't?" />
+        </label>
+        <label class="field">
+          <span>Name to show <span class="muted small">(optional; empty posts as Anonymous)</span></span>
+          <input name="name" type="text" maxlength="60" autocomplete="nickname" />
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input name="email" type="email" required autocomplete="email" />
+          <span class="muted small">
+            Never shown and never stored. We send one link to confirm it, then keep only a
+            fingerprint, so one address gets one review per plugin.
+          </span>
+        </label>
+        <div class="ts" />
+        <button type="submit" class="btn btn-primary">Send confirmation link</button>
+        <p class="status" role="status" aria-live="polite" />
+        <p class="muted small fine">
+          Your review is public, under the name you give, and published with the directory's data
+          under CC BY 4.0. Links are removed. We never store your IP address: a scrambled code made
+          from it is kept for 30 days to catch fake reviews. Every review is checked before it's
+          published; how fake ones are spotted isn't published, so it can't be gamed.
+        </p>
+      </form>
+    </details>
+  )
+}
+
+<script>
+  const API = "https://zoteroatlas.com/api/v1/reviews";
+  type Turnstile = {
+    render: (el: HTMLElement, o: { sitekey: string; size?: string }) => string;
+    reset: (id?: string) => void;
+    getResponse: (id?: string) => string | undefined;
+  };
+  const MESSAGES: Record<string, string> = {
+    "not-open":
+      "Reviews on this site open soon. Meanwhile you can rate it inside Zotero with Zotero Atlas.",
+    email: "That doesn't look like an email address.",
+    throwaway: "Please use an address you keep: throwaway mailboxes can't confirm a review.",
+    turnstile: "The check against bots didn't pass. Please try again.",
+    "too-many": "Too many confirmation emails for that address or network today. Please try tomorrow.",
+    invalid: "Something in the form isn't right. Please check it and try again.",
+  };
+  for (const d of document.querySelectorAll<HTMLDetailsElement>("details.write")) {
+    let widget: string | undefined;
+    const form = d.querySelector("form") as HTMLFormElement;
+    const status = d.querySelector(".status") as HTMLElement;
+    const box = d.querySelector(".ts") as HTMLElement;
+    d.addEventListener("toggle", () => {
+      if (!d.open || box.dataset.loaded) return;
+      box.dataset.loaded = "1";
+      const s = document.createElement("script");
+      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      s.async = true;
+      s.onload = () => {
+        const t = (window as unknown as { turnstile?: Turnstile }).turnstile;
+        widget = t?.render(box, { sitekey: d.dataset.sitekey ?? "", size: "flexible" });
+      };
+      document.head.append(s);
+    });
+    form.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const t = (window as unknown as { turnstile?: Turnstile }).turnstile;
+      const data = new FormData(form);
+      const stars = Number(data.get("stars"));
+      if (!stars) {
+        status.textContent = "Choose from one to five stars first.";
+        return;
+      }
+      const email = String(data.get("email") ?? "").trim();
+      if (!email) {
+        status.textContent = "Enter the email address to send the confirmation link to.";
+        return;
+      }
+      const token = t?.getResponse(widget);
+      if (!token) {
+        status.textContent = "Please wait for the check against bots to finish.";
+        return;
+      }
+      const button = form.querySelector("button[type=submit]") as HTMLButtonElement;
+      button.disabled = true;
+      status.textContent = "Sending…";
+      try {
+        const res = await fetch(API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            slug: d.dataset.slug,
+            version: d.dataset.version,
+            stars,
+            text: String(data.get("text") ?? ""),
+            name: String(data.get("name") ?? ""),
+            email,
+            turnstile: token,
+          }),
+        });
+        const out = await res.json().catch(() => ({}));
+        if (res.status === 202) {
+          form.replaceChildren();
+          const done = document.createElement("p");
+          done.className = "done";
+          done.textContent = `Check your inbox: we sent a link to ${email}. Your review goes up once you open it, within 24 hours, and it's been checked.`;
+          form.append(done);
+          return;
+        }
+        status.textContent = MESSAGES[out.error] ?? "That didn't work. Please try again in a moment.";
+      } catch {
+        status.textContent = "Couldn't reach the review service. Please try again in a moment.";
+      }
+      button.disabled = false;
+      t?.reset(widget);
+    });
+  }
+</script>
+
+<style>
+  .lead {
+    margin: 0 0 12px;
+    max-width: 60ch;
+  }
+  .summary {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .avg {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .big {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .stars {
+    color: var(--rev-fg);
+    letter-spacing: 1px;
+  }
+  .few {
+    margin: 0;
+  }
+  .bars {
+    display: grid;
+    gap: 4px;
+    max-width: 320px;
+  }
+  .bar {
+    display: grid;
+    grid-template-columns: 12px 1fr 3ch;
+    gap: 8px;
+    align-items: center;
+    font-size: 13px;
+  }
+  .track {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--surface-2);
+    overflow: hidden;
+  }
+  .fill {
+    display: block;
+    height: 100%;
+    background: var(--rev-fg);
+  }
+  .reviews {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+    display: grid;
+    gap: 14px;
+  }
+  .reviews li {
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .who {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 12px;
+    padding: 1px 8px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    color: var(--ink-2);
+  }
+  .text {
+    margin: 6px 0 0;
+    white-space: pre-line;
+    max-width: 65ch;
+  }
+  .write summary {
+    display: inline-flex;
+    cursor: pointer;
+    list-style: none;
+  }
+  .write summary::-webkit-details-marker {
+    display: none;
+  }
+  form {
+    display: grid;
+    gap: 14px;
+    max-width: 520px;
+    margin-top: 14px;
+  }
+  .pick {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+  .pick legend {
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .pick label {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    color: var(--rev-fg);
+    cursor: pointer;
+    min-height: 32px;
+  }
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .field {
+    display: grid;
+    gap: 6px;
+    font-weight: 600;
+  }
+  .field .small {
+    font-weight: 400;
+  }
+  textarea,
+  input[type="text"],
+  input[type="email"] {
+    font: inherit;
+    font-weight: 400;
+    padding: 9px 10px;
+    border: 1px solid var(--line-strong, var(--line));
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  textarea {
+    resize: vertical;
+  }
+  .status:empty {
+    display: none;
+  }
+  .status {
+    margin: 0;
+  }
+  .fine {
+    margin: 0;
+  }
+  .done {
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: var(--few-bg, var(--surface-2));
+    color: var(--few-fg);
+  }
+</style>

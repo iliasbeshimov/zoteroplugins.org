@@ -186,6 +186,17 @@ export function buildProgram(): Command {
     });
 
   program
+    .command("ratings")
+    .description(
+      "fetch the published ratings from zoteroatlas.com into data/generated/ratings.json, for the catalogue and the site",
+    )
+    .action(async () => {
+      const { loadConfig } = await import("./config.ts");
+      const { fetchRatings } = await import("./profile/ratings.ts");
+      await fetchRatings(loadConfig().userAgent);
+    });
+
+  program
     .command("moved")
     .description(
       "cards whose repo left the census: redirect the ones that moved on GitHub to their new card, mark the ones whose repo is gone (the nightly profile run does this too)",

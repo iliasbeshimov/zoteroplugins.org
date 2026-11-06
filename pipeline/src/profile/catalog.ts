@@ -9,6 +9,7 @@ import {
   gradeOf,
   jobsFor,
   type PluginProfile,
+  PublicRatings,
   type Release,
 } from "@atlas/schema";
 import { paths } from "../paths.ts";
@@ -20,6 +21,7 @@ import { RULES_VERSION } from "./score.ts";
  * ones (forks, retired, Zotero 6 only, nothing to install) aren't offered for installation.
  */
 export const CATALOG_FILE = join(paths.generated, "catalog.json");
+export const RATINGS_FILE = join(paths.generated, "ratings.json");
 export const SITE = "https://zoteroplugins.org";
 
 export interface CatalogSources {
@@ -32,6 +34,8 @@ export interface CatalogSources {
   >;
   /** A release document by its path relative to data/generated, for the other builds. */
   release: (file: string) => Release | null;
+  /** Published ratings by slug (data/generated/ratings.json, fetched by `atlas ratings`). */
+  ratings?: PublicRatings["plugins"];
 }
 
 const GRADE_OF_LABEL: Record<string, CatalogGrade> = {
@@ -115,6 +119,21 @@ export function catalogEntry(p: PluginProfile, src: CatalogSources): CatalogEntr
     maintenance: p.maintenance.status,
     lastReleaseAt: p.maintenance.lastReleaseAt,
     docsChineseOnly: p.languages.chineseOnlyDocs,
+    ratings: ratingsOf(src.ratings?.[p.slug], inst.version),
+  };
+}
+
+/** The catalogue's short form of a plugin's ratings: all versions, and the listed one. */
+function ratingsOf(
+  r: PublicRatings["plugins"][string] | undefined,
+  version: string,
+): CatalogEntry["ratings"] {
+  if (!r || r.all.count === 0) return null;
+  const v = r.versions[version];
+  return {
+    count: r.all.count,
+    average: r.all.average,
+    version: v ? { count: v.count, average: v.average } : null,
   };
 }
 
@@ -188,7 +207,13 @@ export async function loadCatalogSources(profiles: PluginProfile[]): Promise<Cat
     for (const b of p.install?.builds ?? [])
       if (!releases.has(b.releaseFile))
         releases.set(b.releaseFile, await readJson<Release>(join(paths.generated, b.releaseFile)));
-  return { summaries, requirements, release: (file) => releases.get(file) ?? null };
+  const ratings = PublicRatings.safeParse(await readJson(RATINGS_FILE));
+  return {
+    summaries,
+    requirements,
+    release: (file) => releases.get(file) ?? null,
+    ratings: ratings.success ? ratings.data.plugins : {},
+  };
 }
 
 export async function writeCatalog(

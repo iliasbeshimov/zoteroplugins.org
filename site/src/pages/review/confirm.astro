@@ -1,0 +1,62 @@
+---
+/**
+ * /review/confirm#<token>: where the confirmation email's link lands. The token travels in
+ * the fragment, which browsers never send to a server, and is taken out of the address bar at once.
+ * The page hands it to zoteroatlas.com, which posts the review for checking.
+ */
+import SiteFooter from "../../components/SiteFooter.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import Base from "../../layouts/Base.astro";
+---
+
+<Base title="Confirm your review · Zotero Plugins Atlas" description="Confirming a review on zoteroplugins.org." noindex>
+  <SiteHeader />
+  <main class="page">
+    <h1>Your review</h1>
+    <p id="state" role="status" aria-live="polite">Confirming…</p>
+    <p id="next" hidden><a id="back" href="/">Back to the plugin</a></p>
+  </main>
+  <SiteFooter />
+</Base>
+
+<script>
+  const state = document.getElementById("state") as HTMLElement;
+  const next = document.getElementById("next") as HTMLElement;
+  const back = document.getElementById("back") as HTMLAnchorElement;
+  const token = location.hash.slice(1);
+  history.replaceState(null, "", location.pathname);
+  async function confirm() {
+    if (!/^[A-Za-z0-9_-]{40,60}$/.test(token)) {
+      state.textContent = "This link isn't complete. Open it straight from the email.";
+      return;
+    }
+    try {
+      const res = await fetch("https://zoteroatlas.com/api/v1/reviews/confirm", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+      const out = await res.json().catch(() => ({}));
+      if (res.ok && out.slug) {
+        state.textContent =
+          "Thanks, your review is in. It shows on the plugin's page once it's been checked, usually within a day.";
+        back.href = `/p/${out.slug}`;
+        next.hidden = false;
+        return;
+      }
+      state.textContent =
+        res.status === 404
+          ? "This link has expired or was already used. Links work once, for 24 hours."
+          : "That didn't work. Please open the link again in a moment.";
+    } catch {
+      state.textContent = "Couldn't reach the review service. Please open the link again in a moment.";
+    }
+  }
+  confirm();
+</script>
+
+<style>
+  .page { max-width: 720px; margin: 0 auto; padding: 64px var(--gutter); display: flex; flex-direction: column; gap: 12px; }
+  h1 { margin: 0; font-size: clamp(28px, 4vw, 36px); }
+  p { margin: 0; line-height: 1.6; }
+</style>

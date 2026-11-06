@@ -1,4 +1,4 @@
-import { Catalog, type PluginProfile, type Release } from "@atlas/schema";
+import { Catalog, type PluginProfile, PublicRatings, type Release } from "@atlas/schema";
 import { describe, expect, it } from "vitest";
 import {
   buildCatalog,
@@ -6,6 +6,7 @@ import {
   catalogEntry,
   serializeCatalog,
 } from "../src/profile/catalog.ts";
+import { serializeRatings } from "../src/profile/ratings.ts";
 
 /** A listed plugin with one release, as the catalogue reads it. */
 function profile(o: {
@@ -244,5 +245,69 @@ describe("buildCatalog", () => {
     expect(lines[0]).toMatch(/^\{"schemaVersion":1,.*"plugins":\[$/);
     expect(lines.length).toBe(4); // header, two plugins, closing
     expect(Catalog.parse(JSON.parse(text))).toEqual(catalog);
+  });
+});
+
+describe("ratings in the catalogue", () => {
+  const summary = (count: number, average: number | null) => ({
+    count,
+    average,
+    stars: [0, 0, 0, 0, count],
+  });
+  it("carries the count and average of all versions and of the version listed", () => {
+    const e = catalogEntry(profile({}), {
+      ...sources(),
+      ratings: {
+        demo: {
+          all: summary(14, 4.6),
+          versions: { "1.1.0": summary(3, 4.0), "1.2.0": summary(11, 4.8) },
+          reviews: [],
+        },
+      },
+    });
+    expect(e?.version).toBe("1.2.0");
+    expect(e?.ratings).toEqual({ count: 14, average: 4.6, version: { count: 11, average: 4.8 } });
+  });
+  it("is null with no ratings, and the catalogue still validates", () => {
+    const e = catalogEntry(profile({}), sources());
+    expect(e?.ratings).toBeNull();
+    const catalog = buildCatalog([profile({})], sources(), "2026-11-03T00:00:00.000Z");
+    expect(Catalog.parse(JSON.parse(serializeCatalog(catalog)))).toEqual(catalog);
+  });
+});
+
+describe("ratings.json", () => {
+  it("one plugin per line, sorted, and it reads back against the schema", () => {
+    const r = {
+      generatedAt: "2026-11-07T00:00:00.000Z",
+      plugins: {
+        zoplicate: {
+          all: { count: 1, average: 1, stars: [1, 0, 0, 0, 0] },
+          versions: { "5.1.1": { count: 1, average: 1, stars: [1, 0, 0, 0, 0] } },
+          reviews: [
+            {
+              stars: 1,
+              version: "5.1.1",
+              text: "Crashed on start",
+              by: "Zotero Atlas user",
+              from: "zotero-atlas" as const,
+              zotero: "10.0.7",
+              usedDays: 0,
+              posted: "2026-11-06",
+            },
+          ],
+        },
+        notero: {
+          all: { count: 1, average: 4, stars: [0, 0, 0, 1, 0] },
+          versions: { "2.1.0": { count: 1, average: 4, stars: [0, 0, 0, 1, 0] } },
+          reviews: [],
+        },
+      },
+    };
+    const text = serializeRatings(r);
+    const lines = text.trimEnd().split("\n");
+    expect(lines.length).toBe(4);
+    expect(lines[1]).toMatch(/^"notero":/);
+    expect(PublicRatings.parse(JSON.parse(text))).toEqual(r);
   });
 });

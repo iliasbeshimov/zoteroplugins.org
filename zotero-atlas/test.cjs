@@ -230,6 +230,7 @@ function load(opts = {}) {
       uiReadyPromise: Promise.resolve(),
       getMainWindow: () => t.window,
       launchURL: (u) => log.push(`open:${u}`),
+      Users: { getLocalUserKey: () => t.localKey ?? "AbCd2345" },
       DataDirectory: { dir: "/data" },
       File: {
         pathToFile: file,
@@ -647,6 +648,101 @@ const run = async (name, fn) => {
       );
     },
   );
+
+  await run(
+    "ratings: a slow hash of Zotero's key, never the key; exactly these fields; the list ID only while sending",
+    async () => {
+      const t = load({ http: () => ({ status: 204, responseText: "" }) });
+      t.s.startup({ id: "a", version: "0.2.0", rootURI: "r/" });
+      const A = t.s.Zotero.ZoteroAtlas;
+      const win = { crypto: require("node:crypto").webcrypto, TextEncoder };
+      const target = { slug: "x", addon: "x@example.org", version: "1.2.0", name: "X" };
+      const r = await A.ratings.rate({ ...target, stars: 4, text: "  Good.  " }, win);
+      assert.ok(r.ok, r.message);
+      const req = t.http.at(-1);
+      assert.equal(req.url, "https://zoteroatlas.com/api/v1/ratings");
+      const sent = JSON.parse(req.body);
+      assert.deepEqual(Object.keys(sent).sort(), [
+        "addon",
+        "atlas",
+        "os",
+        "rater",
+        "slug",
+        "stars",
+        "text",
+        "version",
+        "zotero",
+      ]);
+      const expected = require("node:crypto")
+        .pbkdf2Sync("AbCd2345", "zotero-atlas ratings v1", 600000, 32, "sha256")
+        .toString("hex");
+      assert.equal(sent.rater, expected, "PBKDF2 of the local user key");
+      assert.ok(!req.body.includes("AbCd2345"), "the key itself is never sent");
+      assert.equal(sent.text, "Good.");
+      assert.deepEqual(
+        [sent.stars, sent.version, sent.atlas, sent.os],
+        [4, "1.2.0", "0.2.0", "mac"],
+      );
+      assert.equal(A.ratings.rated("x", "1.2.0").stars, 4);
+      assert.equal(A.ratings.rated("x", "1.1.0"), null);
+
+      t.prefs["extensions.zotero-atlas.usage"] = "yes";
+      t.prefs["extensions.zotero-atlas.id"] = "12345678-1234-4123-8123-123456789abc";
+      await A.ratings.rate({ ...target, stars: 2 }, win);
+      const again = JSON.parse(t.http.at(-1).body);
+      assert.equal(again.install, "12345678-1234-4123-8123-123456789abc");
+      assert.equal(again.rater, expected, "same Zotero, same ID");
+      assert.equal(again.text, null);
+
+      const n = t.http.length;
+      assert.equal((await A.ratings.rate({ ...target, stars: 0 }, win)).ok, false);
+      assert.equal((await A.ratings.rate({ ...target, stars: 6 }, win)).ok, false);
+      assert.equal(t.http.length, n, "nothing sent without one to five stars");
+
+      t.httpHandler = () => {
+        const e = new Error("HTTP 429");
+        e.status = 429;
+        throw e;
+      };
+      const busy = await A.ratings.rate({ ...target, stars: 5 }, win);
+      assert.ok(!busy.ok && /Too many ratings/.test(busy.message));
+      assert.equal(A.ratings.rated("x", "1.2.0").stars, 2, "a failed rating isn't remembered");
+    },
+  );
+
+  await run("ratings: a removed plugin can be rated for 30 days, then it's forgotten", async () => {
+    const e = entry({});
+    const x = {
+      id: "x@example.org",
+      type: "extension",
+      name: "X",
+      version: "1.1.0",
+      isActive: true,
+    };
+    const t = load({ addons: [x], http: () => ok200(catalogJson([e])) });
+    t.s.startup({ id: "a", version: "0.2.0", rootURI: "r/" });
+    const A = t.s.Zotero.ZoteroAtlas;
+    await A.review(true);
+    assert.deepEqual(A.ratings.removed(), []);
+    t.addons = [];
+    await A.review(false);
+    const gone = A.ratings.removed();
+    assert.equal(gone.length, 1);
+    assert.deepEqual(
+      { id: gone[0].id, slug: gone[0].slug, name: gone[0].name, version: gone[0].version },
+      { id: "x@example.org", slug: "x", name: "X", version: "1.1.0" },
+    );
+    t.addons = [x];
+    await A.review(false);
+    assert.deepEqual(A.ratings.removed(), [], "installed again: not listed as removed");
+    t.addons = [];
+    await A.review(false);
+    const st = JSON.parse(t.prefs["extensions.zotero-atlas.state"]);
+    st.removed["x@example.org"].at = Date.now() - 31 * 24 * 3600 * 1000;
+    t.prefs["extensions.zotero-atlas.state"] = JSON.stringify(st);
+    await A.review(false);
+    assert.deepEqual(A.ratings.removed(), [], "forgotten after 30 days");
+  });
 
   await run("worksWith and fileFor compare versions the way Zotero does", async () => {
     const t = load();

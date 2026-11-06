@@ -25,6 +25,9 @@ inside Zotero, and keeps an eye on the ones you have. Home: [zoteroatlas.com](ht
   you have, when Zotero's blocklist blocks it, or when Zotero has disabled it because it doesn't
   work with your version. Where a version that works, or a cleaner one, is listed, it offers it.
   "Your plugins" shows all of this in one place.
+- **Rate what you use.** Stars, and a review if you want to write one, for any plugin you have or
+  removed in the last 30 days. No account. Ratings show next to each plugin's grade, but never
+  change it: the grade is what the code does, the rating is what people who use it say.
 
 Every grade comes from the directory's published checks: see
 [how plugins are graded](https://zoteroplugins.org/how-we-grade). The plugin itself is listed and
@@ -46,9 +49,21 @@ Zotero Atlas, and the plugin asks the server to delete the record. "Show what wo
 the settings shows the exact message. The server's code is in [server/](server/); it stores
 nothing from the request but those fields, no IP address.
 
+**When you post a rating**, and only then, it sends to zoteroatlas.com: the plugin and version you
+rate, your stars and review, your Zotero version and operating system, this plugin's version, and
+a scrambled ID for this Zotero, so rating again replaces your rating. The ID is a slow hash of a
+random key Zotero makes for its database; the key itself is never sent, and nothing is stored on
+your computer for it. While **Send my plugin list** is chosen, the rating also carries that list's
+random ID, so the rating can say how long you had the plugin. Reviews are public, shown as
+"Zotero Atlas user" with your Zotero version; links are removed. We never store your IP address:
+for ratings, the server keeps a scrambled code made from it for 30 days to catch fake reviews,
+after which even we can't match it to anything. Every rating is checked before it's published, and
+how fake ones are spotted isn't published, so it can't be gamed.
+
 Whatever you choose, the plugin fetches the directory's catalogue once a day from GitHub
 (raw.githubusercontent.com, the directory's public repository) and, when you click Install,
-Zotero downloads the plugin file from GitHub. Nothing else is contacted.
+Zotero downloads the plugin file from GitHub. Nothing else is contacted, except zoteroatlas.com
+when you post a rating.
 
 It stores three settings (`extensions.zotero-atlas.usage`, `.id`, `.state`) and the catalogue in
 `zotero-atlas/catalog.json` in your Zotero data directory. Uninstalling removes all of it.

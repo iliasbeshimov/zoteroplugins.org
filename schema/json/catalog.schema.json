@@ -400,6 +400,64 @@
           },
           "docsChineseOnly": {
             "type": "boolean"
+          },
+          "ratings": {
+            "description": "Published ratings from Zotero Atlas and zoteroplugins.org; never part of the grade. Absent in catalogues written before ratings",
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "count": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991,
+                    "description": "Published ratings of every version"
+                  },
+                  "average": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "version": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "count": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "average": {
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "count",
+                          "average"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "description": "Ratings of the version listed here"
+                  }
+                },
+                "required": [
+                  "count",
+                  "average",
+                  "version"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [

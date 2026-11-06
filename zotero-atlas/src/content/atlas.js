@@ -119,6 +119,111 @@
     return parts.join(" · ");
   }
 
+  /** "★ 4.6 (96 ratings of 2.1.0)" once the listed version has 10, "too few ratings yet" before. */
+  function ratingText(entry) {
+    const r = entry.ratings;
+    if (!r?.count) return "";
+    const v = r.version;
+    if (v && v.count >= 10)
+      return `★ ${v.average.toFixed(1)} (${v.count} ratings of ${entry.version})`;
+    return "too few ratings yet";
+  }
+
+  const SENT =
+    "Sent to zoteroatlas.com when you click Post: the plugin and version, your stars and review, " +
+    "your Zotero version and operating system, and a scrambled ID for this Zotero, so rating " +
+    "again replaces your rating. Never your library, your Zotero account or your email. We never " +
+    "store your IP address: a scrambled code made from it is kept for 30 days to catch fake reviews.";
+
+  /** Stars and an optional review for one installed (or recently removed) version. */
+  function rateBox(target) {
+    const box = el("div", "rate");
+    const closed = () => {
+      box.textContent = "";
+      const mine = A.ratings.rated(target.slug, target.version);
+      const open = el(
+        "button",
+        "linkish",
+        mine
+          ? `You rated ${target.version} ${"★".repeat(mine.stars)}. Change your rating`
+          : `Rate ${target.version}`,
+      );
+      open.type = "button";
+      open.addEventListener("click", () => form(mine?.stars ?? 0));
+      box.append(open);
+    };
+    const form = (start) => {
+      box.textContent = "";
+      let stars = start;
+      const group = el("div", "stars");
+      group.setAttribute("role", "radiogroup");
+      group.setAttribute("aria-label", `Your rating of ${target.name} ${target.version}`);
+      const buttons = [];
+      const paint = () =>
+        buttons.forEach((b, i) => {
+          b.classList.toggle("on", i < stars);
+          b.textContent = i < stars ? "★" : "☆";
+          b.setAttribute("aria-checked", String(i + 1 === stars));
+        });
+      for (let n = 1; n <= 5; n++) {
+        const b = el("button", "star", "★");
+        b.type = "button";
+        b.setAttribute("role", "radio");
+        b.setAttribute("aria-label", `${n} star${n === 1 ? "" : "s"}`);
+        b.addEventListener("click", () => {
+          stars = n;
+          paint();
+        });
+        buttons.push(b);
+        group.append(b);
+      }
+      paint();
+      const text = document.createElement("textarea");
+      text.rows = 3;
+      text.maxLength = 1000;
+      text.placeholder = "A review, if you'd like: what you used it for, what worked, what didn't";
+      text.setAttribute("aria-label", "Your review (optional)");
+      const msg = el("p", "note");
+      const post = el("button", "primary", "Post");
+      post.type = "button";
+      const cancel = el("button", "", "Cancel");
+      cancel.type = "button";
+      cancel.addEventListener("click", closed);
+      post.addEventListener("click", async () => {
+        if (!stars) {
+          msg.textContent = "Choose from one to five stars first.";
+          return;
+        }
+        post.disabled = true;
+        msg.textContent = "Sending…";
+        const r = await A.ratings.rate({ ...target, stars, text: text.value }, window);
+        if (!r.ok) {
+          post.disabled = false;
+          msg.textContent = r.message;
+          return;
+        }
+        closed();
+        box.prepend(el("p", "note", r.message));
+      });
+      const act = el("div", "rate-actions");
+      act.append(post, cancel);
+      box.append(
+        group,
+        text,
+        el(
+          "p",
+          "note",
+          "Public, shown as “Zotero Atlas user” with your Zotero version. Links are removed.",
+        ),
+        act,
+        msg,
+        el("p", "note fine", SENT),
+      );
+    };
+    closed();
+    return box;
+  }
+
   function row(entry, flags) {
     const r = el("div", "row");
     const main = el("div", "main");
@@ -130,6 +235,8 @@
     );
     const meta = [];
     if (entry.downloads) meta.push(`${num(entry.downloads)} downloads`);
+    const rating = ratingText(entry);
+    if (rating) meta.push(rating);
     if (entry.jobs.length) meta.push(entry.jobs.map((j) => JOB_TITLE[j] || j).join(", "));
     if (entry.lastReleaseAt) meta.push(`updated ${date(entry.lastReleaseAt)}`);
     title.append(el("span", "meta", meta.join(" · ")));
@@ -158,6 +265,7 @@
       link("Full card on zoteroplugins.org", entry.page),
       link("GitHub", entry.repo),
     );
+    if (entry.ratings?.count) why.append(link("Reviews", `${entry.page}#reviews`));
     main.append(why);
     for (const f of flags || []) {
       if (f === "outdated") continue;
@@ -235,6 +343,14 @@
             el("span", "", `The grade is for version ${i.entry.version}. `),
           );
         if (!i.addon.enabled) r.querySelector(".title").append(el("span", "meta", "disabled"));
+        r.querySelector(".main").append(
+          rateBox({
+            slug: i.entry.slug,
+            addon: i.addon.id,
+            version: i.addon.version,
+            name: i.entry.name,
+          }),
+        );
         list.append(r);
       } else {
         const r = el("div", "row");
@@ -255,6 +371,22 @@
         r.append(main);
         list.append(r);
       }
+    }
+    // Removed in the last month: still worth a rating, above all from someone who removed it fast.
+    const gone = A.ratings.removed().sort((a, b) => b.at - a.at);
+    if (gone.length) list.append(el("h3", "sub", "Removed in the last 30 days"));
+    for (const g of gone) {
+      const r = el("div", "row");
+      const main = el("div", "main");
+      const title = el("div", "title");
+      title.append(
+        gradePill("–"),
+        el("span", "name", g.name),
+        el("span", "ver", `${g.version} · removed ${new Date(g.at).toLocaleDateString()}`),
+      );
+      main.append(title, rateBox({ slug: g.slug, addon: g.id, version: g.version, name: g.name }));
+      r.append(main);
+      list.append(r);
     }
   }
 
