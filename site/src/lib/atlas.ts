@@ -12,6 +12,7 @@ import {
 } from "@atlas/schema";
 
 import type { SearchDoc } from "./search.ts";
+import { fmtUse, loadUsage } from "./usage.ts";
 
 /**
  * Turns data/generated/<slug>/profile.json into what the pages show: the Atlas grade, its
@@ -130,6 +131,14 @@ export interface Plugin {
   stars: string;
   downloads: string;
   downloadsN: number;
+  /** About how many copies of Zotero have it, from the census history (lib/usage.ts); null without history. */
+  inUse: number | null;
+  /** `inUse` rounded for display, e.g. "570k"; "" without an estimate. */
+  inUseText: string;
+  /** Releases published on GitHub, formatted. */
+  releases: string;
+  /** When its repository was created, as an ISO timestamp: when the plugin first appeared. */
+  createdAt: string | null;
   contributors: string;
   maint: string;
   maintStatus: string;
@@ -436,6 +445,7 @@ function build(
   summaries: Record<string, Summary>,
   reqs: Record<string, Requirement>,
   phrases: Record<string, string[]>,
+  usage: Map<string, number>,
 ): Plugin {
   const t = p.trust;
   const f = t?.facets;
@@ -834,6 +844,7 @@ function build(
     p.about.manifestDescription ??
     "Description coming soon.";
   const size = p.install ? fmtSize(p.install.asset.size) : "";
+  const inUse = usage.get(p.repo.toLowerCase()) ?? null;
   // The jobs judged from its summary (data/census/jobs.json), or the keyword guess without one.
   const pick = jobPick(p);
   const jobs = pick
@@ -854,6 +865,10 @@ function build(
     stars: fmtCount(p.popularity.stars),
     downloads: fmtCount(p.popularity.downloads),
     downloadsN: p.popularity.downloads ?? 0,
+    inUse,
+    inUseText: inUse == null ? "" : fmtUse(inUse),
+    releases: fmtCount(p.popularity.releaseCount),
+    createdAt: p.popularity.createdAt,
     contributors: fmtCount(p.popularity.contributors),
     maint,
     maintStatus: m.status,
@@ -975,11 +990,14 @@ export function allPlugins(): Plugin[] {
   const summaries = loadSummaries();
   const reqs = loadRequirements();
   const phrases = loadPhrases();
+  const usage = loadUsage(`${ROOT}census/history`);
   const out: Plugin[] = [];
   for (const slug of readdirSync(GENERATED)) {
     const f = `${GENERATED}${slug}/profile.json`;
     if (!existsSync(f)) continue;
-    out.push(build(JSON.parse(readFileSync(f, "utf8")) as PluginProfile, summaries, reqs, phrases));
+    out.push(
+      build(JSON.parse(readFileSync(f, "utf8")) as PluginProfile, summaries, reqs, phrases, usage),
+    );
   }
   out.sort((a, b) => b.downloadsN - a.downloadsN);
   cache = out;

@@ -1,23 +1,40 @@
 ---
 import Findings from "../components/Findings.astro";
-import GradeLogList from "../components/GradeLogList.astro";
 import GradeTag from "../components/GradeTag.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import Tip from "../components/Tip.astro";
 import Base from "../layouts/Base.astro";
-import { CURRENT_ZOTERO_MAJOR, GRADES, shownPlugins } from "../lib/atlas.ts";
-import { gradeLog } from "../lib/gradeLog.ts";
+import { CURRENT_ZOTERO_MAJOR, fmtDate, GRADES, type Plugin, shownPlugins } from "../lib/atlas.ts";
 import { JOBS } from "@atlas/schema";
 import { siteLd } from "../lib/meta.ts";
+import { USE_TIP } from "../lib/usage.ts";
 
 const plugins = shownPlugins();
 const tries = ["cite in Word", "translate PDFs", "summarise a paper", "find duplicates"];
 const cats = JOBS.map((j) => ({ ...j, n: plugins.filter((p) => p.jobs.includes(j.slug)).length }));
-const top = plugins.filter((p) => p.grade === "A+").slice(0, 6);
-// Moves up or down; plugins graded for the first time are in the full log under "New".
-const changes = gradeLog()
-  .filter((c) => c.dir !== "new")
-  .slice(0, 4);
+const cur = CURRENT_ZOTERO_MAJOR();
+const byUse = (a: Plugin, b: Plugin) => (b.inUse ?? 0) - (a.inUse ?? 0) || b.downloadsN - a.downloadsN;
+// The plugins most people have, among those that work with the current Zotero (lib/usage.ts).
+const used = plugins.filter((p) => p.currentOk && p.inUse != null).sort(byUse).slice(0, 10);
+// The next major, while it's in beta: each row says whether the plugin works with it.
+const nextLabel = plugins.flatMap((p) => p.compat).find((c) => c.v.includes("beta"))?.v ?? null;
+const nextOf = (p: Plugin) => {
+  const c = p.compat.find((x) => x.v === nextLabel);
+  return c?.ok === true ? "yes" : c?.ok === false ? "no" : "unknown";
+};
+const nextTip = {
+  yes: `Its latest release works with Zotero ${nextLabel}, the next version.`,
+  no: `Its latest release doesn't work with Zotero ${nextLabel} yet. Developers often update before a version comes out of beta.`,
+  unknown: `We couldn't tell whether it works with Zotero ${nextLabel}.`,
+};
+// New: repositories created in the last 90 days of the census, most used first.
+const NEW_DAYS = 90;
+const asOf = Math.max(...plugins.map((p) => Date.parse(p.checkedAt)));
+const fresh = plugins
+  .filter((p) => p.currentOk && p.inUse != null && p.createdAt && asOf - Date.parse(p.createdAt) < NEW_DAYS * 86_400_000)
+  .sort(byUse)
+  .slice(0, 6);
 // Written about us. The link's utm_ parameters tell the article's site the visit came from here.
 const press = {
   name: "Citation Styler",
@@ -75,7 +92,52 @@ const pressLink = `${press.url}?utm_source=zoteroplugins.org&utm_medium=referral
     <a class="read" href={pressLink}>Read the article</a>
   </aside>
 
-  <Findings plugins={plugins} currentMajor={CURRENT_ZOTERO_MAJOR()} />
+  <section class="used" aria-labelledby="used-h">
+    <div class="uhead">
+      <div class="uh">
+        <h2 id="used-h">The most-used plugins, and what we found</h2>
+        <p>Ranked by about how many people have each one installed. All {used.length} work with Zotero {cur}.</p>
+      </div>
+      <a href="/browse?sort=used">All plugins by use</a>
+    </div>
+    <ol class="ulist">
+      {
+        used.map((p, i) => {
+          const nx = nextOf(p);
+          return (
+            <li class="urow">
+              <span class="rk" aria-hidden="true">{i + 1}</span>
+              <span class="ug">
+                <GradeTag grade={p.grade} size="sm" />
+              </span>
+              <div class="ub">
+                <a href={`/p/${p.slug}`} class="un">{p.name}</a>
+                <p class="ud">{p.oneLiner}</p>
+                {(p.grade === "B" || p.grade === "C") && (
+                  <p class="uw">
+                    <span class="muted">{p.grade} because </span>
+                    {p.because}
+                  </p>
+                )}
+              </div>
+              <div class="uf">
+                <Tip text={USE_TIP} class="uu tip-end">
+                  <strong>{p.inUseText}</strong> in use
+                </Tip>
+                {nextLabel && (
+                  <Tip text={nextTip[nx]} class={`nx nx-${nx} tip-end`}>
+                    {`Zotero ${nextLabel} `}
+                    <span aria-hidden="true" class="mk">{nx === "yes" ? "✓" : nx === "no" ? "✗" : "?"}</span>
+                    <span class="visually-hidden">{nx === "yes" ? "works" : nx === "no" ? "doesn't work yet" : "not known"}</span>
+                  </Tip>
+                )}
+              </div>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </section>
 
   <div class="wrap">
     <section>
@@ -94,29 +156,34 @@ const pressLink = `${press.url}?utm_source=zoteroplugins.org&utm_medium=referral
         }
       </div>
     </section>
+  </div>
 
-    <div class="two">
-      <section>
-        <div class="rule-head"><h2>Top of the ladder</h2><a href="/browse?grade=A%2B">All A+ plugins</a></div>
-        <div class="toplist">
-          {
-            top.map((r) => (
-              <a href={`/p/${r.slug}`} class="toprow">
-                <span class="tg">
-                  <GradeTag grade={r.grade} size="sm" />
-                </span>
-                <strong>{r.name}</strong>
-                <span class="tl">{r.oneLiner}</span>
-              </a>
-            ))
-          }
-        </div>
-      </section>
-      <section>
-        <div class="rule-head"><h2>Grade changes</h2><a href="/log">Full log</a></div>
-        <GradeLogList items={changes} compact />
-      </section>
-    </div>
+  <Findings plugins={plugins} currentMajor={cur} />
+
+  <div class="wrap end">
+    <section>
+      <div class="rule-head">
+        <h2>New and catching on</h2>
+        <a href="/browse?sort=new">Newest first</a>
+      </div>
+      <p class="lede">Plugins first published in the last {NEW_DAYS} days that the most people have installed.</p>
+      <div class="fresh">
+        {
+          fresh.map((p) => (
+            <a href={`/p/${p.slug}`} class="fc">
+              <span class="fn">
+                <GradeTag grade={p.grade} size="xs" />
+                <strong>{p.name}</strong>
+              </span>
+              <span class="fd">{p.oneLiner}</span>
+              <span class="fm">
+                {[`${p.inUseText} in use`, `since ${fmtDate(p.createdAt).replace(/ \d{4}$/, "")}`, p.chineseDocs ? "docs in Chinese" : ""].filter(Boolean).join(" · ")}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
   </div>
   </main>
   <SiteFooter />
@@ -287,10 +354,13 @@ const pressLink = `${press.url}?utm_source=zoteroplugins.org&utm_medium=referral
   .wrap {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 48px var(--gutter) 56px;
+    padding: 48px var(--gutter) 8px;
     display: flex;
     flex-direction: column;
     gap: 56px;
+  }
+  .wrap.end {
+    padding-bottom: 56px;
   }
   section {
     display: flex;
@@ -336,44 +406,183 @@ const pressLink = `${press.url}?utm_source=zoteroplugins.org&utm_medium=referral
     line-height: 1.4;
     color: var(--ink-2);
   }
-  .two {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 32px;
-    align-items: start;
+  .lede {
+    margin: -6px 0 0;
+    font-size: 15px;
+    color: var(--ink-2);
   }
-  .two section {
-    gap: 6px;
+  /* The most-used plugins: rank, grade, what it does and why, then use and the next Zotero. */
+  .used {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px var(--gutter) 8px;
+    gap: 20px;
   }
-  .toplist {
+  .uhead {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 10px 24px;
+  }
+  .uh {
     display: flex;
     flex-direction: column;
+    gap: 6px;
   }
-  .toprow {
+  .uh h2 {
+    margin: 0;
+    font-size: 36px;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-weight: 760;
+    text-wrap: balance;
+  }
+  .uh p {
+    margin: 0;
+    font-size: 17px;
+    color: var(--ink-2);
+  }
+  .uhead > a {
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+  .ulist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 2px solid var(--ink);
+  }
+  .urow {
     display: grid;
-    grid-template-columns: 52px minmax(0, 1fr);
-    gap: 2px 14px;
-    padding: 12px 0;
+    grid-template-columns: 26px 52px minmax(0, 1fr) 180px;
+    gap: 4px 14px;
+    align-items: start;
+    padding: 16px 0;
     border-bottom: 1px solid var(--line);
-    text-decoration: none;
-    color: var(--ink);
   }
-  .toprow:hover strong {
-    text-decoration: underline;
+  .rk {
+    padding-top: 3px;
+    text-align: right;
+    font: 600 14px var(--font-mono);
+    color: var(--ink-3);
   }
-  .tg {
-    grid-row: span 2;
+  .ug {
     display: flex;
     padding-top: 2px;
   }
-  .toprow strong {
-    font-size: 16.5px;
+  .ub {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
   }
-  .tl {
-    font-size: 14px;
-    line-height: 1.4;
-    color: var(--ink-2);
+  .un {
+    font-size: 17.5px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
     overflow-wrap: anywhere;
+  }
+  .un:hover {
+    text-decoration: underline;
+  }
+  .ud,
+  .uw {
+    margin: 0;
+    max-width: 78ch;
+    font-size: 14.5px;
+    line-height: 1.45;
+  }
+  .ud {
+    color: var(--ink-2);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .uw {
+    color: var(--ink);
+  }
+  .uw .muted {
+    color: var(--ink-2);
+  }
+  .uf {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    padding-top: 1px;
+    text-align: right;
+  }
+  .uf :global(.uu) {
+    font-size: 14px;
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+  .uf :global(.uu strong) {
+    font: 700 19px var(--font-mono);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .uf :global(.nx) {
+    font: 500 12.5px var(--font-mono);
+    white-space: nowrap;
+  }
+  .uf :global(.mk) {
+    font: 700 13px var(--font-sans);
+  }
+  .uf :global(.nx-yes) {
+    color: var(--few-fg);
+  }
+  .uf :global(.nx-no),
+  .uf :global(.nx-unknown) {
+    color: var(--ink-3);
+  }
+  /* New and catching on */
+  .fresh {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .fc {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 18px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .fc:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .fn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+  .fn strong {
+    font-size: 16.5px;
+    overflow-wrap: anywhere;
+  }
+  .fd {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .fm {
+    font: 500 12.5px var(--font-mono);
+    color: var(--ink-2);
   }
   @media (max-width: 960px) {
     .hero {
@@ -406,12 +615,39 @@ const pressLink = `${press.url}?utm_source=zoteroplugins.org&utm_medium=referral
     .cats {
       grid-template-columns: 1fr 1fr;
     }
-    .two {
-      grid-template-columns: 1fr;
-    }
-    .wrap {
+    .wrap,
+    .used {
       padding-top: 28px;
       gap: 40px;
+    }
+    .used {
+      gap: 16px;
+    }
+    .uh h2 {
+      font-size: 28px;
+    }
+    .uh p {
+      font-size: 15.5px;
+    }
+    .fresh {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 720px) {
+    .urow {
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 6px 12px;
+    }
+    .rk {
+      display: none;
+    }
+    .uf {
+      grid-column: 2;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 4px 14px;
+      text-align: left;
     }
   }
 </style>

@@ -1,10 +1,12 @@
 ---
 import { fmtCount, GRADES, type Plugin } from "../lib/atlas.ts";
+import { USE_TIP } from "../lib/usage.ts";
 import GradeTag from "./GradeTag.astro";
+import Tip from "./Tip.astro";
 
 /**
  * "What we found": the headline numbers across every listed plugin, the split by grade, and the
- * most-downloaded plugins we don't recommend. Every number is computed from the profiles at build.
+ * most-used plugins we don't recommend. Every number is computed from the profiles at build.
  */
 interface Props {
   plugins: Plugin[];
@@ -55,7 +57,7 @@ const tiles = [
     tone: "rev",
   },
 ];
-const worst = notRec.slice(0, 5);
+const worst = [...notRec].sort((a, b) => (b.inUse ?? 0) - (a.inUse ?? 0) || b.downloadsN - a.downloadsN).slice(0, 5);
 ---
 
 <section class="findings" aria-labelledby="findings-h">
@@ -104,7 +106,7 @@ const worst = notRec.slice(0, 5);
 
   <div class="worst">
     <div class="rule-head">
-      <h3>Not recommended, most downloaded</h3>
+      <h3>Not recommended, most used</h3>
       <a href="/browse?grade=C">All {notRec.length}</a>
     </div>
     <ul>
@@ -116,7 +118,7 @@ const worst = notRec.slice(0, 5);
             </span>
             <span class="wm">
               <a href={`/p/${p.slug}`}>{p.name}</a>
-              <span class="wd">{p.downloads} downloads</span>
+              {p.inUseText ? <Tip text={USE_TIP} class="wd tip-start">{p.inUseText} in use</Tip> : <span class="wd">{p.downloads} downloads</span>}
             </span>
             <span class="wb">
               <span class="muted">because </span>
@@ -285,7 +287,7 @@ const worst = notRec.slice(0, 5);
   .wm a:hover {
     text-decoration: underline;
   }
-  .wd {
+  .wm :global(.wd) {
     font: 500 12.5px var(--font-mono);
     color: var(--ink-2);
   }

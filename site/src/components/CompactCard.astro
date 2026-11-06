@@ -1,5 +1,6 @@
 ---
 import { GRADES, type Plugin, testedText } from "../lib/atlas.ts";
+import { USE_TIP } from "../lib/usage.ts";
 import GradeTag from "./GradeTag.astro";
 import Tip from "./Tip.astro";
 
@@ -61,7 +62,15 @@ const testTip = p.liveTest
         {p.worksWith.length ? `Zotero ${p.worksRange}` : "No Zotero version"}{notCurrent && <span class="warn"> · not {p.currentMajor}</span>}
       </Tip>
       <span aria-hidden="true">·</span>
-      <Tip text="All-time downloads of its release files from GitHub. Installs from elsewhere aren't counted.">{p.downloads} downloads</Tip>
+      {
+        p.inUseText && (
+          <>
+            <Tip text={USE_TIP}>{p.inUseText} in use</Tip>
+            <span aria-hidden="true">·</span>
+          </>
+        )
+      }
+      <Tip text="All-time downloads of its release files from GitHub, counting every update. Installs from elsewhere aren't counted.">{p.downloads} downloads</Tip>
       {
         p.maintStatus === "active" && (
           <>

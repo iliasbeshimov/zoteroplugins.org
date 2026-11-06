@@ -16,6 +16,7 @@ import { checkedOn, pluginDescription, pluginLd, pluginTitle, verdictSentence } 
 import { JOB_BY_SLUG } from "@atlas/schema";
 import { REPORT_URL, RESPOND_URL } from "../../lib/links.ts";
 import { similarFloor, similarPlugins } from "../../lib/similar.ts";
+import { USE_TIP } from "../../lib/usage.ts";
 
 export function getStaticPaths() {
   return allPlugins().map((p) => ({ params: { slug: p.slug }, props: { p } }));
@@ -82,8 +83,10 @@ const RESPONSE_ABOUT: Record<string, string> = {
 };
 const paras = (t: string) => t.split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean);
 const stats = [
+  ["In use", p.inUseText ? `About ${p.inUseText}` : "—", USE_TIP],
+  ["Downloads", p.downloads, "All-time downloads of its release files from GitHub, counting every update. Installs from elsewhere aren't counted."],
+  ["Releases", p.releases, "Versions published on GitHub. Everyone who has the plugin downloads each one again, which adds up in Downloads."],
   ["Stars", p.stars, "People who starred the repository on GitHub: a rough measure of interest."],
-  ["Downloads", p.downloads, "All-time downloads of its release files from GitHub. Installs from elsewhere aren't counted."],
   ["Contributors", p.contributors, "People who have committed code to the repository."],
   ["Licence", p.license, "The licence the code is published under, as GitHub reports it."],
 ];
@@ -576,7 +579,7 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
   .stats {
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     border-radius: 12px;
     border: 1px solid var(--line);
     background: var(--surface);
@@ -588,8 +591,11 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     gap: 2px;
     min-width: 0;
   }
-  .stats div + div {
+  .stats div:not(:nth-child(3n + 1)) {
     border-left: 1px solid var(--line);
+  }
+  .stats div:nth-child(n + 4) {
+    border-top: 1px solid var(--line);
   }
   dt {
     font: 500 11px/1.2 var(--font-mono);
@@ -1082,6 +1088,9 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     }
     .stats div:nth-child(odd) {
       border-left: 0;
+    }
+    .stats div:nth-child(even) {
+      border-left: 1px solid var(--line);
     }
     .stats div:nth-child(n + 3) {
       border-top: 1px solid var(--line);
