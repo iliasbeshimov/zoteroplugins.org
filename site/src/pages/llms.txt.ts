@@ -1,6 +1,7 @@
 import { JOBS } from "@atlas/schema";
 import type { APIRoute } from "astro";
 import { allPlugins, fmtDate, shownPlugins } from "../lib/atlas.ts";
+import { GUIDES } from "../lib/guides.ts";
 import { SITE } from "../lib/links.ts";
 import { jobTitle } from "../lib/meta.ts";
 
@@ -32,6 +33,10 @@ export const GET: APIRoute = () => {
     link("How to install a Zotero plugin", "/install", "step by step, with pictures"),
     link("Grade log", "/log", "every grade change, up or down"),
     link("About", "/about", "who runs it, how it's made and where AI is used"),
+    "",
+    "## Guides",
+    "",
+    ...GUIDES.map((g) => `- [${g.name}](${SITE}${g.path})`),
     "",
     "## Plugins by job",
     "",
