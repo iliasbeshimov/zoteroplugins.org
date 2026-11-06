@@ -12,7 +12,10 @@ developer can respond to it.
 - **The file you'd install.** For each plugin we download the release file (`.xpi`) from its
   GitHub release and identify it by its SHA-256 hash. When a release ships several builds (one per
   Zotero version or operating system), the card describes the build current Zotero installs, and
-  the others are listed with their own labels.
+  the others are listed with their own labels; among builds for the same Zotero, the one its update
+  address serves, since every installed copy ends up on it. When the plugin's own update address
+  serves a newer version than its latest GitHub release, the card describes that file instead and
+  says so.
 - **Every script in it.** We read all of its JavaScript and the scripts inside its HTML and XUL
   pages, without running anything. We note which parts are bundled libraries (pdf.js, React, an
   API client) and which are the plugin's own code.
@@ -159,6 +162,15 @@ capabilities rate the same whether or not a setting turns them on. zotero-plugin
 zotero:// links count only when the plugin actually sets them up; many plugins carry the code
 without doing so.
 
+The toolkit's install link (zotero://plugin) installs an add-on from the link without asking.
+In a plugin's own code that's high; from the toolkit we rate it medium. The toolkit registers one
+handler for the whole Zotero installation, shared by every plugin built with it, so the risk
+belongs to the installation rather than to the plugin you're choosing: anyone with one toolkit
+plugin installed already has the link, and a second adds nothing. A plugin's own install link is
+that plugin's choice and adds its own risk. The toolkit removed the install link in version 6.0.0,
+and from that version sets its debug link up only when a plugin asks for it; cards built with an
+older version say so.
+
 A finding inside a bundled library still counts. The card says which library it came from, because
 bundled code runs with the same rights as the plugin's own.
 
@@ -300,6 +312,7 @@ for others too, so we fix the analysis for everyone and the card changes with it
 
 | Date | Analyzer | Rules | What changed |
 |---|---|---|---|
+| 2026-11-05 | 0.13.1 | 0.9.1-preview | zotero-plugin-toolkit 6.0.0: the scanner reads its debug link where 6.0.0 sets it up, counts it only when the plugin calls `register()`, and rates it high when the plugin turns the link's password and prompt off. No listed plugin uses 6.0.0 yet, so no card changed. Cards with the toolkit's install link say the toolkit removed it in 6.0.0. A card describes the file the plugin's own update address serves when that's newer than its latest GitHub release, and among several builds for the same Zotero the one the update address serves. |
 | 2026-11-03 | 0.13.1 | 0.9.1-preview | A zotero:// link that switches the catalogue a plugin installs from is rated by what installing from that catalogue then does: medium while each install waits for a click or for a setting that's off by default, high when installs run by themselves. Before, it rated high like a link that installs an add-on without asking, which was stricter than the toolkit's install link (medium) even though the user still has to click. |
 | 2026-11-03 | 0.13.1 | 0.9.0-preview | A text-direction control character inside a lookup table (a language dictionary, for example) no longer counts as hidden code: with only data after it, nothing is shown out of order. Keys in addresses a plugin builds at runtime are redacted in the evidence, like other keys. |
 | 2026-10-16 | 0.13.0 | 0.9.0-preview | A program a plugin downloads and runs is rated by who can change it and whether anything checks it, and the card gives the reason. Until we've reviewed one, the finding stays high. |

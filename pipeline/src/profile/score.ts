@@ -620,9 +620,19 @@ function badgeDetail(
       const mixed =
         apis.some((x) => x.endsWith("(asks first)")) &&
         apis.some((x) => !x.endsWith("(asks first)"));
-      return apis.length
+      const named = apis.length
         ? list(mixed ? apis : apis.map((x) => x.replace(" (asks first)", "")))
         : undefined;
+      // The toolkit's install link exists only before 6.0.0 (D47), so the plugin was built with
+      // an older version; rebuilding with 6.0.0 removes it.
+      const oldToolkit =
+        id === "link-installs-addons" &&
+        c?.libraries?.includes("zotero-plugin-toolkit") &&
+        apis.some((x) => x.startsWith("zotero://plugin"));
+      if (!oldToolkit) return named;
+      const note =
+        "zotero-plugin-toolkit removed this link in version 6.0.0; this plugin is built with an older version";
+      return named ? `${named}. ${note}` : note;
     }
     default:
       return undefined;

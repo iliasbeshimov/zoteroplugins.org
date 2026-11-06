@@ -631,6 +631,8 @@ class ToolkitSetup {
     hit: Hit;
     name: string;
     asks: boolean;
+    /** The plugin calls the toolkit's `register()` for it (6.0.0): it counts on its own. */
+    registered?: boolean;
   }[] = [];
   /** Where BasicTool calls getInstance(): in its constructor (up to 4.1.0) or its `debug` getter. */
   eager = false;
@@ -1371,6 +1373,42 @@ class Bindings {
 }
 
 const fnsIn = (anc: AstNode[]) => anc.filter((a) => FUNCTION_TYPES.has(a.type)).reverse();
+
+/**
+ * Code inside a class's static `register` method (zotero-plugin-toolkit 6.0.0's DebugBridge):
+ * the names the class goes by (`class DebugBridge`, `var Wt = class t`) and where it sits.
+ */
+function staticRegisterOf(anc: AstNode[]): { names: string[]; span: [number, number] } | undefined {
+  const method = anc.findLast((a) => a.type === "MethodDefinition");
+  if (!method?.static || lastName(node(method.key)) !== "register") return undefined;
+  const at = anc.lastIndexOf(method);
+  const clsAt = anc.findLastIndex(
+    (a, i) => i < at && (a.type === "ClassDeclaration" || a.type === "ClassExpression"),
+  );
+  const cls = anc[clsAt];
+  if (!cls) return undefined;
+  const parent = anc[clsAt - 1];
+  const names = [
+    node(cls.id)?.name as string | undefined,
+    parent?.type === "VariableDeclarator"
+      ? (node(parent.id)?.name as string | undefined)
+      : undefined,
+    parent?.type === "AssignmentExpression" ? lastName(node(parent.left)) : undefined,
+  ].filter((x): x is string => Boolean(x));
+  return names.length ? { names: [...new Set(names)], span: [cls.start, cls.end] } : undefined;
+}
+
+/** The arguments of each `Name.register(…)` call outside the class itself. */
+function registerCalls(code: string, r: { names: string[]; span: [number, number] }): string[] {
+  const names = r.names.map((n) => n.replace(/[$]/g, "\\$")).join("|");
+  const out: string[] = [];
+  for (const m of code.matchAll(new RegExp(`(?<![\\w$.])(?:${names})\\.register\\(`, "g"))) {
+    const at = m.index ?? 0;
+    if (at >= r.span[0] && at < r.span[1]) continue;
+    out.push(code.slice(at + m[0].length, at + m[0].length + 300).split(")")[0] ?? "");
+  }
+  return out;
+}
 const classesIn = (anc: AstNode[]) =>
   anc.filter((a) => a.type === "ClassDeclaration" || a.type === "ClassExpression");
 
@@ -3514,6 +3552,10 @@ function analyzeJs(
     name: string;
     value: AstNode | undefined;
     fns: AstNode[];
+    /** Set through a helper's return value (`getProtocolExtensions()[key] = h`): its name. */
+    via?: string;
+    /** Inside a class's static `register` method: the names that class goes by, and its span. */
+    register?: { names: string[]; span: [number, number] };
   }[] = [];
   // Keys: `name` for plain functions and calls, `.name` for methods and member calls, so a
   // toolkit method called `getIcon` doesn't stand in for the plugin's own `getIcon(src)`.
@@ -5165,15 +5207,28 @@ function analyzeJs(
               (str(node(node(left.object)?.property)) ??
                 (node(node(left.object)?.property)?.name as string)) === "_extensions") ||
             // …or `_extensions` itself is hidden: `['wrappedJSObject'][zr(0x82a)][key]` (zotmind).
-            fromServicesIo(node(left.object)))
-        )
+            fromServicesIo(node(left.object)) ||
+            // …or it comes from a helper, `getProtocolExtensions()[DebugBridge.extensionKey] = h`
+            // (zotero-plugin-toolkit 6.0.0): kept once the walk shows the helper returns it.
+            (node(left.object)?.type === "CallExpression" &&
+              node(node(left.object)?.callee)?.type === "Identifier"))
+        ) {
+          const helper = node(left.object);
+          const via =
+            helper?.type === "CallExpression"
+              ? (node(helper.callee)?.name as string | undefined)
+              : undefined;
+          const register = staticRegisterOf(anc);
           linkHandlers.push({
             n,
             key: node(left.property),
             name: "",
             value: node(n.right),
             fns: anc.filter((a) => FUNCTION_TYPES.has(a.type)).reverse(),
+            ...(via ? { via } : {}),
+            ...(register ? { register } : {}),
           });
+        }
         if (
           /\.src$/.test(target) &&
           !FRAME_NAME.test(target.split(".").at(-2) ?? "") &&
@@ -6135,6 +6190,18 @@ function analyzeJs(
     h.value?.type === "Identifier"
       ? bindings.lookup(h.value.name as string, h.fns).find((v) => v.type === "ObjectExpression")
       : h.value;
+  // A handler set through a helper is the zotero:// handler's only when the helper returns
+  // `_extensions`; any other `f()[key] = value` is something else.
+  for (let i = linkHandlers.length - 1; i >= 0; i--) {
+    const via = linkHandlers[i]?.via;
+    if (
+      via &&
+      ![...fnNames].some(
+        ([fn, name]) => name === via && /\b_extensions\b/.test(code.slice(fn.start, fn.end)),
+      )
+    )
+      linkHandlers.splice(i, 1);
+  }
   for (const h of linkHandlers) {
     const keys = [textOf(h.key), ...bindings.texts(h.key, h.fns)].filter(
       (k): k is string => typeof k === "string",
@@ -6264,7 +6331,20 @@ function analyzeJs(
           ));
       // The plugin bridge never asks, in any version.
       const asks = !pluginBridge && (v2 || acting.every((p) => ASKS.test(p)));
-      if (toolkitKey) {
+      if (toolkitKey && h.register) {
+        // zotero-plugin-toolkit 6.0.0 sets its debug link up only when the plugin calls
+        // `DebugBridge.register()`, and that link stops asking with `{ disablePassword: true }`.
+        const calls = registerCalls(code, h.register);
+        if (!calls.length) continue;
+        const silent = calls.some((a) => /\bdisablePassword\s*:\s*(?:!0|true)\b/.test(a));
+        col.toolkit.bridges.push({
+          id,
+          hit: toolkitHit(h.n),
+          name: h.name,
+          asks: asks && !silent,
+          registered: true,
+        });
+      } else if (toolkitKey) {
         // Counted once the whole build is read, if it sets the toolkit up (ToolkitSetup).
         col.toolkit.bridges.push({ id, hit: toolkitHit(h.n), name: h.name, asks });
       } else {
@@ -10378,20 +10458,22 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
     tk.bridges.some((b) =>
       col.signals.some((s) => s.file === b.hit.file.path && STRONG.includes(s.kind)),
     );
-  if (tk.bridges.length && (unsure || tk.registers()))
-    for (const b of tk.bridges) {
-      // A development build's `disableDebugBridgePassword = true` stops the shared debug bridge
-      // asking, for every toolkit plugin in that Zotero (zotero-split-viewer).
-      const off = b.asks && b.id === "link-runs-code" ? tk.promptOff : null;
-      const cap = col.cap(
-        b.id,
-        b.hit,
-        off ? `${b.name} (prompt turned off)` : b.asks ? `${b.name} (asks first)` : b.name,
-      );
-      if (off) cap.hits.push(off);
-      if (b.asks && !off) cap.asksFirst = true;
-      else cap.unguarded = true;
-    }
+  const setUp = tk.bridges.some((b) => !b.registered) && (unsure || tk.registers());
+  for (const b of tk.bridges) {
+    if (!b.registered && !setUp) continue;
+    // A development build's `disableDebugBridgePassword = true` stops the shared debug bridge
+    // asking, for every toolkit plugin in that Zotero (zotero-split-viewer); 6.0.0's
+    // registered bridge doesn't read it.
+    const off = b.asks && b.id === "link-runs-code" && !b.registered ? tk.promptOff : null;
+    const cap = col.cap(
+      b.id,
+      b.hit,
+      off ? `${b.name} (prompt turned off)` : b.asks ? `${b.name} (asks first)` : b.name,
+    );
+    if (off) cap.hits.push(off);
+    if (b.asks && !off) cap.asksFirst = true;
+    else cap.unguarded = true;
+  }
 
   // Downloads a file, makes it executable and launches programs, all in its own code.
   const launches = col.caps

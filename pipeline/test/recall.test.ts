@@ -1448,6 +1448,83 @@ describe("card review, 2026-09-26 (last verifications)", () => {
   });
 });
 
+describe("zotero-plugin-toolkit 6.0.0's debug link: only when the plugin registers it", () => {
+  // 6.0.0 removed zotero://plugin; DebugBridge registers zotero://ztoolkit-debug only from its
+  // static register(), through a helper that returns `_extensions` (npm tarball, 2026-11-05).
+  const debugBridge = `
+    var BasicTool = class { static getZotero() { return Zotero; } };
+    var DebugBridge = class DebugBridge {
+      static extensionKey = "zotero://ztoolkit-debug";
+      static extension;
+      static register(options = {}) {
+        const debugBridgeExtension = {
+          noContent: true,
+          doAction: async (uri) => {
+            const Zotero$1 = BasicTool.getZotero();
+            const window$1 = Zotero$1.getMainWindow();
+            const params = {};
+            uri.spec.split("?").pop()?.split("&").forEach((p) => { params[p.split("=")[0]] = decodeURIComponent(p.split("=")[1]); });
+            const password = DebugBridge.password;
+            let allowed = false;
+            if (options.disablePassword) allowed = true;
+            else if (typeof params.password === "undefined" && typeof password === "undefined") allowed = window$1.confirm("External App wants to execute command. If you do not know what it is, please click Cancel to deny.");
+            else allowed = password === params.password;
+            if (allowed && params.run) {
+              const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
+              await new AsyncFunction("Zotero,window", params.run)(Zotero$1, window$1);
+            }
+          },
+          newChannel(uri) { this.doAction(uri); },
+        };
+        getProtocolExtensions()[DebugBridge.extensionKey] = debugBridgeExtension;
+        DebugBridge.extension = debugBridgeExtension;
+      }
+    };
+    function getProtocolExtensions() {
+      return Services.io.getProtocolHandler("zotero").wrappedJSObject._extensions;
+    }`;
+  // esbuild --minify keeps the shape: `w()[o.extensionKey]=i` inside `h=class o{static register…}`.
+  const minified = (call: string) =>
+    `var p=class{static getZotero(){return Zotero}},h=class o{static extensionKey="zotero://ztoolkit-debug";static register(e={}){let i={noContent:!0,doAction:async c=>{let t=p.getZotero(),a=t.getMainWindow(),s={},f=o.password,d=!1;if(e.disablePassword?d=!0:typeof s.password>"u"&&typeof f>"u"?d=a.confirm("If you do not know what it is, please click Cancel to deny."):d=f===s.password,d){let n=Object.getPrototypeOf(async()=>{}).constructor;await new n("Zotero,window",s.run)(t,a)}},newChannel(c){this.doAction(c)}};w()[o.extensionKey]=i,o.extension=i}};function w(){return Services.io.getProtocolHandler("zotero").wrappedJSObject._extensions}function m(){${call}}`;
+  const link = (r: ScanOutput) => capIn(r, "link-runs-code");
+
+  it("finds nothing when the plugin never calls register()", async () => {
+    for (const code of [`${debugBridge}\nZotero.debug(1);`, minified("0")]) {
+      const r = await scanFiles({ "content/index.js": code });
+      expect(link(r)).toBeUndefined();
+      expect(capIn(r, "link-installs-addons")).toBeUndefined();
+    }
+  });
+
+  it("rates the registered link as asking first, as the 5.x bridge", async () => {
+    for (const code of [`${debugBridge}\nDebugBridge.register();`, minified("h.register()")]) {
+      const r = await scanFiles({ "content/index.js": code });
+      expect(link(r)?.details?.apis).toEqual(["zotero://ztoolkit-debug (asks first)"]);
+      expect(link(r)?.details?.asksFirst).toBe(true);
+      expect(link(r)?.libraries).toEqual(["zotero-plugin-toolkit"]);
+    }
+  });
+
+  it("rates it high when the plugin turns the password and prompt off", async () => {
+    for (const code of [
+      `${debugBridge}\nDebugBridge.register({ disablePassword: true });`,
+      minified("h.register({disablePassword:!0})"),
+    ]) {
+      const r = await scanFiles({ "content/index.js": code });
+      expect(link(r)?.details?.asksFirst).toBe(false);
+      expect(r.card.label).toBe("high-concern");
+    }
+  });
+
+  it("ignores another helper's `f()[key] = value`", async () => {
+    const r = await scanFiles({
+      "content/index.js":
+        'function store(){return globalThis.cache}store()["zotero://x"]={doAction(u){eval(u.spec)}};',
+    });
+    expect(link(r)).toBeUndefined();
+  });
+});
+
 describe("zotero-plugin-toolkit's zotero:// bridges (toolkit sweep, 2026-09-26)", () => {
   // A cut-down toolkit: ToolkitGlobal registers both bridges the first time getInstance() runs.
   // Up to 4.1.0 BasicTool's constructor calls it; from 4.1.1 only its `debug` getter does, and

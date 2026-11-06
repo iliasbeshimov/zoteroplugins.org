@@ -937,6 +937,29 @@ describe("badge wording for data sent over plain http", () => {
   });
 });
 
+describe("badge wording for zotero-plugin-toolkit's install link", () => {
+  // Cut down from toolkit 5.x: ToolkitGlobal sets up the plugin bridge when a ZoteroToolkit is built.
+  const toolkit = `// node_modules/zotero-plugin-toolkit/dist/index.js
+    var ToolkitGlobal = class { static getInstance() { if (!Zotero._tg) { Zotero._tg = new ToolkitGlobal(); Services.io.getProtocolHandler("zotero").wrappedJSObject._extensions["zotero://plugin"] = { noContent: true, doAction: async (uri) => { const x = await AddonManager.getInstallForURL(uri.spec.split("?")[1]); x.install(); }, newChannel(uri) { this.doAction(uri); } }; } return Zotero._tg; } };
+    var PromptManager = class { constructor() { ToolkitGlobal.getInstance(); } };
+    var BasicTool = class { get debug() { return ToolkitGlobal.getInstance(); } };
+    var ZoteroToolkit = class extends BasicTool { Prompt = new PromptManager(this); };
+    // src/index.ts
+    var ztoolkit = new ZoteroToolkit();`;
+
+  it("says the toolkit removed it in 6.0.0", () => {
+    const b = cardFor("", { analysis: analyze(toolkit) }).facets.capabilities.badges.find(
+      (x) => x.id === "link-installs-addons",
+    );
+    expect(b).toMatchObject({
+      concern: "medium",
+      libraries: ["zotero-plugin-toolkit"],
+      detail:
+        "zotero://plugin. zotero-plugin-toolkit removed this link in version 6.0.0; this plugin is built with an older version",
+    });
+  });
+});
+
 describe("badge wording for add-on installs", () => {
   const feed = "https://github.com/fixture/plugin/releases/download/release/update.json";
   const badge = (code: string, id: string, updateUrl?: string) =>
