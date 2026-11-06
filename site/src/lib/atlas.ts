@@ -201,7 +201,7 @@ export interface Plugin {
   /** What the browse page's search indexes (served as /search.json). */
   search: SearchDoc;
   /** Findings to fix for the next rung, for the developer page. */
-  toFix: { t: string; level: Level; evidence: Evidence | null }[];
+  toFix: { t: string; level: Level; evidence: Evidence | null; guide?: string }[];
   passing: string[];
   /** IDs of the capability findings on its card, e.g. "link-installs-addons". */
   capIds: string[];
@@ -370,7 +370,12 @@ interface CodeEv {
 }
 interface ReleaseAnalysis {
   network?: { hosts?: { host: string; category: string; usage: string; evidence: CodeEv[] }[] };
-  capabilities?: { id: string; evidence: CodeEv[] }[];
+  capabilities?: {
+    id: string;
+    evidence: CodeEv[];
+    libraries?: string[];
+    inVendoredCodeOnly?: boolean;
+  }[];
 }
 function loadRelease(p: PluginProfile): ReleaseAnalysis | null {
   const rf = p.install?.releaseFile;
@@ -760,11 +765,18 @@ function build(
   if (grade === "B" || grade === "C") {
     const want = grade === "C" ? 3 : 2;
     for (const b of badges.filter((b) => CONCERN_RANK[b.concern] >= want)) {
-      const e = pickEv(rel?.capabilities?.find((c) => c.id === b.id)?.evidence);
+      const cap = rel?.capabilities?.find((c) => c.id === b.id);
+      const e = pickEv(cap?.evidence);
+      // The toolkit's zotero:// links come from zotero-plugin-toolkit 5, not the plugin's own code.
+      const fromToolkit =
+        b.id.startsWith("link-") &&
+        cap?.inVendoredCodeOnly === true &&
+        (cap.libraries ?? []).includes("zotero-plugin-toolkit");
       toFix.push({
         t: b.label,
         level: CONCERN_LEVEL[b.concern],
         evidence: e ? toEv(b.id, e) : null,
+        ...(fromToolkit ? { guide: "/developers/toolkit-6" } : {}),
       });
     }
     if (st && CONCERN_RANK[st.concern] >= want)

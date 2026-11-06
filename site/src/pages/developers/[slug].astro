@@ -54,6 +54,11 @@ const kind = (l: string) => (l === "high" ? "serious" : l === "medium" ? "review
                           <code>{x.evidence.code}</code>
                         </>
                       )}
+                      {x.guide && (
+                        <a class="guide" href={x.guide}>
+                          This comes from zotero-plugin-toolkit 5. How to remove it
+                        </a>
+                      )}
                     </span>
                     <a href={RESPOND_URL} class="btn small">
                       Reply
@@ -200,6 +205,11 @@ const kind = (l: string) => (l === "high" ? "serious" : l === "medium" ? "review
   }
   .tb strong {
     font-size: 16px;
+  }
+  .guide {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-fg);
   }
   code {
     font: 500 12.5px/1.5 var(--font-mono);

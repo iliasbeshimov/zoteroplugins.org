@@ -1,0 +1,257 @@
+---
+import SiteFooter from "../../components/SiteFooter.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import Base from "../../layouts/Base.astro";
+
+/** Toolkit 5.x property → what builds it, for a toolkit made of only the modules a plugin uses. */
+const modules: [string, string][] = [
+  ["UI", "new UITool(this)"],
+  ["Menu", "new MenuManager(this)"],
+  ["Keyboard", "new KeyboardManager(this)"],
+  ["Reader", "new ReaderTool(this)"],
+  ["ExtraField", "new ExtraFieldTool(this)"],
+  ["FieldHooks", "new FieldHookManager(this)"],
+  ["ProgressWindow", "makeHelperTool(ProgressWindowHelper, this)"],
+  ["Dialog", "makeHelperTool(DialogHelper, this)"],
+  ["Clipboard", "makeHelperTool(ClipboardHelper, this)"],
+  ["FilePicker", "makeHelperTool(FilePickerHelper, this)"],
+  ["VirtualizedTable", "makeHelperTool(VirtualizedTableHelper, this)"],
+  ["Patch", "makeHelperTool(PatchHelper, this)"],
+  ["LargePrefObject", "makeHelperTool(LargePrefHelper, this)"],
+  ["Guide", "makeHelperTool(GuideHelper, this)"],
+];
+
+const fix1 = `// package.json
+"zotero-plugin-toolkit": "^6.0.0"
+
+// src/utils/ztoolkit.ts
+import { ZoteroToolkit } from "zotero-plugin-toolkit/ztoolkit";`;
+
+const fix2 = `// src/utils/ztoolkit.ts
+import {
+  BasicTool,
+  MenuManager,
+  ProgressWindowHelper,
+  UITool,
+  makeHelperTool,
+  unregister,
+} from "zotero-plugin-toolkit";
+
+class MyToolkit extends BasicTool {
+  UI = new UITool(this);
+  Menu = new MenuManager(this);
+  ProgressWindow = makeHelperTool(ProgressWindowHelper, this);
+  unregisterAll() {
+    unregister(this);
+  }
+}
+
+function createZToolkit() {
+  const _ztoolkit = new MyToolkit(); // was: new ZoteroToolkit()
+  initZToolkit(_ztoolkit);
+  return _ztoolkit;
+}`;
+
+const check = `Object.keys(Services.io.getProtocolHandler("zotero").wrappedJSObject._extensions)
+  .filter((k) => k === "zotero://plugin" || k === "zotero://ztoolkit-debug")`;
+---
+
+<Base
+  title="Remove the toolkit's zotero:// links · Zotero Plugins Atlas"
+  description="Plugins built with zotero-plugin-toolkit 5 register two zotero:// links they don't use. How to remove them from your next release, and what that does to your grade."
+>
+  <SiteHeader active="dev" />
+  <article class="wrap">
+    <a class="back" href="/developers">For developers</a>
+    <h1>Remove the toolkit's zotero:// links</h1>
+    <p class="lead">
+      Plugins built with zotero-plugin-toolkit 5 or earlier register two zotero:// links when they start, even when the plugin never uses them. Toolkit 6.0.0 removed them. Here's how to drop them from your next release.
+    </p>
+
+    <section>
+      <h2>What the two links do</h2>
+      <ul>
+        <li><code class="inline">zotero://plugin</code> installs an add-on from the link, without asking.</li>
+        <li><code class="inline">zotero://ztoolkit-debug</code> runs code from the link, after asking.</li>
+      </ul>
+      <p>
+        Web pages can open zotero:// links. Each link is registered once for the whole Zotero installation, so it takes only one plugin to put it there, and it stays until every plugin that registers it has been updated.
+      </p>
+      <p>
+        They were never meant for users. The toolkit's author: "This is only for debugging purposes and should never be included in any plugin that is distributed for users" (<a href="https://github.com/windingwind/zotero-plugin-toolkit/pull/104">windingwind/zotero-plugin-toolkit#104</a>). Version 6.0.0 removed the install link and sets the debug link up only when a plugin calls <code class="inline">DebugBridge.register()</code>.
+      </p>
+      <p>
+        In toolkit 5, the links are switched on when your plugin builds <code class="inline">new ZoteroToolkit()</code> (its <code class="inline">Prompt</code> module does it) or reads <code class="inline">basicOptions.debug</code>. That's why plugins started from zotero-plugin-template have them.
+      </p>
+    </section>
+
+    <section>
+      <h2>Which fix is yours</h2>
+      <p>
+        It depends on whether your plugin adds menus with <code class="inline">ztoolkit.Menu</code>, which toolkit 6 no longer has. Your plugin's checklist page says which one we'd suggest. We built test plugins both ways and ran our checks on them: neither link is found.
+      </p>
+    </section>
+
+    <section class="box">
+      <span class="tag">Fix 1</span>
+      <h2>Move to toolkit 6</h2>
+      <p class="muted">For plugins that don't use <code class="inline">ztoolkit.Menu</code> or <code class="inline">ztoolkit.Prompt</code>.</p>
+      <ol>
+        <li>In <code class="inline">package.json</code>, set <code class="inline">zotero-plugin-toolkit</code> to <code class="inline">^6.0.0</code> and install.</li>
+        <li>Import <code class="inline">ZoteroToolkit</code> from <code class="inline">zotero-plugin-toolkit/ztoolkit</code>. Other modules still come from <code class="inline">zotero-plugin-toolkit</code>.</li>
+        <li>If you started from zotero-plugin-template, delete its example code: <code class="inline">src/modules/examples.ts</code> and the calls to it in <code class="inline">src/hooks.ts</code>. The examples use <code class="inline">ztoolkit.Menu</code> and <code class="inline">ztoolkit.Prompt</code>.</li>
+        <li>Build. TypeScript points out anything else that changed. Lines that set <code class="inline">basicOptions.debug</code> can stay; in 6.0.0 they do nothing.</li>
+      </ol>
+      <pre><code>{fix1}</code></pre>
+    </section>
+
+    <section class="box">
+      <span class="tag">Fix 2</span>
+      <h2>Stay on toolkit 5, without <code class="inline">Prompt</code></h2>
+      <p class="muted">For plugins that add menus with <code class="inline">ztoolkit.Menu</code>. Needs toolkit 4.1.1 or later: up to 4.1.0 any toolkit object switches the links on, so update to <code class="inline">5.1.0-beta.13</code> first (the version the plugin template uses, which still has <code class="inline">Menu</code>).</p>
+      <ol>
+        <li>Instead of <code class="inline">new ZoteroToolkit()</code>, build a toolkit from the modules you use, leaving out <code class="inline">Prompt</code>. The template already has this pattern (<code class="inline">MyToolkit</code> in <code class="inline">src/utils/ztoolkit.ts</code>).</li>
+        <li>Remove any line that reads or sets <code class="inline">basicOptions.debug</code>, such as <code class="inline">disableDebugBridgePassword</code>.</li>
+        <li>If you started from zotero-plugin-template, delete its <code class="inline">Prompt</code> examples (or all of <code class="inline">src/modules/examples.ts</code> and its calls in <code class="inline">src/hooks.ts</code>).</li>
+        <li>Build. TypeScript names any module you use but left out.</li>
+      </ol>
+      <pre><code>{fix2}</code></pre>
+      <details>
+        <summary>Every toolkit 5 module and what builds it</summary>
+        <pre><code>{modules.map(([k, v]) => `${k} = ${v};`).join("\n")}</code></pre>
+        <p class="muted small">Import each class you use from <code class="inline">zotero-plugin-toolkit</code>. <code class="inline">log</code>, <code class="inline">getGlobal</code> and the other basics come with <code class="inline">BasicTool</code>.</p>
+      </details>
+      <p class="muted small">Moving your menus to something else later lets you take Fix 1, the long-term route.</p>
+    </section>
+
+    <section>
+      <h2>Check your build</h2>
+      <p>
+        In a Zotero profile with only your plugin installed, open Tools › Developer › Run JavaScript and run:
+      </p>
+      <pre><code>{check}</code></pre>
+      <p>
+        An empty list, <code class="inline">[]</code>, means neither link is registered. With other plugins installed you may still see them; those come from the other plugins.
+      </p>
+    </section>
+
+    <section>
+      <h2>What happens to your grade</h2>
+      <p>
+        We check new releases every night with the same rules and publish the results the same night. If these links were all that kept your plugin at B, the first release without them is graded A, and you're welcome to show it with the <a href="/developers#badge">README badge</a>. Your plugin's checklist page, at <code class="inline">/developers/&lt;your-plugin&gt;</code>, shows what's left.
+      </p>
+      <p class="muted">
+        Something here wrong for your plugin? Reply on the issue we opened, or respond to your card from the checklist page.
+      </p>
+    </section>
+  </article>
+  <SiteFooter />
+</Base>
+
+<style>
+  .wrap {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 44px var(--gutter) 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .back {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-fg);
+  }
+  h1 {
+    margin: -12px 0 0;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 760;
+  }
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    font-weight: 720;
+  }
+  .lead {
+    margin: 0;
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  section p,
+  section li {
+    margin: 0;
+    line-height: 1.6;
+  }
+  ul,
+  ol {
+    margin: 0;
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .box {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 20px;
+  }
+  .tag {
+    align-self: flex-start;
+    font: 700 12px/1 var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-fg);
+  }
+  .muted {
+    color: var(--ink-2);
+  }
+  .small {
+    font-size: 14px;
+  }
+  code.inline {
+    font: 500 0.88em/1.4 var(--font-mono);
+    padding: 1px 5px;
+    border-radius: 5px;
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    overflow-wrap: anywhere;
+  }
+  h2 code.inline {
+    font-size: 0.8em;
+  }
+  pre {
+    margin: 0;
+    padding: 14px;
+    border-radius: 10px;
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  pre code {
+    font: 500 13px/1.55 var(--font-mono);
+    white-space: pre;
+  }
+  details summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+  details[open] summary {
+    margin-bottom: 10px;
+  }
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 34px;
+    }
+  }
+</style>

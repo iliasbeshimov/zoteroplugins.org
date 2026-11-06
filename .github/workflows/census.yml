@@ -90,6 +90,7 @@ jobs:
         run: pnpm atlas profile
 
       - name: Commit snapshot
+        id: commit
         if: always()
         run: |
           git config user.name "github-actions[bot]"
@@ -102,3 +103,18 @@ jobs:
           git commit -m "Census and profiles (${{ steps.mode.outputs.mode }}) $(date -u +%F)"
           git pull --rebase origin main
           git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # Publish the new grades the same night: a developer who ships a fix sees it on the site and
+      # on their README badge the next day. HEAD is the main just pushed, rebased on anything newer.
+      - name: Deploy
+        if: always() && steps.commit.outputs.changed == 'true'
+        # Only this step gets the token; a step's own env isn't visible to its `if`, so it's checked here.
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then echo "::warning::CLOUDFLARE_API_TOKEN is not set; not deploying."; exit 0; fi
+          pnpm site:build
+          cd site && npx -y wrangler@4 pages deploy dist --project-name zoteroplugins --branch main --commit-hash "$(git rev-parse HEAD)" --commit-dirty=false
