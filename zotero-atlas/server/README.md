@@ -41,7 +41,7 @@ wrangler d1 execute zotero-atlas --remote --file migrations/0002-ratings.sql
 wrangler secret put TURNSTILE_SECRET       # the zoteroplugins.org Turnstile widget's secret
 wrangler secret put EMAIL_KEY              # 64 hex characters, made once and kept
 wrangler secret put MAIL_API_KEY           # the mail service's key
-# and in wrangler.toml [vars]: MAIL_PROVIDER = "resend" or "postmark", MAIL_FROM
+# and in wrangler.toml [vars]: MAIL_PROVIDER ("resend" or "postmark") and MAIL_FROM
 wrangler deploy
 ```
 
