@@ -54,7 +54,7 @@
         <h2>What the server keeps</h2>
         <p>Per reporting install: the random ID, the Zotero version, the operating system, the plugin's version, and the plugin list, replaced on every report, except that a plugin you remove is remembered for 30 days so a rating can say how long it was used; and the date of every report with its reason (first run, list changed, weekly). Nothing else from the request is kept: no IP address, no user agent, no headers. A nightly job deletes all of it for an install not heard from for 180 days. Choosing <strong>Don't send</strong> deletes it at once; your ratings stay, without the link to your plugin list.</p>
         <p>Cloudflare, which runs the server, sees requests the way any web host does. We keep none of that, and the server code that decides what is stored is public.</p>
-        <p>What is published: <a href="/api/v1/totals.json">totals</a>, meaning how many installs reported in the last 30 days and how many of them have each plugin. Counts only.</p>
+        <p>None of it is published. It stays in the server's database, which only we can read, and we use it as counts: how many installs report, which plugins they have, and which Zotero versions and systems they run. That tells us which plugins people actually use.</p>
 
         <h2>Turning it off, and deleting your record</h2>
         <p>Open Zotero's settings, choose <strong>Zotero Atlas</strong>, and pick <strong>Don't send</strong>. The plugin then asks the server to delete everything it holds for its ID, report dates included, and stops sending. Uninstalling the plugin stops the sending and removes everything it stored on your computer, but doesn't contact the server: to delete your record, pick <strong>Don't send</strong> before you uninstall. Otherwise the server deletes it after 180 days without a report, as above.</p>
@@ -72,7 +72,7 @@
         <p>Three settings in Zotero's preferences (<code>extensions.zotero-atlas.usage</code>, <code>.id</code>, <code>.state</code>, which also remembers the ratings you posted and the plugins you removed in the last 30 days) and a copy of the catalogue at <code>zotero-atlas/catalog.json</code> in your Zotero data directory. Uninstalling removes all of it.</p>
 
         <h2>This website</h2>
-        <p>zoteroatlas.com sets no cookies, runs no analytics, and loads nothing from third parties: the fonts are your system's, and the scripts and styles are served from here. The one image from elsewhere is the live grade badge, loaded from zoteroplugins.org, which we also run. Cloudflare, which hosts the site, sees requests the way any host does. The front page asks this site's own <code>/api/v1/totals.json</code> for the published counts; nothing about you is sent with that.</p>
+        <p>zoteroatlas.com sets no cookies, runs no analytics, and loads nothing from third parties: the fonts are your system's, and everything else it loads is served from here. The one image from elsewhere is the live grade badge, loaded from zoteroplugins.org, which we also run. Cloudflare, which hosts the site, sees requests the way any host does.</p>
 
         <h2>Questions</h2>
         <p>Open an issue at <a href="https://github.com/iliasbeshimov/zotero-atlas/issues">github.com/iliasbeshimov/zotero-atlas/issues</a>.</p>

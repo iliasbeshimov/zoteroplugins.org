@@ -43,8 +43,8 @@ and **Don't send** one click away. With **Send my plugin list**, it sends one th
 plugins installed in this Zotero, with
 their versions and whether each is enabled, under a random ID created on this computer, together
 with your Zotero version, operating system and this plugin's version. That goes to zoteroatlas.com
-when you turn it on, when the list changes, and once a week. We publish the totals so everyone can
-see which plugins people actually use. Choose **Don't send** later, in Zotero's settings under
+when you turn it on, when the list changes, and once a week. We use the totals to see which
+plugins people actually use, and we don't publish them. Choose **Don't send** later, in Zotero's settings under
 Zotero Atlas, and the plugin asks the server to delete the record. "Show what would be sent" in
 the settings shows the exact message. The server's code is in [server/](server/); it stores
 nothing from the request but those fields, no IP address.

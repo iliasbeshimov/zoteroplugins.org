@@ -9,8 +9,8 @@
  *                                 kept, marked removed, for 30 days, so a rating can say how long
  *                                 it was used.
  * - DELETE /api/v1/plugins/<id>   forget everything about that ID (its ratings stay, unlinked).
- * - GET    /api/v1/totals.json    how many installs reported in the last 30 days, and how many
- *                                 of them have each plugin. Public, cached for an hour.
+ * Nothing about plugin lists is published: there is no public endpoint for them. The owner reads
+ * the database with wrangler (see README.md).
  *
  * Ratings and reviews
  * - POST   /api/v1/ratings        stars and an optional review from the plugin. No account.
@@ -77,7 +77,6 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname.replace(/\/+$/, "");
     const m = request.method;
-    if (m === "GET" && path === "/api/v1/totals.json") return totals(env);
     if (m === "GET" && path === "/api/v1/ratings.json") return ratingsFile(env);
     if (m === "POST" && path === "/api/v1/plugins") return report(request, env);
     const del = path.match(/^\/api\/v1\/plugins\/([0-9a-f-]{36})$/);
@@ -182,28 +181,6 @@ async function forget(id, env) {
     env.DB.prepare("UPDATE ratings SET install_id = NULL WHERE install_id = ?1").bind(id),
   ]);
   return reply(204);
-}
-
-async function totals(env) {
-  const installs = await env.DB.prepare(
-    "SELECT COUNT(*) AS n FROM installs WHERE last_seen > datetime('now', '-30 days')",
-  ).first("n");
-  const rows = await env.DB.prepare(
-    "SELECT p.addon_id AS id, COUNT(*) AS n, SUM(p.enabled) AS enabled FROM plugins p " +
-      "JOIN installs i ON i.id = p.install_id WHERE i.last_seen > datetime('now', '-30 days') " +
-      "AND p.removed_at IS NULL GROUP BY p.addon_id ORDER BY n DESC",
-  ).all();
-  const plugins = {};
-  for (const r of rows.results) plugins[r.id] = { installs: r.n, enabled: r.enabled };
-  return reply(
-    200,
-    JSON.stringify({ generatedAt: new Date().toISOString(), window: "30 days", installs, plugins }),
-    {
-      "Content-Type": "application/json",
-      "Cache-Control": "public, max-age=3600",
-      "Access-Control-Allow-Origin": "*",
-    },
-  );
 }
 
 // ---------------------------------------------------------------------------------------------

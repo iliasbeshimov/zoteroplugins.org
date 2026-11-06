@@ -52,8 +52,8 @@ const ASK_TEXT =
   "Zotero Atlas never sends your library, notes, files, Zotero account, email or anything " +
   "that identifies you.\n\n" +
   'With "Send my plugin list" it sends one thing: the list of plugins installed in this ' +
-  "Zotero, with their versions, under a random ID created on this computer. We publish the " +
-  "totals so everyone can see which plugins people actually use.\n\n" +
+  "Zotero, with their versions, under a random ID created on this computer. We use the " +
+  "totals to see which plugins people actually use, and we don't publish them.\n\n" +
   "You can change this any time in Zotero's settings, under Zotero Atlas.";
 
 let rootURI = "";

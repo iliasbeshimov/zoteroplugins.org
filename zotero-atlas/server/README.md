@@ -24,9 +24,15 @@ address, and nothing here logs request headers. Every rating waits as `new` unti
 private check publishes, holds or drops it; how fake reviews are spotted isn't published, so it
 can't be gamed.
 
-Published: `GET /api/v1/totals.json`, how many installs reported in the last 30 days and how many
-of them have each plugin (counts only); `GET /api/v1/ratings.json`, the published ratings per
-plugin and version (count, average, spread) and the reviews with text.
+Published: `GET /api/v1/ratings.json`, the published ratings per plugin and version (count,
+average, spread) and the reviews with text. The plugin lists are not published in any form; only
+the owner reads them, from the database:
+
+```sh
+wrangler d1 execute zotero-atlas --remote --command "SELECT COUNT(*) FROM installs WHERE last_seen > datetime('now', '-30 days')"
+wrangler d1 execute zotero-atlas --remote --command "SELECT addon_id, COUNT(*) AS n FROM plugins WHERE removed_at IS NULL GROUP BY 1 ORDER BY n DESC"
+wrangler d1 execute zotero-atlas --remote --command "SELECT zotero, os, COUNT(*) AS n FROM installs GROUP BY 1, 2 ORDER BY n DESC"
+```
 
 Deploy:
 
