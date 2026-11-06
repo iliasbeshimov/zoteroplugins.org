@@ -27,7 +27,7 @@ function findData(): string {
     if (dirname(d) === d) throw new Error("data/generated not found above the working directory");
   }
 }
-const ROOT = findData();
+export const ROOT = findData();
 const GENERATED = `${ROOT}generated/`;
 
 export type { Grade };
@@ -145,6 +145,8 @@ export interface Plugin {
   description: string[] | null;
   version: string;
   released: string;
+  /** `released` as an ISO timestamp, for the sitemap. */
+  releasedAt: string | null;
   /** The file is the one its update address serves, newer than its latest GitHub release. */
   fromUpdateAddress: boolean;
   size: string;
@@ -820,6 +822,7 @@ function build(
     description: summary ? [summary.does, summary.pain] : null,
     version: p.install?.version ?? "",
     released: fmtDate(p.install?.publishedAt ?? m.lastReleaseAt),
+    releasedAt: p.install?.publishedAt ?? m.lastReleaseAt ?? null,
     fromUpdateAddress: Boolean(p.install?.fromUpdateAddress),
     size,
     installUrl:

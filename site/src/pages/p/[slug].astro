@@ -9,6 +9,7 @@ import Tip from "../../components/Tip.astro";
 import Base from "../../layouts/Base.astro";
 import SameIdRow from "../../components/SameIdRow.astro";
 import { allPlugins, alternatives, bySlug, type Plugin, sameIdGroupOf, sameIdText } from "../../lib/atlas.ts";
+import { indexable } from "../../lib/seo.ts";
 import { JOB_BY_SLUG } from "@atlas/schema";
 import { REPORT_URL, RESPOND_URL } from "../../lib/links.ts";
 import { similarFloor, similarPlugins } from "../../lib/similar.ts";
@@ -87,7 +88,7 @@ const forkSlug = p.forkOf?.slug && all[p.forkOf.slug] ? p.forkOf.slug : null;
 const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.level === "medium" || a.level === "high").map((a) => a.key) : [];
 ---
 
-<Base title={`${p.name} · Zotero Plugins Atlas`} description={`${p.name}: Atlas grade ${p.grade} (${p.gradeLong}). ${p.oneLiner}`}>
+<Base title={`${p.name} · Zotero Plugins Atlas`} description={`${p.name}: Atlas grade ${p.grade} (${p.gradeLong}). ${p.oneLiner}`} noindex={!indexable(p)}>
   <SiteHeader search />
   {
     p.banner && (

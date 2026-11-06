@@ -12,6 +12,8 @@ export interface GradeChange {
   name: string;
   version: string;
   date: string;
+  /** `date` as an ISO timestamp. */
+  at: string;
   month: string;
   from: Grade | null;
   to: Grade;
@@ -51,6 +53,7 @@ export function gradeLog(): GradeChange[] {
         ...c,
         name: plugins[c.slug].name,
         date: fmtDate(c.date),
+        at: c.date,
         month: d.toLocaleString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" }),
         dir: !c.from ? "new" : RANK[c.to] > RANK[c.from] ? "up" : "down",
       };

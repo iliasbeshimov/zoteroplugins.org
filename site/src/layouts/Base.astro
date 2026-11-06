@@ -4,10 +4,20 @@ import "../styles/global.css";
 interface Props {
   title: string;
   description: string;
+  /** Keep this page out of search indexes (it stays reachable and its links are still followed). */
+  noindex?: boolean;
 }
 
 const { title, description } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+// Pages are built as files (p/x.html) but served without the extension (/p/x), so the canonical
+// address drops ".html" and "index".
+const path = Astro.url.pathname.replace(/\.html$/, "").replace(/(^|\/)index$/, "$1") || "/";
+const notFound = path === "/404";
+const canonical = new URL(path, Astro.site);
+// Per-plugin developer checklists, shared-ID pages and the compare tool repeat what the plugin
+// pages say, so search engines get the plugin pages instead.
+const noindex =
+  Astro.props.noindex || notFound || /^\/(developers|id)\/./.test(path) || path === "/compare";
 ---
 
 <!doctype html>
@@ -25,7 +35,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="alternate" type="application/rss+xml" title="Grade log" href="/log.xml" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {!notFound && <link rel="canonical" href={canonical} />}
+    {noindex && <meta name="robots" content="noindex, follow" />}
   </head>
   <body class="min-h-screen antialiased">
     <slot />
