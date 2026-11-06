@@ -22,7 +22,9 @@ import { describeChange, type Snapshot } from "../src/profile/regress.ts";
 import {
   finishCheck,
   hintsFrom,
+  orderBuilds,
   PROFILER_VERSION,
+  separateRecords,
   stable,
   type UpdateCheck,
   unchangedRelease,
@@ -1102,6 +1104,67 @@ describe("compatibility line", () => {
     });
     expect(card.overall.label).toBe("low-concern");
     expect(cardFor(`const x = 1;`).facets.compatibility.installProblem).toBeUndefined();
+  });
+});
+
+describe("several builds of one version (z-transplit 1.17.0: lean and -full)", () => {
+  const zv10 = {
+    release: { mac: "10.0.4" },
+    beta: {},
+    dev: {},
+    currentMajor: 10,
+    nextMajor: 11,
+    lastTagPerMajor: { 9: "9.0.6", 10: "10.0.4" },
+  };
+  const base = "https://github.com/Liozhang/z-transplit/releases/download/v1.17.0/";
+  const build = (name: string, sha: string, uploadedAt: string, isNew = true) =>
+    ({
+      file: "1.17.0.json",
+      isNew,
+      asset: {},
+      doc: {
+        version: "1.17.0",
+        asset: { name, url: base + name, sha256: sha.repeat(64), uploadedAt },
+        manifest: {
+          format: "manifest.json",
+          addonId: "ztransplit@zotero.org",
+          updateUrl:
+            "https://github.com/Liozhang/z-transplit/releases/download/release/update.json",
+          strictMinVersion: "10.0",
+          strictMaxVersion: "10.*",
+        },
+      },
+    }) as unknown as Parameters<typeof orderBuilds>[0][number];
+  const lean = () => build("z-transplit.xpi", "3", "2026-11-05T09:22:00Z");
+  const full = () => build("z-transplit-1.17.0-full.xpi", "d", "2026-11-05T09:25:00Z");
+
+  it("gives each new build its own record; a stored one keeps its name", () => {
+    const a = full();
+    const b = lean();
+    separateRecords([a, b]);
+    expect([a.file, b.file]).toEqual(["1.17.0.json", `1.17.0+${"3".repeat(8)}.json`]);
+    const stored = lean();
+    stored.isNew = false;
+    const added = full();
+    separateRecords([added, stored]);
+    expect([stored.file, added.file]).toEqual(["1.17.0.json", `1.17.0+${"d".repeat(8)}.json`]);
+  });
+
+  it("leads with the build the update address serves", () => {
+    const check = { link: `${base}z-transplit.xpi`, sha256: null } as unknown as UpdateCheck;
+    expect(orderBuilds([lean(), full()], zv10)[0]?.doc.asset.name).toBe(
+      "z-transplit-1.17.0-full.xpi",
+    );
+    expect(orderBuilds([full(), lean()], zv10, check)[0]?.doc.asset.name).toBe("z-transplit.xpi");
+  });
+
+  it("still leads with a build that works with the current Zotero", () => {
+    const old = lean();
+    old.doc.manifest.strictMaxVersion = "9.*";
+    const check = { link: `${base}z-transplit.xpi`, sha256: null } as unknown as UpdateCheck;
+    expect(orderBuilds([old, full()], zv10, check)[0]?.doc.asset.name).toBe(
+      "z-transplit-1.17.0-full.xpi",
+    );
   });
 });
 

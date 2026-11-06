@@ -461,6 +461,7 @@ export async function gather(
           scanError = (error as Error).message.slice(0, 200);
         }
       }
+      separateRecords(artifacts);
     } catch (error) {
       scanError = (error as Error).message.slice(0, 200);
     }
@@ -469,10 +470,17 @@ export async function gather(
   // Where Zotero's automatic updates lead today: the update address fetched, and the file it
   // offers analysed when it isn't one of this release's.
   let update: Gathered["update"] = null;
-  const lead = orderBuilds(artifacts, ctx.zv)[0];
+  let lead = orderBuilds(artifacts, ctx.zv)[0];
   if (release && lead) {
     try {
       update = await checkUpdates(lead, artifacts, row, slug, known, developer, ctx, existing);
+      // The update address serves another build of this release (z-transplit serves its lean
+      // z-transplit.xpi, not the -full one): that build leads, so check again from it.
+      const served = orderBuilds(artifacts, ctx.zv, update?.check)[0];
+      if (served && served !== lead) {
+        lead = served;
+        update = await checkUpdates(lead, artifacts, row, slug, known, developer, ctx, existing);
+      }
     } catch {
       update = null;
     }
@@ -627,7 +635,36 @@ export function writtenForAnotherFile(
  * A release's builds, the one users install first: identical bytes under two names collapse to
  * one, then the order below.
  */
-function orderBuilds(builds: Artifact[], zv: ZoteroVersions): Artifact[] {
+/**
+ * Builds of one version analysed in the same run, none stored yet, would share one record file
+ * and the last written would replace the others (z-transplit 1.17.0: its -full.xpi was offered
+ * for install while its record held the lean build). A stored build keeps its file; every other
+ * build that would take a name already used gets its own `+<sha256 prefix>` file.
+ */
+export function separateRecords(builds: Pick<Artifact, "file" | "isNew" | "doc">[]): void {
+  const owner = new Map<string, string>();
+  const stored = [...builds].sort((a, b) => Number(a.isNew) - Number(b.isNew));
+  for (const art of stored) {
+    const sha = art.doc.asset.sha256;
+    const taken = owner.get(art.file);
+    if (taken && taken !== sha) art.file = art.file.replace(/\.json$/, `+${sha.slice(0, 8)}.json`);
+    owner.set(art.file, sha);
+  }
+}
+
+/** Whether the update address serves this very file (by its download link or its hash). */
+const servedBy = (art: Artifact, check: UpdateCheck | null | undefined) =>
+  Boolean(
+    check?.link &&
+      (art.doc.asset.url === check.link ||
+        (check.sha256 !== null && check.sha256 === art.doc.asset.sha256)),
+  );
+
+export function orderBuilds(
+  builds: Artifact[],
+  zv: ZoteroVersions,
+  check?: UpdateCheck | null,
+): Artifact[] {
   // The same bytes under two names (`plugin.xpi` and `plugin-1.2.3.xpi`) are one build, named after
   // the file that carries the version, so the install file's name doesn't flip between runs.
   const versioned = (art: Artifact) => Number(art.doc.asset.name.includes(art.doc.version));
@@ -644,13 +681,16 @@ function orderBuilds(builds: Artifact[], zv: ZoteroVersions): Artifact[] {
   }
   const artifacts = [...bySha.values()];
   // The file users install: the build that works with the current Zotero when a release ships
-  // several (review K1: zotero-reference's headline was a build Zotero 10 refuses), then a
-  // manifest.json build, then the one supporting the newest Zotero. Otherwise GitHub's order.
+  // several (review K1: zotero-reference's headline was a build Zotero 10 refuses), then the one
+  // the update address serves (every installed copy ends up on it: z-transplit's lean build, not
+  // its -full one), then a manifest.json build, then the one supporting the newest Zotero.
+  // Otherwise GitHub's order.
   const current = newestRelease(zv.currentMajor, zv);
   const covers = (art: Artifact) => supportsVersion(asXpiManifest(art.doc.manifest), current);
   return artifacts.sort(
     (a, b) =>
       Number(covers(b)) - Number(covers(a)) ||
+      Number(servedBy(b, check)) - Number(servedBy(a, check)) ||
       Number(b.doc.manifest.format === "manifest.json") -
         Number(a.doc.manifest.format === "manifest.json") ||
       compareVersions(
@@ -677,7 +717,7 @@ export function assemble(
   const { row, slug, kind } = c;
   const developer = developerHints(row.repo, row.addonId, null);
   const { release, scanError, docs, alternates } = g;
-  const artifacts = orderBuilds(g.artifacts, ctx.zv);
+  const artifacts = orderBuilds(g.artifacts, ctx.zv, g.update?.check);
   const primary = artifacts[0] ?? null;
   const primaryAsset = release?.assets.find((a) => a.name.toLowerCase().endsWith(".xpi")) ?? null;
 
@@ -896,6 +936,15 @@ export function assemble(
     doc: Release.parse(art.doc),
     ...(art.replaces ? { replaces: art.replaces } : {}),
   }));
+  // Every file a card offers or grades has its own record: two files under one record name would
+  // leave the card offering a file whose analysis was overwritten.
+  const recordOf = new Map<string, string>();
+  for (const r of releases) {
+    const other = recordOf.get(r.file);
+    if (other && other !== r.doc.asset.sha256)
+      throw new Error(`${slug}: two files would share the record ${r.file}`);
+    recordOf.set(r.file, r.doc.asset.sha256);
+  }
 
   const a = primary?.doc.analysis ?? null;
   let updates = primary
