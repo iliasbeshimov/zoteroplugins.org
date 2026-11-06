@@ -17,7 +17,7 @@ import {
   type RepoFull,
 } from "./metadata.ts";
 import { buildReport } from "./report.ts";
-import { type Discovery, discover, loadSeeds, type SourceId } from "./sources.ts";
+import { type Discovery, discover, loadSeeds, SOURCE_IDS, type SourceId } from "./sources.ts";
 import { httpRangeReader, readXpiManifests, type XpiManifest } from "./xpi.ts";
 
 export const CURATED_SOURCES: SourceId[] = [
@@ -111,6 +111,40 @@ const maxDate = (...dates: (string | null | undefined)[]) =>
 
 export type CensusMode = "full" | "refresh";
 
+const PLUGIN_VERDICTS = new Set(["zotero-plugin", "zotero-plugin-legacy"]);
+
+/**
+ * Every repo we already know as a plugin, with the sources it was found by: the last census's
+ * plugin rows, and every repo with a plugin card in data/generated (a repo a full run missed, then
+ * dropped, keeps its card). Discovery samples GitHub's code search differently each run; these
+ * stay candidates so a plugin isn't dropped because one search didn't return it.
+ */
+export async function knownRepos(
+  outDir: string,
+  generatedDir = join(paths.root, "data", "generated"),
+): Promise<Map<string, Set<SourceId>>> {
+  const known = new Map<string, Set<SourceId>>();
+  for (const [key, r] of await lastRows(outDir))
+    if (PLUGIN_VERDICTS.has(r.verdict)) known.set(key, new Set(r.sources));
+  let index: { slug: string; repo: string; kind: string }[] = [];
+  try {
+    index = JSON.parse(await readFile(join(generatedDir, "index.json"), "utf8"));
+  } catch {}
+  for (const p of index) {
+    const key = p.repo?.toLowerCase();
+    if (!key || p.kind !== "plugin" || known.has(key)) continue;
+    let sources: SourceId[] = [];
+    try {
+      const profile = JSON.parse(
+        await readFile(join(generatedDir, p.slug, "profile.json"), "utf8"),
+      ) as { sources?: SourceId[] };
+      sources = (profile.sources ?? []).filter((s) => SOURCE_IDS.includes(s));
+    } catch {}
+    known.set(key, new Set(sources));
+  }
+  return known;
+}
+
 /** The last census's rows by lower-case repo, or none before the first census. */
 async function lastRows(outDir: string): Promise<Map<string, CensusRow>> {
   try {
@@ -164,6 +198,17 @@ export async function runCensus(
       set.add("submitted");
       discovery.candidates.set(key, set);
     }
+    // Known plugins stay candidates (citation-phoenix, zotvim: found only by code search, dropped
+    // by the 2026-10-18 full run that didn't return them). One found again keeps this run's
+    // sources; one not found keeps the sources it was found by. Pass A still drops a repo GitHub
+    // says is gone or that has no .xpi release, and folds a renamed one into its new name.
+    let carried = 0;
+    for (const [key, sources] of await knownRepos(outDir)) {
+      if (discovery.candidates.has(key)) continue;
+      discovery.candidates.set(key, new Set(sources));
+      carried++;
+    }
+    log(`  ${carried} known plugins kept as candidates though no search found them this run`);
     const keys = [...discovery.candidates.keys()].sort();
     log(`  ${keys.length} unique candidate repos`);
     log("Pass A: which candidates release .xpi files");
@@ -223,6 +268,13 @@ export async function runCensus(
       if (r.verdict === "repo-unavailable" || (onlyKeys && !onlyKeys.has(r.repo.toLowerCase())))
         carriedRows.push(r);
       else sourcesOf.set(r.repo.toLowerCase(), new Set(r.sources));
+    }
+    // `--only` can name a repo the last census lost: measure it with the sources its card records.
+    if (onlyKeys) {
+      const inLast = new Set(prev.rows.map((r) => r.repo.toLowerCase()));
+      const known = await knownRepos(outDir);
+      for (const key of onlyKeys)
+        if (!inLast.has(key)) sourcesOf.set(key, new Set(known.get(key) ?? []));
     }
     base = {
       candidates: prev.funnel.candidates,

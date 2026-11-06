@@ -386,6 +386,48 @@ describe("history", () => {
   });
 });
 
+describe("known plugins stay candidates", () => {
+  it("lists the last census's plugin rows and every plugin card the census lost", async () => {
+    const { mkdtemp, mkdir, writeFile } = await import("node:fs/promises");
+    const { tmpdir } = await import("node:os");
+    const { join } = await import("node:path");
+    const { knownRepos } = await import("../src/census/run.ts");
+    const dir = await mkdtemp(join(tmpdir(), "atlas-known-"));
+    const census = join(dir, "census");
+    const generated = join(dir, "generated");
+    await mkdir(census);
+    await mkdir(join(generated, "zotvim"), { recursive: true });
+    await writeFile(
+      join(census, "census.json"),
+      JSON.stringify({
+        rows: [
+          { repo: "a/Plugin", verdict: "zotero-plugin", sources: ["topic"] },
+          { repo: "a/old", verdict: "zotero-plugin-legacy", sources: ["sheet"] },
+          { repo: "a/docs", verdict: "no-xpi-release", sources: ["topic"] },
+        ],
+      }),
+    );
+    await writeFile(
+      join(generated, "index.json"),
+      JSON.stringify([
+        { slug: "plugin", repo: "a/plugin", kind: "plugin" },
+        { slug: "zotvim", repo: "jan-grp/zotvim", kind: "plugin" },
+        { slug: "wiki", repo: "z/wiki", kind: "resource" },
+      ]),
+    );
+    await writeFile(
+      join(generated, "zotvim", "profile.json"),
+      JSON.stringify({ sources: ["code-search", "not-a-source"] }),
+    );
+    const known = await knownRepos(census, generated);
+    expect(Object.fromEntries([...known].map(([k, v]) => [k, [...v]]))).toEqual({
+      "a/plugin": ["topic"],
+      "a/old": ["sheet"],
+      "jan-grp/zotvim": ["code-search"],
+    });
+  });
+});
+
 describe("batched GitHub queries", () => {
   /**
    * Answers like GitHub: a batch that includes `heavy/repo` with anything else exceeds the
