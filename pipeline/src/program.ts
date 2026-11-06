@@ -25,7 +25,7 @@ const forceOption = () =>
  */
 export function buildProgram(): Command {
   const program = new Command("atlas")
-    .description("Zotero Plugin Atlas data pipeline")
+    .description("Zotero Plugins Atlas data pipeline")
     .showHelpAfterError();
 
   program

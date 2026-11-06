@@ -3,6 +3,8 @@ import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import Base from "../layouts/Base.astro";
 import { REPO, REPORT_URL } from "../lib/links.ts";
+import { allPlugins } from "../lib/atlas.ts";
+import { datasetLd } from "../lib/meta.ts";
 
 const toc = [
   ["who", "Who made this"],
@@ -20,7 +22,7 @@ const checks = [
 ];
 ---
 
-<Base title="About · Zotero Plugins Atlas" description="Who made zoteroplugins.org, why, how the checks work and where AI is used. A non-commercial hobby project by Ilias Beshimov.">
+<Base title="About Zotero Plugins Atlas: who checks the plugins and how" description="Who made zoteroplugins.org, why, how the checks work and where AI is used. A non-commercial hobby project by Ilias Beshimov." jsonld={datasetLd(allPlugins()[0].checkedAt, allPlugins().filter((p) => !p.hidden).length)}>
   <SiteHeader active="about" />
   <div class="wrap">
     <nav aria-label="On this page" class="toc">

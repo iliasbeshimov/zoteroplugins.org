@@ -147,6 +147,8 @@ export interface Plugin {
   released: string;
   /** `released` as an ISO timestamp, for the sitemap. */
   releasedAt: string | null;
+  /** When the census last checked its repository and releases, as an ISO timestamp. */
+  checkedAt: string;
   /** The file is the one its update address serves, newer than its latest GitHub release. */
   fromUpdateAddress: boolean;
   size: string;
@@ -331,6 +333,17 @@ function rangeOf(vs: string[]): string {
 interface Summary {
   does: string;
   pain: string;
+}
+/** When the census last ran: every run, daily or weekly, re-checks every known plugin. */
+let censusAt: string | null | undefined;
+function censusDate(fallback: string): string {
+  if (censusAt === undefined) {
+    const f = `${ROOT}census/census.json`;
+    censusAt = existsSync(f)
+      ? (JSON.parse(readFileSync(f, "utf8")) as { generatedAt: string }).generatedAt
+      : null;
+  }
+  return censusAt ?? fallback;
 }
 function loadSummaries(): Record<string, Summary> {
   const f = `${ROOT}census/summaries.json`;
@@ -835,6 +848,7 @@ function build(
     version: p.install?.version ?? "",
     released: fmtDate(p.install?.publishedAt ?? m.lastReleaseAt),
     releasedAt: p.install?.publishedAt ?? m.lastReleaseAt ?? null,
+    checkedAt: censusDate(p.generatedAt),
     fromUpdateAddress: Boolean(p.install?.fromUpdateAddress),
     size,
     installUrl:

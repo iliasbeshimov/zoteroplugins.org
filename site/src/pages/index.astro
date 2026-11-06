@@ -8,6 +8,7 @@ import Base from "../layouts/Base.astro";
 import { CURRENT_ZOTERO_MAJOR, GRADES, shownPlugins } from "../lib/atlas.ts";
 import { gradeLog } from "../lib/gradeLog.ts";
 import { JOBS } from "@atlas/schema";
+import { siteLd } from "../lib/meta.ts";
 
 const plugins = shownPlugins();
 const tries = ["cite in Word", "translate PDFs", "summarise a paper", "find duplicates"];
@@ -29,6 +30,7 @@ const pressLink = `${press.url}?utm_source=zoteroplugins.org&utm_medium=referral
 <Base
   title="Zotero Plugins Atlas · plugins for Zotero, checked before you install"
   description="Every Zotero plugin gets a grade from a check of its code: what it does, what it needs from you and where it sends your data, with the evidence."
+  jsonld={siteLd("Every Zotero plugin, graded from a check of its code: what it does, what it needs from you and where it sends your data.")}
 >
   <SiteHeader />
   <div class="hero">

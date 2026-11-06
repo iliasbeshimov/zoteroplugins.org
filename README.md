@@ -1,4 +1,4 @@
-# Zotero Plugin Atlas
+# Zotero Plugins Atlas
 
 A reviewed, trust-first web catalog of Zotero plugins. For every released version of every plugin:
 what it does, what it needs from you, and what it does with your data, with the evidence one

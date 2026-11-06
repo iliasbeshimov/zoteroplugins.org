@@ -4,14 +4,15 @@ import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import Base from "../layouts/Base.astro";
 import { CURRENT_ZOTERO_MAJOR, shownPlugins } from "../lib/atlas.ts";
+import { clip, pageTitle } from "../lib/meta.ts";
 
 const plugins = shownPlugins();
 ---
 
-<Base title="Find a plugin for the job · Zotero Plugins Atlas" description="Search every Zotero plugin by what you want it to do, and filter by your Zotero version, API keys, documentation language and grade.">
+<Base title={pageTitle(`All ${plugins.length.toLocaleString("en-GB")} Zotero plugins, checked and graded`)} description={clip(`Search all ${plugins.length.toLocaleString("en-GB")} Zotero plugins by what you want them to do, and filter by your Zotero version, API keys, documentation language and grade.`)}>
   <SiteHeader active="browse" />
   <div class="wrap">
-    <h1>Find a plugin for the job</h1>
+    <h1>Find a Zotero plugin for the job</h1>
     <PluginList plugins={plugins} currentMajor={CURRENT_ZOTERO_MAJOR()} search />
   </div>
   <SiteFooter />

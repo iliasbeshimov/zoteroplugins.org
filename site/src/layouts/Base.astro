@@ -1,14 +1,19 @@
 ---
 import "../styles/global.css";
+import JsonLd from "../components/JsonLd.astro";
 
 interface Props {
   title: string;
   description: string;
   /** Keep this page out of search indexes (it stays reachable and its links are still followed). */
   noindex?: boolean;
+  /** Structured data for the page (see lib/meta.ts). */
+  jsonld?: Record<string, unknown> | Record<string, unknown>[];
+  /** Open Graph type: "website" for most pages, "article" for guides. */
+  ogType?: "website" | "article";
 }
 
-const { title, description } = Astro.props;
+const { title, description, jsonld, ogType = "website" } = Astro.props;
 // Pages are built as files (p/x.html) but served without the extension (/p/x), so the canonical
 // address drops ".html" and "index".
 const path = Astro.url.pathname.replace(/\.html$/, "").replace(/(^|\/)index$/, "$1") || "/";
@@ -37,6 +42,18 @@ const noindex =
     <meta name="description" content={description} />
     {!notFound && <link rel="canonical" href={canonical} />}
     {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta property="og:site_name" content="Zotero Plugins Atlas" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {!notFound && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={new URL("/og.png", Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Zotero Plugins Atlas: every Zotero plugin, checked before you install" />
+    <meta property="og:locale" content="en" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {jsonld && <JsonLd data={jsonld} />}
   </head>
   <body class="min-h-screen antialiased">
     <slot />

@@ -1,0 +1,11 @@
+---
+/** Structured data for search and answer engines: one JSON-LD block. */
+interface Props {
+  data: Record<string, unknown> | Record<string, unknown>[];
+}
+const { data } = Astro.props;
+// "<" is escaped so a value can't close the script element.
+const json = JSON.stringify(data).replace(/</g, "\\u003c");
+---
+
+<script type="application/ld+json" set:html={json} />

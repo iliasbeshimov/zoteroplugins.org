@@ -10,6 +10,7 @@ import Base from "../../layouts/Base.astro";
 import SameIdRow from "../../components/SameIdRow.astro";
 import { allPlugins, alternatives, bySlug, type Plugin, sameIdGroupOf, sameIdText } from "../../lib/atlas.ts";
 import { indexable } from "../../lib/seo.ts";
+import { checkedOn, pluginDescription, pluginLd, pluginTitle, verdictSentence } from "../../lib/meta.ts";
 import { JOB_BY_SLUG } from "@atlas/schema";
 import { REPORT_URL, RESPOND_URL } from "../../lib/links.ts";
 import { similarFloor, similarPlugins } from "../../lib/similar.ts";
@@ -85,10 +86,16 @@ const stats = [
   ["Licence", p.license, "The licence the code is published under, as GitHub reports it."],
 ];
 const forkSlug = p.forkOf?.slug && all[p.forkOf.slug] ? p.forkOf.slug : null;
+const crumbs: [string, string][] = [
+  ["Home", "/"],
+  ["Plugins", "/browse"],
+  ...(job0 ? ([[job0.title, `/c/${job0.slug}`]] as [string, string][]) : []),
+  [p.name, `/p/${p.slug}`],
+];
 const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.level === "medium" || a.level === "high").map((a) => a.key) : [];
 ---
 
-<Base title={`${p.name} · Zotero Plugins Atlas`} description={`${p.name}: Atlas grade ${p.grade} (${p.gradeLong}). ${p.oneLiner}`} noindex={!indexable(p)}>
+<Base title={pluginTitle(p)} description={pluginDescription(p)} noindex={!indexable(p)} jsonld={indexable(p) ? pluginLd(p, crumbs) : undefined}>
   <SiteHeader search />
   {
     p.banner && (
@@ -140,6 +147,7 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
       <h1>{p.name}</h1>
       <span class="by">by {p.author} · <a href={p.repoUrl}>github.com/{p.repo}</a></span>
       <p class="lead">{p.oneLiner}</p>
+      <p class="verdict">{verdictSentence(p)} <span class="checked">Last checked {checkedOn(p)}.</span></p>
       {
         p.jobs.length > 0 && (
           <div class="cats">
@@ -479,6 +487,17 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     font-weight: 760;
     text-wrap: balance;
     overflow-wrap: anywhere;
+  }
+  .verdict {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+  }
+  .verdict .checked {
+    white-space: nowrap;
   }
   .by {
     font: 500 13px/1.4 var(--font-mono);

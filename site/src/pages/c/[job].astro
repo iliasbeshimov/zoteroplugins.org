@@ -5,21 +5,24 @@ import SiteHeader from "../../components/SiteHeader.astro";
 import Base from "../../layouts/Base.astro";
 import { CURRENT_ZOTERO_MAJOR, shownPlugins } from "../../lib/atlas.ts";
 import { JOBS, type Job } from "@atlas/schema";
+import { categoryLd, jobDescription, jobHeading, jobTitle } from "../../lib/meta.ts";
 
 export function getStaticPaths() {
   return JOBS.map((job) => ({ params: { job: job.slug }, props: { job } }));
 }
 const { job } = Astro.props as { job: Job };
 const plugins = shownPlugins().filter((p) => p.jobs.includes(job.slug));
+const title = jobTitle(job, plugins.length);
+const description = jobDescription(job, plugins);
 ---
 
-<Base title={`${job.title} · Zotero Plugins Atlas`} description={`${job.lead} ${plugins.length} plugins, each graded from a check of its code.`}>
+<Base title={title} description={description} jsonld={categoryLd(job, plugins, title, description)}>
   <SiteHeader active="browse" search />
-  <div class="wrap">
+  <main class="wrap">
     <nav aria-label="Breadcrumb" class="crumb"><a href="/">Home</a><span>›</span><span>{job.title}</span></nav>
     <div class="top">
       <div class="tl">
-        <h1>{job.title}</h1>
+        <h1>{jobHeading(job)}</h1>
         <p>{job.lead} {plugins.length} plugins.</p>
         <p class="hint">Tick up to three plugins to compare them.</p>
       </div>
@@ -29,8 +32,8 @@ const plugins = shownPlugins().filter((p) => p.jobs.includes(job.slug));
       </aside>
     </div>
     <PluginList plugins={plugins} currentMajor={CURRENT_ZOTERO_MAJOR()} compare />
-    <p class="fine">Categories are matched from each plugin's name, description and topics until we've written a summary for every plugin, so a few may be missing or misplaced.</p>
-  </div>
+    <p class="fine">Categories are matched from each plugin's name, description and topics, so a few may be missing or misplaced.</p>
+  </main>
   <SiteFooter />
 </Base>
 
