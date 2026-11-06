@@ -159,7 +159,10 @@ export interface Plugin {
   gradeTone: Tone;
   because: string;
   next: string;
+  /** The jobs it's listed under, main job first. */
   jobs: string[];
+  /** The job it's listed under first (and the only one /best counts it for). */
+  mainJob: string | null;
   categories: string[];
   hidden: boolean;
   /** Why it's hidden from lists ("fork", "legacy", "no-release", "retired", "removed"). */
@@ -344,6 +347,22 @@ function censusDate(fallback: string): string {
       : null;
   }
   return censusAt ?? fallback;
+}
+/** A plugin's jobs as judged from its summary: the main one, then up to two it also does. */
+interface JobPick {
+  main: string | null;
+  also: string[];
+  notZotero?: boolean;
+}
+let jobPicks: Record<string, JobPick> | undefined;
+function jobPick(p: PluginProfile): JobPick | undefined {
+  if (jobPicks === undefined) {
+    const f = `${ROOT}census/jobs.json`;
+    jobPicks = existsSync(f)
+      ? (JSON.parse(readFileSync(f, "utf8")) as { jobs: Record<string, JobPick> }).jobs
+      : {};
+  }
+  return jobPicks[p.repoName] ?? jobPicks[p.repo];
 }
 function loadSummaries(): Record<string, Summary> {
   const f = `${ROOT}census/summaries.json`;
@@ -815,7 +834,13 @@ function build(
     p.about.manifestDescription ??
     "Description coming soon.";
   const size = p.install ? fmtSize(p.install.asset.size) : "";
-  const jobs = jobsFor(p);
+  // The jobs judged from its summary (data/census/jobs.json), or the keyword guess without one.
+  const pick = jobPick(p);
+  const jobs = pick
+    ? [pick.main, ...pick.also].filter(
+        (j, i, a): j is string => !!j && j in JOB_BY_SLUG && a.indexOf(j) === i,
+      )
+    : jobsFor(p);
 
   return {
     slug: p.slug,
@@ -862,6 +887,7 @@ function build(
     because,
     next,
     jobs,
+    mainJob: jobs[0] ?? null,
     categories: jobs.map((j) => JOB_BY_SLUG[j].title),
     hidden: p.listing.hiddenByDefault,
     hiddenReason: p.listing.hiddenReason ?? null,

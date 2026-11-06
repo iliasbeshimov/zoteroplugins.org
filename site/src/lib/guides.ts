@@ -91,14 +91,14 @@ export function gradeCounts() {
 export const MIN_DOWNLOADS = 50;
 
 /**
- * The best-graded plugins for a job: listed, working with the current Zotero, graded B or better,
+ * The best-graded plugins for a job (their main job only): listed, working with the current Zotero, graded B or better,
  * with some users. Better grade first, then more downloads.
  */
 export function bestFor(job: string, n = 5): Plugin[] {
   return shownPlugins()
     .filter(
       (p) =>
-        p.jobs.includes(job) &&
+        p.mainJob === job &&
         p.currentOk &&
         RANK[p.grade] >= RANK.B &&
         p.downloadsN >= MIN_DOWNLOADS &&
