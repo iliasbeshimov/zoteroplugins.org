@@ -3,7 +3,13 @@ import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { applyMoved, followLostCards, markRemoved, readRedirects } from "../src/profile/moved.ts";
+import {
+  applyMoved,
+  dropCards,
+  followLostCards,
+  markRemoved,
+  readRedirects,
+} from "../src/profile/moved.ts";
 
 describe("cards for repos that moved on GitHub", () => {
   const cards = [
@@ -90,5 +96,24 @@ describe("cards for repos that moved on GitHub", () => {
       ["b", "c"],
     ]);
     expect(JSON.parse(await readFile(join(dir, "redirects.json"), "utf8")).schemaVersion).toBe(1);
+  });
+
+  it("removes the cards of repos found not to be Zotero plugins, whatever their case", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "atlas-notplugin-"));
+    for (const s of ["kerko", "zotero-pdf-translate"]) {
+      await mkdir(join(dir, s));
+      await writeFile(join(dir, s, "profile.json"), "{}");
+    }
+    const gone = await dropCards(
+      dir,
+      [
+        { slug: "kerko", repo: "whiskyechobravo/Kerko" },
+        { slug: "zotero-pdf-translate", repo: "windingwind/zotero-pdf-translate" },
+      ],
+      new Set(["whiskyechobravo/kerko"]),
+    );
+    expect(gone).toEqual(["kerko"]);
+    expect(existsSync(join(dir, "kerko"))).toBe(false);
+    expect(existsSync(join(dir, "zotero-pdf-translate"))).toBe(true);
   });
 });

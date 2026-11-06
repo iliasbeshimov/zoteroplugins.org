@@ -54,8 +54,8 @@ import {
 } from "./checks.ts";
 import { updateGradeLog } from "./gradeLog.ts";
 import { detectDocLanguages, linkedReadmeLanguages, uiLocales } from "./languages.ts";
-import { assignSlugs, listingKind, resolveListing } from "./listing.ts";
-import { applyMoved, followLostCards as findLost, markRemoved } from "./moved.ts";
+import { assignSlugs, listingKind, loadNotPlugins, resolveListing } from "./listing.ts";
+import { applyMoved, dropCards, followLostCards as findLost, markRemoved } from "./moved.ts";
 import { buildProfileReport } from "./report.ts";
 import {
   type FindingReview,
@@ -152,6 +152,8 @@ export interface Prepared {
   registry: Record<string, string>;
   listing: ReturnType<typeof resolveListing>;
   table: HostTable;
+  /** Repos found not to be Zotero plugins, in lower case (listing.ts). */
+  notPlugins: Set<string>;
 }
 
 /** Census rows, slugs, listing and the hosts table: everything a run needs before any plugin. */
@@ -166,8 +168,9 @@ export async function prepare(): Promise<Prepared> {
   if (!census.rows.length)
     throw new Error("data/census/census.json is missing; run `atlas census`");
 
+  const notPlugins = await loadNotPlugins();
   const listed = census.rows
-    .map((row) => ({ row, kind: listingKind(row) }))
+    .map((row) => ({ row, kind: listingKind(row, notPlugins) }))
     .filter((c): c is Omit<Candidate, "slug"> => c.kind !== null)
     .sort(
       (a, b) =>
@@ -205,7 +208,7 @@ export async function prepare(): Promise<Prepared> {
       addonId: c.row.addonId,
     })),
   );
-  return { census, candidates, registry, listing, table: await loadHostTable() };
+  return { census, candidates, registry, listing, table: await loadHostTable(), notPlugins };
 }
 
 export function selectCandidates(
@@ -276,7 +279,7 @@ export async function runProfile(
   log: (msg: string) => void = console.log,
 ): Promise<void> {
   const prep = await prepare();
-  const { census, candidates, registry, listing, table } = prep;
+  const { census, candidates, registry, listing, table, notPlugins } = prep;
   const selected = selectCandidates(candidates, opts);
   const ctx = await makeContext(prep, {
     force: Boolean(opts.force),
@@ -301,6 +304,7 @@ export async function runProfile(
 
   // A full online run: cards for repos that moved on GitHub redirect; deleted ones are marked.
   if (!ctx.offline && !opts.plugin && !opts.limit) await followLostCards(ctx.gh, census.rows, log);
+  await dropNotPlugins(notPlugins, log);
   await writeFile(SLUGS_FILE, `${JSON.stringify(registry, null, 1)}\n`);
   const profiles = await loadAllProfiles();
   await updateGradeLog(profiles, ctx.now.slice(0, 10), log);
@@ -1909,6 +1913,25 @@ export async function followLostCards(
     );
   for (const m of moves) log(`  moved: ${m.slug} → ${m.target} (${m.from} is now ${m.to})`);
   log(`${moves.length} cards moved to their repo's new name`);
+}
+
+/**
+ * Removes the cards of repos in data/census/not-plugins.json (a card made before its repo was
+ * found not to be a plugin) and rewrites the index when any went.
+ */
+export async function dropNotPlugins(
+  notPlugins: ReadonlySet<string>,
+  log: (msg: string) => void = console.log,
+): Promise<string[]> {
+  const cards = (await loadAllProfiles()).map((p) => ({ slug: p.slug, repo: p.repo }));
+  const gone = await dropCards(paths.generated, cards, notPlugins);
+  for (const slug of gone) log(`  dropped: ${slug} (not a Zotero plugin)`);
+  if (gone.length)
+    await writeFile(
+      join(paths.generated, "index.json"),
+      `${JSON.stringify((await loadAllProfiles()).map(indexEntry), null, 1)}\n`,
+    );
+  return gone;
 }
 
 export async function loadAllProfiles(): Promise<Profile[]> {

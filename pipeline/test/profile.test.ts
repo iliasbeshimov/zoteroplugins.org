@@ -120,7 +120,13 @@ describe("interface locales", () => {
 });
 
 const row = (over: Partial<CensusRow>): CensusRow =>
-  ({ verdict: "zotero-plugin", sources: ["topic"], sheetToolType: null, ...over }) as CensusRow;
+  ({
+    repo: "a/b",
+    verdict: "zotero-plugin",
+    sources: ["topic"],
+    sheetToolType: null,
+    ...over,
+  }) as CensusRow;
 
 describe("listing", () => {
   it("lists confirmed plugins, legacy plugins and curated plugins without a release", () => {
@@ -132,6 +138,18 @@ describe("listing", () => {
     ).toBeNull();
     expect(listingKind(row({ verdict: "no-xpi-release", sources: ["topic"] }))).toBeNull();
     expect(listingKind(row({ verdict: "firefox-extension" }))).toBeNull();
+  });
+
+  it("never lists a repo found not to be a Zotero plugin, even one with a Zotero release", () => {
+    const notPlugins = new Set(["whiskyechobravo/kerko", "xiling951/zotero-"]);
+    expect(
+      listingKind(
+        row({ repo: "whiskyechobravo/Kerko", verdict: "no-xpi-release", sources: ["sheet"] }),
+        notPlugins,
+      ),
+    ).toBeNull();
+    expect(listingKind(row({ repo: "xiling951/zotero-" }), notPlugins)).toBeNull();
+    expect(listingKind(row({ repo: "FluentRead/FluentRead" }), notPlugins)).toBe("plugin");
   });
 
   it("keeps existing slugs and gives clashes an owner suffix", () => {

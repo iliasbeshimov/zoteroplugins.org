@@ -127,3 +127,17 @@ export async function applyMoved(generatedDir: string, moves: Moved[]): Promise<
   for (const m of moves) await rm(join(generatedDir, m.slug), { recursive: true, force: true });
   return out;
 }
+
+/**
+ * Removes the cards of repos found not to be Zotero plugins (listing.ts, not-plugins.json): they
+ * leave the site rather than staying up hidden, since they were never plugins. Returns the slugs.
+ */
+export async function dropCards(
+  generatedDir: string,
+  cards: { slug: string; repo: string }[],
+  notPlugins: ReadonlySet<string>,
+): Promise<string[]> {
+  const gone = cards.filter((c) => notPlugins.has(c.repo.toLowerCase())).map((c) => c.slug);
+  for (const slug of gone) await rm(join(generatedDir, slug), { recursive: true, force: true });
+  return gone.sort();
+}

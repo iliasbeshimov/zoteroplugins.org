@@ -199,14 +199,16 @@ export function buildProgram(): Command {
   program
     .command("moved")
     .description(
-      "cards whose repo left the census: redirect the ones that moved on GitHub to their new card, mark the ones whose repo is gone (the nightly profile run does this too)",
+      "cards whose repo left the census: redirect the ones that moved on GitHub to their new card, mark the ones whose repo is gone, and remove the ones in data/census/not-plugins.json (the nightly profile run does this too)",
     )
     .action(async () => {
       const { loadConfig, requireGithubToken } = await import("./config.ts");
       const { GitHub } = await import("./net/github.ts");
       const { DiskCache } = await import("./net/http.ts");
       const { join } = await import("node:path");
-      const { prepare, followLostCards, loadAllProfiles } = await import("./profile/run.ts");
+      const { prepare, followLostCards, dropNotPlugins, loadAllProfiles } = await import(
+        "./profile/run.ts"
+      );
       const { writeCatalog } = await import("./profile/catalog.ts");
       const config = loadConfig();
       const gh = new GitHub(
@@ -214,7 +216,9 @@ export function buildProgram(): Command {
         config.userAgent,
         new DiskCache(join(config.cacheDir, "http")),
       );
-      await followLostCards(gh, (await prepare()).census.rows);
+      const prep = await prepare();
+      await followLostCards(gh, prep.census.rows);
+      await dropNotPlugins(prep.notPlugins);
       await writeCatalog(await loadAllProfiles(), new Date().toISOString());
     });
 
