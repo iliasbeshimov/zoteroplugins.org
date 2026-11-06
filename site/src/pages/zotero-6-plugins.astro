@@ -62,7 +62,7 @@ const graph = collectionPage({ path, name: h1, description, plugins: legacy });
     <ol class="legacy">
       {
         withRepl.map(({ p, repl }) => (
-          <li>
+          <li id={p.slug}>
             <div class="lh">
               <a href={`/p/${p.slug}`} class="ln">{p.name}</a>
               <span class="ld">{p.repo} · {p.downloads} downloads · Zotero 6</span>
@@ -94,7 +94,7 @@ const graph = collectionPage({ path, name: h1, description, plugins: legacy });
     <ul class="plain">
       {
         without.map(({ p }) => (
-          <li>
+          <li id={p.slug}>
             <a href={`/p/${p.slug}`}>{p.name}</a>
             <span class="ld">{p.repo} · {p.downloads} downloads</span>
             <span class="lo">{p.oneLiner}</span>

@@ -25,6 +25,15 @@ const description = jobDescription(job, plugins);
         <h1>{jobHeading(job)}</h1>
         <p>{job.lead} {plugins.length} plugins.</p>
         <p class="hint">Tick up to three plugins to compare them.</p>
+        <p class="hint">
+          <a href={`/best#${job.slug}`}>The best-graded for this job</a>
+          {job.slug === "ai" && (
+            <>
+              {" · "}
+              <a href="/ai-without-api-key">AI plugins without an API key</a>
+            </>
+          )}
+        </p>
       </div>
       <aside class="watch">
         <strong>What to watch for</strong>

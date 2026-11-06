@@ -147,7 +147,15 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
       <h1>{p.name}</h1>
       <span class="by">by {p.author} · <a href={p.repoUrl}>github.com/{p.repo}</a></span>
       <p class="lead">{p.oneLiner}</p>
-      <p class="verdict">{verdictSentence(p)} <span class="checked">Last checked {checkedOn(p)}.</span></p>
+      <p class="verdict">
+        {verdictSentence(p)}{" "}
+        {p.legacy && (
+          <>
+            <a href={`/zotero-6-plugins#${p.slug}`}>What to use instead</a>.{" "}
+          </>
+        )}
+        <span class="checked">Last checked {checkedOn(p)}.</span>
+      </p>
       {
         p.jobs.length > 0 && (
           <div class="cats">
