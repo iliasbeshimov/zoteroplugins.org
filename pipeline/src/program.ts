@@ -103,7 +103,10 @@ export function buildProgram(): Command {
       "find every Zotero plugin on GitHub and record stars, downloads, activity and compatibility (no LLM)",
     )
     .addOption(
-      new Option("--mode <mode>", "full: discover and measure; refresh: re-measure known repos")
+      new Option(
+        "--mode <mode>",
+        "full: discover and measure; refresh: re-measure known repos and add new ones on the curated lists",
+      )
         .choices(["full", "refresh"])
         .default("full"),
     )

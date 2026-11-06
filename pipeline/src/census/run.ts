@@ -17,7 +17,15 @@ import {
   type RepoFull,
 } from "./metadata.ts";
 import { buildReport } from "./report.ts";
-import { type Discovery, discover, loadSeeds, SOURCE_IDS, type SourceId } from "./sources.ts";
+import {
+  curatedLists,
+  type Discovery,
+  discover,
+  type Listed,
+  loadSeeds,
+  SOURCE_IDS,
+  type SourceId,
+} from "./sources.ts";
 import { httpRangeReader, readXpiManifests, type XpiManifest } from "./xpi.ts";
 
 export const CURATED_SOURCES: SourceId[] = [
@@ -158,8 +166,42 @@ async function lastRows(outDir: string): Promise<Map<string, CensusRow>> {
 }
 
 /**
+ * Repos on the curated lists that the last census didn't measure, under GitHub's current name,
+ * with the lists that name them. A list can still use a repo's old name (MuiseDestiny/ZoteroStyle
+ * is now zotero-style): pass A folds it into the current one, so a renamed plugin isn't measured
+ * twice. A repo GitHub says is gone, or keeps failing on, is left to the weekly full run.
+ */
+export async function newOnLists(
+  gh: GitHub,
+  lists: Listed[],
+  measured: Set<string>,
+  log: (msg: string) => void,
+): Promise<Map<string, { sources: Set<SourceId>; hasXpi: boolean }>> {
+  const listed = new Map<string, Set<SourceId>>();
+  for (const l of lists)
+    for (const key of l.repos) {
+      if (measured.has(key)) continue;
+      listed.set(key, (listed.get(key) ?? new Set<SourceId>()).add(l.source));
+    }
+  const out = new Map<string, { sources: Set<SourceId>; hasXpi: boolean }>();
+  if (listed.size === 0) return out;
+  const light = await fetchLight(gh, [...listed.keys()].sort(), log);
+  for (const [key, sources] of listed) {
+    const l = light.get(key);
+    if (!l) continue;
+    const c = l.nameWithOwner.toLowerCase();
+    if (measured.has(c)) continue;
+    const found = out.get(c) ?? { sources: new Set<SourceId>(), hasXpi: false };
+    for (const s of sources) found.sources.add(s);
+    found.hasXpi ||= l.hasXpi;
+    out.set(c, found);
+  }
+  return out;
+}
+
+/**
  * full: discover candidates from every source, then measure them (weekly).
- * refresh: re-measure the repos from the last census without re-running discovery (nightly);
+ * refresh: re-measure the repos from the last census, plus any new on the curated lists (nightly);
  * with `only`, just those repos, keeping every other row as it was.
  */
 export async function runCensus(
@@ -276,13 +318,29 @@ export async function runCensus(
       for (const key of onlyKeys)
         if (!inLast.has(key)) sourcesOf.set(key, new Set(known.get(key) ?? []));
     }
-    base = {
-      candidates: prev.funnel.candidates,
-      existing: prev.funnel.existing,
-      unavailable: prev.funnel.unavailable,
-      withXpiRelease: prev.funnel.withXpiRelease,
-    };
     log(`  refreshing ${sourcesOf.size} repos from the last census`);
+    // A plugin new on a curated list is measured tonight, not at the weekly full discovery. The
+    // lists failing doesn't stop the re-measure.
+    let found = new Map<string, { sources: Set<SourceId>; hasXpi: boolean }>();
+    if (!onlyKeys) {
+      try {
+        const lists = await curatedLists(gh, config.userAgent, seeds.addonMarket);
+        const inLast = new Set(prev.rows.map((r) => r.repo.toLowerCase()));
+        found = await newOnLists(gh, lists, inLast, log);
+        for (const [key, f] of found) sourcesOf.set(key, f.sources);
+        const names = found.size ? `: ${[...found.keys()].join(", ")}` : "";
+        log(`  ${found.size} new on the curated lists${names}`);
+      } catch (error) {
+        log(`  curated lists skipped: ${(error as Error).message}`);
+      }
+    }
+    const newWithXpi = [...found.values()].filter((f) => f.hasXpi).length;
+    base = {
+      candidates: prev.funnel.candidates + found.size,
+      existing: prev.funnel.existing + found.size,
+      unavailable: prev.funnel.unavailable,
+      withXpiRelease: prev.funnel.withXpiRelease + newWithXpi,
+    };
   }
   const selected = [...sourcesOf.keys()].sort();
 

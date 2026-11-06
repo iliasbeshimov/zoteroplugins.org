@@ -198,6 +198,47 @@ export async function loadSeeds(
   return { addonMarket, sheet };
 }
 
+/** The repos one curated list names, with the query the census records for it. */
+export interface Listed {
+  source: SourceId;
+  query: string;
+  repos: string[];
+}
+
+const isRepoKey = (key: string) => /^[a-z0-9-]+\/[a-z0-9._-]+$/.test(key);
+
+/**
+ * The curated lists new plugins appear on first: syt2's add-on market (its published list, and the
+ * addons/ folder its pull requests add to before the list is rebuilt) and zotero-chinese's list.
+ * Two requests besides addon_infos.json, so nightly refresh runs read them too.
+ */
+export async function curatedLists(
+  gh: GitHub,
+  userAgent: string,
+  addonMarket: Map<string, AddonMarketEntry>,
+): Promise<Listed[]> {
+  const tree = await gh.rest<{ tree: { path: string; type: string }[] }>(
+    "/repos/syt2/zotero-addons-scraper/git/trees/master?recursive=1",
+  );
+  const tracked = (tree.data?.tree ?? [])
+    .filter((t) => t.type === "blob" && t.path.startsWith("addons/"))
+    .map((t) => t.path.slice("addons/".length).replace("@", "/").toLowerCase());
+  const zc = await getText(ZOTERO_CHINESE_URL, userAgent);
+  const chinese = [...zc.matchAll(/repo:\s*['"]([^'"]+)['"]/g)].map((m) =>
+    (m[1] ?? "").toLowerCase(),
+  );
+  const lists: Listed[] = [
+    { source: "addon-market", query: "addon_infos.json", repos: [...addonMarket.keys()] },
+    { source: "addon-market-tracked", query: "syt2/zotero-addons-scraper addons/", repos: tracked },
+    {
+      source: "zotero-chinese",
+      query: "zotero-chinese/zotero-plugins src/plugins.ts",
+      repos: chinese,
+    },
+  ];
+  return lists.map((l) => ({ ...l, repos: l.repos.filter(isRepoKey) }));
+}
+
 export async function discover(
   gh: GitHub,
   userAgent: string,
@@ -208,7 +249,7 @@ export async function discover(
   const add = (source: SourceId, query: string, repos: Iterable<string>) => {
     let n = 0;
     for (const key of repos) {
-      if (!/^[a-z0-9-]+\/[a-z0-9._-]+$/.test(key)) continue;
+      if (!isRepoKey(key)) continue;
       if (!candidates.has(key)) candidates.set(key, new Set());
       candidates.get(key)?.add(source);
       n++;
@@ -219,22 +260,7 @@ export async function discover(
 
   // Curated lists
   const { addonMarket, sheet } = await loadSeeds(userAgent);
-  add("addon-market", "addon_infos.json", addonMarket.keys());
-
-  const tree = await gh.rest<{ tree: { path: string; type: string }[] }>(
-    "/repos/syt2/zotero-addons-scraper/git/trees/master?recursive=1",
-  );
-  const tracked = (tree.data?.tree ?? [])
-    .filter((t) => t.type === "blob" && t.path.startsWith("addons/"))
-    .map((t) => t.path.slice("addons/".length).replace("@", "/").toLowerCase());
-  add("addon-market-tracked", "syt2/zotero-addons-scraper addons/", tracked);
-
-  const zc = await getText(ZOTERO_CHINESE_URL, userAgent);
-  add(
-    "zotero-chinese",
-    "zotero-chinese/zotero-plugins src/plugins.ts",
-    [...zc.matchAll(/repo:\s*['"]([^'"]+)['"]/g)].map((m) => (m[1] ?? "").toLowerCase()),
-  );
+  for (const l of await curatedLists(gh, userAgent, addonMarket)) add(l.source, l.query, l.repos);
 
   add("sheet", "research sheet, Plugins tab", sheet.keys());
 

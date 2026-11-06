@@ -8,7 +8,7 @@ import {
 } from "../src/census/compat.ts";
 import { parseCsv, toCsv } from "../src/census/csv.ts";
 import { fetchFull, fetchLight } from "../src/census/metadata.ts";
-import { maintenanceOf, pickRelease } from "../src/census/run.ts";
+import { maintenanceOf, newOnLists, pickRelease } from "../src/census/run.ts";
 import { repoKeyFromUrl } from "../src/census/sources.ts";
 import {
   parseInstallRdf,
@@ -562,5 +562,83 @@ describe("batched GitHub queries", () => {
     expect(asked).toEqual(["50", "10"]);
     expect(full.get("huge/repo")?.releases[0]?.assets[0]?.name).toBe("p.xpi");
     expect(full.get("huge/repo")?.releaseCount).toBe(270);
+  });
+});
+
+describe("new plugins on the curated lists (nightly)", () => {
+  // GitHub's answer per name the lists use: renamed repos answer with their current name.
+  const current: Record<string, string | null> = {
+    "muisedestiny/zoterostyle": "MuiseDestiny/zotero-style",
+    "huaisure/zotero-quick-copy-pdf": "Huaisure/zotero-quick-copy-pdf",
+    "xiuxiuki/zotero-pdf2zh-batch": "xiuxiuki/zotero-pdf2zh-batch",
+    "old/name": "someone/new-name",
+    "gone/repo": null,
+  };
+  const asked: string[] = [];
+  const gh = {
+    graphql: async (query: string) => {
+      const data: Record<string, unknown> = {};
+      for (const m of query.matchAll(/(r\d+): repository\(owner: "([^"]+)", name: "([^"]+)"\)/g)) {
+        const key = `${m[2]}/${m[3]}`;
+        asked.push(key);
+        const name = current[key];
+        data[m[1] as string] = name
+          ? {
+              nameWithOwner: name,
+              stargazerCount: 0,
+              isFork: false,
+              releases: { nodes: [{ releaseAssets: { nodes: [{ name: "p.xpi" }] } }] },
+            }
+          : null;
+      }
+      return { data, errors: [] };
+    },
+  } as unknown as GitHub;
+
+  it("adds only repos the last census didn't measure, under their current name", async () => {
+    asked.length = 0;
+    const found = await newOnLists(
+      gh,
+      [
+        {
+          source: "addon-market",
+          query: "addon_infos.json",
+          repos: ["muisedestiny/zoterostyle", "huaisure/zotero-quick-copy-pdf", "gone/repo"],
+        },
+        {
+          source: "addon-market-tracked",
+          query: "addons/",
+          repos: ["huaisure/zotero-quick-copy-pdf", "xiuxiuki/zotero-pdf2zh-batch", "old/name"],
+        },
+        { source: "zotero-chinese", query: "plugins.ts", repos: ["muisedestiny/zotero-style"] },
+      ],
+      new Set(["muisedestiny/zotero-style"]),
+      () => {},
+    );
+    // Known by its current name: not asked about. Listed by its old name: asked, then left out.
+    expect(asked).not.toContain("muisedestiny/zotero-style");
+    expect(asked).toContain("muisedestiny/zoterostyle");
+    expect([...found.keys()].sort()).toEqual([
+      "huaisure/zotero-quick-copy-pdf",
+      "someone/new-name",
+      "xiuxiuki/zotero-pdf2zh-batch",
+    ]);
+    expect([...(found.get("huaisure/zotero-quick-copy-pdf")?.sources ?? [])].sort()).toEqual([
+      "addon-market",
+      "addon-market-tracked",
+    ]);
+    expect(found.get("someone/new-name")?.hasXpi).toBe(true);
+  });
+
+  it("asks GitHub nothing when every listed repo is known", async () => {
+    asked.length = 0;
+    const found = await newOnLists(
+      gh,
+      [{ source: "addon-market", query: "addon_infos.json", repos: ["a/b"] }],
+      new Set(["a/b"]),
+      () => {},
+    );
+    expect(found.size).toBe(0);
+    expect(asked).toEqual([]);
   });
 });
