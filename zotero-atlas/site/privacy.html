@@ -47,12 +47,12 @@
         <p>It is sent when you turn the choice on, when the list of plugins changes, and once a week. The ID is a random UUID the plugin generates on your computer; it is not derived from your hardware, your Zotero account or anything else, and it is the only thing that links one report to the next. <strong>Show what would be sent</strong>, in Zotero's settings under Zotero Atlas, shows your exact message.</p>
 
         <h2>What the server keeps</h2>
-        <p>Per reporting install: the random ID, when it first and last reported, the Zotero version, the operating system, the plugin's version, and the plugin list, replaced on every report. Nothing else from the request is kept: no IP address, no user agent, no headers. An install not heard from for 180 days is deleted by a nightly job.</p>
+        <p>Per reporting install: the random ID, the Zotero version, the operating system, the plugin's version, and the plugin list, replaced on every report; and the date of every report with its reason (first run, list changed, weekly). Nothing else from the request is kept: no IP address, no user agent, no headers. A nightly job deletes all of it for an install not heard from for 180 days.</p>
         <p>Cloudflare, which runs the server, sees requests the way any web host does. We keep none of that, and the server code that decides what is stored is public.</p>
         <p>What is published: <a href="/api/v1/totals.json">totals</a>, meaning how many installs reported in the last 30 days and how many of them have each plugin. Counts only.</p>
 
         <h2>Turning it off, and deleting your record</h2>
-        <p>Open Zotero's settings, choose <strong>Zotero Atlas</strong>, and pick <strong>Don't send</strong>. The plugin then asks the server to delete the record for its ID and stops sending. Uninstalling the plugin does the same and also removes everything it stored on your computer.</p>
+        <p>Open Zotero's settings, choose <strong>Zotero Atlas</strong>, and pick <strong>Don't send</strong>. The plugin then asks the server to delete everything it holds for its ID, report dates included, and stops sending. Uninstalling the plugin stops the sending and removes everything it stored on your computer, but doesn't contact the server: to delete your record, pick <strong>Don't send</strong> before you uninstall. Otherwise the server deletes it after 180 days without a report, as above.</p>
 
         <h2>What happens whatever you choose</h2>
         <ul class="tight">

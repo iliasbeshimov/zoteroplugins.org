@@ -10,7 +10,8 @@
  *
  * Nothing from the request but the validated body is stored: no IP address, no user agent, no
  * headers. Cloudflare, which runs this, sees the request like any web host; we keep none of it.
- * Installs not heard from for 180 days are deleted nightly.
+ * Each report's date and reason go in `events`. Installs not heard from for 180 days are deleted
+ * nightly, with their plugin lists and events.
  */
 
 const MAX_BODY = 64 * 1024;
@@ -35,10 +36,14 @@ export default {
     return reply(404, "Not found");
   },
 
+  // Everything about an install not heard from for 180 days. events has no foreign key, and
+  // plugins is cleared here too rather than relying on the cascade.
   async scheduled(_event, env) {
-    await env.DB.prepare(
-      "DELETE FROM installs WHERE last_seen < datetime('now', '-180 days')",
-    ).run();
+    await env.DB.batch([
+      env.DB.prepare("DELETE FROM installs WHERE last_seen < datetime('now', '-180 days')"),
+      env.DB.prepare("DELETE FROM plugins WHERE install_id NOT IN (SELECT id FROM installs)"),
+      env.DB.prepare("DELETE FROM events WHERE install_id NOT IN (SELECT id FROM installs)"),
+    ]);
   },
 };
 
@@ -85,28 +90,35 @@ async function report(request, env) {
   const last = await env.DB.prepare("SELECT last_seen FROM installs WHERE id = ?1")
     .bind(body.id)
     .first("last_seen");
-  // The plugin sends at most a few reports a week; anything faster is a bug or a replay.
+  // The plugin sends at most a few reports a week; anything faster is a bug or a replay. 429, not
+  // a success: the plugin keeps a report it couldn't deliver and sends it at the next check.
   if (last && body.event !== "first-run" && Date.now() - Date.parse(last) < MIN_GAP_MS)
-    return reply(204);
+    return reply(429, "Too soon");
 
-  const statements = [
+  // Four statements whatever the number of plugins: D1 limits queries per request on the free
+  // plan, so the plugin list goes in as one JSON array.
+  await env.DB.batch([
     env.DB.prepare(
       "INSERT INTO installs (id, first_seen, last_seen, zotero, os, atlas) VALUES (?1, ?2, ?2, ?3, ?4, ?5) " +
         "ON CONFLICT(id) DO UPDATE SET last_seen = excluded.last_seen, zotero = excluded.zotero, os = excluded.os, atlas = excluded.atlas",
     ).bind(body.id, now, body.zotero, body.os, body.atlas),
     env.DB.prepare("DELETE FROM plugins WHERE install_id = ?1").bind(body.id),
-    ...body.plugins.map((p) =>
-      env.DB.prepare(
-        "INSERT INTO plugins (install_id, addon_id, version, enabled) VALUES (?1, ?2, ?3, ?4)",
-      ).bind(body.id, p.id, p.version, p.enabled ? 1 : 0),
+    env.DB.prepare(
+      "INSERT INTO plugins (install_id, addon_id, version, enabled) " +
+        "SELECT ?1, json_extract(value, '$.id'), json_extract(value, '$.version'), json_extract(value, '$.enabled') " +
+        "FROM json_each(?2)",
+    ).bind(
+      body.id,
+      JSON.stringify(
+        body.plugins.map((p) => ({ id: p.id, version: p.version, enabled: p.enabled ? 1 : 0 })),
+      ),
     ),
     env.DB.prepare("INSERT INTO events (at, install_id, event) VALUES (?1, ?2, ?3)").bind(
       now,
       body.id,
       body.event,
     ),
-  ];
-  await env.DB.batch(statements);
+  ]);
   return reply(204);
 }
 
