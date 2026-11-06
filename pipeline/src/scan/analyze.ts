@@ -981,6 +981,8 @@ class Collector {
   makesExecutable = false;
   /** Files that encrypt to an RSA public key they carry (JWE), like zotero-plugin's log sender. */
   jweFiles = new Set<string>();
+  /** Files with the same encryption code but not the key: a second bundled copy of the sender. */
+  jweCodeFiles = new Set<string>();
   /** Unpacks an archive: `unzipSync(bytes)`, nsIZipReader, `/usr/bin/unzip`, `tar -x`. */
   extractsArchive = false;
   /** Own network calls whose response is written out as bytes, and program addresses named. */
@@ -10358,8 +10360,8 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
     }
     const file = new SourceFile(path, decoder.decode(entry.data), col.libraries);
     col.analyzed++;
-    if (/\bCompactEncrypt\b|["']RSA-OAEP/.test(file.text) && EMBEDDED_RSA_JWK.test(file.text))
-      col.jweFiles.add(path);
+    if (/\bCompactEncrypt\b|["']RSA-OAEP/.test(file.text))
+      (EMBEDDED_RSA_JWK.test(file.text) ? col.jweFiles : col.jweCodeFiles).add(path);
     col.codeBytes += entry.data.length;
     col.sources.push(file);
     if (file.vendoredFile && file.vendoredBy)
@@ -11531,8 +11533,14 @@ function buildDocument(col: Collector, input: AnalyzeInput, version: string): An
             // over plain http.
             flags: [
               ...h.cls.flags,
+              // A copy of the sender in a file without the key (Better BibTeX bundles it twice)
+              // counts when the release carries the key the sender encrypts to.
               ...(h.cls.flags.includes("public-relay") &&
-              h.hits.every((x) => col.jweFiles.has(x.file.path))
+              h.hits.every(
+                (x) =>
+                  col.jweFiles.has(x.file.path) ||
+                  (col.jweFiles.size > 0 && col.jweCodeFiles.has(x.file.path)),
+              )
                 ? ["encrypted-upload" as const]
                 : []),
               ...(h.hits.some((x) => x.plain && x.usage === "request")

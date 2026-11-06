@@ -459,6 +459,21 @@ describe("hosts in template-literal URLs", () => {
     expect(r.card.drivers).toContain("DS-PUBLIC-RELAY");
     expect(r.card.label).toBe("review-details");
   });
+
+  it("credits an upload encrypted to the developer's key, even with a second copy of the sender", async () => {
+    const key = `var jwk = { "alg": "RSA-OAEP-256", "kty": "RSA", "n": "${"x".repeat(342)}", "e": "AQAB" };`;
+    const sender = `class Bundler {
+      async add(path, data) { const jwe = await new jose.CompactEncrypt(data).setProtectedHeader({ alg: "RSA-OAEP-256", enc: "A256GCM" }).encrypt(this.pubKey); }
+      async send() { return fetch(\`https://filebin.net/\${this.name}/\${this.filename}\`, { method: "POST", body: this.zip }); }
+    }`;
+    const r = await scanFiles({ "bootstrap.js": `${key}\n${sender}`, "content/main.js": sender });
+    expect(hostIn(r, "filebin.net")?.flags).toContain("encrypted-upload");
+    expect(r.card.drivers).not.toContain("DS-PUBLIC-RELAY");
+    // Without a key anywhere in the release, the same code may send the log as it is.
+    const plain = await scanFiles({ "bootstrap.js": sender });
+    expect(hostIn(plain, "filebin.net")?.flags).not.toContain("encrypted-upload");
+    expect(plain.card.drivers).toContain("DS-PUBLIC-RELAY");
+  });
 });
 
 describe("network activity we used to miss", () => {
