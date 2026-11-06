@@ -77,7 +77,7 @@ export function explorerData(census: CensusFile, summaries?: SummariesFile) {
         'A "new find" is a confirmed plugin that appears in none of the curated lists (Add-on Market, zotero-chinese, the research sheet, Zotero\'s archived page).',
         ...(summaries
           ? [
-              `The "what it does" and "pain it solves" summaries cover the plugins that had ${summaries.minDownloads.toLocaleString("en-US")}+ downloads on ${summaries.writtenAt}, and were written by ${summaries.writtenBy}. They are the only AI-written part of this page, and they describe what each project says it does, not whether it works.`,
+              `The "what it does" and "pain it solves" summaries cover ${summaries.minDownloads ? `the plugins that had ${summaries.minDownloads.toLocaleString("en-US")}+ downloads` : "every profiled plugin"} as of ${summaries.writtenAt}, and were written by ${summaries.writtenBy}. They are the only AI-written part of this page, and they describe what each project says it does, not whether it works.`,
             ]
           : []),
       ],
