@@ -17,7 +17,7 @@ export function getStaticPaths() {
 }
 const { p } = Astro.props as { p: Plugin };
 const target = p.grade === "C" ? "B" : p.grade === "B" ? "A" : p.grade === "A" ? "A+" : null;
-const badgeMd = `[![Plugins Atlas grade](${SITE}/badge/${p.slug}.svg)](${SITE}/p/${p.slug})`;
+const badgeMd = `[![Zotero Plugins grade](${SITE}/badge/${p.slug}.svg)](${SITE}/p/${p.slug})`;
 const kind = (l: string) => (l === "high" ? "serious" : l === "medium" ? "review" : "nodata");
 ---
 
@@ -98,7 +98,7 @@ const kind = (l: string) => (l === "high" ? "serious" : l === "medium" ? "review
       <div class="side">
         <div class="box" id="badge">
           <strong>README badge</strong>
-          <img src={`/badge/${p.slug}.svg`} alt={`Plugins Atlas grade ${p.grade}`} height="20" />
+          <img src={`/badge/${p.slug}.svg`} alt={`Zotero Plugins grade ${p.grade}`} height="20" />
           <code>{badgeMd}</code>
           <span class="muted small">Updates itself when the grade changes.</span>
         </div>

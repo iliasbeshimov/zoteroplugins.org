@@ -2,7 +2,7 @@
 
 # Zotero Atlas
 
-[![Plugins Atlas grade](https://zoteroplugins.org/badge/zotero-atlas.svg)](https://zoteroplugins.org/p/zotero-atlas)
+[![Zotero Plugins grade](https://zoteroplugins.org/badge/zotero-atlas.svg)](https://zoteroplugins.org/p/zotero-atlas)
 [![Release](https://img.shields.io/github/v/release/iliasbeshimov/zotero-atlas?label=release&color=2f6fdb)](https://github.com/iliasbeshimov/zotero-atlas/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/iliasbeshimov/zotero-atlas/total?label=downloads&color=3a9e4a)](https://github.com/iliasbeshimov/zotero-atlas/releases)
 [![Works with Zotero 7 to 11](https://img.shields.io/badge/Zotero-7%20to%2011-cc2936)](https://www.zotero.org/download/)

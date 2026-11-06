@@ -18,8 +18,8 @@ export function getStaticPaths() {
 export const GET: APIRoute = ({ props }) => {
   const p = (props as { p: Plugin }).p;
   const [bg, fg] = COLORS[p.grade];
-  const brand = "Plugins Atlas";
-  const bw = 92;
+  const brand = "Zotero Plugins";
+  const bw = 102;
   const gw = p.grade === "A+" ? 34 : 28;
   const w = bw + gw;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="20" role="img" aria-label="${brand}: ${p.grade}"><title>${brand}: ${p.grade} (${p.gradeLong})</title><clipPath id="r"><rect width="${w}" height="20" rx="4"/></clipPath><g clip-path="url(#r)"><rect width="${bw}" height="20" fill="${BRAND}"/><rect x="${bw}" width="${gw}" height="20" fill="${bg}"/></g><g font-family="Verdana,DejaVu Sans,sans-serif" font-size="11" text-anchor="middle"><text x="${bw / 2}" y="14" fill="#fff">${brand}</text><text x="${bw + gw / 2}" y="14" fill="${fg}" font-weight="bold">${p.grade}</text></g></svg>`;
