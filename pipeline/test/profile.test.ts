@@ -23,6 +23,7 @@ import {
   finishCheck,
   hintsFrom,
   orderBuilds,
+  ownNewerFile,
   PROFILER_VERSION,
   separateRecords,
   stable,
@@ -1165,6 +1166,47 @@ describe("several builds of one version (z-transplit 1.17.0: lean and -full)", (
     expect(orderBuilds([old, full()], zv10, check)[0]?.doc.asset.name).toBe(
       "z-transplit-1.17.0-full.xpi",
     );
+  });
+});
+
+describe("a card for the file its own update address serves (D47)", () => {
+  const repo = "ice-cream-cpu/zotero-plugin-paper-reading";
+  const lead = { doc: { version: "0.6.3" } } as unknown as Parameters<typeof ownNewerFile>[2];
+  const check = (over: Partial<UpdateCheck>) =>
+    ({
+      result: "different-file",
+      version: "0.6.15",
+      link: "https://raw.githubusercontent.com/ice-cream-cpu/Zotero-Plugin-Paper-Reading/main/release-assets/ice-cream-0.6.15.xpi",
+      ...over,
+    }) as UpdateCheck;
+
+  it("switches when the project's own address serves a newer file", () => {
+    expect(ownNewerFile(check({}), repo, lead)).toBe(true);
+    expect(
+      ownNewerFile(
+        check({
+          link: "https://github.com/ice-cream-cpu/zotero-plugin-paper-reading/releases/download/v0.6.15/x.xpi",
+        }),
+        repo,
+        lead,
+      ),
+    ).toBe(true);
+  });
+
+  it("keeps the release for another project's file, an older one, or one Zotero refuses", () => {
+    // A fork whose update address is its upstream's (llm-for-zotero forks): the note covers it.
+    expect(
+      ownNewerFile(
+        check({
+          link: "https://github.com/yilewang/llm-for-zotero/releases/download/v3.9.16/a.xpi",
+        }),
+        repo,
+        lead,
+      ),
+    ).toBe(false);
+    expect(ownNewerFile(check({ version: "0.6.3" }), repo, lead)).toBe(false);
+    expect(ownNewerFile(check({ hashMatches: false }), repo, lead)).toBe(false);
+    expect(ownNewerFile(check({ result: "not-analysed" }), repo, lead)).toBe(false);
   });
 });
 

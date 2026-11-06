@@ -145,6 +145,8 @@ export interface Plugin {
   description: string[] | null;
   version: string;
   released: string;
+  /** The file is the one its update address serves, newer than its latest GitHub release. */
+  fromUpdateAddress: boolean;
   size: string;
   installUrl: string | null;
   grade: Grade;
@@ -818,6 +820,7 @@ function build(
     description: summary ? [summary.does, summary.pain] : null,
     version: p.install?.version ?? "",
     released: fmtDate(p.install?.publishedAt ?? m.lastReleaseAt),
+    fromUpdateAddress: Boolean(p.install?.fromUpdateAddress),
     size,
     installUrl:
       blocked || noRelease || installProblem || p.retired || p.removed

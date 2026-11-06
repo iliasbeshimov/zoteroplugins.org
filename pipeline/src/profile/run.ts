@@ -465,6 +465,18 @@ export async function gather(
         }
       }
       separateRecords(artifacts);
+      // Rebuilt from a card that was for its update address's file: that's still what it is.
+      const prev = existing?.install;
+      if (ctx.offline && prev?.fromUpdateAddress)
+        for (const art of artifacts)
+          if (art.doc.asset.sha256 === prev.asset.sha256) {
+            const stored = known.get(art.doc.asset.sha256)?.doc;
+            art.doc.source = "update-feed";
+            art.doc.tag = null;
+            art.doc.publishedAt = stored?.publishedAt ?? art.doc.publishedAt;
+            art.doc.asset.githubAssetId = null;
+            art.doc.asset.uploadedAt = stored?.asset.uploadedAt ?? null;
+          }
     } catch (error) {
       scanError = (error as Error).message.slice(0, 200);
     }
@@ -482,6 +494,23 @@ export async function gather(
       const served = orderBuilds(artifacts, ctx.zv, update?.check)[0];
       if (served && served !== lead) {
         lead = served;
+        update = await checkUpdates(lead, artifacts, row, slug, known, developer, ctx, existing);
+      }
+      // The project's own update address serves a newer file than its latest release
+      // (zotero-plugin-paper-reading: release 0.6.3, its update address 0.6.15 from the repo):
+      // every installed copy runs that file, so the card is for it (D47).
+      const target = update?.target;
+      if (target && update && ownNewerFile(update.check, row.repo, lead)) {
+        release = {
+          tag_name: "",
+          author: null,
+          published_at: target.doc.publishedAt,
+          created_at: target.doc.publishedAt ?? ctx.now,
+          prerelease: false,
+          assets: [target.asset],
+        };
+        artifacts.splice(0, artifacts.length, target);
+        lead = target;
         update = await checkUpdates(lead, artifacts, row, slug, known, developer, ctx, existing);
       }
     } catch {
@@ -655,6 +684,20 @@ export function separateRecords(builds: Pick<Artifact, "file" | "isNew" | "doc">
   }
 }
 
+/**
+ * The update address belongs to the project (a release download or a file in its own GitHub
+ * repository), serves a newer version than `lead`, and Zotero would accept the file.
+ */
+export function ownNewerFile(check: UpdateCheck, repo: string, lead: Artifact): boolean {
+  if (check.result !== "different-file" || check.hashMatches === false) return false;
+  if (!check.link || !check.version) return false;
+  if (compareVersions(check.version, lead.doc.version) <= 0) return false;
+  const m = check.link.match(
+    /^https:\/\/(?:github\.com|raw\.githubusercontent\.com)\/([^/]+\/[^/]+)\//i,
+  );
+  return Boolean(m?.[1] && m[1].toLowerCase() === repo.toLowerCase());
+}
+
 /** Whether the update address serves this very file (by its download link or its hash). */
 const servedBy = (art: Artifact, check: UpdateCheck | null | undefined) =>
   Boolean(
@@ -756,9 +799,13 @@ export function assemble(
   // won't install counts for no Zotero 7+ major (Zotero 6 reads install.rdf, which the release
   // records don't keep). Without analysed builds, the census's majors.
   const manifests = artifacts.map((art) => asXpiManifest(art.doc.manifest));
-  const supports = manifests.length
-    ? row.supports.filter((m) => m < 7 || manifests.some((x) => supportsMajor(x, m, zv)))
-    : row.supports;
+  // A card for its update address's file: the census only read the older release, so that
+  // file's own range decides.
+  const supports = !manifests.length
+    ? row.supports
+    : primary?.doc.source === "update-feed"
+      ? supportedMajors(manifests, zv)
+      : row.supports.filter((m) => m < 7 || manifests.some((x) => supportsMajor(x, m, zv)));
   const { current, previous, next } = targets(
     (m, v) =>
       manifests.length ? manifests.some((x) => supportsVersion(x, v)) : supports.includes(m),
@@ -1043,6 +1090,7 @@ export function assemble(
             tag: release.tag_name,
             publishedAt: release.published_at,
             prerelease: release.prerelease,
+            ...(primary?.doc.source === "update-feed" ? { fromUpdateAddress: true } : {}),
             asset: primary
               ? {
                   name: primary.doc.asset.name,

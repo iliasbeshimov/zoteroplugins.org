@@ -110,6 +110,12 @@ export const PluginProfile = z.object({
       tag: z.string(),
       publishedAt: IsoDateTime.nullable(),
       prerelease: z.boolean(),
+      fromUpdateAddress: z
+        .boolean()
+        .optional()
+        .describe(
+          "The file is the one the project's own update address serves, newer than its latest GitHub release (tag is empty)",
+        ),
       asset: z.object({
         name: z.string(),
         url: z.url(),

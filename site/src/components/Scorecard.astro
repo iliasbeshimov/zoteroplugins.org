@@ -74,7 +74,15 @@ const checked = testedText(p);
     <div class="next">{p.next}</div>
   </div>
   <div class="meta">
-    {p.version && <span>Applies to v{p.version}, released {p.released}</span>}
+    {
+      p.version && (
+        <span>
+          {p.fromUpdateAddress
+            ? `Applies to v${p.version}, the file its update address serves (newer than its latest GitHub release), first seen ${p.released}`
+            : `Applies to v${p.version}, released ${p.released}`}
+        </span>
+      )
+    }
     <span>{checked}</span>
   </div>
   {
