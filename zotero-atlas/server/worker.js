@@ -1,5 +1,5 @@
 /**
- * zoteroatlas.com/api/v1: the opt-in usage data from the Zotero Atlas plugin.
+ * zoteroatlas.com/api/v1: the plugin lists Zotero Atlas sends ("Send my plugin list").
  *
  * - POST   /api/v1/plugins        one report: a random ID, Zotero version, OS, plugin version,
  *                                 and the installed plugins (ID, version, enabled). Replaces

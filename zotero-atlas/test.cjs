@@ -328,31 +328,34 @@ const run = async (name, fn) => {
     },
   );
 
-  await run("first run: asked once, 'Don't send' is the default and sends nothing", async () => {
-    const t = load({ answer: [1], http: () => ok200(catalogJson([])) });
-    t.s.startup({ id: "a", version: "0.1.0", rootURI: "r/" });
-    t.s.onMainWindowLoad({ window: t.window });
-    t.s.onMainWindowLoad({ window: t.window });
-    assert.equal(t.timers.filter((x) => x.ms === 8000).length, 1, "one ask timer");
-    t.flush();
-    await settle();
-    assert.equal(t.dialogs.length, 1);
-    assert.equal(t.dialogs[0].title, "Zotero Atlas");
-    assert.ok(t.dialogs[0].text.startsWith("Zotero Atlas never sends your library"));
-    assert.equal(t.dialogs[0].b0, "Send my plugin list");
-    assert.equal(t.dialogs[0].b1, "Don't send");
-    assert.ok(t.dialogs[0].flags & (1 << 24), "Don't send is the default button");
-    assert.equal(t.prefs["extensions.zotero-atlas.usage"], "no");
-    assert.ok(
-      !t.http.some((h) => h.url.includes("zoteroatlas.com")),
-      "nothing sent to zoteroatlas.com",
-    );
-    assert.ok(!t.prefs["extensions.zotero-atlas.id"], "no ID made");
-    t.s.onMainWindowLoad({ window: t.window });
-    t.flush();
-    await settle();
-    assert.equal(t.dialogs.length, 1, "not asked again");
-  });
+  await run(
+    "first run: asked once, 'Send my plugin list' is the default, 'Don't send' sends nothing",
+    async () => {
+      const t = load({ answer: [1], http: () => ok200(catalogJson([])) });
+      t.s.startup({ id: "a", version: "0.1.0", rootURI: "r/" });
+      t.s.onMainWindowLoad({ window: t.window });
+      t.s.onMainWindowLoad({ window: t.window });
+      assert.equal(t.timers.filter((x) => x.ms === 8000).length, 1, "one ask timer");
+      t.flush();
+      await settle();
+      assert.equal(t.dialogs.length, 1);
+      assert.equal(t.dialogs[0].title, "Zotero Atlas");
+      assert.ok(t.dialogs[0].text.startsWith("Zotero Atlas never sends your library"));
+      assert.equal(t.dialogs[0].b0, "Send my plugin list");
+      assert.equal(t.dialogs[0].b1, "Don't send");
+      assert.ok(!(t.dialogs[0].flags & (1 << 24)), "Send my plugin list is the default button");
+      assert.equal(t.prefs["extensions.zotero-atlas.usage"], "no");
+      assert.ok(
+        !t.http.some((h) => h.url.includes("zoteroatlas.com")),
+        "nothing sent to zoteroatlas.com",
+      );
+      assert.ok(!t.prefs["extensions.zotero-atlas.id"], "no ID made");
+      t.s.onMainWindowLoad({ window: t.window });
+      t.flush();
+      await settle();
+      assert.equal(t.dialogs.length, 1, "not asked again");
+    },
+  );
 
   await run(
     "installed while Zotero is open: asked from startup, menu added to the open window",

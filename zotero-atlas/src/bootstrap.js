@@ -11,12 +11,12 @@
  * - raw.githubusercontent.com, once a day, for the catalogue (catalog.json in the directory's
  *   public repository), and github.com for a plugin file when you click Install. Zotero's own
  *   installer downloads the file and refuses it unless it matches the SHA-256 we analysed.
- * - zoteroatlas.com, only if you chose "Send my plugin list" on the first-run screen (or in
- *   Zotero's settings): the installed plugins' IDs, versions and whether each is enabled, under a
- *   random ID made on this computer, with the Zotero version, the operating system and this
- *   plugin's version. Sent at first run, when that list changes, and once a week. Choosing
- *   "Don't send" later sends one request to delete the record. Nothing from your library, no
- *   account, nothing that identifies you.
+ * - zoteroatlas.com, only while "Send my plugin list" is chosen (the first-run screen's default
+ *   answer, or later in Zotero's settings): the installed plugins' IDs, versions and whether
+ *   each is enabled, under a random ID made on this computer, with the Zotero version, the
+ *   operating system and this plugin's version. Sent at first run, when that list changes, and
+ *   once a week. Choosing "Don't send" sends one request to delete the record. Nothing from your
+ *   library, no account, nothing that identifies you.
  *
  * What it stores: three settings (extensions.zotero-atlas.usage, .id, .state) and the catalogue
  * in <Zotero data directory>/zotero-atlas/catalog.json. Uninstalling removes all of it.
@@ -42,9 +42,9 @@ const RANK = { "A+": 4, A: 3, B: 2, C: 1, "–": 0 };
 const ASK_TEXT =
   "Zotero Atlas never sends your library, notes, files, Zotero account, email or anything " +
   "that identifies you.\n\n" +
-  "If you allow it, it sends one thing: the list of plugins installed in this Zotero, with " +
-  "their versions, under a random ID created on this computer. We publish the totals so " +
-  "everyone can see which plugins people actually use.\n\n" +
+  'With "Send my plugin list" it sends one thing: the list of plugins installed in this ' +
+  "Zotero, with their versions, under a random ID created on this computer. We publish the " +
+  "totals so everyone can see which plugins people actually use.\n\n" +
   "You can change this any time in Zotero's settings, under Zotero Atlas.";
 
 let rootURI = "";
@@ -449,7 +449,7 @@ function ask(window) {
   const flags =
     p.BUTTON_TITLE_IS_STRING * p.BUTTON_POS_0 +
     p.BUTTON_TITLE_IS_STRING * p.BUTTON_POS_1 +
-    p.BUTTON_POS_1_DEFAULT;
+    p.BUTTON_POS_0_DEFAULT; // "Send my plugin list"; closing the dialog answers "Don't send"
   const choice = p.confirmEx(
     window || null,
     "Zotero Atlas",

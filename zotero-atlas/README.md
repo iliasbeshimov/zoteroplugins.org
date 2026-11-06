@@ -35,8 +35,9 @@ graded there like any other.
 **It never sends your library, notes, files, Zotero account, email or anything that identifies
 you.**
 
-The first time it runs it asks one question, with "Don't send" as the default. If you choose
-**Send my plugin list**, it sends one thing: the list of plugins installed in this Zotero, with
+The first time it runs it asks one question, with **Send my plugin list** as the default answer
+and **Don't send** one click away. With **Send my plugin list**, it sends one thing: the list of
+plugins installed in this Zotero, with
 their versions and whether each is enabled, under a random ID created on this computer, together
 with your Zotero version, operating system and this plugin's version. That goes to zoteroatlas.com
 when you turn it on, when the list changes, and once a week. We publish the totals so everyone can
