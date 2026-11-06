@@ -1,0 +1,670 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-library-sync",
+ "repo": "kzhangsci/zotero-library-sync",
+ "version": "0.2.0-beta.8",
+ "tag": "v0.2.0-beta.8",
+ "releaseAuthor": "kzhangsci",
+ "publishedAt": "2026-11-05T13:13:00Z",
+ "prerelease": true,
+ "asset": {
+  "name": "library-sync-0.2.0-beta.8.xpi",
+  "url": "https://github.com/kzhangsci/zotero-library-sync/releases/download/v0.2.0-beta.8/library-sync-0.2.0-beta.8.xpi",
+  "size": 202178,
+  "sha256": "75da7da81fee575c08b5411dffe4018a6205f9fff328b0842e25db26ef06179a",
+  "githubAssetId": 713467347,
+  "uploader": "kzhangsci",
+  "uploadedAt": "2026-11-05T13:12:56Z",
+  "fetchedAt": "2026-11-06T05:32:40.148Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "library-sync@local.invalid",
+  "name": "Library Sync 文献同步",
+  "version": "0.2.0-beta.8",
+  "description": "通过本机 bridge 预演、确认并查看 Zotero 到 Obsidian Library 的同步。",
+  "updateUrl": "https://library-sync.invalid/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1510,
+   "sha256": "e62a0fd8bdda40826eed8b2c121fec379e794cf351660574996fc59366d5f49c"
+  },
+  {
+   "path": "bridge-client.js",
+   "size": 45972,
+   "sha256": "9e05e9f41a05b9f20f0b097d984f143061c849a2f0aa5bf0c2b62560584a3d59"
+  },
+  {
+   "path": "manifest.json",
+   "size": 429,
+   "sha256": "900cfd2cf4ae8f5df4ac51acbcf14c901122786960242f57e94b8ec45ff73737"
+  },
+  {
+   "path": "panel.css",
+   "size": 7660,
+   "sha256": "dbd12b177a0b63b9c5ee9c610227cf3e7f86233b003b30647539122ec0f0ed7f"
+  },
+  {
+   "path": "panel.js",
+   "size": 87882,
+   "sha256": "108d201e075f394897bad8540071622f5f8ff2002900e647c40511ad6382080c"
+  },
+  {
+   "path": "panel.xhtml",
+   "size": 34008,
+   "sha256": "673a7294b6c150c168e82c49b677112fe5d05a69cdbb707a8691214efd69f18b"
+  },
+  {
+   "path": "picker.js",
+   "size": 9905,
+   "sha256": "fc5b5fd2c7739961200c7c1e53f20770519e36eab692727a6c126fcba35b66fd"
+  },
+  {
+   "path": "prefs.js",
+   "size": 177,
+   "sha256": "eec2ead87562f49c1c2cb2706033409e3aa6aa80fd7ff8eb8c250a12859b9184"
+  },
+  {
+   "path": "runtime.js",
+   "size": 13737,
+   "sha256": "6dd5acddc6ac25853ade30178276d1ed5f9a16c4d14b1848b288a0883d9215e6"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-06T05:32:40.148Z",
+  "input": {
+   "slug": "zotero-library-sync",
+   "version": "0.2.0-beta.8",
+   "sha256": "75da7da81fee575c08b5411dffe4018a6205f9fff328b0842e25db26ef06179a"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "panel.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 193191,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "xhr",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 67,
+       "column": 14,
+       "snippet": "xhr = new XMLHttpRequest({ mozAnon: true });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge-client.js",
+       "line": 498,
+       "column": 43,
+       "snippet": "response = await this.io.request(`http://127.0.0.1:${current.port}${path}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "agi.tongji.edu.cn",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge-client.js",
+       "line": 67,
+       "column": 16,
+       "snippet": "base_url: \"https://agi.tongji.edu.cn/v1\", models_url: \"https://agi.tongji.edu.cn/v1/models\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bridge-client.js",
+       "line": 67,
+       "column": 60,
+       "snippet": "base_url: \"https://agi.tongji.edu.cn/v1\", models_url: \"https://agi.tongji.edu.cn/v1/models\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "panel.xhtml",
+       "line": 139,
+       "column": 31,
+       "snippet": "<h:p class=\"hint\">同济服务使用 https://agi.tongji.edu.cn/v1 和独立校内 Key；需具备网络及账户权限。模型 ID 按校内平台原样填写（区分大小写），先保存 Key 再获取模型列表。列表可能含非对话模型；QC / ZH 请选择支持 Chat Completions 的模型。连接失败不会自动换用其他服务。</h:p>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api-docs.deepseek.com",
+     "category": "documentation",
+     "provider": "DeepSeek documentation",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 176,
+       "column": 27,
+       "snippet": "\"deepseek-thinking\": \"https://api-docs.deepseek.com/guides/thinking_mode/\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 177,
+       "column": 26,
+       "snippet": "\"deepseek-request\": \"https://api-docs.deepseek.com/api/create-chat-completion/\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 178,
+       "column": 26,
+       "snippet": "\"deepseek-context\": \"https://api-docs.deepseek.com/quick_start/pricing/\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge-client.js",
+       "line": 70,
+       "column": 78,
+       "snippet": "base_url: provider === \"glm\" ? \"https://open.bigmodel.cn/api/paas/v4\" : \"https://api.deepseek.com\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bridge-client.js",
+       "line": 71,
+       "column": 44,
+       "snippet": "models_url: provider === \"glm\" ? \"\" : \"https://api.deepseek.com/models\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "docs.bigmodel.cn",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 172,
+       "column": 15,
+       "snippet": "\"glm53\": \"https://docs.bigmodel.cn/cn/guide/models/text/glm-5.3\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 173,
+       "column": 21,
+       "snippet": "\"glm-request\": \"https://docs.bigmodel.cn/api-reference/模型-api/对话补全\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 174,
+       "column": 22,
+       "snippet": "\"glm-thinking\": \"https://docs.bigmodel.cn/cn/guide/capabilities/thinking\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 175,
+       "column": 20,
+       "snippet": "\"glm-params\": \"https://docs.bigmodel.cn/cn/guide/start/concept-param\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "open.bigmodel.cn",
+     "category": "llm-provider",
+     "provider": "Zhipu (GLM)",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge-client.js",
+       "line": 70,
+       "column": 37,
+       "snippet": "base_url: provider === \"glm\" ? \"https://open.bigmodel.cn/api/paas/v4\" : \"https://api.deepseek.com\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "http://127.0.0.1:<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge-client.js",
+       "line": 498,
+       "column": 43,
+       "snippet": "response = await this.io.request(`http://127.0.0.1:${current.port}${path}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "41f9f2671fb6",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 189,
+      "column": 10,
+      "snippet": "try { Zotero.Utilities.Internal.copyTextToClipboard(text); return true; } catch (_) {}",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 191,
+      "column": 9,
+      "snippet": "Cc[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Ci.nsIClipboardHelper).copyString(text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 191,
+      "column": 61,
+      "snippet": "Cc[\"@mozilla.org/widget/clipboardhelper;1\"].getService(Ci.nsIClipboardHelper).copyString(text);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 13,
+    "inVendoredCodeOnly": false,
+    "codeKey": "ecf5ecfbbb65",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 9,
+      "column": 22,
+      "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 9,
+      "column": 66,
+      "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 20,
+      "column": 58,
+      "snippet": "const local = Services.dirsvc.get(\"LocalAppData\", Ci.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 134,
+      "column": 20,
+      "snippet": "if (await IOUtils.exists(configPath)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 135,
+      "column": 31,
+      "snippet": "const info = await IOUtils.stat(configPath);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 137,
+      "column": 44,
+      "snippet": "const config = JSON.parse(await IOUtils.readUTF8(configPath));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 146,
+      "column": 19,
+      "snippet": "if (!await IOUtils.exists(path)) throw { code: \"MISSING\" };",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 147,
+      "column": 27,
+      "snippet": "const info = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 149,
+      "column": 32,
+      "snippet": "return JSON.parse(await IOUtils.readUTF8(path));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 155,
+      "column": 24,
+      "snippet": "const file = Cc[\"@mozilla.org/file/local;1\"].createInstance(Ci.nsIFile);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "87e95b79be8d",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 163,
+      "column": 27,
+      "snippet": "const process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 163,
+      "column": 73,
+      "snippet": "const process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIProcess"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://library-sync.invalid/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://library-sync.invalid/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-06T05:32:40.148Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the kzhangsci account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-06T05:32:40.148Z",
+  "appliesTo": {
+   "slug": "zotero-library-sync",
+   "version": "0.2.0-beta.8",
+   "sha256": "75da7da81fee575c08b5411dffe4018a6205f9fff328b0842e25db26ef06179a"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.7",
+   "inputHash": "881fba4896ebc2b80fc9468267e4e27bf5ed5067156dfd5a4db2cdf2432ef9c5"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com",
+       "open.bigmodel.cn"
+      ],
+      "unconfirmed": [
+       "api.deepseek.com",
+       "open.bigmodel.cn"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ],
+      "unconfirmed": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium"
+     },
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-05T13:13:00Z",
+    "lastCommitAt": "2026-11-05T13:02:47Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

@@ -1,0 +1,370 @@
+{
+ "schemaVersion": 1,
+ "slug": "rmzotero",
+ "repo": "zsrobinson/rmzotero",
+ "version": "0.3.0",
+ "tag": "v0.3.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-11-04T02:14:11Z",
+ "prerelease": false,
+ "asset": {
+  "name": "rmzotero.xpi",
+  "url": "https://github.com/zsrobinson/rmzotero/releases/download/v0.3.0/rmzotero.xpi",
+  "size": 15806,
+  "sha256": "79704eff3012d640da9a0004cfc2053026bc9c851f21de6b3a7716c2c46e5d49",
+  "githubAssetId": 707903178,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-11-04T02:14:10Z",
+  "fetchedAt": "2026-11-06T05:32:40.148Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "rmzotero@zsrobinson.com",
+  "name": "reMarkable for Zotero (rmzotero)",
+  "version": "0.3.0",
+  "description": "Shows and controls how your library syncs with a reMarkable tablet through the rmzotero service.",
+  "updateUrl": "https://github.com/zsrobinson/rmzotero/releases/latest/download/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "8.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 606,
+   "sha256": "b757e5386bd3d8a54fc02a441bac43393ad06833a411371c4564d55d0bf61894"
+  },
+  {
+   "path": "content/icon.svg",
+   "size": 276,
+   "sha256": "718800a4499f35ff1f68921f3eae10756e544b43776da7ea43ba370eee797507"
+  },
+  {
+   "path": "content/preferences.js",
+   "size": 12216,
+   "sha256": "05aca5e8003f603d424c2b2b546bbf2a4815d0eaaa24cb46521226d5076418c6"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 3529,
+   "sha256": "e7ce35a805fd08fe76c43fd2e7af19874dbc5ffc666799e4d336b285b1ceee4e"
+  },
+  {
+   "path": "content/rmzotero.js",
+   "size": 26268,
+   "sha256": "2c7f0bb8251cfcf8e20459b28927070df81dc398c06b0cf29a47ca2efda1731f"
+  },
+  {
+   "path": "locale/en-US/rmzotero.ftl",
+   "size": 352,
+   "sha256": "6bb5f4b08294825857bc4cc87059e956bf7a6107a642955aed4dfc9682642c3f"
+  },
+  {
+   "path": "manifest.json",
+   "size": 572,
+   "sha256": "da032c008144adb0480410b179157bd82a3310a1c897d4db211036cb7c0fe4d1"
+  },
+  {
+   "path": "prefs.js",
+   "size": 83,
+   "sha256": "aa3929fdd9a236d23f239fd167d433cf0589446b10aaf6524ea70fc2ba13fd84"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-06T05:32:40.148Z",
+  "input": {
+   "slug": "rmzotero",
+   "version": "0.3.0",
+   "sha256": "79704eff3012d640da9a0004cfc2053026bc9c851f21de6b3a7716c2c46e5d49"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "content/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/rmzotero.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 42702,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.js",
+       "line": 154,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(method, url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/rmzotero.js",
+       "line": 280,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(method, url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.rmzotero.serviceURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.js",
+       "line": 165,
+       "column": 11,
+       "snippet": "url: Zotero.Prefs.get(PREF_URL, true) || \"\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/rmzotero.js",
+       "line": 291,
+       "column": 11,
+       "snippet": "url: Zotero.Prefs.get(PREF_URL, true) || \"\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "rmz-url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 6,
+       "column": 6,
+       "snippet": "<html:input id=\"rmz-url\" type=\"url\" placeholder=\"https://rmzotero.example.com\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "a2bf14e03e3a",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/preferences.js",
+      "line": 166,
+      "column": 13,
+      "snippet": "token: Zotero.Prefs.get(PREF_TOKEN, true) || \"\"",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/preferences.js",
+      "line": 312,
+      "column": 6,
+      "snippet": "Zotero.Prefs.set(PREF_TOKEN, $(\"rmz-token\").value.trim(), true);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/rmzotero.js",
+      "line": 292,
+      "column": 13,
+      "snippet": "token: Zotero.Prefs.get(PREF_TOKEN, true) || \"\"",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.rmzotero.token\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.rmzotero.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/zsrobinson/rmzotero/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/zsrobinson/rmzotero/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-06T05:32:40.148Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": true,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. GitHub holds a build attestation for this exact file; we haven't checked its signature. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-06T05:32:40.148Z",
+  "appliesTo": {
+   "slug": "rmzotero",
+   "version": "0.3.0",
+   "sha256": "79704eff3012d640da9a0004cfc2053026bc9c851f21de6b3a7716c2c46e5d49"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.7",
+   "inputHash": "41f4f6952d83aa07c69a4a3689a8a4f1e8396b9bc378a348c25b9f7626df40a1"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-04T02:14:11Z",
+    "lastCommitAt": "2026-11-05T06:07:36Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; made for Zotero 7–8",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

@@ -1,0 +1,296 @@
+{
+ "schemaVersion": 1,
+ "slug": "dstu-8302-zotero",
+ "repo": "walking-wisely/dstu-8302-zotero",
+ "version": "0.2.0",
+ "tag": "v0.2.0",
+ "releaseAuthor": "walking-wisely",
+ "publishedAt": "2026-11-02T07:15:04Z",
+ "prerelease": false,
+ "asset": {
+  "name": "dstu-8302-0.2.0.xpi",
+  "url": "https://github.com/walking-wisely/dstu-8302-zotero/releases/download/v0.2.0/dstu-8302-0.2.0.xpi",
+  "size": 18747,
+  "sha256": "f1c7ed085d279e9121b6bdd169807cee362679ae9a241555ee7de2054990dcf7",
+  "githubAssetId": 700872396,
+  "uploader": "walking-wisely",
+  "uploadedAt": "2026-11-02T07:15:03Z",
+  "fetchedAt": "2026-11-06T05:32:40.148Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "dstu-8302@local",
+  "name": "ДСТУ 8302 helper",
+  "version": "0.2.0",
+  "description": "Item shim and output post-processor for the ДСТУ 8302:2015 CSL styles.",
+  "updateUrl": "https://raw.githubusercontent.com/walking-wisely/dstu-8302-zotero/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2736,
+   "sha256": "f30da1720558a086b6de789c42bd1f1ba880958d78ea26a6934ba21584bde1ec"
+  },
+  {
+   "path": "dstu-lib.js",
+   "size": 40376,
+   "sha256": "d2ede0850d6b3a74c7ec519cd5c2b14cb75ea5a50419dede822e3f4038841d84"
+  },
+  {
+   "path": "hooks.js",
+   "size": 8117,
+   "sha256": "49f7ba2087f2b7f79629f50864227521bb1323930f65810e7515fadf2790c7de"
+  },
+  {
+   "path": "manifest.json",
+   "size": 434,
+   "sha256": "d2a154a368553a4514a99c9e2d3091821bdd44312746632a2ec4655a0424e8af"
+  },
+  {
+   "path": "pane.js",
+   "size": 1810,
+   "sha256": "fd6674dd1aecdab332abac763c622a09514b122629d3e7a0bf1f8bfa5296838a"
+  },
+  {
+   "path": "picker.js",
+   "size": 5255,
+   "sha256": "dba0b7d9d79ac5e29df3ddd6823e4ed6f700540f96f50bfbcdc8b18f585340a1"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 144,
+   "sha256": "9a843807b1bf711d44e1b9c5a5c6b7224378667dcf7017c7ff522101bb7a55d9"
+  },
+  {
+   "path": "preview.js",
+   "size": 1631,
+   "sha256": "357fa4aa5fa886b35cd70acf9cfd2f5eb546ef04d271c112388833a68a0fb6bb"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-06T05:32:40.148Z",
+  "input": {
+   "slug": "dstu-8302-zotero",
+   "version": "0.2.0",
+   "sha256": "f1c7ed085d279e9121b6bdd169807cee362679ae9a241555ee7de2054990dcf7"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 60069,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "www.nbuv.gov.ua",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "dstu-lib.js",
+       "line": 1228,
+       "column": 62,
+       "snippet": "'container-title': 'Національна бібліотека України', URL: 'http://www.nbuv.gov.ua/archives',",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "8caceb1b6e75",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 62,
+      "column": 8,
+      "snippet": "await IOUtils.writeUTF8(Services.env.get('DSTU_OUT'), JSON.stringify(report, null, 2));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/walking-wisely/dstu-8302-zotero/main/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/walking-wisely/dstu-8302-zotero/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-06T05:32:40.148Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the walking-wisely account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-06T05:32:40.148Z",
+  "appliesTo": {
+   "slug": "dstu-8302-zotero",
+   "version": "0.2.0",
+   "sha256": "f1c7ed085d279e9121b6bdd169807cee362679ae9a241555ee7de2054990dcf7"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.7",
+   "inputHash": "2df637b421c92cd5bbb5982f75da90f737ffc8ad27dde6619535562631a39584"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found; its code names servers we couldn't identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-02T07:15:04Z",
+    "lastCommitAt": "2026-11-02T07:14:11Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

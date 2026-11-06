@@ -1,0 +1,439 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf2zh-cli",
+ "repo": "felix-bin/zotero-pdf2zh-cli",
+ "version": "0.1.0",
+ "tag": "v0.1.0",
+ "releaseAuthor": "Felix-bin",
+ "publishedAt": "2026-11-03T02:48:13Z",
+ "prerelease": false,
+ "asset": {
+  "name": "pdf2zh-cli-0.1.0.xpi",
+  "url": "https://github.com/Felix-bin/zotero-pdf2zh-cli/releases/download/v0.1.0/pdf2zh-cli-0.1.0.xpi",
+  "size": 8895,
+  "sha256": "24892499301d67d672ed62bb54eb317f2cfb7e0e200ffbb7d77db716a15d058b",
+  "githubAssetId": 704017347,
+  "uploader": "Felix-bin",
+  "uploadedAt": "2026-11-03T02:48:12Z",
+  "fetchedAt": "2026-11-06T05:32:40.148Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "pdf2zh-cli@local",
+  "name": "PDF2zh CLI",
+  "version": "0.1.0",
+  "description": "右键直接调用本机 pdf2zh 命令翻译 PDF，无需常驻服务。",
+  "updateUrl": "https://localhost/pdf2zh-cli/update.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "11.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 886,
+   "sha256": "8d5c26239b546b496c52822da747df2f5cae4a026e869bc273f38dd6d3649bd4"
+  },
+  {
+   "path": "icon.svg",
+   "size": 268,
+   "sha256": "0227030cfe162cecfd0a83aa39b3b1cbef97a3ffc62806244b774e741b35b6af"
+  },
+  {
+   "path": "locale/en-US/pdf2zh-cli.ftl",
+   "size": 828,
+   "sha256": "c80283ce3ae179c7be35b3274340a87a750ef993c0eab675ccd02444c1864cd0"
+  },
+  {
+   "path": "locale/zh-CN/pdf2zh-cli.ftl",
+   "size": 824,
+   "sha256": "bf79e84b2d499e7bb1f8c9207f114b44407736ba84fd57b5e61963ab37c54e32"
+  },
+  {
+   "path": "manifest.json",
+   "size": 432,
+   "sha256": "abfd345394e14b02d65e0a3941ca7dcb08ef6dd8991a45fee9d67bb631940a6b"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 1795,
+   "sha256": "fdff993f259971cd24188dea215d3f14e9125f81c5c6a5010b4969ab031c161c"
+  },
+  {
+   "path": "prefs.js",
+   "size": 430,
+   "sha256": "ff8d6fde3c7b6bb27012b4705613ca623946bd854c887ab94e429ee3df799897"
+  },
+  {
+   "path": "translator.js",
+   "size": 16247,
+   "sha256": "f63caa5e9d55e3fdc2de6fcd258e61570170119a4ec2c7751bb8466cb59e69bf"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-06T05:32:40.148Z",
+  "input": {
+   "slug": "zotero-pdf2zh-cli",
+   "version": "0.1.0",
+   "sha256": "24892499301d67d672ed62bb54eb317f2cfb7e0e200ffbb7d77db716a15d058b"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/pdf2zh-cli.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/pdf2zh-cli.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 19358,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "pdf2zh",
+     "provider": "Google Translate, or the translator it's set up with",
+     "category": "translation",
+     "documents": true,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "translator.js",
+       "line": 298,
+       "column": 37,
+       "snippet": "const exeName = Zotero.isWin ? \"pdf2zh.exe\" : \"pdf2zh\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 11,
+    "inVendoredCodeOnly": false,
+    "codeKey": "e1bfe376658f",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 252,
+      "column": 14,
+      "snippet": "await IOUtils.makeDirectory(dir, { createAncestors: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 255,
+      "column": 14,
+      "snippet": "await IOUtils.copy(sourcePath, input);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 285,
+      "column": 16,
+      "snippet": "await IOUtils.remove(dir, { recursive: true, ignoreAbsent: true })",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 295,
+      "column": 18,
+      "snippet": "if (await IOUtils.exists(custom)) return custom;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 303,
+      "column": 47,
+      "snippet": "const home = Services.dirsvc.get(\"Home\", Components.interfaces.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 305,
+      "column": 16,
+      "snippet": "if (await IOUtils.exists(fallback)) return fallback;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 413,
+      "column": 19,
+      "snippet": "const base = Zotero.File.getValidFileName(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 421,
+      "column": 19,
+      "snippet": "if (!await IOUtils.exists(file) || !(await IOUtils.stat(file)).size) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 421,
+      "column": 51,
+      "snippet": "if (!await IOUtils.exists(file) || !(await IOUtils.stat(file)).size) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "6dd0d6b0e171",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 3,
+      "column": 52,
+      "snippet": "const { Subprocess } = ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 300,
+      "column": 21,
+      "snippet": "return await Subprocess.pathSearch(exeName, Subprocess.getEnvironment());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 300,
+      "column": 52,
+      "snippet": "return await Subprocess.pathSearch(exeName, Subprocess.getEnvironment());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "translator.js",
+      "line": 323,
+      "column": 25,
+      "snippet": "const proc = await Subprocess.call({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ],
+     "programs": [
+      "pdf2zh"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://localhost/pdf2zh-cli/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://localhost/pdf2zh-cli/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-06T05:32:40.148Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Felix-bin account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-06T05:32:40.148Z",
+  "appliesTo": {
+   "slug": "zotero-pdf2zh-cli",
+   "version": "0.1.0",
+   "sha256": "24892499301d67d672ed62bb54eb317f2cfb7e0e200ffbb7d77db716a15d058b"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.7",
+   "inputHash": "bd1ecff7bdc115e93495bc0e3565025d0291521d6db4ca1381568c2922a7c9cb"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "translation",
+      "hosts": [
+       "pdf2zh (Google Translate, or the translator it's set up with)"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include pdf2zh"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-03T02:48:13Z",
+    "lastCommitAt": "2026-11-03T03:19:06Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

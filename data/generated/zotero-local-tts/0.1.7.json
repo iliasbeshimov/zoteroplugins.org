@@ -1,0 +1,340 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-local-tts",
+ "repo": "nightlighttw/zotero-local-tts",
+ "version": "0.1.7",
+ "tag": "v0.1.7",
+ "releaseAuthor": "NightLightTw",
+ "publishedAt": "2026-11-04T03:59:45Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-local-tts-0.1.7.xpi",
+  "url": "https://github.com/NightLightTw/zotero-local-tts/releases/download/v0.1.7/zotero-local-tts-0.1.7.xpi",
+  "size": 8367,
+  "sha256": "838cf38d01c866ae87de2364b83d167078babe9066a82dabe2a07bceac693778",
+  "githubAssetId": 708144224,
+  "uploader": "NightLightTw",
+  "uploadedAt": "2026-11-04T03:59:44Z",
+  "fetchedAt": "2026-11-06T05:32:40.148Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-local-tts@zhangzizhong.local",
+  "name": "Zotero Local TTS",
+  "version": "0.1.7",
+  "description": "Use a local Qwen3-TTS voice with Zotero Read Aloud.",
+  "updateUrl": "https://github.com/NightLightTw/zotero-local-tts/releases/latest/download/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 10425,
+   "sha256": "94816080dc74b1e29f00afe93be578aeaf96c8f256645413e2fec2fafd70868e"
+  },
+  {
+   "path": "LICENSE",
+   "size": 11357,
+   "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  {
+   "path": "manifest.json",
+   "size": 477,
+   "sha256": "36fb2b56b46cadec3bc3719edc69cd1eddd6977c229cded97efe01b55dd9dd34"
+  },
+  {
+   "path": "NOTICE",
+   "size": 356,
+   "sha256": "aed89d6dc9306ffd95546b5e8f842e032d535c6558bea2cece6f37a481aaebb9"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-06T05:32:40.148Z",
+  "input": {
+   "slug": "zotero-local-tts",
+   "version": "0.1.7",
+   "sha256": "838cf38d01c866ae87de2364b83d167078babe9066a82dabe2a07bceac693778"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "NOTICE",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 10425,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 245,
+       "column": 26,
+       "snippet": "const xmlhttp = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 8766,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 7,
+       "column": 19,
+       "snippet": "const BRIDGE_URL = \"http://127.0.0.1:8766\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 247,
+       "column": 6,
+       "snippet": "`${BRIDGE_URL}/v1/audio/speech`,",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/v1/audio/speech",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 245,
+       "column": 26,
+       "snippet": "const xmlhttp = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "fe698a5a5a32",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 79,
+      "column": 43,
+      "snippet": "const home = Services.dirsvc.get(\"Home\", Components.interfaces.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 90,
+      "column": 23,
+      "snippet": "const token = (await IOUtils.readUTF8(tokenPath())).trim();",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/NightLightTw/zotero-local-tts/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/NightLightTw/zotero-local-tts/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-06T05:32:40.148Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the NightLightTw account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-06T05:32:40.148Z",
+  "appliesTo": {
+   "slug": "zotero-local-tts",
+   "version": "0.1.7",
+   "sha256": "838cf38d01c866ae87de2364b83d167078babe9066a82dabe2a07bceac693778"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.7",
+   "inputHash": "dc463593466363df3678b8caa3606cf46ab4ff84ea8b5813e14aaf1b9af484a4"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts programs on this computer",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-04T03:59:45Z",
+    "lastCommitAt": "2026-11-04T04:50:41Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

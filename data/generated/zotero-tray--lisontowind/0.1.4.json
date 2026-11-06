@@ -1,0 +1,366 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-tray--lisontowind",
+ "repo": "lisontowind/zotero-tray",
+ "version": "0.1.4",
+ "tag": "v0.1.4",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-11-04T04:48:11Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-tray-0.1.4.xpi",
+  "url": "https://github.com/lisontowind/zotero-tray/releases/download/v0.1.4/zotero-tray-0.1.4.xpi",
+  "size": 15921,
+  "sha256": "23a49f9fd96b2933fd20039bf6c4dde80b50364162bace8be4666a17944aa731",
+  "githubAssetId": 708268727,
+  "uploader": "lisontowind",
+  "uploadedAt": "2026-11-04T04:48:05Z",
+  "fetchedAt": "2026-11-06T05:32:40.148Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-tray@local",
+  "name": "Zotero Tray",
+  "version": "0.1.4",
+  "description": "关闭到 Windows 托盘，支持显示窗口和正常退出；不附带可执行程序。",
+  "homepageUrl": "https://github.com/lisontowind/zotero-tray",
+  "updateUrl": "https://github.com/lisontowind/zotero-tray/releases/latest/download/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 15870,
+   "sha256": "8bfddc6e6a65c47fadb1ae31f7f9ba53029e6af7e64072ba964d2fda8f34dd6c"
+  },
+  {
+   "path": "content/appearance.js",
+   "size": 4463,
+   "sha256": "baf64b763c7ee97cec4ac49059ff256ad3cc0fdd03d2ef0299e353ca82132efd"
+  },
+  {
+   "path": "content/tray-worker.js",
+   "size": 25004,
+   "sha256": "5055da7154e7ae3598cdfb22e59946622f89cf72331e8b3e3ce2114dc2921102"
+  },
+  {
+   "path": "icons/icon.svg",
+   "size": 224,
+   "sha256": "a6fc54c7d2829e16fb5df2a9f6f26a8865292e34dbf077be4f4bafec4fc9a86f"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1112,
+   "sha256": "20be035c6d8be2c8bf28d622b21f9ef84e4875f3894acef80b057c5eedd8dbcf"
+  },
+  {
+   "path": "manifest.json",
+   "size": 607,
+   "sha256": "0c61a26351da8edb2020fc45b3c374a0eaa0d778941fcb79a2bf63b7963c7976"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-06T05:32:40.148Z",
+  "input": {
+   "slug": "zotero-tray--lisontowind",
+   "version": "0.1.4",
+   "sha256": "23a49f9fd96b2933fd20039bf6c4dde80b50364162bace8be4666a17944aa731"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 45337,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "f984b12e12db",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 292,
+      "column": 33,
+      "snippet": "Components.classes[\"@mozilla.org/widget/clipboardhelper;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 293,
+      "column": 28,
+      "snippet": ".getService(Components.interfaces.nsIClipboardHelper).copyString(diagnostics);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "367d2a790d6e",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 102,
+      "column": 49,
+      "snippet": "const system = Services.dirsvc.get(\"SysD\", Components.interfaces.nsIFile).path;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "native-code",
+    "occurrences": 7,
+    "inVendoredCodeOnly": false,
+    "codeKey": "10aa5312314f",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 113,
+      "column": 55,
+      "snippet": "const { ctypes: c } = ChromeUtils.importESModule(\"resource://gre/modules/ctypes.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/tray-worker.js",
+      "line": 225,
+      "column": 19,
+      "snippet": "const item = ctypes.cast(t.LPARAM(lp.value ?? lp), t.MEASUREITEM.ptr).contents;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/tray-worker.js",
+      "line": 233,
+      "column": 19,
+      "snippet": "const item = ctypes.cast(t.LPARAM(lp.value ?? lp), t.DRAWITEM.ptr).contents;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/tray-worker.js",
+      "line": 326,
+      "column": 26,
+      "snippet": "const nativeBytes = ctypes.uint8_t.array(pixels.length)(Array.from(pixels));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "js-ctypes"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/lisontowind/zotero-tray/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/lisontowind/zotero-tray/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-06T05:32:40.148Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release was created by an automated GitHub workflow, but this file was uploaded afterwards from the lisontowind account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-06T05:32:40.148Z",
+  "appliesTo": {
+   "slug": "zotero-tray--lisontowind",
+   "version": "0.1.4",
+   "sha256": "23a49f9fd96b2933fd20039bf6c4dde80b50364162bace8be4666a17944aa731"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.7",
+   "inputHash": "eeda2acb5cd9539fda115274a04d8fe25dac33115ccb6751938577c446b292d9"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "native-code",
+      "label": "Loads native code",
+      "concern": "medium"
+     },
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-04T04:48:11Z",
+    "lastCommitAt": "2026-11-04T04:46:04Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Loads native code"
+   ]
+  }
+ }
+}

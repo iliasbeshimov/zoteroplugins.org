@@ -1,0 +1,444 @@
+{
+ "schemaVersion": 1,
+ "slug": "folio-zotero",
+ "repo": "panhh0804/folio-zotero",
+ "version": "1.0.11",
+ "tag": "v1.0.11",
+ "releaseAuthor": "panhh0804",
+ "publishedAt": "2026-11-05T09:45:03Z",
+ "prerelease": false,
+ "asset": {
+  "name": "Folio-1.0.11.xpi",
+  "url": "https://github.com/panhh0804/folio-zotero/releases/download/v1.0.11/Folio-1.0.11.xpi",
+  "size": 35155,
+  "sha256": "10ef61d1115d400b9a5dbf06635e23ab053a5b428744b8cac1f412dbc7ae1dc4",
+  "githubAssetId": 712874784,
+  "uploader": "panhh0804",
+  "uploadedAt": "2026-11-05T09:45:00Z",
+  "fetchedAt": "2026-11-06T05:32:40.148Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "folio@folio.local",
+  "name": "Folio",
+  "version": "1.0.11",
+  "description": "Read the argument. AI and manual semantic highlights with margin labels.",
+  "updateUrl": "https://folio.invalid/updates.json",
+  "strictMinVersion": "10.0.7",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 449,
+   "sha256": "b45ac4a36aad07a1464f576cc30336e0d7d42812ea16161537fdc9c6e9a9a2e5"
+  },
+  {
+   "path": "LICENSE",
+   "size": 11358,
+   "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  {
+   "path": "manifest.json",
+   "size": 402,
+   "sha256": "eb8b0525f91acc6cb4575f3644e516b528b687e48d65ed50770d1a5fbcea10f3"
+  },
+  {
+   "path": "NOTICE",
+   "size": 579,
+   "sha256": "ee670e8a470986064e565133ff6c4df0ac653c4a37513bcd0459d4b102202080"
+  },
+  {
+   "path": "src/core.js",
+   "size": 9988,
+   "sha256": "95a7f365efdf25893a8b91c91de25410b52565abfbd5beecac022058ad54596a"
+  },
+  {
+   "path": "src/panel.js",
+   "size": 23444,
+   "sha256": "fc6aaf1828e7f44eb816a8d66ceba67269552963fbbc3ae7f72b9dce3d92f08f"
+  },
+  {
+   "path": "src/plugin.js",
+   "size": 41725,
+   "sha256": "d06adafffa3ba14cbfcc5a156eec825a627e33ece24d5f9974aa72cb7eb2f6e3"
+  },
+  {
+   "path": "src/style.css",
+   "size": 10461,
+   "sha256": "9edca6f2b2a96546fb8a679b24915d8dca89a1f71a9449645aca3ff94590c48e"
+  },
+  {
+   "path": "src/translation.js",
+   "size": 2188,
+   "sha256": "49dd39cc49a105987fe5b2fc58c47ad2d68470cd5639c9617692b97796e51e33"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-06T05:32:40.148Z",
+  "input": {
+   "slug": "folio-zotero",
+   "version": "1.0.11",
+   "sha256": "10ef61d1115d400b9a5dbf06635e23ab053a5b428744b8cac1f412dbc7ae1dc4"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "NOTICE",
+     "reason": "not-code"
+    },
+    {
+     "path": "src/style.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 77794,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/plugin.js",
+       "line": 279,
+       "column": 33,
+       "snippet": "async function send(){return Zotero.HTTP.request('POST',url,{headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify(payload),responseType:'json',",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 11434,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/panel.js",
+       "line": 157,
+       "column": 292,
+       "snippet": "model.value='deepseek-ai/DeepSeek-V4-Pro';}else if(v==='ollama'){endpoint.value='http://127.0.0.1:11434';model.value='qwen3:8b';}});body.append(field('模型服务',provider));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/plugin.js",
+       "line": 9,
+       "column": 50,
+       "snippet": "const defaultConfig={provider:'ollama',endpoint:'http://127.0.0.1:11434',model:'qwen3:8b',allowRemote:false};",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.siliconflow.cn",
+     "category": "llm-provider",
+     "provider": "SiliconFlow",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/panel.js",
+       "line": 157,
+       "column": 180,
+       "snippet": "口']],config.provider,v=>{config.provider=v;if(v==='siliconflow'){endpoint.value='https://api.siliconflow.cn/v1';model.value='deepseek-ai/DeepSeek-V4-Pro';}else if(v==='ollama'){endpoint.value='http://",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "bb07fadba92a",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "src/plugin.js",
+      "line": 403,
+      "column": 103,
+      "snippet": "picker.show();if(result===picker.returnOK||result===picker.returnReplace){await Zotero.File.putContentsAsync(picker.file,contents);message(s,'已导出 '+name);}",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/plugin.js",
+      "line": 435,
+      "column": 18,
+      "snippet": "cssText=await Zotero.File.getResourceAsync(uri+'src/style.css');",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "login-manager",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "codeKey": "0b9a9f7cafb1",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "src/plugin.js",
+      "line": 23,
+      "column": 25,
+      "snippet": "const logins=await Services.logins.searchLoginsAsync({origin:credentialOrigin,httpRealm:realm});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/plugin.js",
+      "line": 33,
+      "column": 25,
+      "snippet": "const logins=await Services.logins.searchLoginsAsync({origin:credentialOrigin,httpRealm:realm});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/plugin.js",
+      "line": 39,
+      "column": 15,
+      "snippet": "if(old)Services.logins.modifyLogin(old,login);else await Services.logins.addLoginAsync(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/plugin.js",
+      "line": 39,
+      "column": 65,
+      "snippet": "if(old)Services.logins.modifyLogin(old,login);else await Services.logins.addLoginAsync(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/plugin.js",
+      "line": 40,
+      "column": 19,
+      "snippet": "}else if(old)Services.logins.removeLogin(old);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsILoginManager"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://folio.invalid/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://folio.invalid/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-06T05:32:40.148Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the panhh0804 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-06T05:32:40.148Z",
+  "appliesTo": {
+   "slug": "folio-zotero",
+   "version": "1.0.11",
+   "sha256": "10ef61d1115d400b9a5dbf06635e23ab053a5b428744b8cac1f412dbc7ae1dc4"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.7",
+   "inputHash": "1b1b57fc90f1632909231f6212de82db5c2a01600a5d8d04ccfc643d9aeff66f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.siliconflow.cn"
+      ],
+      "unconfirmed": [
+       "api.siliconflow.cn"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ],
+      "unconfirmed": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "login-manager",
+      "label": "Uses Zotero's password manager",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-05T09:45:03Z",
+    "lastCommitAt": "2026-11-05T09:48:01Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

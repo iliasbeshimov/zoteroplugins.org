@@ -1,0 +1,407 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-pdf2zh-batch",
+ "repo": "xiuxiuki/zotero-pdf2zh-batch",
+ "version": "1.0.5pre",
+ "tag": "v1.0.5pre",
+ "releaseAuthor": "xiuxiuki",
+ "publishedAt": "2026-11-02T14:07:58Z",
+ "prerelease": true,
+ "asset": {
+  "name": "zotero-pdf2zh-batch-1.0.5pre.xpi",
+  "url": "https://github.com/xiuxiuki/zotero-pdf2zh-batch/releases/download/v1.0.5pre/zotero-pdf2zh-batch-1.0.5pre.xpi",
+  "size": 25570,
+  "sha256": "23620ab09b890c0600966af4f30ddca9620296f4370a2d59b9cc50536afb6925",
+  "githubAssetId": 701964263,
+  "uploader": "xiuxiuki",
+  "uploadedAt": "2026-11-02T14:06:33Z",
+  "fetchedAt": "2026-11-06T05:32:40.148Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "pdf2zh-batch@local.tools",
+  "name": "Zotero 双语 PDF 自动补齐",
+  "version": "1.0.5pre",
+  "description": "配合 Zotero PDF2zh 使用，扫描个人文库、补齐缺失双语 PDF，支持永久排除、停止续跑与去重。",
+  "homepageUrl": "https://github.com/xiuxiuki/zotero-pdf2zh-batch",
+  "updateUrl": "https://raw.githubusercontent.com/xiuxiuki/zotero-pdf2zh-batch/main/updates-beta.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1247,
+   "sha256": "a4c731d0e63c19009777322906cc2183a8f7ede6886f50540b4ccb1422dfabdd"
+  },
+  {
+   "path": "core.js",
+   "size": 13327,
+   "sha256": "8dae00cce1b30c81fd53e45948de4d0b3fcfbf84dbedc4e7068f21177194a154"
+  },
+  {
+   "path": "LICENSE",
+   "size": 35181,
+   "sha256": "6da1054eef20b8949622f2acc5a89c3243ff3b3d7aa8c2bb8fa5c04d15113c00"
+  },
+  {
+   "path": "manifest.json",
+   "size": 625,
+   "sha256": "5b2ea0ee53d6872bfe9671c28018adacdc29ce66cbee2a79dba270798c96aff0"
+  },
+  {
+   "path": "NOTICE",
+   "size": 913,
+   "sha256": "83a8a642f3de8b1c168044fdb1e3a561a1466281e93df34d9a3193ce411bb206"
+  },
+  {
+   "path": "runtime.js",
+   "size": 22021,
+   "sha256": "62b6dbbe19e1b40d783a0a0c231a83d4ce76498a94bcc53e7a0f04ab37ea854d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-06T05:32:40.148Z",
+  "input": {
+   "slug": "zotero-pdf2zh-batch",
+   "version": "1.0.5pre",
+   "sha256": "23620ab09b890c0600966af4f30ddca9620296f4370a2d59b9cc50536afb6925"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "NOTICE",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 36595,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 170,
+       "column": 31,
+       "snippet": "const response = await win.fetch(this.config.serverUrl + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "localhost",
+     "port": 8890,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 137,
+       "column": 46,
+       "snippet": "serverUrl: String(get('new_serverip', 'http://localhost:8890')).replace(/\\/+$/, ''),",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "runtime.js",
+       "line": 170,
+       "column": 31,
+       "snippet": "const response = await win.fetch(this.config.serverUrl + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 14,
+    "inVendoredCodeOnly": false,
+    "codeKey": "2cdb3ca28143",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 19,
+      "column": 17,
+      "snippet": "if (!await IOUtils.exists(path)) return null;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 20,
+      "column": 30,
+      "snippet": "return JSON.parse(await IOUtils.readUTF8(path));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 128,
+      "column": 12,
+      "snippet": "await IOUtils.makeDirectory(this.dir, { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 129,
+      "column": 6,
+      "snippet": "Zotero.File.reveal(await IOUtils.exists(this.statePath) ? this.statePath : this.dir);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 129,
+      "column": 31,
+      "snippet": "Zotero.File.reveal(await IOUtils.exists(this.statePath) ? this.statePath : this.dir);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 211,
+      "column": 30,
+      "snippet": "if (s.path && await IOUtils.exists(s.path)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 213,
+      "column": 33,
+      "snippet": "const header = await IOUtils.read(s.path, { maxBytes: 1024 });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 244,
+      "column": 17,
+      "snippet": "if (!await IOUtils.exists(this.statePath)) return { version: 1, jobs: {} };",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 245,
+      "column": 36,
+      "snippet": "try { return JSON.parse(await IOUtils.readUTF8(this.statePath)); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "runtime.js",
+      "line": 249,
+      "column": 12,
+      "snippet": "await IOUtils.makeDirectory(this.dir, { ignoreExisting: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/xiuxiuki/zotero-pdf2zh-batch/main/updates-beta.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/xiuxiuki/zotero-pdf2zh-batch/main/updates-beta.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-06T05:32:40.148Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the xiuxiuki account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-06T05:32:40.148Z",
+  "appliesTo": {
+   "slug": "zotero-pdf2zh-batch",
+   "version": "1.0.5pre",
+   "sha256": "23620ab09b890c0600966af4f30ddca9620296f4370a2d59b9cc50536afb6925"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.7",
+   "inputHash": "c9d9d79c5dbabc036f3c597bb11317627d17df4e7453826263de2ece94e2b55d"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts programs on this computer",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-02T14:07:58Z",
+    "lastCommitAt": "2026-11-02T14:07:30Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.7",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
