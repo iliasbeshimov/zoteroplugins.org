@@ -1,0 +1,363 @@
+{
+ "schemaVersion": 1,
+ "slug": "paperbridge-zotero",
+ "repo": "relativity143/paperbridge-zotero",
+ "version": "0.2.1",
+ "tag": "v0.2.1",
+ "releaseAuthor": "relativity143",
+ "publishedAt": "2026-11-06T09:29:02Z",
+ "prerelease": false,
+ "asset": {
+  "name": "paperbridge-0.2.1.xpi",
+  "url": "https://github.com/relativity143/paperbridge-zotero/releases/download/v0.2.1/paperbridge-0.2.1.xpi",
+  "size": 21463,
+  "sha256": "2f62ecac36ceb9e470243a22a82bfdfea1b88e4a7b65e72e35e8854634f335c8",
+  "githubAssetId": 716613614,
+  "uploader": "relativity143",
+  "uploadedAt": "2026-11-06T09:29:00Z",
+  "fetchedAt": "2026-11-07T10:31:02.229Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "paperbridge@local",
+  "name": "纸桥翻译 PaperBridge",
+  "version": "0.2.1",
+  "description": "使用自己的 API，在 Zotero 中生成、管理并导入双语论文 PDF。",
+  "updateUrl": "https://paperbridge.invalid/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1607,
+   "sha256": "6e414964e4b136742af3c577947e8ae50410e676b9343309fc12d5b5df75472a"
+  },
+  {
+   "path": "content/icon.svg",
+   "size": 515,
+   "sha256": "7bf5a6b0247290005cdea44c50c9b2b343cbb5bde4491f509aedb0e600fc833b"
+  },
+  {
+   "path": "content/paperbridge.js",
+   "size": 33688,
+   "sha256": "ea04d9944cefe8df97fe93a9b650b1c812fcc88d85273fa58738da1b9e35d6ca"
+  },
+  {
+   "path": "content/window.css",
+   "size": 6238,
+   "sha256": "5a279be619a767486933e1aacbe545af1625993a3d733b2521350f8b20dcccab"
+  },
+  {
+   "path": "content/window.js",
+   "size": 8670,
+   "sha256": "f9ef5dd97bf1f3c2f5be5250e64d13b7a8cfd5dd99ab554035e8ff45163b6d48"
+  },
+  {
+   "path": "content/window.xhtml",
+   "size": 7115,
+   "sha256": "f459fe41474d3c9dba4c1bfb73a271cb2bba7738683c3309d821fc5ca4ec994b"
+  },
+  {
+   "path": "manifest.json",
+   "size": 519,
+   "sha256": "597bdb2375882486f7e88461aa88137f2b9a5cfa90c3a89fc313f734d73aed59"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-07T10:31:02.229Z",
+  "input": {
+   "slug": "paperbridge-zotero",
+   "version": "0.2.1",
+   "sha256": "2f62ecac36ceb9e470243a22a82bfdfea1b88e4a7b65e72e35e8854634f335c8"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "content/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/window.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 51080,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/paperbridge.js",
+       "line": 201,
+       "column": 25,
+       "snippet": "response = await this.Zotero.HTTP.request(method, bridge.url + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.openai.com",
+     "category": "llm-provider",
+     "provider": "OpenAI",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/paperbridge.js",
+       "line": 10,
+       "column": 44,
+       "snippet": "const DEFAULTS = Object.freeze({ baseUrl: 'https://api.openai.com/v1', model: 'gpt-4.1-mini',",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/paperbridge.js",
+       "line": 201,
+       "column": 25,
+       "snippet": "response = await this.Zotero.HTTP.request(method, bridge.url + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "baseUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/window.xhtml",
+       "line": 36,
+       "column": 72,
+       "snippet": "<div class=\"field\"><label for=\"baseUrl\">API Base URL</label><input id=\"baseUrl\" type=\"url\" spellcheck=\"false\" placeholder=\"https://api.example.com/v1\" required=\"required\"/><small>通常填写以 /v1",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "b981e16f09b2",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/paperbridge.js",
+      "line": 66,
+      "column": 58,
+      "snippet": "const profile = this.Services.dirsvc.get('ProfD', this.env.Components.interfaces.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/paperbridge.js",
+      "line": 178,
+      "column": 52,
+      "snippet": "const home = this.Services.dirsvc.get('Home', this.env.Components.interfaces.nsIFile).path;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 16,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://paperbridge.invalid/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://paperbridge.invalid/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-07T10:31:02.229Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the relativity143 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-07T10:31:02.229Z",
+  "appliesTo": {
+   "slug": "paperbridge-zotero",
+   "version": "0.2.1",
+   "sha256": "2f62ecac36ceb9e470243a22a82bfdfea1b88e4a7b65e72e35e8854634f335c8"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.8",
+   "inputHash": "a72ff03b87d85b06c30efee204d502e518aacc3b9f72452513b2c90edfa4304d"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.openai.com"
+      ],
+      "unconfirmed": [
+       "api.openai.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-06T09:29:02Z",
+    "lastCommitAt": "2026-11-06T08:15:19Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.8",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
