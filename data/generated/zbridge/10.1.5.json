@@ -1,0 +1,380 @@
+{
+ "schemaVersion": 1,
+ "slug": "zbridge",
+ "repo": "taotaochen86/zbridge",
+ "version": "10.1.5",
+ "tag": "v10.1.5",
+ "releaseAuthor": "taotaochen86",
+ "publishedAt": "2026-11-06T15:50:48Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zbridge-10.1.5.xpi",
+  "url": "https://github.com/taotaochen86/zbridge/releases/download/v10.1.5/zbridge-10.1.5.xpi",
+  "size": 5200,
+  "sha256": "ccb28024da8f7ddcf2810bd265810a4136d16739fa62679bc2bf21e12998bf93",
+  "githubAssetId": 717662510,
+  "uploader": "taotaochen86",
+  "uploadedAt": "2026-11-06T15:50:56Z",
+  "fetchedAt": "2026-11-08T13:52:59.724Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zbridge@taotaochen86.github.io",
+  "name": "ZBridge",
+  "version": "10.1.5",
+  "description": "Browser-friendly local bridge for Zotero: lets local web pages (file:// add-ins, WPS/Office add-ins, local web apps) talk to Zotero without any relay process.",
+  "homepageUrl": "https://github.com/taotaochen86/zbridge",
+  "updateUrl": "https://raw.githubusercontent.com/taotaochen86/zbridge/main/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 12431,
+   "sha256": "e52d896616e0e9dd6ca475fe67d2b9872c4f0c827035ea39c2a70fe06d94227d"
+  },
+  {
+   "path": "manifest.json",
+   "size": 621,
+   "sha256": "9d775477195e61f70e5102d3bb895cb3558ce387d3f0c55a13988e3bd8615fb2"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-08T13:52:59.724Z",
+  "input": {
+   "slug": "zbridge",
+   "version": "10.1.5",
+   "sha256": "ccb28024da8f7ddcf2810bd265810a4136d16739fa62679bc2bf21e12998bf93"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 12431,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "fee545a9fa9a",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 64,
+      "column": 14,
+      "snippet": "const v = Zotero.Prefs.get('extensions.zotero.zbridge.token', true)",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.zbridge.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "7652c640bce8",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 179,
+      "column": 21,
+      "snippet": "const action = new AsyncFunction(code)",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 261,
+      "column": 21,
+      "snippet": "const action = new AsyncFunction('query', code)",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "AsyncFunction"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "codeKey": "42025c67c4ea",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 280,
+      "column": 41,
+      "snippet": "return !!(Zotero && Zotero.Server && Zotero.Server.Endpoints",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 281,
+      "column": 16,
+      "snippet": "&& typeof Zotero.Server.Endpoints === 'object')",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 294,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints['/zbridge/execute'] = ExecuteEndpoint",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 295,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints['/zbridge/ping'] = PingEndpoint",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 296,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints['/debug-bridge/execute'] = LegacyExecuteEndpoint",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/debug-bridge/execute",
+      "/zbridge/execute",
+      "/zbridge/ping"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "runs-sent-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "3b1e501233d5",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 179,
+      "column": 21,
+      "snippet": "const action = new AsyncFunction(code)",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "local endpoint",
+      "web pages"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/taotaochen86/zbridge/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/taotaochen86/zbridge/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-08T13:52:59.724Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the taotaochen86 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-08T13:52:59.724Z",
+  "appliesTo": {
+   "slug": "zbridge",
+   "version": "10.1.5",
+   "sha256": "ccb28024da8f7ddcf2810bd265810a4136d16739fa62679bc2bf21e12998bf93"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.8",
+   "inputHash": "6f87e568774a936e908d67961f9b463b9e2991846225272bd658b1f789f9d9a0"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "runs-sent-code",
+      "label": "Runs code web pages send it",
+      "concern": "high"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "dynamic-code",
+      "label": "Runs code it assembles while running",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "high",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-SENT-CODE-WEB"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-06T15:50:48Z",
+    "lastCommitAt": "2026-11-06T15:50:24Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.8",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "high-concern",
+   "ruleId": "OV-HIGH",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Runs code web pages send it"
+   ]
+  }
+ }
+}

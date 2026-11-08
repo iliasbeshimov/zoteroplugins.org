@@ -1,0 +1,399 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-retainpdf",
+ "repo": "haoning-chen226/zotero-retainpdf",
+ "version": "1.0.2",
+ "tag": "v1.0.2",
+ "releaseAuthor": "haoning-Chen226",
+ "publishedAt": "2026-11-06T05:08:21Z",
+ "prerelease": false,
+ "asset": {
+  "name": "Zotero-RetainPDF-Bridge-1.0.2.xpi",
+  "url": "https://github.com/haoning-Chen226/zotero-retainpdf/releases/download/v1.0.2/Zotero-RetainPDF-Bridge-1.0.2.xpi",
+  "size": 6316,
+  "sha256": "357dfe257a0cb694233a9215142383eb9227081a8570d924a6d11a242df3bdb2",
+  "githubAssetId": 715983281,
+  "uploader": "haoning-Chen226",
+  "uploadedAt": "2026-11-06T05:07:37Z",
+  "fetchedAt": "2026-11-08T13:52:59.724Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "retainpdf-bridge@local.invalid",
+  "name": "Zotero → RetainPDF",
+  "version": "1.0.2",
+  "description": "自用 Zotero 插件：按分类将新论文 PDF 导入 RetainPDF，并提交中文全文翻译。",
+  "homepageUrl": "https://github.com/haoning-Chen226/zotero-retainpdf",
+  "updateUrl": "https://raw.githubusercontent.com/haoning-Chen226/zotero-retainpdf/main/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 17342,
+   "sha256": "bd179be8101bd96c1dd72eed95556b08565861d00698234f911a9d5d75dddcb1"
+  },
+  {
+   "path": "manifest.json",
+   "size": 581,
+   "sha256": "0a33e52a437569c91b9250e5f4a46d0e035feae229c14f157b4f19c1742759a8"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-08T13:52:59.724Z",
+  "input": {
+   "slug": "zotero-retainpdf",
+   "version": "1.0.2",
+   "sha256": "357dfe257a0cb694233a9215142383eb9227081a8570d924a6d11a242df3bdb2"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 17342,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 15,
+       "column": 6,
+       "snippet": "fetch(retainGateway + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 40001,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 4,
+       "column": 22,
+       "snippet": "const retainGateway = \"http://127.0.0.1:40001\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "paddleocr.aistudio-app.com",
+     "category": "llm-provider",
+     "provider": "Baidu PaddleOCR",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 87,
+       "column": 50,
+       "snippet": "if (provider === \"paddle\") ocr.paddle_api_url = \"https://paddleocr.aistudio-app.com\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 15,
+       "column": 6,
+       "snippet": "fetch(retainGateway + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "RetainPDF",
+     "provider": "Baidu PaddleOCR and the AI provider it's set up with",
+     "documents": true,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 4,
+       "column": 22,
+       "snippet": "const retainGateway = \"http://127.0.0.1:40001\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "51e5d6577610",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 248,
+      "column": 14,
+      "snippet": "if (await IOUtils.exists(this.statePath)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 249,
+      "column": 36,
+      "snippet": "this.state = JSON.parse(await IOUtils.readUTF8(this.statePath));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 307,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(this.statePath, JSON.stringify(this.state), {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "d99c117663e7",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 41,
+      "column": 12,
+      "snippet": "await Zotero.Utilities.Internal.exec(\"/usr/bin/open\", [\"-g\", \"/Applications/RetainPDF.app\"]);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Zotero.Utilities.Internal.exec",
+      "system openers only"
+     ],
+     "programs": [
+      "open"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/haoning-Chen226/zotero-retainpdf/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/haoning-Chen226/zotero-retainpdf/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-08T13:52:59.724Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the haoning-Chen226 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-08T13:52:59.724Z",
+  "appliesTo": {
+   "slug": "zotero-retainpdf",
+   "version": "1.0.2",
+   "sha256": "357dfe257a0cb694233a9215142383eb9227081a8570d924a6d11a242df3bdb2"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.8",
+   "inputHash": "625622a6028216eea055a1eb567809cd87d98d9c3a9565212c941ee301f8b49b"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "RetainPDF (Baidu PaddleOCR and the AI provider it's set up with)",
+       "paddleocr.aistudio-app.com"
+      ],
+      "unconfirmed": [
+       "paddleocr.aistudio-app.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "process-launch",
+      "label": "Opens files or links with your system's own apps",
+      "concern": "low",
+      "detail": "Programs it names include open"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-06T05:08:21Z",
+    "lastCommitAt": "2026-11-06T05:03:39Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.8",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
