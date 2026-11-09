@@ -1,7 +1,7 @@
 import type { PluginProfile } from "./profile.ts";
 
 /**
- * The Atlas grade on a plugin's card, and the "because …" line under it. Both follow from the
+ * The Zotero Plugins grade on a plugin's card, and the "because …" line under it. Both follow from the
  * profile alone, so the site, the pipeline's grade log and anything else agree on them.
  * "–" means not graded: no release, code not analysed, or still checking.
  */

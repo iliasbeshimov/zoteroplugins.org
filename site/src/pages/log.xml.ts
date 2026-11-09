@@ -15,6 +15,6 @@ export const GET: APIRoute = () => {
       return `<item><title>${esc(title)}</title><link>${link}</link><guid isPermaLink="false">${esc(`${c.slug}@${c.version}:${c.to}`)}</guid><pubDate>${new Date(c.date).toUTCString()}</pubDate><description>${esc(c.why)}</description></item>`;
     })
     .join("");
-  const xml = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Zotero Plugins Atlas: grade log</title><link>${SITE}/log</link><description>Every change to a Zotero plugin's Atlas grade, up or down.</description>${items}</channel></rss>`;
+  const xml = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Zotero Plugins Atlas: grade log</title><link>${SITE}/log</link><description>Every change to a Zotero plugin's grade on zoteroplugins.org, up or down.</description>${items}</channel></rss>`;
   return new Response(xml, { headers: { "Content-Type": "application/rss+xml; charset=utf-8" } });
 };

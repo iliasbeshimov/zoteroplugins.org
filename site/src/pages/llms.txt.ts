@@ -20,7 +20,7 @@ export const GET: APIRoute = () => {
     "",
     `> Every Zotero plugin, graded from a check of its code: what it does, what it needs from you and where it sends your data, with the evidence. ${n} plugins, re-checked daily from GitHub (last on ${checked}). Non-commercial: no ads, no paid listings, and no one can pay for a better grade.`,
     "",
-    "Grades: A+ is recommended and was also tested installed in a live Zotero; A is recommended (every code check came out low); B is use with care (read why before installing); C is not recommended (a serious problem); a dash means not graded yet. Each plugin page states its grade, the reason, which Zotero versions it works with, and the evidence (file and line). The data is CC BY 4.0 and the code MIT.",
+    "Every plugin gets a Zotero Plugins grade, from A+ to C: A+ is recommended and was also tested installed in a live Zotero; A is recommended (every code check came out low); B is use with care (read why before installing); C is not recommended (a serious problem); a dash means not graded yet. Each plugin page states its grade, the reason, which Zotero versions it works with, and the evidence (file and line). The data is CC BY 4.0 and the code MIT.",
     "",
     "## Start here",
     "",

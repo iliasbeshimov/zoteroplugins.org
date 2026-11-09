@@ -88,7 +88,7 @@ export function verdictSentence(p: Plugin): string {
   const grade =
     p.grade === "–"
       ? `${p.name} isn't graded yet: ${p.because}.`
-      : `${p.name} has Atlas grade ${p.grade} (${p.gradeWord.toLowerCase()}) because ${p.because}.`;
+      : `${p.name} has a Zotero Plugins grade of ${p.grade} (${p.gradeWord.toLowerCase()}) because ${p.because}.`;
   const compat = p.legacy
     ? "It's a Zotero 6 plugin, so Zotero 7 and later can't load it."
     : !p.worksWith.length

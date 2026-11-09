@@ -15,7 +15,7 @@ import type { SearchDoc } from "./search.ts";
 import { fmtUse, loadUsage } from "./usage.ts";
 
 /**
- * Turns data/generated/<slug>/profile.json into what the pages show: the Atlas grade, its
+ * Turns data/generated/<slug>/profile.json into what the pages show: the Zotero Plugins grade, its
  * "because" line, the scorecard's areas and the notices. Everything comes from the deterministic
  * profile; the only AI-written text is the summaries in data/census/summaries.json and the search
  * phrases in data/search/phrases.json, tagged as such.

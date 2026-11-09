@@ -82,7 +82,7 @@ const reviewing = inReview().slice(0, 20);
   };
   const describe = (k: Known | undefined): [string, string] | null => {
     if (!k) return null;
-    if (k.status === "listed") return [`<strong>${esc(k.name)}</strong> is in the atlas: <a href="/p/${k.slug}">see its page</a>.`, "ok"];
+    if (k.status === "listed") return [`<strong>${esc(k.name)}</strong> is listed: <a href="/p/${k.slug}">see its page</a>.`, "ok"];
     if (k.status === "in-review") return [`<strong>${esc(k.name)}</strong> is in review: <a href="/p/${k.slug}">see its page</a>. Its grade appears there when the checks finish.`, "ok"];
     if (k.status === "waiting") return ["It's queued. We add a limited number of new plugins a day, so it will be added within a day.", "ok"];
     return k.status === "rejected" ? [esc(k.reason), "no"] : null;
