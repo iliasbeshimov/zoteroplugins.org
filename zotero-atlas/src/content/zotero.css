@@ -1,0 +1,66 @@
+/* Zotero Atlas in Zotero's main window: the button by the sync button, its dot, and the bar. */
+
+#zotero-atlas-tb {
+  list-style-image: url("chrome://zotero-atlas/content/icons/atlas-mono.svg");
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+  position: relative;
+}
+
+/* Something needs you: a small red dot, ringed in the toolbar's colour. */
+#zotero-atlas-tb[attention="true"]::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  inset-inline-end: 3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d92d20;
+  box-shadow: 0 0 0 1.5px var(--material-tabstrip, -moz-dialog);
+  pointer-events: none;
+}
+
+/* A blocked plugin or a known security problem: Zotero's own bar, in the retraction bar's red. */
+#zotero-atlas-banner {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 8px 6px 14px;
+  line-height: 1.4;
+  background: #d93425;
+  color: #fff;
+  font-weight: 600;
+}
+#zotero-atlas-banner .message {
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: start;
+}
+#zotero-atlas-banner .link {
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  white-space: nowrap;
+}
+#zotero-atlas-banner .link:active {
+  color: #f9e8e2;
+}
+#zotero-atlas-banner .close-btn {
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+}
+#zotero-atlas-banner .close-btn .icon {
+  width: 20px;
+  height: 20px;
+  background: url("chrome://zotero/skin/16/universal/x-8.svg") no-repeat center / contain;
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+  padding-block: 4px;
+  box-sizing: border-box;
+}
+#zotero-atlas-banner .close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+}

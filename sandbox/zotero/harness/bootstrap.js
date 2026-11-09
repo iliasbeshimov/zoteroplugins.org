@@ -98,6 +98,17 @@ async function run() {
   }
   mark("startup");
   out.addonsAtStart = await within(5000, addons()).catch(() => []);
+  if (out.mode === "atlas") {
+    // Zotero Atlas's walk-through runs in its own driver add-on (sandbox/atlas/driver); the
+    // harness only records, and quits once the driver says it's done.
+    mark("atlas");
+    await within(WATCHDOG_MS - 10000, waitForPref("atlas-sandbox.done")).catch((e) => {
+      out.atlasError = String(e);
+    });
+    out.addons = await addons();
+    mark("end");
+    return finish(out);
+  }
   await delay(PHASE_MS.startup);
   if (out.mode === "links") {
     mark("links");
@@ -124,6 +135,10 @@ async function run() {
   out.addons = await addons();
   mark("end");
   finish(out);
+}
+
+async function waitForPref(name) {
+  while (!Services.prefs.getBoolPref(name, false)) await delay(1000);
 }
 
 async function step(name, fn) {

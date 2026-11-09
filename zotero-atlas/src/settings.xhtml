@@ -3,14 +3,28 @@
     <label><html:h2>Zotero Atlas</html:h2></label>
     <html:p>
       Find and install plugins from zoteroplugins.org inside Zotero, filtered to your Zotero
-      version, with each plugin's grade. It also watches the plugins you have: it tells you when
-      one drops a grade, when the update Zotero would apply is graded worse, when Zotero's
-      blocklist blocks it, or when Zotero has disabled it because it doesn't work with your
-      version. Open it from Tools → Zotero Atlas.
+      version, with each plugin's grade. It also looks after the plugins you have: it tells you
+      when one is blocked or has a known security problem, drops a grade, or gets an update
+      graded lower, and shows each plugin's grade in Tools → Plugins. Open it from Tools →
+      Zotero Atlas, or the Zotero Atlas button by the sync button.
     </html:p>
     <hbox>
       <button id="zotero-atlas-open" label="Open Zotero Atlas"/>
     </hbox>
+  </groupbox>
+  <groupbox>
+    <label><html:h2>Plugin updates</html:h2></label>
+    <html:p>
+      Zotero installs plugin updates by itself without looking at what changed. Zotero Atlas can
+      hold each update until zoteroplugins.org has checked it: one we've checked that isn't
+      graded lower installs as usual, usually within a day, and anything else waits for you in
+      Zotero Atlas. Plugins the directory doesn't list are never held. Holding changes no Zotero
+      setting, so removing Zotero Atlas gives Zotero back its own updates.
+    </html:p>
+    <radiogroup preference="extensions.zotero-atlas.updates">
+      <radio value="hold" label="Hold updates until they're checked (recommended)"/>
+      <radio value="off" label="Leave updates to Zotero"/>
+    </radiogroup>
   </groupbox>
   <groupbox>
     <label><html:h2>Usage data</html:h2></label>

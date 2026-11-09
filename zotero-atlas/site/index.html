@@ -34,7 +34,7 @@
         <a class="btn" href="https://zoteroplugins.org/p/zotero-atlas">Its card on zoteroplugins.org</a>
       </div>
       <p class="meta"><span>Zotero 7 to 11</span><span>MIT licence</span><span>Reproducible build</span><span>Nothing sent unless you say so</span></p>
-      <div class="howto">Download the <code>.xpi</code> file, then in Zotero open <strong>Tools → Plugins</strong>, click the gear and choose <strong>Install Plugin From File</strong>. Afterwards it lives under <strong>Tools → Zotero Atlas</strong>.</div>
+      <div class="howto">Download the <code>.xpi</code> file, then in Zotero open <strong>Tools → Plugins</strong>, click the gear and choose <strong>Install Plugin From File</strong>. Afterwards it lives under <strong>Tools → Zotero Atlas</strong>, and as a button by the sync button.</div>
     </div>
 
     <section id="what">
@@ -50,8 +50,20 @@
             <p>Install hands the release file to Zotero's own installer together with the SHA-256 of the file the directory analysed. Zotero refuses the file if it doesn't match, so what you get is exactly what the card describes. A file nobody has analysed can't be installed from here.</p>
           </div>
           <div class="card">
-            <h3>Watch what you have</h3>
-            <p>Once a day it compares your installed plugins with the directory and tells you when one drops a grade, when the update Zotero would apply is graded worse than what you have, when Zotero's blocklist blocks it, or when it has stopped working with your Zotero. Where a cleaner version is listed, it offers it.</p>
+            <h3>Hold updates until they're checked</h3>
+            <p>Zotero installs plugin updates by itself without looking at what changed. With holding on, the recommended choice, an update whose file the directory analysed, and that isn't graded lower than what you have, installs as usual, usually within a day. Anything else waits for you. Plugins the directory doesn't list are never held.</p>
+          </div>
+          <div class="card">
+            <h3>Go back after an update</h3>
+            <p>Each update of the past month is listed with a way back to the version you had: the file the directory checked. After that, its updates wait until you choose.</p>
+          </div>
+          <div class="card">
+            <h3>Only what needs you</h3>
+            <p>A blocked plugin, or one on the directory's list of known security problems, gets a bar above your library until you deal with it. A held update or a grade drop gets one notice and a red dot on the Atlas button. The rest waits quietly in "Your plugins".</p>
+          </div>
+          <div class="card">
+            <h3>Grades in Tools → Plugins</h3>
+            <p>Every plugin in Zotero's own Plugins window gets its grade by its name, or "Not listed" when the directory doesn't list it and so Atlas can't check it. A line appears only when there's something to know.</p>
           </div>
         </div>
       </div>
@@ -118,11 +130,12 @@
             <a href="https://zoteroplugins.org/p/zotero-atlas"><img src="https://zoteroplugins.org/badge/zotero-atlas.svg" alt="Live grade badge from zoteroplugins.org"></a>
           </div>
           <div class="prose">
-            <p>On zoteroplugins.org, Zotero Atlas is graded <strong>B</strong>. Two findings put it there, and both are the point of the plugin:</p>
+            <p>On zoteroplugins.org, Zotero Atlas is graded <strong>B</strong>. Three findings put it there, and all three are the point of the plugin:</p>
             <div class="finding"><span class="tag">medium</span><b>Sends usage data to zoteroatlas.com.</b> Under the directory's rules, a plugin that can send usage data to its developer's server rates "medium", whether the sending is opt-in or not. Atlas can, so it does.</div>
             <div class="finding"><span class="tag">medium</span><b>Installs other add-ons.</b> Installing software is a powerful capability, and the rules rate it medium however carefully it is done: here from a hash-checked catalogue, after asking you.</div>
+            <div class="finding"><span class="tag">medium</span><b>Changes other plugins.</b> Holding another plugin's update, or turning one off, rates medium for every plugin that does it. Atlas holds updates only if you choose to, and turns a plugin off only when you click "Turn it off".</div>
             <div class="ok"><span class="tag">low</span>Everything else came out low: readable code uploaded by the project's own GitHub build, updates from the project's repository, no credentials stored, and it works with the current Zotero.</div>
-            <p>An A would need both findings gone, which means a plugin that neither installs anything nor can report anything. We would rather say plainly what it does and take the B. It is the grade we would give anyone else with the same code.</p>
+            <p>An A would need all three gone, which means a plugin that installs nothing, changes nothing and can report nothing. We would rather say plainly what it does and take the B. It is the grade we would give anyone else with the same code.</p>
             <p>We did not bend the rules for ourselves. The grade is computed by the same pipeline, from the same release file, with the same thresholds as the other plugins, and the card carries a note that the directory's own team makes it. If a rule ever changes, the change applies to every plugin and shows up in the public <a href="https://zoteroplugins.org/log">grade log</a>. The card also notes that Atlas hasn't yet been through the directory's live test in a running Zotero; that test is what separates A+ from A, and doesn't change a B.</p>
           </div>
         </div>
@@ -139,7 +152,7 @@
             <p class="muted">Your list of installed plugins, with versions and whether each is enabled, under a random ID made on your computer, plus your Zotero version, operating system and the plugin's version. It goes to zoteroatlas.com when you turn it on, when the list changes, and once a week. This is the whole message:</p>
 <pre><code>{
   "id": "4c9d3b2e-…",          random, made on your computer
-  "atlas": "0.1.0",
+  "atlas": "1.0.0",
   "zotero": "7.0.32",
   "os": "mac",
   "event": "weekly",
@@ -152,8 +165,8 @@
           <div>
             <h3>Whatever you choose</h3>
             <ul class="tight muted">
-              <li>It fetches the directory's catalogue once a day from GitHub, the directory's public repository. No account, no identifier.</li>
-              <li>When you click Install, Zotero downloads the plugin file from GitHub, as it would for any plugin.</li>
+              <li>It fetches the directory's catalogue once a day, and its list of known security problems every 6 hours, from GitHub, the directory's public repository. No account, no identifier.</li>
+              <li>When you click Install, or go back to an earlier version, Zotero downloads the plugin file from GitHub, as it would for any plugin.</li>
               <li>When you post a rating, it goes to zoteroatlas.com: the plugin, your stars and review, and a scrambled ID for this Zotero. No account. See the <a href="/privacy">privacy page</a>.</li>
               <li>Nothing else is contacted. The server never stores your IP address, and deletes an install not heard from in 180 days.</li>
               <li>"Show what would be sent" in Zotero's settings shows your exact message. Uninstalling removes everything the plugin stored on your computer; to delete what the server holds, choose "Don't send" first.</li>

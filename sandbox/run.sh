@@ -7,6 +7,8 @@
 #   sandbox/run.sh test <zotero-version> <xpi> [<name>]
 #   sandbox/run.sh links <zotero-version> <xpi> [<name>]   the link check for Install Link Blocker
 #   sandbox/run.sh clicks <zotero-version> <xpi> [<name>]  clicking those links in a note and a PDF
+#   sandbox/run.sh atlas <zotero-version> <zotero-atlas.xpi>  Zotero Atlas's own walk-through
+#                                                   (inputs from sandbox/atlas/prepare.py)
 #
 # EXTRA=<xpi> installs another add-on beside the plugin (Install Link Blocker, for the link check).
 #
@@ -97,6 +99,9 @@ run_one() {
   chmod 777 "$dir/results" "$dir/proxy" "$dir/monitor"
   [ -n "$xpi" ] && cp "$xpi" "$dir/in/target.xpi"
   if [ -n "${EXTRA:-}" ]; then mkdir -p "$dir/in/extra" && cp "$EXTRA" "$dir/in/extra/"; fi
+  # Several add-ons beside it, and files for Zotero Atlas's data folder (the atlas mode).
+  if [ -n "${EXTRA_DIR:-}" ]; then mkdir -p "$dir/in/extra" && cp "$EXTRA_DIR"/*.xpi "$dir/in/extra/"; fi
+  if [ -n "${ATLAS_DATA:-}" ]; then mkdir -p "$dir/in/atlas-data" && cp "$ATLAS_DATA"/*.json "$dir/in/atlas-data/"; fi
   # The menu items Zotero has by itself, from this version's latest baseline run.
   local base
   base=$(ls -d "$IO/runs/baseline-${v}_"* 2> /dev/null | tail -1 || true)
@@ -162,6 +167,11 @@ case "$cmd" in
     ensure_machine
     [ -f "${3:-}" ] || die "no such .xpi: ${3:-}"
     run_one clicks "${2:?zotero version}" "$3" "clicks-${4:-$(basename "$3" .xpi)}"
+    ;;
+  atlas)
+    ensure_machine
+    [ -f "${3:-}" ] || die "no such .xpi: ${3:-}"
+    run_one atlas "${2:?zotero version}" "$3" "atlas-$2"
     ;;
   links)
     ensure_machine

@@ -1,5 +1,5 @@
 /* global Zotero, window, document */
-// The Zotero Atlas window: the catalogue and the plugins installed here. Everything it knows
+// The Zotero Atlas window: the catalogue, and the plugins installed here. Everything it knows
 // comes from Zotero.ZoteroAtlas (bootstrap.js); this file only draws it.
 (() => {
   const A = Zotero.ZoteroAtlas;
@@ -14,17 +14,16 @@
     ["files", "Files, sync & backup"],
   ];
   const JOB_TITLE = Object.fromEntries(JOBS);
-  const FLAG_TEXT = {
-    blocked: "Blocked by Zotero's blocklist",
-    "worse-update": "The update offered is graded worse",
-    "grade-drop": "Grade dropped",
-    "disabled-fix": "Disabled by Zotero: not for this version. A version that works is listed",
-    disabled: "Disabled by Zotero: no listed version works with this Zotero",
-    outdated: "A newer version is listed",
-    "not-listed": "Not in the directory",
-  };
-  const LOUD = new Set(["blocked", "worse-update"]);
   const PAGE = 150;
+  const CHIP = {
+    blocked: ["Blocked by Zotero", "red"],
+    advisory: ["Known security problem", "red"],
+    held: ["Update held", "amber"],
+    "worse-update": ["Worse update offered", "amber"],
+    "grade-drop": ["Grade dropped", "amber"],
+    "disabled-fix": ["Turned off by Zotero", "amber"],
+    stuck: ["Not updated", "amber"],
+  };
 
   const zv = Zotero.version;
   const $ = (id) => document.getElementById(id);
@@ -43,6 +42,19 @@
     });
     return a;
   };
+  const button = (text, cls, fn) => {
+    const b = el("button", cls || "", text);
+    b.type = "button";
+    b.addEventListener("click", async () => {
+      b.disabled = true;
+      try {
+        await fn(b);
+      } finally {
+        if (b.isConnected) b.disabled = false;
+      }
+    });
+    return b;
+  };
   const num = (n) =>
     n === null || n === undefined
       ? ""
@@ -50,17 +62,32 @@
         ? `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k`
         : String(n);
   const date = (iso) => (iso ? new Date(iso).toLocaleDateString() : "");
+  const ago = (t) => {
+    if (!t) return "";
+    const m = Math.round((Date.now() - t) / 60000);
+    if (m < 2) return "just now";
+    if (m < 60) return `${m} minutes ago`;
+    const h = Math.round(m / 60);
+    if (h < 36) return `${h} hour${h === 1 ? "" : "s"} ago`;
+    return `${Math.round(h / 24)} days ago`;
+  };
 
   let data = null; // the catalogue
-  let items = []; // the review of installed plugins
+  let rv = null; // the latest review of installed plugins
   let byId = new Map(); // addon ID → review item
   let shown = PAGE;
+  let tab = "find";
 
   function status(text) {
     $("status").textContent = text;
   }
 
-  function gradePill(g) {
+  function gradePill(g, listed = true) {
+    if (!listed) {
+      const p = el("span", "grade g-none", "Not listed");
+      p.title = "Not on zoteroplugins.org, so Zotero Atlas can't check it or hold its updates";
+      return p;
+    }
     const pill = el("span", `grade g-${g === "–" ? "none" : g}`, g === "–" ? "?" : g);
     if (g !== "–") pill.title = `Zotero Plugins grade ${g}`;
     return pill;
@@ -69,6 +96,9 @@
   function installedFor(entry) {
     return entry.id ? byId.get(entry.id) : undefined;
   }
+
+  // -------------------------------------------------------------------------------------------
+  // Find plugins
 
   /** The row's button: what clicking Install would do for this Zotero. */
   function action(entry) {
@@ -130,6 +160,96 @@
       return `★ ${v.average.toFixed(1)} (${v.count} ratings of ${entry.version})`;
     return "too few ratings yet";
   }
+
+  function row(entry) {
+    const r = el("div", "row");
+    const main = el("div", "main");
+    const title = el("div", "title");
+    title.append(
+      gradePill(entry.grade),
+      link(entry.name, entry.page),
+      el("span", "ver", entry.version),
+    );
+    const meta = [];
+    if (entry.downloads) meta.push(`${num(entry.downloads)} downloads`);
+    const rating = ratingText(entry);
+    if (rating) meta.push(rating);
+    if (entry.jobs.length) meta.push(entry.jobs.map((j) => JOB_TITLE[j] || j).join(", "));
+    if (entry.lastReleaseAt) meta.push(`updated ${date(entry.lastReleaseAt)}`);
+    title.append(el("span", "meta", meta.join(" · ")));
+    main.append(title);
+    if (entry.summary) main.append(el("p", "summary", entry.summary));
+    const why = el("div", "why");
+    why.append(
+      el(
+        "span",
+        "",
+        `${entry.grade === "–" ? "Not graded yet" : `Grade ${entry.grade}`}: ${entry.because}.`,
+      ),
+    );
+    const needs = needsLine(entry);
+    if (needs) why.append(el("span", "", ` ${needs[0].toUpperCase()}${needs.slice(1)}.`));
+    if (entry.tested)
+      why.append(
+        el(
+          "span",
+          "",
+          ` Live test in Zotero ${entry.tested.zotero}: ${entry.tested.verdict.replace(/-/g, " ")}.`,
+        ),
+      );
+    why.append(
+      el("br"),
+      link("Full card on zoteroplugins.org", entry.page),
+      link("GitHub", entry.repo),
+    );
+    if (entry.ratings?.count) why.append(link("Reviews", `${entry.page}#reviews`));
+    main.append(why);
+    for (const al of installedFor(entry)?.alerts || [])
+      if (al.level !== "info") main.append(el("span", `flag ${al.level}`, al.text));
+    r.append(main, action(entry));
+    return r;
+  }
+
+  function filtered() {
+    const q = $("q").value.trim().toLowerCase();
+    const job = $("job").value;
+    const fit = $("fit").checked;
+    const sort = $("sort").value;
+    let list = data.plugins;
+    if (fit) list = list.filter((p) => A.fileFor(p, zv));
+    if (job) list = list.filter((p) => p.jobs.includes(job));
+    if (q) {
+      const words = q.split(/\s+/);
+      list = list.filter((p) => {
+        const hay = `${p.name} ${p.summary || ""} ${p.slug} ${p.jobs.join(" ")}`.toLowerCase();
+        return words.every((w) => hay.includes(w));
+      });
+    }
+    if (sort === "name") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+    else if (sort === "updated")
+      list = [...list].sort((a, b) => (b.lastReleaseAt || "").localeCompare(a.lastReleaseAt || ""));
+    else if (sort === "grade")
+      list = [...list].sort(
+        (a, b) => A.RANK[b.grade] - A.RANK[a.grade] || (b.downloads || 0) - (a.downloads || 0),
+      );
+    return list;
+  }
+
+  function renderFind() {
+    if (!data) return;
+    const list = $("list");
+    list.textContent = "";
+    const all = filtered();
+    if (!all.length) list.append(el("div", "empty", "No plugins match."));
+    for (const p of all.slice(0, shown)) list.append(row(p));
+    $("more").hidden = all.length <= shown;
+    $("more").textContent = `Show more (${all.length - Math.min(shown, all.length)} left)`;
+    $("foot").textContent =
+      `${all.length} of ${data.plugins.length} plugins · catalogue from ${date(data.generatedAt)}, graded for Zotero ${data.currentZotero} · you run Zotero ${zv}`;
+  }
+
+  // -------------------------------------------------------------------------------------------
+  // Your plugins
 
   const SENT =
     "Sent to zoteroatlas.com when you click Post: the plugin and version, your stars and review, " +
@@ -226,178 +346,272 @@
     return box;
   }
 
-  function row(entry, flags) {
-    const r = el("div", "row");
-    const main = el("div", "main");
-    const title = el("div", "title");
-    title.append(
-      gradePill(entry.grade),
-      link(entry.name, entry.page),
-      el("span", "ver", entry.version),
-    );
-    const meta = [];
-    if (entry.downloads) meta.push(`${num(entry.downloads)} downloads`);
-    const rating = ratingText(entry);
-    if (rating) meta.push(rating);
-    if (entry.jobs.length) meta.push(entry.jobs.map((j) => JOB_TITLE[j] || j).join(", "));
-    if (entry.lastReleaseAt) meta.push(`updated ${date(entry.lastReleaseAt)}`);
-    title.append(el("span", "meta", meta.join(" · ")));
-    main.append(title);
-    if (entry.summary) main.append(el("p", "summary", entry.summary));
-    const why = el("div", "why");
-    why.append(
+  const nameOf = (i) => i.entry?.name || i.addon.name;
+
+  /** One thing that needs you: a card with what happened and what you can do. */
+  function needCard(i, al) {
+    const card = el("div", `card level-${al.level}`);
+    const head = el("div", "card-head");
+    head.append(el("b", "card-name", nameOf(i)));
+    if (al.flag === "held" && al.held)
+      head.append(
+        el("span", "card-ver", `${al.held.from || i.addon.version} → ${al.held.version}`),
+      );
+    else head.append(el("span", "card-ver", i.addon.version));
+    const chip = CHIP[al.flag];
+    if (chip) head.append(el("span", `chip ${chip[1]}`, chip[0]));
+    head.append(el("span", "spacer"));
+    if (i.entry && al.flag === "held") head.append(link("Releases", `${i.entry.repo}/releases`));
+    card.append(head, el("p", "card-text", al.text));
+    const act = el("div", "card-actions");
+    const done = (r) => {
+      if (r && r.ok === false && r.message) Zotero.alert(window, "Zotero Atlas", r.message);
+    };
+    if (al.off) act.append(button("Turn it off", "danger", () => A.decide.off(i.addon.id)));
+    if (al.url) act.append(button("What we know", "", () => A.openPage(al.url)));
+    if (al.flag === "held") {
+      act.append(button("Update anyway", "", () => A.decide.update(i.addon.id)));
+      act.append(
+        button(`Keep ${al.held?.from || i.addon.version}`, "primary", () =>
+          A.decide.keep(i.addon.id),
+        ),
+      );
+      act.prepend(
+        el(
+          "span",
+          "card-note",
+          `Held since ${new Date(al.held?.at || Date.now()).toLocaleDateString()}. Without Atlas, Zotero would have installed it.`,
+        ),
+      );
+    }
+    if (al.flag === "worse-update")
+      act.append(
+        button("Hold updates until they're checked", "primary", () => A.updates.set("hold")),
+      );
+    if (al.flag === "grade-drop" && i.entry)
+      act.append(button("See why", "", () => A.openPage(i.entry.page)));
+    if (al.install)
+      act.append(
+        button(`Install ${al.install.entry.version}`, "primary", async () => {
+          done(await A.install(al.install.entry, al.install.build, window));
+        }),
+      );
+    if (act.childNodes.length) card.append(act);
+    return card;
+  }
+
+  /** "Go back to 9.0.76?" asked in place, then done. */
+  function goBack(i, rowEl) {
+    const ask = el("div", "confirm");
+    ask.append(
       el(
         "span",
         "",
-        `${entry.grade === "–" ? "Not graded yet" : `Grade ${entry.grade}`}: ${entry.because}.`,
+        `Go back to ${i.back.version}? Atlas installs the ${i.back.version} file we checked, and holds updates for it until you say so.`,
       ),
+      button("Cancel", "", () => ask.remove()),
+      button("Go back", "primary", async () => {
+        const r = await A.decide.back(i, window);
+        if (!r.ok) {
+          if (r.message) Zotero.alert(window, "Zotero Atlas", r.message);
+          return;
+        }
+        ask.replaceWith(el("div", "confirm done", `${nameOf(i)} ${i.back.version} is installed.`));
+      }),
     );
-    const needs = needsLine(entry);
-    if (needs) why.append(el("span", "", ` ${needs[0].toUpperCase()}${needs.slice(1)}.`));
-    if (entry.tested)
-      why.append(
-        el(
-          "span",
-          "",
-          ` Live test in Zotero ${entry.tested.zotero}: ${entry.tested.verdict.replace(/-/g, " ")}.`,
-        ),
-      );
-    why.append(
-      el("br"),
-      link("Full card on zoteroplugins.org", entry.page),
-      link("GitHub", entry.repo),
-    );
-    if (entry.ratings?.count) why.append(link("Reviews", `${entry.page}#reviews`));
-    main.append(why);
-    for (const f of flags || []) {
-      if (f === "outdated") continue;
-      main.append(el("span", `flag ${LOUD.has(f) ? "loud" : "quiet"}`, FLAG_TEXT[f] || f));
+    rowEl.after(ask);
+  }
+
+  function updateRow(i, al) {
+    const r = el("div", "urow");
+    r.append(el("b", "", nameOf(i)));
+    const ver =
+      al.flag === "updated"
+        ? `${i.updated.from} → ${i.updated.to}`
+        : al.held?.version
+          ? `${al.held.from || i.addon.version} → ${al.held.version}`
+          : i.addon.version;
+    r.append(el("span", "uver", ver));
+    if (i.entry) r.append(gradePill(i.entry.grade));
+    else r.append(el("span", ""));
+    r.append(el("span", "utext", al.text));
+    const act = el("span", "uact");
+    if (al.flag === "updated" && i.back) {
+      const b = el("button", "linkish", `Go back to ${i.back.version}`);
+      b.type = "button";
+      b.addEventListener("click", () => {
+        if (r.nextSibling?.classList?.contains("confirm")) return;
+        goBack(i, r);
+      });
+      act.append(b);
     }
-    r.append(main, action(entry));
+    if (al.flag === "kept")
+      act.append(button("Update anyway", "", () => A.decide.update(i.addon.id)));
+    if (al.flag === "pinned") act.append(button("Update", "", () => A.decide.unpin(i.addon.id)));
+    r.append(act);
     return r;
   }
 
-  function filtered() {
-    const q = $("q").value.trim().toLowerCase();
-    const job = $("job").value;
-    const fit = $("fit").checked;
-    const sort = $("sort").value;
-    let list = data.plugins;
-    if (fit) list = list.filter((p) => A.fileFor(p, zv));
-    if (job) list = list.filter((p) => p.jobs.includes(job));
-    if (q) {
-      const words = q.split(/\s+/);
-      list = list.filter((p) => {
-        const hay = `${p.name} ${p.summary || ""} ${p.slug} ${p.jobs.join(" ")}`.toLowerCase();
-        return words.every((w) => hay.includes(w));
-      });
-    }
-    if (sort === "name") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
-    else if (sort === "updated")
-      list = [...list].sort((a, b) => (b.lastReleaseAt || "").localeCompare(a.lastReleaseAt || ""));
-    else if (sort === "grade")
-      list = [...list].sort(
-        (a, b) => A.RANK[b.grade] - A.RANK[a.grade] || (b.downloads || 0) - (a.downloads || 0),
-      );
-    return list;
-  }
-
-  function renderFind() {
-    if (!data) return;
-    const list = $("list");
-    list.textContent = "";
-    const all = filtered();
-    if (!all.length) list.append(el("div", "empty", "No plugins match."));
-    for (const p of all.slice(0, shown)) list.append(row(p, installedFor(p)?.flags));
-    $("more").hidden = all.length <= shown;
-    $("more").textContent = `Show more (${all.length - Math.min(shown, all.length)} left)`;
-    $("foot").textContent =
-      `${all.length} of ${data.plugins.length} plugins · catalogue from ${date(data.generatedAt)}, graded for Zotero ${data.currentZotero} · you run Zotero ${zv} · usage data: ${A.usage.choice() === "yes" ? "on" : "off"} (Zotero settings → Zotero Atlas)`;
+  function section(title, count) {
+    const s = el("div", "block");
+    const h = el("h2", "h", title);
+    if (count !== undefined) h.append(el("span", "h-count", ` ${count}`));
+    s.append(h);
+    return s;
   }
 
   function renderMine() {
-    const list = $("mine-list");
-    list.textContent = "";
-    const worth = items.filter((i) => i.flags.some((f) => f !== "outdated" && f !== "not-listed"));
-    $("mine-count").textContent = worth.length ? String(worth.length) : "";
-    $("mine-lead").textContent = items.length
-      ? `${items.length} plugins installed. ${worth.length ? `${worth.length} worth a look.` : "Nothing needs your attention."}`
-      : "No other plugins are installed.";
-    const order = (i) =>
-      i.flags.some((f) => LOUD.has(f))
-        ? 0
-        : i.flags.some((f) => f !== "outdated" && f !== "not-listed")
-          ? 1
-          : i.entry
-            ? 2
-            : 3;
-    for (const i of [...items].sort(
-      (a, b) => order(a) - order(b) || a.addon.name.localeCompare(b.addon.name),
-    )) {
-      if (i.entry) {
-        const r = row(i.entry, i.flags);
-        const ver = r.querySelector(".ver");
-        ver.textContent = i.same
-          ? `${i.addon.version} installed`
-          : `${i.addon.version} installed · ${i.entry.version} listed`;
-        if (!i.same)
-          r.querySelector(".why").prepend(
-            el("span", "", `The grade is for version ${i.entry.version}. `),
-          );
-        if (!i.addon.enabled) r.querySelector(".title").append(el("span", "meta", "disabled"));
-        r.querySelector(".main").append(
-          rateBox({
-            slug: i.entry.slug,
-            addon: i.addon.id,
-            version: i.addon.version,
-            name: i.entry.name,
-          }),
-        );
-        list.append(r);
-      } else {
-        const r = el("div", "row");
-        const main = el("div", "main");
-        const title = el("div", "title");
-        title.append(
-          gradePill("–"),
-          el("span", "name", i.addon.name),
-          el("span", "ver", `${i.addon.version} installed`),
-        );
-        main.append(
-          title,
-          el("span", "flag quiet", "Not in the directory, so nothing is known about it."),
-        );
-        const why = el("div", "why");
-        why.append(link("Submit it to zoteroplugins.org", `${A.SITE}/submit`));
-        main.append(why);
-        r.append(main);
-        list.append(r);
-      }
-    }
-    // Removed in the last month: still worth a rating, above all from someone who removed it fast.
-    const gone = A.ratings.removed().sort((a, b) => b.at - a.at);
-    if (gone.length) list.append(el("h3", "sub", "Removed in the last 30 days"));
-    for (const g of gone) {
-      const r = el("div", "row");
-      const main = el("div", "main");
-      const title = el("div", "title");
-      title.append(
-        gradePill("–"),
-        el("span", "name", g.name),
-        el("span", "ver", `${g.version} · removed ${new Date(g.at).toLocaleDateString()}`),
+    const items = rv?.items || [];
+    const attention = items.flatMap((i) =>
+      i.alerts.filter((a) => a.level !== "info").map((a) => [i, a]),
+    );
+    const order = { critical: 0, important: 1 };
+    attention.sort((a, b) => order[a[1].level] - order[b[1].level]);
+    $("mine-count").textContent = attention.length ? String(attention.length) : "";
+    $("mine-lead").textContent = !rv
+      ? "Loading…"
+      : items.length
+        ? `${items.length} plugin${items.length === 1 ? "" : "s"}. ${
+            attention.length
+              ? `${attention.length} need${attention.length === 1 ? "s" : ""} you; the rest are fine.`
+              : "Nothing needs you."
+          }`
+        : "No other plugins are installed.";
+
+    // Holding updates, offered once to people who used Atlas before it could.
+    const offer = $("offer");
+    offer.textContent = "";
+    if (A.updates.choice() === "") {
+      const o = el("div", "offer");
+      o.append(
+        el("span", "", "New: Zotero Atlas can hold plugin updates until they're checked. "),
+        button("Turn on", "linkish", () => A.updates.set("hold")),
+        el("span", "", " · "),
+        button("No thanks", "linkish", () => A.updates.set("off")),
       );
-      main.append(title, rateBox({ slug: g.slug, addon: g.id, version: g.version, name: g.name }));
-      r.append(main);
-      list.append(r);
+      offer.append(o);
     }
+
+    const needs = $("needs");
+    needs.textContent = "";
+    if (attention.length) {
+      const s = section("Needs you");
+      for (const [i, al] of attention) s.append(needCard(i, al));
+      needs.append(s);
+    }
+
+    const updates = $("updates");
+    updates.textContent = "";
+    const ups = items.flatMap((i) =>
+      i.alerts
+        .filter((a) => ["updated", "waiting", "kept", "pinned"].includes(a.flag))
+        .map((a) => [i, a]),
+    );
+    if (ups.length) {
+      const s = section("Updates");
+      const box = el("div", "box");
+      for (const [i, al] of ups) box.append(updateRow(i, al));
+      s.append(box);
+      updates.append(s);
+    }
+
+    const all = $("all");
+    all.textContent = "";
+    if (items.length) {
+      const det = el("details", "block");
+      det.open = attention.length + ups.length === 0 || items.length <= 12;
+      const sum = el("summary", "h", `All your plugins `);
+      sum.append(el("span", "h-count", String(items.length)));
+      det.append(sum);
+      const box = el("div", "box");
+      for (const i of [...items].sort((a, b) => nameOf(a).localeCompare(nameOf(b)))) {
+        const r = el("div", "prow");
+        const top = el("div", "ptop");
+        top.append(gradePill(i.entry?.grade ?? "–", Boolean(i.entry)));
+        top.append(i.entry ? link(nameOf(i), i.entry.page) : el("b", "", nameOf(i)));
+        top.append(el("span", "ver", i.addon.version + (i.addon.enabled ? "" : " · turned off")));
+        r.append(top);
+        const quiet = i.alerts.filter(
+          (a) => a.level === "info" && !["updated", "waiting", "kept", "pinned"].includes(a.flag),
+        );
+        for (const a of quiet) r.append(el("div", "pline", a.text));
+        if (!i.entry) {
+          const l = el("div", "pline");
+          l.append(
+            el(
+              "span",
+              "",
+              "Not on zoteroplugins.org, so Atlas can't check it or hold its updates. ",
+            ),
+            link("Submit it", `${A.SITE}/submit`),
+          );
+          r.append(l);
+        } else if (i.entry.grade !== "–" && !quiet.length && !i.same) {
+          r.append(el("div", "pline", `The grade is for version ${i.entry.version}.`));
+        }
+        if (i.entry)
+          r.append(
+            rateBox({
+              slug: i.entry.slug,
+              addon: i.addon.id,
+              version: i.addon.version,
+              name: i.entry.name,
+            }),
+          );
+        box.append(r);
+      }
+      det.append(box);
+      all.append(det);
+    }
+
+    // Removed in the last month: still worth a rating, above all from someone who removed it fast.
+    const gone = $("gone");
+    gone.textContent = "";
+    const removed = A.ratings.removed().sort((a, b) => b.at - a.at);
+    if (removed.length) {
+      const s = section("Removed in the last 30 days");
+      const box = el("div", "box");
+      for (const g of removed) {
+        const r = el("div", "prow");
+        const top = el("div", "ptop");
+        top.append(
+          el("b", "", g.name),
+          el("span", "ver", `${g.version} · removed ${new Date(g.at).toLocaleDateString()}`),
+        );
+        r.append(top, rateBox({ slug: g.slug, addon: g.id, version: g.version, name: g.name }));
+        box.append(r);
+      }
+      s.append(box);
+      gone.append(s);
+    }
+
+    const foot = $("mine-foot");
+    foot.textContent = "";
+    const hold = A.updates.choice() === "hold";
+    foot.append(
+      el("span", "", `Updates: ${hold ? "held until they're checked" : "left to Zotero"} · `),
+      button(hold ? "Stop holding" : "Hold them", "linkish", () =>
+        A.updates.set(hold ? "off" : "hold"),
+      ),
+      el(
+        "span",
+        "",
+        ` · Checked against Zotero's blocklist and our list of known security problems${rv?.fetchedAt ? `, ${ago(Math.max(rv.fetchedAt, rv.advisoriesAt || 0))}` : ""} · Usage data: ${A.usage.choice() === "yes" ? "on" : "off"}`,
+      ),
+    );
   }
 
   async function refreshInstalled(force) {
-    const rv = await A.review(Boolean(force));
-    items = rv.items;
-    byId = new Map(items.filter((i) => i.entry).map((i) => [i.addon.id, i]));
+    rv = await A.review(Boolean(force));
+    show();
+  }
+
+  function show() {
+    rv = A.last() || rv;
+    byId = new Map((rv?.items || []).filter((i) => i.entry).map((i) => [i.addon.id, i]));
     renderMine();
     renderFind();
+    if (tab === "mine") A.ack();
   }
 
   async function load(force) {
@@ -405,7 +619,7 @@
     $("refresh").disabled = true;
     try {
       data = await A.catalog(Boolean(force));
-      await refreshInstalled(false);
+      await refreshInstalled(force);
       status("");
     } catch (e) {
       status(String(e.message || e));
@@ -414,11 +628,14 @@
   }
 
   function showTab(which) {
-    $("find").hidden = which !== "find";
-    $("mine").hidden = which !== "mine";
-    $("tab-find").classList.toggle("on", which === "find");
-    $("tab-mine").classList.toggle("on", which === "mine");
+    tab = which === "mine" ? "mine" : "find";
+    $("find").hidden = tab !== "find";
+    $("mine").hidden = tab !== "mine";
+    $("tab-find").classList.toggle("on", tab === "find");
+    $("tab-mine").classList.toggle("on", tab === "mine");
+    if (tab === "mine" && rv) A.ack();
   }
+  window.zoteroAtlasShow = showTab;
 
   window.addEventListener("load", () => {
     for (const [slug, title] of JOBS) {
@@ -445,6 +662,12 @@
       shown += PAGE;
       renderFind();
     });
+    const args = window.arguments?.[0]?.wrappedJSObject ?? window.arguments?.[0];
+    showTab(args?.tab || "find");
+    const off = A.subscribe(() => {
+      if (data) show();
+    });
+    window.addEventListener("unload", off, { once: true });
     load(false);
   });
 })();

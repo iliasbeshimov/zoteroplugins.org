@@ -3,6 +3,7 @@
 # /in/target.xpi, in a fresh profile, and leaves everything worth reading in /results.
 #   ATLAS_MODE     seed | baseline | test | links (the link check for Install Link Blocker)
 #                  | clicks (clicking those links inside a note and a PDF)
+#                  | atlas (Zotero Atlas's walk-through: its driver add-on in /in/extra)
 #   ATLAS_PROXY    host:port of the logging proxy (the only way out of this container)
 #   ATLAS_TIMEOUT  seconds before Zotero is killed
 set -u
@@ -19,9 +20,13 @@ if [ "$MODE" != seed ] && [ -f /template/data.tar ]; then tar -xf /template/data
 # The harness is a directory add-on; the plugin keeps its own file, named by its add-on ID.
 printf '%s' /sandbox/harness/ > "$P/extensions/atlas-harness@zoteroplugins.invalid"
 TARGET_ID=""
-if [ "$MODE" = test ] || [ "$MODE" = links ] || [ "$MODE" = clicks ]; then
+if [ "$MODE" = test ] || [ "$MODE" = links ] || [ "$MODE" = clicks ] || [ "$MODE" = atlas ]; then
   TARGET_ID=$(python3 /sandbox/addon_id.py /in/target.xpi) || { echo '{"error":"no add-on ID"}' > "$R/entry.json"; exit 3; }
   cp /in/target.xpi "$P/extensions/$TARGET_ID.xpi"
+fi
+# Zotero Atlas's saved catalogue and advisories, so its walk-through sees the plugins it expects.
+if [ "$MODE" = atlas ] && [ -d /in/atlas-data ]; then
+  mkdir -p "$D/zotero-atlas" && cp /in/atlas-data/*.json "$D/zotero-atlas/"
 fi
 # Other add-ons installed beside it (Install Link Blocker, for the link check).
 for x in /in/extra/*.xpi; do
@@ -76,7 +81,9 @@ export http_proxy="$HTTP_PROXY" https_proxy="$HTTPS_PROXY" NO_PROXY=localhost,12
 export ATLAS_MODE="$MODE" ATLAS_TARGET_ID="$TARGET_ID" ATLAS_RESULTS="$R/harness.json"
 export MOZ_CRASHREPORTER_DISABLE=1 DISPLAY=:99
 sleep 3
-Xvfb :99 -screen 0 1400x900x24 -nolisten tcp > /dev/null 2>&1 &
+# -fbdir: the screen is also a file (/tmp/fb/Xvfb_screen0), so a run can take pictures of it.
+mkdir -p /tmp/fb
+Xvfb :99 -screen 0 1400x900x24 -fbdir /tmp/fb -nolisten tcp > /dev/null 2>&1 &
 sleep 1
 
 start=$(date +%s)

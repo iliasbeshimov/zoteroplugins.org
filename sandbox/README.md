@@ -62,7 +62,18 @@ python3 sandbox/batch.py --jobs 4 <slug> ...  # current release of each, one rep
 EXTRA=install-link-blocker/dist/install-link-blocker-1.0.0.xpi \
   sandbox/run.sh links 10.0.3 path/to/plugin.xpi name  # the link check, with the blocker
 sandbox/run.sh clicks 10.0.3 path/to/plugin.xpi name   # clicking those links in a note and a PDF
+python3 sandbox/atlas/prepare.py                       # inputs for Zotero Atlas's walk-through
+EXTRA_DIR=.cache/atlas-sandbox/extra ATLAS_DATA=.cache/atlas-sandbox/data \
+  sandbox/run.sh atlas 10.0.3 zotero-atlas/dist/zotero-atlas-1.0.0.xpi
 ```
+
+`sandbox/run.sh atlas` walks through Zotero Atlas itself, beside three test plugins
+(`sandbox/atlas/prepare.py`): it answers the first-run screen, lets Zotero check for updates (the
+test catalogue grades ZotMoov's newer release lower, so Atlas holds it), and takes pictures of the
+button and its dot, the bar for a known security problem, the Tools menu, Tools → Plugins and the
+Atlas window (`results/shots/`), with what it found in `results/atlas.json`. The driver is
+`sandbox/atlas/driver/`; the harness only records. Pictures of the whole screen, menus included,
+come from Xvfb's framebuffer file.
 
 `sandbox/run.sh clicks` puts the toolkit's two links in a note (shown in the item pane's note editor)
 and on a PDF page beside an ordinary https link, then clicks each with real mouse events: a plain
