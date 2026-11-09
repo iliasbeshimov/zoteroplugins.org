@@ -1,0 +1,112 @@
+---
+import { atlasLink } from "../lib/links.ts";
+import AtlasIcon from "./AtlasIcon.astro";
+
+/**
+ * One line above the header pointing to Zotero Atlas, our plugin that brings the catalogue into
+ * Zotero. It scrolls away with the page, isn't shown on phones (the plugin installs on a computer)
+ * or in print, and stays closed once closed. A visit from a link carrying ?ref=atlas (one opened
+ * from inside the plugin) counts as closed: they have it already.
+ */
+---
+
+<script is:inline>
+  (() => {
+    const k = "zp-atlas-band";
+    let off = new URLSearchParams(location.search).get("ref") === "atlas";
+    try {
+      if (off) localStorage.setItem(k, "closed");
+      else off = localStorage.getItem(k) === "closed";
+    } catch {}
+    if (off) document.documentElement.dataset.atlasBand = "off";
+  })();
+</script>
+<aside class="atlas-band" aria-label="Zotero Atlas">
+  <AtlasIcon size={22} />
+  <p><strong>New from us:</strong> everything on this site, inside Zotero. <strong>Zotero Atlas</strong> finds plugins and installs them in one click.</p>
+  <a href={atlasLink("band")} class="go">Get Zotero Atlas <span aria-hidden="true">→</span></a>
+  <button type="button" class="x" aria-label="Close" data-atlas-band-close>×</button>
+</aside>
+
+<script>
+  document.querySelector("[data-atlas-band-close]")?.addEventListener("click", () => {
+    document.documentElement.dataset.atlasBand = "off";
+    try {
+      localStorage.setItem("zp-atlas-band", "closed");
+    } catch {}
+  });
+</script>
+
+<style>
+  .atlas-band {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 44px;
+    padding: 6px 60px;
+    box-sizing: border-box;
+    background: var(--atlas-bg);
+    color: var(--atlas-ink);
+    border-bottom: 1px solid var(--atlas-line);
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  :global(:root[data-atlas-band="off"]) .atlas-band {
+    display: none;
+  }
+  p {
+    margin: 0;
+    min-width: 0;
+  }
+  .go {
+    flex: none;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--atlas-btn);
+    color: var(--atlas-btn-ink);
+    font-weight: 650;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .go:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .x {
+    all: unset;
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--atlas-ink-2);
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  .x:hover {
+    color: var(--atlas-ink);
+  }
+  .x:focus-visible,
+  .go:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  @media (max-width: 639px) {
+    .atlas-band {
+      display: none;
+    }
+  }
+  @media print {
+    .atlas-band {
+      display: none;
+    }
+  }
+</style>

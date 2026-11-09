@@ -7,3 +7,9 @@ export const SITE = "https://zoteroplugins.org";
 export const CONTACT = "hello@zoteroplugins.org";
 export const mailto = (subject: string) =>
   `mailto:${CONTACT}?subject=${encodeURIComponent(subject)}`;
+/**
+ * zoteroatlas.com, home of Zotero Atlas, our plugin that brings the catalogue into Zotero. The
+ * utm_ parameters tell that site's analytics which spot here the visit came from.
+ */
+export const atlasLink = (medium: "band" | "install-sheet" | "install-guide") =>
+  `https://zoteroatlas.com/?utm_source=zoteroplugins.org&utm_medium=${medium}&utm_campaign=atlas`;

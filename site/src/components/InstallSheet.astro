@@ -1,11 +1,14 @@
 ---
 import { capFirst, type Plugin } from "../lib/atlas.ts";
+import AtlasPitch from "./AtlasPitch.astro";
 import GradeTag from "./GradeTag.astro";
 
 /**
  * Downloading is the moment of decision, so the grade shows again here. A and A+ go straight to
  * the steps, B asks you to read the reason first, C offers better-graded plugins before the
- * download. Nothing is ever blocked: the user decides.
+ * download. Nothing is ever blocked: the user decides. Under the steps, Zotero Atlas is offered
+ * as the way to skip them, for plugins it can install: listed ones (its catalogue leaves out
+ * hidden ones such as forks and Zotero 6-only plugins), and not on its own card.
  */
 interface Props {
   p: Plugin;
@@ -15,6 +18,7 @@ const { p, better } = Astro.props;
 const pause = p.grade === "B" || p.grade === "C";
 const why = capFirst(p.because);
 const job = p.jobs[0];
+const viaAtlas = !p.hidden && p.slug !== "zotero-atlas";
 ---
 
 <dialog class="sheet" data-install aria-label={`Install ${p.name}`}>
@@ -97,6 +101,16 @@ const job = p.jobs[0];
       </li>
     </ol>
     <a href="/install" class="guide">Step-by-step guide with pictures</a>
+    {
+      viaAtlas && (
+        <div class="atlas">
+          <AtlasPitch title="Or skip the download: use Zotero Atlas" medium="install-sheet" grade>
+            Our free plugin puts this site inside Zotero. Find {p.name} there and install it in one click; Zotero
+            checks the file against the one we graded.
+          </AtlasPitch>
+        </div>
+      )
+    }
   </div>
 </dialog>
 
@@ -273,5 +287,8 @@ const job = p.jobs[0];
   .sz {
     font: 500 12.5px var(--font-mono);
     opacity: 0.85;
+  }
+  .atlas {
+    margin: 0 24px 24px;
   }
 </style>

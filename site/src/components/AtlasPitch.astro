@@ -1,0 +1,115 @@
+---
+import { bySlug } from "../lib/atlas.ts";
+import { atlasLink } from "../lib/links.ts";
+import AtlasIcon from "./AtlasIcon.astro";
+
+/**
+ * A box offering Zotero Atlas, our plugin, where someone is about to install a plugin by hand. It
+ * says the plugin is ours, leads with what it never sends, and (with `grade`) gives its grade from
+ * its own card, which the same pipeline writes.
+ */
+interface Props {
+  title: string;
+  medium: "install-sheet" | "install-guide";
+  /** Add a line with Zotero Atlas's own grade, linked to its card. */
+  grade?: boolean;
+  size?: "sm" | "md";
+}
+const { title, medium, grade = false, size = "sm" } = Astro.props;
+const own = grade ? bySlug()["zotero-atlas"] : undefined;
+---
+
+<div class:list={["atlas-pitch", size]}>
+  <div class="hd">
+    <AtlasIcon size={size === "md" ? 40 : 32} />
+    <strong>{title}</strong>
+  </div>
+  <p class="body"><slot /></p>
+  <div class="acts">
+    <a href={atlasLink(medium)} class="go">Get Zotero Atlas <span aria-hidden="true">→</span></a>
+  </div>
+  <p class="fine">
+    It never sends your library, notes or files: only your list of plugins, if you say yes.
+    {
+      own && (
+        <>
+          {" "}
+          Made by us and graded by the same rules: <a href={`/p/${own.slug}`}>Zotero Plugins grade {own.grade}</a>.
+        </>
+      )
+    }
+  </p>
+</div>
+
+<style>
+  .atlas-pitch {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 18px;
+    border-radius: 14px;
+    background: var(--atlas-bg);
+    color: var(--atlas-ink);
+    border: 1px solid var(--atlas-line);
+  }
+  .hd {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hd strong {
+    font-size: 16px;
+    letter-spacing: -0.01em;
+  }
+  .body {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.45;
+  }
+  .acts {
+    display: flex;
+    padding-top: 2px;
+  }
+  .go {
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--atlas-btn);
+    color: var(--atlas-btn-ink);
+    font-size: 14px;
+    font-weight: 650;
+    text-decoration: none;
+  }
+  .go:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .go:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .fine {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--atlas-ink-2);
+  }
+  .fine a {
+    color: inherit;
+    font-weight: 600;
+  }
+  .md {
+    padding: 20px 22px;
+    border-radius: 16px;
+    gap: 12px;
+  }
+  .md .hd strong {
+    font-size: 18px;
+  }
+  .md .body {
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+  .md .fine {
+    font-size: 13px;
+  }
+</style>

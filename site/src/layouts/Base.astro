@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import AtlasBand from "../components/AtlasBand.astro";
 import ConsentBanner from "../components/ConsentBanner.astro";
 import JsonLd from "../components/JsonLd.astro";
 
@@ -24,6 +25,8 @@ const canonical = new URL(path, Astro.site);
 // pages say, so search engines get the plugin pages instead.
 const noindex =
   Astro.props.noindex || notFound || /^\/(developers|id)\/./.test(path) || path === "/compare";
+// The band about Zotero Atlas would only repeat Zotero Atlas's own card and its reviews.
+const atlasBand = !notFound && !/^\/p\/zotero-atlas(\/|$)/.test(path);
 ---
 
 <!doctype html>
@@ -53,6 +56,7 @@ const noindex =
     {jsonld && <JsonLd data={jsonld} />}
   </head>
   <body class="min-h-screen antialiased">
+    {atlasBand && <AtlasBand />}
     <slot />
     <ConsentBanner />
     <script>
