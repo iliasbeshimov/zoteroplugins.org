@@ -48,7 +48,13 @@ export const CatalogEntry = z.object({
   file: CatalogBuild.nullable().describe("The build current Zotero installs"),
   builds: z.array(CatalogBuild).describe("The release's other builds, e.g. for an older Zotero"),
   update: z
-    .object({ version: z.string().nullable(), grade: CatalogGrade })
+    .object({
+      version: z.string().nullable(),
+      grade: CatalogGrade,
+      sha256: Sha256.nullish().describe(
+        "That file's SHA-256 once downloaded; absent in catalogues written before Atlas 1.0",
+      ),
+    })
     .nullable()
     .describe(
       "What the plugin's own update address offers today, when it's a different file from this one",
@@ -69,6 +75,20 @@ export const CatalogEntry = z.object({
   maintenance: z.string(),
   lastReleaseAt: IsoDateTime.nullable(),
   docsChineseOnly: z.boolean(),
+  previous: z
+    .array(
+      z.object({
+        version: z.string(),
+        grade: CatalogGrade.describe(
+          "Its grade when we checked it (A at most: live tests are of the listed version)",
+        ),
+        file: CatalogBuild,
+      }),
+    )
+    .optional()
+    .describe(
+      "Up to three earlier releases we analysed, newest first: what Atlas can go back to, and the grade an update is compared with. Absent in catalogues written before Atlas 1.0",
+    ),
   ratings: z
     .object({
       count: z.int().nonnegative().describe("Published ratings of every version"),

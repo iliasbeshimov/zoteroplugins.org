@@ -136,3 +136,34 @@ describe("JSON Schema generation", () => {
     expect(json.type).toBe("object");
   });
 });
+
+describe("data/advisories.json", () => {
+  it("validates, with unique IDs", async () => {
+    const { Advisories } = await import("../src/index.ts");
+    const doc = Advisories.parse(
+      JSON.parse(await readFile(new URL("../../data/advisories.json", import.meta.url), "utf8")),
+    );
+    const ids = doc.advisories.map((a) => a.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("refuses an advisory without a severity or with a made-up ID", async () => {
+    const { Advisory } = await import("../src/index.ts");
+    const ok = {
+      id: "ZPA-2026-001",
+      addon: "demo@example.org",
+      slug: "demo",
+      name: "Demo",
+      affects: { min: null, max: "1.2.0" },
+      severity: "critical",
+      title: "uploads your library",
+      text: "Versions up to 1.2.0 upload your library to a server its developer doesn't name.",
+      fixedIn: "1.2.1",
+      url: "https://zoteroplugins.org/p/demo",
+      publishedAt: "2026-11-09T00:00:00Z",
+    };
+    expect(Advisory.safeParse(ok).success).toBe(true);
+    expect(Advisory.safeParse({ ...ok, severity: "info" }).success).toBe(false);
+    expect(Advisory.safeParse({ ...ok, id: "CVE-1" }).success).toBe(false);
+  });
+});

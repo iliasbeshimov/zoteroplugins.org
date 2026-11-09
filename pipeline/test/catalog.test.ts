@@ -4,6 +4,7 @@ import {
   buildCatalog,
   type CatalogSources,
   catalogEntry,
+  previousReleases,
   serializeCatalog,
 } from "../src/profile/catalog.ts";
 import { serializeRatings } from "../src/profile/ratings.ts";
@@ -172,12 +173,12 @@ describe("catalogEntry", () => {
       profile({ check: { result: "different-file", version: "1.3.0", label: "high-concern" } }),
       sources(),
     );
-    expect(worse?.update).toEqual({ version: "1.3.0", grade: "C" });
+    expect(worse?.update).toEqual({ version: "1.3.0", grade: "C", sha256: null });
     const unknown = catalogEntry(
       profile({ check: { result: "different-file", version: "1.3.0", label: null } }),
       sources(),
     );
-    expect(unknown?.update).toEqual({ version: "1.3.0", grade: "–" });
+    expect(unknown?.update).toEqual({ version: "1.3.0", grade: "–", sha256: null });
     const same = catalogEntry(
       profile({ check: { result: "same-file", version: "1.2.0", label: null } }),
       sources(),
@@ -309,5 +310,55 @@ describe("ratings.json", () => {
     expect(lines.length).toBe(4);
     expect(lines[1]).toMatch(/^"notero":/);
     expect(PublicRatings.parse(JSON.parse(text))).toEqual(r);
+  });
+});
+
+describe("previousReleases", () => {
+  const doc = (
+    version: string,
+    o: { label?: string | null; prerelease?: boolean; sha?: string | null; max?: string } = {},
+  ) =>
+    ({
+      version,
+      prerelease: o.prerelease ?? false,
+      asset: {
+        name: `demo-${version}.xpi`,
+        url: `https://github.com/o/demo/releases/download/v${version}/demo-${version}.xpi`,
+        sha256: o.sha === undefined ? "a".repeat(64) : o.sha,
+      },
+      manifest: { strictMinVersion: "7.0", strictMaxVersion: o.max ?? "10.*" },
+      trustCard: o.label === null ? null : { overall: { label: o.label ?? "low-concern" } },
+    }) as unknown as Release;
+
+  it("keeps up to three finished, analysed releases older than the listed one, newest first", () => {
+    const prev = previousReleases(
+      [
+        doc("1.0.0"),
+        doc("1.2.0"),
+        doc("1.1.0", { label: "review-details" }),
+        doc("0.9.0"),
+        doc("1.1.5-beta.1", { prerelease: true }),
+        doc("1.1.9", { sha: null }),
+        doc("1.1.8", { label: null }),
+        doc("1.3.0"),
+      ],
+      "1.2.0",
+    );
+    expect(prev.map((p) => p.version)).toEqual(["1.1.0", "1.0.0", "0.9.0"]);
+    expect(prev[0]?.grade).toBe("B");
+    expect(prev[1]?.grade).toBe("A");
+    expect(prev[0]?.file).toMatchObject({
+      name: "demo-1.1.0.xpi",
+      sha256: "a".repeat(64),
+      min: "7.0",
+      max: "10.*",
+      supports: [7, 8, 9, 10],
+    });
+  });
+
+  it("takes a version's first document, so its own file wins over other builds", () => {
+    const own = doc("1.0.0");
+    const other = { ...doc("1.0.0"), asset: { ...doc("1.0.0").asset, name: "demo-z7.xpi" } };
+    expect(previousReleases([own, other as Release], "2.0.0")[0]?.file.name).toBe("demo-1.0.0.xpi");
   });
 });

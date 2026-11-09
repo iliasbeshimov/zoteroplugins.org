@@ -12,6 +12,7 @@ import {
   PublicRatings,
   type Release,
 } from "@atlas/schema";
+import { compareVersions } from "../census/compat.ts";
 import { paths } from "../paths.ts";
 import { RULES_VERSION } from "./score.ts";
 
@@ -36,6 +37,52 @@ export interface CatalogSources {
   release: (file: string) => Release | null;
   /** Published ratings by slug (data/generated/ratings.json, fetched by `atlas ratings`). */
   ratings?: PublicRatings["plugins"];
+  /** The release documents of a plugin's analysed versions (data/generated/<slug>/<version>.json). */
+  releasesOf?: (slug: string) => Release[];
+}
+
+/** How many earlier releases a catalogue row carries for Atlas to go back to. */
+const PREVIOUS = 3;
+const MAJORS_NOW = [7, 8, 9, 10, 11];
+
+/** Zotero majors a manifest range reaches, read literally (Atlas compares the exact version). */
+function majorsOf(min: string | null, max: string | null): number[] {
+  return MAJORS_NOW.filter(
+    (m) =>
+      compareVersions(min ?? "0", `${m}.99999`) <= 0 && compareVersions(max ?? "*", `${m}.0`) >= 0,
+  );
+}
+
+/** Up to three earlier, finished releases we analysed, newest first, each with its grade then. */
+export function previousReleases(
+  docs: Release[],
+  current: string,
+): NonNullable<CatalogEntry["previous"]> {
+  const byVersion = new Map<string, Release>();
+  for (const d of docs) {
+    if (d.prerelease || !d.asset?.sha256 || !d.trustCard) continue;
+    if (compareVersions(d.version, current) >= 0) continue;
+    if (!byVersion.has(d.version)) byVersion.set(d.version, d);
+  }
+  return [...byVersion.values()]
+    .sort((a, b) => compareVersions(b.version, a.version))
+    .slice(0, PREVIOUS)
+    .map((d) => {
+      const min = d.manifest.strictMinVersion ?? null;
+      const max = d.manifest.strictMaxVersion ?? null;
+      return {
+        version: d.version,
+        grade: GRADE_OF_LABEL[d.trustCard?.overall.label ?? ""] ?? ("–" as const),
+        file: {
+          name: d.asset.name,
+          url: d.asset.url,
+          sha256: d.asset.sha256,
+          supports: majorsOf(min, max),
+          min,
+          max,
+        },
+      };
+    });
 }
 
 const GRADE_OF_LABEL: Record<string, CatalogGrade> = {
@@ -83,7 +130,11 @@ export function catalogEntry(p: PluginProfile, src: CatalogSources): CatalogEntr
   const check = inst.updates?.check;
   const update =
     check?.result === "different-file"
-      ? { version: check.version, grade: GRADE_OF_LABEL[check.label ?? ""] ?? ("–" as const) }
+      ? {
+          version: check.version,
+          grade: GRADE_OF_LABEL[check.label ?? ""] ?? ("–" as const),
+          sha256: check.sha256 ?? null,
+        }
       : null;
   const need = req?.apiKey.need;
   const tested = p.trust?.tested;
@@ -119,6 +170,7 @@ export function catalogEntry(p: PluginProfile, src: CatalogSources): CatalogEntr
     maintenance: p.maintenance.status,
     lastReleaseAt: p.maintenance.lastReleaseAt,
     docsChineseOnly: p.languages.chineseOnlyDocs,
+    previous: previousReleases(src.releasesOf?.(p.slug) ?? [], inst.version),
     ratings: ratingsOf(src.ratings?.[p.slug], inst.version),
   };
 }
@@ -208,11 +260,35 @@ export async function loadCatalogSources(profiles: PluginProfile[]): Promise<Cat
       if (!releases.has(b.releaseFile))
         releases.set(b.releaseFile, await readJson<Release>(join(paths.generated, b.releaseFile)));
   const ratings = PublicRatings.safeParse(await readJson(RATINGS_FILE));
+  // Each plugin's analysed versions, for the earlier releases Atlas can go back to.
+  const versions = new Map<string, Release[]>();
+  for (const p of profiles) {
+    if (!p.install) continue;
+    let files: string[] = [];
+    try {
+      files = await readdir(join(paths.generated, p.slug));
+    } catch {
+      files = [];
+    }
+    const own: Release[] = [];
+    const other: Release[] = [];
+    for (const f of files.sort()) {
+      if (!f.endsWith(".json") || f === "profile.json") continue;
+      const doc =
+        releases.get(`${p.slug}/${f}`) ??
+        (await readJson<Release>(join(paths.generated, p.slug, f)));
+      if (!doc?.version || !doc.asset) continue;
+      // A version's own document (4.0.3.json) before other builds of it.
+      (f === `${doc.version}.json` ? own : other).push(doc);
+    }
+    versions.set(p.slug, [...own, ...other]);
+  }
   return {
     summaries,
     requirements,
     release: (file) => releases.get(file) ?? null,
     ratings: ratings.success ? ratings.data.plugins : {},
+    releasesOf: (slug) => versions.get(slug) ?? [],
   };
 }
 

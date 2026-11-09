@@ -282,6 +282,18 @@
                       "C",
                       "–"
                     ]
+                  },
+                  "sha256": {
+                    "description": "That file's SHA-256 once downloaded; absent in catalogues written before Atlas 1.0",
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
                   }
                 },
                 "required": [
@@ -400,6 +412,91 @@
           },
           "docsChineseOnly": {
             "type": "boolean"
+          },
+          "previous": {
+            "description": "Up to three earlier releases we analysed, newest first: what Atlas can go back to, and the grade an update is compared with. Absent in catalogues written before Atlas 1.0",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "version": {
+                  "type": "string"
+                },
+                "grade": {
+                  "type": "string",
+                  "enum": [
+                    "A+",
+                    "A",
+                    "B",
+                    "C",
+                    "–"
+                  ],
+                  "description": "Its grade when we checked it (A at most: live tests are of the listed version)"
+                },
+                "file": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "The release file's name"
+                    },
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "The GitHub release asset"
+                    },
+                    "sha256": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "description": "The file we analysed; the plugin installs only a file with this hash"
+                    },
+                    "supports": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "description": "Zotero majors its manifest range covers"
+                    },
+                    "min": {
+                      "description": "strict_min_version, compared the way Zotero does",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "max": {
+                      "description": "strict_max_version",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "url",
+                    "sha256",
+                    "supports",
+                    "min",
+                    "max"
+                  ]
+                }
+              },
+              "required": [
+                "version",
+                "grade",
+                "file"
+              ]
+            }
           },
           "ratings": {
             "description": "Published ratings from Zotero Atlas and zoteroplugins.org; never part of the grade. Absent in catalogues written before ratings",
