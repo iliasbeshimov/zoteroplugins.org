@@ -539,6 +539,7 @@ describe("batched GitHub queries", () => {
               licenseInfo: null,
               repositoryTopics: { nodes: [] },
               defaultBranchRef: null,
+              listed: { totalCount: 270 },
               releases: {
                 totalCount: 270,
                 pageInfo: { hasNextPage: false, endCursor: null },

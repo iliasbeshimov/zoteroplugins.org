@@ -14,7 +14,7 @@ import type { CensusRow } from "./run.ts";
 export const TEMPLATES = ["windingwind/zotero-plugin-template"];
 
 /** A history longer than this isn't walked: the plugin keeps GitHub's count, bots aside. */
-const MAX_COMMIT_PAGES = 30;
+const MAX_COMMIT_PAGES = 50;
 const MAX_LIST_PAGES = 5;
 const MAX_AHEAD_PAGES = 10;
 
@@ -41,7 +41,8 @@ export function isBot(who: {
     who.type === "Bot" ||
     /\[bot\]$/i.test(who.login ?? "") ||
     /\[bot\]/i.test(who.name ?? "") ||
-    /\[bot\]@|dependabot|renovate|github-actions/i.test(who.email ?? "")
+    /^actions-user$/i.test(who.login ?? "") ||
+    /\[bot\]@|dependabot|renovate|github-actions|^action@github\.com$/i.test(who.email ?? "")
   );
 }
 
@@ -272,7 +273,11 @@ export async function countContributors(
     } catch (error) {
       log(`  contributors: ${row.repo}: ${(error as Error).message.slice(0, 120)}`);
     }
-    row.contributors = own ? own.size : (list?.people ?? null);
+    const people = own ? own.size : (list?.people ?? null);
+    // Someone published the plugin even when no commit names them: a fork released from another
+    // branch has none ahead of its parent, and GitHub's list is empty when the commits carry no
+    // usable email.
+    row.contributors = people === null ? null : Math.max(people, 1);
   });
   log(`  ${forks} forks and ${copies} copies of another history counted by their own commits`);
 }

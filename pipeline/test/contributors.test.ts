@@ -12,7 +12,7 @@ import {
   type RepoFacts,
 } from "../src/census/contributors.ts";
 import type { RepoFull } from "../src/census/metadata.ts";
-import { isManifestOnly } from "../src/census/metadata.ts";
+import { isManifestOnly, listedReleases } from "../src/census/metadata.ts";
 import type { CensusRow } from "../src/census/run.ts";
 import { GitHub, type RestResponse } from "../src/net/github.ts";
 import { DiskCache } from "../src/net/http.ts";
@@ -64,6 +64,12 @@ describe("contributors: who committed to the plugin", () => {
             email: "41898282+github-actions[bot]@users.noreply.github.com",
           },
         },
+      },
+      // A version bump pushed by a workflow (wwsh123/zotero-zotadata).
+      {
+        sha: "f",
+        author: { login: "actions-user" },
+        commit: { author: { name: "GitHub Action", email: "action@github.com" } },
       },
     ]);
     expect([...who].sort()).toEqual(["@alice", "bob@example.org"]);
@@ -160,7 +166,7 @@ describe("contributors: who committed to the plugin", () => {
     expect(asked).toHaveLength(1);
   });
 
-  it("sets each plugin's count: fork, copy, and an ordinary repository with a bot", async () => {
+  it("sets each plugin's count: fork, copy, an ordinary repository with a bot, never 0", async () => {
     const templateList = TEMPLATE_PEOPLE.map(user);
     const { gh } = fakeRest({
       "/repos/windingwind/zotero-plugin-template": { created_at: "2022-01-01T00:00:00Z" },
@@ -187,6 +193,14 @@ describe("contributors: who committed to the plugin", () => {
         commit("t2", "windingwind"),
         commit("t1", "northword"),
       ],
+      // A fork released from another branch: nothing ahead of its parent on its default branch.
+      "/repos/234pk/gene-search/contributors?per_page=100&anon=true": templateList,
+      "/repos/windingwind/zotero-plugin-template/compare/main...234pk%3Amain?per_page=100&page=1": {
+        ahead_by: 0,
+        commits: [],
+      },
+      // Commits without a usable email: GitHub's list comes back empty.
+      "/repos/jwingnut/zotero-batch-open/contributors?per_page=100&anon=true": [],
       // Ordinary: two people and dependabot.
       "/repos/yhmtsai/KeepZotero/contributors?per_page=100&anon=true": [
         user("yhmtsai"),
@@ -205,6 +219,8 @@ describe("contributors: who committed to the plugin", () => {
       ),
       row("hyfaust/zotero-roam", "2026-05-01T00:00:00Z"),
       row("yhmtsai/KeepZotero", "2022-06-01T00:00:00Z"),
+      row("234pk/gene-search", "2025-11-18T00:00:00Z", true, "windingwind/zotero-plugin-template"),
+      row("jwingnut/zotero-batch-open", "2026-09-03T00:00:00Z"),
     ];
     const full = new Map<string, RepoFull | null>([
       [
@@ -215,9 +231,18 @@ describe("contributors: who committed to the plugin", () => {
           parentDefaultBranch: "main",
         } as RepoFull,
       ],
+      [
+        "234pk/gene-search",
+        {
+          nameWithOwner: "234pk/gene-search",
+          defaultBranch: "main",
+          parentDefaultBranch: "main",
+        } as RepoFull,
+      ],
     ]);
     await countContributors(gh, rows, full, () => {});
-    expect(rows.map((r) => r.contributors)).toEqual([1, 1, 2]);
+    // Someone published each of them, so never 0.
+    expect(rows.map((r) => r.contributors)).toEqual([1, 1, 2, 1, 1]);
   });
 });
 
@@ -282,8 +307,10 @@ describe("releases that aren't versions", () => {
                   licenseInfo: null,
                   repositoryTopics: { nodes: [] },
                   defaultBranchRef: { name: "main", target: {} },
+                  // Ordered, GitHub also returns a release whose tag was deleted; its list doesn't.
+                  listed: { totalCount: 3 },
                   releases: {
-                    totalCount: 3,
+                    totalCount: 4,
                     pageInfo: { hasNextPage: true, endCursor: "c" },
                     nodes: [rel("v1.0.8", "p.xpi"), rel("v1.0.7", "p.xpi")],
                   },
@@ -299,6 +326,11 @@ describe("releases that aren't versions", () => {
     expect(repo?.totalXpiDownloads).toBe(10);
     expect(repo?.defaultBranch).toBe("main");
     expect(repo?.parentDefaultBranch).toBe("main");
+  });
+
+  it("counts the releases GitHub lists, past its 1,000 cap too", () => {
+    expect(listedReleases(15, 32)).toBe(15);
+    expect(listedReleases(1000, 1042)).toBe(1042);
   });
 });
 

@@ -162,6 +162,7 @@ const fullFields = (releases: number) => `
   homepageUrl parent { nameWithOwner defaultBranchRef { name } } licenseInfo { spdxId }
   repositoryTopics(first: 20) { nodes { topic { name } } }
   defaultBranchRef { name target { ... on Commit { committedDate history { totalCount } } } }
+  listed: releases { totalCount }
   releases(first: ${releases}, orderBy: {field: CREATED_AT, direction: DESC}) {
     totalCount pageInfo { hasNextPage endCursor }
     nodes { tagName publishedAt isPrerelease isDraft
@@ -194,12 +195,21 @@ interface FullRaw {
     name?: string;
     target: { committedDate?: string; history?: { totalCount: number } };
   } | null;
+  listed: { totalCount: number };
   releases: {
     totalCount: number;
     pageInfo: { hasNextPage: boolean; endCursor: string | null };
     nodes: (ReleaseRaw | null)[];
   };
 }
+
+/**
+ * The releases GitHub lists. Ordered, the connection also returns releases whose tag was deleted,
+ * which GitHub's page and count leave out (dralkh/seerai: 15 listed, 32 ordered); unordered, the
+ * count stops at 1,000 (retorquere/zotero-better-bibtex has more).
+ */
+export const listedReleases = (listed: number, ordered: number) =>
+  listed < 1000 ? listed : ordered;
 
 const xpiDownloads = (releases: { releaseAssets: { nodes: (AssetInfo | null)[] } }[]) =>
   releases.reduce(
@@ -302,7 +312,10 @@ export async function fetchFull(
       lastCommitAt: r.defaultBranchRef?.target.committedDate ?? null,
       commitCount: r.defaultBranchRef?.target.history?.totalCount ?? null,
       // Versions: the template's update-manifest release isn't one.
-      releaseCount: r.releases.totalCount - manifestOnly,
+      releaseCount: Math.max(
+        0,
+        listedReleases(r.listed.totalCount, r.releases.totalCount) - manifestOnly,
+      ),
       releases: releases.map((rel) => ({
         tag: rel.tagName,
         publishedAt: rel.publishedAt,
