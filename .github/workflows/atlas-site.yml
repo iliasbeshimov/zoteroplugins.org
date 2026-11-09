@@ -6,7 +6,7 @@ name: zoteroatlas.com
 on:
   push:
     branches: [main]
-    paths: ["zotero-atlas/site/**", "zotero-atlas/stamp_site.py"]
+    paths: ["zotero-atlas/site/**", "zotero-atlas/stamp_site.py", "zotero-atlas/check_site_release.py"]
   workflow_dispatch:
 
 permissions:
@@ -41,6 +41,12 @@ jobs:
           if ! git diff --quiet -- zotero-atlas/site; then
             echo "::warning::Asset stamps were stale in the commit; deploying the re-stamped pages. Run zotero-atlas/stamp_site.py before committing."
           fi
+
+      - name: Check the .xpi matches the latest release
+        if: env.SKIP != '1'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 zotero-atlas/check_site_release.py
 
       - name: Deploy to Cloudflare Pages
         if: env.SKIP != '1'
