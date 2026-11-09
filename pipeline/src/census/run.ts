@@ -7,15 +7,9 @@ import { paths } from "../paths.ts";
 import { submittedRepos } from "../submit/records.ts";
 import { detectZoteroVersions } from "../zotero-version.ts";
 import { newestRelease, supportedMajors, supportsVersion, type ZoteroVersions } from "./compat.ts";
+import { countContributors } from "./contributors.ts";
 import { toCsv } from "./csv.ts";
-import {
-  fetchContributors,
-  fetchFull,
-  fetchLight,
-  isXpi,
-  type ReleaseInfo,
-  type RepoFull,
-} from "./metadata.ts";
+import { fetchFull, fetchLight, isXpi, type ReleaseInfo, type RepoFull } from "./metadata.ts";
 import { buildReport } from "./report.ts";
 import {
   curatedLists,
@@ -55,6 +49,7 @@ export interface CensusRow {
   newFind: boolean;
   stars: number | null;
   forks: number | null;
+  /** People who committed to the plugin: no bots, nor a fork's parent's or a copied template's authors. */
   contributors: number | null;
   commits: number | null;
   totalXpiDownloads: number | null;
@@ -454,10 +449,12 @@ export async function measureRepos(
   );
 
   log("Counting contributors for confirmed plugins");
-  const plugins = rows.filter((r) => r.verdict.startsWith("zotero-plugin"));
-  await mapLimit(plugins, 8, async (row) => {
-    row.contributors = await fetchContributors(gh, row.repo);
-  });
+  await countContributors(
+    gh,
+    rows.filter((r) => r.verdict.startsWith("zotero-plugin")),
+    full,
+    log,
+  );
   return rows;
 }
 

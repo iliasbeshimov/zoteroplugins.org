@@ -113,17 +113,24 @@ export class GitHub {
   }
 
   /**
-   * GraphQL call, cached by query text for `maxAgeMs`. Returns `data` even when some aliases fail
-   * (GitHub reports missing repositories as per-alias errors). Only answers whose errors are all
-   * NOT_FOUND are cached: any other error means GitHub dropped part of the answer.
+   * GraphQL call, cached by query text. Returns `data` even when some aliases fail (GitHub reports
+   * missing repositories as per-alias errors). Only answers whose errors are all NOT_FOUND are
+   * cached: any other error means GitHub dropped part of the answer.
+   *
+   * An answer is reused only by the workflow run that fetched it (a re-run of a failed job keeps
+   * its run id), and locally for an hour. A later run reusing it would publish GitHub as it was
+   * hours before, next to fresher facts found elsewhere: a release seen at its update address, but
+   * a last-release date from before it.
    */
   async graphql<T>(
     query: string,
-    maxAgeMs = 20 * 60 * 60 * 1000,
+    maxAgeMs = graphqlRunId() ? 20 * 60 * 60 * 1000 : 60 * 60 * 1000,
   ): Promise<{ data: T | null; errors: GraphqlError[] }> {
     const key = `graphql:${query}`;
-    const cached = await this.cache.get<{ data: T | null; errors: GraphqlError[] }>(key, maxAgeMs);
-    if (cached) return cached;
+    const runId = graphqlRunId();
+    const cached = await this.cache.get<CachedGraphql<T>>(key, maxAgeMs);
+    if (cached && (cached.runId ?? null) === runId)
+      return { data: cached.data, errors: cached.errors };
     const res = await fetchWithRetry(`${API}/graphql`, {
       method: "POST",
       headers: this.headers({ "content-type": "application/json" }),
@@ -132,10 +139,21 @@ export class GitHub {
     if (!res.ok) throw new Error(`GraphQL HTTP ${res.status}: ${(await res.text()).slice(0, 300)}`);
     const body = (await res.json()) as { data: T | null; errors?: GraphqlError[] };
     const result = { data: body.data, errors: body.errors ?? [] };
-    if (body.data && partialErrors(result.errors).length === 0) await this.cache.set(key, result);
+    if (body.data && partialErrors(result.errors).length === 0)
+      await this.cache.set<CachedGraphql<T>>(key, { ...result, runId });
     return result;
   }
 }
+
+interface CachedGraphql<T> {
+  data: T | null;
+  errors: GraphqlError[];
+  /** The workflow run that fetched it; null outside Actions. Absent in entries from before. */
+  runId?: string | null;
+}
+
+/** The current GitHub Actions run, read per call so tests can set it. */
+const graphqlRunId = (): string | null => process.env.GITHUB_RUN_ID || null;
 
 export interface GraphqlError {
   message: string;

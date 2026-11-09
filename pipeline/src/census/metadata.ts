@@ -1,4 +1,4 @@
-import { type GitHub, lastPage, partialErrors } from "../net/github.ts";
+import { type GitHub, partialErrors } from "../net/github.ts";
 
 /**
  * GitHub metadata via batched GraphQL (GitHub resolves renamed repos to their current name).
@@ -35,6 +35,9 @@ export interface RepoFull {
   forks: number;
   isFork: boolean;
   parent: string | null;
+  /** Branch names, for comparing a fork with its parent. */
+  defaultBranch: string | null;
+  parentDefaultBranch: string | null;
   archived: boolean;
   createdAt: string;
   pushedAt: string | null;
@@ -50,6 +53,17 @@ export interface RepoFull {
 }
 
 const isXpi = (name: string) => name.toLowerCase().endsWith(".xpi");
+
+/**
+ * A release that carries no plugin file, only update manifests: the "release" tag that
+ * zotero-plugin-template's workflow keeps update.json on. A place for Zotero to look, not a version.
+ */
+export function isManifestOnly(tag: string, assetNames: string[]): boolean {
+  if (assetNames.some(isXpi)) return false;
+  if (tag === "release") return true;
+  return assetNames.length > 0 && assetNames.every((n) => /^update[\w.-]*\.(json|rdf)$/i.test(n));
+}
+
 /** GraphQL connections can contain null entries (e.g. assets GitHub can't resolve). */
 const present = <T>(nodes: (T | null)[] | null | undefined): T[] =>
   (nodes ?? []).filter((n): n is T => n !== null);
@@ -145,9 +159,9 @@ export async function fetchLight(
 const ASSET_FIELDS = "name size downloadCount updatedAt downloadUrl";
 const fullFields = (releases: number) => `
   nameWithOwner url stargazerCount forkCount isFork isArchived pushedAt createdAt description
-  homepageUrl parent { nameWithOwner } licenseInfo { spdxId }
+  homepageUrl parent { nameWithOwner defaultBranchRef { name } } licenseInfo { spdxId }
   repositoryTopics(first: 20) { nodes { topic { name } } }
-  defaultBranchRef { target { ... on Commit { committedDate history { totalCount } } } }
+  defaultBranchRef { name target { ... on Commit { committedDate history { totalCount } } } }
   releases(first: ${releases}, orderBy: {field: CREATED_AT, direction: DESC}) {
     totalCount pageInfo { hasNextPage endCursor }
     nodes { tagName publishedAt isPrerelease isDraft
@@ -173,10 +187,13 @@ interface FullRaw {
   createdAt: string;
   description: string | null;
   homepageUrl: string | null;
-  parent: { nameWithOwner: string } | null;
+  parent: { nameWithOwner: string; defaultBranchRef?: { name: string } | null } | null;
   licenseInfo: { spdxId: string } | null;
   repositoryTopics: { nodes: ({ topic: { name: string } } | null)[] };
-  defaultBranchRef: { target: { committedDate?: string; history?: { totalCount: number } } } | null;
+  defaultBranchRef: {
+    name?: string;
+    target: { committedDate?: string; history?: { totalCount: number } };
+  } | null;
   releases: {
     totalCount: number;
     pageInfo: { hasNextPage: boolean; endCursor: string | null };
@@ -198,29 +215,52 @@ interface ReleasePage {
   repository: {
     releases: {
       pageInfo: { hasNextPage: boolean; endCursor: string | null };
-      nodes: ({ releaseAssets: { nodes: (AssetInfo | null)[] } } | null)[];
+      nodes: ({
+        tagName: string;
+        isDraft: boolean;
+        releaseAssets: { nodes: (AssetInfo | null)[] };
+      } | null)[];
     };
   } | null;
 }
 
-/** Remaining release pages, for lifetime download totals only. */
-async function olderReleaseDownloads(gh: GitHub, nwo: string, cursor: string): Promise<number> {
+const manifestOnlyCount = (
+  releases: { tagName: string; isDraft: boolean; releaseAssets: { nodes: (AssetInfo | null)[] } }[],
+) =>
+  releases.filter(
+    (r) =>
+      !r.isDraft &&
+      isManifestOnly(
+        r.tagName,
+        present(r.releaseAssets.nodes).map((a) => a.name),
+      ),
+  ).length;
+
+/** Remaining release pages: lifetime download totals, and releases that aren't versions. */
+async function olderReleases(
+  gh: GitHub,
+  nwo: string,
+  cursor: string,
+): Promise<{ downloads: number; manifestOnly: number }> {
   const [owner, name] = nwo.split("/");
-  let total = 0;
+  let downloads = 0;
+  let manifestOnly = 0;
   let after: string | null = cursor;
   while (after) {
     const res: { data: ReleasePage | null } = await gh.graphql<ReleasePage>(
       `query { repository(owner: ${lit(owner ?? "")}, name: ${lit(name ?? "")}) {
         releases(first: 100, after: ${lit(after)}, orderBy: {field: CREATED_AT, direction: DESC}) {
           pageInfo { hasNextPage endCursor }
-          nodes { releaseAssets(first: 20) { nodes { ${ASSET_FIELDS} } } } } } }`,
+          nodes { tagName isDraft releaseAssets(first: 20) { nodes { ${ASSET_FIELDS} } } } } } }`,
     );
     const page = res.data?.repository?.releases;
     if (!page) break;
-    total += xpiDownloads(present(page.nodes));
+    const nodes = present(page.nodes);
+    downloads += xpiDownloads(nodes.filter((r) => !r.isDraft));
+    manifestOnly += manifestOnlyCount(nodes);
     after = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null;
   }
-  return total;
+  return { downloads, manifestOnly };
 }
 
 export async function fetchFull(
@@ -237,12 +277,11 @@ export async function fetchFull(
     }
     const releases = present(r.releases.nodes).filter((rel) => !rel.isDraft);
     let totalXpiDownloads = xpiDownloads(releases);
+    let manifestOnly = manifestOnlyCount(releases);
     if (r.releases.pageInfo.hasNextPage && r.releases.pageInfo.endCursor) {
-      totalXpiDownloads += await olderReleaseDownloads(
-        gh,
-        r.nameWithOwner,
-        r.releases.pageInfo.endCursor,
-      );
+      const older = await olderReleases(gh, r.nameWithOwner, r.releases.pageInfo.endCursor);
+      totalXpiDownloads += older.downloads;
+      manifestOnly += older.manifestOnly;
     }
     out.set(key, {
       nameWithOwner: r.nameWithOwner,
@@ -251,6 +290,8 @@ export async function fetchFull(
       forks: r.forkCount,
       isFork: r.isFork,
       parent: r.parent?.nameWithOwner ?? null,
+      defaultBranch: r.defaultBranchRef?.name ?? null,
+      parentDefaultBranch: r.parent?.defaultBranchRef?.name ?? null,
       archived: r.isArchived,
       createdAt: r.createdAt,
       pushedAt: r.pushedAt,
@@ -260,7 +301,8 @@ export async function fetchFull(
       topics: present(r.repositoryTopics.nodes).map((n) => n.topic.name),
       lastCommitAt: r.defaultBranchRef?.target.committedDate ?? null,
       commitCount: r.defaultBranchRef?.target.history?.totalCount ?? null,
-      releaseCount: r.releases.totalCount,
+      // Versions: the template's update-manifest release isn't one.
+      releaseCount: r.releases.totalCount - manifestOnly,
       releases: releases.map((rel) => ({
         tag: rel.tagName,
         publishedAt: rel.publishedAt,
@@ -271,14 +313,6 @@ export async function fetchFull(
     });
   }
   return out;
-}
-
-/** Contributor count from the `last` page link at per_page=1 (anonymous contributors included). */
-export async function fetchContributors(gh: GitHub, nwo: string): Promise<number | null> {
-  const res = await gh.rest<unknown[]>(`/repos/${nwo}/contributors?per_page=1&anon=true`);
-  if (res.status === 204) return 0;
-  if (res.status !== 200 || !Array.isArray(res.data)) return null; // 403: history too large to list
-  return lastPage(res.link) ?? res.data.length;
 }
 
 export { isXpi };

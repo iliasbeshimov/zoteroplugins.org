@@ -21,7 +21,7 @@ import {
   supportsVersion,
   type ZoteroVersions,
 } from "../census/compat.ts";
-import type { CensusRow } from "../census/run.ts";
+import { type CensusRow, maintenanceOf } from "../census/run.ts";
 import type { XpiManifest } from "../census/xpi.ts";
 import { loadConfig, requireGithubToken } from "../config.ts";
 import { loadLibraryIndex } from "../libs/index.ts";
@@ -696,6 +696,74 @@ export function separateRecords(builds: Pick<Artifact, "file" | "isNew" | "doc">
 }
 
 /**
+ * The REST path of the GitHub release a download link belongs to (`…/releases/download/v1.0.8/x.xpi`
+ * or `…/releases/latest/download/x.xpi`); null for any other link.
+ */
+export function releaseApiPath(link: string): string | null {
+  const m = link.match(
+    /^https:\/\/github\.com\/([^/]+)\/([^/]+)\/releases\/(?:download\/([^/]+)|latest\/download)\//i,
+  );
+  if (!m) return null;
+  const repo = `${m[1]}/${m[2]}`;
+  if (!m[3]) return `/repos/${repo}/releases/latest`;
+  try {
+    return `/repos/${repo}/releases/tags/${encodeURIComponent(decodeURIComponent(m[3]))}`;
+  } catch {
+    return null;
+  }
+}
+
+/** When the GitHub release behind a download link was published. Offline, GitHub's cached answer. */
+async function releaseDateOf(link: string, ctx: Context): Promise<string | null> {
+  const path = releaseApiPath(link);
+  if (!path) return null;
+  const rel = ctx.offline
+    ? await cachedRest<RestRelease>(ctx.httpCache, path)
+    : (await ctx.gh.rest<RestRelease>(path)).data;
+  return rel?.published_at ?? null;
+}
+
+/**
+ * The census's maintenance facts, brought up to date with the release the card offers. One the
+ * census hadn't seen (found at the update address, the census reading GitHub before it came out)
+ * is the last release, not the one before it: the card must not offer v1.0.8 and call v1.0.7's
+ * date the last release.
+ */
+export function maintenanceFor(
+  row: Pick<
+    CensusRow,
+    "maintenance" | "latestReleaseAt" | "lastCommitAt" | "lastActivityAt" | "archived"
+  >,
+  offered: { publishedAt: string | null; prerelease: boolean } | null,
+  now: number,
+): {
+  status: CensusRow["maintenance"];
+  lastReleaseAt: string | null;
+  lastCommitAt: string | null;
+  lastActivityAt: string | null;
+} {
+  const base = {
+    status: row.maintenance,
+    lastReleaseAt: row.latestReleaseAt,
+    lastCommitAt: row.lastCommitAt,
+    lastActivityAt: row.lastActivityAt,
+  };
+  const at = offered && !offered.prerelease ? offered.publishedAt : null;
+  if (!at || Number.isNaN(Date.parse(at))) return base;
+  if (row.latestReleaseAt && Date.parse(at) <= Date.parse(row.latestReleaseAt)) return base;
+  const lastActivityAt =
+    row.lastActivityAt && Date.parse(row.lastActivityAt) >= Date.parse(at)
+      ? row.lastActivityAt
+      : at;
+  return {
+    ...base,
+    lastReleaseAt: at,
+    lastActivityAt,
+    status: maintenanceOf(lastActivityAt, row.archived ?? false, now),
+  };
+}
+
+/**
  * The update address belongs to the project (a release download or a file in its own GitHub
  * repository), serves a newer version than `lead`, and Zotero would accept the file.
  */
@@ -777,6 +845,17 @@ export function assemble(
   const artifacts = orderBuilds(g.artifacts, ctx.zv, g.update?.check);
   const primary = artifacts[0] ?? null;
   const primaryAsset = release?.assets.find((a) => a.name.toLowerCase().endsWith(".xpi")) ?? null;
+  // Only a release GitHub dates counts: a file at the update address that sits in the repository
+  // (raw.githubusercontent.com) carries the day we first saw it, not when it was published.
+  const githubDated =
+    primary?.doc.source !== "update-feed" || releaseApiPath(primary.doc.asset.url) !== null;
+  const maintenance = maintenanceFor(
+    row,
+    release && (primary || primaryAsset) && githubDated
+      ? { publishedAt: release.published_at, prerelease: release.prerelease }
+      : null,
+    Date.parse(ctx.now),
+  );
 
   const ui = primary ? uiLocales(primary.doc.files.map((f) => f.path)) : [];
 
@@ -944,9 +1023,9 @@ export function assemble(
       assetReplaced: art === primary && assetReplaced,
       ...(art === primary && manifestMismatch ? { manifestMismatch: true } : {}),
       maintenance: {
-        status: row.maintenance,
-        lastReleaseAt: row.latestReleaseAt,
-        lastCommitAt: row.lastCommitAt,
+        status: maintenance.status,
+        lastReleaseAt: maintenance.lastReleaseAt,
+        lastCommitAt: maintenance.lastCommitAt,
       },
       compatibility: compatOf(asXpiManifest(art.doc.manifest)),
       currentZotero: current.zoteroVersion,
@@ -1077,12 +1156,7 @@ export function assemble(
       releaseCount: row.releaseCount,
       createdAt: row.createdAt,
     },
-    maintenance: {
-      status: row.maintenance,
-      lastReleaseAt: row.latestReleaseAt,
-      lastCommitAt: row.lastCommitAt,
-      lastActivityAt: row.lastActivityAt,
-    },
+    maintenance,
     compatibility: {
       supports,
       // The headline build's range: the census reads the release's first file, which for
@@ -1342,7 +1416,9 @@ async function checkUpdates(
     const previous = known.get(sha256)?.doc;
     art.doc.source = "update-feed";
     art.doc.tag = null;
-    art.doc.publishedAt = previous?.publishedAt ?? ctx.now;
+    // A file on a GitHub release was published with it (the census may not have seen that release
+    // yet); a file elsewhere, on the day we first saw it.
+    art.doc.publishedAt = (await releaseDateOf(link, ctx)) ?? previous?.publishedAt ?? ctx.now;
     art.doc.asset.githubAssetId = null;
     art.doc.asset.uploadedAt = modified;
     // Same version as a release build but other bytes: keep both records.
