@@ -129,7 +129,7 @@
  "analysis": {
   "schemaVersion": 1,
   "analyzerVersion": "0.13.1",
-  "analyzedAt": "2026-11-03T21:27:11.131Z",
+  "analyzedAt": "2026-11-09T20:54:30.383Z",
   "input": {
    "slug": "tara",
    "version": "1.0.11",
@@ -256,6 +256,36 @@
    "hostsTableVersion": "2026.11.03"
   },
   "capabilities": [
+   {
+    "id": "changes-addons",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "529d28babfc3",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/tara.js",
+      "line": 4558,
+      "column": 26,
+      "snippet": "await installedAddon.disable();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/tara.js",
+      "line": 4560,
+      "column": 26,
+      "snippet": "await installedAddon.enable();",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "turns other add-ons off",
+      "turns other add-ons on"
+     ]
+    }
+   },
    {
     "id": "clipboard",
     "occurrences": 3,
@@ -572,7 +602,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-07T10:31:02.229Z",
+  "computedAt": "2026-11-09T20:54:30.383Z",
   "appliesTo": {
    "slug": "tara",
    "version": "1.0.11",
@@ -617,6 +647,12 @@
    "capabilities": {
     "badges": [
      {
+      "id": "changes-addons",
+      "label": "Changes other plugins",
+      "concern": "medium",
+      "detail": "Turns other plugins off or on"
+     },
+     {
       "id": "link-installs-addons",
       "label": "A zotero:// link (a web page can open one) can make it install add-ons without asking you",
       "concern": "medium",
@@ -648,6 +684,7 @@
     ],
     "concern": "medium",
     "drivers": [
+     "CAP-CHANGES-ADDONS",
      "CAP-MINOR",
      "CAP-LINK-INSTALL",
      "CAP-LINK-CODE"
@@ -695,6 +732,7 @@
     "capabilities"
    ],
    "reasons": [
+    "Changes other plugins",
     "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from zotero-plugin-toolkit)",
     "A zotero:// link can make it run code if you approve a prompt (from zotero-plugin-toolkit)"
    ]

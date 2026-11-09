@@ -4455,3 +4455,145 @@ describe("addresses held in a class field or a table of defaults", () => {
     expect(endpointOf(r)).toBeUndefined();
   });
 });
+
+describe("changing other add-ons (changes-addons)", () => {
+  const apis = (r: ScanOutput) => capIn(r, "changes-addons")?.details?.apis;
+
+  it("flags an install listener that holds other add-ons' downloads back", async () => {
+    const r = await scanFiles({
+      "bootstrap.js": `AddonManager.addInstallListener({
+        onDownloadEnded(install) { if (!isChecked(install)) { held.push(install); return false; } return true; },
+      });
+      async function release(install) { await install.install(); }`,
+    });
+    expect(apis(r)).toEqual(["holds back other add-ons' updates"]);
+    expect(r.card.capabilities).toContainEqual({ id: "changes-addons", concern: "medium" });
+    expect(r.card.drivers).toContain("CAP-CHANGES-ADDONS");
+  });
+
+  it("follows a listener object defined elsewhere, minified", async () => {
+    const r = await scanFiles({
+      "bootstrap.js": `const L={onDownloadEnded(e){return!1}};AddonManager.addInstallListener(L);`,
+    });
+    expect(apis(r)).toEqual(["holds back other add-ons' updates"]);
+  });
+
+  it("follows a handler into the same-file function it calls, and AddonManager through a helper", async () => {
+    const r = await scanFiles({
+      "bootstrap.js": `const ID = "fixture@example.org";
+        function addonManager() { try { return ChromeUtils.importESModule("resource://gre/modules/AddonManager.sys.mjs").AddonManager; } catch { return ChromeUtils.import("resource://gre/modules/AddonManager.jsm").AddonManager; } }
+        const installListener = { onDownloadEnded(inst) { try { return onUpdateDownloaded(inst); } catch (e) { return undefined; } }, onInstallEnded() {} };
+        function onUpdateDownloaded(inst) { if (inst.addon.id === ID) return undefined; return false; }
+        function startup() { const AM = addonManager(); AM.addInstallListener(installListener); }
+        const decide = { async off(id) { const addon = await addonManager().getAddonByID(id); if (!addon) return false; await addon.disable(); } };`,
+    });
+    expect(apis(r)).toEqual(["holds back other add-ons' updates", "turns other add-ons off"]);
+    // A helper that isn't the add-on manager is not it.
+    const plain = await scanFiles({
+      "bootstrap.js": `function timers() { return makeTimers(); }
+        async function f(id) { const t = await timers().getAddonByID(id); await t.disable(); }
+        const l = { onDownloadEnded(i) { return log(i); } }; function log(i) { return true; }
+        AddonManager.addInstallListener(l);`,
+    });
+    expect(capIn(plain, "changes-addons")).toBeUndefined();
+  });
+
+  it("ignores a listener that only watches", async () => {
+    const r = await scanFiles({
+      "bootstrap.js": `AddonManager.addInstallListener({ onDownloadEnded(install) { log(install.name); } });`,
+    });
+    expect(capIn(r, "changes-addons")).toBeUndefined();
+  });
+
+  it("flags disabling another add-on, and turning one on", async () => {
+    const r = await scanFiles({
+      "content/a.js": `async function turnOff(id) { const addon = await AddonManager.getAddonByID(id); await addon.disable(); }
+        async function back(id) { const a = await AddonManager.getAddonByID(id); a.userDisabled = false; }`,
+    });
+    expect(apis(r)).toEqual(["turns other add-ons off", "turns other add-ons on"]);
+  });
+
+  it("flags every add-on from a list, and a changed update setting", async () => {
+    const r = await scanFiles({
+      "content/a.js": `async function all() { for (const a of await AddonManager.getAllAddons()) { if (a.type === "extension") a.applyBackgroundUpdates = AddonManager.AUTOUPDATE_DISABLE; } }`,
+    });
+    expect(apis(r)).toEqual(["changes other add-ons' update setting"]);
+  });
+
+  it("ignores the add-on ID Zotero hands startup, and an ID the code sets to its own", async () => {
+    const own = {
+      "manifest.json": JSON.stringify({
+        manifest_version: 2,
+        name: "Fixture",
+        version: "1.0.0",
+        applications: { zotero: { id: "fixture@example.org" } },
+      }),
+    };
+    const startup = await scanFiles({
+      ...own,
+      "bootstrap.js": `async function startup({ id: id2 = ADDON_ID }) { const me = await AddonManager.getAddonByID(id2); me.applyBackgroundUpdates = AddonManager.AUTOUPDATE_DISABLE; }`,
+    });
+    expect(capIn(startup, "changes-addons")).toBeUndefined();
+    const named = await scanFiles({
+      ...own,
+      "bootstrap.js": `const PLUGIN_ID = "fixture@example.org";
+        AddonManager.getAddonByID(PLUGIN_ID).then(a => { a.applyBackgroundUpdates = AddonManager.AUTOUPDATE_DISABLE; });`,
+      "content/t.js": `const ZR = { id: "fixture@example.org" };
+        async function t() { const a = await AddonManager.getAddonByID(ZR.id); await a.disable(); }`,
+    });
+    expect(capIn(named, "changes-addons")).toBeUndefined();
+    const held = await scanFiles({
+      ...own,
+      "bootstrap.js": `async function startup({ id, version }) { ZR = { id, version }; }`,
+      "content/t.js": `async function t() { const a = await AddonManager.getAddonByID(ZR.id); await a.disable(); }`,
+    });
+    expect(capIn(held, "changes-addons")).toBeUndefined();
+    // Another function's own `id` parameter is some other add-on's.
+    const other = await scanFiles({
+      ...own,
+      "bootstrap.js": `async function startup({ id }) { log(id); }
+        async function turnOff(id) { const a = await AddonManager.getAddonByID(id); await a.disable(); }`,
+    });
+    expect(apis(other)).toEqual(["turns other add-ons off"]);
+  });
+
+  it("copies another add-on's on/off state when the value isn't a literal (restore from backup)", async () => {
+    const r = await scanFiles({
+      "content/a.js": `async function restore(saved) { const a = await AddonManager.getAddonByID(saved.id); a.userDisabled = saved.userDisabled; }`,
+    });
+    expect(apis(r)).toEqual(["turns other add-ons off or on"]);
+  });
+
+  it("looks only at the listener it is given", async () => {
+    const r = await scanFiles({
+      "content/a.js": `AddonManager.addAddonListener(this.watcher);
+        const watcher = { onInstalling: log };
+        AddonManager.addInstallListener({ onDownloadEnded(i) { return false; } });`,
+    });
+    expect(apis(r)).toEqual(["holds back other add-ons' updates"]);
+    const plain = await scanFiles({
+      "content/a.js": `const watcher = { onInstalling: log };
+        AddonManager.addAddonListener(watcher);
+        const mine = { onDownloadEnded(i) { return false; } };`,
+    });
+    expect(capIn(plain, "changes-addons")).toBeUndefined();
+  });
+
+  it("ignores a plugin that acts only on itself", async () => {
+    const r = await scanFiles({
+      "content/a.js": `async function selfOff() { const me = await AddonManager.getAddonByID("fixture@example.org"); await me.disable(); }
+          async function m2() { const x = await AddonManager.getAddonByID(config.addonID); x.disable(); x.applyBackgroundUpdates = 2; }`,
+      "manifest.json": JSON.stringify({
+        manifest_version: 2,
+        name: "Fixture",
+        version: "1.0.0",
+        applications: { zotero: { id: "fixture@example.org" } },
+      }),
+    });
+    expect(capIn(r, "changes-addons")).toBeUndefined();
+    const plain = await scanFiles({
+      "content/a.js": `const timer = makeTimer(); timer.disable(); button.enable();`,
+    });
+    expect(capIn(plain, "changes-addons")).toBeUndefined();
+  });
+});

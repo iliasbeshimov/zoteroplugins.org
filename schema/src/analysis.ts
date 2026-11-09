@@ -337,6 +337,7 @@ export const CapabilityId = z.enum([
   "remote-script", // a web script loaded into one of the plugin's own pages
   "remote-script-output", // pages the plugin generates load scripts from the web
   "installs-addons", // AddonManager installs
+  "changes-addons", // holds back, cancels, turns off or on, or changes the update setting of other add-ons
   "download-exec", // downloads a program, makes it executable and runs it
   "borrowed-identity", // signs in with another app's OAuth client ID
   "encrypted-code", // decrypts code shipped in the package and runs it

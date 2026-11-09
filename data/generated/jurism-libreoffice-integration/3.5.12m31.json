@@ -144,7 +144,7 @@
  "analysis": {
   "schemaVersion": 1,
   "analyzerVersion": "0.13.1",
-  "analyzedAt": "2026-11-03T21:27:11.131Z",
+  "analyzedAt": "2026-11-09T20:48:08.387Z",
   "input": {
    "slug": "jurism-libreoffice-integration",
    "version": "3.5.12m31",
@@ -288,6 +288,35 @@
    "hostsTableVersion": "2026.11.03"
   },
   "capabilities": [
+   {
+    "id": "changes-addons",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "fd06f6b34348",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "resource/install_check.jsm",
+      "line": 43,
+      "column": 20,
+      "snippet": "parentAddon.userDisabled = true;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "resource/install_check.jsm",
+      "line": 45,
+      "column": 20,
+      "snippet": "thisAddon.userDisabled = true;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "turns other add-ons off"
+     ]
+    }
+   },
    {
     "id": "filesystem",
     "occurrences": 5,
@@ -495,7 +524,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-07T10:31:02.229Z",
+  "computedAt": "2026-11-09T20:48:08.387Z",
   "appliesTo": {
    "slug": "jurism-libreoffice-integration",
    "version": "3.5.12m31",
@@ -540,6 +569,12 @@
    "capabilities": {
     "badges": [
      {
+      "id": "changes-addons",
+      "label": "Changes other plugins",
+      "concern": "medium",
+      "detail": "Turns other plugins off"
+     },
+     {
       "id": "process-launch",
       "label": "Launches programs on your computer",
       "concern": "medium",
@@ -558,6 +593,7 @@
     ],
     "concern": "medium",
     "drivers": [
+     "CAP-CHANGES-ADDONS",
      "CAP-MINOR",
      "CAP-PROCESS"
     ]
@@ -604,6 +640,7 @@
     "capabilities"
    ],
    "reasons": [
+    "Changes other plugins",
     "Launches programs on your computer"
    ]
   }

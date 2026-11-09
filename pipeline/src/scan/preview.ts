@@ -512,6 +512,9 @@ export function preview(
       const [asked, unasked] = INSTALL_RULE[c.id];
       rule = concern === "high" ? unasked : RANK[concern] >= RANK.medium ? asked : null;
     }
+    // Holds back, cancels, turns off or on, or changes the update setting of other add-ons.
+    // The same level for every plugin: the user's own add-ons change without a new file arriving.
+    else if (c.id === "changes-addons") [concern, rule] = ["medium", "CAP-CHANGES-ADDONS"];
     // Settings that aren't its own: the worst change (SETTINGS_CONCERN).
     else if (c.id === "changes-settings") {
       const entries = c.details?.settings ?? [];

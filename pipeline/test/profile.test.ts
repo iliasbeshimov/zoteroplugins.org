@@ -2468,3 +2468,19 @@ describe("untraced network code", () => {
     expect(card.overall.label).toBe("review-details");
   });
 });
+
+describe("badge wording for changing other plugins", () => {
+  it("is a medium concern that says what it does", () => {
+    const b = cardFor("", {
+      analysis: analyze(
+        `AddonManager.addInstallListener({ onDownloadEnded(i) { return false; } });
+         async function off(id) { const a = await AddonManager.getAddonByID(id); a.disable(); }`,
+      ),
+    }).facets.capabilities.badges.find((x) => x.id === "changes-addons");
+    expect(b).toMatchObject({
+      concern: "medium",
+      label: "Changes other plugins",
+      detail: "Holds back other plugins' updates, turns other plugins off",
+    });
+  });
+});

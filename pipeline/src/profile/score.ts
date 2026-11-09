@@ -109,6 +109,7 @@ export const CAPABILITY_LABEL: Record<string, string> = {
   "remote-script": "Its pages ask for web scripts, which Zotero blocks",
   "remote-script-output": "Pages it creates load scripts from the web",
   "installs-addons": "Installs other add-ons",
+  "changes-addons": "Changes other plugins",
   "download-exec": "Downloads and runs a program we haven't reviewed yet",
   "download-exec-pinned": "Downloads a program checked against a fixed fingerprint, and runs it",
   "download-exec-http": "Downloads a program over unencrypted http and runs it unchecked",
@@ -581,6 +582,23 @@ function badgeDetail(
     case "installs-addons":
     case "self-installs":
       return installDetail(d.installs ?? [], id === "self-installs");
+    case "changes-addons": {
+      // "turns other add-ons off" and "…on" read as one: off or on.
+      const kinds = (d.apis ?? []).filter(
+        (x) => !(x.endsWith("add-ons on") && d.apis?.some((y) => y.endsWith("add-ons off"))),
+      );
+      return kinds.length
+        ? upperFirst(
+            list(
+              kinds.map((x) =>
+                x.endsWith("add-ons off") && kinds.length < (d.apis?.length ?? 0)
+                  ? "turns other plugins off or on"
+                  : x.replaceAll("add-ons", "plugins"),
+              ),
+            ),
+          )
+        : undefined;
+    }
     case "browser-credentials":
       // Copied into a profile of a browser it starts, the cookies sign that browser in as you
       // (zotero-pdf-hand-catcher's Edge); read, they're the plugin's to use or send.

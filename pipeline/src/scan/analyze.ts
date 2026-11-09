@@ -900,6 +900,8 @@ class Collector {
   linkSource: Hit | null = null;
   /** Where it turns Zotero's automatic updates on for an add-on, and the function doing it. */
   autoUpdateSets: { hit: Hit; fn: string | null }[] = [];
+  /** Where it holds, cancels, turns off or on, or changes the update setting of other add-ons. */
+  addonChanges: { hit: Hit; kind: string; arg: string }[] = [];
   /** Changes to settings that aren't its own, and prefs.js defaults for Zotero's (C33). */
   settingsSites: SettingsSite[] = [];
   settingsDefaults: { hit: Hit; change: SettingsChange }[] = [];
@@ -4021,6 +4023,43 @@ function analyzeJs(
       )
         col.autoUpdateSets.push({ hit: hit(n), fn: callerName(anc) });
     }
+    // `addon.userDisabled = true`, `addon.applyBackgroundUpdates = …` on another add-on.
+    if (
+      n.type === "AssignmentExpression" &&
+      own(base + n.start) &&
+      /^(userDisabled|applyBackgroundUpdates)$/.test(nameOf(node(n.left)) ?? "")
+    ) {
+      const left = node(n.left);
+      const target = left?.type === "MemberExpression" ? chain(node(left.object)) : null;
+      const arg = target
+        ? addonReceiver(
+            code.slice(Math.max(0, n.start - 3000), n.start),
+            target,
+            managerNames(code),
+          )
+        : null;
+      // Turning updates on for the one add-on it names is the self-update setting above.
+      const at = hit(n);
+      const selfSetting =
+        arg !== "" &&
+        col.autoUpdateSets.some((u) => u.hit.file === at.file && u.hit.offset === at.offset);
+      if (arg !== null && !selfSetting) {
+        const value = node(n.right);
+        const text = value ? code.slice(value.start, value.end) : "";
+        col.addonChanges.push({
+          hit: hit(n),
+          kind:
+            nameOf(left) === "applyBackgroundUpdates"
+              ? ADDON_CHANGE.updates
+              : /^(false|!\s*1)$/.test(text)
+                ? ADDON_CHANGE.on
+                : /^(true|!\s*0)$/.test(text)
+                  ? ADDON_CHANGE.off
+                  : ADDON_CHANGE.sets,
+          arg,
+        });
+      }
+    }
     // Zotero's configuration or code changed in memory (C33): ZOTERO_CONFIG's service addresses,
     // the resolvers behind Find Available PDF. Putting a saved value back
     // (`= this.originalGetFileResolvers`) is the undo, not a change.
@@ -4679,6 +4718,31 @@ function analyzeJs(
             offTopicClick: !named && !!inner && offTopicClick(code, anc, inner),
             holder: fnNode ? holderOf(anc, fnNode, base) : null,
           });
+        }
+        // Other add-ons held back, cancelled, turned off or on: an install listener that returns
+        // false, `addon.disable()` on what AddonManager returned for another ID.
+        if (!isNew && own(base + n.start)) {
+          const method = c.split(".").at(-1) ?? "";
+          const target = c.includes(".") ? c.slice(0, c.lastIndexOf(".")) : "";
+          if (method === "addInstallListener" || method === "addAddonListener") {
+            const arg = args[0];
+            if (holdingHandlers(code, arg ? code.slice(arg.start, arg.end) : "") > 0)
+              col.addonChanges.push({ hit: hit(n), kind: ADDON_CHANGE.holds, arg: "" });
+          } else if (args.length === 0 && (method === "disable" || method === "enable")) {
+            const before = code.slice(Math.max(0, n.start - 3000), n.start);
+            const arg = addonReceiver(before, target, managerNames(code));
+            if (arg !== null)
+              col.addonChanges.push({
+                hit: hit(n),
+                kind: method === "disable" ? ADDON_CHANGE.off : ADDON_CHANGE.on,
+                arg,
+              });
+          } else if (method === "cancel" || method === "postpone") {
+            const before = code.slice(Math.max(0, n.start - 3000), n.start);
+            const arg = addonReceiver(before, target, managerNames(code), INSTALL_CALLS);
+            if (arg !== null)
+              col.addonChanges.push({ hit: hit(n), kind: ADDON_CHANGE.cancels, arg });
+          }
         }
         // Any receiver: an alias of IOUtils (`createGlobalProxy("IOUtils")`, zopilot) counts too.
         if (/(^|\.)setPermissions$/.test(c) && own(base + n.start)) {
@@ -10118,6 +10182,197 @@ function settingsChanges(col: Collector): { entries: SettingsEntry[]; hits: Hit[
   };
 }
 
+/** What a plugin does to other add-ons without installing them: how the scanner words each. */
+export const ADDON_CHANGE = {
+  holds: "holds back other add-ons' updates",
+  cancels: "cancels other add-ons' installs",
+  off: "turns other add-ons off",
+  on: "turns other add-ons on",
+  sets: "turns other add-ons off or on",
+  updates: "changes other add-ons' update setting",
+} as const;
+
+const INSTALL_HANDLER = /\b(onDownloadEnded|onDownloadStarted|onInstallStarted|onNewInstall)\b/g;
+const HOLD_BACK = /\breturn\s*(?:false|!\s*1)\b|\.(?:cancel|postpone)\s*\(/;
+/** Names that hold the add-on's own ID: acting on that add-on is the plugin looking after itself. */
+const OWN_ID_NAME = /\b(config\.addonID|ADDON_ID|addonID|this\.id|data\.id|rootURI)\b/;
+const ADDON_CALLS = String.raw`\.(?:getAddonByID|getAddonsByIDs|getAllAddons|getAddonsByTypes)\b`;
+const INSTALL_CALLS = String.raw`\.(?:getAllInstalls|getInstallsByTypes)\b`;
+
+let managerCache: { code: string; alt: string } | null = null;
+/**
+ * What names AddonManager in a file, as a regex alternation: `AddonManager` itself, a function
+ * that returns the module's export (`function addonManager() { return ChromeUtils
+ * .importESModule(".../AddonManager.sys.mjs").AddonManager }`, called as `addonManager()`), and
+ * names assigned from either (`const AM = addonManager()`).
+ */
+export function managerNames(code: string): string {
+  if (managerCache?.code === code) return managerCache.alt;
+  const alts = new Set(["AddonManager"]);
+  const fns = new Set<string>();
+  for (const m of code.matchAll(/\bfunction\s+([\w$]+)\s*\([^)]{0,40}\)\s*\{/g)) {
+    const body = braceBody(code, (m.index ?? 0) + m[0].length - 1);
+    if (/AddonManager\.(?:sys\.mjs|jsm)\b/.test(body) && /\breturn\b/.test(body))
+      fns.add(m[1] as string);
+  }
+  const esc = (x: string) => x.replaceAll("$", "\\$");
+  for (const f of fns) alts.add(`${esc(f)}\\(\\)`);
+  const from = [...alts].join("|");
+  for (const m of code.matchAll(
+    new RegExp(
+      String.raw`\b(?:const|let|var)\s+([\w$]+)\s*=\s*(?:await\s+)?(?:${from})\s*[;\n]`,
+      "g",
+    ),
+  ))
+    alts.add(esc(m[1] as string));
+  for (const m of code.matchAll(
+    /\b(?:const|let|var)\s+([\w$]+)\s*=\s*[^;]{0,120}?AddonManager\.(?:sys\.mjs|jsm)["'][^;]{0,40}?\.AddonManager\b/g,
+  ))
+    alts.add(esc(m[1] as string));
+  const alt = [...alts].join("|");
+  managerCache = { code, alt };
+  return alt;
+}
+
+/**
+ * The names the add-on's own ID goes by inside its lifecycle functions: `startup({ id })`,
+ * `startup({ id: id2 = ADDON_ID })`. Zotero passes the plugin's own ID there. `before` is the
+ * code ahead of the call.
+ */
+function lifecycleIds(before: string): Set<string> {
+  const names = new Set<string>();
+  const starts = [
+    ...before.matchAll(/\b(?:startup|install|shutdown|uninstall)\s*\(\s*\{([^}]{0,200})\}/g),
+  ];
+  const last = starts.at(-1);
+  const id = (last?.[1] ?? "").match(/(?:^|,)\s*id\s*(?::\s*([\w$]+))?/);
+  if (!last || !id) return names;
+  const name = id[1] ?? "id";
+  // Only until another function takes a parameter of that name (`turnOff(id)` for another add-on).
+  const rest = before.slice((last.index ?? 0) + last[0].length);
+  if (
+    !new RegExp(
+      String.raw`\(\s*(?:[\w$,\s]*[,\s])?${name.replaceAll("$", "\\$")}\b[^)]*\)\s*(?:=>|\{)`,
+    ).test(rest)
+  )
+    names.add(name);
+  return names;
+}
+
+/**
+ * Whether the add-on ID an expression names is the plugin's own, because a file assigns that
+ * name (`PLUGIN_ID = "own@id"`, `ZR = { id: "own@id" }`) the plugin's own ID.
+ */
+export function namesOwnAddon(arg: string, ownId: string, texts: string[]): boolean {
+  if (arg.includes(ownId)) return true;
+  const parts = arg.split(".");
+  const last = parts.at(-1) ?? "";
+  if (!/^[\w$]+$/.test(last)) return false;
+  const lit = `["'\x60]${ownId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["'\x60]`;
+  const res =
+    parts.length > 1
+      ? [
+          new RegExp(
+            String.raw`\b${parts[0]?.replaceAll("$", "\\$")}\b\s*[=:][^;]{0,600}?\bid\s*:\s*${lit}`,
+          ),
+          new RegExp(String.raw`\b${parts.slice(0, -1).join("\\.")}\.${last}\s*=\s*${lit}`),
+          // `ZR = { id, version, rootURI }` in startup, which Zotero hands the plugin's own ID.
+          ...(last === "id"
+            ? [new RegExp(String.raw`\b${parts[0]?.replaceAll("$", "\\$")}\s*=\s*\{\s*id\s*[,}]`)]
+            : []),
+        ]
+      : [new RegExp(String.raw`\b${last.replaceAll("$", "\\$")}\s*[:=]\s*${lit}`)];
+  return texts.some((t) => res.some((re) => re.test(t)));
+}
+
+/** The `{ … }` that starts at or after `from`, as text (braces are counted; strings aren't parsed). */
+function braceBody(code: string, from: number): string {
+  const open = code.indexOf("{", from);
+  if (open < 0) return "";
+  let depth = 0;
+  const end = Math.min(code.length, open + 6000);
+  for (let i = open; i < end; i++) {
+    if (code[i] === "{") depth++;
+    else if (code[i] === "}" && --depth === 0) return code.slice(open, i + 1);
+  }
+  return code.slice(open, end);
+}
+
+/**
+ * The handlers of an install listener that hold back or cancel installs and downloads:
+ * `AddonManager.addInstallListener({ onDownloadEnded(install) { … return false } })`. A listener
+ * passed by name may be defined elsewhere in the file, so every handler of those names counts.
+ */
+/** A handler that returns or calls a function of the same file that holds back (one level). */
+function callsHolder(code: string, body: string): boolean {
+  for (const m of body.matchAll(/\b([\w$]{3,})\s*\(/g)) {
+    const name = (m[1] as string).replaceAll("$", "\\$");
+    const def = code.match(
+      new RegExp(
+        String.raw`\b(?:function\s+${name}\s*\([^)]{0,80}\)|(?:const|let|var)\s+${name}\s*=\s*(?:async\s*)?\([^)]{0,80}\)\s*=>)\s*\{`,
+      ),
+    );
+    if (def?.index !== undefined && HOLD_BACK.test(braceBody(code, def.index + def[0].length - 1)))
+      return true;
+  }
+  return false;
+}
+
+export function holdingHandlers(code: string, listener: string): number {
+  const count = (text: string) => {
+    let held = 0;
+    for (const m of text.matchAll(INSTALL_HANDLER)) {
+      const end = (m.index ?? 0) + m[0].length;
+      if (!/^\s*[(:=]/.test(text.slice(end, end + 4))) continue;
+      const body = braceBody(text, end);
+      if (HOLD_BACK.test(body) || callsHolder(code, body)) held++;
+    }
+    return held;
+  };
+  if (/^\s*\{/.test(listener)) return count(listener);
+  // `addInstallListener(this.listener)`: the object that name is given, wherever the file does it.
+  const name = listener.trim().split(".").at(-1) ?? "";
+  if (!/^[\w$]+$/.test(name)) return 0;
+  let held = 0;
+  for (const m of code.matchAll(
+    new RegExp(String.raw`\b${name.replaceAll("$", "\\$")}\s*[:=]\s*\{`, "g"),
+  ))
+    held += count(braceBody(code, (m.index ?? 0) + m[0].length - 1));
+  return held;
+}
+
+/**
+ * Whether `name` holds an add-on (or an install) that AddonManager handed out, judging by the
+ * code just before it: assigned from the call, a `for … of` over it, or a callback parameter of
+ * a list it returned. The text of the ID asked for comes back (empty for a whole list), or null
+ * when `name` isn't one, or is this plugin's own add-on.
+ */
+export function addonReceiver(
+  before: string,
+  name: string,
+  managers: string,
+  calls = ADDON_CALLS,
+): string | null {
+  if (!/^[\w$]+$/.test(name) || name === "this") return null;
+  const source = `(?:${managers})${calls}`;
+  const id = name.replaceAll("$", "\\$");
+  const patterns = [
+    String.raw`\b${id}\s*=\s*(?:await\s+)?[^;]{0,60}?(${source})\s*(?:\(([^)]{0,80})\))?`,
+    String.raw`\b(?:const|let|var)\s+\[\s*${id}\b[^\]]*\]\s*=\s*(?:await\s+)?[^;]{0,60}?(${source})\s*(?:\(([^)]{0,80})\))?`,
+    String.raw`\b(?:const|let|var)\s+${id}\s+of\s+(?:await\s+)?[^)]{0,80}?(${source})\s*(?:\(([^)]{0,80})\))?`,
+    String.raw`(${source})\s*(?:\(([^)]{0,80})\))?[^;]{0,200}?(?:\(\s*${id}\s*[,)][^;]{0,20}?=>|\b${id}\s*=>)`,
+    String.raw`(${source})\s*(?:\(([^)]{0,80})\))?[^;]{0,200}?function\s*\(\s*${id}\b`,
+  ];
+  for (const p of patterns) {
+    const found = [...before.matchAll(new RegExp(p, "g"))].at(-1);
+    if (!found) continue;
+    const arg = (found[2] ?? "").trim();
+    if (OWN_ID_NAME.test(arg) || lifecycleIds(before).has(arg)) return null;
+    return arg;
+  }
+  return null;
+}
+
 export function pickManifest(manifests: XpiManifest[]): XpiManifest | undefined {
   const zotero = manifests.filter((m) => m.target === "zotero");
   return (
@@ -10870,6 +11125,12 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
       for (const t of col.installTargets) col.cap("self-installs", t.hit, "getInstallForURL");
     }
   }
+  // Other add-ons held back, cancelled, turned off or on (the plugin acting on its own ID is not).
+  const ownId = primary?.addonId;
+  const texts = col.addonChanges.length && ownId ? files.map((e) => decoder.decode(e.data)) : [];
+  for (const a of col.addonChanges)
+    if (!ownId || !a.arg || !namesOwnAddon(a.arg, ownId, texts))
+      col.cap("changes-addons", a.hit, a.kind);
   // Where each install's file comes from, and what starts it.
   for (const id of ["installs-addons", "self-installs"] as const) {
     const c = col.caps.get(id);

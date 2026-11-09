@@ -119,6 +119,7 @@ Zotero plugins run with the same rights as Zotero itself. These are the capabili
 | Installs and runs npm or PyPI packages at a fixed version | medium |
 | Keeps its own tables in Zotero's database | medium |
 | Installs other add-ons or its own updates after you click, or silently from the developer's own https feed checked against a hash; a zotero:// link can switch the catalogue it installs from, while installs from that catalogue wait for a click or for a setting that's off by default | medium |
+| Holds back, cancels, turns off or on, or changes the update setting of other add-ons | medium |
 | A zotero:// link can make it install add-ons, run code if you approve a prompt, or run only code its developer signed (checked by hand) | medium |
 | Downloads and runs a program its developer or someone else can change at any time (see below) | medium |
 | Adds Zotero translators it downloads | medium |

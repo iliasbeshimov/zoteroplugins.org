@@ -124,7 +124,7 @@
  "analysis": {
   "schemaVersion": 1,
   "analyzerVersion": "0.13.1",
-  "analyzedAt": "2026-11-03T21:27:11.131Z",
+  "analyzedAt": "2026-11-09T20:54:24.551Z",
   "input": {
    "slug": "tara-0-06-fix",
    "version": "0.0.6",
@@ -266,6 +266,27 @@
    "hostsTableVersion": "2026.11.03"
   },
   "capabilities": [
+   {
+    "id": "changes-addons",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "b23c0de639a2",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "chrome/content/scripts/index.js",
+      "line": 741,
+      "column": 22,
+      "snippet": "a.userDisabled = addon.userDisabled;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "turns other add-ons off or on"
+     ]
+    }
+   },
    {
     "id": "filesystem",
     "occurrences": 47,
@@ -427,7 +448,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-07T10:31:02.229Z",
+  "computedAt": "2026-11-09T20:54:24.551Z",
   "appliesTo": {
    "slug": "tara-0-06-fix",
    "version": "0.0.6",
@@ -472,6 +493,12 @@
    "capabilities": {
     "badges": [
      {
+      "id": "changes-addons",
+      "label": "Changes other plugins",
+      "concern": "medium",
+      "detail": "Turns other plugins off or on"
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -483,8 +510,9 @@
       "detail": "Every add-on in a backup file you pick"
      }
     ],
-    "concern": "low",
+    "concern": "medium",
     "drivers": [
+     "CAP-CHANGES-ADDONS",
      "CAP-MINOR"
     ]
    },
@@ -524,9 +552,14 @@
    }
   },
   "overall": {
-   "label": "low-concern",
-   "ruleId": "OV-LOW",
-   "drivers": []
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Changes other plugins"
+   ]
   }
  }
 }
