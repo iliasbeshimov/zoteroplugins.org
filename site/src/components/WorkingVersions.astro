@@ -1,0 +1,119 @@
+---
+/**
+ * On the page of a plugin people can't use on the current Zotero: the other versions of it that do
+ * work (lib/atlas.ts workingVersions), placed above the install button so nobody installs the
+ * broken one by mistake.
+ */
+import type { Plugin, WorkingVersion } from "../lib/atlas.ts";
+import GradeTag from "./GradeTag.astro";
+
+interface Props {
+  p: Plugin;
+  versions: WorkingVersion[];
+}
+const { p, versions } = Astro.props;
+const top = versions[0];
+const z = `Zotero ${p.currentMajor}`;
+const others = versions.filter((v) => v.relation === "fork" || v.relation === "copy").length;
+const heading =
+  top.relation === "original"
+    ? `The original works with ${z}.`
+    : top.relation === "same-developer"
+      ? `Its developer has a version that works with ${z}.`
+      : others > 1
+        ? `Other developers' versions work with ${z}.`
+        : `Another developer's version works with ${z}.`;
+const LABEL: Record<WorkingVersion["relation"], string> = {
+  original: "The original",
+  fork: "Fork",
+  copy: "Copy",
+  "same-developer": "Same developer",
+};
+const allSameId = versions.every((v) => v.sameId);
+const replaces =
+  versions.length === 1
+    ? "It has this plugin's ID, so installing it replaces this one."
+    : "They have this plugin's ID, so installing one replaces this one.";
+---
+
+<div class="wv" role="note">
+  <strong class="wh">{heading}</strong>
+  <ul>
+    {
+      versions.map((v) => (
+        <li>
+          <GradeTag grade={v.p.grade} size="xs" />
+          <span class="wb">
+            <a href={`/p/${v.p.slug}`}>{v.p.name}</a>
+            <span class="wm">
+              {LABEL[v.relation]} · {v.p.repo}
+            </span>
+            <span class="wm">
+              {[
+                `Zotero ${v.p.worksRange}`,
+                `released ${v.p.released}`,
+                v.p.ownUpdates && v.p.autoText === "Updates automatically" && "updates itself",
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+            </span>
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+  {allSameId && <span class="wn">{replaces}</span>}
+</div>
+
+<style>
+  .wv {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--few-bg);
+    border: 1px solid var(--few-line);
+  }
+  .wh {
+    font-size: 15.5px;
+    line-height: 1.35;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  li {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+  }
+  li > :first-child {
+    margin-top: 2px;
+  }
+  .wb {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+  .wb a {
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .wm {
+    font: 500 12.5px/1.45 var(--font-mono);
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  .wn {
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+</style>

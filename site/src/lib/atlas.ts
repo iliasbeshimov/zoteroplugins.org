@@ -211,6 +211,8 @@ export interface Plugin {
   ui: string;
   compat: { v: string; cur: boolean; ok: boolean | null }[];
   autoText: string;
+  /** Its update address is in its own repository, so its developer can ship it updates. */
+  ownUpdates: boolean;
   liveTest: { zotero: string; date: string; verdict: string } | null;
   /** What the browse page's search indexes (served as /search.json). */
   search: SearchDoc;
@@ -944,6 +946,7 @@ function build(
     ui,
     compat,
     autoText,
+    ownUpdates: p.install?.updates?.kind === "this-project",
     liveTest: tested
       ? { zotero: tested.zotero, date: fmtDate(tested.testedAt), verdict: tested.verdict }
       : null,
@@ -1077,6 +1080,93 @@ export function alternatives(p: Plugin, n = 4, betterThan?: Grade): Plugin[] {
     .filter((x) => !betterThan || RANK[x.grade] > RANK[betterThan])
     .sort((a, b) => RANK[b.grade] - RANK[a.grade] || b.downloadsN - a.downloadsN)
     .slice(0, n);
+}
+
+/** Fewer downloads than this is mostly a days-old experiment. */
+const MIN_VERSION_DOWNLOADS = 50;
+
+export interface WorkingVersion {
+  p: Plugin;
+  /** How it relates to the plugin whose page shows it. */
+  relation: "original" | "fork" | "copy" | "same-developer";
+  /** It carries the plugin's add-on ID, so installing it replaces the plugin. */
+  sameId: boolean;
+}
+
+let forksBySlug: Map<string, Plugin[]> | null = null;
+/** Each listed plugin's forks, by the slug of the plugin they were forked from. */
+function forksOf(): Map<string, Plugin[]> {
+  if (forksBySlug) return forksBySlug;
+  const m = new Map<string, Plugin[]>();
+  for (const x of allPlugins())
+    if (x.forkOf?.slug) m.set(x.forkOf.slug, [...(m.get(x.forkOf.slug) ?? []), x]);
+  forksBySlug = m;
+  return m;
+}
+const ownerOf = (p: Plugin) => p.repo.split("/")[0].toLowerCase();
+
+/**
+ * For a plugin people can't use on the current Zotero (it doesn't work there, its repository is
+ * gone, or it was retired without a named replacement): other versions of it that do work. Its
+ * family is the line it was forked from, its own forks and theirs, and the plugins that kept its ID
+ * as copies of it. Sibling forks aren't family: a fork of the same original can be a different plugin
+ * built on its code. A family member with a different ID must also be listed for one of the same jobs.
+ * Each one shown is installable, graded A or better and has some users. Best grade first, then those
+ * that get updates from their own repository, then most downloaded.
+ */
+export function workingVersions(p: Plugin, n = 3): WorkingVersion[] {
+  // A blocked plugin's ID is usually blocked too; a retired one already names its replacement.
+  if (p.banner || p.retired?.alternative) return [];
+  if (p.currentOk && !p.removed && !p.retired) return [];
+  const by = bySlug();
+  const forks = forksOf();
+  const family = new Map<string, Plugin>();
+  const ancestors = new Set<string>();
+  for (let x = p; x.forkOf?.slug && by[x.forkOf.slug] && !ancestors.has(x.forkOf.slug); ) {
+    ancestors.add(x.forkOf.slug);
+    x = by[x.forkOf.slug];
+    family.set(x.slug, x);
+  }
+  const descendants = new Set<string>();
+  const walk = (x: Plugin) => {
+    for (const f of forks.get(x.slug) ?? [])
+      if (f.slug !== p.slug && !family.has(f.slug)) {
+        family.set(f.slug, f);
+        descendants.add(f.slug);
+        walk(f);
+      }
+  };
+  walk(p);
+  const sid = sameIdGroupOf(p);
+  const copies = sid?.cause === "copies" ? sid.plugins : [];
+  for (const x of copies) if (x.slug !== p.slug) family.set(x.slug, x);
+  const sameId = (x: Plugin) => !!p.addonId && x.addonId === p.addonId;
+
+  const relation = (x: Plugin): WorkingVersion["relation"] => {
+    if (ancestors.has(x.slug) || (x === copies[0] && !descendants.has(x.slug))) return "original";
+    if (ownerOf(x) === ownerOf(p)) return "same-developer";
+    const parent = x.forkOf?.slug;
+    return parent && (family.has(parent) || parent === p.slug) ? "fork" : "copy";
+  };
+  return [...family.values()]
+    .filter(
+      (x) =>
+        (sameId(x) || x.jobs.some((j) => p.jobs.includes(j))) &&
+        x.currentOk &&
+        !!x.installUrl &&
+        !x.retired &&
+        !x.removed &&
+        RANK[x.grade] >= RANK.A &&
+        x.downloadsN >= MIN_VERSION_DOWNLOADS,
+    )
+    .sort(
+      (a, b) =>
+        RANK[b.grade] - RANK[a.grade] ||
+        Number(b.ownUpdates) - Number(a.ownUpdates) ||
+        b.downloadsN - a.downloadsN,
+    )
+    .slice(0, n)
+    .map((x) => ({ p: x, relation: relation(x), sameId: sameId(x) }));
 }
 
 export const CURRENT_ZOTERO_MAJOR = () => shownPlugins()[0]?.currentMajor ?? 10;

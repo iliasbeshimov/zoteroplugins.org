@@ -9,7 +9,8 @@ import StatusIcon from "../../components/StatusIcon.astro";
 import Tip from "../../components/Tip.astro";
 import Base from "../../layouts/Base.astro";
 import SameIdRow from "../../components/SameIdRow.astro";
-import { allPlugins, alternatives, bySlug, type Plugin, sameIdGroupOf, sameIdText } from "../../lib/atlas.ts";
+import WorkingVersions from "../../components/WorkingVersions.astro";
+import { allPlugins, alternatives, bySlug, type Plugin, sameIdGroupOf, sameIdText, workingVersions } from "../../lib/atlas.ts";
 import { REVIEWS_OPEN, ratingsOf } from "../../lib/ratings.ts";
 import { indexable } from "../../lib/seo.ts";
 import { checkedOn, pluginDescription, pluginLd, pluginTitle, verdictSentence } from "../../lib/meta.ts";
@@ -29,6 +30,7 @@ const sid = sameIdGroupOf(p);
 const sidText = sid ? sameIdText(sid, p) : null;
 const sidTop = sid ? sid.plugins.filter((x) => x.slug !== p.slug && !x.hidden).slice(0, 3) : [];
 const better = alternatives(p, 3, p.grade);
+const working = workingVersions(p);
 const data = p.areas.find((a) => a.key === "data")!;
 const job0 = p.jobs[0] ? JOB_BY_SLUG[p.jobs[0]] : null;
 const blocked = !!p.banner;
@@ -170,6 +172,7 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
           </div>
         )
       }
+      {working.length > 0 && <WorkingVersions p={p} versions={working} />}
       <div class="actions">
         <button type="button" class="btn btn-primary install" disabled={!canInstall} data-open-install={canInstall ? "" : undefined}>{installLabel}</button>
         <a href={p.repoUrl} class="btn">View source</a>
