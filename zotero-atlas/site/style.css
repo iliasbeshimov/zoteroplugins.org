@@ -1,5 +1,6 @@
 /* Zotero Atlas site. Same token names as zoteroplugins.org so the two feel related; the accent is
-   the plugin icon's purple. System fonts: this site loads nothing from third parties. */
+   the plugin icon's purple. System fonts: nothing loads from third parties except Google Analytics,
+   and that only as consent.js allows. */
 :root {
   --bg: oklch(0.975 0.004 265);
   --surface: oklch(0.997 0.002 265);
@@ -480,4 +481,74 @@ article h2 {
 }
 article .prose {
   max-width: 48em;
+}
+
+/* analytics question (consent.js) */
+button.btn {
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+button.linkish {
+  font: inherit;
+  color: var(--accent-fg);
+  background: none;
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+button.linkish:hover {
+  color: var(--ink);
+}
+.consent {
+  position: fixed;
+  z-index: 30;
+  left: 16px;
+  bottom: 16px;
+  max-width: 520px;
+  margin-right: 16px;
+  padding: 16px 18px;
+  background: var(--surface);
+  color: var(--ink-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  box-shadow: 0 8px 28px oklch(0.22 0.02 265 / 0.16);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.consent[hidden] {
+  display: none;
+}
+.consent p {
+  margin: 0;
+}
+.consent strong {
+  display: block;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.consent-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}
+.consent-actions .btn {
+  min-width: 104px;
+  padding: 9px 16px;
+}
+@media (max-width: 720px) {
+  .consent {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    margin-right: 0;
+    max-width: none;
+  }
+  .consent-actions .btn {
+    flex: 1;
+  }
 }
