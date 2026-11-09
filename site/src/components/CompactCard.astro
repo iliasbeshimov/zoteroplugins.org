@@ -6,7 +6,7 @@ import Tip from "./Tip.astro";
 
 /**
  * One plugin in a list. Facts every plugin has (Zotero versions, downloads, last update) are a
- * plain line; pills appear only when something applies: a heads-up (dormant, Chinese-only docs) or
+ * plain line; pills appear only when something applies: a heads-up (dormant, docs not in English) or
  * something that sets it apart (needs an API key, can use a local model, a fork). When no Zotero
  * version is picked in the list's filter, versions that leave out the current Zotero are marked.
  */
@@ -14,7 +14,7 @@ interface Props {
   p: Plugin;
 }
 const { p } = Astro.props;
-type Pill = { t: string; tip: string; tone: "rev" | "ser" | "nd" | "accent" | "few" | "plain"; lang?: boolean };
+type Pill = { t: string; tip: string; tone: "rev" | "ser" | "nd" | "accent" | "few" | "plain"; mark?: string };
 const pills: Pill[] = [];
 if (p.banner) pills.push({ t: "Blocked by Zotero", tip: "On Zotero's official blocklist: Zotero won't install it.", tone: "ser" });
 if (p.legacy) pills.push({ t: "Zotero 6 only", tip: "Uses the old plugin format, which Zotero 7 and later can't load.", tone: "rev" });
@@ -22,7 +22,7 @@ else if (!p.installUrl && !p.banner) pills.push({ t: "Nothing to install", tip: 
 if (p.maintStatus === "archived") pills.push({ t: "Archived", tip: p.maintTip, tone: "rev" });
 else if (p.maintStatus === "dormant" || p.maintStatus === "unknown") pills.push({ t: p.maintStatus === "dormant" ? "Dormant" : "Activity unknown", tip: p.maintTip, tone: "nd" });
 else if (p.maintStatus === "slowing") pills.push({ t: "Slowing down", tip: p.maintTip, tone: "nd" });
-if (p.chineseDocs) pills.push({ t: "Docs in Chinese only", tip: "The plugin's README and support are in Chinese. Our summary is in English.", tone: "accent", lang: true });
+if (p.docsOnly) pills.push({ t: `Docs in ${p.docsOnly} only`, tip: `The plugin's README and support are in ${p.docsOnly}. Our summary is in English.`, tone: "accent", mark: p.docsMark });
 if (p.needsShort) pills.push({ t: p.needsShort, tip: p.keyTip, tone: "plain" });
 if (p.localModel) pills.push({ t: "Can use a local model", tip: "It can use a model running on your own computer, such as Ollama, so your text needn't leave it.", tone: "few" });
 if (p.forkOf) pills.push({ t: `Fork of ${p.forkOf.name}`, tip: "A copy of another listed plugin, changed by someone else.", tone: "plain" });
@@ -50,7 +50,7 @@ const testTip = p.liveTest
         <div class="pills">
           {pills.map((f) => (
             <Tip text={f.tip} class={`pill plain t-${f.tone}`}>
-              {f.lang && <span aria-hidden="true" class="wen">文</span>}
+              {f.mark && <span aria-hidden="true" class="wen">{f.mark}</span>}
               {f.t}
             </Tip>
           ))}

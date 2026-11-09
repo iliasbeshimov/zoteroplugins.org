@@ -232,6 +232,26 @@ export function buildProfileReport(profiles: PluginProfile[], meta: Meta): strin
           pct(profiles.filter((p) => p.languages.chineseOnlyDocs).length, profiles.length),
         ],
         [
+          "README in another named language only (no linked English version)",
+          profiles.filter(
+            (p) =>
+              !p.languages.chineseOnlyDocs &&
+              !p.languages.docs.includes("en") &&
+              !p.languages.docsAlternates.includes("en") &&
+              p.languages.docs.some((d) => d !== "latin"),
+          ).length,
+          pct(
+            profiles.filter(
+              (p) =>
+                !p.languages.chineseOnlyDocs &&
+                !p.languages.docs.includes("en") &&
+                !p.languages.docsAlternates.includes("en") &&
+                p.languages.docs.some((d) => d !== "latin"),
+            ).length,
+            profiles.length,
+          ),
+        ],
+        [
           "Interface in Chinese only",
           profiles.filter((p) => p.languages.chineseOnlyUi).length,
           pct(profiles.filter((p) => p.languages.chineseOnlyUi).length, profiles.length),

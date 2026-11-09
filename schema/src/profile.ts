@@ -20,8 +20,25 @@ export const ListingKind = z.enum([
 
 export const HiddenReason = z.enum(["fork", "legacy", "no-release", "retired", "removed"]);
 
-/** Script-level language detection; `latin` is Latin-script text that isn't clearly English. */
-export const DocLanguage = z.enum(["en", "zh", "ja", "ko", "ru", "latin"]);
+/**
+ * README language detection. `zh` is written Chinese (Simplified or Traditional), not a spoken
+ * variety. `latin` is Latin-script text that is neither clearly English nor clearly one of the
+ * European languages listed.
+ */
+export const DocLanguage = z.enum([
+  "en",
+  "zh",
+  "ja",
+  "ko",
+  "ru",
+  "es",
+  "pt",
+  "fr",
+  "de",
+  "it",
+  "tr",
+  "latin",
+]);
 
 const CompatTarget = z.object({
   major: z.int().positive(),

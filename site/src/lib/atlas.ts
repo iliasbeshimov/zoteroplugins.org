@@ -117,6 +117,8 @@ export interface Notice {
     | "legal";
   t: string;
   sub: string;
+  /** For "lang": a letter in the docs' own script. */
+  mark?: string;
 }
 
 export interface Plugin {
@@ -200,7 +202,10 @@ export interface Plugin {
   keyTip: string;
   localModel: boolean;
   needsShort: string;
-  chineseDocs: boolean;
+  /** The docs' language(s) when none is English, e.g. "Korean"; null otherwise. */
+  docsOnly: string | null;
+  /** A letter in that language's script, for the mark next to it. */
+  docsMark: string;
   forkOf: { name: string; slug: string | null } | null;
   sameId: number;
   forksCount: number;
@@ -254,14 +259,33 @@ function fmtSize(bytes: number): string {
 }
 export const capFirst = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
+// "Chinese", not "Mandarin": READMEs are written Chinese, and Mandarin is a spoken language.
 const LANG: Record<string, string> = {
   en: "English",
   zh: "Chinese",
   ja: "Japanese",
   ko: "Korean",
   ru: "Russian",
-  latin: "another language",
+  es: "Spanish",
+  pt: "Portuguese",
+  fr: "French",
+  de: "German",
+  it: "Italian",
+  tr: "Turkish",
 };
+/** A letter in each language's own script; Latin-script languages share "Aa". */
+const LANG_MARK: Record<string, string> = { zh: "文", ja: "あ", ko: "한", ru: "Я" };
+
+/**
+ * The README's languages when none is English and it links no English version, e.g. "Korean".
+ * Null when there's English, or when we couldn't name the language ("latin"): no claim then.
+ */
+function docsWithoutEnglish(L: PluginProfile["languages"]): { names: string; mark: string } | null {
+  if (L.docs.includes("en") || L.docsAlternates.includes("en")) return null;
+  const named = L.docs.flatMap((d) => LANG[d] ?? []);
+  if (!named.length) return null;
+  return { names: listJoin(named), mark: LANG_MARK[L.docs[0] ?? ""] ?? "Aa" };
+}
 const displayNames = new Intl.DisplayNames(["en"], { type: "language" });
 function localeName(tag: string): string {
   try {
@@ -719,24 +743,29 @@ function build(
   });
 
   const L = p.languages;
-  const docsLangs = L.docs.map((d) => LANG[d] ?? d);
-  const docs = L.chineseOnlyDocs
-    ? "Chinese only"
+  const noEnglish = docsWithoutEnglish(L);
+  const docsLangs = L.docs.flatMap((d) => LANG[d] ?? []);
+  const docs = noEnglish
+    ? `${noEnglish.names} only`
     : docsLangs.length
       ? listJoin(docsLangs)
-      : "Not detected";
+      : L.docs.length
+        ? "Not identified"
+        : "Not detected";
   const uiNames = [...new Set(L.ui.map((tag) => localeName(tag.split(/[-_]/)[0] ?? tag)))];
   const ui = uiNames.length ? listJoin(uiNames) : "Not declared";
   areas.push({
     key: "lang",
     title: "Languages",
     level: "info",
-    value: L.chineseOnlyDocs
-      ? "Documentation in Chinese only"
+    value: noEnglish
+      ? `Documentation in ${noEnglish.names} only`
       : docsLangs.length
         ? `Documentation in ${listJoin(docsLangs)}`
-        : "Documentation language not detected",
-    highlight: L.chineseOnlyDocs,
+        : L.docs.length
+          ? "Documentation language not identified"
+          : "Documentation language not detected",
+    highlight: Boolean(noEnglish),
     sub: uiNames.length ? `Interface: ${ui}` : "Interface language not declared",
     groups: [],
     evidence: [],
@@ -790,11 +819,12 @@ function build(
       t: "Another plugin uses the same ID",
       sub: `${p.addonIdSharedWith.length === 1 ? "One other plugin shares" : `${p.addonIdSharedWith.length} other plugins share`} this add-on ID. Zotero can only install one of them.`,
     });
-  if (L.chineseOnlyDocs)
+  if (noEnglish)
     notices.push({
       kind: "lang",
-      t: "Documentation in Chinese only",
-      sub: "Our summary is in English, but the plugin's own docs and support are in Chinese.",
+      t: `Documentation in ${noEnglish.names} only`,
+      sub: `Our summary is in English, but the plugin's own docs and support are in ${noEnglish.names}.`,
+      mark: noEnglish.mark,
     });
   if (ds?.legalRisk)
     notices.push({
@@ -935,7 +965,8 @@ function build(
     keyTip,
     localModel,
     needsShort,
-    chineseDocs: L.chineseOnlyDocs,
+    docsOnly: noEnglish?.names ?? null,
+    docsMark: noEnglish?.mark ?? "",
     forkOf: p.fork ? { name: p.fork.of, slug: p.fork.ofSlug } : null,
     sameId: p.addonIdSharedWith.length,
     forksCount: p.forks.length,

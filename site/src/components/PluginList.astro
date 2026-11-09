@@ -21,7 +21,7 @@ interface Props {
   compare?: boolean;
 }
 const { plugins, currentMajor, search = false, compare = false } = Astro.props;
-const cnCount = plugins.filter((p) => p.chineseDocs).length;
+const noEnCount = plugins.filter((p) => p.docsOnly).length;
 // Each grade's count with no filters on, so the buttons don't change width when the script fills
 // them in (which moved the cards below them once the page had painted).
 const gradeCount: Record<string, number> = {};
@@ -29,7 +29,7 @@ for (const p of plugins) gradeCount[p.grade] = (gradeCount[p.grade] ?? 0) + 1;
 const toggles = [
   ["local", "Can use a local model"],
   ["nokey", "Works without an API key"],
-  ["hidecn", `Hide Chinese-only docs (${cnCount})`],
+  ["hidenoen", `Hide docs not in English (${noEnCount})`],
 ];
 // Versions offered in "Your Zotero": the current one first, then the beta, then older majors.
 const beta = plugins.flatMap((p) => p.worksWith).find((v) => v.includes("beta"));
@@ -119,7 +119,7 @@ const versions: [string, string][] = [
           data-works={`|${p.worksWith.join("|")}|`}
           data-key={p.keyNeed}
           data-local={p.localModel ? "1" : "0"}
-          data-cn={p.chineseDocs ? "1" : "0"}
+          data-noen={p.docsOnly ? "1" : "0"}
           data-jobs={p.jobs.join(" ")}
           data-dl={p.downloadsN}
           data-use={p.inUse ?? 0}
@@ -230,7 +230,7 @@ const versions: [string, string][] = [
         if (zv && !(d.works ?? "").includes(`|${zv}|`)) continue;
         if (on.has("nokey") && d.key !== "none" && d.key !== "optional") continue;
         if (on.has("local") && d.local !== "1") continue;
-        if (on.has("hidecn") && d.cn === "1") continue;
+        if (on.has("hidenoen") && d.noen === "1") continue;
         if (job && !(d.jobs ?? "").split(" ").includes(job)) continue;
         if (hits === undefined) continue;
         const s = hits ? hits.get(d.slug ?? "") : 1;

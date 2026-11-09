@@ -82,13 +82,34 @@ describe("README languages", () => {
     expect(detectDocLanguages(`${zh}\n\n${en}`).sort()).toEqual(["en", "zh"]);
   });
 
-  it("doesn't mistake Spanish or Portuguese for English", () => {
+  it("doesn't mistake Spanish or Portuguese for English, and tells them apart", () => {
     const es =
-      "Un plugin de Zotero que agrega un panel editable en la barra lateral del lector de PDFs. Permite crear, renombrar, anidar, reordenar y borrar marcadores, y guardarlos a la biblioteca como notas.";
+      "Un plugin de Zotero que agrega un panel editable en la barra lateral del lector de PDFs. Permite crear, renombrar, anidar, reordenar y borrar marcadores, y guardarlos a la biblioteca como notas. El panel muestra los marcadores del PDF y también los que creas, y puede exportarlos cuando cierras el lector.";
     const pt =
-      "Plugin para o Zotero que formata as referências de acordo com as normas da universidade, com suporte da biblioteca e a comunidade acadêmica. As correções vão além do que o estilo consegue expressar.";
-    expect(detectDocLanguages(es)).toEqual(["latin"]);
-    expect(detectDocLanguages(pt)).toEqual(["latin"]);
+      "Plugin para o Zotero que formata as referências de acordo com as normas da universidade, com suporte da biblioteca e a comunidade acadêmica. As correções vão além do que o estilo consegue expressar. Os autores e os títulos são ajustados pelo plugin, e você não precisa mudar a sua biblioteca.";
+    expect(detectDocLanguages(es)).toEqual(["es"]);
+    expect(detectDocLanguages(pt)).toEqual(["pt"]);
+  });
+
+  it("names French, German, Italian and Turkish READMEs", () => {
+    const fr =
+      "Extension Zotero qui génère le sommaire manquant d'un PDF et l'inscrit dans le fichier, afin que le volet du lecteur ne reste pas vide. Elle fonctionne avec les fichiers EPUB et vous pouvez choisir les niveaux des titres pour chaque document.";
+    const de =
+      "Das Plugin zeigt die Standorte der Bibliothek in Zotero an. Laden Sie die neueste Version herunter und installieren Sie sie über das Menü. Die Einstellungen sind auf der Seite des Plugins und können auch später geändert werden, wenn sich die Bibliothek ändert.";
+    const it =
+      "Plugin per Zotero che trasforma le evidenziazioni dei PDF in domande di recall per Anki. Le domande sono generate da un modello e il testo della nota viene salvato alla fine del documento, anche quando questo è lungo.";
+    const tr =
+      "Kayıtları seçip sağ tıklayın ve seçili kayıtlardaki tüm alanları Latin harflerine çevirin. Bu eklenti için bir ayar gerekmez; dönüştürme bir kez yapılır ve sonra her kayıt için ayrı olarak geri alınabilir, daha çok kitap ve makale ile çalışır.";
+    expect(detectDocLanguages(fr)).toEqual(["fr"]);
+    expect(detectDocLanguages(de)).toEqual(["de"]);
+    expect(detectDocLanguages(it)).toEqual(["it"]);
+    expect(detectDocLanguages(tr)).toEqual(["tr"]);
+  });
+
+  it("keeps sparse Latin-script text unnamed", () => {
+    const list =
+      "# Packages\n\n| Package | Description |\n|---|---|\n| ng-daum-address | Angular Daum Address Search Component |\n| saju | Korean Four Pillars calculation library |\n| validate-branch | Git branch name validation tool with custom regexp support |\n| biome-plugin | Biome GritQL plugins for code quality |\n| markdown | Markdown preprocessing utilities for Korean text rendering |";
+    expect(detectDocLanguages(list)).toEqual(["latin"]);
   });
 
   it("returns nothing for a README too short to judge", () => {

@@ -1,9 +1,9 @@
 import type { DocLanguage } from "@atlas/schema";
 
 /**
- * Which languages a README is written in, from the scripts its prose uses. Deterministic and
- * deliberately coarse: we only need to tell readers "the documentation is in Chinese only", not
- * to identify every European language.
+ * Which languages a README is written in, from the scripts its prose uses and, for Latin script,
+ * its commonest short words. Deterministic and deliberately coarse: we only need to tell readers
+ * "the documentation is in Korean only", not to label every paragraph.
  */
 
 // Words that are also common in Spanish, Portuguese or German ("a", "as", "an", "also") are left
@@ -14,6 +14,30 @@ const ENGLISH_WORDS = new Set(
     "all when which have has more after into its any only how what then there"
   ).split(" "),
 );
+
+// Short words common in one of these languages and rare in the others and in English: words
+// they share ("de", "la", "que", "en", "una", "es", "il", "mais", "do", "her") are left out.
+const LATIN_WORDS: [DocLanguage, Set<string>][] = (
+  [
+    ["es", "el los las del y más está puede este esta también cuando sin pero muy"],
+    ["pt", "os dos das não uma com ao são você pelo pela também seu sua quando sem"],
+    ["fr", "le les des du et est une pour dans qui sur avec pas vous au aux ce cette sont"],
+    ["de", "der die das und ist nicht mit für ein eine den dem sie auf zu von im sich oder auch"],
+    ["it", "gli della di che è per sono nel dei delle alla questo anche viene"],
+    ["tr", "ve bir bu için ile olarak değil daha gibi çok veya kadar sonra olan ise"],
+  ] as const
+).map(([lang, words]) => [lang, new Set(words.split(" "))]);
+
+/** The European language most of these words belong to, if one clearly leads. */
+function latinLanguage(words: string[]): DocLanguage | null {
+  const hits = LATIN_WORDS.map(([lang, set]) => ({
+    lang,
+    n: words.filter((w) => set.has(w.toLowerCase())).length,
+  })).sort((a, b) => b.n - a.n);
+  const [first, second] = hits;
+  if (!first || first.n < 3 || first.n < 2 * (second?.n ?? 0)) return null;
+  return first.lang;
+}
 
 /** Removes code, markup, links' targets and badges, keeping human prose. */
 export function prose(markdown: string): string {
@@ -34,6 +58,7 @@ interface Counts {
   cyrillicWords: number;
   latinWords: number;
   englishWords: number;
+  latinLanguage: DocLanguage | null;
 }
 
 function count(text: string): Counts {
@@ -46,13 +71,15 @@ function count(text: string): Counts {
     cyrillicWords: n(/\p{Script=Cyrillic}{2,}/gu),
     latinWords: latin.length,
     englishWords: latin.filter((w) => ENGLISH_WORDS.has(w.toLowerCase())).length,
+    latinLanguage: latinLanguage(text.match(/\p{Script=Latin}+/gu) ?? []),
   };
 }
 
 /**
  * Languages ordered by share of the text, keeping those with at least 15% of it. Latin-script
  * words count as English only when enough of them are English function words; otherwise they're
- * usually product names inside CJK prose, and count as "latin" only if they dominate.
+ * usually product names inside CJK prose, and count only if they dominate: as Spanish, French
+ * and so on when their short words say which, as "latin" when they don't.
  */
 export function detectDocLanguages(markdown: string): DocLanguage[] {
   const c = count(prose(markdown));
@@ -68,7 +95,7 @@ export function detectDocLanguages(markdown: string): DocLanguage[] {
   if (c.latinWords > 0) {
     // Product names inside CJK prose dilute the ratio, so enough function words also count.
     if (c.englishWords >= 20 || c.englishWords / c.latinWords >= 0.1) units.en = c.latinWords;
-    else if (c.latinWords / total0 >= 0.5) units.latin = c.latinWords;
+    else if (c.latinWords / total0 >= 0.5) units[c.latinLanguage ?? "latin"] = c.latinWords;
   }
   const total = Object.values(units).reduce((s, v) => s + (v ?? 0), 0);
   if (total < 15) return [];
