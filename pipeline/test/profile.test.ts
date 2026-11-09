@@ -106,10 +106,16 @@ describe("README languages", () => {
     expect(detectDocLanguages(tr)).toEqual(["tr"]);
   });
 
-  it("keeps sparse Latin-script text unnamed", () => {
+  it("recognises sparse English in a README that is mostly a table of names", () => {
     const list =
-      "# Packages\n\n| Package | Description |\n|---|---|\n| ng-daum-address | Angular Daum Address Search Component |\n| saju | Korean Four Pillars calculation library |\n| validate-branch | Git branch name validation tool with custom regexp support |\n| biome-plugin | Biome GritQL plugins for code quality |\n| markdown | Markdown preprocessing utilities for Korean text rendering |";
-    expect(detectDocLanguages(list)).toEqual(["latin"]);
+      "# Packages\n\n**English** | [한국어](./README.ko.md)\n\n| Package | Description |\n|---|---|\n| ng-daum-address | Angular Daum Address Search Component |\n| saju | Korean Four Pillars calculation library |\n| validate-branch | Git branch name validation tool with custom regexp support |\n| biome-plugin | Biome GritQL plugins for code quality |\n| markdown | Markdown preprocessing utilities for Korean text rendering |\n| react-share | Headless social sharing library for React with strategy pattern |\n| zotero-plugin-uts | Zotero plugin to copy bibliography in UTS APA format |\n\nIf this project helped you, please consider buying me a coffee!";
+    expect(detectDocLanguages(list)).toEqual(["en"]);
+  });
+
+  it("keeps Latin-script text it can't name unnamed", () => {
+    const nl =
+      "Deze plugin voegt een knop toe aan het paneel van Zotero. Hiermee kun je de citatiesleutel van het geselecteerde item kopiëren, en het werkt met elke stijl. De knop staat bovenaan het paneel en is altijd zichtbaar wanneer een item is geselecteerd.";
+    expect(detectDocLanguages(nl)).toEqual(["latin"]);
   });
 
   it("returns nothing for a README too short to judge", () => {

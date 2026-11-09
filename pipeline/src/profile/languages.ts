@@ -79,7 +79,7 @@ function count(text: string): Counts {
  * Languages ordered by share of the text, keeping those with at least 15% of it. Latin-script
  * words count as English only when enough of them are English function words; otherwise they're
  * usually product names inside CJK prose, and count only if they dominate: as Spanish, French
- * and so on when their short words say which, as "latin" when they don't.
+ * and so on when their short words say which, as sparse English, or as "latin" when none fits.
  */
 export function detectDocLanguages(markdown: string): DocLanguage[] {
   const c = count(prose(markdown));
@@ -95,7 +95,14 @@ export function detectDocLanguages(markdown: string): DocLanguage[] {
   if (c.latinWords > 0) {
     // Product names inside CJK prose dilute the ratio, so enough function words also count.
     if (c.englishWords >= 20 || c.englishWords / c.latinWords >= 0.1) units.en = c.latinWords;
-    else if (c.latinWords / total0 >= 0.5) units[c.latinLanguage ?? "latin"] = c.latinWords;
+    // Latin-script text that is none of the named European languages needs fewer English words:
+    // tables of package names dilute them ("Git branch name validation tool with custom regexp
+    // support").
+    else if (c.latinWords / total0 >= 0.5)
+      units[
+        c.latinLanguage ??
+          (c.englishWords / c.latinWords >= 0.05 && c.englishWords >= 5 ? "en" : "latin")
+      ] = c.latinWords;
   }
   const total = Object.values(units).reduce((s, v) => s + (v ?? 0), 0);
   if (total < 15) return [];
