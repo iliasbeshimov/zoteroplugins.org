@@ -229,7 +229,6 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     grid-template-columns: minmax(0, 1fr) 380px;
     gap: 56px;
     align-items: center;
-    border-bottom: 1px solid var(--line);
     max-width: 1280px;
     margin: 0 auto;
   }
@@ -338,11 +337,12 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     flex-wrap: wrap;
     gap: 6px 18px;
   }
+  /* A full-width white band, its content lined up with the 1280px column. */
   .press {
     box-sizing: border-box;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 30px var(--gutter);
+    padding: 30px max(var(--gutter), calc((100% - 1280px) / 2 + var(--gutter)));
+    background: var(--surface);
+    border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     display: flex;
     flex-wrap: wrap;
