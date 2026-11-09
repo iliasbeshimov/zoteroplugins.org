@@ -79,7 +79,9 @@ Whatever you choose, the plugin fetches the directory's catalogue once a day and
 known security problems every 6 hours, both from GitHub (raw.githubusercontent.com, the
 directory's public repository), and when you click Install or go back to an earlier version,
 Zotero downloads the plugin file from GitHub. Nothing else is contacted, except zoteroatlas.com
-when you post a rating.
+when you post a rating. Links to zoteroplugins.org open in your browser with `?ref=atlas` added,
+which only tells the site not to show its note about Atlas; the site takes it out of the address
+before its analytics load.
 
 It stores four settings (`extensions.zotero-atlas.usage`, `.updates`, `.id`, `.state`) and the
 catalogue and the advisories in `zotero-atlas/` in your Zotero data directory. Uninstalling

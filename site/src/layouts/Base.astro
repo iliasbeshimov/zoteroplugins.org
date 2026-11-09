@@ -34,6 +34,29 @@ const atlasBand = !notFound && !/^\/p\/zotero-atlas(\/|$)/.test(path);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // The band about Zotero Atlas stays hidden once closed. Links opened from inside the plugin
+      // carry ?ref=atlas (they have it already), which counts as closed; the parameter is taken out
+      // of the address at once, before analytics or anything else reads it.
+      (() => {
+        const k = "zp-atlas-band";
+        const root = document.documentElement;
+        const q = new URLSearchParams(location.search);
+        if (q.get("ref") === "atlas") {
+          root.dataset.atlasBand = "off";
+          try {
+            localStorage.setItem(k, "closed");
+          } catch {}
+          q.delete("ref");
+          const rest = q.toString();
+          history.replaceState(history.state, "", location.pathname + (rest ? `?${rest}` : "") + location.hash);
+          return;
+        }
+        try {
+          if (localStorage.getItem(k) === "closed") root.dataset.atlasBand = "off";
+        } catch {}
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />

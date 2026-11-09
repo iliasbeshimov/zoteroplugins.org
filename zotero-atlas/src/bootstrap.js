@@ -48,6 +48,20 @@ const USAGE_URL = "https://zoteroatlas.com/api/v1/plugins";
 const RATINGS_URL = "https://zoteroatlas.com/api/v1/ratings";
 const SITE = "https://zoteroplugins.org";
 const HOME = "https://zoteroatlas.com";
+
+/**
+ * Opens a page in the browser. Pages on zoteroplugins.org get ?ref=atlas, which only tells the site
+ * not to show its note about this plugin; the site takes it out of the address straight away.
+ */
+function openPage(url) {
+  if (url.startsWith(`${SITE}/`)) {
+    const cut = url.indexOf("#");
+    const path = cut < 0 ? url : url.slice(0, cut);
+    const hash = cut < 0 ? "" : url.slice(cut);
+    url = `${path}${path.includes("?") ? "&" : "?"}ref=atlas${hash}`;
+  }
+  Zotero.launchURL(url);
+}
 const PREF = {
   usage: "extensions.zotero-atlas.usage", // "" (not asked yet), "yes" or "no"
   updates: "extensions.zotero-atlas.updates", // "" (not asked yet), "hold" or "off"
@@ -1505,7 +1519,7 @@ function paintWindow(win) {
       bar.appendChild(a);
     };
     if (first.off) link("Turn it off", () => decide.off(first.item.addon.id));
-    link("What we know", () => (first.url ? Zotero.launchURL(first.url) : openWindow("mine")));
+    link("What we know", () => (first.url ? openPage(first.url) : openWindow("mine")));
     bar.appendChild(el(doc, "div", { class: "spacer" }, XHTML));
     const close = el(
       doc,
@@ -1708,7 +1722,7 @@ function paintPage(doc) {
         pill.addEventListener("click", (ev) => {
           ev.preventDefault();
           ev.stopPropagation();
-          Zotero.launchURL(e.page);
+          openPage(e.page);
         });
       } else {
         pill.className = "zotero-atlas zotero-atlas-grade g-none";
@@ -1718,7 +1732,7 @@ function paintPage(doc) {
         pill.addEventListener("click", (ev) => {
           ev.preventDefault();
           ev.stopPropagation();
-          Zotero.launchURL(`${SITE}/submit`);
+          openPage(`${SITE}/submit`);
         });
       }
       name.after(pill);
@@ -1758,7 +1772,7 @@ function paintPage(doc) {
           () => installPlugin(al.install.entry, al.install.build, doc.defaultView),
           true,
         );
-      if (al.url && !al.off) act("What we know", () => Zotero.launchURL(al.url));
+      if (al.url && !al.off) act("What we know", () => openPage(al.url));
       contents.appendChild(line);
     }
   } catch (e) {
@@ -1785,7 +1799,7 @@ const Atlas = {
   fileFor,
   install: installPlugin,
   openWindow,
-  openPage: (url) => Zotero.launchURL(url),
+  openPage,
   attention: () => attention(last),
   ack,
   dismiss,
