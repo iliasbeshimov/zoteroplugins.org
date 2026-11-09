@@ -1,49 +1,79 @@
-<p align="center"><img src="src/icon.svg" width="96" height="96" alt=""></p>
+<p align="center"><img src="src/icon.svg" width="88" height="88" alt=""></p>
 
-# Zotero Atlas
+<h1 align="center">Zotero Atlas</h1>
 
-[![Zotero Plugins grade](https://zoteroplugins.org/badge/zotero-atlas.svg)](https://zoteroplugins.org/p/zotero-atlas)
-[![Release](https://img.shields.io/github/v/release/iliasbeshimov/zotero-atlas?label=release&color=2f6fdb)](https://github.com/iliasbeshimov/zotero-atlas/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/iliasbeshimov/zotero-atlas/total?label=downloads&color=3a9e4a)](https://github.com/iliasbeshimov/zotero-atlas/releases)
-[![Works with Zotero 7 to 11](https://img.shields.io/badge/Zotero-7%20to%2011-cc2936)](https://www.zotero.org/download/)
-[![Reproducible build, attested](https://img.shields.io/badge/build-reproducible%2C%20attested-5b3fc4)](#check-what-you-install)
-[![MIT](https://img.shields.io/github/license/iliasbeshimov/zotero-atlas?color=777)](LICENSE)
+<p align="center"><strong>Every Zotero plugin, one click away. Each one checked first.</strong><br>
+The <a href="https://zoteroplugins.org">zoteroplugins.org</a> catalogue inside Zotero: search 1,500+
+plugins, see what each one's code does, and install in one click.</p>
 
-A Zotero plugin that finds and installs plugins from [zoteroplugins.org](https://zoteroplugins.org)
-inside Zotero, and keeps an eye on the ones you have. Home: [zoteroatlas.com](https://zoteroatlas.com).
+<p align="center">
+  <a href="https://zoteroatlas.com/install?start"><strong>Download Zotero Atlas</strong></a> ·
+  <a href="https://zoteroatlas.com/install">How to install</a> ·
+  <a href="https://zoteroatlas.com">zoteroatlas.com</a>
+</p>
+
+<p align="center">
+  <a href="https://zoteroplugins.org/p/zotero-atlas"><img src="https://zoteroplugins.org/badge/zotero-atlas.svg" alt="Zotero Plugins grade"></a>
+  <a href="https://github.com/iliasbeshimov/zotero-atlas/releases/latest"><img src="https://img.shields.io/github/v/release/iliasbeshimov/zotero-atlas?label=release&color=2f6fdb" alt="Release"></a>
+  <a href="https://github.com/iliasbeshimov/zotero-atlas/releases"><img src="https://img.shields.io/github/downloads/iliasbeshimov/zotero-atlas/total?label=downloads&color=3a9e4a" alt="Downloads"></a>
+  <a href="https://www.zotero.org/download/"><img src="https://img.shields.io/badge/Zotero-7%20to%2011-cc2936" alt="Works with Zotero 7 to 11"></a>
+  <a href="#check-what-you-install"><img src="https://img.shields.io/badge/build-reproducible%2C%20attested-5b3fc4" alt="Reproducible build, attested"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/iliasbeshimov/zotero-atlas?color=777" alt="MIT"></a>
+</p>
+
+<p align="center"><img src="docs/readme/search-demo.gif" width="880" alt="Searching in Zotero Atlas: each result shows the plugin's grade and the reason for it, and C-graded plugins say to read the card first"></p>
+<p align="center"><sub>The search example from zoteroatlas.com, with real catalogue entries. The screenshots below are Zotero Atlas 1.0 in Zotero 10.</sub></p>
 
 ## What it does
 
-- **Find.** Tools → Zotero Atlas lists every plugin in the directory, filtered to your Zotero
+### Find, and install the file that was checked
+
+<p align="center"><img src="docs/readme/find-plugins.png" width="880" alt="Find plugins in Zotero Atlas: the most downloaded plugins that work with this Zotero, each with its grade, the reason, and an Install button"></p>
+
+- **Find.** Tools → Zotero Atlas lists every plugin in the catalogue, filtered to your Zotero
   version by default, with each plugin's grade and the one line that explains it. Search, or
   pick a job (reading, citing, AI, translation, organising, metadata, interface, files).
 - **Install the file we checked.** Install hands the release file to Zotero's own installer with
   the SHA-256 of the file we analysed. Zotero refuses the file if it doesn't match, so what you
   get is exactly what the card describes. A file we haven't analysed can't be installed from here.
+
+### Grades in Tools → Plugins
+
+<p align="center"><img src="docs/readme/plugins-window.png" width="560" alt="Zotero's Plugins window with a grade by each plugin and a Find more plugins button"></p>
+
+- **Grades in Tools → Plugins.** Each plugin gets its grade by its name, "Not listed" when the
+  catalogue doesn't list it (so Atlas can't check it), and one line only when there's something
+  to know. "Find more plugins" opens Atlas.
+
+### Hold updates, go back, and hear only what matters
+
+<p align="center"><img src="docs/readme/your-plugins.png" width="880" alt="Your plugins in Zotero Atlas: a plugin with a known security problem needs you, the rest are fine"></p>
+<p align="center"><sub>Example: Lab Tools is a made-up plugin with a made-up advisory, from the project's test setup.</sub></p>
+
 - **Hold updates until they're checked** (recommended on the first-run screen, and a setting
   afterwards). Zotero installs plugin updates by itself without looking at what changed. With
-  this on, an update whose file the directory has analysed, and whose grade isn't lower than the
+  this on, an update whose file the catalogue has analysed, and whose grade isn't lower than the
   version you have, installs as usual, usually within a day. Anything else waits in "Your
-  plugins" for you to update anyway or keep your version. Plugins the directory doesn't list are
+  plugins" for you to update anyway or keep your version. Plugins the catalogue doesn't list are
   never held: we can't check them. Holding uses Zotero's own install listeners and changes no
   Zotero setting, so removing the plugin gives Zotero back its own updates.
 - **Go back after an update.** "Your plugins" lists the month's updates, and for each one whose
   earlier version we analysed, offers to go back to it: the file we checked, after which its
   updates wait until you choose.
-- **Say what matters, and only that.** A blocked plugin, or one on the directory's list of known
+- **Say what matters, and only that.** A blocked plugin, or one on the catalogue's list of known
   security problems ([data/advisories.json](https://github.com/iliasbeshimov/zoteroplugins.org/blob/main/data/advisories.json)),
   gets a bar above your library until you turn it off or close the bar. A held update, a grade
   drop, a plugin Zotero turned off when a version that works is listed, or a newer version Zotero
   hasn't installed in three days gets one notice and a red dot on the Zotero Atlas button by the
   sync button, until you look. Everything else waits quietly in "Your plugins".
-- **Grades in Tools → Plugins.** Each plugin gets its grade by its name, "Not listed" when the
-  directory doesn't list it (so Atlas can't check it), and one line only when there's something
-  to know. "Find more plugins" opens Atlas.
+
+### Rate what you use
+
 - **Rate what you use.** Stars, and a review if you want to write one, for any plugin you have or
   removed in the last 30 days. No account. Ratings show next to each plugin's grade, but never
   change it: the grade is what the code does, the rating is what people who use it say.
 
-Every grade comes from the directory's published checks: see
+Every grade comes from the catalogue's published checks: see
 [how plugins are graded](https://zoteroplugins.org/how-we-grade). The plugin itself is listed and
 graded there like any other.
 
@@ -51,6 +81,8 @@ graded there like any other.
 
 **It never sends your library, notes, files, Zotero account, email or anything that identifies
 you.**
+
+<p align="center"><img src="docs/readme/first-run.png" width="420" alt="Zotero Atlas's first-run screen: hold plugin updates until they're checked, and send my plugin list or don't send"></p>
 
 The first time it runs it shows one screen with two settings: holding updates until they're
 checked (on, recommended), and **Send my plugin list** as the default answer with **Don't send**
@@ -75,9 +107,9 @@ for ratings, the server keeps a scrambled code made from it for 30 days to catch
 after which even we can't match it to anything. Every rating is checked before it's published, and
 how fake ones are spotted isn't published, so it can't be gamed.
 
-Whatever you choose, the plugin fetches the directory's catalogue once a day and its list of
+Whatever you choose, the plugin fetches the catalogue once a day and its list of
 known security problems every 6 hours, both from GitHub (raw.githubusercontent.com, the
-directory's public repository), and when you click Install or go back to an earlier version,
+catalogue's public repository), and when you click Install or go back to an earlier version,
 Zotero downloads the plugin file from GitHub. Nothing else is contacted, except zoteroatlas.com
 when you post a rating. Links to zoteroplugins.org open in your browser with `?ref=atlas` added,
 which only tells the site not to show its note about Atlas; the site takes it out of the address
@@ -90,7 +122,7 @@ removes all of it.
 ## Its own grade
 
 On zoteroplugins.org this plugin is graded **B**, because sending usage data to a developer's
-server rates "medium" under the directory's rules, whether or not it's opt-in, because it
+server rates "medium" under the catalogue's rules, whether or not it's opt-in, because it
 installs other add-ons, and because it changes other plugins (it holds their updates and turns
 one off when you click "Turn it off"). Those are the same rules every plugin gets. The grade is set by the same
 pipeline as every other plugin's and nothing on its card is edited by hand.
@@ -125,9 +157,9 @@ node test.cjs          # offline checks of the plugin's behaviour, with Zotero m
 python3 build.py       # dist/zotero-atlas-<version>.xpi and dist/updates.json
 ```
 
-Before a release it's also walked through in real Zotero 7, 8, 9 and 10 by the directory's
-sandbox (`sandbox/run.sh atlas` in the directory's repository): first run, a real update held,
+Before a release it's also walked through in real Zotero 7, 8, 9 and 10 by the catalogue's
+sandbox (`sandbox/run.sh atlas` in the catalogue's repository): first run, a real update held,
 the button and the bar, Tools → Plugins and the Atlas window, with pictures of each.
 
-Needs Zotero 7.0 or later. The catalogue it reads is written by the directory's pipeline
-(`atlas catalog`); its shape is published as `catalog.schema.json` in the directory's repository.
+Needs Zotero 7.0 or later. The catalogue it reads is written by the catalogue's pipeline
+(`atlas catalog`); its shape is published as `catalog.schema.json` in the catalogue's repository.
