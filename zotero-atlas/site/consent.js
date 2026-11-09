@@ -39,7 +39,8 @@
   function load() {
     if (loaded) return;
     loaded = true;
-    const dataLayer = (window.dataLayer = window.dataLayer || []);
+    window.dataLayer = window.dataLayer || [];
+    const dataLayer = window.dataLayer;
     function gtag() {
       // The Arguments object, not an array: that's what the tag reads.
       dataLayer.push(arguments);
@@ -56,11 +57,13 @@
   function clearCookies() {
     const parts = location.hostname.split(".");
     const domains = [""];
-    for (let i = 0; i < parts.length - 1; i++) domains.push(`; domain=.${parts.slice(i).join(".")}`);
+    for (let i = 0; i < parts.length - 1; i++)
+      domains.push(`; domain=.${parts.slice(i).join(".")}`);
     for (const c of document.cookie.split(";")) {
       const name = c.split("=")[0].trim();
       if (!/^(_ga|_gid|_gat|_gcl)/.test(name)) continue;
-      for (const d of domains) document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${d}`;
+      for (const d of domains)
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${d}`;
     }
   }
 
