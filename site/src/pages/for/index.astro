@@ -3,7 +3,7 @@ import GradeTag from "../../components/GradeTag.astro";
 import Guide from "../../layouts/Guide.astro";
 import { CURRENT_ZOTERO_MAJOR } from "../../lib/atlas.ts";
 import { breadcrumb, modifiedAt, PUBLISHER } from "../../lib/guides.ts";
-import { REPO, SITE } from "../../lib/links.ts";
+import { mailto, SITE } from "../../lib/links.ts";
 import { countWord, PACKS, packPath, packPdf, packPdfName, packTitle, resolvePack } from "../../lib/packs.ts";
 
 /** The plugin packs: one card per kind of reader, each naming its plugins and linking its PDF. */
@@ -12,7 +12,7 @@ const h1 = "Zotero plugin packs for students and researchers";
 const cur = CURRENT_ZOTERO_MAJOR();
 const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
 const description = `Five or six Zotero plugins for each stage of academic work: undergraduates, master's students, PhD students, and researchers and faculty. Each plugin is graded B or better after a check of its code and works with Zotero ${cur}.`;
-const suggest = `${REPO}/issues/new?title=${encodeURIComponent("Plugin pack suggestion")}`;
+const suggest = mailto("Plugin packs: a suggestion");
 
 const graph = [
   {
@@ -72,7 +72,7 @@ const graph = [
   <section>
     <h2>For librarians and instructors</h2>
     <p class="prose">
-      The packs are free to use in research guides, workshops and orientation materials, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> with credit to zoteroplugins.org. Each PDF is one US Letter page and is rebuilt whenever a grade changes, so a link to it never goes stale. If your students rely on a plugin that isn't here, or you'd advise against one that is, <a href={suggest}>tell us</a>.
+      The packs are free to use in research guides, workshops and orientation materials, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> with credit to zoteroplugins.org. Each PDF is one US Letter page and is rebuilt whenever a grade changes, so a link to it never goes stale. <a href="/librarians">Copy a ready-made box for your guide</a>. If your students rely on a plugin that isn't here, or you'd advise against one that is, <a href={suggest}>tell us</a>.
     </p>
   </section>
 

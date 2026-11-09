@@ -5,7 +5,7 @@ import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import Tip from "../components/Tip.astro";
 import Base from "../layouts/Base.astro";
-import { CURRENT_ZOTERO_MAJOR, fmtDate, GRADES, type Plugin, shownPlugins, testingOpen } from "../lib/atlas.ts";
+import { CURRENT_ZOTERO_MAJOR, fmtDate, GRADES, type Plugin, shownPlugins } from "../lib/atlas.ts";
 import { JOBS } from "@atlas/schema";
 import { siteLd } from "../lib/meta.ts";
 import { countWord, PACKS, packPath, resolvePack } from "../lib/packs.ts";
@@ -18,10 +18,8 @@ const cur = CURRENT_ZOTERO_MAJOR();
 const byUse = (a: Plugin, b: Plugin) => (b.inUse ?? 0) - (a.inUse ?? 0) || b.downloadsN - a.downloadsN;
 // The plugins most people have, among those that work with the current Zotero (lib/usage.ts).
 const used = plugins.filter((p) => p.currentOk && p.inUse != null).sort(byUse).slice(0, 10);
-// The next major, while it's in beta and Zotero has opened its testing: each row says whether the
-// plugin works with it. Before that, nearly every plugin rightly doesn't declare it (atlas.ts).
-const betaLabel = plugins.flatMap((p) => p.compat).find((c) => c.v.includes("beta"))?.v ?? null;
-const nextLabel = betaLabel && testingOpen(Number.parseInt(betaLabel, 10)) ? betaLabel : null;
+// The next major, while it's in beta: each row says whether the plugin works with it.
+const nextLabel = plugins.flatMap((p) => p.compat).find((c) => c.v.includes("beta"))?.v ?? null;
 const nextOf = (p: Plugin) => {
   const c = p.compat.find((x) => x.v === nextLabel);
   return c?.ok === true ? "yes" : c?.ok === false ? "no" : "unknown";
@@ -144,25 +142,24 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
               </span>
               <div class="ub">
                 <a href={`/p/${p.slug}`} class="un">{p.name}</a>
-                <p class="ud">{p.oneLiner}</p>
                 {(p.grade === "B" || p.grade === "C") && (
                   <p class="uw">
                     <span class="muted">{p.grade} because </span>
                     {p.because}
                   </p>
                 )}
-              </div>
-              <div class="uf">
-                <Tip text={USE_TIP} class="uu tip-end">
-                  <strong>{p.inUseText}</strong> in use
-                </Tip>
-                {nextLabel && (
-                  <Tip text={nextTip[nx]} class={`nx nx-${nx} tip-end`}>
-                    {`Zotero ${nextLabel} `}
-                    <span aria-hidden="true" class="mk">{nx === "yes" ? "✓" : nx === "no" ? "✗" : "?"}</span>
-                    <span class="visually-hidden">{nx === "yes" ? "works" : nx === "no" ? "doesn't work yet" : "not known"}</span>
+                <div class="uf">
+                  <Tip text={USE_TIP} class="uu">
+                    <strong>{p.inUseText}</strong> in use
                   </Tip>
-                )}
+                  {nextLabel && (
+                    <Tip text={nextTip[nx]} class={`nx nx-${nx}`}>
+                      {`Zotero ${nextLabel} `}
+                      <span aria-hidden="true" class="mk">{nx === "yes" ? "✓" : nx === "no" ? "✗" : "?"}</span>
+                      <span class="visually-hidden">{nx === "yes" ? "works" : nx === "no" ? "doesn't work yet" : "not known"}</span>
+                    </Tip>
+                  )}
+                </div>
               </div>
             </li>
           );
@@ -536,18 +533,24 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     font-size: 14.5px;
     font-weight: 600;
   }
+  /* Two columns on wide screens, ranked down each column: 1–5, then 6–10. */
   .ulist {
     list-style: none;
     margin: 0;
     padding: 0;
     border-top: 2px solid var(--ink);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(5, auto);
+    grid-auto-flow: column;
+    column-gap: 48px;
   }
   .urow {
     display: grid;
-    grid-template-columns: 26px 52px minmax(0, 1fr) 180px;
+    grid-template-columns: 26px 52px minmax(0, 1fr);
     gap: 4px 14px;
     align-items: start;
-    padding: 16px 0;
+    padding: 14px 0;
     border-bottom: 1px solid var(--line);
   }
   .rk {
@@ -576,21 +579,10 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
   .un:hover {
     text-decoration: underline;
   }
-  .ud,
   .uw {
     margin: 0;
-    max-width: 78ch;
     font-size: 14.5px;
     line-height: 1.45;
-  }
-  .ud {
-    color: var(--ink-2);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .uw {
     color: var(--ink);
   }
   .uw .muted {
@@ -598,11 +590,10 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
   }
   .uf {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
-    padding-top: 1px;
-    text-align: right;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    padding-top: 2px;
   }
   .uf :global(.uu) {
     font-size: 14px;
@@ -610,7 +601,7 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     white-space: nowrap;
   }
   .uf :global(.uu strong) {
-    font: 700 19px var(--font-mono);
+    font: 700 15px var(--font-mono);
     letter-spacing: -0.02em;
     color: var(--ink);
   }
@@ -728,6 +719,11 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     .fresh {
       grid-template-columns: 1fr;
     }
+    .ulist {
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+      grid-auto-flow: row;
+    }
   }
   @media (max-width: 720px) {
     .pk-grid {
@@ -739,14 +735,6 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     }
     .rk {
       display: none;
-    }
-    .uf {
-      grid-column: 2;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 4px 14px;
-      text-align: left;
     }
   }
 </style>

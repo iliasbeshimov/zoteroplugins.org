@@ -20,6 +20,7 @@ const GUIDE_PATHS = [
   "/best",
   "/for",
   ...PACKS.map(packPath),
+  "/librarians",
   "/works-with-zotero",
   "/ai-without-api-key",
   "/zotero-6-plugins",

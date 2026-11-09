@@ -12,6 +12,7 @@ export const GUIDES = [
   { path: "/are-zotero-plugins-safe", name: "Are Zotero plugins safe?" },
   { path: "/best", name: "Best-graded plugins by job" },
   { path: "/for", name: "Plugin packs for students and researchers" },
+  { path: "/librarians", name: "For librarians: a box for your guide" },
   { path: "/works-with-zotero", name: "Plugins for the current Zotero" },
   { path: "/ai-without-api-key", name: "AI plugins without an API key" },
   { path: "/zotero-6-plugins", name: "Zotero 6 plugin replacements" },

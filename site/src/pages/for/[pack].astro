@@ -3,7 +3,7 @@ import GradeTag from "../../components/GradeTag.astro";
 import Guide from "../../layouts/Guide.astro";
 import { allPlugins, CURRENT_ZOTERO_MAJOR, capFirst, fmtDate, type Plugin } from "../../lib/atlas.ts";
 import { breadcrumb, itemList, modifiedAt, PUBLISHER } from "../../lib/guides.ts";
-import { REPO, SITE } from "../../lib/links.ts";
+import { mailto, SITE } from "../../lib/links.ts";
 import { countWord, type Pack, PACKS, packPath, packPdf, packPdfName, packTitle, resolvePack } from "../../lib/packs.ts";
 
 /**
@@ -33,9 +33,7 @@ const meta = (p: Plugin) =>
   [p.worksWith.length ? `Zotero ${p.worksRange}` : "", `${p.downloads} downloads`, `${p.stars} GitHub stars`, p.maint]
     .filter(Boolean)
     .join(" · ");
-const suggest = `${REPO}/issues/new?title=${encodeURIComponent(`Plugin pack suggestion (${pack.name})`)}&body=${encodeURIComponent(
-  `Which plugin should the ${pack.name} pack add or drop, and why?\n\n`,
-)}`;
+const suggest = mailto(`Plugin packs: ${pack.name}`);
 const host = SITE.replace(/^https:\/\//, "");
 
 const graph = [
@@ -152,7 +150,7 @@ const graph = [
   <section class="screen-only">
     <h2>For librarians and instructors</h2>
     <p class="prose">
-      Use this pack in research guides, workshops and orientation materials. The <a href={packPdf(pack)} download={packPdfName(pack)}>PDF</a> is one US Letter page, and it's free to copy and share under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> with credit to zoteroplugins.org. Is a plugin your students rely on missing, or one here you'd advise against? <a href={suggest}>Suggest a change to this pack</a>.
+      Use this pack in research guides, workshops and orientation materials. The <a href={packPdf(pack)} download={packPdfName(pack)}>PDF</a> is one US Letter page, and it's free to copy and share under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> with credit to zoteroplugins.org, and there's a <a href="/librarians">ready-made box for your guide</a>. Is a plugin your students rely on missing, or one here you'd advise against? <a href={suggest}>Suggest a change to this pack</a>.
     </p>
   </section>
 

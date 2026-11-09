@@ -1,0 +1,347 @@
+---
+import Guide from "../layouts/Guide.astro";
+import { CURRENT_ZOTERO_MAJOR } from "../lib/atlas.ts";
+import { breadcrumb, gradeCounts, modifiedAt, num, PUBLISHER } from "../lib/guides.ts";
+import { CONTACT, mailto, REPO, SITE } from "../lib/links.ts";
+import { PACKS, packPath, packPdf, packPdfName, packTitle } from "../lib/packs.ts";
+
+/**
+ * For librarians: a ready-made box for a library's Zotero guide, as HTML to paste, as a LibGuides
+ * link asset, and as one line for a page that already lists plugins. The box links only to pages
+ * that keep themselves current (the packs, the directory) and names no plugin, so a guide that
+ * pastes it never has to update it.
+ */
+const path = "/librarians";
+const h1 = "Add Zotero plugin advice to your library guide";
+const cur = CURRENT_ZOTERO_MAJOR();
+const total = num(gradeCounts().total);
+const description = `A ready-made box for your library's Zotero guide: zoteroplugins.org grades all ${total} Zotero plugins from a check of their code, and its plugin packs give each stage of study a short list. Copy, paste, and it stays current.`;
+
+const packItems = PACKS.map((k) => `  <li><a href="${SITE}${packPath(k)}">${packTitle(k).replace(/^Zotero plugins/, "Plugins")}</a></li>`).join("\n");
+const box = `<p>Plugins add features to Zotero, but anyone can publish one. Before you install a plugin, look it up on <a href="${SITE}/">zoteroplugins.org</a>, an independent, non-commercial directory that checks the code of every Zotero plugin and grades it from A+ (recommended) to C (not recommended). Each plugin's page shows what it does, what it needs and where it sends your data.</p>
+<p>Not sure where to start? Short lists of checked plugins for each stage of study:</p>
+<ul>
+${packItems}
+</ul>`;
+const oneLine = `<p>Before you install a Zotero plugin, look it up on <a href="${SITE}/">zoteroplugins.org</a>, which grades every plugin from a check of its code.</p>`;
+const link = {
+  name: "Zotero Plugins Atlas",
+  url: `${SITE}/`,
+  desc: "Every Zotero plugin, graded from a check of its code: what it does, what it needs and where it sends your data. Includes short lists of checked plugins for undergraduates, graduate students and faculty.",
+};
+const suggest = `${REPO}/issues/new?title=${encodeURIComponent("Plugin pack suggestion from a library")}`;
+const write = mailto("Plugin packs: a suggestion from a library");
+
+const graph = [
+  {
+    "@type": "WebPage",
+    "@id": `${SITE}${path}`,
+    url: `${SITE}${path}`,
+    name: h1,
+    description,
+    dateModified: modifiedAt(path),
+    isPartOf: { "@type": "WebSite", name: "Zotero Plugins Atlas", url: `${SITE}/` },
+    publisher: PUBLISHER,
+    audience: { "@type": "Audience", audienceType: "Librarians" },
+  },
+  breadcrumb("For librarians", path),
+];
+---
+
+<Guide title="For librarians: Zotero plugin advice for your guide · Zotero Plugins Atlas" description={description} h1={h1} crumb="For librarians" graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      Students ask which Zotero plugins are safe to install. zoteroplugins.org checks the code of all {total} Zotero plugins and grades each one, and its plugin packs give every stage of study a short list of checked plugins. Copy the box below into your guide. It links only to pages we keep current, so you never have to update it.
+    </p>
+  </Fragment>
+
+  <section id="box">
+    <h2>The box for your guide</h2>
+    <div class="kit">
+      <div class="preview">
+        <span class="eyebrow">How it looks in a guide</span>
+        <div class="lg-box">
+          <div class="lg-head">Zotero plugins: check before you install</div>
+          <div class="lg-body" set:html={box} />
+        </div>
+        <p class="small">The box title is yours to set. In your guide the box takes your own fonts and colours.</p>
+      </div>
+      <div class="how">
+        <ol class="steps">
+          <li>In LibGuides, edit the page and add a <strong>Rich Text / HTML</strong> box or asset.</li>
+          <li>Open the editor's <strong>Source</strong> view (the <code>&lt;&gt;</code> button).</li>
+          <li>Paste the HTML and save.</li>
+        </ol>
+        <div class="acts">
+          <button type="button" class="btn btn-dark" data-copy="box-code">Copy the HTML</button>
+        </div>
+        <details>
+          <summary>Show the HTML</summary>
+          <pre><code id="box-code">{box}</code></pre>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="link">
+    <h2>Or add it as a link</h2>
+    <p class="prose">For a LibGuides <strong>Link</strong> asset, or any list of resources:</p>
+    <dl class="fields">
+      <div>
+        <dt>Name</dt>
+        <dd><span id="link-name">{link.name}</span><button type="button" class="copy" data-copy="link-name">Copy</button></dd>
+      </div>
+      <div>
+        <dt>URL</dt>
+        <dd><span id="link-url">{link.url}</span><button type="button" class="copy" data-copy="link-url">Copy</button></dd>
+      </div>
+      <div>
+        <dt>Description</dt>
+        <dd><span id="link-desc">{link.desc}</span><button type="button" class="copy" data-copy="link-desc">Copy</button></dd>
+      </div>
+    </dl>
+  </section>
+
+  <section id="one-line">
+    <h2>One line for a page that already lists plugins</h2>
+    <p class="prose">
+      If your guide recommends plugins, this line can stand in for an "install at your own risk" note, so students can check any plugin, including ones you don't list:
+    </p>
+    <div class="line">
+      <div class="lg-body" set:html={oneLine} />
+      <button type="button" class="btn" data-copy="line-code">Copy the HTML</button>
+      <pre hidden><code id="line-code">{oneLine}</code></pre>
+    </div>
+  </section>
+
+  <section id="handouts">
+    <h2>Handouts for workshops</h2>
+    <p class="prose">Each pack is one US Letter page, rebuilt whenever a grade changes. Print them for orientation sessions or attach them to a guide.</p>
+    <ul class="pdfs">
+      {
+        PACKS.map((k) => (
+          <li>
+            <a href={packPdf(k)} download={packPdfName(k)}>{k.name} (PDF)</a>
+            <a href={packPath(k)} class="muted">page</a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section id="trust">
+    <h2>Why you can point students here</h2>
+    <ul class="facts">
+      <li><strong>Independent and non-commercial.</strong> No ads and no paid listings, and nobody can pay for a better grade. Not affiliated with Zotero or the Corporation for Digital Scholarship.</li>
+      <li><strong>The method is public.</strong> Every grade comes from a check of the plugin's code, with the evidence (file and line) on its page. <a href="/how-we-grade">How we grade</a>.</li>
+      <li><strong>Current.</strong> Plugins are re-checked daily from GitHub, and each plugin's page says which Zotero versions it works with, up to Zotero {cur}.</li>
+      <li><strong>Open.</strong> The data is CC BY 4.0 and the code is MIT, on <a href={REPO}>GitHub</a>.</li>
+    </ul>
+  </section>
+
+  <section id="suggest">
+    <h2>Tell us what to change</h2>
+    <p class="prose">
+      If your students rely on a plugin the packs leave out, or you'd advise against one they include, email <a href={write}>{CONTACT}</a> (or <a href={suggest}>open an issue on GitHub</a>). Librarians' suggestions decide what goes into the next version of the packs, and a reply comes from a person.
+    </p>
+  </section>
+</Guide>
+
+<script>
+  // Copy the text of the element a button names; say so on the button for a moment.
+  for (const b of document.querySelectorAll<HTMLButtonElement>("[data-copy]")) {
+    const label = b.textContent;
+    b.addEventListener("click", async () => {
+      const text = document.getElementById(b.dataset.copy ?? "")?.textContent ?? "";
+      try {
+        await navigator.clipboard.writeText(text);
+        b.textContent = "Copied";
+      } catch {
+        b.textContent = "Select and copy it by hand";
+      }
+      setTimeout(() => {
+        b.textContent = label;
+      }, 2000);
+    });
+  }
+</script>
+
+<style>
+  .kit {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+  }
+  .preview {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .eyebrow {
+    font: 600 12px var(--font-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  /* A plain stand-in for a LibGuides box: system fonts, a grey title bar. */
+  .lg-box {
+    border: 1px solid #c9ccd1;
+    border-radius: 4px;
+    background: #fff;
+    color: #222;
+    font: 15px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    overflow: hidden;
+  }
+  .lg-head {
+    background: #f2f3f5;
+    border-bottom: 1px solid #c9ccd1;
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .lg-body {
+    padding: 4px 14px 10px;
+  }
+  .lg-body :global(p),
+  .lg-body :global(ul) {
+    margin: 10px 0;
+  }
+  .lg-body :global(ul) {
+    padding-left: 22px;
+    list-style: disc;
+  }
+  .lg-body :global(a) {
+    color: #0b5cad;
+  }
+  .how {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .steps {
+    margin: 0;
+    padding-left: 22px;
+    list-style: decimal;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .acts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  details summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  pre {
+    margin: 10px 0 0;
+    padding: 14px;
+    border-radius: 10px;
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    font: 12.5px/1.55 var(--font-mono);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    max-height: 360px;
+    overflow: auto;
+  }
+  .fields {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 860px;
+  }
+  .fields > div {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  dt {
+    font-weight: 650;
+  }
+  dd {
+    margin: 0;
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    justify-content: space-between;
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  .copy {
+    flex: none;
+    font: 600 13px var(--font-sans);
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .copy:hover {
+    border-color: var(--ink);
+  }
+  .line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+    max-width: 860px;
+  }
+  .line .lg-body {
+    flex: 1 1 380px;
+    border: 1px solid #c9ccd1;
+    border-radius: 4px;
+    background: #fff;
+    color: #222;
+    font: 15px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    padding: 0 14px;
+  }
+  .pdfs,
+  .facts {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 860px;
+  }
+  .pdfs li {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    font-size: 16.5px;
+  }
+  .pdfs a:first-child {
+    font-weight: 650;
+  }
+  .muted {
+    color: var(--ink-3);
+    font-size: 14.5px;
+  }
+  .facts li {
+    font-size: 16.5px;
+    line-height: 1.55;
+  }
+  @media (max-width: 860px) {
+    .kit {
+      grid-template-columns: 1fr;
+    }
+    .fields > div {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>
