@@ -238,6 +238,23 @@ async function run() {
   await delay(5000);
   if (aw) {
     await snap(aw, "05-your-plugins");
+    // A rating's message, built in the Atlas window but not sent: the scrambled ID needs
+    // crypto.subtle there, which only a real Zotero shows.
+    try {
+      const body = await A.ratings.payload(
+        {
+          slug: "delitemwithatt",
+          addon: "delitemwithatt@redleaf.me",
+          version: "0.5.1",
+          stars: 5,
+          text: "",
+        },
+        aw,
+      );
+      out.rating = { rater: /^[0-9a-f]{64}$/.test(body.rater), fields: Object.keys(body).sort() };
+    } catch (e) {
+      out.rating = { error: String(e) };
+    }
     const back = [...aw.document.querySelectorAll("button.linkish")].find((b) =>
       /^Go back to/.test(b.textContent),
     );
