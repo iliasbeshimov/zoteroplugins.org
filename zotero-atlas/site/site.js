@@ -13,9 +13,19 @@
       ready.hidden = true;
       started.hidden = false;
     }
-    // Queued for Google Analytics; sent only if consent.js loads it.
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event: "atlas_download", atlas_version: link.dataset.version || "" });
+    // Counted in Google Analytics (GTM tag "GA4 event - atlas_download") only once consent.js has
+    // loaded Tag Manager: wait up to a minute for it, so the event comes after the Google tag
+    // and a visitor who accepts the question meanwhile is counted. Nothing is queued otherwise.
+    const version = link.dataset.version || "";
+    let tries = 0;
+    const count = () => {
+      if (window.google_tag_manager && Array.isArray(window.dataLayer)) {
+        window.dataLayer.push({ event: "atlas_download", atlas_version: version });
+      } else if (++tries < 120) {
+        setTimeout(count, 500);
+      }
+    };
+    count();
     setTimeout(() => {
       const a = document.createElement("a");
       a.href = link.href;
