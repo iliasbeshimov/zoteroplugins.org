@@ -1,0 +1,48 @@
+---
+import { iconLetter, iconOf } from "../lib/icons.ts";
+
+/**
+ * A plugin's own icon on a white tile (white in dark mode too, so dark glyphs stay visible), or its
+ * initial on a plain tile. Decorative: the plugin's name always sits next to it.
+ */
+interface Props {
+  slug: string;
+  name: string;
+  /** The tile's side in px. */
+  size?: number;
+}
+const { slug, name, size = 32 } = Astro.props;
+const src = iconOf(slug);
+const inner = size - 2 * Math.max(2, Math.round(size * 0.1));
+---
+
+<span class:list={["picon", !src && "none"]} style={`--s:${size}px;--i:${inner}px`} aria-hidden="true">
+  {src ? <img src={src} alt="" width={inner} height={inner} loading="lazy" decoding="async" /> : iconLetter(name)}
+</span>
+
+<style>
+  .picon {
+    flex: none;
+    box-sizing: border-box;
+    width: var(--s);
+    height: var(--s);
+    display: inline-grid;
+    place-items: center;
+    border-radius: calc(var(--s) * 0.24);
+    background: #fff;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .picon img {
+    width: var(--i);
+    height: var(--i);
+    object-fit: contain;
+  }
+  .picon.none {
+    background: var(--surface-2);
+    color: var(--ink-3);
+    font: 700 calc(var(--s) * 0.44) / 1 var(--font-sans);
+  }
+</style>

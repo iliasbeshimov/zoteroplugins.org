@@ -1,6 +1,7 @@
 ---
 import GradeTag from "../../components/GradeTag.astro";
 import InstallSheet from "../../components/InstallSheet.astro";
+import PluginIcon from "../../components/PluginIcon.astro";
 import Ratings from "../../components/Ratings.astro";
 import Scorecard from "../../components/Scorecard.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
@@ -165,7 +166,10 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
   <div class="hero">
     <div class="intro">
       <span class="crumb"><a href="/browse">Plugins</a>{job0 && <> / <a href={`/c/${job0.slug}`}>{job0.title}</a></>}</span>
-      <h1>{p.name}</h1>
+      <div class="h1row">
+        <PluginIcon slug={p.slug} name={p.name} size={60} />
+        <h1>{p.name}</h1>
+      </div>
       <span class="by">by {p.author} · <a href={p.repoUrl}>github.com/{p.repo}</a></span>
       <p class="lead">{p.oneLiner}</p>
       <p class="verdict">
@@ -529,6 +533,12 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
   }
   .crumb a {
     color: var(--ink-2);
+  }
+  .h1row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: 0;
   }
   h1 {
     margin: 0;
@@ -941,6 +951,19 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     margin-top: 8px;
     max-width: 60ch;
     line-height: 1.5;
+  }
+  @media (max-width: 720px) {
+    .h1row {
+      gap: 12px;
+    }
+    .h1row :global(.picon) {
+      width: 44px !important;
+      height: 44px !important;
+    }
+    .h1row :global(.picon img) {
+      width: 36px !important;
+      height: 36px !important;
+    }
   }
   @media (max-width: 720px) {
     .sim li {

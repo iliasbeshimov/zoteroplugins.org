@@ -1,6 +1,7 @@
 ---
 import Findings from "../components/Findings.astro";
 import GradeTag from "../components/GradeTag.astro";
+import PluginIcon from "../components/PluginIcon.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import Tip from "../components/Tip.astro";
@@ -141,7 +142,10 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
                 <GradeTag grade={p.grade} size="sm" />
               </span>
               <div class="ub">
-                <a href={`/p/${p.slug}`} class="un">{p.name}</a>
+                <span class="unrow">
+                  <PluginIcon slug={p.slug} name={p.name} size={24} />
+                  <a href={`/p/${p.slug}`} class="un">{p.name}</a>
+                </span>
                 {(p.grade === "B" || p.grade === "C") && (
                   <p class="uw">
                     <span class="muted">{p.grade} because </span>
@@ -578,6 +582,12 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
   }
   .un:hover {
     text-decoration: underline;
+  }
+  .unrow {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
   }
   .uw {
     margin: 0;

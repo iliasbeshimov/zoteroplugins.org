@@ -186,6 +186,32 @@ export function buildProgram(): Command {
     });
 
   program
+    .command("icons")
+    .description(
+      "write site/public/icons/<slug>.png from the icon each plugin declares in its graded release file (redoes changed files only)",
+    )
+    .addOption(pluginOption())
+    .addOption(forceOption())
+    .option("--no-fetch", "use only release files already in the blob cache")
+    .action(async (opts: { plugin?: string; force?: boolean; fetch: boolean }) => {
+      const { loadConfig } = await import("./config.ts");
+      const { updateIcons } = await import("./profile/icons.ts");
+      const config = loadConfig();
+      const counts = await updateIcons({
+        cacheDir: config.cacheDir,
+        userAgent: config.userAgent,
+        fetch: opts.fetch,
+        force: opts.force,
+        only: opts.plugin,
+      });
+      console.log(
+        Object.entries(counts)
+          .map(([k, v]) => `${k} ${v}`)
+          .join(", "),
+      );
+    });
+
+  program
     .command("ratings")
     .description(
       "fetch the published ratings from zoteroatlas.com into data/generated/ratings.json, for the catalogue and the site",

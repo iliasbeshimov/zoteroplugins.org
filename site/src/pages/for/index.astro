@@ -1,5 +1,6 @@
 ---
 import GradeTag from "../../components/GradeTag.astro";
+import PluginIcon from "../../components/PluginIcon.astro";
 import Guide from "../../layouts/Guide.astro";
 import { CURRENT_ZOTERO_MAJOR } from "../../lib/atlas.ts";
 import { breadcrumb, modifiedAt, PUBLISHER } from "../../lib/guides.ts";
@@ -50,7 +51,10 @@ const graph = [
               <li>
                 <GradeTag grade={k.plugin.grade} size="xs" />
                 <span>
-                  <a href={`/p/${k.plugin.slug}`}>{k.plugin.name}</a>
+                  <a href={`/p/${k.plugin.slug}`} class="mn">
+                    <PluginIcon slug={k.plugin.slug} name={k.plugin.name} size={20} />
+                    {k.plugin.name}
+                  </a>
                   <span class="task">{k.task}</span>
                 </span>
               </li>
@@ -157,6 +161,11 @@ const graph = [
   }
   .mini a:hover {
     text-decoration: underline;
+  }
+  .mn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
   }
   .task {
     font-size: 14px;

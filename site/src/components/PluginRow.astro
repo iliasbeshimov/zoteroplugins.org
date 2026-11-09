@@ -1,6 +1,7 @@
 ---
 import type { Plugin } from "../lib/atlas.ts";
 import GradeTag from "./GradeTag.astro";
+import PluginIcon from "./PluginIcon.astro";
 
 /** One plugin in a guide's list: grade, name, what it does, and why it got its grade. */
 interface Props {
@@ -17,7 +18,10 @@ const meta = [p.worksWith.length ? `Zotero ${p.worksRange}` : "", `${p.downloads
 <li class="row">
   <GradeTag grade={p.grade} size="sm" />
   <div class="body">
-    <a href={`/p/${p.slug}`} class="name">{p.name}</a>
+    <span class="nrow">
+      <PluginIcon slug={p.slug} name={p.name} size={26} />
+      <a href={`/p/${p.slug}`} class="name">{p.name}</a>
+    </span>
     <p class="does">{p.oneLiner}</p>
     {because && (p.grade === "B" || p.grade === "C") && <p class="why"><span class="muted">{p.grade} because </span>{p.because}</p>}
     <span class="meta">{meta}</span>
@@ -51,6 +55,12 @@ const meta = [p.worksWith.length ? `Zotero ${p.worksRange}` : "", `${p.downloads
   }
   .name:hover {
     text-decoration: underline;
+  }
+  .nrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
   }
   .does,
   .why {

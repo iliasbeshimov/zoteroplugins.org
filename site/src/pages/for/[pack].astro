@@ -1,5 +1,6 @@
 ---
 import GradeTag from "../../components/GradeTag.astro";
+import PluginIcon from "../../components/PluginIcon.astro";
 import Guide from "../../layouts/Guide.astro";
 import { allPlugins, CURRENT_ZOTERO_MAJOR, capFirst, fmtDate, type Plugin } from "../../lib/atlas.ts";
 import { breadcrumb, itemList, modifiedAt, PUBLISHER } from "../../lib/guides.ts";
@@ -84,7 +85,10 @@ const graph = [
             <div class="plug">
               <GradeTag grade={k.plugin.grade} size="sm" />
               <div class="pinfo">
-                <a href={`/p/${k.plugin.slug}`} class="name">{k.plugin.name}</a>
+                <span class="pname">
+                  <PluginIcon slug={k.plugin.slug} name={k.plugin.name} size={30} />
+                  <a href={`/p/${k.plugin.slug}`} class="name">{k.plugin.name}</a>
+                </span>
                 <p class="why">{k.why}</p>
                 {k.plugin.grade === "B" && (
                   <p class="because">
@@ -102,7 +106,10 @@ const graph = [
                 <div class="plug">
                   <GradeTag grade={k.or.plugin.grade} size="xs" />
                   <div class="pinfo">
-                    <a href={`/p/${k.or.plugin.slug}`} class="name sm">{k.or.plugin.name}</a>
+                    <span class="pname">
+                      <PluginIcon slug={k.or.plugin.slug} name={k.or.plugin.name} size={24} />
+                      <a href={`/p/${k.or.plugin.slug}`} class="name sm">{k.or.plugin.name}</a>
+                    </span>
                     <p class="why">{k.or.why}</p>
                     {k.or.plugin.grade === "B" && (
                       <p class="because">
@@ -244,6 +251,12 @@ const graph = [
     display: flex;
     flex-direction: column;
     gap: 4px;
+    min-width: 0;
+  }
+  .pname {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     min-width: 0;
   }
   .name {
@@ -432,6 +445,18 @@ const graph = [
     .name {
       font-size: 10.5pt;
       color: var(--ink);
+    }
+    .pname {
+      gap: 6px;
+    }
+    .pname :global(.picon) {
+      width: 17px !important;
+      height: 17px !important;
+      border-radius: 4px;
+    }
+    .pname :global(.picon img) {
+      width: 13px !important;
+      height: 13px !important;
     }
     .name.sm {
       font-size: 9.5pt;
