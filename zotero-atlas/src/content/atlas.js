@@ -61,7 +61,9 @@
   }
 
   function gradePill(g) {
-    return el("span", `grade g-${g === "–" ? "none" : g}`, g === "–" ? "?" : g);
+    const pill = el("span", `grade g-${g === "–" ? "none" : g}`, g === "–" ? "?" : g);
+    if (g !== "–") pill.title = `Zotero Plugins grade ${g}`;
+    return pill;
   }
 
   function installedFor(entry) {
