@@ -5,6 +5,10 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
 
+# Browsers keep assets for 4 hours (the zone's Browser Cache TTL), so pages link
+# /style.css, /site.js and /consent.js with ?v=<hash>: after changing one, run
+# python3 stamp_site.py (in zotero-atlas/) and commit the stamped pages.
+
 # The current release's file, served from here so browsers save it instead of handing it to
 # Firefox's add-on installer (GitHub sends it as application/x-xpinstall, inline). On each
 # release: replace the .xpi with the release asset, and update its path here, the dl-link in
