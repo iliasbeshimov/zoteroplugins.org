@@ -3,195 +3,349 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Zotero Atlas · the plugin directory, inside Zotero</title>
-  <meta name="description" content="A Zotero plugin that finds and installs plugins from zoteroplugins.org inside Zotero and keeps watching the ones you have. It never sends your library or anything that identifies you.">
+  <title>Zotero Atlas · every Zotero plugin, checked, inside Zotero</title>
+  <meta name="description" content="Zotero Atlas is a free plugin that brings the zoteroplugins.org catalogue into Zotero: search 1,500+ plugins, see what each one's code does, install in one click, and hold updates until they're checked.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zoteroatlas.com/">
+  <meta property="og:title" content="Zotero Atlas: every Zotero plugin, one click away">
+  <meta property="og:description" content="Search 1,500+ Zotero plugins inside Zotero, see each one's grade, install in one click. Free and open source.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="canonical" href="https://zoteroatlas.com/">
+  <link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/style.css">
   <script src="/consent.js" defer></script>
+  <script src="/site.js" defer></script>
 </head>
 <body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="shelf-mono" viewBox="4 10 88 82"><rect x="10" y="25" width="14" height="57" rx="3"/><rect x="30" y="16" width="14" height="66" rx="3"/><rect x="50" y="28" width="12" height="54" rx="3"/><rect x="73.8" y="20" width="13" height="62" rx="3" transform="rotate(-12 86.8 82)"/><rect x="8" y="82" width="79" height="5" rx="2.5"/></symbol>
+  </svg>
+
   <header class="top">
     <div class="wrap">
-      <a class="brand" href="/"><img src="/icon.svg" alt="">Zotero Atlas</a>
-      <nav>
-        <a href="#what">What it does</a>
-        <a href="#why">Why</a>
-        <a href="#grade">Its grade</a>
+      <a class="brand" href="/"><img src="/icon.svg" alt="" width="30" height="30">Zotero Atlas</a>
+      <nav class="nav" aria-label="Site">
+        <a href="#grades">Grades</a>
+        <a href="#watch">Updates</a>
+        <a href="/install">Install</a>
         <a href="/privacy">Privacy</a>
         <a href="https://github.com/iliasbeshimov/zotero-atlas">GitHub</a>
       </nav>
+      <a class="btn sm" href="/install?start"><svg width="17" height="17" aria-hidden="true"><use href="#i-dl"/></svg>Download</a>
     </div>
   </header>
 
   <main>
-    <div class="wrap hero">
-      <div class="kicker"><img src="/icon.svg" alt="">A plugin for Zotero 7 and later</div>
-      <h1>The plugin directory, inside Zotero.</h1>
-      <p class="lede">Zotero Atlas finds and installs plugins from <a href="https://zoteroplugins.org">zoteroplugins.org</a> without leaving Zotero, installs exactly the file the directory checked, and keeps watching the plugins you have. Free, open source, and graded by the same rules as every other plugin.</p>
-      <div class="actions">
-        <a class="btn primary" href="https://github.com/iliasbeshimov/zotero-atlas/releases/latest">Download the latest release</a>
-        <a class="btn" href="https://zoteroplugins.org/p/zotero-atlas">Its card on zoteroplugins.org</a>
-      </div>
-      <p class="meta"><span>Zotero 7 to 11</span><span>MIT licence</span><span>Reproducible build</span><span>Nothing sent unless you say so</span></p>
-      <div class="howto">Download the <code>.xpi</code> file, then in Zotero open <strong>Tools → Plugins</strong>, click the gear and choose <strong>Install Plugin From File</strong>. Afterwards it lives under <strong>Tools → Zotero Atlas</strong>, and as a button by the sync button.</div>
-    </div>
-
-    <section id="what">
-      <div class="wrap">
-        <div class="sh"><h2>What it does</h2></div>
-        <div class="cards three">
-          <div class="card">
-            <h3>Find</h3>
-            <p>Lists every plugin in the directory, about 1,500 of them, filtered to your Zotero version by default, with each plugin's grade and the one line that explains it. Search, or pick a job: reading, citing, AI, translation, organising, metadata, interface, files.</p>
+    <section class="hero" aria-labelledby="h-hero">
+      <div class="wrap hero-top">
+        <div>
+          <p class="eyebrow"><i aria-hidden="true"></i>Free plugin for Zotero 7 to 11</p>
+          <h1 id="h-hero">Every Zotero plugin, one click away. <span>Each one checked first.</span></h1>
+        </div>
+        <div class="hero-side">
+          <p class="lede">Zotero Atlas brings the <a href="https://zoteroplugins.org">zoteroplugins.org</a> catalogue into Zotero. Search <b>1,500+ plugins</b>, see what each one's code does, and install in one click.</p>
+          <div class="cta-row">
+            <a class="btn" href="/install?start"><svg width="20" height="20" aria-hidden="true"><use href="#i-dl"/></svg>Download Zotero Atlas</a>
+            <a class="textlink" href="/install">How to install</a>
           </div>
-          <div class="card">
-            <h3>Install the file that was checked</h3>
-            <p>Install hands the release file to Zotero's own installer together with the SHA-256 of the file the directory analysed. Zotero refuses the file if it doesn't match, so what you get is exactly what the card describes. A file nobody has analysed can't be installed from here.</p>
-          </div>
-          <div class="card">
-            <h3>Hold updates until they're checked</h3>
-            <p>Zotero installs plugin updates by itself without looking at what changed. With holding on, the recommended choice, an update whose file the directory analysed, and that isn't graded lower than what you have, installs as usual, usually within a day. Anything else waits for you. Plugins the directory doesn't list are never held.</p>
-          </div>
-          <div class="card">
-            <h3>Go back after an update</h3>
-            <p>Each update of the past month is listed with a way back to the version you had: the file the directory checked. After that, its updates wait until you choose.</p>
-          </div>
-          <div class="card">
-            <h3>Only what needs you</h3>
-            <p>A blocked plugin, or one on the directory's list of known security problems, gets a bar above your library until you deal with it. A held update or a grade drop gets one notice and a red dot on the Atlas button. The rest waits quietly in "Your plugins".</p>
-          </div>
-          <div class="card">
-            <h3>Grades in Tools → Plugins</h3>
-            <p>Every plugin in Zotero's own Plugins window gets its grade by its name, or "Not listed" when the directory doesn't list it and so Atlas can't check it. A line appears only when there's something to know.</p>
-          </div>
+          <p class="micro">Version 1.0 · 119 KB · Mac, Windows, Linux</p>
         </div>
       </div>
-    </section>
 
-    <section id="why">
       <div class="wrap">
-        <div class="sh"><h2>Why we built it</h2></div>
-        <div class="prose">
-          <p>Zotero has no plugin store. People find plugins through a wiki page, forum threads and GitHub, and install files they have no way to check. Most plugins are fine. Some ask for far more than they need, some quietly send data to servers nobody mentioned, and a plugin that was fine when you installed it can change hands or change behaviour in an update you never read.</p>
-          <p><a href="https://zoteroplugins.org">zoteroplugins.org</a> already reads every plugin's latest release and gives it one grade, with the findings in plain language. But a grade on a website helps only at the moment you look. Atlas puts the same grades where the decisions happen: when you choose a plugin, when you install it, and every day after, when an update arrives that you didn't ask to see.</p>
-          <p>We would rather people got their plugins from somewhere that checks them than from a link in a forum thread. That is the whole idea.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="values">
-      <div class="wrap">
-        <div class="sh"><h2>What we hold to</h2></div>
-        <div class="cards">
-          <div class="card">
-            <div class="n">01</div>
-            <h3>Nothing about you</h3>
-            <p>It never sends your library, notes, files, Zotero account, email or anything that identifies you. There is no account, no sign-in, and no identifier that could be tied back to a person.</p>
-          </div>
-          <div class="card">
-            <div class="n">02</div>
-            <h3>One list, and your choice</h3>
-            <p>The only thing it can ever send is your list of installed plugins, and only while "Send my plugin list" is chosen. That's the default answer on the first-run screen. Pick "Don't send" there, or any time later, and it sends nothing more and asks the server to delete the record.</p>
-          </div>
-          <div class="card">
-            <div class="n">03</div>
-            <h3>Install what was checked, not what's there today</h3>
-            <p>Every install carries the hash of the file the directory analysed. If the file at the address has changed since, Zotero refuses it. That closes the gap between "we read this" and "you installed that".</p>
-          </div>
-          <div class="card">
-            <div class="n">04</div>
-            <h3>The same rules as everyone</h3>
-            <p>Atlas is listed and graded on zoteroplugins.org by the same pipeline as the other plugins. Nothing on its card is edited by hand, and the card says who makes it. See <a href="#grade">its grade</a> below.</p>
-          </div>
-          <div class="card">
-            <div class="n">05</div>
-            <h3>Nothing hidden</h3>
-            <p>The plugin is a few plain JavaScript files zipped as they are, with nothing compiled or bundled. Anyone can rebuild it byte for byte from the tagged source, and each release carries GitHub's build attestation. The server's code is public too.</p>
-          </div>
-          <div class="card">
-            <div class="n">06</div>
-            <h3>Kept private</h3>
-            <p>What people choose to send is never published. We read it as counts: how many installs report, and how many have each plugin. That tells us which plugins people actually use, and it can't tell us who.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="grade">
-      <div class="wrap">
-        <div class="sh"><h2>Its own grade: B</h2><span class="mono-sm">Set by the directory's pipeline, not by us</span></div>
-        <div class="grade">
-          <div class="tile">
-            <div class="letter">B</div>
-            <div class="label">Use with care</div>
-            <div class="sub">Read why before installing</div>
-            <div class="ladder"><span>A+</span><span>A</span><span class="on">B</span><span>C</span></div>
-            <a href="https://zoteroplugins.org/p/zotero-atlas"><img src="https://zoteroplugins.org/badge/zotero-atlas.svg" alt="Live grade badge from zoteroplugins.org"></a>
-          </div>
-          <div class="prose">
-            <p>On zoteroplugins.org, Zotero Atlas is graded <strong>B</strong>. Three findings put it there, and all three are the point of the plugin:</p>
-            <div class="finding"><span class="tag">medium</span><b>Sends usage data to zoteroatlas.com.</b> Under the directory's rules, a plugin that can send usage data to its developer's server rates "medium", whether the sending is opt-in or not. Atlas can, so it does.</div>
-            <div class="finding"><span class="tag">medium</span><b>Installs other add-ons.</b> Installing software is a powerful capability, and the rules rate it medium however carefully it is done: here from a hash-checked catalogue, after asking you.</div>
-            <div class="finding"><span class="tag">medium</span><b>Changes other plugins.</b> Holding another plugin's update, or turning one off, rates medium for every plugin that does it. Atlas holds updates only if you choose to, and turns a plugin off only when you click "Turn it off".</div>
-            <div class="ok"><span class="tag">low</span>Everything else came out low: readable code uploaded by the project's own GitHub build, updates from the project's repository, no credentials stored, and it works with the current Zotero.</div>
-            <p>An A would need all three gone, which means a plugin that installs nothing, changes nothing and can report nothing. We would rather say plainly what it does and take the B. It is the grade we would give anyone else with the same code.</p>
-            <p>We did not bend the rules for ourselves. The grade is computed by the same pipeline, from the same release file, with the same thresholds as the other plugins, and the card carries a note that the directory's own team makes it. If a rule ever changes, the change applies to every plugin and shows up in the public <a href="https://zoteroplugins.org/log">grade log</a>. The card also notes that Atlas hasn't yet been through the directory's live test in a running Zotero; that test is what separates A+ from A, and doesn't change a B.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="privacy">
-      <div class="wrap">
-        <div class="sh"><h2>What it sends, and what it never sends</h2><a class="mono-sm" href="/privacy">Full privacy page →</a></div>
-        <p class="never">It never sends your library, notes, files, Zotero account, email or anything that identifies you.</p>
-        <div class="two">
-          <div>
-            <h3>The one thing it sends, unless you choose "Don't send"</h3>
-            <p class="muted">Your list of installed plugins, with versions and whether each is enabled, under a random ID made on your computer, plus your Zotero version, operating system and the plugin's version. It goes to zoteroatlas.com when you turn it on, when the list changes, and once a week. This is the whole message:</p>
-<pre><code>{
-  "id": "4c9d3b2e-…",          random, made on your computer
-  "atlas": "1.0.0",
-  "zotero": "7.0.32",
-  "os": "mac",
-  "event": "weekly",
-  "plugins": [
-    { "id": "zoterostyle@polygon.org", "version": "5.0.0", "enabled": true },
-    …
-  ]
-}</code></pre>
-          </div>
-          <div>
-            <h3>Whatever you choose</h3>
-            <ul class="tight muted">
-              <li>It fetches the directory's catalogue once a day, and its list of known security problems every 6 hours, from GitHub, the directory's public repository. No account, no identifier.</li>
-              <li>When you click Install, or go back to an earlier version, Zotero downloads the plugin file from GitHub, as it would for any plugin.</li>
-              <li>When you post a rating, it goes to zoteroatlas.com: the plugin, your stars and review, and a scrambled ID for this Zotero. No account. See the <a href="/privacy">privacy page</a>.</li>
-              <li>Nothing else is contacted. The server never stores your IP address, and deletes an install not heard from in 180 days.</li>
-              <li>"Show what would be sent" in Zotero's settings shows your exact message. Uninstalling removes everything the plugin stored on your computer; to delete what the server holds, choose "Don't send" first.</li>
+        <div class="stage">
+          <div class="win" id="demo" role="group" aria-label="Zotero Atlas, Find plugins (a working example)">
+            <div class="win-title" aria-hidden="true"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="win-name">Zotero Atlas</span></div>
+            <div class="win-bar">
+              <img src="/icon.svg" alt="" width="24" height="24">
+              <span class="tab on">Find plugins</span>
+              <span class="tab">Your plugins</span>
+              <span class="refresh" aria-hidden="true">Refresh</span>
+            </div>
+            <div class="win-tools">
+              <div class="search">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5a6070" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                <span class="q-text" id="q-text">translate a PDF</span><span class="caret" aria-hidden="true"></span>
+              </div>
+              <span class="sel" aria-hidden="true">All jobs</span>
+              <span class="sel sort" aria-hidden="true">Most downloaded</span>
+              <span class="works"><span class="cb on" aria-hidden="true"></span>Works with Zotero 10.0.8</span>
+            </div>
+            <ul class="results" id="results" aria-live="polite">
+              <li class="res"><div class="res-main"><div class="res-name"><span class="pill gB">B</span><b>Translate for Zotero</b><small>2.4.8 · 11.5M downloads</small></div><p class="res-sum">Translates text as you select it in the PDF, EPUB or web reader, plus titles, abstracts, annotations and notes, using 20+ services.</p><p class="res-why">Grade B: it sends your text or keys unencrypted (http://) to api.fanyi.baidu.com, api.interpreter.caiyunai.com and 2 more.</p><p class="res-links"><span>Full card on zoteroplugins.org</span><span>GitHub</span></p></div><div class="res-act"><button class="ui-btn primary" type="button">Install</button></div></li>
+              <li class="res"><div class="res-main"><div class="res-name"><span class="pill gB">B</span><b>Zotero PDF2zh</b><small>4.1.8 · 827K downloads</small></div><p class="res-sum">Translates entire PDFs with PDFMathTranslate, keeping equations and layout intact, and attaches bilingual copies to the item.</p><p class="res-why">Grade B: a zotero:// link (a web page can open one) can make it install add-ons without asking you, and 1 more finding.</p><p class="res-links"><span>Full card on zoteroplugins.org</span><span>GitHub</span></p></div><div class="res-act"><button class="ui-btn primary" type="button">Install</button></div></li>
+              <li class="res"><div class="res-main"><div class="res-name"><span class="pill gAp">A+</span><b>PDF Translate</b><small>1.2.0 · 3K downloads</small></div><p class="res-sum">Shows a translate button when you select text in the PDF or EPUB reader and opens a floating translation card beside it.</p><p class="res-why">Grade A+: every code check came out low, and our live test in Zotero found nothing unexpected.</p><p class="res-links"><span>Full card on zoteroplugins.org</span><span>GitHub</span></p></div><div class="res-act"><button class="ui-btn primary" type="button">Install</button></div></li>
             </ul>
           </div>
+          <div class="try" id="try">
+            <span>Try a search:</span>
+            <button type="button" data-q="translate" aria-pressed="true">translate a PDF</button>
+            <button type="button" data-q="dup" aria-pressed="false">merge duplicates</button>
+            <button type="button" data-q="notes" aria-pressed="false">notes in Notion or Obsidian</button>
+            <button type="button" data-q="chat" aria-pressed="false">chat with a PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap strip" aria-label="Some of the plugins in the catalogue">
+        <span class="strip-label">In the catalogue</span>
+        <ul>
+          <li><span class="pill gB">B</span>Better BibTeX</li>
+          <li><span class="pill gB">B</span>Better Notes</li>
+          <li><span class="pill gAp">A+</span>Zoplicate</li>
+          <li><span class="pill gAp">A+</span>Notero</li>
+          <li><span class="pill gA">A</span>Linter for Zotero</li>
+          <li><span class="pill gA">A</span>Actions and Tags</li>
+        </ul>
+        <span class="more">and 1,541 more</span>
+      </div>
+    </section>
+
+    <section class="sec" id="grades" aria-labelledby="h-grades">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="h-grades">Know what a plugin does before you install it.</h2>
+          <p><a href="https://zoteroplugins.org/how-we-grade">zoteroplugins.org</a> reads the code of every release and grades it. Atlas shows that grade wherever you pick a plugin.</p>
+        </div>
+        <div class="grades">
+          <div class="panel stat">
+            <p class="stat-num">751 <span>of 1,547</span></p>
+            <p class="stat-cap">plugins have <b>a finding worth reading</b> before you install them.</p>
+            <div class="bar" role="img" aria-label="Grades of 1,547 plugins: 179 A+, 617 A, 675 B, 76 C"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span></div>
+            <ul class="legend">
+              <li><span class="pill gAp">A+</span><b>179</b>Tested in Zotero</li>
+              <li><span class="pill gA">A</span><b>617</b>Recommended</li>
+              <li><span class="pill gB">B</span><b>675</b>Use with care</li>
+              <li><span class="pill gC">C</span><b>76</b>Not recommended</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <ul class="examples">
+              <li class="ex"><span class="pill gAp lg">A+</span><h3>Zoplicate <small>merges duplicates</small></h3><p>Every code check came out low, and our live test in Zotero found nothing unexpected.</p></li>
+              <li class="ex"><span class="pill gA lg">A</span><h3>Linter for Zotero <small>cleans metadata</small></h3><p>Every code check came out low.</p></li>
+              <li class="ex"><span class="pill gB lg">B</span><h3>Translate for Zotero <small>translates as you read</small></h3><p>Sends your text or keys unencrypted (http://) to api.fanyi.baidu.com, api.interpreter.caiyunai.com and 2 more.</p></li>
+              <li class="ex"><span class="pill gC lg">C</span><h3>Ethereal Reference <small>lists a paper's references</small></h3><p>Runs encrypted code we can't read.</p></li>
+            </ul>
+            <p class="ex-src">Real grades from zoteroplugins.org, updated every night.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="check">
+    <section class="sec" id="inside" aria-labelledby="h-inside">
       <div class="wrap">
-        <div class="sh"><h2>Check what you install</h2></div>
-        <div class="cards three">
-          <div class="card">
-            <h3>Unzip and compare</h3>
-            <p>The <code>.xpi</code> is a zip of the files in the repository's <code>src/</code> folder, unchanged. Rename it to <code>.zip</code> if your computer won't open it and compare with the tagged source.</p>
+        <div class="sec-head">
+          <h2 id="h-inside">Grades in Zotero's own Plugins window.</h2>
+          <p>Nothing new to learn. Atlas adds to the window you already use.</p>
+        </div>
+        <div class="duo">
+          <div class="stage">
+            <div class="pw" role="img" aria-label="Zotero's Plugins window with a grade by each plugin, a held update, a recent update with a way back, and a working version offered for a plugin Zotero turned off">
+              <div class="win-title"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="win-name">Plugins</span></div>
+              <div class="pw-body">
+                <div class="pw-top">
+                  <h3>Manage Your Plugins</h3>
+                  <span class="mk">3</span>
+                  <span class="ui-btn grey">Find more plugins</span>
+                  <span class="gear"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d4250" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></span>
+                </div>
+                <p class="pw-sec">Enabled</p>
+                <div class="pcard">
+                  <div class="ico">PD</div>
+                  <div class="pc-main">
+                    <div class="nm"><b>Paper Digest</b><span class="pill gA">A</span><span class="mk">2</span></div>
+                    <div class="desc">Summarises the open paper and drafts reading notes.</div>
+                    <div class="note"><span class="d"></span><span>Update 2.4.0 held: graded B, lower than the A of the version you have.</span></div>
+                    <div class="note-act"><span class="ui-btn grey">Review</span></div>
+                  </div>
+                  <span class="sw"></span>
+                </div>
+                <div class="pcard">
+                  <div class="ico">N</div>
+                  <div class="pc-main">
+                    <div class="nm"><b>Notero</b><span class="pill gAp">A+</span><span class="mk">1</span></div>
+                    <div class="desc">Sync Zotero items and notes into Notion.</div>
+                  </div>
+                  <span class="sw"></span>
+                  <div class="tip"><b>Zotero Plugins grade A+</b>: every code check came out low, and our live test in Zotero found nothing unexpected.</div>
+                </div>
+                <div class="pcard">
+                  <div class="ico">BB</div>
+                  <div class="pc-main">
+                    <div class="nm"><b>Better BibTeX for Zotero</b><span class="pill gB">B</span></div>
+                    <div class="desc">Citation keys, and BibTeX and BibLaTeX export for LaTeX and Markdown.</div>
+                    <div class="note"><span class="d grey"></span><span>Updated from 9.0.76 on Nov 3. No new findings.</span></div>
+                    <div class="note-act"><span class="ui-btn grey">Go back to 9.0.76</span></div>
+                  </div>
+                  <span class="sw"></span>
+                </div>
+                <p class="pw-sec">Disabled</p>
+                <div class="pcard">
+                  <div class="ico">RT</div>
+                  <div class="pc-main">
+                    <div class="nm"><b>Reading Timer</b><span class="pill gA">A</span></div>
+                    <div class="note"><span class="d"></span><span>Turned off by Zotero: 1.9.0 doesn't work with Zotero 10. Version 2.2.0 does, and we've checked it.</span></div>
+                    <div class="note-act"><span class="ui-btn primary">Install 2.2.0</span></div>
+                  </div>
+                  <span class="sw off"></span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="card">
-            <h3>Rebuild it</h3>
-            <p><code>python3 build.py</code> on the tagged commit makes a byte-identical file on any system. Compare its SHA-256 with the download's.</p>
-          </div>
-          <div class="card">
-            <h3>Check where it was built</h3>
-            <p>Each release is built by the public release workflow from the tagged commit and carries GitHub's attestation: <code>gh attestation verify &lt;file&gt; --repo iliasbeshimov/zotero-atlas</code>.</p>
-          </div>
+          <ul class="keys">
+            <li><span class="mk">1</span><span><b>A grade by each plugin</b>Hover for the reason. Plugins the catalogue doesn't list say so.</span></li>
+            <li><span class="mk">2</span><span><b>One line when there's news</b>A held update, a way back, a version that works.</span></li>
+            <li><span class="mk">3</span><span><b>Find more plugins</b>Opens Atlas.</span></li>
+            <li class="quiet">When all is well: no banners, no counts. Just the grades.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="watch" aria-labelledby="h-watch">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="h-watch">Bad updates wait. Good ones install as usual.</h2>
+          <p>Zotero installs plugin updates without looking at what changed. Atlas looks first, and speaks up only when something needs you.</p>
+        </div>
+        <div class="pair">
+          <figure class="shot">
+            <div class="stage">
+              <div class="ucard warn" role="img" aria-label="Paper Digest update 2.4.0 held because it is graded B, lower than the A of the installed version. Buttons: Update anyway, Keep 2.3.1.">
+                <div class="uhead"><b>Paper Digest</b><span class="v">2.3.1 → 2.4.0</span><span class="uchip warn">Update held</span><a>Releases</a></div>
+                <p>Update 2.4.0 held: graded B, lower than the A of the version you have.</p>
+                <div class="ufoot">
+                  <span class="sm">Held since Nov 5. Without Atlas, Zotero would have installed it.</span>
+                  <span class="btns"><span class="ui-btn">Update anyway</span><span class="ui-btn primary">Keep 2.3.1</span></span>
+                </div>
+              </div>
+            </div>
+            <figcaption><span><b>An update graded lower waits for you.</b> Checked updates that aren't worse install as usual.</span><span class="tagx">Example</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="stage">
+              <div class="tabbar" role="img" aria-label="Zotero's toolbar with the Zotero Atlas button showing a red dot">
+                <span class="lib"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4b4b52" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-5 9 5"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg>My Library</span>
+                <span class="grow"></span>
+                <span class="tbb on"><svg width="18" height="17" fill="#55555c" aria-hidden="true"><use href="#shelf-mono"/></svg><span class="dot"></span></span>
+                <span class="tbb"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#55555c" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8"/><path d="M4 3v5h5"/><path d="M4 13a8 8 0 0 0 14.5 4.5L20 16"/><path d="M20 21v-5h-5"/></svg></span>
+              </div>
+              <div class="ucard bad" role="img" aria-label="QuickCite Helper 1.2.0 has a known security problem: it uploads your library to a server its developer doesn't name. Buttons: Turn it off, What we know.">
+                <div class="uhead"><b>QuickCite Helper</b><span class="v">1.2.0</span><span class="uchip bad">Known security problem</span></div>
+                <p>QuickCite Helper 1.2.0 uploads your library to a server its developer doesn't name. Turn it off; there's no fixed version yet.</p>
+                <div class="btns"><span class="ui-btn danger">Turn it off</span><span class="ui-btn">What we know</span></div>
+              </div>
+            </div>
+            <figcaption><span><b>A plugin you have turns out unsafe? You'll know within hours.</b> With the fix, if there is one.</span><span class="tagx">Example</span></figcaption>
+          </figure>
+        </div>
+        <ul class="under">
+          <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Go back to the version you had, in one click</li>
+          <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Offers a version that works when Zotero turns one off</li>
+          <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg>Nothing changes until you choose</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="band" id="install" aria-labelledby="h-install">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="h-install">Installed in under a minute.</h2>
+          <p>Zotero installs plugins from a file. Three steps, once.</p>
+        </div>
+        <ol class="steps">
+          <li class="step">
+            <div class="step-h"><span class="step-n">01</span><h3>Download the file</h3></div>
+            <div class="ill">
+              <div class="file">
+                <svg class="file-ico" viewBox="0 0 34 42" aria-hidden="true"><path d="M3 1h20l10 10v28a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2z" fill="#f4ecdc" stroke="#1c1917" stroke-width="1.5"/><path d="M23 1v10h10" fill="none" stroke="#1c1917" stroke-width="1.5"/><text x="17" y="31" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="8" font-weight="700" fill="#c7361f">XPI</text></svg>
+                <div><div class="file-name">zotero-atlas-1.0.0.xpi</div><div class="file-meta"><svg width="13" height="13" aria-hidden="true"><use href="#i-check"/></svg>119 KB · downloaded</div></div>
+              </div>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step-h"><span class="step-n">02</span><h3>Tools → Plugins → gear <span>→ Install Plugin From File</span></h3></div>
+            <div class="ill">
+              <div class="menu" aria-hidden="true">
+                <div class="menu-h">Manage Your Plugins<span class="gear"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#173d8f" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></span></div>
+                <div class="mi"><span class="ic"></span>Check for Updates</div>
+                <div class="mi on"><span class="ic"></span>Install Plugin From File…</div>
+                <div class="msep"></div>
+                <div class="mi"><span class="ic"><svg width="12" height="12"><use href="#i-check"/></svg></span>Update Plugins Automatically</div>
+              </div>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step-h"><span class="step-n">03</span><h3>Open it from <span>Tools → Zotero Atlas</span></h3></div>
+            <div class="ill">
+              <div class="menu" aria-hidden="true">
+                <div class="menu-h">Tools</div>
+                <div class="mi"><span class="ic"></span>Install Browser Connector…</div>
+                <div class="mi"><span class="ic"></span>Plugins</div>
+                <div class="mi on"><span class="ic"><img src="/icon.svg" alt=""></span>Zotero Atlas…</div>
+                <div class="mi"><span class="ic"></span>Developer<span class="ch">›</span></div>
+              </div>
+            </div>
+          </li>
+        </ol>
+        <div class="install-cta">
+          <a class="btn" href="/install?start"><svg width="20" height="20" aria-hidden="true"><use href="#i-dl"/></svg>Download Zotero Atlas</a>
+          <span class="micro">Free · Zotero 7 to 11 · Mac, Windows, Linux</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec tight" id="trust" aria-labelledby="h-trust">
+      <div class="wrap">
+        <h2 id="h-trust" class="sr">Privacy and trust</h2>
+        <ul class="trust">
+          <li>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>
+            <b>Never sends your library, notes or files</b>
+            <span>Or anything that identifies you. <a href="/privacy">What it sends</a></span>
+          </li>
+          <li>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/><path d="M3 3l18 18"/></svg>
+            <b>No account</b>
+            <span>No sign-in, no email.</span>
+          </li>
+          <li>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 7L3.5 12l5 5M15.5 7l5 5-5 5"/></svg>
+            <b>Open source</b>
+            <span>Rebuild it byte for byte from the code. <a href="https://github.com/iliasbeshimov/zotero-atlas">Source</a></span>
+          </li>
+          <li>
+            <span class="pill gB lg">B</span>
+            <b>Graded by the same rules</b>
+            <span>Atlas gets a B, like any plugin that installs or changes others. <a href="/trust">Why</a></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="sec tight" id="faq" aria-labelledby="h-faq">
+      <div class="wrap">
+        <div class="sec-head"><h2 id="h-faq">Questions</h2></div>
+        <div class="faq">
+          <details><summary>Is it free?</summary><p>Yes. Free and open source under the MIT licence.</p></details>
+          <details><summary>Which Zotero versions does it work with?</summary><p>Zotero 7 to 11, on Mac, Windows and Linux.</p></details>
+          <details><summary>Where do the grades come from?</summary><p>From <a href="https://zoteroplugins.org">zoteroplugins.org</a>, the catalogue Atlas reads. It reads the code of every plugin's latest release, every night, with the same rules for every plugin. <a href="https://zoteroplugins.org/how-we-grade">How plugins are graded</a></p></details>
+          <details><summary>Will it change my plugins without asking?</summary><p>No. At first run you choose whether Atlas may hold updates until they're checked. It turns a plugin off only when you click "Turn it off", and plugins the catalogue doesn't list are never held.</p></details>
+          <details><summary>What does it send?</summary><p>Never your library, notes, files, Zotero account or anything that identifies you. By default it sends the list of plugins you have, under a random ID, so we can see which plugins people use. "Don't send" is one click, any time. <a href="/privacy">Full details</a></p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final" aria-labelledby="h-final">
+      <div class="wrap">
+        <img class="mark" src="/icon.svg" alt="" width="88" height="88">
+        <h2 id="h-final">Your next plugin is one search away. <span>Already checked.</span></h2>
+        <div>
+          <a class="btn" href="/install?start"><svg width="20" height="20" aria-hidden="true"><use href="#i-dl"/></svg>Download Zotero Atlas</a>
+          <p class="micro">Free · Version 1.0 · 119 KB</p>
         </div>
       </div>
     </section>
@@ -199,14 +353,16 @@
 
   <footer>
     <div class="wrap">
-      <div class="links">
+      <nav aria-label="Footer">
         <a href="https://github.com/iliasbeshimov/zotero-atlas">Source</a>
         <a href="https://github.com/iliasbeshimov/zotero-atlas/issues">Report a problem</a>
+        <a href="/install">Install guide</a>
+        <a href="/trust">Its grade</a>
         <a href="/privacy">Privacy</a>
+        <button type="button" class="linkish" data-consent-open>Analytics settings</button>
         <a href="https://zoteroplugins.org">zoteroplugins.org</a>
-        <a href="https://zoteroplugins.org/how-we-grade">How plugins are graded</a>
-      </div>
-      <p>Zotero Atlas is made by the people who run zoteroplugins.org. It is not affiliated with Zotero or the Corporation for Digital Scholarship. Zotero is a trademark of the Corporation for Digital Scholarship. The plugin never loads anything from Google; this website counts visits with Google Analytics, in Europe only if you accept (<a href="/privacy#website">more</a>).</p>
+      </nav>
+      <p>Zotero Atlas is made by the people who run zoteroplugins.org. It is not affiliated with Zotero or the Corporation for Digital Scholarship. Zotero is a trademark of the Corporation for Digital Scholarship.</p>
     </div>
   </footer>
 </body>

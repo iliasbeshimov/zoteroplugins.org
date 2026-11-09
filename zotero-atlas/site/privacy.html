@@ -7,27 +7,37 @@
   <meta name="description" content="What the Zotero Atlas plugin sends, what it never sends, what the server keeps, and how to turn it off and delete your record.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="canonical" href="https://zoteroatlas.com/privacy">
+  <link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/style.css">
   <script src="/consent.js" defer></script>
 </head>
 <body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
   <header class="top">
     <div class="wrap">
-      <a class="brand" href="/"><img src="/icon.svg" alt="">Zotero Atlas</a>
-      <nav>
-        <a href="/#what">What it does</a>
-        <a href="/#why">Why</a>
-        <a href="/#grade">Its grade</a>
+      <a class="brand" href="/"><img src="/icon.svg" alt="" width="30" height="30">Zotero Atlas</a>
+      <nav class="nav" aria-label="Site">
+        <a href="/#grades">Grades</a>
+        <a href="/#watch">Updates</a>
+        <a href="/install">Install</a>
         <a href="/privacy">Privacy</a>
         <a href="https://github.com/iliasbeshimov/zotero-atlas">GitHub</a>
       </nav>
+      <a class="btn sm" href="/install?start"><svg width="17" height="17" aria-hidden="true"><use href="#i-dl"/></svg>Download</a>
     </div>
   </header>
 
   <main>
     <article class="wrap">
-      <h1>Privacy</h1>
-      <p class="muted">What the plugin sends, what it never sends, what the server keeps, and how to stop. Written to be checked against the code: the plugin is in <a href="https://github.com/iliasbeshimov/zotero-atlas/tree/main/src">src/</a>, the server in <a href="https://github.com/iliasbeshimov/zotero-atlas/tree/main/server">server/</a>.</p>
+      <div class="page-head">
+      <p class="eyebrow"><i aria-hidden="true"></i>Privacy</p>
+      <h1>What it sends, and what it never sends.</h1>
+      <p class="lede">What the plugin sends, what it never sends, what the server keeps, and how to stop. Written to be checked against the code: the plugin is in <a href="https://github.com/iliasbeshimov/zotero-atlas/tree/main/src">src/</a>, the server in <a href="https://github.com/iliasbeshimov/zotero-atlas/tree/main/server">server/</a>.</p>
+      </div>
 
       <p class="never">Zotero Atlas never sends your library, notes, files, Zotero account, email or anything that identifies you.</p>
 
@@ -77,7 +87,7 @@
         <p>In the European Economic Area, the UK and Switzerland, the website runs no analytics and loads nothing from Google unless you accept the question at the bottom of the page. Elsewhere it counts visits with Google Analytics unless you turn it off, and it stays off if your browser sends a Global Privacy Control signal. To tell which applies, the page asks Cloudflare, which hosts the site, for the country of your connection; only the country is used, and it isn't stored anywhere but your browser for the session.</p>
         <p>When it's on, the website loads Google Analytics through Google Tag Manager. Google then gets your IP address, your browser and device, the page you came from, and the pages you view here, and sets its cookies (<code>_ga</code>). It tells us which pages people read and how they found the site. There are no accounts and no ads.</p>
         <p>Your choice is kept in your browser's storage, not in a cookie. You can <button type="button" class="linkish" data-consent-open>change it</button> at any time; turning analytics off deletes Google's cookies.</p>
-        <p>Apart from that, the website loads nothing from third parties: the fonts are your system's, and everything else is served from here. The one image from elsewhere is the live grade badge, loaded from zoteroplugins.org, which we also run. Cloudflare sees requests the way any host does.</p>
+        <p>Apart from that, the website loads nothing from third parties: the fonts and everything else are served from here. The one image from elsewhere is the live grade badge, loaded from zoteroplugins.org, which we also run. Cloudflare sees requests the way any host does.</p>
 
         <h2>Questions</h2>
         <p>Open an issue at <a href="https://github.com/iliasbeshimov/zotero-atlas/issues">github.com/iliasbeshimov/zotero-atlas/issues</a>.</p>
@@ -85,14 +95,17 @@
     </article>
   </main>
 
-  <footer>
+  <footer class="ruled">
     <div class="wrap">
-      <div class="links">
+      <nav aria-label="Footer">
         <a href="https://github.com/iliasbeshimov/zotero-atlas">Source</a>
         <a href="https://github.com/iliasbeshimov/zotero-atlas/issues">Report a problem</a>
         <a href="/">Home</a>
+        <a href="/install">Install guide</a>
+        <a href="/trust">Its grade</a>
+        <button type="button" class="linkish" data-consent-open>Analytics settings</button>
         <a href="https://zoteroplugins.org">zoteroplugins.org</a>
-      </div>
+      </nav>
       <p>Zotero Atlas is made by the people who run zoteroplugins.org. It is not affiliated with Zotero or the Corporation for Digital Scholarship. Zotero is a trademark of the Corporation for Digital Scholarship.</p>
     </div>
   </footer>
