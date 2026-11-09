@@ -1,0 +1,178 @@
+---
+import GradeTag from "../../components/GradeTag.astro";
+import Guide from "../../layouts/Guide.astro";
+import { CURRENT_ZOTERO_MAJOR } from "../../lib/atlas.ts";
+import { breadcrumb, modifiedAt, PUBLISHER } from "../../lib/guides.ts";
+import { REPO, SITE } from "../../lib/links.ts";
+import { countWord, PACKS, packPath, packPdf, packPdfName, packTitle, resolvePack } from "../../lib/packs.ts";
+
+/** The plugin packs: one card per kind of reader, each naming its plugins and linking its PDF. */
+const path = "/for";
+const h1 = "Zotero plugin packs for students and researchers";
+const cur = CURRENT_ZOTERO_MAJOR();
+const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
+const description = `Five or six Zotero plugins for each stage of academic work: undergraduates, master's students, PhD students, and researchers and faculty. Each plugin is graded B or better after a check of its code and works with Zotero ${cur}.`;
+const suggest = `${REPO}/issues/new?title=${encodeURIComponent("Plugin pack suggestion")}`;
+
+const graph = [
+  {
+    "@type": "CollectionPage",
+    "@id": `${SITE}${path}`,
+    url: `${SITE}${path}`,
+    name: h1,
+    description,
+    dateModified: modifiedAt(path),
+    isPartOf: { "@type": "WebSite", name: "Zotero Plugins Atlas", url: `${SITE}/` },
+    publisher: PUBLISHER,
+    hasPart: packs.map(({ pack }) => ({ "@type": "CollectionPage", name: packTitle(pack), url: `${SITE}${packPath(pack)}` })),
+  },
+  breadcrumb("Plugin packs", path),
+];
+---
+
+<Guide title="Zotero plugin packs for students and researchers · Zotero Plugins Atlas" description={description} h1={h1} crumb="Plugin packs" graph={graph} active="packs">
+  <Fragment slot="lead">
+    <p>
+      Five or six plugins for each stage of academic work, from a first essay to a research group. Each plugin is graded B or better after a check of its code, and works with Zotero {cur}. Every pack has a one-page PDF to print or share.
+    </p>
+  </Fragment>
+
+  <ul class="packs">
+    {
+      packs.map(({ pack, picks }) => (
+        <li class="pack">
+          <div class="head">
+            <h2><a href={packPath(pack)}>{pack.name}</a></h2>
+            <p>{pack.who}</p>
+          </div>
+          <ol class="mini">
+            {picks.map((k) => (
+              <li>
+                <GradeTag grade={k.plugin.grade} size="xs" />
+                <span>
+                  <a href={`/p/${k.plugin.slug}`}>{k.plugin.name}</a>
+                  <span class="task">{k.task}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+          <div class="acts">
+            <a class="btn btn-dark" href={packPath(pack)}>
+              See the {countWord(picks.length)} plugins
+            </a>
+            <a class="btn" href={packPdf(pack)} download={packPdfName(pack)}>
+              PDF
+            </a>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <section>
+    <h2>For librarians and instructors</h2>
+    <p class="prose">
+      The packs are free to use in research guides, workshops and orientation materials, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> with credit to zoteroplugins.org. Each PDF is one US Letter page and is rebuilt whenever a grade changes, so a link to it never goes stale. If your students rely on a plugin that isn't here, or you'd advise against one that is, <a href={suggest}>tell us</a>.
+    </p>
+  </section>
+
+  <section>
+    <h2>How we pick them</h2>
+    <p class="prose">
+      For each task a reader needs done, we choose a plugin graded B or better that works with Zotero {cur} and is still maintained, preferring a better grade, then wider use: downloads and GitHub stars. Plugins that download papers from shadow libraries are left out. If a plugin drops below B or stops working with the current Zotero, the next plugin for the task takes its place automatically until we review it. For every plugin that does a job, see <a href="/best">the best-graded plugins by job</a>.
+    </p>
+  </section>
+</Guide>
+
+<style>
+  .packs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .pack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--surface);
+  }
+  .head {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .head h2 {
+    border-top: 0;
+    padding-top: 0;
+    font-size: 26px;
+  }
+  .head h2 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .head h2 a:hover {
+    text-decoration: underline;
+  }
+  .head p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+  .mini {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+  .mini li {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+  }
+  .mini li > :first-child {
+    margin-top: 2px;
+  }
+  .mini li > span {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+  .mini a {
+    font-weight: 650;
+    font-size: 15.5px;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .mini a:hover {
+    text-decoration: underline;
+  }
+  .task {
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+  .acts {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 860px) {
+    .packs {
+      grid-template-columns: 1fr;
+    }
+    .pack {
+      padding: 18px;
+    }
+  }
+</style>

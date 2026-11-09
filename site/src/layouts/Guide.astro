@@ -14,16 +14,24 @@ interface Props {
   h1: string;
   /** The breadcrumb's last step. */
   crumb: string;
+  /** A step between Home and `crumb`, for a page under a list page. */
+  parent?: { name: string; path: string };
   /** JSON-LD nodes for the page's @graph. */
   graph: Record<string, unknown>[];
+  /** The header link to mark as the current section. */
+  active?: "packs";
 }
-const { title, description, h1, crumb, graph } = Astro.props;
+const { title, description, h1, crumb, parent, graph, active } = Astro.props;
 ---
 
 <Base title={title} description={description}>
-  <SiteHeader search />
+  <SiteHeader search active={active} />
   <main class="guide">
-    <nav aria-label="Breadcrumb" class="crumb"><a href="/">Home</a><span>›</span><span>{crumb}</span></nav>
+    <nav aria-label="Breadcrumb" class="crumb">
+      <a href="/">Home</a><span>›</span>
+      {parent && (<><a href={parent.path}>{parent.name}</a><span>›</span></>)}
+      <span>{crumb}</span>
+    </nav>
     <div class="intro">
       <h1>{h1}</h1>
       <div class="lead"><slot name="lead" /></div>

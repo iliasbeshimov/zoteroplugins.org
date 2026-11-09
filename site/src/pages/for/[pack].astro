@@ -1,0 +1,490 @@
+---
+import GradeTag from "../../components/GradeTag.astro";
+import Guide from "../../layouts/Guide.astro";
+import { allPlugins, CURRENT_ZOTERO_MAJOR, capFirst, fmtDate, type Plugin } from "../../lib/atlas.ts";
+import { breadcrumb, itemList, modifiedAt, PUBLISHER } from "../../lib/guides.ts";
+import { REPO, SITE } from "../../lib/links.ts";
+import { countWord, type Pack, PACKS, packPath, packPdf, packPdfName, packTitle, resolvePack } from "../../lib/packs.ts";
+
+/**
+ * One plugin pack: a task per row, the plugin for it and why this reader wants it. Printed (or
+ * rendered to /for/<slug>.pdf by scripts/pack-pdfs.mjs), the page becomes a one-page US Letter
+ * handout for library guides and workshops, with each plugin's address written out.
+ */
+export function getStaticPaths() {
+  return PACKS.map((pack) => ({ params: { pack: pack.slug }, props: { pack } }));
+}
+interface Props {
+  pack: Pack;
+}
+const { pack } = Astro.props;
+const picks = resolvePack(pack);
+const cur = CURRENT_ZOTERO_MAJOR();
+const path = packPath(pack);
+const n = picks.length;
+const h1 = packTitle(pack);
+const lead = `${capFirst(countWord(n))} plugins ${pack.lead}`;
+const grades = `Each is graded B or better after a check of its code, and works with Zotero ${cur}.`;
+const description = `${lead} ${grades}`;
+const updated = fmtDate(allPlugins()[0]?.checkedAt);
+const others = PACKS.filter((k) => k.slug !== pack.slug);
+const plugins = picks.map((k) => k.plugin);
+const meta = (p: Plugin) =>
+  [p.worksWith.length ? `Zotero ${p.worksRange}` : "", `${p.downloads} downloads`, `${p.stars} GitHub stars`, p.maint]
+    .filter(Boolean)
+    .join(" · ");
+const suggest = `${REPO}/issues/new?title=${encodeURIComponent(`Plugin pack suggestion (${pack.name})`)}&body=${encodeURIComponent(
+  `Which plugin should the ${pack.name} pack add or drop, and why?\n\n`,
+)}`;
+const host = SITE.replace(/^https:\/\//, "");
+
+const graph = [
+  {
+    "@type": "CollectionPage",
+    "@id": `${SITE}${path}`,
+    url: `${SITE}${path}`,
+    name: h1,
+    description,
+    dateModified: modifiedAt(path),
+    isPartOf: { "@type": "WebSite", name: "Zotero Plugins Atlas", url: `${SITE}/` },
+    publisher: PUBLISHER,
+    mainEntity: itemList(plugins),
+  },
+  breadcrumb(pack.name, path, { name: "Plugin packs", path: "/for" }),
+];
+---
+
+<Guide
+  title={`${h1}: a ${countWord(n)}-plugin pack · Zotero Plugins Atlas`}
+  description={description}
+  h1={h1}
+  crumb={pack.name}
+  parent={{ name: "Plugin packs", path: "/for" }}
+  graph={graph}
+  active="packs"
+>
+  <Fragment slot="lead">
+    <p class="print-only kicker">A plugin pack from {host} · checked {updated}</p>
+    <p>{lead}</p>
+    <p class="grades">{grades}</p>
+    <div class="acts screen-only">
+      <a class="btn btn-dark" href={packPdf(pack)} download={packPdfName(pack)}>Download the one-page PDF</a>
+      <a class="btn" href="/for">All plugin packs</a>
+    </div>
+  </Fragment>
+
+  <ol class="picks">
+    {
+      picks.map((k, i) => (
+        <li class="pick">
+          <span class="n" aria-hidden="true">{i + 1}</span>
+          <div class="pbody">
+            <div class="task">
+              <h2>{k.task}</h2>
+              {k.ifYou && <span class="if">If you {k.ifYou}</span>}
+            </div>
+            <div class="plug">
+              <GradeTag grade={k.plugin.grade} size="sm" />
+              <div class="pinfo">
+                <a href={`/p/${k.plugin.slug}`} class="name">{k.plugin.name}</a>
+                <p class="why">{k.why}</p>
+                {k.plugin.grade === "B" && (
+                  <p class="because">
+                    <span class="muted">B because </span>
+                    {k.plugin.because}
+                  </p>
+                )}
+                <span class="meta screen-only">{meta(k.plugin)}</span>
+                <span class="url print-only">{host}/p/{k.plugin.slug}</span>
+              </div>
+            </div>
+            {k.or && (
+              <div class="or">
+                <span class="or-if">Or, if you {k.or.ifYou}:</span>
+                <div class="plug">
+                  <GradeTag grade={k.or.plugin.grade} size="xs" />
+                  <div class="pinfo">
+                    <a href={`/p/${k.or.plugin.slug}`} class="name sm">{k.or.plugin.name}</a>
+                    <p class="why">{k.or.why}</p>
+                    {k.or.plugin.grade === "B" && (
+                      <p class="because">
+                        <span class="muted">B because </span>
+                        {k.or.plugin.because}
+                      </p>
+                    )}
+                    <span class="url print-only">{host}/p/{k.or.plugin.slug}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <footer class="print-only handout-foot">
+    <p>
+      <strong>Install:</strong> download each plugin's .xpi file from its page, then in Zotero choose Tools › Plugins, click the gear, and Install Plugin From File. Step by step: {host}/install
+    </p>
+    <p>
+      <strong>Grades</strong> come from a check of each plugin's code: A+ Recommended, tested in Zotero · A Recommended · B Use with care, read why first.
+    </p>
+    <p class="small-print">
+      Latest version: {host}{path} · Free to share under CC BY 4.0, credit {host} · Independent, not affiliated with Zotero
+    </p>
+  </footer>
+
+  <section class="screen-only">
+    <h2>Installing them</h2>
+    <p class="prose">
+      Each plugin is a single file ending in .xpi. Open a plugin's page, click Install and follow the steps, or read <a href="/install">how to install a plugin</a>. Install one at a time and restart Zotero if it asks, so that if something misbehaves you know which plugin did it.
+    </p>
+  </section>
+
+  <section class="screen-only">
+    <h2>How we picked them</h2>
+    <p class="prose">
+      For each task, we chose a plugin graded B or better that works with Zotero {cur} and is still maintained, preferring a better grade, then wider use: downloads and GitHub stars. Nobody has rated these plugins on the site yet; ratings will count once they have. Plugins that download papers from shadow libraries are left out. A B grade means one finding is worth reading before you install, and its reason is shown above. Picks are reviewed by hand; if one drops below B or stops working with the current Zotero, the next plugin for the task takes its place automatically until we review it. No plugin pays to appear. Grades come from a check of each plugin's code, described in <a href="/how-we-grade">How we grade</a>.
+    </p>
+  </section>
+
+  <section class="screen-only">
+    <h2>For librarians and instructors</h2>
+    <p class="prose">
+      Use this pack in research guides, workshops and orientation materials. The <a href={packPdf(pack)} download={packPdfName(pack)}>PDF</a> is one US Letter page, and it's free to copy and share under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> with credit to zoteroplugins.org. Is a plugin your students rely on missing, or one here you'd advise against? <a href={suggest}>Suggest a change to this pack</a>.
+    </p>
+  </section>
+
+  <section class="screen-only">
+    <h2>Other packs</h2>
+    <ul class="others">
+      {
+        others.map((k) => (
+          <li>
+            <a href={packPath(k)}>{k.name}</a>
+            <span>{k.who}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Guide>
+
+<style>
+  .acts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .grades {
+    font-size: 17px !important;
+  }
+  .print-only {
+    display: none;
+  }
+  .picks {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    max-width: 860px;
+  }
+  .pick {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 16px;
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+  }
+  .pick:first-child {
+    border-top: 2px solid var(--ink);
+  }
+  .n {
+    font: 700 22px/1.2 var(--font-mono);
+    color: var(--ink-3);
+  }
+  .pbody {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+  .task {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 12px;
+  }
+  .task h2 {
+    border-top: 0;
+    padding-top: 0;
+    font-size: 22px;
+  }
+  .if {
+    font-size: 13px;
+    font-weight: 650;
+    line-height: 1;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--line-strong);
+    white-space: nowrap;
+  }
+  .plug {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+  .plug > :first-child {
+    margin-top: 3px;
+  }
+  .pinfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .name {
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .name.sm {
+    font-size: 16px;
+  }
+  .name:hover {
+    text-decoration: underline;
+  }
+  .why,
+  .because {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .because {
+    font-size: 14.5px;
+  }
+  .muted {
+    color: var(--ink-3);
+  }
+  .meta,
+  .url {
+    font: 500 12.5px/1.45 var(--font-mono);
+    color: var(--ink-3);
+    overflow-wrap: anywhere;
+  }
+  .or {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 14px;
+    border: 1px dashed var(--line-strong);
+    border-radius: 12px;
+  }
+  .or-if {
+    font-size: 14px;
+    font-weight: 650;
+  }
+  .or .plug {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px;
+  }
+  .others {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 980px;
+  }
+  .others li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .others a {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .others span {
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+  @media (max-width: 860px) {
+    .others {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 600px) {
+    .pick {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .n {
+      font-size: 16px;
+    }
+    .plug {
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 12px;
+    }
+    .task h2 {
+      font-size: 20px;
+    }
+  }
+
+  /* The handout: one US Letter page, light colours whatever the screen's theme. */
+  @page {
+    size: letter;
+    margin: 0.4in 0.55in;
+  }
+  @media print {
+    :global(html:root:not([data-print])) {
+      color-scheme: light;
+      --bg: #fff;
+      --surface: #fff;
+      --surface-2: oklch(0.955 0.006 265);
+      --line: oklch(0.88 0.008 265);
+      --line-strong: oklch(0.72 0.012 265);
+      --ink: oklch(0.2 0.02 265);
+      --ink-2: oklch(0.33 0.02 265);
+      --ink-3: oklch(0.45 0.015 265);
+      --g-ap: oklch(0.38 0.08 170);
+      --g-ap-on: oklch(0.99 0 0);
+      --g-a: oklch(0.5 0.11 160);
+      --g-a-on: oklch(0.99 0 0);
+      --g-b: oklch(0.8 0.14 85);
+      --g-b-on: oklch(0.25 0.03 80);
+    }
+    :global(body) {
+      background: #fff !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    :global(.site-header),
+    :global(.site-footer),
+    :global(.crumb),
+    :global(.consent),
+    .screen-only {
+      display: none !important;
+    }
+    .print-only {
+      display: block;
+    }
+    :global(main.guide) {
+      padding: 0 !important;
+      gap: 10px !important;
+      max-width: none !important;
+    }
+    :global(main.guide h1) {
+      font-size: 23pt;
+      letter-spacing: -0.03em;
+    }
+    :global(main.guide .intro) {
+      gap: 6px;
+      max-width: none;
+    }
+    :global(main.guide .lead) {
+      gap: 4px;
+    }
+    :global(main.guide .lead p) {
+      font-size: 10pt !important;
+      line-height: 1.35;
+    }
+    .kicker {
+      font: 600 8pt var(--font-mono) !important;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-3) !important;
+    }
+    .picks {
+      max-width: none;
+    }
+    .pick {
+      grid-template-columns: 22px minmax(0, 1fr);
+      gap: 8px;
+      padding: 4px 0;
+      break-inside: avoid;
+    }
+    .n {
+      font-size: 11pt;
+    }
+    .pbody {
+      gap: 2px;
+    }
+    .task h2 {
+      font-size: 11.5pt;
+      letter-spacing: -0.01em;
+    }
+    .if {
+      font-size: 7.5pt;
+      padding: 2px 6px;
+    }
+    .plug {
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 8px;
+    }
+    .name {
+      font-size: 10.5pt;
+      color: var(--ink);
+    }
+    .name.sm {
+      font-size: 9.5pt;
+    }
+    .pinfo {
+      gap: 1px;
+    }
+    .why {
+      font-size: 9pt;
+      line-height: 1.3;
+    }
+    .because {
+      font-size: 7.5pt;
+      line-height: 1.3;
+    }
+    .url {
+      font-size: 7.5pt;
+      color: var(--ink-2);
+    }
+    .or {
+      gap: 2px;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .or-if {
+      font-size: 8.5pt;
+    }
+    .or .plug {
+      grid-template-columns: 30px minmax(0, 1fr);
+      gap: 6px;
+    }
+    .handout-foot {
+      border-top: 2px solid var(--ink);
+      padding-top: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      break-inside: avoid;
+    }
+    .handout-foot p {
+      margin: 0;
+      font-size: 8pt;
+      line-height: 1.35;
+      color: var(--ink-2);
+    }
+    .handout-foot strong {
+      color: var(--ink);
+    }
+    .handout-foot .small-print {
+      font-size: 7.5pt;
+      color: var(--ink-3);
+    }
+  }
+</style>

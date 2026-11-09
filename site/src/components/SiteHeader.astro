@@ -1,15 +1,17 @@
 ---
 interface Props {
-  active?: "" | "browse" | "grade" | "dev" | "install" | "about";
+  active?: "" | "browse" | "packs" | "grade" | "dev" | "install" | "about";
   search?: boolean;
 }
 const { active = "", search = false } = Astro.props;
-const items = [
+// A fourth element is a shorter label for the wide nav on narrower screens, so the search box keeps its room.
+const items: [NonNullable<Props["active"]>, string, string, string?][] = [
   ["browse", "Browse", "/browse"],
+  ["packs", "Plugin packs", "/for"],
   ["grade", "How we grade", "/how-we-grade"],
-  ["install", "How to install a plugin", "/install"],
+  ["install", "How to install a plugin", "/install", "Install"],
   ["about", "About", "/about"],
-] as const;
+];
 ---
 
 <header class="site-header">
@@ -33,9 +35,16 @@ const items = [
   }
   <nav aria-label="Main" class="wide">
     {
-      items.map(([k, t, href]) => (
+      items.map(([k, t, href, short]) => (
         <a href={href} aria-current={k === active ? "page" : undefined}>
-          {t}
+          {short ? (
+            <>
+              <span class="long">{t}</span>
+              <span class="short">{short}</span>
+            </>
+          ) : (
+            t
+          )}
         </a>
       ))
     }
@@ -126,6 +135,17 @@ const items = [
     display: flex;
     align-items: center;
     gap: 22px;
+  }
+  .wide .short {
+    display: none;
+  }
+  @media (max-width: 1180px) {
+    .wide .long {
+      display: none;
+    }
+    .wide .short {
+      display: inline;
+    }
   }
   nav a {
     white-space: nowrap;

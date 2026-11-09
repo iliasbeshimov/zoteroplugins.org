@@ -11,6 +11,7 @@ import { pageEntries } from "./seo.ts";
 export const GUIDES = [
   { path: "/are-zotero-plugins-safe", name: "Are Zotero plugins safe?" },
   { path: "/best", name: "Best-graded plugins by job" },
+  { path: "/for", name: "Plugin packs for students and researchers" },
   { path: "/works-with-zotero", name: "Plugins for the current Zotero" },
   { path: "/ai-without-api-key", name: "AI plugins without an API key" },
   { path: "/zotero-6-plugins", name: "Zotero 6 plugin replacements" },
@@ -22,13 +23,17 @@ export const PUBLISHER = { "@type": "Organization", name: "Zotero Plugins Atlas"
 export const modifiedAt = (path: string): string | undefined =>
   pageEntries().find((e) => e.loc === `${SITE}${path}`)?.lastmod ?? undefined;
 
-export function breadcrumb(name: string, path: string) {
+/** Home › name, or Home › parent › name for a page under a list page. */
+export function breadcrumb(name: string, path: string, parent?: { name: string; path: string }) {
+  const steps = [{ name: "Home", path: "/" }, ...(parent ? [parent] : []), { name, path }];
   return {
     "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE}/` },
-      { "@type": "ListItem", position: 2, name, item: `${SITE}${path}` },
-    ],
+    itemListElement: steps.map((s, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: s.name,
+      item: `${SITE}${s.path === "/" ? "/" : s.path}`,
+    })),
   };
 }
 

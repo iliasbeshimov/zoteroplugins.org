@@ -3,6 +3,7 @@ import { JOBS } from "@atlas/schema";
 import { allPlugins, type Plugin, ROOT } from "./atlas.ts";
 import { gradeLog } from "./gradeLog.ts";
 import { SITE } from "./links.ts";
+import { PACKS, packPath } from "./packs.ts";
 
 /**
  * Which plugin pages search engines should index: every listed plugin, plus legacy and retired
@@ -17,6 +18,8 @@ export const indexable = (p: Plugin): boolean =>
 const GUIDE_PATHS = [
   "/are-zotero-plugins-safe",
   "/best",
+  "/for",
+  ...PACKS.map(packPath),
   "/works-with-zotero",
   "/ai-without-api-key",
   "/zotero-6-plugins",

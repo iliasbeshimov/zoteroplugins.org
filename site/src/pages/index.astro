@@ -8,6 +8,7 @@ import Base from "../layouts/Base.astro";
 import { CURRENT_ZOTERO_MAJOR, fmtDate, GRADES, type Plugin, shownPlugins, testingOpen } from "../lib/atlas.ts";
 import { JOBS } from "@atlas/schema";
 import { siteLd } from "../lib/meta.ts";
+import { countWord, PACKS, packPath, resolvePack } from "../lib/packs.ts";
 import { USE_TIP } from "../lib/usage.ts";
 
 const plugins = shownPlugins();
@@ -44,6 +45,8 @@ const press = {
   url: "https://citationstyler.com/en/knowledge/zotero-plugins-atlas-the-directory-that-rates-plugins/",
 };
 const pressLink = `${press.url}?utm_source=zoteroplugins.org&utm_medium=referral&utm_campaign=as-seen-on`;
+// Plugin packs: the friendliest way in for a student or researcher new to plugins.
+const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
 ---
 
 <Base
@@ -93,6 +96,33 @@ const pressLink = `${press.url}?utm_source=zoteroplugins.org&utm_medium=referral
     <q cite={press.url}>{press.quote}</q>
     <a class="read" href={pressLink}>Read the article</a>
   </aside>
+
+  <section class="packs-home" aria-labelledby="packs-h">
+    <div class="uhead">
+      <div class="uh">
+        <h2 id="packs-h">Start with a plugin pack</h2>
+        <p>Five or six checked plugins for each stage of academic work, each pack with a one-page PDF to print or share.</p>
+      </div>
+      <a href="/for">All packs and PDFs</a>
+    </div>
+    <div class="pk-grid">
+      {
+        packs.map(({ pack, picks }) => (
+          <a href={packPath(pack)} class="pk">
+            <span class="pk-top">
+              <strong>{pack.name}</strong>
+              <span class="n">{countWord(picks.length)} plugins</span>
+            </span>
+            <span class="pk-who">{pack.who}</span>
+            <span class="pk-tags" aria-hidden="true">
+              {picks.map((k) => <GradeTag grade={k.plugin.grade} size="xs" />)}
+            </span>
+            <span class="pk-names">{picks.map((k) => k.plugin.name).join(" · ")}</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
 
   <section class="used" aria-labelledby="used-h">
     <div class="uhead">
@@ -413,6 +443,63 @@ const pressLink = `${press.url}?utm_source=zoteroplugins.org&utm_medium=referral
     font-size: 15px;
     color: var(--ink-2);
   }
+  /* Plugin packs: one card per kind of reader, its plugins' grades and names. */
+  .packs-home {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px var(--gutter) 8px;
+    gap: 20px;
+  }
+  .pk-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .pk {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .pk:hover {
+    border-color: var(--ink);
+  }
+  .pk-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .pk-top strong {
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .pk-top .n {
+    font: 500 12.5px var(--font-mono);
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+  .pk-who {
+    font-size: 14.5px;
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+  .pk-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .pk-names {
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink-3);
+  }
   /* The most-used plugins: rank, grade, what it does and why, then use and the next Zotero. */
   .used {
     max-width: 1280px;
@@ -618,9 +705,16 @@ const pressLink = `${press.url}?utm_source=zoteroplugins.org&utm_medium=referral
       grid-template-columns: 1fr 1fr;
     }
     .wrap,
-    .used {
+    .used,
+    .packs-home {
       padding-top: 28px;
       gap: 40px;
+    }
+    .packs-home {
+      gap: 16px;
+    }
+    .pk-grid {
+      grid-template-columns: 1fr 1fr;
     }
     .used {
       gap: 16px;
@@ -636,6 +730,9 @@ const pressLink = `${press.url}?utm_source=zoteroplugins.org&utm_medium=referral
     }
   }
   @media (max-width: 720px) {
+    .pk-grid {
+      grid-template-columns: 1fr;
+    }
     .urow {
       grid-template-columns: 44px minmax(0, 1fr);
       gap: 6px 12px;
