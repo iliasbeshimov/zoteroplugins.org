@@ -1,0 +1,396 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-fix-proposals",
+ "repo": "ipbes-data/zotero-fix-proposals",
+ "version": "0.1.15",
+ "tag": "v0.1.15",
+ "releaseAuthor": "rkrug",
+ "publishedAt": "2026-11-09T09:52:51Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-fix-proposals-0.1.15.xpi",
+  "url": "https://github.com/IPBES-Data/zotero-fix-proposals/releases/download/v0.1.15/zotero-fix-proposals-0.1.15.xpi",
+  "size": 18910,
+  "sha256": "93d654ec22c269918c0346ffeab9f59fdf03e0c99fc80d73b251db9501027707",
+  "githubAssetId": 726978594,
+  "uploader": "rkrug",
+  "uploadedAt": "2026-11-09T09:52:52Z",
+  "fetchedAt": "2026-11-09T11:48:25.027Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "fix-proposals@ipbes-data",
+  "name": "Zotero Fix Proposals",
+  "version": "0.1.15",
+  "description": "Shows fixes proposed for Zotero groups (e.g. by the IPBES Literature Report) and applies the ones you choose through Zotero Safe Edit, after approval.",
+  "updateUrl": "https://ipbes-data.github.io/IPBES.LiteratureReport/plugins/zotero-fix-proposals/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2645,
+   "sha256": "853c5a532083b158392e1ac0050de067e005c0a5d6d935fade13b374c6c8e645"
+  },
+  {
+   "path": "content/fixes.css",
+   "size": 4865,
+   "sha256": "0dc6e0f76176c2461124d37edf747bf79920c31586df066b97dbc18693f30e97"
+  },
+  {
+   "path": "content/fixes.js",
+   "size": 30269,
+   "sha256": "42bae2901b6d7c24ccbae3908e36b8ecda94b5c4bcd994d201af2545d315d8e8"
+  },
+  {
+   "path": "content/fixes.xhtml",
+   "size": 2385,
+   "sha256": "b7b01bc8f15c6e36a76d8c4e81707f68c83dac761333e0fff6d9b8ba0e0dc737"
+  },
+  {
+   "path": "content/prefs.xhtml",
+   "size": 697,
+   "sha256": "a3ba14133ff42e66d13bbe8c8bf682971fa73a7577e7952beaffcb13d0169fe6"
+  },
+  {
+   "path": "manifest.json",
+   "size": 561,
+   "sha256": "02cac7394954576e2de9aa1c1503026b2e4362b15ba342f0094de488db43fa10"
+  },
+  {
+   "path": "prefs.js",
+   "size": 259,
+   "sha256": "2802f16b0a7416a69eaa07aa520604398f8bffe0a970994d69987dd0242e3791"
+  },
+  {
+   "path": "src/feed.js",
+   "size": 1710,
+   "sha256": "bc362052c86a6426c20ee617000c8f22f281620cab37980653f7c2c2c4d95045"
+  },
+  {
+   "path": "src/logic.js",
+   "size": 5665,
+   "sha256": "a271a4befc714f2e593ec3f4c709243bbf9632e8016d013b50c6354998503992"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-09T11:48:25.027Z",
+  "input": {
+   "slug": "zotero-fix-proposals",
+   "version": "0.1.15",
+   "sha256": "93d654ec22c269918c0346ffeab9f59fdf03e0c99fc80d73b251db9501027707"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "content/fixes.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 43630,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/feed.js",
+       "line": 22,
+       "column": 20,
+       "snippet": "var xhr = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/fixes.js",
+       "line": 416,
+       "column": 66,
+       "snippet": "if (c.doi) out.append(el(\"a\", { onclick: () => Zotero.launchURL(\"https://doi.org/\" + encodeURI(c.doi)) }, \"DOI\"));",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "ipbes-data.github.io",
+     "category": "code-hosting",
+     "provider": "GitHub Pages",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 3,
+       "column": 0,
+       "snippet": "pref(\"extensions.fix-proposals.feedURL\", \"https://ipbes-data.github.io/IPBES.LiteratureReport/fixes/\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 3,
+       "column": 41,
+       "snippet": "pref(\"extensions.fix-proposals.feedURL\", \"https://ipbes-data.github.io/IPBES.LiteratureReport/fixes/\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.fix-proposals.feedURL",
+     "defaultValue": "https://ipbes-data.github.io/IPBES.LiteratureReport/fixes/",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/prefs.xhtml",
+       "line": 8,
+       "column": 18,
+       "snippet": "preference=\"extensions.fix-proposals.feedURL\"/>",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 3,
+       "column": 0,
+       "snippet": "pref(\"extensions.fix-proposals.feedURL\", \"https://ipbes-data.github.io/IPBES.LiteratureReport/fixes/\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/feed.js",
+       "line": 8,
+       "column": 19,
+       "snippet": "var u = String(Zotero.Prefs.get(\"extensions.fix-proposals.feedURL\", true) || \"\").trim();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "169a3989716f",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "src/feed.js",
+      "line": 11,
+      "column": 76,
+      "snippet": "if (u.startsWith(\"~\")) u = PathUtils.join(Services.dirsvc.get(\"Home\", Ci.nsIFile).path, u.slice(1).replace(/^[\\/\\\\]/, \"\"));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/feed.js",
+      "line": 20,
+      "column": 30,
+      "snippet": "return JSON.parse(await IOUtils.readUTF8(path));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://ipbes-data.github.io/IPBES.LiteratureReport/plugins/zotero-fix-proposals/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://ipbes-data.github.io/IPBES.LiteratureReport/plugins/zotero-fix-proposals/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-09T11:48:25.027Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the rkrug account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-09T11:48:25.027Z",
+  "appliesTo": {
+   "slug": "zotero-fix-proposals",
+   "version": "0.1.15",
+   "sha256": "93d654ec22c269918c0346ffeab9f59fdf03e0c99fc80d73b251db9501027707"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.8",
+   "inputHash": "5858352183a4e44875693720bc2ba10d0bda69a2599d5fad89668bc2e0c9f94f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "other-repository",
+     "label": "Updates come from ipbes-data/IPBES.LiteratureReport on GitHub",
+     "check": "The update address offers version 0.1.15, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "code-hosting",
+      "hosts": [
+       "ipbes-data.github.io"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-09T09:52:51Z",
+    "lastCommitAt": "2026-11-09T09:52:45Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.8",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
