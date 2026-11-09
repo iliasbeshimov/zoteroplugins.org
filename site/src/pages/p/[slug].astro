@@ -10,7 +10,7 @@ import Tip from "../../components/Tip.astro";
 import Base from "../../layouts/Base.astro";
 import SameIdRow from "../../components/SameIdRow.astro";
 import WorkingVersions from "../../components/WorkingVersions.astro";
-import { allPlugins, alternatives, bySlug, type Plugin, sameIdGroupOf, sameIdText, workingVersions } from "../../lib/atlas.ts";
+import { allPlugins, alternatives, bySlug, fmtDate, type Plugin, sameIdGroupOf, sameIdText, workingVersions } from "../../lib/atlas.ts";
 import { REVIEWS_OPEN, ratingsOf } from "../../lib/ratings.ts";
 import { indexable } from "../../lib/seo.ts";
 import { checkedOn, pluginDescription, pluginLd, pluginTitle, verdictSentence } from "../../lib/meta.ts";
@@ -87,7 +87,21 @@ const paras = (t: string) => t.split(/\n\s*\n/).map((x) => x.trim()).filter(Bool
 const stats = [
   ["In use", p.inUseText || "—", USE_TIP],
   ["Downloads", p.downloads, "All-time downloads of its release files from GitHub, counting every update. Installs from elsewhere aren't counted."],
+  [
+    "Latest release",
+    p.latestDownloads,
+    p.version
+      ? `Downloads of version ${p.version}, its latest release, since it came out on ${p.released}. A new release starts from zero; Downloads counts every release.`
+      : "Downloads of its latest release. A new release starts from zero; Downloads counts every release.",
+  ],
   ["Releases", p.releases, "Versions published on GitHub. Everyone who has the plugin downloads each one again, which adds up in Downloads."],
+  [
+    "Age",
+    p.age || "—",
+    p.createdAt
+      ? `Time since its GitHub repository was created, on ${fmtDate(p.createdAt)}. The plugin can be younger than its repository.`
+      : "Time since its GitHub repository was created.",
+  ],
   ["Stars", p.stars, "People who starred the repository on GitHub: a rough measure of interest."],
   ["Contributors", p.contributors, "People who have committed code to this plugin. Bots don't count, nor do the authors of a template or project it was copied from."],
   ["Licence", p.license, "The licence the code is published under, as GitHub reports it."],
@@ -403,7 +417,20 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
                   {c.cur && <Tip text="The newest stable Zotero release." class="curtag plain">CURRENT</Tip>}
                 </span>
                 <span style={`color:${c.ok ? "var(--few-fg)" : c.ok === null || c.v.includes("beta") ? "var(--ink-2)" : "var(--rev-fg)"}`}>
-                  {c.ok ? "✓ Works" : c.ok === null ? "? Not known" : "✗ Doesn't work"}
+                  {c.ok ? (
+                    "✓ Works"
+                  ) : c.notYet ? (
+                    <Tip
+                      text={`Zotero hasn't opened Zotero ${Number.parseInt(c.v, 10)} testing yet. Until it does, it asks developers not to declare Zotero ${Number.parseInt(c.v, 10)}, and the beta loads plugins anyway.`}
+                      class="tip-end"
+                    >
+                      Not tested yet
+                    </Tip>
+                  ) : c.ok === null ? (
+                    "? Not known"
+                  ) : (
+                    "✗ Doesn't work"
+                  )}
                 </span>
               </div>
             ))
@@ -599,6 +626,10 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
   }
   .stats div:nth-child(n + 4) {
     border-top: 1px solid var(--line);
+  }
+  /* A last stat alone in the middle column fills the rest of its row. */
+  .stats div:last-child:nth-child(3n + 2) {
+    grid-column: span 2;
   }
   dt {
     font: 500 11px/1.2 var(--font-mono);
@@ -1097,6 +1128,9 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     }
     .stats div:nth-child(n + 3) {
       border-top: 1px solid var(--line);
+    }
+    .stats div:last-child:nth-child(3n + 2) {
+      grid-column: auto;
     }
     .card,
     main {

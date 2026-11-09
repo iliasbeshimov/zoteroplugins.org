@@ -50,6 +50,11 @@ export interface RepoFull {
   releaseCount: number;
   releases: ReleaseInfo[];
   totalXpiDownloads: number;
+  /**
+   * Its GitHub issues, not pull requests (REST's open_issues_count counts both): whether the repo
+   * takes them, and how many are open and closed. Null when GitHub didn't say.
+   */
+  issues: { enabled: boolean; open: number; closed: number } | null;
 }
 
 const isXpi = (name: string) => name.toLowerCase().endsWith(".xpi");
@@ -160,6 +165,8 @@ const ASSET_FIELDS = "name size downloadCount updatedAt downloadUrl";
 const fullFields = (releases: number) => `
   nameWithOwner url stargazerCount forkCount isFork isArchived pushedAt createdAt description
   homepageUrl parent { nameWithOwner defaultBranchRef { name } } licenseInfo { spdxId }
+  hasIssuesEnabled openIssues: issues(states: OPEN) { totalCount }
+  closedIssues: issues(states: CLOSED) { totalCount }
   repositoryTopics(first: 20) { nodes { topic { name } } }
   defaultBranchRef { name target { ... on Commit { committedDate history { totalCount } } } }
   listed: releases { totalCount }
@@ -201,6 +208,9 @@ interface FullRaw {
     pageInfo: { hasNextPage: boolean; endCursor: string | null };
     nodes: (ReleaseRaw | null)[];
   };
+  hasIssuesEnabled?: boolean;
+  openIssues?: { totalCount: number } | null;
+  closedIssues?: { totalCount: number } | null;
 }
 
 /**
@@ -309,6 +319,14 @@ export async function fetchFull(
       homepage: r.homepageUrl,
       license: r.licenseInfo?.spdxId ?? null,
       topics: present(r.repositoryTopics.nodes).map((n) => n.topic.name),
+      issues:
+        r.openIssues && r.closedIssues
+          ? {
+              enabled: r.hasIssuesEnabled ?? true,
+              open: r.openIssues.totalCount,
+              closed: r.closedIssues.totalCount,
+            }
+          : null,
       lastCommitAt: r.defaultBranchRef?.target.committedDate ?? null,
       commitCount: r.defaultBranchRef?.target.history?.totalCount ?? null,
       // Versions: the template's update-manifest release isn't one.

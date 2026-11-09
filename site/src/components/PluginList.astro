@@ -1,5 +1,5 @@
 ---
-import { GRADES, type Plugin } from "../lib/atlas.ts";
+import { GRADES, type Plugin, testingOpen } from "../lib/atlas.ts";
 import { JOBS } from "@atlas/schema";
 import CompactCard from "./CompactCard.astro";
 import GradeTag from "./GradeTag.astro";
@@ -31,8 +31,11 @@ const toggles = [
   ["nokey", "Works without an API key"],
   ["hidenoen", `Hide docs not in English (${noEnCount})`],
 ];
-// Versions offered in "Your Zotero": the current one first, then the beta, then older majors.
-const beta = plugins.flatMap((p) => p.worksWith).find((v) => v.includes("beta"));
+// Versions offered in "Your Zotero": the current one first, then the beta once Zotero has opened
+// its testing (before that, few plugins declare it, as Zotero asks), then older majors.
+const beta = plugins
+  .flatMap((p) => p.worksWith)
+  .find((v) => v.includes("beta") && testingOpen(Number.parseInt(v, 10)));
 const versions: [string, string][] = [
   [String(currentMajor), `Zotero ${currentMajor} (current)`],
   ...(beta ? ([[beta, `Zotero ${beta}`]] as [string, string][]) : []),

@@ -5,7 +5,7 @@ import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import Tip from "../components/Tip.astro";
 import Base from "../layouts/Base.astro";
-import { CURRENT_ZOTERO_MAJOR, fmtDate, GRADES, type Plugin, shownPlugins } from "../lib/atlas.ts";
+import { CURRENT_ZOTERO_MAJOR, fmtDate, GRADES, type Plugin, shownPlugins, testingOpen } from "../lib/atlas.ts";
 import { JOBS } from "@atlas/schema";
 import { siteLd } from "../lib/meta.ts";
 import { USE_TIP } from "../lib/usage.ts";
@@ -17,8 +17,10 @@ const cur = CURRENT_ZOTERO_MAJOR();
 const byUse = (a: Plugin, b: Plugin) => (b.inUse ?? 0) - (a.inUse ?? 0) || b.downloadsN - a.downloadsN;
 // The plugins most people have, among those that work with the current Zotero (lib/usage.ts).
 const used = plugins.filter((p) => p.currentOk && p.inUse != null).sort(byUse).slice(0, 10);
-// The next major, while it's in beta: each row says whether the plugin works with it.
-const nextLabel = plugins.flatMap((p) => p.compat).find((c) => c.v.includes("beta"))?.v ?? null;
+// The next major, while it's in beta and Zotero has opened its testing: each row says whether the
+// plugin works with it. Before that, nearly every plugin rightly doesn't declare it (atlas.ts).
+const betaLabel = plugins.flatMap((p) => p.compat).find((c) => c.v.includes("beta"))?.v ?? null;
+const nextLabel = betaLabel && testingOpen(Number.parseInt(betaLabel, 10)) ? betaLabel : null;
 const nextOf = (p: Plugin) => {
   const c = p.compat.find((x) => x.v === nextLabel);
   return c?.ok === true ? "yes" : c?.ok === false ? "no" : "unknown";

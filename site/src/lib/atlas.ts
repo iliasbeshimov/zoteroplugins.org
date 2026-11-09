@@ -139,6 +139,10 @@ export interface Plugin {
   inUseText: string;
   /** Releases published on GitHub, formatted. */
   releases: string;
+  /** Downloads of its latest release's files, formatted ("—" when unknown). */
+  latestDownloads: string;
+  /** How long ago its repository was created, as of the census, e.g. "8 months"; "" when unknown. */
+  age: string;
   /** When its repository was created, as an ISO timestamp: when the plugin first appeared. */
   createdAt: string | null;
   contributors: string;
@@ -214,7 +218,8 @@ export interface Plugin {
   needs: { t: string; sub: string }[];
   docs: string;
   ui: string;
-  compat: { v: string; cur: boolean; ok: boolean | null }[];
+  /** `notYet`: the next major, in beta, before Zotero opens its compatibility testing (testingOpen). */
+  compat: { v: string; cur: boolean; ok: boolean | null; notYet?: boolean }[];
   autoText: string;
   /** Its update address is in its own repository, so its developer can ship it updates. */
   ownUpdates: boolean;
@@ -243,6 +248,28 @@ export interface Plugin {
 // ---------- formatting ----------
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+/**
+ * Zotero majors whose plugin compatibility testing Zotero has opened. Zotero announces it on the
+ * zotero-dev list once a beta is feature-frozen. Until then it asks developers not to declare the
+ * new major, and beta builds load plugins whatever they declare, so for a beta not listed here a
+ * plugin that doesn't declare it is "not tested yet", not "doesn't work". Add the major when Zotero
+ * makes the announcement.
+ * https://www.zotero.org/support/dev/zotero_11_for_developers#updating_plugin_compatibility
+ */
+const TESTING_OPEN: ReadonlySet<number> = new Set<number>([]);
+/** Whether Zotero has opened compatibility testing for this major (see TESTING_OPEN). */
+export const testingOpen = (major: number) => TESTING_OPEN.has(major);
+
+/** How long from one date to another, roughly: "5 days", "3 weeks", "8 months", "4 years". */
+export function fmtAge(fromIso: string, toIso: string): string {
+  const days = Math.max(0, Math.floor((Date.parse(toIso) - Date.parse(fromIso)) / 86_400_000));
+  const n = (k: number, unit: string) => `${k} ${unit}${k === 1 ? "" : "s"}`;
+  if (days < 14) return n(Math.max(1, days), "day");
+  if (days < 61) return n(Math.round(days / 7), "week");
+  if (days < 730) return n(Math.round(days / 30.44), "month");
+  return n(Math.floor(days / 365.25), "year");
+}
+
 export function fmtDate(iso: string | null | undefined): string {
   if (!iso) return "unknown date";
   const d = new Date(iso);
@@ -640,10 +667,14 @@ function build(
           ? null
           : target.status === "compatible"
         : p.compatibility.supports.includes(m);
+      // Before Zotero opens testing for the beta, not declaring it is what Zotero asks for.
+      const notYet =
+        m === nextMajor && ok !== true && !testingOpen(m) && !blocked && !installProblem;
       return {
         v: m === nextMajor ? `${m} beta` : String(m),
         cur: m === currentMajor,
-        ok: blocked || installProblem ? false : ok,
+        ok: blocked || installProblem ? false : notYet ? null : ok,
+        ...(notYet && { notYet }),
       };
     });
   const okList = compat.filter((c) => c.ok).map((c) => c.v);
@@ -673,7 +704,15 @@ function build(
       {
         name: null,
         items: compat.map((c) => ({
-          t: `Zotero ${c.v}  ${c.ok ? "✓ works" : c.ok === false ? "✗ doesn't work" : "? not known"}`,
+          t: `Zotero ${c.v}  ${
+            c.ok
+              ? "✓ works"
+              : c.ok === false
+                ? "✗ doesn't work"
+                : c.notYet
+                  ? `not tested yet: Zotero hasn't opened Zotero ${Number.parseInt(c.v, 10)} testing`
+                  : "? not known"
+          }`,
           tone: c.ok ? "few" : c.v.includes("beta") || c.ok === null ? "nd" : "rev",
         })),
       },
@@ -900,6 +939,8 @@ function build(
     inUse,
     inUseText: inUse == null ? "" : fmtUse(inUse),
     releases: fmtCount(p.popularity.releaseCount),
+    latestDownloads: fmtCount(p.popularity.latestDownloads),
+    age: p.popularity.createdAt ? fmtAge(p.popularity.createdAt, censusDate(p.generatedAt)) : "",
     createdAt: p.popularity.createdAt,
     contributors: fmtCount(p.popularity.contributors),
     maint,

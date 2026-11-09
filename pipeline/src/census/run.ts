@@ -80,6 +80,11 @@ export interface CensusRow {
   note: string | null;
   /** The latest release's .xpi files; a changed upload time or size under the same tag means replaced. */
   latestAssets: { name: string; size: number; updatedAt: string; downloadCount: number }[];
+  /**
+   * GitHub issues, not pull requests: whether the repo takes them, open and closed counts.
+   * Collected since 2026-11-09, not shown yet; absent in rows from before then.
+   */
+  issues?: { enabled: boolean; open: number; closed: number } | null;
 }
 
 const DAY = 86_400_000;
@@ -633,6 +638,7 @@ function buildRow(
       updatedAt: a.updatedAt,
       downloadCount: a.downloadCount,
     })),
+    issues: repo?.issues ?? null,
   };
 }
 
@@ -677,6 +683,7 @@ function unavailableRow(key: string, sources: Set<SourceId>, discovery: Discover
     topics: [],
     note: "repository not found (deleted, private or renamed away)",
     latestAssets: [],
+    issues: null,
   };
 }
 
@@ -713,6 +720,9 @@ const CSV_COLUMNS = [
   "license",
   "forks",
   "created_at",
+  "issues_enabled",
+  "open_issues",
+  "closed_issues",
   "sources",
   "new_find",
   "sheet_tool_type",
@@ -753,6 +763,9 @@ function flatten(r: CensusRow): Record<string, unknown> {
     license: r.license,
     forks: r.forks,
     created_at: r.createdAt?.slice(0, 10),
+    issues_enabled: r.issues?.enabled,
+    open_issues: r.issues?.open,
+    closed_issues: r.issues?.closed,
     sources: r.sources,
     new_find: r.newFind,
     sheet_tool_type: r.sheetToolType,

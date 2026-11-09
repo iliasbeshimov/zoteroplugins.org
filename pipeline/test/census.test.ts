@@ -540,6 +540,9 @@ describe("batched GitHub queries", () => {
               repositoryTopics: { nodes: [] },
               defaultBranchRef: null,
               listed: { totalCount: 270 },
+              hasIssuesEnabled: true,
+              openIssues: { totalCount: 3 },
+              closedIssues: { totalCount: 41 },
               releases: {
                 totalCount: 270,
                 pageInfo: { hasNextPage: false, endCursor: null },
@@ -563,6 +566,7 @@ describe("batched GitHub queries", () => {
     expect(asked).toEqual(["50", "10"]);
     expect(full.get("huge/repo")?.releases[0]?.assets[0]?.name).toBe("p.xpi");
     expect(full.get("huge/repo")?.releaseCount).toBe(270);
+    expect(full.get("huge/repo")?.issues).toEqual({ enabled: true, open: 3, closed: 41 });
   });
 });
 
