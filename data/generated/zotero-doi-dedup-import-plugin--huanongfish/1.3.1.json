@@ -1,0 +1,310 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-doi-dedup-import-plugin--huanongfish",
+ "repo": "huanongfish/zotero-doi-dedup-import-plugin",
+ "version": "1.3.1",
+ "tag": "v1.3.1",
+ "releaseAuthor": "huanongfish",
+ "publishedAt": "2026-11-10T01:01:19Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-doi-dedup-import-plugin-1.3.1.xpi",
+  "url": "https://github.com/huanongfish/zotero-doi-dedup-import-plugin/releases/download/v1.3.1/zotero-doi-dedup-import-plugin-1.3.1.xpi",
+  "size": 13148,
+  "sha256": "3c3b3688a24c7b54ea3ae4d980a0b69cface510e94b0d93c7eec05888650a458",
+  "githubAssetId": 729597872,
+  "uploader": "huanongfish",
+  "uploadedAt": "2026-11-10T01:01:19Z",
+  "fetchedAt": "2026-11-10T11:35:24.497Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "doi-dedup-import@plugin.local",
+  "name": "DOI Dedup Import",
+  "version": "1.3.1",
+  "description": "Deduplicate DOI imports directly inside Zotero's Add Item by Identifier popup.",
+  "homepageUrl": "https://github.com/huanongfish/zotero-doi-dedup-import-plugin",
+  "updateUrl": "https://raw.githubusercontent.com/huanongfish/zotero-doi-dedup-import-plugin/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 939,
+   "sha256": "ddd65af530718b5c1b8ee350975a539b9c2c8b84aeba1b9b56893f5b10669b2e"
+  },
+  {
+   "path": "doi-dedup-import-plugin.js",
+   "size": 39562,
+   "sha256": "11027add6fe28bbcce5540da889a2a9a877556b83a620fde186c8859890283de"
+  },
+  {
+   "path": "manifest.json",
+   "size": 542,
+   "sha256": "366a84050fec2a32720bfc6f5aae6d21715a200ad5c2fec76ae6e9222c09ff69"
+  },
+  {
+   "path": "README.md",
+   "size": 3819,
+   "sha256": "b10bb5b45d43300ecdc733080ee21169034166817450cd705a5410e2114f4f26"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-10T11:35:24.497Z",
+  "input": {
+   "slug": "zotero-doi-dedup-import-plugin--huanongfish",
+   "version": "1.3.1",
+   "sha256": "3c3b3688a24c7b54ea3ae4d980a0b69cface510e94b0d93c7eec05888650a458"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 40501,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "doi-dedup-import-plugin.js",
+       "line": 876,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "doi-dedup-import-plugin.js",
+       "line": 858,
+       "column": 22,
+       "snippet": "const translate = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "doi-dedup-import-plugin.js",
+       "line": 878,
+       "column": 8,
+       "snippet": "`https://doi.org/${encodeURI(doi)}`,",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://doi.org/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "doi-dedup-import-plugin.js",
+       "line": 876,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/huanongfish/zotero-doi-dedup-import-plugin/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/huanongfish/zotero-doi-dedup-import-plugin/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-10T11:35:24.497Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the huanongfish account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-10T11:35:24.497Z",
+  "appliesTo": {
+   "slug": "zotero-doi-dedup-import-plugin--huanongfish",
+   "version": "1.3.1",
+   "sha256": "3c3b3688a24c7b54ea3ae4d980a0b69cface510e94b0d93c7eec05888650a458"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.8",
+   "inputHash": "e2452443c891ffe73e149272615f478dddf36fc6b071ca9dc35fd04bb97805a3"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "doi.org"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-10T01:01:19Z",
+    "lastCommitAt": "2026-11-10T01:01:08Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.8",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

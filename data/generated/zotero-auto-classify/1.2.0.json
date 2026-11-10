@@ -1,0 +1,361 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-auto-classify",
+ "repo": "lynneguo930-prog/zotero-auto-classify",
+ "version": "1.2.0",
+ "tag": "v1.2.0",
+ "releaseAuthor": "lynneguo930-prog",
+ "publishedAt": "2026-11-10T07:02:20Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-auto-classify.xpi",
+  "url": "https://github.com/lynneguo930-prog/zotero-auto-classify/releases/download/v1.2.0/zotero-auto-classify.xpi",
+  "size": 16473,
+  "sha256": "e76e889a3498d2171f3d47e3a75b25f9f39b0733e5ab7be5fcc19bff6f9d67ff",
+  "githubAssetId": 730508039,
+  "uploader": "lynneguo930-prog",
+  "uploadedAt": "2026-11-10T07:23:12Z",
+  "fetchedAt": "2026-11-10T11:35:24.497Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "auto-classify@example.com",
+  "name": "Auto Classify",
+  "version": "1.2.0",
+  "description": "Auto-label references with a short category, add a Type column, and group items into same-named collections. Compatible with Zotero 8, 9 and 10.",
+  "homepageUrl": "https://www.zotero.org/",
+  "updateUrl": "https://example.com/zotero-auto-classify/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.999"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 979,
+   "sha256": "bd1476b05bdc9b092b8825d4162cddffabaaafe82a0cfc8a6a5b658ebae4d51c"
+  },
+  {
+   "path": "content/auto-classify.js",
+   "size": 30974,
+   "sha256": "e335b885c567640fe35cb65f449c680094a3f03d351bbe66d1b330a3e4de4883"
+  },
+  {
+   "path": "locale/en-US/auto-classify.ftl",
+   "size": 284,
+   "sha256": "bcd3b725b65df391df4bf0b49fd35d984860b4ad4599f731f39ea76363f0f597"
+  },
+  {
+   "path": "locale/zh-CN/auto-classify.ftl",
+   "size": 288,
+   "sha256": "cdb90ffe1b24a35cbb349bc598726516e7ef9119769724031424f4810b8f81e2"
+  },
+  {
+   "path": "manifest.json",
+   "size": 549,
+   "sha256": "a7223b7ba8beb2b7a441688de374f770e783d6e45a00a7a4ab0d982081764161"
+  },
+  {
+   "path": "prefs-script.js",
+   "size": 6224,
+   "sha256": "e4e234d621f02293e4beb8ceb49585ae6ee04f3a3d46efdfa5dd983de27e2ec0"
+  },
+  {
+   "path": "prefs.css",
+   "size": 1103,
+   "sha256": "749beadf58de2875cee488d48e024ab632bd68f7ae3847c4f868a00a6199bf02"
+  },
+  {
+   "path": "prefs.js",
+   "size": 395,
+   "sha256": "a318c7dab62e49c350ef38ce3abe5b15b68ed9ee89c90dc0d3a40a2cc31e25bd"
+  },
+  {
+   "path": "prefs.xhtml",
+   "size": 2701,
+   "sha256": "c8067a90fcc41462658c931782c9a0b2bae750b1ed867a28d4b24e3b31c13eb3"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-10T11:35:24.497Z",
+  "input": {
+   "slug": "zotero-auto-classify",
+   "version": "1.2.0",
+   "sha256": "e76e889a3498d2171f3d47e3a75b25f9f39b0733e5ab7be5fcc19bff6f9d67ff"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/auto-classify.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/auto-classify.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "prefs.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 41273,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/auto-classify.js",
+       "line": 278,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request('POST', conf.url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.autoclassify.llmURL\", \"https://api.deepseek.com/v1/chat/completions\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 39,
+       "snippet": "pref(\"extensions.autoclassify.llmURL\", \"https://api.deepseek.com/v1/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.autoclassify.llmURL",
+     "defaultValue": "https://api.deepseek.com/v1/chat/completions",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 1,
+       "column": 0,
+       "snippet": "pref(\"extensions.autoclassify.llmURL\", \"https://api.deepseek.com/v1/chat/completions\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.autoclassify.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.autoclassify.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://example.com/zotero-auto-classify/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://example.com/zotero-auto-classify/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-10T11:35:24.497Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the lynneguo930-prog account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-10T11:35:24.497Z",
+  "appliesTo": {
+   "slug": "zotero-auto-classify",
+   "version": "1.2.0",
+   "sha256": "e76e889a3498d2171f3d47e3a75b25f9f39b0733e5ab7be5fcc19bff6f9d67ff"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.8",
+   "inputHash": "fa3f9d0aa123a17f7b17f29e829e77adc6db18f501376f901098a44efc40111e"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-10T07:02:20Z",
+    "lastCommitAt": "2026-11-10T07:02:16Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.8",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
