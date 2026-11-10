@@ -15,7 +15,7 @@ plugins, see what each one's code does, and install in one click.</p>
 <p align="center">
   <a href="https://zoteroplugins.org/p/zotero-atlas"><img src="https://zoteroplugins.org/badge/zotero-atlas.svg" alt="Zotero Plugins grade"></a>
   <a href="https://github.com/iliasbeshimov/zotero-atlas/releases/latest"><img src="https://img.shields.io/github/v/release/iliasbeshimov/zotero-atlas?label=release&color=2f6fdb" alt="Release"></a>
-  <a href="https://github.com/iliasbeshimov/zotero-atlas/releases"><img src="https://img.shields.io/github/downloads/iliasbeshimov/zotero-atlas/total?label=downloads&color=3a9e4a" alt="Downloads"></a>
+  <a href="https://zoteroplugins.org/p/zotero-atlas"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fzoteroplugins.org%2Fp%2Fzotero-atlas.json&query=%24.downloads&label=downloads&color=3a9e4a" alt="Downloads"></a>
   <a href="https://www.zotero.org/download/"><img src="https://img.shields.io/badge/Zotero-7%20to%2011-cc2936" alt="Works with Zotero 7 to 11"></a>
   <a href="#check-what-you-install"><img src="https://img.shields.io/badge/build-reproducible%2C%20attested-5b3fc4" alt="Reproducible build, attested"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/iliasbeshimov/zotero-atlas?color=777" alt="MIT"></a>
