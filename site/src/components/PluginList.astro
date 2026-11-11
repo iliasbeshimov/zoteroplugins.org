@@ -46,22 +46,32 @@ const versions: [string, string][] = [
 <div class="plist" data-plugin-list data-compare={compare ? "1" : undefined}>
   {
     search && (
-      <label class="bigsearch">
-        <span aria-hidden="true" class="glass" />
-        <span class="visually-hidden">What do you want Zotero to do?</span>
-        <input type="search" name="q" data-q placeholder="What do you want Zotero to do?" autocomplete="off" />
-      </label>
+      <div class="searchbar">
+        <label class="bigsearch">
+          <span aria-hidden="true" class="glass" />
+          <span class="visually-hidden">What do you want Zotero to do?</span>
+          <input type="search" name="q" data-q placeholder="What do you want Zotero to do?" autocomplete="off" />
+        </label>
+        <label class="field jobfield">
+          <span class="visually-hidden">Job</span>
+          <select data-job>
+            <option value="">Any job</option>
+            {JOBS.map((j) => (
+              <option value={j.slug}>{j.title}</option>
+            ))}
+          </select>
+        </label>
+      </div>
     )
   }
-  <div role="group" aria-label="Filters" class="row">
-    <label class="select zsel">
-      <span class="zl">Your Zotero</span>
+  <div role="group" aria-label="Filters" class="bar">
+    <label class="field">
+      <span class="fl">Your Zotero</span>
       <select data-zotero>
         <option value="">Any version</option>
         {versions.map(([v, t]) => <option value={v}>{t}</option>)}
       </select>
     </label>
-    <span class="sep" />
     {
       toggles.map(([k, t]) => (
         <button type="button" class="chip-btn" aria-pressed="false" data-toggle={k}>
@@ -70,39 +80,25 @@ const versions: [string, string][] = [
         </button>
       ))
     }
-    {
-      search && (
-        <>
-          <span class="sep" />
-          <label class="select">
-            <span class="visually-hidden">Job</span>
-            <select data-job>
-              <option value="">Any job</option>
-              {JOBS.map((j) => (
-                <option value={j.slug}>{j.title}</option>
-              ))}
-            </select>
-          </label>
-        </>
-      )
-    }
   </div>
-  <div role="group" aria-label="Zotero Plugins grade" class="row">
-    <span class="eyebrow gl">Zotero Plugins grade</span>
-    {
-      GRADES.map((g) => (
-        <button type="button" class="gbtn" aria-pressed="false" data-grade-btn={g.g} style={`--on-bg:var(--${g.tone}-bg);--on-bd:var(--${g.tone}-fg)`}>
-          <GradeTag grade={g.g} size="xs" />
-          {g.g === "A+" ? "Tested in Zotero" : g.word}
-          <span class="n" data-grade-n>{gradeCount[g.g] ?? 0}</span>
-        </button>
-      ))
-    }
+  <div role="group" aria-labelledby="grade-label" class="gradeset">
+    <span class="eyebrow" id="grade-label">Zotero Plugins grade</span>
+    <div class="grades">
+      {
+        GRADES.map((g) => (
+          <button type="button" class="gbtn" aria-pressed="false" data-grade-btn={g.g} style={`--on-bg:var(--${g.tone}-bg);--on-bd:var(--${g.tone}-fg)`}>
+            <GradeTag grade={g.g} size="xs" />
+            {g.g === "A+" ? "Tested in Zotero" : g.word}
+            <span class="n" data-grade-n>{gradeCount[g.g] ?? 0}</span>
+          </button>
+        ))
+      }
+    </div>
   </div>
   <div class="rule-head counthead">
     <span class="count" aria-live="polite"><span data-count>{plugins.length}</span> plugins</span>
-    <label class="sort">
-      Sort by
+    <label class="field">
+      <span class="fl">Sort by</span>
       <select data-sort>
         <option value="match" disabled>Best match</option>
         <option value="used">Most used</option>
@@ -386,19 +382,27 @@ const versions: [string, string][] = [
 
 <style>
   .plist {
+    container: plist / inline-size;
     display: flex;
     flex-direction: column;
     gap: 18px;
   }
-  .bigsearch {
+  /* Search, with the job picker on its right: both answer "what do you want Zotero to do?". */
+  .searchbar {
     display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 18px;
+    align-items: stretch;
     border-radius: 14px;
     border: 1.5px solid var(--ink);
     background: var(--surface);
     box-shadow: var(--shadow-1);
+  }
+  .bigsearch {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
   }
   .bigsearch input {
     all: unset;
@@ -417,11 +421,86 @@ const versions: [string, string][] = [
     border: 2.5px solid var(--ink);
     border-radius: 50%;
   }
-  .row {
+  /* A select in a box of its own, with an optional label inside and a drawn chevron, so every
+     control in the filters shares one height, corner and border. */
+  .field {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 40px;
+    padding-left: 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink);
+  }
+  .field:focus-within {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .field select {
+    appearance: none;
+    align-self: stretch;
+    min-width: 0;
+    margin: 0;
+    padding: 0 36px 0 0;
+    border: 0;
+    border-radius: 0 10px 10px 0;
+    background: transparent;
+    color: inherit;
+    font: 600 14px var(--font-sans);
+    cursor: pointer;
+    outline: none;
+  }
+  .field::after {
+    content: "";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    border-right: 1.75px solid var(--ink-2);
+    border-bottom: 1.75px solid var(--ink-2);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+  .fl {
+    font: 600 11px/1 var(--font-mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+  .jobfield {
+    flex: none;
+    width: 230px;
+    min-height: 0;
+    border: 0;
+    border-left: 1px solid var(--line);
+    border-radius: 0 12px 12px 0;
+    background: transparent;
+    padding-left: 18px;
+  }
+  .jobfield select {
+    flex: 1;
+    font-size: 15px;
+    border-radius: 0 12px 12px 0;
+  }
+  .jobfield:focus-within {
+    outline-offset: -3px;
+  }
+  .bar {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    align-items: center;
+  }
+  .bar .chip-btn {
+    border-radius: 10px;
+  }
+  .bar .chip-btn,
+  .field {
+    flex: none;
   }
   .box {
     width: 14px;
@@ -436,38 +515,16 @@ const versions: [string, string][] = [
   [aria-pressed="true"] .box::before {
     content: "✓";
   }
-  .sep {
-    width: 1px;
-    height: 24px;
-    background: var(--line-strong);
-    margin: 0 4px;
+  .gradeset {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
-  .select select {
-    min-height: 40px;
-    padding: 0 14px;
-    border-radius: 10px;
-    border: 1px solid var(--line-strong);
-    background: var(--surface);
-    color: var(--ink);
-    font: 600 14px var(--font-sans);
-  }
-  .zsel {
-    display: inline-flex;
-    align-items: center;
+  /* One column per grade across the full width: equal, unless a tile's words need more. */
+  .grades {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(max-content, 1fr));
     gap: 8px;
-  }
-  .zl {
-    font: 600 12px/1 var(--font-mono);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
-  .zsel select {
-    border-color: var(--ink);
-  }
-  .gl {
-    font-size: 12px;
-    margin-right: 4px;
   }
   .gbtn {
     min-height: 40px;
@@ -476,19 +533,83 @@ const versions: [string, string][] = [
     gap: 8px;
     padding: 0 14px 0 8px;
     border-radius: 10px;
-    border: 1.5px solid var(--line-strong);
+    border: 1px solid var(--line-strong);
     background: var(--surface);
     color: var(--ink);
     font: 600 14px var(--font-sans);
+    white-space: nowrap;
     cursor: pointer;
   }
   .gbtn[aria-pressed="true"] {
     background: var(--on-bg);
     border-color: var(--on-bd);
+    box-shadow: inset 0 0 0 0.5px var(--on-bd);
   }
   .n {
+    margin-left: auto;
     font: 500 12px var(--font-mono);
     color: var(--ink-2);
+  }
+  /* Too narrow for five grade tiles in a row (1030px at today's counts): with a mouse the rows
+     wrap into even columns; on touch screens, and on any screen narrower than a tablet, the filter
+     and grade rows scroll sideways to the screen edge instead of stacking a row per control. */
+  @container plist (max-width: 1039px) {
+    .grades {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+  }
+  @media (pointer: coarse) {
+    @container plist (max-width: 1039px) {
+      .bar,
+      .grades {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        margin: -5px calc(-1 * var(--gutter));
+        padding: 5px var(--gutter);
+        scroll-padding-inline: var(--gutter);
+      }
+      .gbtn {
+        flex: none;
+      }
+    }
+  }
+  @container plist (max-width: 640px) {
+    .bar,
+    .grades {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      margin: -5px calc(-1 * var(--gutter));
+      padding: 5px var(--gutter);
+      scroll-padding-inline: var(--gutter);
+    }
+    .gbtn {
+      flex: none;
+    }
+    /* Phones: the job picker drops under the search. */
+    .searchbar {
+      flex-direction: column;
+    }
+    .bigsearch {
+      padding: 13px 16px;
+    }
+    .bigsearch input {
+      font-size: 17px;
+    }
+    .jobfield {
+      width: auto;
+      min-height: 44px;
+      border-left: 0;
+      border-top: 1px solid var(--line);
+      border-radius: 0 0 12px 12px;
+      padding-left: 16px;
+    }
+    .jobfield select {
+      border-radius: 0 0 12px 12px;
+    }
   }
   .counthead {
     align-items: baseline;
@@ -496,22 +617,6 @@ const versions: [string, string][] = [
   .count {
     font-size: 15px;
     font-weight: 650;
-  }
-  .sort {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: var(--ink-2);
-  }
-  .sort select {
-    min-height: 36px;
-    padding: 0 10px;
-    border-radius: 8px;
-    border: 1px solid var(--line-strong);
-    background: var(--surface);
-    color: var(--ink);
-    font: 600 14px var(--font-sans);
   }
   .cards {
     display: flex;
