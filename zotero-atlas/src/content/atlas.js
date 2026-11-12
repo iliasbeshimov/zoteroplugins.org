@@ -662,6 +662,19 @@
       shown += PAGE;
       renderFind();
     });
+    // Zotero places the window after this load event; then make sure its title bar is on screen.
+    window.setTimeout(() => A.keepOnScreen(window));
+    A.closeOnEscape(window, (ev) => {
+      const t = ev.target;
+      // Escape empties the search box first, and never throws away a review being written.
+      if (t?.id === "q" && t.value) {
+        t.value = "";
+        shown = PAGE;
+        renderFind();
+        return true;
+      }
+      return t?.localName === "textarea" && t.value.trim() !== "";
+    });
     const args = window.arguments?.[0]?.wrappedJSObject ?? window.arguments?.[0];
     showTab(args?.tab || "find");
     const off = A.subscribe(() => {

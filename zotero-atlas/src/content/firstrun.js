@@ -30,6 +30,7 @@
       }
       out.hidden = false;
       window.sizeToContent?.();
+      A.keepOnScreen?.(window);
     });
     $("done").addEventListener("click", () => {
       paint();
@@ -37,9 +38,12 @@
       window.close();
     });
     window.addEventListener("keydown", (ev) => {
-      if (ev.key === "Enter" && ev.target?.tagName !== "BUTTON") $("done").click();
+      // localName: in an XHTML page tagName is lower case, so "BUTTON" never matched.
+      if (ev.key === "Enter" && ev.target?.localName !== "button") $("done").click();
     });
     $("done").focus();
     window.sizeToContent?.();
+    // On a small screen the page scrolls instead of running off it.
+    window.setTimeout(() => A.keepOnScreen?.(window));
   });
 })();

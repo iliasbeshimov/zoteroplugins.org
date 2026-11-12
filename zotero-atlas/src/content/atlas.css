@@ -137,6 +137,36 @@ section[hidden] {
   font: inherit;
   padding: 4px;
 }
+/* The list a <select> opens is a menu Gecko adds to this window (#ContentSelectDropdown). Its look
+   comes from chrome://global/skin/global.css, which Zotero's own windows load and this one doesn't
+   (it would restyle every control here), so on Windows and Linux the list had no background. The
+   host is styled for Zotero 7, the content part for later versions. On a Mac the list is a native
+   menu and none of this shows. */
+/* biome-ignore lint/correctness/noUnknownTypeSelector: XUL elements Gecko adds for the list */
+#ContentSelectDropdown > menupopup {
+  color: var(--fg);
+  background-color: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+/* biome-ignore lint/correctness/noUnknownTypeSelector: XUL elements Gecko adds for the list */
+#ContentSelectDropdown > menupopup::part(content) {
+  color: var(--fg);
+  background: var(--card);
+  border: 0;
+  border-radius: 6px;
+  padding: 4px 0;
+}
+/* biome-ignore lint/correctness/noUnknownTypeSelector: XUL elements Gecko adds for the list */
+#ContentSelectDropdown menuitem {
+  padding: 4px 10px;
+  color: var(--fg);
+}
+/* biome-ignore lint/correctness/noUnknownTypeSelector: XUL elements Gecko adds for the list */
+#ContentSelectDropdown menuitem[_moz-menuactive="true"] {
+  background-color: var(--accent);
+  color: #fff;
+}
 .fit {
   color: var(--muted);
   white-space: nowrap;

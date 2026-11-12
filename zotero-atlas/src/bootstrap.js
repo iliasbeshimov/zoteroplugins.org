@@ -1561,13 +1561,52 @@ function openWindow(tab) {
   }
   const args = { tab: tab || "find" };
   args.wrappedJSObject = args;
-  atlasWindow = Zotero.getMainWindow().openDialog(
+  const main = Zotero.getMainWindow();
+  // Zotero doesn't shrink a window it opens to fit the screen, and centring one taller than the
+  // screen puts its title bar, close button included, above the top edge (a 1080p screen at
+  // 150% on Windows leaves about 670 pixels). Leave room for the title bar and borders.
+  const width = Math.max(600, Math.min(1000, main.screen.availWidth - 40));
+  const height = Math.max(400, Math.min(720, main.screen.availHeight - 80));
+  atlasWindow = main.openDialog(
     `${CONTENT}/atlas.xhtml`,
     "zotero-atlas",
-    "chrome,centerscreen,resizable,dialog=no,width=1000,height=720",
+    `chrome,centerscreen,resizable,dialog=no,width=${width},height=${height}`,
     args,
   );
   return atlasWindow;
+}
+
+/**
+ * Move a window back inside its screen's usable area, shrinking it first if it's too big, so its
+ * title bar can always be reached. A size or position saved on a bigger screen can put it out.
+ */
+function keepOnScreen(win) {
+  try {
+    if (win.windowState !== win.STATE_NORMAL) return; // maximised, minimised or full screen
+    const s = win.screen;
+    const w = Math.min(win.outerWidth, s.availWidth);
+    const h = Math.min(win.outerHeight, s.availHeight);
+    if (w !== win.outerWidth || h !== win.outerHeight) win.resizeTo(w, h);
+    const x = Math.min(Math.max(win.screenX, s.availLeft), s.availLeft + s.availWidth - w);
+    const y = Math.min(Math.max(win.screenY, s.availTop), s.availTop + s.availHeight - h);
+    if (x !== win.screenX || y !== win.screenY) win.moveTo(x, y);
+  } catch (e) {
+    Zotero.debug(`Zotero Atlas: couldn't keep the window on screen: ${e}`);
+  }
+}
+
+/** Escape and Ctrl+W (Cmd+W on a Mac) close a window, unless it's in the middle of something. */
+function closeOnEscape(win, busy) {
+  win.addEventListener("keydown", (ev) => {
+    if (ev.defaultPrevented || ev.altKey) return;
+    const accel = Zotero.isMac ? ev.metaKey : ev.ctrlKey;
+    const closeKey = accel && !ev.shiftKey && ev.key.toLowerCase() === "w";
+    const esc = ev.key === "Escape" && !accel && !ev.shiftKey;
+    if (!closeKey && !esc) return;
+    if (esc && busy?.(ev)) return;
+    ev.preventDefault();
+    win.close();
+  });
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -1799,6 +1838,8 @@ const Atlas = {
   fileFor,
   install: installPlugin,
   openWindow,
+  keepOnScreen,
+  closeOnEscape,
   openPage,
   attention: () => attention(last),
   ack,
