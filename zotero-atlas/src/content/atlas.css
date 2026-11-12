@@ -162,6 +162,18 @@ section[hidden] {
   padding: 4px 10px;
   color: var(--fg);
 }
+/* Each item carries its label twice (one copy for find-as-you-type); the same stylesheet hides one,
+   and without it every option read twice (seen in Zotero 10; Zotero 7 has one copy). */
+/* biome-ignore lint/correctness/noUnknownTypeSelector: XUL elements Gecko adds for the list */
+#ContentSelectDropdown menuitem:not([highlightable]) > .menu-highlightable-text,
+#ContentSelectDropdown menuitem:not([highlightable]) > .menu-iconic-highlightable-text {
+  display: none;
+}
+/* biome-ignore lint/correctness/noUnknownTypeSelector: XUL elements Gecko adds for the list */
+#ContentSelectDropdown menuitem[highlightable] > .menu-text,
+#ContentSelectDropdown menuitem[highlightable] > .menu-iconic-text {
+  display: none;
+}
 /* biome-ignore lint/correctness/noUnknownTypeSelector: XUL elements Gecko adds for the list */
 #ContentSelectDropdown menuitem[_moz-menuactive="true"] {
   background-color: var(--accent);

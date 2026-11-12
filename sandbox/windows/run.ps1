@@ -73,17 +73,23 @@ public static class Win {
     return s.ToString();
   }
 
-  // Visible top-level windows of these processes, front to back.
+  // Visible top-level windows of these processes (all of them if null), front to back.
   public static List<IntPtr> Windows(uint[] pids) {
     List<IntPtr> found = new List<IntPtr>();
-    HashSet<uint> want = new HashSet<uint>(pids);
+    HashSet<uint> want = pids == null ? null : new HashSet<uint>(pids);
     EnumWindows(delegate (IntPtr h, IntPtr l) {
       uint pid;
       GetWindowThreadProcessId(h, out pid);
-      if (want.Contains(pid) && IsWindowVisible(h)) found.Add(h);
+      if ((want == null || want.Contains(pid)) && IsWindowVisible(h)) found.Add(h);
       return true;
     }, IntPtr.Zero);
     return found;
+  }
+
+  public static uint Owner(IntPtr h) {
+    uint pid;
+    GetWindowThreadProcessId(h, out pid);
+    return pid;
   }
 
   // The window as drawn, without the invisible resize borders (DWMWA_EXTENDED_FRAME_BOUNDS).
@@ -121,6 +127,12 @@ function Shot([string] $path) {
   $bmp.Dispose()
 }
 
+function Describe([IntPtr] $h) {
+  if ($h -eq [IntPtr]::Zero) { return '(none)' }
+  $name = (Get-Process -Id ([Win]::Owner($h)) -ErrorAction SilentlyContinue).ProcessName
+  "'$([Win]::Title($h))' ($name)"
+}
+
 function AtlasWindow {
   $pids = [uint32[]]@(Get-Process zotero -ErrorAction SilentlyContinue | ForEach-Object { $_.Id })
   if (-not $pids) { return $null }
@@ -135,6 +147,17 @@ $rc = [Win]::SetResolution($Width, $Height)
 Start-Sleep -Seconds 2
 $screen = [System.Windows.Forms.Screen]::PrimaryScreen
 Write-Host "Resolution change to ${Width}x${Height}: $rc (0 = done). Screen $($screen.Bounds.Width)x$($screen.Bounds.Height), work area $($screen.WorkingArea)"
+
+# Windows 11 runners can show the "Choose privacy settings for your device" setup screen over
+# everything, and it takes the keyboard. Turn it off and close it.
+try {
+  $oobe = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\OOBE'
+  New-Item -Force $oobe | Out-Null
+  Set-ItemProperty $oobe -Name DisablePrivacyExperience -Value 1 -Type DWord
+} catch { Write-Host "Couldn't turn off the privacy screen: $_" }
+Get-Process WWAHost, CloudExperienceHostBroker, UserOOBEBroker -ErrorAction SilentlyContinue | Stop-Process -Force
+Start-Sleep -Seconds 1
+Write-Host "Visible windows: $((@([Win]::Windows($null)) | ForEach-Object { Describe $_ }) -join '; ')"
 
 # --- a new profile with Atlas and the driver -------------------------------------------------
 $Out = [IO.Path]::GetFullPath($Out)
@@ -197,7 +220,9 @@ while ((Get-Date) -lt $deadline -and -not (Test-Path $finished)) {
     }
     Shot (Join-Path $Shots "$n-$step-1-open.png")
     if ($h) { [Win]::Focus($h); Start-Sleep -Milliseconds 400 }
-    $info.focused = $h -and ([Win]::GetForegroundWindow() -eq $h)
+    $front = [Win]::GetForegroundWindow()
+    $info.focused = $h -and ($front -eq $h)
+    if (-not $info.focused) { $info.inFront = Describe $front }
     [System.Windows.Forms.SendKeys]::SendWait($r.key)
     New-Item -ItemType File -Force (Join-Path $IO "acted-$step") | Out-Null
     Start-Sleep -Milliseconds 1000
@@ -238,6 +263,7 @@ if (-not $driverOut) {
   $painted = { param($c) $c -and $c -ne 'rgba(0, 0, 0, 0)' -and $c -ne 'transparent' }
   $opaque = $p -and ($p.state -eq 'open') -and ((& $painted $p.host) -or (& $painted $p.content))
   Check 'The "All jobs" list opens with a background' ([bool]$opaque) "state=$($p.state) host=$($p.host) content=$($p.content) appearance=$($p.appearance)"
+  Check 'Each option in the list shows its text once' ($p -and $p.texts -eq 1) "texts shown in the first option: $($p.texts)"
   foreach ($step in 'firstrun', 'escape', 'ctrl-w', 'dropdown', 'escape-search') {
     if ($os[$step] -and -not $os[$step].focused) { Write-Host "::warning::$step window wasn't in front when the key was pressed" }
   }

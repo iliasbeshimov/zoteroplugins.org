@@ -128,12 +128,22 @@ async function run() {
       if (!pop) return { popup: null };
       const part = pop.openOrClosedShadowRoot?.querySelector('[part~="content"]');
       const bg = (e) => (e ? w.getComputedStyle(e).backgroundColor : null);
+      // How many copies of its text the first item shows (each item carries two, one hidden).
+      const item = pop.querySelector("menuitem");
+      const texts = item
+        ? [...item.children].filter(
+            (c) =>
+              w.getComputedStyle(c).display !== "none" &&
+              (c.getAttribute("value") || c.textContent || "").trim() !== "",
+          ).length
+        : null;
       return {
         popup: {
           state: pop.state,
           host: bg(pop),
           content: bg(part),
           appearance: w.getComputedStyle(pop).appearance,
+          texts,
         },
       };
     },
