@@ -1,0 +1,672 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-metadata-reconciler",
+ "repo": "alioth5670/zotero-metadata-reconciler",
+ "version": "0.1.22",
+ "tag": "v0.1.22",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-11-11T07:04:04Z",
+ "prerelease": false,
+ "asset": {
+  "name": "metadata-reconciler-zotero10-0.1.22.xpi",
+  "url": "https://github.com/Alioth5670/zotero-metadata-reconciler/releases/download/v0.1.22/metadata-reconciler-zotero10-0.1.22.xpi",
+  "size": 29483,
+  "sha256": "2bcbb87a2cf93ca6d9923fa9f84ef8eddea0b053bb71646590f51c321292819b",
+  "githubAssetId": 734511796,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-11-11T07:04:03Z",
+  "fetchedAt": "2026-11-12T11:33:24.064Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "metadata-reconciler@example.com",
+  "name": "Metadata Reconciler for Zotero 10",
+  "version": "0.1.22",
+  "description": "Find versions of a paper, verify publication type and metadata, and preview changes in Zotero.",
+  "homepageUrl": "https://github.com/Alioth5670/zotero-metadata-reconciler",
+  "updateUrl": "https://raw.githubusercontent.com/Alioth5670/zotero-metadata-reconciler/main/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1877,
+   "sha256": "1116648df422c7e0ab432a1ecfbb9fda86934b01683aec31244d1ce3e2b83109"
+  },
+  {
+   "path": "content/core.js",
+   "size": 12120,
+   "sha256": "b49aedbf387218a0cdd6f171e0659805264140068dee2adfd886e8b72ca6a2f4"
+  },
+  {
+   "path": "content/preferences.js",
+   "size": 2340,
+   "sha256": "bc77e6c2f35c7638529a2c0c37eb9a76cbb50d9080ee0eddec4a03e41686b712"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 1018,
+   "sha256": "b77decc0f87c2aed8cdc7284b008f7ce3c8b4ec1afa9b17c757119df9c6553b8"
+  },
+  {
+   "path": "content/providers.js",
+   "size": 21210,
+   "sha256": "aa72f72133edaf5b69417983e02e9424be51ff600b64a175f6828f4e8fbcd948"
+  },
+  {
+   "path": "content/reconciler.js",
+   "size": 30551,
+   "sha256": "4b2eb164ce3c0746201623dc2dc1e65594549b41d9b8444f756bc58cc331d0d0"
+  },
+  {
+   "path": "content/review.css",
+   "size": 2835,
+   "sha256": "14dd86e4792c6bf6f6fc4e04edc5fd708a194c7f92506eb5a34f63d3061bd857"
+  },
+  {
+   "path": "content/review.js",
+   "size": 16949,
+   "sha256": "d1acc7ef51c37eda9a236d68bd84834514ceca79a8c6ee996cb03e03ab29c7b4"
+  },
+  {
+   "path": "content/review.xhtml",
+   "size": 1314,
+   "sha256": "8631c7fabbf3ec5acb22fda47e1c7afe1561f3387b8384195ae64711cf1131af"
+  },
+  {
+   "path": "manifest.json",
+   "size": 597,
+   "sha256": "fcf646e53e17cf782ec339f495c3946e275d5081a79c84540b3650d37c972976"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-12T11:33:24.064Z",
+  "input": {
+   "slug": "zotero-metadata-reconciler",
+   "version": "0.1.22",
+   "sha256": "2bcbb87a2cf93ca6d9923fa9f84ef8eddea0b053bb71646590f51c321292819b"
+  },
+  "coverage": {
+   "filesTotal": 10,
+   "filesAnalyzed": 8,
+   "filesSkipped": [
+    {
+     "path": "content/review.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 87379,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/reconciler.js",
+       "line": 133,
+       "column": 19,
+       "snippet": "return await Zotero.HTTP.request(\"GET\", url, httpOptions);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/providers.js",
+       "line": 210,
+       "column": 42,
+       "snippet": "const data = await this.requestJSON(`https://api.crossref.org/works/${encodeURIComponent(DOI)}`);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/reconciler.js",
+       "line": 354,
+       "column": 44,
+       "snippet": "const data = await this.requestJSON(`https://api.crossref.org/works?query.title=${title}&rows=3`);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/reconciler.js",
+       "line": 444,
+       "column": 44,
+       "snippet": "const data = await this.requestJSON(`https://api.crossref.org/works/${encodeURIComponent(doi)}`);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/reconciler.js",
+       "line": 480,
+       "column": 44,
+       "snippet": "const data = await this.requestJSON(`https://api.crossref.org/works/${encodeURIComponent(related)}`);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openalex.org",
+     "category": "scholarly-api",
+     "provider": "OpenAlex",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/reconciler.js",
+       "line": 358,
+       "column": 44,
+       "snippet": "const data = await this.requestJSON(`https://api.openalex.org/works?search=${title}&per-page=3`);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/reconciler.js",
+       "line": 451,
+       "column": 44,
+       "snippet": "const data = await this.requestJSON(`https://api.openalex.org/works/https://doi.org/${encodeURIComponent(doi)}`);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/reconciler.js",
+       "line": 363,
+       "column": 44,
+       "snippet": "const data = await this.requestJSON(`https://api.semanticscholar.org/graph/v1/paper/search?query=${title}&limit=3&fields=${fields}`);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/providers.js",
+       "line": 360,
+       "column": 56,
+       "snippet": "const atom = \"http://www.w3.org/2005/Atom\", arxiv = \"http://arxiv.org/schemas/atom\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dblp.org",
+     "category": "scholarly-api",
+     "provider": "dblp",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/reconciler.js",
+       "line": 349,
+       "column": 44,
+       "snippet": "const data = await this.requestJSON(`https://dblp.org/search/publ/api?q=${title}&h=5&format=json`);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/core.js",
+       "line": 107,
+       "column": 47,
+       "snippet": "sourceURL: message.URL || (message.DOI ? `https://doi.org/${message.DOI}` : \"\"),",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "export.arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/providers.js",
+       "line": 345,
+       "column": 41,
+       "snippet": "const xml = await this.requestText(`https://export.arxiv.org/api/query?${query}`);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "openaccess.thecvf.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/reconciler.js",
+       "line": 290,
+       "column": 11,
+       "snippet": "url: `https://openaccess.thecvf.com/${name}${year}?day=all`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "proceedings.iclr.cc",
+     "category": "unknown",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/reconciler.js",
+       "line": 297,
+       "column": 40,
+       "snippet": "const html = await this.requestText(`https://proceedings.iclr.cc/papers/search?q=${encodeURIComponent(term)}`);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "scholar.google.com",
+     "category": "scholarly-api",
+     "provider": "Google Scholar",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/providers.js",
+       "line": 7,
+       "column": 11,
+       "snippet": "return 'https://scholar.google.com/scholar?hl=en&q=' + encodeURIComponent('\"' + title + '\"');",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/providers.js",
+       "line": 73,
+       "column": 48,
+       "snippet": "try { return [...matches, ...await read(\"https://scholar.google.com/scholar?hl=en&cluster=\" + encodeURIComponent(cluster))]; }",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/providers.js",
+       "line": 178,
+       "column": 32,
+       "snippet": "sourceURL: result.link || \"https://scholar.google.com/\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/review.js",
+       "line": 95,
+       "column": 20,
+       "snippet": "const url = `https://scholar.google.com/scholar?q=${encodeURIComponent('\"' + title + '\"')}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "serpapi.com",
+     "category": "integration",
+     "provider": "SerpApi",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/providers.js",
+       "line": 144,
+       "column": 46,
+       "snippet": "const response = await this.httpRequest(`https://serpapi.com/search.json?${query}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://openaccess.thecvf.com<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/reconciler.js",
+       "line": 328,
+       "column": 12,
+       "snippet": ": `https://openaccess.thecvf.com${best.href.startsWith(\"/\") ? \"\" : \"/\"}${best.href}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "https://proceedings.iclr.cc<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/reconciler.js",
+       "line": 308,
+       "column": 39,
+       "snippet": "const url = href.startsWith(\"/\") ? `https://proceedings.iclr.cc${href}` : href;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.03"
+  },
+  "capabilities": [
+   {
+    "id": "login-manager",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "codeKey": "94dbb6910d92",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/providers.js",
+      "line": 117,
+      "column": 25,
+      "snippet": "const logins = await Services.logins.findLogins(\"chrome://metadata-reconciler\", null, \"SerpApi API Key\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/providers.js",
+      "line": 123,
+      "column": 25,
+      "snippet": "const logins = await Services.logins.findLogins(\"chrome://metadata-reconciler\", null, \"SerpApi API Key\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/providers.js",
+      "line": 125,
+      "column": 40,
+      "snippet": "for (const login of logins) await Services.logins.removeLogin(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/providers.js",
+      "line": 129,
+      "column": 31,
+      "snippet": "if (logins.length) await Services.logins.modifyLogin(logins[0], login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/providers.js",
+      "line": 130,
+      "column": 17,
+      "snippet": "else await Services.logins.addLoginAsync(login);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsILoginManager"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Alioth5670/zotero-metadata-reconciler/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Alioth5670/zotero-metadata-reconciler/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-12T11:33:24.064Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-12T11:33:24.064Z",
+  "appliesTo": {
+   "slug": "zotero-metadata-reconciler",
+   "version": "0.1.22",
+   "sha256": "2bcbb87a2cf93ca6d9923fa9f84ef8eddea0b053bb71646590f51c321292819b"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.03",
+   "currentZotero": "10.0.9",
+   "inputHash": "d38557b8465ee16de7afb41d2aa89123acf4ba258e96b337af19dee15900b3d3"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "integration",
+      "hosts": [
+       "serpapi.com"
+      ],
+      "unconfirmed": [
+       "serpapi.com"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "api.openalex.org",
+       "api.semanticscholar.org",
+       "arxiv.org",
+       "dblp.org",
+       "doi.org",
+       "export.arxiv.org",
+       "scholar.google.com"
+      ],
+      "unconfirmed": [
+       "arxiv.org",
+       "doi.org",
+       "export.arxiv.org",
+       "scholar.google.com"
+      ]
+     },
+     {
+      "category": "unknown",
+      "hosts": [
+       "proceedings.iclr.cc"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts a server we couldn't identify: proceedings.iclr.cc",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "login-manager",
+      "label": "Uses Zotero's password manager",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-11T07:04:04Z",
+    "lastCommitAt": "2026-11-11T07:05:38Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Contacts a server we couldn't identify: proceedings.iclr.cc"
+   ]
+  }
+ }
+}
