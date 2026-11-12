@@ -156,6 +156,8 @@ try {
   Set-ItemProperty $oobe -Name DisablePrivacyExperience -Value 1 -Type DWord
 } catch { Write-Host "Couldn't turn off the privacy screen: $_" }
 Get-Process WWAHost, CloudExperienceHostBroker, UserOOBEBroker -ErrorAction SilentlyContinue | Stop-Process -Force
+# Its Search panel can open by itself too; closing the process closes the panel.
+Get-Process SearchHost -ErrorAction SilentlyContinue | Stop-Process -Force
 Start-Sleep -Seconds 1
 Write-Host "Visible windows: $((@([Win]::Windows($null)) | ForEach-Object { Describe $_ }) -join '; ')"
 
@@ -219,7 +221,18 @@ while ((Get-Date) -lt $deadline -and -not (Test-Path $finished)) {
       $info.closeButtonOnScreen = ($frame.Top -ge $work.Top) -and ($frame.Right -le $work.Right)
     }
     Shot (Join-Path $Shots "$n-$step-1-open.png")
-    if ($h) { [Win]::Focus($h); Start-Sleep -Milliseconds 400 }
+    if ($h) {
+      [Win]::Focus($h)
+      Start-Sleep -Milliseconds 400
+      # Something of Windows' own in front (Windows 11's Search panel): Escape closes it.
+      for ($try = 0; $try -lt 3 -and [Win]::GetForegroundWindow() -ne $h; $try++) {
+        Write-Host "$step : closing $(Describe ([Win]::GetForegroundWindow())) in front"
+        [System.Windows.Forms.SendKeys]::SendWait('{ESC}')
+        Start-Sleep -Milliseconds 400
+        [Win]::Focus($h)
+        Start-Sleep -Milliseconds 400
+      }
+    }
     $front = [Win]::GetForegroundWindow()
     $info.focused = $h -and ($front -eq $h)
     if (-not $info.focused) { $info.inFront = Describe $front }
