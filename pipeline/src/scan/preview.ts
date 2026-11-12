@@ -280,6 +280,51 @@ const SERVICES = new Set([
 const inRequestPackage = (libs: string[] | undefined) =>
   !!libs?.length && libs.every((l) => REQUEST_PACKAGES.test(l));
 
+/** Words in a constant's name that make its address a server the code talks to, or a page. */
+const SERVICE_WORDS = new Set(["api", "endpoint", "backend", "server", "host", "base"]);
+const PAGE_WORDS = new Set([
+  "page",
+  "doc",
+  "docs",
+  "privacy",
+  "homepage",
+  "help",
+  "site",
+  "web",
+  "frontend",
+  "login",
+  "dashboard",
+  "link",
+  "href",
+]);
+const words = (name: string) =>
+  name
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+    .toLowerCase()
+    .split(/[^a-z]+/)
+    .filter(Boolean);
+
+/**
+ * A developer's own address that the code uses as a server, not a page: an API host
+ * (api.mktero.com), an /api/ path, or a constant named for one (`MKTERO_RELEASE_API_BASE`,
+ * `DEFAULT_HOST`, `OFFICIAL_AUTH_SERVER`). The request itself often goes through a getter or a
+ * client object we can't follow, so it stays untraced (mktero's card response).
+ */
+export function developerService(h: Analysis["network"]["hosts"][number]): boolean {
+  if (h.host === "localhost" || h.host.endsWith(".localhost")) return false;
+  if (/^([a-z0-9]+-)?api[.-]/.test(h.host)) return true;
+  const host = h.host.replace(/\./g, "\\.");
+  const path = new RegExp(`https?://${host}(:\\d+)?/api/`);
+  const assigned = new RegExp(`([A-Za-z_$][\\w$]*)\\s*[:=][^"'\`]{0,60}["'\`]https?://${host}\\b`);
+  return h.evidence.some((e) => {
+    if (path.test(e.snippet)) return true;
+    const name = assigned.exec(e.snippet)?.[1];
+    if (!name) return false;
+    const w = words(name);
+    return w.some((x) => SERVICE_WORDS.has(x)) && !w.some((x) => PAGE_WORDS.has(x));
+  });
+}
+
 export function preview(
   a: Analysis,
   updateHost: { host: string; category: string } | null,
@@ -306,8 +351,9 @@ export function preview(
       return inRequestPackage(h.libraries) && SERVICES.has(h.category);
     if (h.usage === "request") return true;
     // A name-matched developer host (usually the project's homepage) counts only when requested,
-    // or when obfuscation hides the requests (doc2x's v2c.doc2x.noedgeai.com API).
-    if (h.provider === "Plugin developer (name match)") return obfuscated;
+    // when the code uses it as a server (an API base behind a getter), or when obfuscation hides
+    // the requests (doc2x's v2c.doc2x.noedgeai.com API).
+    if (h.provider === "Plugin developer (name match)") return obfuscated || developerService(h);
     if (h.flags.includes("ip-literal") && h.category === "unknown") return true;
     // Obfuscation hides which named servers it contacts: an unknown one in its own code counts.
     if (obfuscated && h.category === "unknown" && !h.inVendoredCode) return true;

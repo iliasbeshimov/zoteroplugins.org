@@ -1487,7 +1487,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-11T11:17:15.991Z",
+  "computedAt": "2026-11-12T18:02:55.502Z",
   "appliesTo": {
    "slug": "lingkuma-zotero",
    "version": "1.1.1",
@@ -1520,8 +1520,19 @@
     ]
    },
    "dataSharing": {
-    "value": "named-third-parties",
+    "value": "developer-servers",
     "hosts": [
+     {
+      "category": "developer-server",
+      "hosts": [
+       "dashboard.lingkuma.org",
+       "lingkuma.org"
+      ],
+      "unconfirmed": [
+       "dashboard.lingkuma.org",
+       "lingkuma.org"
+      ]
+     },
      {
       "category": "integration",
       "hosts": [
@@ -1556,11 +1567,11 @@
       ]
      }
     ],
-    "concern": "low",
-    "label": "Only contacts services we could identify",
+    "concern": "medium",
+    "label": "Its code names the developer's servers: dashboard.lingkuma.org and lingkuma.org",
     "legalRisk": false,
     "drivers": [
-     "DS-NAMED"
+     "DS-DEVELOPER"
     ]
    },
    "capabilities": {
@@ -1637,9 +1648,11 @@
    "label": "review-details",
    "ruleId": "OV-REVIEW",
    "drivers": [
+    "dataSharing",
     "capabilities"
    ],
    "reasons": [
+    "Its code names the developer's servers: dashboard.lingkuma.org and lingkuma.org",
     "Signs in using another app's identity"
    ]
   }

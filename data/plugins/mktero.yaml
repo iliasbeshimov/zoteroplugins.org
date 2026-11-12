@@ -1,0 +1,30 @@
+schemaVersion: 1
+slug: mktero
+repo: tenglvjun/mktero
+status: listed
+responses:
+  - date: "2026-11-12"
+    from: tenglvjun
+    about: data-sharing
+    version: "0.9.1"
+    text: |-
+      I maintain Mktero. Thanks for the scan — the A grade matches what we would expect from a code check. One correction to "Where your data goes", because it changes what that finding means.
+
+      Mktero's default converter is our own hosted endpoint, and an uncached conversion uploads the **complete PDF** to `https://api.mktero.com`. That origin is the default in `prefs.js` (`extensions.mktero.conversionProvider = "mktero"`) and is defined in `src/config/runtime-config.js`. The same origin also serves sign-in, the account profile, conversion-activity counts, the daily quota, the extension-version heartbeat, and the anonymous daily reading-activity totals. The account and password-reset pages open `https://mktero.com`.
+
+      Neither address appears on your card or in `/api/plugins.json`, so "only contacts services we could identify" is currently missing the endpoint that actually receives the PDF — the one that matters most for this section.
+
+      MinerU cloud, a self-hosted MinerU service, and Mistral are optional: they apply only after the user switches converters. Nothing beyond Zotero is required to install or read cached results. The auto-written "What it does" summary still says the plugin "needs a MinerU token or Mistral API key", which is out of date — by default a signed-in Mktero account does the conversion.
+
+      The anonymous `models.dev` request you list is real and does fire on Zotero startup; it loads a model catalogue into memory only and is kept until Zotero quits.
+
+      Our published data table is `docs/privacy.md`, section "Sent to services"; that row list is the contract we keep current, and it names every destination above.
+    url: https://github.com/iliasbeshimov/zoteroplugins.org/issues/10
+    status: corrected
+    reply: |-
+      Thanks. You're right, and the file references made it quick to check. Our scanner found api.mktero.com in the code but then dropped it. It counts a developer's own address only when it can trace a request to it, so that homepage links don't count as data sharing. Your client gets the address through getAccountApiBase() and sends its requests through an injected fetch, which the scanner can't follow. The same gap hid the developer's server on two other plugins.
+
+      We've changed the rule for every plugin: a developer's address now counts when the code uses it as a server, such as an api. address, an /api/ path, or a value named for an API base or server. Mktero's card now lists api.mktero.com under the developer's servers. It says "its code names" rather than "contacts" because we still can't trace the request itself; your response confirms it. That moves Mktero from A to B, the same grade as every plugin that sends data to its developer's own server. B means "read why before installing": what happens to the PDFs depends on your service, which a code check can't see. Your response, with its pointer to docs/privacy.md, sits next to the card.
+
+      mktero.com isn't listed because the plugin only opens those pages in the browser, and the card lists the addresses the plugin itself sends data to. You were also right about the summary: it now says that a signed-in Mktero account does the conversion by default, and that MinerU and Mistral are optional.
+    repliedAt: "2026-11-12"

@@ -4797,7 +4797,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-12T11:33:24.064Z",
+  "computedAt": "2026-11-12T18:02:50.918Z",
   "appliesTo": {
    "slug": "mktero",
    "version": "0.9.1",
@@ -4830,12 +4830,21 @@
     ]
    },
    "dataSharing": {
-    "value": "named-third-parties",
+    "value": "developer-servers",
     "hosts": [
      {
       "category": "cdn",
       "hosts": [
        "models.dev"
+      ]
+     },
+     {
+      "category": "developer-server",
+      "hosts": [
+       "api.mktero.com"
+      ],
+      "unconfirmed": [
+       "api.mktero.com"
       ]
      },
      {
@@ -4900,11 +4909,11 @@
       ]
      }
     ],
-    "concern": "low",
-    "label": "Only contacts services we could identify",
+    "concern": "medium",
+    "label": "Its code names the developer's server: api.mktero.com",
     "legalRisk": false,
     "drivers": [
-     "DS-NAMED"
+     "DS-DEVELOPER"
     ]
    },
    "capabilities": {
@@ -4966,9 +4975,14 @@
    }
   },
   "overall": {
-   "label": "low-concern",
-   "ruleId": "OV-LOW",
-   "drivers": []
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Its code names the developer's server: api.mktero.com"
+   ]
   }
  }
 }

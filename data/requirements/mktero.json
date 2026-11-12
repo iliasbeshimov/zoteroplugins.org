@@ -1,12 +1,12 @@
 {
  "schemaVersion": 1,
  "slug": "mktero",
- "checkedAt": "2026-09-30",
- "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "checkedAt": "2026-11-12",
+ "method": "rechecked by hand against the README and docs/getting-started.md after the developer's card response (issues/10)",
  "apiKey": {
-  "need": "required",
-  "keyFor": "MinerU API token or Mistral API key for PDF conversion (a self-hosted MinerU service is an alternative)",
-  "worksWithout": "",
+  "need": "optional",
+  "keyFor": "only if you choose MinerU cloud or Mistral OCR instead of the Mktero service, and for AI translation (your own provider's key)",
+  "worksWithout": "conversion by the Mktero service once you sign in to a Mktero account (the default)",
   "services": [
    "MinerU (mineru.net)",
    "Mistral"
@@ -16,10 +16,28 @@
  "evidence": [
   {
    "source": "readme",
-   "where": "README Requirements",
-   "quote": "An API key for MinerU cloud or [Mistral](https://console.mistral.ai/api-keys/).",
+   "where": "README, Important note",
+   "quote": "Sign in from `Settings -> Mktero`; no separate OCR key is required.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "docs/getting-started.md, Requirements",
+   "quote": "**Account:** a Mktero account for the default hosted conversion. It does not\n  require a MinerU or Mistral key.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "readme",
+   "where": "docs/getting-started.md, Sign in or choose a converter",
+   "quote": "MinerU cloud and [Mistral](https://console.mistral.ai/api-keys/) need your own API\nkey.",
+   "supports": "apiKey"
+  },
+  {
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.mktero.conversionProvider\", \"mktero\");",
    "supports": "apiKey"
   }
  ],
- "checkNote": "README Requirements say \"An API key for MinerU cloud or [Mistral](https://console.mistral.ai/api-keys/).\" The default provider is the MinerU cloud. The self-hosted MinerU alternative means you run your own server, so it is not out of the box. The AI base URL is configurable but no local model is named, so unknown."
+ "checkNote": "Since the hosted converter (0.9.x) the default is the developer's Mktero service, which needs a signed-in Mktero account but no key. MinerU cloud and Mistral need the user's own key when chosen instead; a self-hosted MinerU's key is optional. AI translation uses the user's own provider key. No local model is named, so unknown."
 }

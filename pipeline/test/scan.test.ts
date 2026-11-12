@@ -357,6 +357,41 @@ describe("second-pass precision rules", () => {
     expect(r.updateHost).toEqual({ host: "ai4paper.pro", category: "developer-server" });
   });
 
+  it("counts a developer's API base reached through a getter, not their homepage", async () => {
+    const { analyzeXpi, developerHints } = await import("../src/scan/analyze.ts");
+    // mktero 0.9.1: the base goes through getAccountApiBase() into a client that calls an
+    // injected fetch, so no request is traced to it.
+    const code = `
+      var RELEASE_API_BASE = "https://api.fixtureplugin.com";
+      var RELEASE_SITE_BASE = "https://fixtureplugin.com";
+      var DEFAULT_HOST = "https://mirror.fixtureplugin.com";
+      var homepage = "https://docs.fixtureplugin.com/guide";
+      function getApiBase() { return debug() ? readPref() : RELEASE_API_BASE; }
+      async function requestJSON(fetchImpl, apiBase, path) { return fetchImpl(join(apiBase, path)); }
+      function upload(pdf) { return requestJSON(globalThis.fetch, getApiBase(), "/v1/conversions"); }
+      function lookup(host) { return requestJSON(globalThis.fetch, host || DEFAULT_HOST, "/search"); }
+      function account() { Zotero.launchURL(RELEASE_SITE_BASE + "/account"); }
+      function help() { Zotero.launchURL(homepage); }
+      fetch("https://api.crossref.org/works");
+    `;
+    const r = analyzeXpi({
+      slug: "fixture",
+      sha256: "c".repeat(64),
+      entries: [
+        { path: "manifest.json", data: enc.encode(manifest()) },
+        { path: "content/a.js", data: enc.encode(code) },
+      ],
+      table,
+      developer: developerHints("someone/fixtureplugin", null, null),
+    });
+    const card = preview(r.analysis, r.updateHost);
+    expect(card.hostsByCategory["developer-server"]).toEqual([
+      "api.fixtureplugin.com",
+      "mirror.fixtureplugin.com",
+    ]);
+    expect(card.dataSharing).toBe("developer-servers");
+  });
+
   it("treats files named like library releases as bundled", () => {
     const r = scan({
       "chrome/content/modules/excalidraw.production.min-0.16.1.js": "var x = eval(y);",

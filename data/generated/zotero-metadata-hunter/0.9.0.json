@@ -543,7 +543,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-11T11:17:15.991Z",
+  "computedAt": "2026-11-12T18:02:53.278Z",
   "appliesTo": {
    "slug": "zotero-metadata-hunter",
    "version": "0.9.0",
@@ -576,8 +576,17 @@
     ]
    },
    "dataSharing": {
-    "value": "named-third-parties",
+    "value": "developer-servers",
     "hosts": [
+     {
+      "category": "developer-server",
+      "hosts": [
+       "dblp.federicotorrielli.me"
+      ],
+      "unconfirmed": [
+       "dblp.federicotorrielli.me"
+      ]
+     },
      {
       "category": "scholarly-api",
       "hosts": [
@@ -611,11 +620,11 @@
       ]
      }
     ],
-    "concern": "low",
-    "label": "Only contacts services we could identify",
+    "concern": "medium",
+    "label": "Its code names the developer's server: dblp.federicotorrielli.me",
     "legalRisk": false,
     "drivers": [
-     "DS-NAMED"
+     "DS-DEVELOPER"
     ]
    },
    "capabilities": {
@@ -667,9 +676,14 @@
    }
   },
   "overall": {
-   "label": "low-concern",
-   "ruleId": "OV-LOW",
-   "drivers": []
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Its code names the developer's server: dblp.federicotorrielli.me"
+   ]
   }
  }
 }
