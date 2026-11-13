@@ -7,8 +7,9 @@
   position: relative;
 }
 
-/* Something needs you: a small red dot, ringed in the toolbar's colour. */
-#zotero-atlas-tb[attention="true"]::after {
+/* Something needs you: a small red dot, ringed in the toolbar's colour. A plugin to rate: the
+   same dot in Zotero's blue, so red keeps meaning "needs you". */
+#zotero-atlas-tb[attention]::after {
   content: "";
   position: absolute;
   top: 3px;
@@ -19,6 +20,9 @@
   background: #d92d20;
   box-shadow: 0 0 0 1.5px var(--material-tabstrip, -moz-dialog);
   pointer-events: none;
+}
+#zotero-atlas-tb[attention="rate"]::after {
+  background: var(--accent-blue, #4072e5);
 }
 
 /* A blocked plugin or a known security problem: Zotero's own bar, in the retraction bar's red. */

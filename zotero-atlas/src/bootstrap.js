@@ -17,6 +17,10 @@
  *   Atlas button by the sync button until you look).
  * - it shows each plugin's grade in Tools → Plugins, marks the plugins it can't check, and after
  *   an update lets you go back to the version you had (the file we analysed).
+ * - two weeks after it first sees a listed plugin turned on, it asks how that plugin is working:
+ *   a blue dot on the Atlas button (never the red one, which is kept for things that need you)
+ *   and a card in "Your plugins" with five stars. At most three plugins at a time, at most once
+ *   a month, each plugin asked about once, and no notice. Nothing is sent until you click Post.
  *
  * What it contacts:
  * - raw.githubusercontent.com, the directory's public repository: the catalogue (catalog.json)
@@ -82,6 +86,9 @@ const RANK = { "A+": 4, A: 3, B: 2, C: 1, "–": 0 };
 const RATER_SALT = "zotero-atlas ratings v1";
 const RATER_ROUNDS = 600000;
 const REMOVED_FOR = 30 * DAY; // a removed plugin can still be rated for this long
+const ASK_AFTER = 14 * DAY; // in use this long before Atlas asks how a plugin is working
+const ASK_EVERY = 30 * DAY; // at most one round of asking a month; a round's cards last as long
+const ASK_AT_MOST = 3; // plugins asked about in one round
 const MAX_REVIEW = 1000;
 const XHTML = "http://www.w3.org/1999/xhtml";
 const CONTENT = "chrome://zotero-atlas/content";
@@ -227,14 +234,19 @@ function clearPrefs() {
 
 /**
  * catalogEtag, advisoriesEtag: the files' freshness. sentAt, sentHash: the last usage report.
- * seen: { addonId: { grade, version, slug, name, installed } } as last reviewed, so a grade drop
- *   and an update can be told.
+ * seen: { addonId: { grade, version, slug, name, installed, since, early } } as last reviewed, so
+ *   a grade drop and an update can be told. since: when Atlas first saw it installed; early: it
+ *   was there before Atlas (or before Atlas kept since), so it's been in use at least that long.
  * noticed: { key: time } notices already shown, so each shows once.
  * acked: { key: time } what needed you when you last opened "Your plugins": the red dot is for
  *   anything since. dismissed: { key: time } bars you closed.
  * removed: { addonId: { slug, name, version, at } } plugins removed in the last 30 days, so
  *   they can still be rated.
  * rated: { "slug|version": { stars, at } } ratings posted from this Zotero.
+ * asked: { slug: { at, how } } plugins Atlas has asked about ("asked") or you put off ("later"):
+ *   each is asked about once.
+ * askRound: { at, slugs, seenAt } the plugins asked about now, and when you saw them in "Your
+ *   plugins" (which clears the blue dot). A round's cards go after ASK_EVERY.
  * held: { addonId: { version, from, reason, at, name } } updates waiting: "unchecked" until the
  *   directory has analysed the file, "worse", "blocked" or "advisory" until you decide, "kept"
  *   once you chose to keep your version, "pinned" after you went back.
@@ -715,9 +727,15 @@ async function review(force) {
   const items = [];
   const fresh = [];
   const ctx = { advisories: adv, zv };
+  const first = !st.seen; // Atlas's first look: everything installed was there before it
   for (const a of addons) {
     const e = byId.get(a.id) || null;
     const prev = seen[a.id];
+    // When Atlas first saw it, for asking how it's working. Seen before Atlas kept this, or at
+    // Atlas's first look, it's been in use at least that long ("early").
+    const since = prev?.since || Date.now();
+    const early = prev?.since ? Boolean(prev.early) : first || Boolean(prev);
+    const kept = { since, ...(early ? { early } : {}) };
     // A version change since the last look: an update (or going back), kept for a month.
     if (prev?.installed && prev.installed !== a.version) {
       history[a.id] = [
@@ -781,12 +799,22 @@ async function review(force) {
         slug: e.slug,
         name: e.name,
         installed: a.version,
+        ...kept,
         ...(from || {}),
       };
     } else {
       item.flags.push("not-listed");
-      seen[a.id] = { grade: "–", version: "", slug: "", name: a.name, installed: a.version };
+      seen[a.id] = {
+        grade: "–",
+        version: "",
+        slug: "",
+        name: a.name,
+        installed: a.version,
+        ...kept,
+      };
     }
+    item.since = since;
+    item.early = early;
     item.alerts = alertsFor(item, ctx);
     for (const al of item.alerts) item.flags.push(al.flag);
     for (const al of item.alerts) {
@@ -815,7 +843,29 @@ async function review(force) {
     if (addons.some((a) => a.id === id) || ago(r.at) > REMOVED_FOR) delete removed[id];
   for (const m of [noticed, st.acked || {}, st.dismissed || {}])
     for (const [key, at] of Object.entries(m)) if (ago(at) > 90 * DAY) delete m[key];
-  saveState({ seen, noticed, removed, hashes, history, behind, held, pinned });
+  // Asking how a plugin is working: two weeks after Atlas first saw it turned on, never one you
+  // rated from this Zotero or were asked about before, a few at a time, at most once a month.
+  const asked = st.asked || {};
+  let askRound = st.askRound || null;
+  if (!askRound || ago(askRound.at) >= ASK_EVERY) {
+    const rated = ratedSlugs(st);
+    const ready = items
+      .filter(
+        (i) =>
+          i.entry &&
+          i.addon.enabled &&
+          !rated.has(i.entry.slug) &&
+          !asked[i.entry.slug] &&
+          ago(i.since) >= ASK_AFTER,
+      )
+      .sort((x, y) => x.since - y.since)
+      .slice(0, ASK_AT_MOST);
+    if (ready.length) {
+      askRound = { at: Date.now(), slugs: ready.map((i) => i.entry.slug) };
+      for (const i of ready) asked[i.entry.slug] = { at: askRound.at, how: "asked" };
+    }
+  }
+  saveState({ seen, noticed, removed, hashes, history, behind, held, pinned, asked, askRound });
   last = {
     items,
     fresh,
@@ -841,13 +891,50 @@ function unseen(rv) {
   return attention(rv).filter((a) => !acked[a.key]);
 }
 
-/** Opening "Your plugins" clears the dot until something new comes up. */
+/** Slugs rated from this Zotero, any version. */
+function ratedSlugs(st) {
+  return new Set(Object.keys(st.rated || {}).map((k) => k.slice(0, k.lastIndexOf("|"))));
+}
+
+/**
+ * The plugins Atlas is asking about now: this round's, still installed and turned on, not rated
+ * and not put off. Read fresh each time, so a rating or "Not now" shows at once.
+ */
+function asking(rv) {
+  const st = state();
+  const round = st.askRound;
+  if (!rv || !round || ago(round.at) >= ASK_EVERY) return [];
+  const rated = ratedSlugs(st);
+  const asked = st.asked || {};
+  return round.slugs
+    .map((slug) => rv.items.find((i) => i.entry?.slug === slug))
+    .filter(
+      (i) => i?.addon.enabled && !rated.has(i.entry.slug) && asked[i.entry.slug]?.how !== "later",
+    );
+}
+
+/** Whether the blue dot is up: a round you haven't seen in "Your plugins" yet. */
+function askUnseen(rv) {
+  return !state().askRound?.seenAt && asking(rv).length > 0;
+}
+
+/** "Not now": the card goes, and Atlas doesn't ask about this plugin again. */
+function later(slug) {
+  const asked = state().asked || {};
+  asked[slug] = { at: Date.now(), how: "later" };
+  saveState({ asked });
+  changed();
+}
+
+/** Opening "Your plugins" clears the dots until something new comes up. */
 function ack() {
-  const acked = state().acked || {};
+  const st = state();
+  const acked = st.acked || {};
   const fresh = attention(last).filter((a) => !acked[a.key]);
-  if (!fresh.length) return;
+  const ask = askUnseen(last);
+  if (!fresh.length && !ask) return;
   for (const a of fresh) acked[a.key] = Date.now();
-  saveState({ acked });
+  saveState({ acked, ...(ask ? { askRound: { ...st.askRound, seenAt: Date.now() } } : {}) });
   changed();
 }
 
@@ -1483,16 +1570,26 @@ function paintWindow(win) {
   const doc = win.document;
   const want = unseen(last);
   const all = attention(last);
+  // Red for what needs you; blue, only when nothing red is new, for plugins to rate.
+  const rate = !want.length && askUnseen(last) ? asking(last) : [];
   if (parts.button) {
     if (want.length) parts.button.setAttribute("attention", "true");
+    else if (rate.length) parts.button.setAttribute("attention", "rate");
     else parts.button.removeAttribute("attention");
+    const things = `Zotero Atlas: ${all.length} thing${all.length === 1 ? "" : "s"} to look at`;
     parts.button.setAttribute(
       "tooltiptext",
-      all.length
-        ? `Zotero Atlas: ${all.length} thing${all.length === 1 ? "" : "s"} to look at`
-        : last
-          ? "Zotero Atlas: your plugins are fine"
-          : "Zotero Atlas",
+      want.length
+        ? things
+        : rate.length === 1
+          ? `Zotero Atlas: how is ${rate[0].entry.name} working? Rate it`
+          : rate.length
+            ? `Zotero Atlas: ${rate.length} plugins to rate`
+            : all.length
+              ? things
+              : last
+                ? "Zotero Atlas: your plugins are fine"
+                : "Zotero Atlas",
     );
   }
   if (parts.banner) {
@@ -1857,6 +1954,8 @@ const Atlas = {
     rate,
     rated: (slug, v) => state().rated?.[`${slug}|${v}`] || null,
     removed: () => Object.entries(state().removed || {}).map(([id, r]) => ({ id, ...r })),
+    asking: () => asking(last),
+    later,
     payload: ratingPayload,
   },
   usage: {

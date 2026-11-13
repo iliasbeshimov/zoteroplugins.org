@@ -1188,6 +1188,185 @@ const run = async (name, fn) => {
     assert.equal(banner.attrs.collapsed, "true", "stays closed");
   });
 
+  const DAYS = 24 * 3600 * 1000;
+  const STATE = "extensions.zotero-atlas.state";
+  const getState = (t) => JSON.parse(t.prefs[STATE]);
+  const putState = (t, st) => {
+    t.prefs[STATE] = JSON.stringify(st);
+  };
+  /** Pretends Atlas first saw each of these add-ons `days` ago. */
+  const age = (t, days) => {
+    const st = getState(t);
+    for (const [id, d] of Object.entries(days)) st.seen[id].since = Date.now() - d * DAYS;
+    putState(t, st);
+  };
+  const addon = (id, name, o = {}) => ({
+    id,
+    type: "extension",
+    name,
+    version: "1.0.0",
+    isActive: true,
+    ...o,
+  });
+
+  await run(
+    "asking for ratings: two weeks in, three at a time, a blue dot that looking clears, once a month",
+    async () => {
+      const ids = ["a", "b", "c", "d", "off"];
+      const plugins = ids.map((k) =>
+        entry({ slug: k, id: `${k}@x`, name: k.toUpperCase(), version: "1.0.0" }),
+      );
+      const t = load({
+        http: (_m, url) =>
+          url === CATALOG_URL
+            ? ok200(catalogJson(plugins))
+            : url.includes("/ratings")
+              ? { status: 204, responseText: "" }
+              : ok200(advJson([])),
+        addons: [
+          ...ids.map((k) => addon(`${k}@x`, k.toUpperCase(), { isActive: k !== "off" })),
+          addon("unlisted@x", "Unlisted"),
+        ],
+      });
+      t.prefs["extensions.zotero-atlas.usage"] = "no";
+      t.prefs["extensions.zotero-atlas.updates"] = "hold";
+      t.s.startup({ id: "a", version: "1.0.0", rootURI: "r/" });
+      t.s.onMainWindowLoad({ window: t.window });
+      t.flush();
+      await settle(20);
+      const A = t.s.Zotero.ZoteroAtlas;
+      const button = t.toolbar.children[0];
+      assert.equal(button.attrs.attention, undefined, "nothing to rate on day one");
+      assert.deepEqual(A.ratings.asking(), []);
+      assert.equal(
+        getState(t).seen["a@x"].early,
+        true,
+        "there before Atlas: in use at least that long",
+      );
+
+      // 13 days: still too soon.
+      age(t, { "a@x": 13, "b@x": 13, "c@x": 13, "d@x": 13, "off@x": 13, "unlisted@x": 13 });
+      await A.review(false);
+      assert.deepEqual(A.ratings.asking(), []);
+      assert.equal(getState(t).askRound, null);
+
+      // Two weeks and more: the three in use longest; never a turned-off or unlisted plugin.
+      age(t, { "a@x": 40, "b@x": 30, "c@x": 20, "d@x": 15, "off@x": 50, "unlisted@x": 60 });
+      await A.review(false);
+      assert.deepEqual(
+        A.ratings.asking().map((i) => i.entry.slug),
+        ["a", "b", "c"],
+      );
+      assert.equal(button.attrs.attention, "rate", "a blue dot, not the red one");
+      assert.equal(button.attrs.tooltiptext, "Zotero Atlas: 3 plugins to rate");
+      assert.deepEqual(t.notices, [], "no notice for ratings, ever");
+      assert.ok(!t.http.some((r) => r.url.includes("/ratings")), "asking sends nothing");
+
+      // Opening "Your plugins" clears the dot; the cards stay.
+      A.ack();
+      assert.equal(button.attrs.attention, undefined);
+      assert.equal(A.ratings.asking().length, 3);
+
+      // "Not now" and a rating each take a card away.
+      A.ratings.later("b");
+      const win = { crypto: require("node:crypto").webcrypto, TextEncoder };
+      const r = await A.ratings.rate(
+        { slug: "c", addon: "c@x", version: "1.0.0", name: "C", stars: 5 },
+        win,
+      );
+      assert.ok(r.ok, r.message);
+      assert.deepEqual(
+        A.ratings.asking().map((i) => i.entry.slug),
+        ["a"],
+      );
+
+      // Within the month: no new round, so D waits.
+      await A.review(false);
+      assert.deepEqual(getState(t).askRound.slugs, ["a", "b", "c"]);
+      assert.equal(button.attrs.attention, undefined);
+
+      // A month on: a new round with the next ready plugin only; asked, put off and rated ones
+      // aren't asked about again.
+      const st = getState(t);
+      st.askRound.at = Date.now() - 31 * DAYS;
+      putState(t, st);
+      assert.deepEqual(A.ratings.asking(), [], "an old round's cards go");
+      await A.review(false);
+      assert.deepEqual(
+        A.ratings.asking().map((i) => i.entry.slug),
+        ["d"],
+      );
+      assert.equal(button.attrs.attention, "rate");
+      assert.equal(button.attrs.tooltiptext, "Zotero Atlas: how is D working? Rate it");
+
+      // Turned off since: its card goes.
+      t.addons.find((x) => x.id === "d@x").isActive = false;
+      await A.review(false);
+      assert.deepEqual(A.ratings.asking(), []);
+      assert.equal(button.attrs.attention, undefined);
+    },
+  );
+
+  await run("asking for ratings: the red dot wins, and looking clears both", async () => {
+    const plugins = [
+      entry({ id: "bad@x", slug: "bad", name: "Bad", blocked: "it uploads your library" }),
+      entry({ id: "good@x", slug: "good", name: "Good" }),
+    ];
+    const t = load({
+      http: (_m, url) => (url === CATALOG_URL ? ok200(catalogJson(plugins)) : ok200(advJson([]))),
+      addons: [addon("bad@x", "Bad", { version: "1.2.0" }), addon("good@x", "Good")],
+    });
+    t.prefs["extensions.zotero-atlas.usage"] = "no";
+    t.prefs["extensions.zotero-atlas.updates"] = "hold";
+    t.s.startup({ id: "a", version: "1.0.0", rootURI: "r/" });
+    t.s.onMainWindowLoad({ window: t.window });
+    t.flush();
+    await settle(20);
+    const A = t.s.Zotero.ZoteroAtlas;
+    age(t, { "good@x": 20 });
+    await A.review(false);
+    const button = t.toolbar.children[0];
+    assert.deepEqual(
+      A.ratings.asking().map((i) => i.entry.slug),
+      ["good"],
+    );
+    assert.equal(button.attrs.attention, "true", "red wins");
+    assert.equal(button.attrs.tooltiptext, "Zotero Atlas: 1 thing to look at");
+    A.ack();
+    assert.equal(button.attrs.attention, undefined, "both seen");
+    assert.ok(getState(t).askRound.seenAt);
+  });
+
+  await run(
+    "asking for ratings: a plugin installed after Atlas counts from then; an upgrade from before since starts the clock",
+    async () => {
+      const plugins = [entry({}), entry({ id: "y@x", slug: "y", name: "Y" })];
+      const t = load({
+        http: (_m, url) => (url === CATALOG_URL ? ok200(catalogJson(plugins)) : ok200(advJson([]))),
+        addons: [],
+      });
+      t.prefs["extensions.zotero-atlas.usage"] = "no";
+      // State from an Atlas that didn't keep since: X was already known.
+      putState(t, {
+        seen: { "x@example.org": { grade: "A", version: "1.2.0", installed: "1.2.0" } },
+      });
+      t.addons = [addon("x@example.org", "X", { version: "1.2.0" })];
+      t.s.startup({ id: "a", version: "1.0.0", rootURI: "r/" });
+      const A = t.s.Zotero.ZoteroAtlas;
+      await A.review(true);
+      let seen = getState(t).seen["x@example.org"];
+      assert.ok(Date.now() - seen.since < 60000, "the clock starts now");
+      assert.equal(seen.early, true);
+      t.addons.push(addon("y@x", "Y"));
+      await A.review(false);
+      seen = getState(t).seen;
+      assert.equal(seen["y@x"].early, undefined, "installed with Atlas there: exact");
+      const since = seen["x@example.org"].since;
+      await A.review(false);
+      assert.equal(getState(t).seen["x@example.org"].since, since, "kept across reviews");
+    },
+  );
+
   await run(
     "advisories: fetched every 6 hours, matched by version, critical ones interrupt",
     async () => {

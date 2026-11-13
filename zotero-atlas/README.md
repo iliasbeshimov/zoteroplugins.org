@@ -72,6 +72,10 @@ plugins, see what each one's code does, and install in one click.</p>
 - **Rate what you use.** Stars, and a review if you want to write one, for any plugin you have or
   removed in the last 30 days. No account. Ratings show next to each plugin's grade, but never
   change it: the grade is what the code does, the rating is what people who use it say.
+- **Asked once, after two weeks.** When a plugin has been turned on for two weeks, a blue dot on
+  the Zotero Atlas button asks how it's working (the red dot stays for things that need you). At
+  most three plugins at a time, at most once a month, and each plugin only once. No notices, and
+  nothing is sent unless you click Post.
 
 Every grade comes from the catalogue's published checks: see
 [how plugins are graded](https://zoteroplugins.org/how-we-grade). The plugin itself is listed and

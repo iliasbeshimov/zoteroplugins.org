@@ -257,11 +257,52 @@
     "again replaces your rating. Never your library, your Zotero account or your email. We never " +
     "store your IP address: a scrambled code made from it is kept for 30 days to catch fake reviews.";
 
-  /** Stars and an optional review for one installed (or recently removed) version. */
-  function rateBox(target) {
+  /**
+   * Five star buttons, as a radio group. `onPick(n)` runs on a click; `stars` is how many show
+   * filled. Returns the group and a way to repaint it.
+   */
+  function starGroup(target, stars, onPick) {
+    const group = el("div", "stars");
+    group.setAttribute("role", "radiogroup");
+    group.setAttribute("aria-label", `Your rating of ${target.name} ${target.version}`);
+    const buttons = [];
+    const paint = (n) =>
+      buttons.forEach((b, i) => {
+        b.classList.toggle("on", i < n);
+        b.textContent = i < n ? "★" : "☆";
+        b.setAttribute("aria-checked", String(i + 1 === n));
+      });
+    for (let n = 1; n <= 5; n++) {
+      const b = el("button", "star", "★");
+      b.type = "button";
+      b.setAttribute("role", "radio");
+      b.setAttribute("aria-label", `${n} star${n === 1 ? "" : "s"}`);
+      b.addEventListener("click", () => onPick(n));
+      buttons.push(b);
+      group.append(b);
+    }
+    paint(stars);
+    return { group, paint };
+  }
+
+  /**
+   * Stars and an optional review for one installed (or recently removed) version. Closed, it's a
+   * "Rate 1.2.0" link; with `ask`, it's five stars, and a click on one opens the review with that
+   * many chosen.
+   */
+  function rateBox(target, ask = false) {
     const box = el("div", "rate");
     const closed = () => {
       box.textContent = "";
+      if (ask) {
+        const row = el("div", "ask-stars");
+        row.append(
+          starGroup(target, 0, (n) => form(n)).group,
+          el("span", "note", "Click a star to rate it. Nothing is sent until you click Post."),
+        );
+        box.append(row);
+        return;
+      }
       const mine = A.ratings.rated(target.slug, target.version);
       const open = el(
         "button",
@@ -277,29 +318,10 @@
     const form = (start) => {
       box.textContent = "";
       let stars = start;
-      const group = el("div", "stars");
-      group.setAttribute("role", "radiogroup");
-      group.setAttribute("aria-label", `Your rating of ${target.name} ${target.version}`);
-      const buttons = [];
-      const paint = () =>
-        buttons.forEach((b, i) => {
-          b.classList.toggle("on", i < stars);
-          b.textContent = i < stars ? "★" : "☆";
-          b.setAttribute("aria-checked", String(i + 1 === stars));
-        });
-      for (let n = 1; n <= 5; n++) {
-        const b = el("button", "star", "★");
-        b.type = "button";
-        b.setAttribute("role", "radio");
-        b.setAttribute("aria-label", `${n} star${n === 1 ? "" : "s"}`);
-        b.addEventListener("click", () => {
-          stars = n;
-          paint();
-        });
-        buttons.push(b);
-        group.append(b);
-      }
-      paint();
+      const sg = starGroup(target, stars, (n) => {
+        stars = n;
+        sg.paint(n);
+      });
       const text = document.createElement("textarea");
       text.rows = 3;
       text.maxLength = 1000;
@@ -324,13 +346,18 @@
           msg.textContent = r.message;
           return;
         }
+        if (ask) {
+          box.textContent = "";
+          box.append(el("p", "note done", r.message));
+          return;
+        }
         closed();
         box.prepend(el("p", "note", r.message));
       });
       const act = el("div", "rate-actions");
       act.append(post, cancel);
       box.append(
-        group,
+        sg.group,
         text,
         el(
           "p",
@@ -341,9 +368,50 @@
         msg,
         el("p", "note fine", SENT),
       );
+      if (ask) text.focus();
     };
     closed();
     return box;
+  }
+
+  /** "in use for 3 weeks", or "3 weeks or more" for one that was there before Atlas. */
+  function inUse(i) {
+    const days = (Date.now() - i.since) / 86400000;
+    const span =
+      days < 60
+        ? `${Math.max(1, Math.floor(days / 7))} weeks`
+        : `${Math.floor(days / 30.4)} months`;
+    return `in use for ${span}${i.early ? " or more" : ""}`;
+  }
+
+  /** How is it working? Five stars on the card; "Not now" and Atlas doesn't ask again. */
+  function askCard(i) {
+    const card = el("div", "card ask");
+    const head = el("div", "card-head");
+    const name = link(i.entry.name, i.entry.page);
+    name.className = "card-name";
+    head.append(
+      name,
+      el("span", "card-ver", `${i.addon.version} · ${inUse(i)}`),
+      el("span", "spacer"),
+    );
+    const later = el("button", "linkish", "Not now");
+    later.type = "button";
+    later.addEventListener("click", () => A.ratings.later(i.entry.slug));
+    head.append(later);
+    card.append(
+      head,
+      rateBox(
+        {
+          slug: i.entry.slug,
+          addon: i.addon.id,
+          version: i.addon.version,
+          name: i.entry.name,
+        },
+        true,
+      ),
+    );
+    return card;
   }
 
   const nameOf = (i) => i.entry?.name || i.addon.name;
@@ -498,6 +566,24 @@
       const s = section("Needs you");
       for (const [i, al] of attention) s.append(needCard(i, al));
       needs.append(s);
+    }
+
+    // Plugins you've had a couple of weeks: how are they working?
+    const ask = $("ask");
+    ask.textContent = "";
+    const asking = A.ratings.asking();
+    ask.hidden = !asking.length; // empty, it would still add a gap to the page
+    if (asking.length) {
+      const s = section("How are they working?");
+      s.append(
+        el(
+          "p",
+          "ask-lead",
+          `You've had ${asking.length === 1 ? "this one" : "these"} a couple of weeks. A rating helps other Zotero users choose, and the developer see what works.`,
+        ),
+      );
+      for (const i of asking) s.append(askCard(i));
+      ask.append(s);
     }
 
     const updates = $("updates");
