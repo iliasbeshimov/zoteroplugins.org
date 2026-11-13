@@ -230,7 +230,9 @@ export const PluginRecord = z.object({
     .describe("Changes to already-published releases, detected by comparing nightly snapshots"),
   zoteroBlocklist: z
     .array(z.object({ addonId: z.string(), versionRange: z.string(), reason: z.string() }))
-    .describe("Entries from github.com/zotero/plugin-blocklist that match this plugin"),
+    .describe(
+      "Entries from Zotero's own blocklist (BLOCKED_PLUGINS in its plugins.js) that match this plugin",
+    ),
   drafts: z
     .object({
       inputHash: Sha256,

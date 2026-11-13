@@ -5,9 +5,13 @@ import { type DeveloperHints, isDeveloperHost } from "../scan/analyze.ts";
 import { classifyHost, type HostTable, hostOf } from "../scan/hosts.ts";
 
 // ----------------------------------------------------------------------------------------------
-// Zotero's official blocklist (github.com/zotero/plugin-blocklist)
+// Zotero's official blocklist: the table built into Zotero itself (BLOCKED_PLUGINS in plugins.js),
+// the list Zotero acts on. The zotero/plugin-blocklist repository that published it as JSON was
+// deleted (404 from 2026-11-13).
 
-export const BLOCKLIST_SOURCE = "https://github.com/zotero/plugin-blocklist";
+export const BLOCKLIST_SOURCE =
+  "https://github.com/zotero/zotero/blob/main/chrome/content/zotero/xpcom/plugins.js";
+const BLOCKLIST_PATH = "/repos/zotero/zotero/contents/chrome/content/zotero/xpcom/plugins.js";
 
 export interface Blocklist {
   version: number;
@@ -18,12 +22,77 @@ export interface Blocklist {
   }[];
 }
 
+/** A JavaScript object literal of plain data, from its opening brace, as JSON. */
+function objectLiteralAsJson(src: string, open: number): string {
+  let out = "";
+  let depth = 0;
+  for (let i = open; i < src.length; i++) {
+    const c = src[i] as string;
+    if (c === '"' || c === "'" || c === "`") {
+      let text = "";
+      let j = i + 1;
+      for (; j < src.length && src[j] !== c; j++) {
+        if (src[j] === "\\") {
+          j++;
+          const e = src[j] ?? "";
+          text += e === "n" ? "\n" : e === "t" ? "\t" : e;
+        } else text += src[j];
+      }
+      out += JSON.stringify(text);
+      i = j;
+    } else if (c === "/" && src[i + 1] === "/") {
+      while (i < src.length && src[i] !== "\n") i++;
+    } else if (c === "/" && src[i + 1] === "*") {
+      i = src.indexOf("*/", i + 2) + 1 || src.length;
+    } else if (/[A-Za-z_$]/.test(c)) {
+      const id = /^[\w$]+/.exec(src.slice(i))?.[0] ?? c;
+      i += id.length - 1;
+      // A key, quoted; true, false and null as they are. Anything else (a variable) isn't data.
+      out += /^\s*:/.test(src.slice(i + 1)) ? JSON.stringify(id) : id;
+    } else if (c === "}" || c === "]") {
+      out = `${out.replace(/,\s*$/, "")}${c}`;
+      if (--depth === 0) return out;
+    } else {
+      if (c === "{" || c === "[") depth++;
+      out += c;
+    }
+  }
+  throw new Error("unterminated object");
+}
+
+/**
+ * The BLOCKED_PLUGINS table in Zotero's plugins.js. A version range there is an object with
+ * minVersion and maxVersion, "*" for every version, or one exact version.
+ */
+export function parseBlockedPlugins(pluginsJs: string): Blocklist {
+  const start = /\bBLOCKED_PLUGINS\s*=\s*\{/.exec(pluginsJs);
+  if (!start) throw new Error("blocklist: no BLOCKED_PLUGINS table in Zotero's plugins.js");
+  let table: Record<string, { versionRanges?: unknown[]; reason?: string }>;
+  try {
+    table = JSON.parse(objectLiteralAsJson(pluginsJs, start.index + start[0].length - 1));
+  } catch (error) {
+    throw new Error(`blocklist: Zotero's BLOCKED_PLUGINS unreadable: ${(error as Error).message}`);
+  }
+  return {
+    version: 1,
+    blockedPlugins: Object.entries(table).map(([id, p]) => ({
+      id,
+      versionRanges: (p.versionRanges ?? []).map((r) =>
+        r === "*"
+          ? {}
+          : typeof r === "string"
+            ? { minVersion: r, maxVersion: r }
+            : (r as { minVersion?: string; maxVersion?: string }),
+      ),
+      reason: p.reason ?? "",
+    })),
+  };
+}
+
 export async function fetchBlocklist(gh: GitHub): Promise<Blocklist> {
-  const res = await gh.rest<{ content: string }>(
-    "/repos/zotero/plugin-blocklist/contents/blocked-plugins.json",
-  );
+  const res = await gh.rest<{ content: string }>(BLOCKLIST_PATH);
   if (res.status !== 200 || !res.data) throw new Error(`blocklist: HTTP ${res.status}`);
-  return JSON.parse(Buffer.from(res.data.content, "base64").toString("utf8")) as Blocklist;
+  return parseBlockedPlugins(Buffer.from(res.data.content, "base64").toString("utf8"));
 }
 
 export function blockedBy(
