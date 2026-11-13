@@ -1,0 +1,142 @@
+---
+/**
+ * A column chart in plain HTML: one series, columns grow from a hairline baseline, the emphasised
+ * columns in the accent and the rest in a quiet grey. Only the columns given a `label` print their
+ * value; every value is in the hover title and in the table under the chart.
+ */
+interface Item {
+  x: string;
+  value: number;
+  /** Printed on the column's cap. */
+  label?: string;
+  emphasis?: boolean;
+}
+interface Props {
+  items: Item[];
+  /** What a value is, for the hover titles and the table ("plugins", "% of new plugins"). */
+  unit: string;
+  caption: string;
+  /** How a value is written in titles and the table. */
+  format?: (v: number) => string;
+  /** Show every other x label on narrow screens, counting back from the last. */
+  thin?: boolean;
+  /** Put before x in hover titles and the table ("Zotero " for x = "10"). */
+  xPrefix?: string;
+}
+const { items, unit, caption, format = (v: number) => v.toLocaleString("en-GB"), thin = false, xPrefix = "" } = Astro.props;
+const max = Math.max(...items.map((i) => i.value), 1);
+---
+
+<figure class="cols">
+  <div class="plot" style={`--n:${items.length}`} aria-hidden="true">
+    {
+      items.map((i, k) => (
+        <div class:list={["col", { em: i.emphasis, odd: thin && (items.length - 1 - k) % 2 === 1 }]} title={`${xPrefix}${i.x}: ${format(i.value)} ${unit}`}>
+          <span class="cap">{i.label ?? ""}</span>
+          {i.value > 0 && <span class="bar" style={`height:${(100 * i.value) / max}%`} />}
+          <span class="x">{i.x}</span>
+        </div>
+      ))
+    }
+  </div>
+  <figcaption>{caption}</figcaption>
+  <details>
+    <summary>Show the numbers</summary>
+    <table>
+      <tbody>
+        {
+          items.map((i) => (
+            <tr>
+              <th scope="row">{xPrefix}{i.x}</th>
+              <td>{format(i.value)} {unit}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </details>
+</figure>
+
+<style>
+  .cols {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+  .plot {
+    display: grid;
+    grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+    gap: 2px;
+    height: 220px;
+    padding-top: 24px;
+    border-bottom: 1px solid var(--line-strong);
+    margin-bottom: 24px;
+  }
+  .col {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    min-width: 0;
+  }
+  .cap {
+    flex: none;
+    font: 600 13px var(--font-sans);
+    color: var(--ink);
+    white-space: nowrap;
+    padding-bottom: 4px;
+  }
+  .bar {
+    flex: none;
+    width: min(24px, 72%);
+    min-height: 2px;
+    background: var(--line-strong);
+    border-radius: 4px 4px 0 0;
+  }
+  .col.em .bar {
+    background: var(--accent);
+  }
+  .x {
+    position: absolute;
+    top: calc(100% + 6px);
+    font: 500 11.5px var(--font-mono);
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+  figcaption {
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  details {
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  summary {
+    cursor: pointer;
+    width: fit-content;
+  }
+  table {
+    margin-top: 8px;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: 3px 16px 3px 0;
+    border-bottom: 1px solid var(--line);
+    font-weight: 400;
+  }
+  @media (max-width: 640px) {
+    .col.odd .x {
+      visibility: hidden;
+    }
+    .plot {
+      height: 190px;
+    }
+  }
+</style>

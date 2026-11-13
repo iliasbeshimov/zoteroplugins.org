@@ -16,6 +16,7 @@ export const GUIDES = [
   { path: "/works-with-zotero", name: "Plugins for the current Zotero" },
   { path: "/ai-without-api-key", name: "AI plugins without an API key" },
   { path: "/zotero-6-plugins", name: "Zotero 6 plugin replacements" },
+  { path: "/state-of-zotero-plugins", name: "The state of Zotero plugins" },
 ] as const;
 
 export const PUBLISHER = { "@type": "Organization", name: "Zotero Plugins Atlas", url: `${SITE}/` };

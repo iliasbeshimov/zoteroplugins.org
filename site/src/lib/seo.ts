@@ -24,6 +24,7 @@ const GUIDE_PATHS = [
   "/works-with-zotero",
   "/ai-without-api-key",
   "/zotero-6-plugins",
+  "/state-of-zotero-plugins",
 ];
 /** Pages that aren't plugin cards, in the order they appear in the sitemap. */
 const PAGES = [

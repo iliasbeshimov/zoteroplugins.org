@@ -1,0 +1,509 @@
+---
+import EcoBars from "../components/EcoBars.astro";
+import EcoColumns from "../components/EcoColumns.astro";
+import Guide from "../layouts/Guide.astro";
+import { ecosystem } from "../lib/ecosystem.ts";
+import { breadcrumb, modifiedAt, PUBLISHER } from "../lib/guides.ts";
+import { REPO, SITE } from "../lib/links.ts";
+
+const e = ecosystem();
+const path = "/state-of-zotero-plugins";
+const h1 = "The state of Zotero plugins";
+
+const num = (n: number) => Math.round(n).toLocaleString("en-GB");
+const pct = (x: number) => `${Math.round(100 * x)}%`;
+/** 96,282,845 → "96.3 million"; 514,000 → "514,000". */
+const big = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(1).replace(/\.0$/, "")} million` : num(n));
+/** For bar labels: 14,914,376 → "14.9M", 513,708 → "514K". */
+const short = (n: number) =>
+  n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e4 ? `${Math.round(n / 1e3)}K` : num(n);
+const bytes = (n: number) => (n >= 1e6 ? `${Math.round(n / 1e6)} MB` : n >= 1e4 ? `${Math.round(n / 1e3)} KB` : `${(n / 1e3).toFixed(1)} KB`);
+const p = (slug: string) => `/p/${slug}`;
+const words = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+const word = (n: number) => words[n] ?? num(n);
+
+const { pace, popularity: pop, compat, ai, privacy, people, fun } = e;
+const hours = pace.hoursPerPlugin ? Math.max(1, Math.round(pace.hoursPerPlugin)) : null;
+const years = (() => {
+  const out = [];
+  for (let y = pace.firstYear; y <= pace.year; y++) {
+    const count = pace.years.find((x) => x.y === y)?.count ?? 0;
+    out.push({ x: String(y), value: count, emphasis: y >= pace.year - 1, label: y >= pace.year - 1 ? num(count) : undefined });
+  }
+  return out;
+})();
+const oldest = e.oldTimers[0];
+const graded = privacy.grades.reduce((s, g) => s + g.count, 0);
+const gradeVar: Record<string, string> = { "A+": "ap", A: "a", B: "b", C: "c", "–": "nd" };
+const quiet = privacy.noRequests / privacy.scanned;
+const aiNow = ai.byYear.at(-1);
+const aiFirst = ai.byYear.find((y) => y.ai > 0);
+
+const description = `${num(e.checked)} Zotero plugins, ${big(e.totalDownloads)} downloads and ${num(e.developers)} developers: what our census of every Zotero plugin on GitHub found, from the oldest still working to the AI wave. ${e.asOfLabel}.`;
+const graph = [
+  {
+    "@type": "Article",
+    "@id": `${SITE}${path}`,
+    url: `${SITE}${path}`,
+    headline: `${h1}, ${e.asOfLabel}`,
+    description,
+    dateModified: modifiedAt(path),
+    isPartOf: { "@type": "WebSite", name: "Zotero Plugins Atlas", url: `${SITE}/` },
+    author: PUBLISHER,
+    publisher: PUBLISHER,
+  },
+  breadcrumb(h1, path),
+];
+---
+
+<Guide title={`${h1}, ${e.asOfLabel} · Zotero Plugins Atlas`} description={description} h1={h1} crumb="The state of Zotero plugins" graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      We went looking for every Zotero plugin on GitHub. Out of {num(e.screened)} repositories we found {num(e.checked)} plugins, read the code of each one, and kept the numbers. Here is what they say about who builds Zotero plugins, what they build, and where your data goes.
+    </p>
+    <p class="asof">Numbers from our census of {e.asOf.split("-").reverse().join(".")}, updated every night.</p>
+  </Fragment>
+
+  <section class="tiles" aria-label="The ecosystem in four numbers">
+    <div class="tile"><span class="v">{num(e.checked)}</span><span class="l">Zotero plugins, each checked</span></div>
+    <div class="tile"><span class="v">{big(e.totalDownloads).replace(" million", "M")}</span><span class="l">downloads between them</span></div>
+    <div class="tile"><span class="v">{num(e.developers)}</span><span class="l">developers behind them</span></div>
+    {hours && <div class="tile hot"><span class="v">{hours}h</span><span class="l">between new plugins in {pace.year}, on average</span></div>}
+  </section>
+
+  <section id="boom" class="chapter">
+    <span class="kicker">01 · The boom</span>
+    <h2>{hours ? `A new Zotero plugin every ${hours === 1 ? "hour" : `${hours} hours`}` : "The boom"}</h2>
+    <div class="split">
+      <div class="text">
+        <p class="prose">
+          {num(pace.thisYear)} new plugins so far in {pace.year}, against {num(pace.years.find((y) => y.y === pace.year - 1)?.count ?? 0)} in all of {pace.year - 1}.
+          {pace.busiest && (pace.busiest.count > pace.beforeLastYear
+            ? ` ${pace.busiest.month} alone brought ${num(pace.busiest.count)}: more than every year up to ${pace.earlierCut - 1} put together (${num(pace.beforeLastYear)}).`
+            : ` The busiest month was ${pace.busiest.month}, with ${num(pace.busiest.count)}.`)}
+        </p>
+        <p class="prose small">Counted by when each plugin's GitHub repository was created; copies of other plugins aren't counted.</p>
+      </div>
+      <EcoColumns items={years} unit="new plugins" caption={`New Zotero plugins each year, ${pace.firstYear}–${pace.year} (${pace.year} so far)`} thin />
+    </div>
+  </section>
+
+  {
+    oldest && (
+      <section id="old-timers" class="chapter">
+        <span class="kicker">02 · The old-timers</span>
+        <h2>{`The ${oldest.value}-year-old that still works`}</h2>
+        <p class="prose">
+          <a href={p(oldest.slug)}>{oldest.name}</a> has been on GitHub since {oldest.since} and still works in Zotero {compat.currentMajor}. Of the {num(e.veterans.count)} plugins started before {e.veterans.before}, {num(e.veterans.ok)} ({pct(e.veterans.ok / e.veterans.count)}) still do.
+        </p>
+        <ol class="cards">
+          {e.oldTimers.map((o) => (
+            <li>
+              <span class="big">{o.since}</span>
+              <a href={p(o.slug)}>{o.name}</a>
+              <span class="meta">{o.value} years on GitHub{o.lastActivity && ` · updated ${new Date(`${o.lastActivity}-01T00:00:00Z`).toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" })}`}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )
+  }
+
+  <section id="extinction" class="chapter">
+    <span class="kicker">03 · The great extinction</span>
+    <h2>{`Zotero 7 left ${num(e.legacy.count)} plugins behind`}</h2>
+    <div class="split">
+      <div class="text">
+        <p class="prose">
+          Zotero 7 changed how plugins are built, and {num(e.legacy.count)} Zotero 6 plugins never made the jump. Between them they had been downloaded {big(e.legacy.downloads)} times{e.legacy.top[0] && <>; <a href={p(e.legacy.top[0].slug)}>{e.legacy.top[0].name}</a> alone {big(e.legacy.top[0].value)}</>}.
+        </p>
+        <p class="prose"><a class="more" href="/zotero-6-plugins">What replaced them →</a></p>
+      </div>
+      <EcoBars items={e.legacy.top.map((x) => ({ name: x.name, href: p(x.slug), value: x.value, text: short(x.value) }))} caption="The most downloaded Zotero 6 plugins" />
+    </div>
+  </section>
+
+  <section id="popularity" class="chapter">
+    <span class="kicker">04 · The famous few</span>
+    <h2>{`Ten plugins, ${pct(pop.top10Share)} of all downloads`}</h2>
+    <div class="split">
+      <div class="text">
+        <p class="prose">
+          The ten most downloaded plugins account for {pct(pop.top10Share)} of every download. The typical plugin has {num(pop.median)}, and {pct(pop.under100)} have fewer than 100: most are small tools that only a few people have found so far.
+        </p>
+        <div class="meter" role="img" aria-label={`Top ten plugins: ${pct(pop.top10Share)} of downloads`}>
+          <span style={`width:${100 * pop.top10Share}%`} />
+        </div>
+        <p class="meter-l"><span>Top ten · {pct(pop.top10Share)}</span><span>The other {num(compat.installable - 10)} · {pct(1 - pop.top10Share)}</span></p>
+        {
+          pop.month && (
+            <p class="prose small">
+              In {pop.month.name} alone, Zotero users downloaded plugins {big(pop.month.total)} times, about {num(Math.round(pop.month.perDay / 1000) * 1000)} a day.
+              {pop.month.top.length > 0 && <> Most downloaded that month: {pop.month.top.map((t, i) => (<>{i > 0 && (i === pop.month!.top.length - 1 ? " and " : ", ")}<a href={p(t.slug)}>{t.name}</a> ({short(t.value)})</>))}.</>}
+            </p>
+          )
+        }
+      </div>
+      <EcoBars items={pop.top10.map((x) => ({ name: x.name, href: p(x.slug), value: x.value, text: short(x.value) }))} caption="Most downloaded Zotero plugins, all time" />
+    </div>
+    {
+      pop.breakouts.length > 0 && (
+        <div class="aside">
+          <strong>Breakout newcomers.</strong> The fastest starters of the last six months:{" "}
+          {pop.breakouts.map((b, i) => (<>{i > 0 && (i === pop.breakouts.length - 1 ? " and " : ", ")}<a href={p(b.slug)}>{b.name}</a> ({num(b.value)} downloads a day since {b.note})</>))}.
+        </div>
+      )
+    }
+  </section>
+
+  <section id="versions" class="chapter">
+    <span class="kicker">05 · Versions</span>
+    <h2>{compat.next ? `${num(compat.next.count)} plugins are ready for Zotero ${compat.next.v} already` : "Which Zotero they work with"}</h2>
+    <div class="split">
+      <div class="text">
+        <p class="prose">
+          {num(compat.versions.find((v) => v.v === compat.currentMajor)?.count ?? 0)} plugins say they work with Zotero {compat.currentMajor}, today's version.{compat.next && ` ${num(compat.next.count)} already say they work with Zotero ${compat.next.v}, which is still in development.`}
+        </p>
+        <div class="aside">
+          <strong>The optimists.</strong> {num(compat.optimists)} plugins promise to work with every Zotero to come: {num(compat.anyVersion)} accept any version at all, and {word(compat.atBiggest)} say they'll be fine up to Zotero {num(compat.biggestFinite)}.
+        </div>
+      </div>
+      <EcoColumns items={compat.versions.map((v) => ({ x: String(v.v), value: v.count, label: num(v.count), emphasis: v.v === compat.currentMajor }))} xPrefix="Zotero " unit="plugins" caption={`How many of the ${num(compat.installable)} plugins with a download say they work with each Zotero version`} />
+    </div>
+  </section>
+
+  <section id="ai" class="chapter">
+    <span class="kicker">06 · The AI wave</span>
+    <h2>{aiNow ? `${pct(aiNow.share)} of new plugins are about AI` : "The AI wave"}</h2>
+    <div class="split">
+      <div class="text">
+        <p class="prose">
+          {aiFirst && `The first AI plugin appeared in ${aiFirst.y}. `}{aiNow && `In ${aiNow.y}, ${num(aiNow.ai)} of the ${num(aiNow.count)} new plugins were about AI. `}In all, {num(ai.count)} plugins are about AI (<a href="/c/ai">browse the ones we list</a>), and {num(ai.mcp)} speak MCP, the protocol that lets AI assistants such as Claude work with your Zotero library.
+        </p>
+        {ai.team && <p class="prose small">The biggest team behind any Zotero plugin works on an AI plugin: <a href={p(ai.team.slug)}>{ai.team.name}</a>, with {num(ai.team.count)} contributors.</p>}
+      </div>
+      <EcoColumns items={ai.byYear.map((y) => ({ x: String(y.y), value: Math.round(100 * y.share), label: y.share > 0 ? pct(y.share) : undefined, emphasis: true }))} unit="% of new plugins" format={(v) => String(v)} caption="Share of each year's new plugins that are about AI" />
+    </div>
+    <div class="split">
+      <div class="text">
+        <h3>Which AI they call</h3>
+        <p class="prose small">AI services named in the plugins' code. Many plugins offer several, so you can pick one.</p>
+      </div>
+      <EcoBars items={ai.providers.map((x) => ({ name: x.name, value: x.count }))} caption="Plugins whose code can call each AI service" />
+    </div>
+  </section>
+
+  <section id="your-data" class="chapter">
+    <span class="kicker">07 · Your data</span>
+    <h2>{`${pct(quiet)} make no web requests at all`}</h2>
+    <div class="split">
+      <div class="text">
+        <p class="prose">
+          Of the {num(privacy.scanned)} plugins whose code we could check, {num(privacy.noRequests)} never contact a website, and {num(privacy.ownServers)} more only contact servers you set up yourself. The rest send something somewhere; here is where.
+        </p>
+        <p class="prose small">A plugin can talk to several kinds of service. Each plugin's page names them.</p>
+      </div>
+      <EcoBars items={privacy.kinds.map((k) => ({ name: k.name, value: k.count }))} caption="Plugins whose code contacts each kind of service" />
+    </div>
+    <div class="split">
+      <div class="text">
+        <h3>How they graded</h3>
+        <p class="prose small">
+          The <a href="/how-we-grade">Zotero Plugins grade</a> of the {num(graded)} plugins we list. We also installed {num(privacy.tested)} of them in a real Zotero and watched what they did: {num(privacy.asDescribed)} ({pct(privacy.asDescribed / privacy.tested)}) did just what they said.
+        </p>
+      </div>
+      <figure class="grades">
+        <div class="seg" role="img" aria-label={privacy.grades.map((g) => `${g.g}: ${g.count}`).join(", ")}>
+          {privacy.grades.filter((g) => g.count > 0).map((g) => <span style={`flex:${g.count};background:var(--g-${gradeVar[g.g]}, var(--nd-line))`} title={`${g.g}: ${num(g.count)}`} />)}
+        </div>
+        <ul class="legend">
+          {privacy.grades.map((g) => (
+            <li><span class="sw" style={`background:var(--g-${gradeVar[g.g]}, var(--nd-line))`} /><strong>{g.g === "–" ? "Not graded" : g.g}</strong> {num(g.count)}</li>
+          ))}
+        </ul>
+      </figure>
+    </div>
+  </section>
+
+  <section id="people" class="chapter">
+    <span class="kicker">08 · The people</span>
+    <h2>{`${pct(people.onePlugin)} of developers made exactly one plugin`}</h2>
+    <div class="split">
+      <div class="text">
+        <p class="prose">
+          Zotero plugins are mostly one-person projects: {pct(people.solo)} have a single contributor.
+          {people.prolific && <> The most prolific developer, <a href={`https://github.com/${people.prolific.login}`}>{people.prolific.login}</a>, has made {num(people.prolific.count)}{people.prolific.best && <>, including <a href={p(people.prolific.best.slug)}>{people.prolific.best.name}</a></>}.</>}
+        </p>
+        <div class="aside">
+          <strong>Found by nobody else.</strong> {pct(people.newFindShare)} of these plugins aren't in any other plugin list we know of. Our census found them.
+        </div>
+      </div>
+      <EcoBars items={people.languages.map((l) => ({ name: l.name, value: l.count, text: pct(l.share) }))} max={e.listed} caption="Share of listed plugins with an interface in each language" />
+    </div>
+  </section>
+
+  <section id="fun-facts" class="chapter">
+    <span class="kicker">09 · Odds and ends</span>
+    <h2>Fun facts</h2>
+    <ul class="facts">
+      {fun.smallest && <li><span class="big">{bytes(fun.smallest.size)}</span><span>The smallest plugin, <a href={p(fun.smallest.slug)}>{fun.smallest.name}</a>. The typical one is {bytes(fun.medianSize)}.</span></li>}
+      {fun.biggest && <li><span class="big">{bytes(fun.biggest.size)}</span><span>The biggest, <a href={p(fun.biggest.slug)}>{fun.biggest.name}</a>: as much as {num(fun.biggest.size / fun.medianSize)} typical plugins.</span></li>}
+      <li><span class="big">{num(fun.niches.translation)}</span><span>plugins <a href="/c/translation">translate</a> something: a word, an abstract, or a whole PDF.</span></li>
+      <li><span class="big">{num(fun.niches.obsidian)}</span><span>plugins connect Zotero to Obsidian, {num(fun.niches.markdown)} to Markdown and {num(fun.niches.latex)} to LaTeX or BibTeX.</span></li>
+      <li><span class="big">{pct(fun.zot)}</span><span>of plugin names have "zot" in them somewhere.</span></li>
+      {fun.reused && fun.reused.count > 2 && <li><span class="big">{num(fun.reused.count)}</span><span>repositories are called <code>{fun.reused.name}</code>, the most reused name.</span></li>}
+    </ul>
+  </section>
+
+  <section id="method" class="method">
+    <h2>How we counted</h2>
+    <ul class="prose small">
+      <li>We searched GitHub by name, description, topic and code, went through the other plugin lists, and checked {num(e.screened)} repositories. {num(e.checked)} turned out to be Zotero plugins, and each has a page here. We list {num(e.listed)} of them; the rest are copies of another plugin, only work in Zotero 6, have nothing to download, or are gone.</li>
+      <li>Dates are when a plugin's GitHub repository was created. Downloads are downloads of its GitHub release files, so every update a user installs counts again.</li>
+      <li>What plugins contact comes from reading their code. Grades are explained in <a href="/how-we-grade">How we grade</a>.</li>
+      <li>The census runs every night and this page is rebuilt from it. The data is open: <a href={`${REPO}/tree/main/data/census`}>census files</a> and <a href="/api/plugins.json">every plugin as JSON</a>.</li>
+    </ul>
+  </section>
+</Guide>
+
+<style>
+  .asof {
+    font: 500 14px var(--font-mono) !important;
+    color: var(--ink-3) !important;
+  }
+  .tiles {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px !important;
+  }
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 22px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--surface);
+  }
+  .tile .v {
+    font-size: 52px;
+    font-weight: 780;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .tile .l {
+    color: var(--ink-2);
+    font-size: 15px;
+    line-height: 1.35;
+  }
+  .tile.hot {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .tile.hot .v,
+  .tile.hot .l {
+    color: var(--accent-ink);
+  }
+  .chapter {
+    gap: 20px !important;
+    scroll-margin-top: 24px;
+  }
+  .kicker {
+    font: 600 13px var(--font-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-fg);
+    margin-bottom: -10px;
+  }
+  .chapter h2 {
+    font-size: 40px !important;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  h3 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.015em;
+  }
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 40px;
+    align-items: start;
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .more {
+    font-weight: 600;
+  }
+  .aside {
+    padding: 16px 18px;
+    border-radius: 14px;
+    background: var(--accent-soft);
+    color: var(--ink);
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+  .cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .cards li,
+  .facts li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .cards a {
+    font-weight: 650;
+    font-size: 16.5px;
+    color: var(--ink);
+  }
+  .meta {
+    color: var(--ink-3);
+    font-size: 14px;
+  }
+  .big {
+    font-size: 40px;
+    font-weight: 780;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    color: var(--accent-fg);
+  }
+  .meter {
+    height: 12px;
+    border-radius: 6px;
+    background: var(--accent-soft);
+    overflow: hidden;
+  }
+  .meter span {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+  }
+  .meter-l {
+    margin: -6px 0 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .grades {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .seg {
+    display: flex;
+    gap: 2px;
+    height: 12px;
+  }
+  .seg span {
+    border-radius: 6px;
+    min-width: 4px;
+  }
+  .legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+  .legend li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .legend strong {
+    color: var(--ink);
+  }
+  .sw {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+  }
+  .facts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .facts code {
+    font: 500 14px var(--font-mono);
+  }
+  .method ul {
+    margin: 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  @media (max-width: 1000px) {
+    .tiles,
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 860px) {
+    .split {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+    }
+    .chapter h2 {
+      font-size: 30px !important;
+    }
+    .tile .v {
+      font-size: 40px;
+    }
+  }
+  @media (max-width: 520px) {
+    .tiles,
+    .cards {
+      gap: 10px !important;
+    }
+    .tile,
+    .cards li {
+      padding: 14px 14px;
+    }
+    .tile .v {
+      font-size: 32px;
+    }
+    .big {
+      font-size: 32px;
+    }
+    .tile .l,
+    .cards li {
+      font-size: 14px;
+    }
+    .cards a {
+      font-size: 15px;
+    }
+    .facts {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
