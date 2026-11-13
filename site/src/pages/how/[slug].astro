@@ -1,0 +1,148 @@
+---
+import CompactCard from "../../components/CompactCard.astro";
+import Guide from "../../layouts/Guide.astro";
+import { CURRENT_ZOTERO_MAJOR } from "../../lib/atlas.ts";
+import { breadcrumb, itemList, modifiedAt, PUBLISHER } from "../../lib/guides.ts";
+import { type HowPage, howPages } from "../../lib/how.ts";
+import { SITE } from "../../lib/links.ts";
+
+/**
+ * One capability people asked Zotero for on its forum, and the plugins that add it (lib/how.ts).
+ * The threads are linked so readers can see the request and what the Zotero team said.
+ */
+export function getStaticPaths() {
+  return howPages().map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+interface Props {
+  page: HowPage;
+}
+const { page } = Astro.props;
+const cur = CURRENT_ZOTERO_MAJOR();
+const n = page.picks.length;
+const parent = { name: "Asked on the Zotero forum", path: "/how" };
+const description =
+  n === 1
+    ? `${page.asked} ${page.picks[0].name} adds it and works with Zotero ${cur}.`
+    : `${page.asked} ${n} plugins add it, and each works with Zotero ${cur}.`;
+const fmtThread = (d: string) => new Date(`${d}T00:00:00Z`).toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" });
+/** What Zotero said, continuing the sentence after "yet:". */
+const said = (t: string) => (t.startsWith("Zotero") ? t : t.charAt(0).toLowerCase() + t.slice(1)).replace(/\.$/, "");
+const others = howPages()
+  .filter((p) => p.slug !== page.slug)
+  .slice(0, 6);
+
+const graph = [
+  {
+    "@type": "CollectionPage",
+    "@id": `${SITE}${page.path}`,
+    url: `${SITE}${page.path}`,
+    name: page.title,
+    description,
+    dateModified: modifiedAt(page.path),
+    isPartOf: { "@type": "WebSite", name: "Zotero Plugins Atlas", url: `${SITE}/` },
+    publisher: PUBLISHER,
+    mainEntity: itemList(page.picks),
+  },
+  breadcrumb(page.title, page.path, parent),
+];
+---
+
+<Guide title={`${page.title} · Zotero Plugins Atlas`} description={description} h1={page.title} crumb={page.title} parent={parent} graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      People have asked for this on the Zotero forum since {page.since}. Zotero doesn't do this itself yet{page.zotero ? ": " : "."}
+      {page.zotero && (<>{said(page.zotero.text)} (<a href={page.zotero.url}>in this thread</a>).</>)}
+    </p>
+    <p class="also">
+      {n === 1 ? "One plugin adds it" : `${n} plugins add it`}. {n === 1 ? "It works" : "Each works"} with Zotero {cur} and is graded B or better after a check of its code.
+    </p>
+  </Fragment>
+
+  <section>
+    <h2>{n === 1 ? "The plugin" : "The plugins"}</h2>
+    <div class="cards">
+      {page.picks.map((p) => <CompactCard p={p} />)}
+    </div>
+    <p class="prose small">
+      Grades come from a check of each plugin's code, described in <a href="/how-we-grade">How we grade</a>. To install one, open its page, or read <a href="/install">how to install a plugin</a>.
+    </p>
+  </section>
+
+  <section>
+    <h2>What people asked</h2>
+    <p class="prose">{page.asked}</p>
+    <ul class="threads">
+      {
+        page.threads.map((t) => (
+          <li>
+            <a href={t.url}>{t.title}</a>
+            <span>{fmtThread(t.opened)}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <h2>Other requests a plugin answers</h2>
+    <ul class="others">
+      {
+        others.map((p) => (
+          <li>
+            <a href={p.path}>{p.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="prose small"><a href="/how">All {howPages().length} requests</a></p>
+  </section>
+</Guide>
+
+<style>
+  .also {
+    font-size: 17px !important;
+  }
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 860px;
+  }
+  .threads,
+  .others {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 780px;
+  }
+  .threads li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    font-size: 16.5px;
+    line-height: 1.45;
+  }
+  .threads a {
+    overflow-wrap: anywhere;
+  }
+  .threads span {
+    font: 500 13px/1.45 var(--font-mono);
+    color: var(--ink-3);
+  }
+  .others {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 24px;
+    max-width: 980px;
+    font-size: 16.5px;
+  }
+  @media (max-width: 860px) {
+    .others {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

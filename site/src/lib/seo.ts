@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { JOBS } from "@atlas/schema";
 import { allPlugins, type Plugin, ROOT } from "./atlas.ts";
 import { gradeLog } from "./gradeLog.ts";
+import { howPages } from "./how.ts";
 import { SITE } from "./links.ts";
 import { PACKS, packPath } from "./packs.ts";
 
@@ -23,6 +24,8 @@ const GUIDE_PATHS = [
   "/librarians",
   "/works-with-zotero",
   "/ai-without-api-key",
+  "/how",
+  ...howPages().map((p) => p.path),
   "/zotero-6-plugins",
   "/state-of-zotero-plugins",
 ];

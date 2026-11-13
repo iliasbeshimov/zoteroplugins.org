@@ -1,0 +1,97 @@
+---
+import GradeTag from "../../components/GradeTag.astro";
+import PluginIcon from "../../components/PluginIcon.astro";
+import Guide from "../../layouts/Guide.astro";
+import { CURRENT_ZOTERO_MAJOR } from "../../lib/atlas.ts";
+import { breadcrumb, modifiedAt, PUBLISHER } from "../../lib/guides.ts";
+import { howPages } from "../../lib/how.ts";
+import { SITE } from "../../lib/links.ts";
+
+/** Every capability people asked for on the Zotero forum that a listed plugin adds, one line each. */
+const path = "/how";
+const h1 = "Asked on the Zotero forum, answered by a plugin";
+const cur = CURRENT_ZOTERO_MAJOR();
+const pages = howPages();
+const description = `${pages.length} things people asked Zotero for on its forum, and the plugins that add them. Each plugin works with Zotero ${cur} and is graded B or better after a check of its code.`;
+
+const graph = [
+  {
+    "@type": "CollectionPage",
+    "@id": `${SITE}${path}`,
+    url: `${SITE}${path}`,
+    name: h1,
+    description,
+    dateModified: modifiedAt(path),
+    isPartOf: { "@type": "WebSite", name: "Zotero Plugins Atlas", url: `${SITE}/` },
+    publisher: PUBLISHER,
+    hasPart: pages.map((p) => ({ "@type": "CollectionPage", name: p.title, url: `${SITE}${p.path}` })),
+  },
+  breadcrumb("Asked on the Zotero forum", path),
+];
+---
+
+<Guide title={`${h1} · Zotero Plugins Atlas`} description={description} h1={h1} crumb="Asked on the Zotero forum" graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      {pages.length} things people asked Zotero for on its forum, each with the plugins that add it. Every plugin here works with Zotero {cur} and is graded B or better after a check of its code. Each page links the forum threads, so you can read the request and what the Zotero team said.
+    </p>
+  </Fragment>
+
+  <ul class="list">
+    {
+      pages.map((p) => (
+        <li>
+          <a href={p.path} class="t">{p.title}</a>
+          <span class="by">
+            {p.picks.map((k) => (
+              <span class="pk">
+                <GradeTag grade={k.grade} size="xs" />
+                <PluginIcon slug={k.slug} name={k.name} size={18} />
+                {k.name}
+              </span>
+            ))}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</Guide>
+
+<style>
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    max-width: 980px;
+  }
+  .list li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+  }
+  .list li:first-child {
+    border-top: 2px solid var(--ink);
+  }
+  .t {
+    font-size: 19px;
+    font-weight: 700;
+  }
+  .by {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+  }
+  .pk {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14.5px;
+    color: var(--ink-2);
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+</style>

@@ -15,6 +15,7 @@ export const GUIDES = [
   { path: "/librarians", name: "For librarians: a box for your guide" },
   { path: "/works-with-zotero", name: "Plugins for the current Zotero" },
   { path: "/ai-without-api-key", name: "AI plugins without an API key" },
+  { path: "/how", name: "Asked on the Zotero forum" },
   { path: "/zotero-6-plugins", name: "Zotero 6 plugin replacements" },
   { path: "/state-of-zotero-plugins", name: "The state of Zotero plugins" },
 ] as const;
