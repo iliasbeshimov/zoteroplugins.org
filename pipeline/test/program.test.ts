@@ -24,6 +24,7 @@ describe("atlas CLI", () => {
       "ratings",
       "moved",
       "submit",
+      "response",
       "regress",
       "libs",
       "reviews",

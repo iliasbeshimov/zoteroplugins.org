@@ -1,0 +1,124 @@
+schemaVersion: 1
+slug: zocrates
+repo: alexplaka/zocrates
+status: listed
+responses:
+  - date: "2026-11-12"
+    from: alexplaka
+    about: capabilities
+    text: |-
+      # Conditional download of executable from `aka.ms`
+
+      ### 1. What is the Microsoft executable for?
+
+       vc_redist.x64.exe is the Microsoft Visual C++ 2015–2022 Redistributable (x64) installer.
+
+       During plugin initialization on Windows (bootstrap.js::ensureVcRedistWindows):
+       1. Zocrates provisions a local managed Python 3.13 environment (uv, Python runtime, and dependencies
+          like chromadb, onnxruntime, tokenizers, pydantic-core, etc.).
+       2. On Windows, Python itself and virtually all native compiled C/C++/Rust extensions require the
+          Visual C++ runtime DLLs (vcruntime140.dll and vcruntime140_1.dll) in C:\Windows\System32.
+       3. On fresh, minimal, or corporate Windows installations where Visual Studio or C++ runtimes haven't
+          been pre-installed, Python or binary wheel imports crash with:
+          ImportError: DLL load failed while importing ...: The specified module could not be found
+       4. bootstrap.js first checks if vcruntime140_1.dll already exists (isVcRedistInstalledWindows()). If
+          it does, it skips this step entirely. If it is missing, it downloads the installer and runs it
+          passively (/install /passive /norestart) so the backend can start properly.
+
+       ---
+
+       ### 2. Is there a more reputable site?
+
+       aka.ms is Microsoft's official domain.
+
+       - What aka.ms is: It stands for "Also Known As Microsoft". It is Microsoft’s official first-party URL
+         shortening and redirection service (similar to t.co for X/Twitter or goo.gl for Google).
+       - The canonical link: The link https://aka.ms/vs/17/release/vc_redist.x64.exe is the exact permanent
+         URL published in Microsoft's official documentation:
+         Microsoft Learn: Latest supported Visual C++ Redistributable downloads
+         (https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
+       - Where it points: If you inspect the HTTP redirect:
+         ```bash
+           curl -sIL "https://aka.ms/vs/17/release/vc_redist.x64.exe"
+         ```
+         It returns a 301 Moved Permanently pointing directly to Microsoft's visualstudio CDN:
+         ```text
+           Location: https://download.visualstudio.microsoft.com/download/pr/.../VC_redist.x64.exe
+         ```
+
+       Microsoft deliberately publishes the aka.ms redirect URL so scripts and installers don't have to
+       hardcode transient, hash-based CDN URLs (which break whenever Microsoft issues a monthly security or
+       servicing update to the runtime). There is no more reputable or official source than Microsoft's own
+       canonical aka.ms link.
+
+      # On Installing the latest version of Zocrates
+
+      ### 1. It does NOT fetch the "newest version" from the internet
+
+       - wheelInstallTarget is a local file, not a PyPI package:
+         ```javascript
+           const res = await fetch(rootURI + "backend/zocrates.whl");
+           ...
+           const wheelInstallTarget = zocratesDataDir + sep + "zocrates-" + resolvedVersion +
+         "-py3-none-any.whl";
+         ```
+         rootURI points to the inside of the installed Zotero .xpi package (chrome:// / jar:). The wheel is
+         built at release time and bundled directly inside the extension archive. It is never downloading a
+         newer version of Zocrates from PyPI.
+
+       - Dependencies are strictly pinned, not floating:
+         Notice the second parameter in buildWheelInstallArgs(venvPython, wheelInstallTarget,
+         constraintsTarget):
+         ```javascript
+           function buildWheelInstallArgs(venvPython, wheelInstallTarget, constraintsTarget) {
+             const args = ["pip", "install", "--python", venvPython, wheelInstallTarget];
+             if (constraintsTarget) {
+               args.push("--constraint", constraintsTargetToFileUrl(constraintsTarget));
+             }
+             return args;
+           }
+         ```
+         constraints.txt is exported directly from uv.lock at build time (uv export --locked). Every
+         dependency is pinned with an exact == version. Even on first install, it never pulls arbitrary
+         "newest" versions from PyPI—it strictly honors the locked versions tested in the repository.
+
+       ---
+
+       ### 2. It does NOT run "each time at startup"
+
+       In normal operation, this command runs only once (on initial setup) or when the user updates the
+       Zotero plugin.
+
+       In bootstrap.js (launchBackendIfNeeded):
+
+       ```javascript
+         // Step 3: Check if .venv exists
+         if (!haveVenv) {
+           // Fresh install only: provision environment
+           await provisionEnvironment(...);
+         } else {
+           // Incremental upgrade check:
+           const manifestVersion = Zotero.Zocrates.version;
+           const installedVersion = await readBackendVersionMarker(zocratesDataDir, sep);
+           if (installedVersion !== manifestVersion) {
+             // Only runs when the Zotero extension was updated to a new version!
+             await installBundledWheel(..., manifestVersion);
+           }
+         }
+       ```
+
+       - When installBundledWheel completes, it writes manifestVersion into
+         <zocrates-data>/.venv/.zocrates-version.
+       - On subsequent Zotero launches, installedVersion === manifestVersion, so the entire install process
+         is bypassed completely, and Zotero launches the existing backend immediately.
+
+      ---
+
+      ### 3. Regarding doing the above "without asking"
+
+       - User Intent: The user installs or updates the Zotero add-on through Zotero's extension manager.
+         Because Zocrates is an AI assistant plugin requiring a local Python backend to function,
+         provisioning the backend engine is part of the extension's lifecycle (with progress displayed via
+         the onboarding progress card in the sidebar).
+    url: https://github.com/iliasbeshimov/zoteroplugins.org/issues/9
+    status: open

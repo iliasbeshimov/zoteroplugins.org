@@ -302,9 +302,11 @@ What a test can't show:
 ## If you're the developer
 
 If something on your card is wrong or missing context, please
-[open a "Respond to your plugin's card" issue](https://github.com/iliasacademia/zoteroatlas/issues/new?template=card-response.yml).
-We check that you maintain the repository, re-check the finding and reply there. Your response is
-shown on the page next to the card, in your words, with our reply.
+[open a "Respond to your plugin's card" issue](https://github.com/iliasbeshimov/zoteroplugins.org/issues/new?template=card-response.yml).
+If you own the repository, published one of its releases or are a public member of the organisation
+that owns it, your response appears on the plugin's page within a few minutes, in your words,
+marked "We're checking"; otherwise we check that you maintain it by hand first. We then re-check the
+finding and reply in the issue, and the page shows our reply next to your response.
 
 We don't edit individual cards by hand. If a finding is wrong for your plugin, it's probably wrong
 for others too, so we fix the analysis for everyone and the card changes with it.
@@ -313,6 +315,7 @@ for others too, so we fix the analysis for everyone and the card changes with it
 
 | Date | Analyzer | Rules | What changed |
 |---|---|---|---|
+| 2026-11-13 | 0.13.1 | 0.9.1-preview | Package installs: a message that describes a command (a log label such as "uv pip install (wheel)") no longer counts as one, and a folder or package named in a setting is the user's choice, not the plugin's supply chain. A wheel whose file name the plugin builds at runtime counts as one fixed version, options a plugin adds to a command after building it (`args.push("--constraint", …)`) are read, and exact packages held to a fully pinned constraints file the plugin ships count as a locked set (medium) instead of unpinned (high). `aka.ms` and `download.visualstudio.microsoft.com` are identified as Microsoft's download links. Of the 35 plugins whose installs we re-checked, one card changed: Zocrates (C to B, after its developer's response). |
 | 2026-11-05 | 0.13.1 | 0.9.1-preview | zotero-plugin-toolkit 6.0.0: the scanner reads its debug link where 6.0.0 sets it up, counts it only when the plugin calls `register()`, and rates it high when the plugin turns the link's password and prompt off. No listed plugin uses 6.0.0 yet, so no card changed. Cards with the toolkit's install link say the toolkit removed it in 6.0.0. A card describes the file the plugin's own update address serves when that's newer than its latest GitHub release, and among several builds for the same Zotero the one the update address serves. |
 | 2026-11-03 | 0.13.1 | 0.9.1-preview | A zotero:// link that switches the catalogue a plugin installs from is rated by what installing from that catalogue then does: medium while each install waits for a click or for a setting that's off by default, high when installs run by themselves. Before, it rated high like a link that installs an add-on without asking, which was stricter than the toolkit's install link (medium) even though the user still has to click. |
 | 2026-11-03 | 0.13.1 | 0.9.0-preview | A text-direction control character inside a lookup table (a language dictionary, for example) no longer counts as hidden code: with only data after it, nothing is shown out of order. Keys in addresses a plugin builds at runtime are redacted in the evidence, like other keys. |

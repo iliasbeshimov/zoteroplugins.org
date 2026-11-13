@@ -270,6 +270,22 @@ export function buildProgram(): Command {
       if (process.env.GITHUB_OUTPUT)
         await appendFile(process.env.GITHUB_OUTPUT, `in-review=${accepted.length > 0}\n`);
     });
+  program
+    .command("response [issue]")
+    .description(
+      "publish developers' responses to their cards from open card-response issues (or one issue), marked \"We're checking\", when they maintain the plugin",
+    )
+    .option("--no-note", "write the files only; don't comment on or label the issues")
+    .action(async (issue: string | undefined, opts: { note: boolean }) => {
+      const { intakeIssue, intakeOpen, restClient } = await import("./responses/intake.ts");
+      const client = restClient(process.env.GITHUB_TOKEN);
+      const gh = opts.note ? client : { get: client.get };
+      const results = issue ? [await intakeIssue(Number(issue), gh)] : await intakeOpen(gh);
+      console.log(JSON.stringify(results, null, 1));
+      // The workflow commits and deploys only when a page changes.
+      if (process.env.GITHUB_OUTPUT)
+        await appendFile(process.env.GITHUB_OUTPUT, `changed=${results.some((r) => r.changed)}\n`);
+    });
   submit
     .command("check")
     .description("profile and grade every plugin in review, then mark it added")

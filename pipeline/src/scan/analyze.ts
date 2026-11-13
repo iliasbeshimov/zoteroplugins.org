@@ -962,7 +962,19 @@ class Collector {
    * when it's held where a launch takes its arguments (`args: […]`, `const runArgs = […]`, a call).
    */
   packageTools = new Map<string, Set<SourceFile>>();
-  argLists: { text: string; words: string[]; hit: Hit; fn: string | null; run: boolean }[] = [];
+  argLists: {
+    text: string;
+    words: string[];
+    hit: Hit;
+    fn: string | null;
+    run: boolean;
+    /** The list's name and function, for words pushed onto it later (`pushedWords`). */
+    pushKey?: string;
+  }[] = [];
+  /** Words a function pushes onto a list it named: `args.push("--constraint", file)`. */
+  pushedWords = new Map<string, string[]>();
+  /** Names given a setting's value: what they install is the user's choice, not the plugin's. */
+  settingValues = new Set<string>();
   /**
    * URLs in shipped scripts in other languages (Python…) that make requests. `compare`: on a line
    * that tests an address rather than sends to it (`startswith("http://…")`); `named`: in Python,
@@ -1675,6 +1687,8 @@ const RANDOM_SECRET =
 /** A setting read: `getPref("x")`, `Zotero.Prefs.get("x", true)`, `prefs.getBool("x", false)`. */
 const PREF_READ = String.raw`(?:[\w$]+\.)*(?:getPref|getBoolPref|getBool|getSetting|[Pp]refs?\.get(?:Bool)?)\s*\(\s*["'\x60]([\w.-]+)["'\x60]\s*(?:,\s*([^)]*))?\)`;
 const PREF_TEST = new RegExp(PREF_READ, "i");
+/** A call that reads a setting: `Zotero.Prefs.get`, `getPref`, `this.prefs.get`. */
+const SETTING_GET = /(?:^|\.)(?:getPref|getBoolPref|getSetting|[Pp]refs?\.get(?:Bool)?)$/;
 /** `if (!getPref("agentEnabled")) return;`: the code after it waits for the setting. */
 const PREF_RETURN = new RegExp(
   String.raw`if\s*\(\s*!\s*${PREF_READ}\s*\)\s*(?:\{\s*)?(?:return|throw)\b`,
@@ -3359,6 +3373,13 @@ function launchArgs(anc: AstNode[]): boolean {
   );
 }
 
+/** The name a list is declared as: `const args = ["pip", "install", …]`. */
+function declaredAs(anc: AstNode[]): string | null {
+  const decl = anc.at(-2);
+  const id = decl?.type === "VariableDeclarator" ? node(decl.id) : undefined;
+  return id?.type === "Identifier" ? (id.name as string) : null;
+}
+
 function enclosingFn(anc: AstNode[]): AstNode | null {
   for (let i = anc.length - 2; i >= 0; i--)
     if (FUNCTION_TYPES.has((anc[i] as AstNode).type)) return anc[i] as AstNode;
@@ -3951,6 +3972,16 @@ function analyzeJs(
     } else if (n.type === "CallExpression") {
       const callee = node(n.callee);
       const last = chain(callee)?.split(".").at(-1);
+      // Options added to an argument list after it's built (zocrates' `args.push("--constraint",
+      // constraintsUrl)`), read with the list's command below.
+      const pushedTo =
+        callee?.type === "MemberExpression" && last === "push" ? node(callee.object) : null;
+      if (pushedTo?.type === "Identifier" && own(base + n.start)) {
+        const key = `${file.path}\0${enclosingFn(anc)?.start ?? -1}\0${pushedTo.name as string}`;
+        const words = col.pushedWords.get(key) ?? [];
+        if (words.length < 20) words.push(...argWords(nodes(n.arguments)));
+        col.pushedWords.set(key, words);
+      }
       if (last) {
         const key = callee?.type === "MemberExpression" ? `.${last}` : last;
         const list = callArgs.get(key) ?? [];
@@ -4001,6 +4032,19 @@ function analyzeJs(
     }
     if ((n.type === "VariableDeclarator" || n.type === "Property") && own(base + n.start))
       noteSpecValue(col, n);
+    // `sourceDir = Zotero.Prefs.get("extensions.zocrates.backendSourceDir", true)`.
+    const [setTo, setFrom] =
+      n.type === "VariableDeclarator"
+        ? [node(n.id), node(n.init)]
+        : n.type === "AssignmentExpression"
+          ? [node(n.left), node(n.right)]
+          : [undefined, undefined];
+    if (
+      setTo?.type === "Identifier" &&
+      setFrom?.type === "CallExpression" &&
+      SETTING_GET.test(chain(node(setFrom.callee)) ?? "")
+    )
+      col.settingValues.add(setTo.name as string);
     // `addon.applyBackgroundUpdates = AddonManager.AUTOUPDATE_ENABLE`, or a helper returning it:
     // it turns Zotero's automatic updates on for an add-on (literature-review-with-llm, for itself
     // at every start). Whether it runs at startup is read once every call is known.
@@ -4194,6 +4238,9 @@ function analyzeJs(
             hit: hit(n),
             fn: callerName(anc),
             run: launchArgs(anc),
+            ...(declaredAs(anc)
+              ? { pushKey: `${file.path}\0${enclosingFn(anc)?.start ?? -1}\0${declaredAs(anc)}` }
+              : {}),
           });
         if (els.length >= 2 && els.length <= 40 && own(base + n.start)) {
           // The program first, held in a name: `[paths.npxCliPath, "--yes", "--package", spec]`
@@ -4419,7 +4466,7 @@ function analyzeJs(
                   ? [nameIn(argsNode) ? SPREAD + nameIn(argsNode) : EXPR]
                   : [];
             if (commandish && !inMcpConfig(anc)) col.packageRuns.push(runAt([text, ...rest]));
-          } else if (PACKAGE_RUN.test(text)) {
+          } else if (PACKAGE_RUN.test(text) && !LABEL_NOTE.test(text)) {
             const ctx = textContext(anc);
             if (ctx !== "shown" && !inDisplayFn(anc))
               col.commandLines.push({ hit: runAt(commandWords(text)), kind: "package", ctx });
@@ -7676,6 +7723,12 @@ const SHELL_FLAG = /^(?:-[il]{0,2}c|\/[cCkK]|-Command|-command|-EncodedCommand|-
 const PACKAGE_RUN =
   /^(?:npx|pnpx|bunx)\s+(?:-y\s+|--yes\s+)?\S|\bnpm\s+(?:i|install|exec)\s+\S|\bpip3?\s+install\b|^uv\s+(?:run|pip|tool|sync)\b|\buvx\s+\S|\bpipx\s+(?:run|install)\b/;
 
+/**
+ * A command's description, not a command: it ends in a bracketed note (zocrates logs each step as
+ * `runProvisionCommand("uv pip install (wheel)", uvPath, args)`). A shell's `$(…)` doesn't count.
+ */
+const LABEL_NOTE = /\s\([A-Za-z][\w\s-]*\)\s*$/;
+
 /** A package tool named on its own, and the arguments that make it fetch and run a package. */
 const PACKAGE_TOOL = /^(?:.*[/\\])?(uv|npm|pnpm|pip3?|bun)(?:\.exe)?$/;
 /** Near a shell flag: the shell it goes to (a literal, `$SHELL`, a `shellPath` setting). */
@@ -7741,6 +7794,8 @@ const NAMED_RE = /\u0001([\w$]+)\u0002/g;
 const named = (name: string) => `\u0001${name}\u0002`;
 const SPREAD = "\u0003";
 const ALT = "\u0005";
+/** Stands for a setting's value in a command's words. */
+const SETTING_VALUE = "\u0006";
 /** A literal that can name a package with its version, or a version on its own. */
 const SPEC_VALUE =
   /^(?:@[\w.-]+\/)?[\w.-]+(?:\[[\w,.-]+\])?(?:@[\w.^~<>=*|-]+|\s*(?:===?|~=|>=?|<=?|!=)\s*[\w.*+-]+(?:\s*,\s*[<>=!~]=?\s*[\w.*+-]+)*)$|^v?\d+(?:\.\d+){1,3}(?:[-+.]?[a-z0-9]+)*$/i;
@@ -7756,6 +7811,13 @@ const nameIn = (e: AstNode | undefined): string | null =>
     : e?.type === "MemberExpression" && !e.computed
       ? ((node(e.property)?.name as string | undefined) ?? null)
       : null;
+
+/** A `+` chain's pieces in order: `dir + sep + "zocrates-" + version + ".whl"`. */
+function concatParts(e: AstNode | undefined): (AstNode | undefined)[] {
+  return e?.type === "BinaryExpression" && e.operator === "+"
+    ? [...concatParts(node(e.left)), ...concatParts(node(e.right))]
+    : [e];
+}
 
 /** An argument list's words: literals, a template's text, and names to look up later. */
 function argWords(els: AstNode[]): string[] {
@@ -7798,22 +7860,35 @@ function noteSpecValue(col: Collector, n: AstNode) {
   const s = str(value);
   const ref = nameIn(value);
   // A package file's path, built from its name (`joinPath(staging, "scansci-pdf.whl")`): that
-  // file is the version it installs (litmtrans).
-  const parts =
-    value.type === "CallExpression"
-      ? nodes(value.arguments)
-      : value.type === "BinaryExpression"
-        ? [node(value.left), node(value.right)]
-        : [value];
-  const file = parts
+  // file is the version it installs (litmtrans). Also when only set if a version is known
+  // (zocrates' `version ? dir + sep + "zocrates-" + version + "-py3-none-any.whl" : null`).
+  const shapes =
+    value.type === "ConditionalExpression"
+      ? [node(value.consequent), node(value.alternate)]
+      : [value];
+  const file = shapes
+    .flatMap((v): (AstNode | string | undefined)[] => {
+      if (v?.type === "BinaryExpression" && v.operator === "+") {
+        // The file's name: the joined pieces after the last separator, less a leading directory.
+        const joined = concatParts(v)
+          .map((p) => (p ? (str(p) ?? EXPR) : EXPR))
+          .join("");
+        let name = joined.split(/[/\\]/).at(-1) ?? "";
+        while (name.startsWith(EXPR)) name = name.slice(1);
+        return [name];
+      }
+      return v?.type === "CallExpression" ? nodes(v.arguments) : [v];
+    })
     .map((p) =>
-      p?.type === "TemplateLiteral"
-        ? ((nodes(p.quasis).at(-1)?.value as { cooked?: string } | undefined)?.cooked ?? null)
-        : p
-          ? str(p)
-          : null,
+      typeof p === "string"
+        ? p
+        : p?.type === "TemplateLiteral"
+          ? ((nodes(p.quasis).at(-1)?.value as { cooked?: string } | undefined)?.cooked ?? null)
+          : p
+            ? str(p)
+            : null,
     )
-    .find((t) => t !== null && PACKAGE_FILE.test(t));
+    .find((t) => t !== null && t !== "" && PACKAGE_FILE.test(t));
   const entry =
     s !== null && SPEC_VALUE.test(s)
       ? s
@@ -7955,6 +8030,8 @@ interface InstallRead {
   /** `--frozen`, `--locked`, `--require-hashes`, `npm ci`. */
   frozen: boolean;
   noDeps: boolean;
+  /** `--constraint` / `-c`: the files it names pin what the packages pull in. */
+  constrained: boolean;
 }
 
 /** What one package command installs, read from its words; null when no tool starts it. */
@@ -7973,6 +8050,7 @@ function readInstall(words: string[]): InstallRead | null {
     project: false,
     frozen: false,
     noDeps: false,
+    constrained: false,
   };
   let verb: string | null = RUNNER_TOOL.test(tool) && tool !== "pipx" ? "run" : null;
   for (; i < words.length; i++) {
@@ -8004,6 +8082,7 @@ function readInstall(words: string[]): InstallRead | null {
       else if (REQ_FLAG.has(flag) || (flag === "-c" && (tool === "pip" || tool === "uv"))) {
         r.reqPaths.push(value());
         r.reqs++;
+        if (flag === "-c" || flag === "--constraint") r.constrained = true;
       } else if (
         VALUE_FLAG.has(flag) ||
         (flag === "-p" && (tool === "uv" || tool === "uvx" || tool === "conda")) ||
@@ -8072,7 +8151,8 @@ function specLabel(spec: string): string | null {
       "",
     );
     const [name, version] = base.split("-").length >= 5 ? base.split("-") : [base];
-    return name && !name.includes(EXPR) ? (version ? `${name} ${version}` : name) : null;
+    if (!name || name.includes(EXPR)) return null;
+    return version && !version.includes(EXPR) ? `${name} ${version}` : name;
   }
   const exact = exactSpec(spec);
   const m = spec.match(/^((?:@[\w.-]+\/)?[\w.-]+)(?:\[[^\]]*\])?(?:\s*(?:===?|@|=)\s*(\S+))?/);
@@ -8160,14 +8240,19 @@ function runPin(col: Collector, r: InstallRead): Pin | null {
       : project?.length && project.every(exactSpec)
         ? "top-level"
         : "unpinned";
-  const specs = r.specs.flatMap((s) => s.split(ALT));
+  // A package or folder a setting names is the user's (zocrates' backendSourceDir, empty by default).
+  const specs = r.specs.flatMap((s) => s.split(ALT)).filter((s) => s !== SETTING_VALUE);
+  if (r.specs.length && !specs.length && !r.reqs) return null;
   // The files it ships that the command names: another shipped file's pinning isn't this one's.
   const ownReqs = shippedReqFiles(col, r);
   if (!specs.length && !ownReqs) return RUNNER_TOOL.test(r.tool) ? "unpinned" : null;
   const reqsPinned = (ownReqs ?? []).every((f) => fullyPinned(col.reqFiles.get(f) ?? ""));
   if (!reqsPinned || !specs.every(exactSpec)) return "unpinned";
-  // Nothing floats: hashes required, no dependencies pulled, or only fully pinned files it ships.
-  return r.frozen || r.noDeps || !specs.length ? "locked" : "top-level";
+  // Nothing floats: hashes required, no dependencies pulled, only fully pinned files it ships, or
+  // exact packages held to a fully pinned constraints file it ships (zocrates' uv.lock export).
+  return r.frozen || r.noDeps || !specs.length || (r.constrained && ownReqs?.length)
+    ? "locked"
+    : "top-level";
 }
 
 const PIN_RANK: Record<Pin, number> = { locked: 0, "top-level": 1, unpinned: 2 };
@@ -8188,15 +8273,30 @@ function packagePinning(
   // Every unpinned install waits for an "already installed" check.
   let once = true;
   for (const run of runs) {
-    const read = run.words ? readInstall(resolveWords(col, run.words)) : null;
+    const words = run.words?.map((w) =>
+      w.startsWith("\u0001") && w.endsWith("\u0002") && col.settingValues.has(w.slice(1, -1))
+        ? SETTING_VALUE
+        : w,
+    );
+    const read = words ? readInstall(resolveWords(col, words)) : null;
     const pin = read ? runPin(col, read) : "unpinned";
     if (!pin) continue;
     if (!pinning || PIN_RANK[pin] > PIN_RANK[pinning]) pinning = pin;
     if (pin === "unpinned" && !run.once && !calledOnce(col, run)) once = false;
     // The packages it names, and those in the requirements file or project it ships.
+    // A constraints file only holds versions: what it installs is named on the command or in a
+    // requirements file (zocrates' constraints.txt pins 223 dependencies of one wheel).
+    const shipped =
+      read?.constrained && !read.project
+        ? (shippedReqFiles(col, read) ?? [])
+            .filter((f) => !/constraint/i.test(f.split(/[/\\]/).at(-1) ?? f))
+            .flatMap((f) => requirementSpecs(col.reqFiles.get(f) ?? ""))
+        : read
+          ? (shippedSpecs(col, read) ?? [])
+          : [];
     const specs = [
-      ...(read?.specs.flatMap((x) => x.split(ALT)) ?? []),
-      ...((read && shippedSpecs(col, read)) ?? []),
+      ...(read?.specs.flatMap((x) => x.split(ALT)).filter((x) => x !== SETTING_VALUE) ?? []),
+      ...shipped,
     ];
     for (const spec of specs) {
       const label = specLabel(spec);
@@ -10835,7 +10935,12 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
           a.hit,
           `${tool} ${a.text.split(" ").find((w) => !w.startsWith("-"))}`,
         );
-      for (const a of args) runs.push({ ...a.hit, words: [tool, ...a.words], fn: a.fn });
+      for (const a of args)
+        runs.push({
+          ...a.hit,
+          words: [tool, ...a.words, ...((a.pushKey && col.pushedWords.get(a.pushKey)) ?? [])],
+          fn: a.fn,
+        });
     }
     const pkg = col.caps.get("package-run");
     if (pkg) Object.assign(pkg, packagePinning(col, runs));

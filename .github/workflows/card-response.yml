@@ -1,0 +1,63 @@
+name: Card response
+
+# A developer's response to their plugin's card (the "Respond to your plugin's card" issue form,
+# labelled card-response). Within a minute or two of the issue being opened or edited:
+# - `atlas response` checks that the author maintains the plugin's repository (owns it, published
+#   one of its releases, or is a public member of the organisation that owns it);
+# - if so, it adds the response to data/plugins/<slug>.yaml and the plugin's profile, marked
+#   "We're checking", and this commits and deploys, so it shows on the plugin's page;
+# - it leaves one note on the issue saying what happened (or that we'll check by hand, labelled
+#   needs-check, or that it couldn't tell which plugin the issue is about).
+# Each run goes through every open card-response issue (idempotent: one note per issue, a response
+# changes only until we reply), so a run GitHub cancels while the census holds the group loses
+# nothing. Our reply and the final status are written by hand after re-checking the finding.
+# Nothing from an issue passes through this file: the script reads the issues through the API.
+on:
+  issues:
+    types: [opened, edited, labeled]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  publish:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.issue.labels.*.name, 'card-response')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # Shared with the census and submissions: one writer of data/ at a time.
+    concurrency:
+      group: data
+      cancel-in-progress: false
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
+      PUBLIC_REVIEWS_OPEN: ${{ vars.REVIEWS_OPEN }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Publish responses
+        id: response
+        run: pnpm atlas response
+
+      - name: Commit
+        id: commit
+        if: steps.response.outputs.changed == 'true'
+        run: '.github/scripts/commit-push.sh "Responses: developer responses from card-response issues" data/plugins data/generated'
+
+      - name: Deploy
+        if: steps.commit.outputs.changed == 'true' && env.CLOUDFLARE_API_TOKEN != ''
+        run: |
+          pnpm site:build
+          cd site && npx -y wrangler@4 pages deploy dist --project-name zoteroplugins --branch main --commit-hash "$(git rev-parse HEAD)" --commit-dirty=false

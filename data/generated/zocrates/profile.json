@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-11-13T11:18:48.796Z",
+ "generatedAt": "2026-11-13T18:11:14.305Z",
  "slug": "zocrates",
  "repo": "alexplaka/zocrates",
  "repoName": "alexplaka/Zocrates",
@@ -135,7 +135,7 @@
  "trust": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-13T11:18:48.796Z",
+  "computedAt": "2026-11-13T18:11:14.305Z",
   "appliesTo": {
    "slug": "zocrates",
    "version": "0.92.1",
@@ -144,9 +144,9 @@
   "inputs": {
    "analyzerVersion": "0.13.1",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.11.03",
+   "hostsTableVersion": "2026.11.13",
    "currentZotero": "10.0.9",
-   "inputHash": "111d099aa8fc30c8196b3fe7e8a880fe884025c49ae5b6e213115092bde95243"
+   "inputHash": "3a2b67e01f4f8c79c14da6c099e5ad2affd2b0f67b8f1024ab90eba64723ac46"
   },
   "facets": {
    "sourceTransparency": {
@@ -168,11 +168,12 @@
     ]
    },
    "dataSharing": {
-    "value": "unknown-endpoints",
+    "value": "named-third-parties",
     "hosts": [
      {
       "category": "code-hosting",
       "hosts": [
+       "aka.ms",
        "github.com"
       ]
      },
@@ -198,38 +199,26 @@
       ]
      },
      {
-      "category": "unknown",
-      "hosts": [
-       "aka.ms"
-      ]
-     },
-     {
       "category": "zotero",
       "hosts": [
        "Zotero lookup services"
       ]
      }
     ],
-    "concern": "medium",
-    "label": "Contacts a server we couldn't identify: aka.ms",
+    "concern": "low",
+    "label": "Only contacts services we could identify",
     "legalRisk": false,
     "drivers": [
-     "DS-UNKNOWN"
+     "DS-NAMED"
     ]
    },
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads and runs a program we haven't reviewed yet",
-      "concern": "high",
-      "detail": "We haven't yet reviewed who publishes the file or whether anything stops it changing, so it counts as a high concern until we do. From aka.ms; not checked against a fingerprint fixed in the plugin."
-     },
-     {
       "id": "package-run",
-      "label": "Installs and runs npm or PyPI packages without a fixed version",
-      "concern": "high",
-      "detail": "source: installs the newest version each time, at startup, without asking"
+      "label": "Installs and runs software packages from npm or PyPI",
+      "concern": "medium",
+      "detail": "Installs a locked set of packages, at startup, without asking"
      },
      {
       "id": "process-launch",
@@ -247,6 +236,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads uv, and on Windows Microsoft's C++ runtime installer, when it first sets up its Python",
+      "concern": "low",
+      "detail": "It comes straight from Astral, who make uv, and Microsoft, who make the Visual C++ runtime, over an encrypted connection, as it would if you installed it yourself. The first time Zotero starts with it, it sets up its own Python: it downloads uv from Astral's GitHub releases if it can't find one on the computer, and on Windows, only when Microsoft's Visual C++ runtime is missing, that runtime's installer from Microsoft, which asks for administrator rights. Its README says both. Neither file is checked beyond its size and type."
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -257,12 +252,12 @@
       "concern": "low"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
-     "CAP-PACKAGE-UNPINNED",
-     "CAP-PROCESS"
+     "CAP-PACKAGE-RUN",
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-MAKER"
     ]
    },
    "requirements": {
@@ -301,14 +296,14 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
     "capabilities"
    ],
    "reasons": [
-    "Downloads and runs a program we haven't reviewed yet",
-    "Installs and runs npm or PyPI packages without a fixed version"
+    "Installs and runs software packages from npm or PyPI",
+    "Launches programs on your computer"
    ]
   }
  },
@@ -332,6 +327,16 @@
   "launchesPrograms": true
  },
  "integrityEvents": [],
+ "responses": [
+  {
+   "date": "2026-11-12",
+   "from": "alexplaka",
+   "about": "capabilities",
+   "text": "# Conditional download of executable from `aka.ms`\n\n### 1. What is the Microsoft executable for?\n\n vc_redist.x64.exe is the Microsoft Visual C++ 2015–2022 Redistributable (x64) installer.\n\n During plugin initialization on Windows (bootstrap.js::ensureVcRedistWindows):\n 1. Zocrates provisions a local managed Python 3.13 environment (uv, Python runtime, and dependencies\n    like chromadb, onnxruntime, tokenizers, pydantic-core, etc.).\n 2. On Windows, Python itself and virtually all native compiled C/C++/Rust extensions require the\n    Visual C++ runtime DLLs (vcruntime140.dll and vcruntime140_1.dll) in C:\\Windows\\System32.\n 3. On fresh, minimal, or corporate Windows installations where Visual Studio or C++ runtimes haven't\n    been pre-installed, Python or binary wheel imports crash with:\n    ImportError: DLL load failed while importing ...: The specified module could not be found\n 4. bootstrap.js first checks if vcruntime140_1.dll already exists (isVcRedistInstalledWindows()). If\n    it does, it skips this step entirely. If it is missing, it downloads the installer and runs it\n    passively (/install /passive /norestart) so the backend can start properly.\n\n ---\n\n ### 2. Is there a more reputable site?\n\n aka.ms is Microsoft's official domain.\n\n - What aka.ms is: It stands for \"Also Known As Microsoft\". It is Microsoft’s official first-party URL\n   shortening and redirection service (similar to t.co for X/Twitter or goo.gl for Google).\n - The canonical link: The link https://aka.ms/vs/17/release/vc_redist.x64.exe is the exact permanent\n   URL published in Microsoft's official documentation:\n   Microsoft Learn: Latest supported Visual C++ Redistributable downloads\n   (https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)\n - Where it points: If you inspect the HTTP redirect:\n   ```bash\n     curl -sIL \"https://aka.ms/vs/17/release/vc_redist.x64.exe\"\n   ```\n   It returns a 301 Moved Permanently pointing directly to Microsoft's visualstudio CDN:\n   ```text\n     Location: https://download.visualstudio.microsoft.com/download/pr/.../VC_redist.x64.exe\n   ```\n\n Microsoft deliberately publishes the aka.ms redirect URL so scripts and installers don't have to\n hardcode transient, hash-based CDN URLs (which break whenever Microsoft issues a monthly security or\n servicing update to the runtime). There is no more reputable or official source than Microsoft's own\n canonical aka.ms link.\n\n# On Installing the latest version of Zocrates\n\n### 1. It does NOT fetch the \"newest version\" from the internet\n\n - wheelInstallTarget is a local file, not a PyPI package:\n   ```javascript\n     const res = await fetch(rootURI + \"backend/zocrates.whl\");\n     ...\n     const wheelInstallTarget = zocratesDataDir + sep + \"zocrates-\" + resolvedVersion +\n   \"-py3-none-any.whl\";\n   ```\n   rootURI points to the inside of the installed Zotero .xpi package (chrome:// / jar:). The wheel is\n   built at release time and bundled directly inside the extension archive. It is never downloading a\n   newer version of Zocrates from PyPI.\n\n - Dependencies are strictly pinned, not floating:\n   Notice the second parameter in buildWheelInstallArgs(venvPython, wheelInstallTarget,\n   constraintsTarget):\n   ```javascript\n     function buildWheelInstallArgs(venvPython, wheelInstallTarget, constraintsTarget) {\n       const args = [\"pip\", \"install\", \"--python\", venvPython, wheelInstallTarget];\n       if (constraintsTarget) {\n         args.push(\"--constraint\", constraintsTargetToFileUrl(constraintsTarget));\n       }\n       return args;\n     }\n   ```\n   constraints.txt is exported directly from uv.lock at build time (uv export --locked). Every\n   dependency is pinned with an exact == version. Even on first install, it never pulls arbitrary\n   \"newest\" versions from PyPI—it strictly honors the locked versions tested in the repository.\n\n ---\n\n ### 2. It does NOT run \"each time at startup\"\n\n In normal operation, this command runs only once (on initial setup) or when the user updates the\n Zotero plugin.\n\n In bootstrap.js (launchBackendIfNeeded):\n\n ```javascript\n   // Step 3: Check if .venv exists\n   if (!haveVenv) {\n     // Fresh install only: provision environment\n     await provisionEnvironment(...);\n   } else {\n     // Incremental upgrade check:\n     const manifestVersion = Zotero.Zocrates.version;\n     const installedVersion = await readBackendVersionMarker(zocratesDataDir, sep);\n     if (installedVersion !== manifestVersion) {\n       // Only runs when the Zotero extension was updated to a new version!\n       await installBundledWheel(..., manifestVersion);\n     }\n   }\n ```\n\n - When installBundledWheel completes, it writes manifestVersion into\n   <zocrates-data>/.venv/.zocrates-version.\n - On subsequent Zotero launches, installedVersion === manifestVersion, so the entire install process\n   is bypassed completely, and Zotero launches the existing backend immediately.\n\n---\n\n### 3. Regarding doing the above \"without asking\"\n\n - User Intent: The user installs or updates the Zotero add-on through Zotero's extension manager.\n   Because Zocrates is an AI assistant plugin requiring a local Python backend to function,\n   provisioning the backend engine is part of the extension's lifecycle (with progress displayed via\n   the onboarding progress card in the sidebar).",
+   "url": "https://github.com/iliasbeshimov/zoteroplugins.org/issues/9",
+   "status": "open"
+  }
+ ],
  "content": null,
  "categories": null,
  "requirements": null

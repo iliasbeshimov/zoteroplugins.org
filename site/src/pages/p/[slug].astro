@@ -17,6 +17,7 @@ import { indexable } from "../../lib/seo.ts";
 import { checkedOn, pluginDescription, pluginLd, pluginTitle, verdictSentence } from "../../lib/meta.ts";
 import { JOB_BY_SLUG } from "@atlas/schema";
 import { REPORT_URL, RESPOND_URL } from "../../lib/links.ts";
+import { blocks, folded } from "../../lib/response-text.ts";
 import { similarFloor, similarPlugins } from "../../lib/similar.ts";
 import { USE_TIP } from "../../lib/usage.ts";
 
@@ -84,7 +85,6 @@ const RESPONSE_ABOUT: Record<string, string> = {
   updates: "updates",
   other: "the listing",
 };
-const paras = (t: string) => t.split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean);
 const stats = [
   ["In use", p.inUseText || "—", USE_TIP],
   ["Downloads", p.downloads, "All-time downloads of its release files from GitHub, counting every update. Installs from elsewhere aren't counted."],
@@ -359,7 +359,7 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
       </section>
 
       <section>
-        <h2>{p.responses.length > 1 ? "The developer's responses" : "The developer's response"}</h2>
+        <h2 id="developer-response">{p.responses.length > 1 ? "The developer's responses" : "The developer's response"}</h2>
         {
           p.responses.length ? (
             <>
@@ -368,11 +368,20 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
                   <span class="rstatus mono-sm" data-status={r.status}>
                     {RESPONSE_STATUS[r.status] ?? r.status}
                   </span>
-                  <blockquote>
-                    {paras(r.text).map((t) => (
-                      <p>{t}</p>
-                    ))}
-                  </blockquote>
+                  {(() => {
+                    const { shown, more } = folded(r.text);
+                    return (
+                      <blockquote>
+                        <Fragment set:html={shown.join("")} />
+                        {more.length > 0 && (
+                          <details class="more">
+                            <summary>Read the full response</summary>
+                            <Fragment set:html={more.join("")} />
+                          </details>
+                        )}
+                      </blockquote>
+                    );
+                  })()}
                   <figcaption class="mono-sm">
                     {r.who} · <a href={r.url}>{r.date}</a> · about {RESPONSE_ABOUT[r.about] ?? r.about}
                     {r.version && <> in v{r.version}</>}
@@ -380,9 +389,7 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
                   {r.reply && (
                     <div class="reply">
                       <strong>Our reply</strong>
-                      {paras(r.reply).map((t) => (
-                        <p>{t}</p>
-                      ))}
+                      <Fragment set:html={blocks(r.reply).join("")} />
                     </div>
                   )}
                 </figure>
@@ -995,13 +1002,60 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     line-height: 1.55;
     overflow-wrap: anywhere;
   }
-  blockquote p,
-  .reply p {
+  blockquote :global(:is(p, ul, ol, pre)),
+  .reply :global(:is(p, ul, ol, pre)) {
     margin: 0 0 0.6em;
   }
-  blockquote p:last-child,
-  .reply p:last-child {
+  blockquote :global(:is(p, ul, ol, pre):last-child),
+  .reply :global(:is(p, ul, ol, pre):last-child) {
     margin-bottom: 0;
+  }
+  blockquote :global(:is(ul, ol)),
+  .reply :global(:is(ul, ol)) {
+    padding-left: 1.4em;
+  }
+  blockquote :global(ul),
+  .reply :global(ul) {
+    list-style: disc;
+  }
+  blockquote :global(ol),
+  .reply :global(ol) {
+    list-style: decimal;
+  }
+  blockquote :global(li + li) {
+    margin-top: 0.3em;
+  }
+  blockquote :global(pre) {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.45;
+    overflow-x: auto;
+    white-space: pre;
+    overflow-wrap: normal;
+  }
+  blockquote :global(code),
+  .reply :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+  }
+  blockquote :global(.rh) {
+    margin-top: 0.9em;
+  }
+  blockquote :global(.rh:first-child) {
+    margin-top: 0;
+  }
+  .more summary {
+    cursor: pointer;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0.2em 0 0.6em;
+  }
+  .more[open] summary {
+    margin-bottom: 0.8em;
   }
   .rstatus {
     align-self: flex-start;

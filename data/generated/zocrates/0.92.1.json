@@ -308,7 +308,7 @@
  "analysis": {
   "schemaVersion": 1,
   "analyzerVersion": "0.13.1",
-  "analyzedAt": "2026-11-10T11:35:24.497Z",
+  "analyzedAt": "2026-11-13T18:10:53.542Z",
   "input": {
    "slug": "zocrates",
    "version": "0.92.1",
@@ -738,7 +738,8 @@
     },
     {
      "host": "aka.ms",
-     "category": "unknown",
+     "category": "code-hosting",
+     "provider": "Microsoft (official download links)",
      "flags": [],
      "usage": "request",
      "inVendoredCode": false,
@@ -1816,7 +1817,7 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.11.03"
+   "hostsTableVersion": "2026.11.13"
   },
   "capabilities": [
    {
@@ -2234,9 +2235,9 @@
    },
    {
     "id": "package-run",
-    "occurrences": 5,
+    "occurrences": 3,
     "inVendoredCodeOnly": false,
-    "codeKey": "7df02e701a96",
+    "codeKey": "951fb47da926",
     "evidence": [
      {
       "kind": "code",
@@ -2249,24 +2250,8 @@
      {
       "kind": "code",
       "file": "bootstrap.js",
-      "line": 2084,
-      "column": 28,
-      "snippet": "await runProvisionCommand(\"uv pip install (wheel)\", uvPath, buildWheelInstallArgs(venvPython, wheelInstallTarget, constraintsTarget), null);",
-      "inVendoredCode": false
-     },
-     {
-      "kind": "code",
-      "file": "bootstrap.js",
       "line": 2241,
       "column": 12,
-      "snippet": "await runProvisionCommand(\"uv pip install (dev source)\", uvPath, [\"pip\", \"install\", \"--python\", venvPython, sourceDir], null);",
-      "inVendoredCode": false
-     },
-     {
-      "kind": "code",
-      "file": "bootstrap.js",
-      "line": 2241,
-      "column": 32,
       "snippet": "await runProvisionCommand(\"uv pip install (dev source)\", uvPath, [\"pip\", \"install\", \"--python\", venvPython, sourceDir], null);",
       "inVendoredCode": false
      },
@@ -2284,9 +2269,9 @@
       "npx / pip / uv",
       "uv pip"
      ],
-     "pinning": "unpinned",
+     "pinning": "locked",
      "packages": [
-      "source"
+      "zocrates"
      ],
      "atStartup": true
     }
@@ -2352,7 +2337,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-13T11:18:48.796Z",
+  "computedAt": "2026-11-13T18:10:53.542Z",
   "appliesTo": {
    "slug": "zocrates",
    "version": "0.92.1",
@@ -2361,9 +2346,9 @@
   "inputs": {
    "analyzerVersion": "0.13.1",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.11.03",
+   "hostsTableVersion": "2026.11.13",
    "currentZotero": "10.0.9",
-   "inputHash": "111d099aa8fc30c8196b3fe7e8a880fe884025c49ae5b6e213115092bde95243"
+   "inputHash": "3a2b67e01f4f8c79c14da6c099e5ad2affd2b0f67b8f1024ab90eba64723ac46"
   },
   "facets": {
    "sourceTransparency": {
@@ -2385,11 +2370,12 @@
     ]
    },
    "dataSharing": {
-    "value": "unknown-endpoints",
+    "value": "named-third-parties",
     "hosts": [
      {
       "category": "code-hosting",
       "hosts": [
+       "aka.ms",
        "github.com"
       ]
      },
@@ -2415,38 +2401,26 @@
       ]
      },
      {
-      "category": "unknown",
-      "hosts": [
-       "aka.ms"
-      ]
-     },
-     {
       "category": "zotero",
       "hosts": [
        "Zotero lookup services"
       ]
      }
     ],
-    "concern": "medium",
-    "label": "Contacts a server we couldn't identify: aka.ms",
+    "concern": "low",
+    "label": "Only contacts services we could identify",
     "legalRisk": false,
     "drivers": [
-     "DS-UNKNOWN"
+     "DS-NAMED"
     ]
    },
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads and runs a program we haven't reviewed yet",
-      "concern": "high",
-      "detail": "We haven't yet reviewed who publishes the file or whether anything stops it changing, so it counts as a high concern until we do. From aka.ms; not checked against a fingerprint fixed in the plugin."
-     },
-     {
       "id": "package-run",
-      "label": "Installs and runs npm or PyPI packages without a fixed version",
-      "concern": "high",
-      "detail": "source: installs the newest version each time, at startup, without asking"
+      "label": "Installs and runs software packages from npm or PyPI",
+      "concern": "medium",
+      "detail": "Installs a locked set of packages, at startup, without asking"
      },
      {
       "id": "process-launch",
@@ -2464,6 +2438,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads uv, and on Windows Microsoft's C++ runtime installer, when it first sets up its Python",
+      "concern": "low",
+      "detail": "It comes straight from Astral, who make uv, and Microsoft, who make the Visual C++ runtime, over an encrypted connection, as it would if you installed it yourself. The first time Zotero starts with it, it sets up its own Python: it downloads uv from Astral's GitHub releases if it can't find one on the computer, and on Windows, only when Microsoft's Visual C++ runtime is missing, that runtime's installer from Microsoft, which asks for administrator rights. Its README says both. Neither file is checked beyond its size and type."
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -2474,12 +2454,12 @@
       "concern": "low"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
-     "CAP-PACKAGE-UNPINNED",
-     "CAP-PROCESS"
+     "CAP-PACKAGE-RUN",
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-MAKER"
     ]
    },
    "requirements": {
@@ -2518,14 +2498,14 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
     "capabilities"
    ],
    "reasons": [
-    "Downloads and runs a program we haven't reviewed yet",
-    "Installs and runs npm or PyPI packages without a fixed version"
+    "Installs and runs software packages from npm or PyPI",
+    "Launches programs on your computer"
    ]
   }
  }

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "slug": "zocrates",
+  "version": "0.92.1",
+  "sha256": "e919d14212ba190a899d5c3ecf88b813d6e6a63cf2135acc7f03c72ce966801a",
+  "codeKey": "cac6f3b89f53",
+  "reviewedAt": "2026-11-13",
+  "method": "Read by hand in the release file (bootstrap.js: startup, launchBackendIfNeeded, provisionEnvironment, the uv lookup, downloadStandaloneUv, ensureVcRedistWindows) and the README, after the developer's response (issues/9); every quote checked against the release file and README; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "real": true,
+  "concern": "low",
+  "rule": "CAP-DOWNLOAD-EXEC-MAKER",
+  "label": "Downloads uv, and on Windows Microsoft's C++ runtime installer, when it first sets up its Python",
+  "summary": "The first time Zotero starts with it, it sets up its own Python: it downloads uv from Astral's GitHub releases if it can't find one on the computer, and on Windows, only when Microsoft's Visual C++ runtime is missing, that runtime's installer from Microsoft, which asks for administrator rights. Its README says both. Neither file is checked beyond its size and type.",
+  "facts": {
+    "what": "uv, the Python package manager from Astral (the latest release, from github.com/astral-sh/uv/releases/latest/download/), unless uv is already on the computer; uv then installs Python 3.13 (Astral's own Python builds) into the plugin's data folder. On Windows only, when vcruntime140_1.dll is missing, the Microsoft Visual C++ 2015–2022 Redistributable (x64) installer from Microsoft's official link aka.ms/vs/17/release/vc_redist.x64.exe (it redirects to download.visualstudio.microsoft.com), run with /install /passive /norestart through PowerShell's Start-Process -Verb RunAs, so Windows asks for administrator rights, then deleted.",
+    "urls": [
+      "https://github.com/astral-sh/uv/releases/latest/download/uv-<target>.tar.gz (or .zip on Windows)",
+      "https://aka.ms/vs/17/release/vc_redist.x64.exe"
+    ],
+    "source": "official",
+    "publisher": "Astral, who make uv, and Microsoft, who make the Visual C++ runtime",
+    "transport": "https",
+    "integrity": "none",
+    "trigger": "automatic",
+    "toldInReadme": "yes",
+    "readmeQuote": "Requires the [Microsoft Visual C++ 2015–2022 Redistributable (x64)](https://aka.ms/vs/17/release/vc_redist.x64.exe) for native document conversion and ONNX runtime dependencies (setup automatically detects and installs it if missing).",
+    "readmeQuote2": "the extension automatically provisions an isolated, hermetic Python `3.13` runtime and `.venv` via [Astral `uv`](https://github.com/astral-sh/uv)",
+    "triggerQuote": {
+      "file": "bootstrap.js",
+      "text": "launchBackendIfNeeded().catch(function(e) {"
+    },
+    "sourceQuote": {
+      "file": "bootstrap.js",
+      "text": "const downloadUrl = \"https://aka.ms/vs/17/release/vc_redist.x64.exe\";"
+    },
+    "sourceQuote2": {
+      "file": "bootstrap.js",
+      "text": "const url = \"https://github.com/astral-sh/uv/releases/latest/download/\" + artifactName;"
+    },
+    "notes": "startup() (line 11) calls launchBackendIfNeeded() (line 276). With no .venv yet (line 2751), provisionEnvironment() runs: ensureVcRedistWindows() (2114) returns at once off Windows or when isVcRedistInstalledWindows() finds vcruntime140_1.dll; otherwise it shows 'Installing Microsoft Visual C++ Runtime (24 MB)...' in the sidebar's setup card, fetches the aka.ms link (2135), rejects files of 5 MB or less or without an MZ header, and runs it elevated (2185). The uv lookup tries a system uv, the plugin's own bin folder and ~/.local/bin and ~/.cargo/bin before downloading the latest standalone uv (1873, 1658); the download is rejected under 1 MB and the binary's magic bytes are checked, nothing more. 'uv python install 3.13' (2229) then fetches Python through uv. The plugin's own Python package is a wheel shipped in the .xpi (backend/zocrates.whl) and its dependencies are held to backend/constraints.txt, 223 exact versions exported from uv.lock; that install is the separate package-run finding.",
+    "reviewerNote": "Both downloads come from the program's maker over https and the README names both, so CAP-DOWNLOAD-EXEC-MAKER (low), as for jadense-in-zotero and iris-zotero's uv downloads. uv is the latest release rather than a fixed version, and nothing checks either file against a fingerprint; that's within the rule, which treats the maker's own https download as installing it yourself."
+  }
+}

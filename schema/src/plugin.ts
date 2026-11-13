@@ -38,7 +38,11 @@ export const DeveloperResponse = z.object({
     "other",
   ]),
   version: VersionString.optional().describe("The version the response is about"),
-  text: z.string().min(1).max(2000).describe("The developer's words, published as written"),
+  text: z
+    .string()
+    .min(1)
+    .max(10000)
+    .describe("The developer's words, published as written (long ones fold on the page)"),
   url: z.url().describe("The public issue it came from"),
   status: z
     .enum(["open", "corrected", "fixed", "finding-stands", "noted"])
