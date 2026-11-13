@@ -17,8 +17,9 @@ import { fmtUse, loadUsage } from "./usage.ts";
 /**
  * Turns data/generated/<slug>/profile.json into what the pages show: the Zotero Plugins grade, its
  * "because" line, the scorecard's areas and the notices. Everything comes from the deterministic
- * profile; the only AI-written text is the summaries in data/census/summaries.json and the search
- * phrases in data/search/phrases.json, tagged as such.
+ * profile; the only AI-written text is the summaries in data/census/summaries.json, the taglines
+ * made from them in data/census/taglines.json and the search phrases in data/search/phrases.json,
+ * tagged as such.
  */
 
 /** The repository's data/ folder, found from where the build runs (the site or the repo root). */
@@ -131,6 +132,10 @@ export interface Plugin {
   author: string;
   license: string;
   stars: string;
+  /** GitHub stars as a number; null when unknown. */
+  starsN: number | null;
+  /** `stars` for lists: 8,440 → "8.4k", 405 → "405"; "" when unknown. */
+  starsShort: string;
   downloads: string;
   downloadsN: number;
   /** About how many copies of Zotero have it, from the census history (lib/usage.ts); null without history. */
@@ -156,6 +161,10 @@ export interface Plugin {
   /** The same as a short range, e.g. "8–10, 11 beta". */
   worksRange: string;
   oneLiner: string;
+  /** One line of at most 45 characters for lists (data/census/taglines.json), or null without one. */
+  tagline: string | null;
+  /** The tagline, or the summary's first sentence without one: what lists show under the name. */
+  line: string;
   descSoon: boolean;
   description: string[] | null;
   version: string;
@@ -279,6 +288,12 @@ export function fmtCount(n: number | null | undefined): string {
   if (n == null) return "—";
   if (n >= 1_000_000) return `${(n / 1_000_000).toPrecision(3).replace(/\.?0+$/, "")}M`;
   return n.toLocaleString("en-GB");
+}
+/** GitHub stars for lists: exact below 1,000, then two significant figures (8,440 → "8.4k"). */
+export function fmtStars(n: number): string {
+  if (n < 1000) return String(n);
+  const r = Number(n.toPrecision(2));
+  return r >= 1_000_000 ? `${r / 1_000_000}M` : `${r / 1000}k`;
 }
 function fmtSize(bytes: number): string {
   const mb = bytes / 1_000_000;
@@ -426,6 +441,15 @@ function jobPick(p: PluginProfile): JobPick | undefined {
   }
   return jobPicks[p.repoName] ?? jobPicks[p.repo];
 }
+/**
+ * Taglines: one line per plugin for lists, at most 45 characters, written by AI from the summary
+ * (data/census/taglines.json, keyed by owner/repo like the summaries).
+ */
+function loadTaglines(): Record<string, string> {
+  const f = `${ROOT}census/taglines.json`;
+  if (!existsSync(f)) return {};
+  return (JSON.parse(readFileSync(f, "utf8")) as { taglines: Record<string, string> }).taglines;
+}
 function loadSummaries(): Record<string, Summary> {
   const f = `${ROOT}census/summaries.json`;
   if (!existsSync(f)) return {};
@@ -496,6 +520,7 @@ const toEv = (what: string, e: CodeEv): Evidence => ({
 function build(
   p: PluginProfile,
   summaries: Record<string, Summary>,
+  taglines: Record<string, string>,
   reqs: Record<string, Requirement>,
   phrases: Record<string, string[]>,
   usage: Map<string, number>,
@@ -914,6 +939,7 @@ function build(
     p.about.githubDescription ??
     p.about.manifestDescription ??
     "Description coming soon.";
+  const tagline = taglines[p.repoName] ?? taglines[p.repo] ?? null;
   const size = p.install ? fmtSize(p.install.asset.size) : "";
   const inUse = usage.get(p.repo.toLowerCase()) ?? null;
   // The jobs judged from its summary (data/census/jobs.json), or the keyword guess without one.
@@ -934,6 +960,8 @@ function build(
     author: p.author.login,
     license: p.license ?? "None stated",
     stars: fmtCount(p.popularity.stars),
+    starsN: p.popularity.stars ?? null,
+    starsShort: p.popularity.stars == null ? "" : fmtStars(p.popularity.stars),
     downloads: fmtCount(p.popularity.downloads),
     downloadsN: p.popularity.downloads ?? 0,
     inUse,
@@ -956,6 +984,8 @@ function build(
     worksWith: okList,
     worksRange: rangeOf(okList),
     oneLiner,
+    tagline,
+    line: tagline ?? oneLiner,
     descSoon: !summary && !p.about.githubDescription && !p.about.manifestDescription,
     description: summary ? [summary.does, summary.pain] : null,
     version: p.install?.version ?? "",
@@ -1063,6 +1093,7 @@ function inRepo(url: string | null | undefined, repo: string): boolean {
 export function allPlugins(): Plugin[] {
   if (cache) return cache;
   const summaries = loadSummaries();
+  const taglines = loadTaglines();
   const reqs = loadRequirements();
   const phrases = loadPhrases();
   const usage = loadUsage(`${ROOT}census/history`);
@@ -1071,7 +1102,14 @@ export function allPlugins(): Plugin[] {
     const f = `${GENERATED}${slug}/profile.json`;
     if (!existsSync(f)) continue;
     out.push(
-      build(JSON.parse(readFileSync(f, "utf8")) as PluginProfile, summaries, reqs, phrases, usage),
+      build(
+        JSON.parse(readFileSync(f, "utf8")) as PluginProfile,
+        summaries,
+        taglines,
+        reqs,
+        phrases,
+        usage,
+      ),
     );
   }
   out.sort((a, b) => b.downloadsN - a.downloadsN);

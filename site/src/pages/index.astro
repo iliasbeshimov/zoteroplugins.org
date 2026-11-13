@@ -4,13 +4,16 @@ import GradeTag from "../components/GradeTag.astro";
 import PluginIcon from "../components/PluginIcon.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import Stars from "../components/Stars.astro";
 import Tip from "../components/Tip.astro";
 import Base from "../layouts/Base.astro";
-import { CURRENT_ZOTERO_MAJOR, fmtDate, GRADES, type Plugin, shownPlugins } from "../lib/atlas.ts";
+import { CURRENT_ZOTERO_MAJOR, fmtDate, GRADES, type Plugin, ROOT, shownPlugins } from "../lib/atlas.ts";
 import { JOBS } from "@atlas/schema";
 import { siteLd } from "../lib/meta.ts";
 import { countWord, PACKS, packPath, resolvePack } from "../lib/packs.ts";
-import { USE_TIP } from "../lib/usage.ts";
+import { PICKS } from "../lib/picks.ts";
+import { RISING_DAYS, rising } from "../lib/rising.ts";
+import { loadGrowth, USE_TIP } from "../lib/usage.ts";
 
 const plugins = shownPlugins();
 const tries = ["cite in Word", "translate PDFs", "summarise a paper", "find duplicates"];
@@ -37,6 +40,16 @@ const fresh = plugins
   .filter((p) => p.currentOk && p.inUse != null && p.createdAt && asOf - Date.parse(p.createdAt) < NEW_DAYS * 86_400_000)
   .sort(byUse)
   .slice(0, 6);
+// Our picks: chosen by hand, each with a screenshot from its README (lib/picks.ts).
+const bySlug = new Map(plugins.map((p) => [p.slug, p]));
+const picks = PICKS.flatMap((k) => {
+  const plugin = bySlug.get(k.slug);
+  return plugin?.currentOk ? [{ ...k, plugin }] : [];
+});
+// Rising: the most new GitHub stars in six weeks, among plugins whose downloads grew too (lib/rising.ts).
+const shown = new Set([...picks.map((k) => k.slug), ...used.map((p) => p.slug)]);
+const risers = rising(plugins, loadGrowth(`${ROOT}census/history`, RISING_DAYS), shown, 6);
+const gradeTip = (p: Plugin) => `${p.gradeLong}, because ${p.because}.`;
 // Written about us. The link's utm_ parameters tell the article's site the visit came from here.
 const press = {
   name: "Citation Styler",
@@ -96,6 +109,143 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     <a class="read" href={pressLink}>Read the article</a>
   </aside>
 
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+    <symbol id="gh-mark" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" /></symbol>
+  </svg>
+  {
+    picks.length > 0 && (
+      <section class="band picks-home" aria-labelledby="picks-h">
+        <div class="uhead">
+          <div class="uh">
+            <h2 id="picks-h">Our picks</h2>
+            <p>Well made, well graded, and easy to see what they do. Chosen by us; nobody pays to be here.</p>
+          </div>
+        </div>
+        <div class="picks">
+          {picks.map((k) => (
+            <a href={`/p/${k.plugin.slug}`} class="pick">
+              <span class="shot">
+                <img src={k.shot} alt={k.alt} width={k.w} height={k.h} loading="lazy" decoding="async" />
+              </span>
+              <span class="pm">
+                <PluginIcon slug={k.plugin.slug} name={k.plugin.name} size={44} />
+                <span class="pt">
+                  <strong>{k.plugin.name}</strong>
+                  <span class="pl">{k.plugin.line}</span>
+                  <span class="meta">
+                    <GradeTag grade={k.plugin.grade} size="xs" />
+                    {k.plugin.inUseText && <span>{k.plugin.inUseText} in use</span>}
+                    {k.plugin.starsShort && <Stars n={k.plugin.starsShort} />}
+                  </span>
+                </span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section class="band" aria-labelledby="used-h">
+    <div class="uhead">
+      <div class="uh">
+        <h2 id="used-h">Most used</h2>
+        <p>Ranked by about how many people have each one installed. All {used.length} work with Zotero {cur}.</p>
+      </div>
+      <a href="/browse?sort=used">All plugins by use</a>
+    </div>
+    <ol class="ulist two">
+      {
+        used.map((p, i) => {
+          const nx = nextOf(p);
+          return (
+            <li class="line">
+              <span class="rk" aria-hidden="true">{i + 1}</span>
+              <PluginIcon slug={p.slug} name={p.name} size={52} />
+              <div class="lb">
+                <a href={`/p/${p.slug}`} class="ln">{p.name}</a>
+                <p class="ll">{p.line}</p>
+                <div class="meta">
+                  <Tip text={gradeTip(p)} class="gt"><GradeTag grade={p.grade} size="xs" /></Tip>
+                  <Tip text={USE_TIP} class="uu">
+                    <strong>{p.inUseText}</strong> in use
+                  </Tip>
+                  {p.starsShort && <Stars n={p.starsShort} tip />}
+                  {nextLabel && (
+                    <Tip text={nextTip[nx]} class={`nx nx-${nx}`}>
+                      {`Zotero ${nextLabel} `}
+                      <span aria-hidden="true" class="mk">{nx === "yes" ? "✓" : nx === "no" ? "✗" : "?"}</span>
+                      <span class="visually-hidden">{nx === "yes" ? "works" : nx === "no" ? "doesn't work yet" : "not known"}</span>
+                    </Tip>
+                  )}
+                </div>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </section>
+
+  {
+    risers.length > 0 && (
+      <section class="band" aria-labelledby="rise-h">
+        <div class="uhead">
+          <div class="uh">
+            <h2 id="rise-h">Rising</h2>
+            <p>The most new GitHub stars in the last six weeks, among plugins whose downloads grew too. Graded B or better.</p>
+          </div>
+        </div>
+        <ul class="ulist three">
+          {risers.map(({ plugin: p, stars }) => (
+            <li class="line">
+              <PluginIcon slug={p.slug} name={p.name} size={48} />
+              <div class="lb">
+                <a href={`/p/${p.slug}`} class="ln">{p.name}</a>
+                <p class="ll">{p.line}</p>
+                <div class="meta">
+                  <Tip text={gradeTip(p)} class="gt"><GradeTag grade={p.grade} size="xs" /></Tip>
+                  <Tip text={USE_TIP} class="uu">
+                    <strong>{p.inUseText}</strong> in use
+                  </Tip>
+                  <span class="up">+{stars.toLocaleString("en-GB")} stars</span>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section class="band" aria-labelledby="new-h">
+    <div class="uhead">
+      <div class="uh">
+        <h2 id="new-h">New and catching on</h2>
+        <p>Plugins first published in the last {NEW_DAYS} days that the most people have installed.</p>
+      </div>
+      <a href="/browse?sort=new">Newest first</a>
+    </div>
+    <ul class="ulist three">
+      {
+        fresh.map((p) => (
+          <li class="line">
+            <PluginIcon slug={p.slug} name={p.name} size={48} />
+            <div class="lb">
+              <a href={`/p/${p.slug}`} class="ln">{p.name}</a>
+              <p class="ll">{p.line}</p>
+              <div class="meta">
+                <Tip text={gradeTip(p)} class="gt"><GradeTag grade={p.grade} size="xs" /></Tip>
+                <span>{p.inUseText} in use · since {fmtDate(p.createdAt).replace(/ \d{4}$/, "")}</span>
+                {p.docsOnly && <span>docs in {p.docsOnly}</span>}
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
   <section class="packs-home" aria-labelledby="packs-h">
     <div class="uhead">
       <div class="uh">
@@ -123,55 +273,6 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     </div>
   </section>
 
-  <section class="used" aria-labelledby="used-h">
-    <div class="uhead">
-      <div class="uh">
-        <h2 id="used-h">The most-used plugins, and what we found</h2>
-        <p>Ranked by about how many people have each one installed. All {used.length} work with Zotero {cur}.</p>
-      </div>
-      <a href="/browse?sort=used">All plugins by use</a>
-    </div>
-    <ol class="ulist">
-      {
-        used.map((p, i) => {
-          const nx = nextOf(p);
-          return (
-            <li class="urow">
-              <span class="rk" aria-hidden="true">{i + 1}</span>
-              <span class="ug">
-                <GradeTag grade={p.grade} size="sm" />
-              </span>
-              <div class="ub">
-                <span class="unrow">
-                  <PluginIcon slug={p.slug} name={p.name} size={24} />
-                  <a href={`/p/${p.slug}`} class="un">{p.name}</a>
-                </span>
-                {(p.grade === "B" || p.grade === "C") && (
-                  <p class="uw">
-                    <span class="muted">{p.grade} because </span>
-                    {p.because}
-                  </p>
-                )}
-                <div class="uf">
-                  <Tip text={USE_TIP} class="uu">
-                    <strong>{p.inUseText}</strong> in use
-                  </Tip>
-                  {nextLabel && (
-                    <Tip text={nextTip[nx]} class={`nx nx-${nx}`}>
-                      {`Zotero ${nextLabel} `}
-                      <span aria-hidden="true" class="mk">{nx === "yes" ? "✓" : nx === "no" ? "✗" : "?"}</span>
-                      <span class="visually-hidden">{nx === "yes" ? "works" : nx === "no" ? "doesn't work yet" : "not known"}</span>
-                    </Tip>
-                  )}
-                </div>
-              </div>
-            </li>
-          );
-        })
-      }
-    </ol>
-  </section>
-
   <div class="wrap">
     <section>
       <div class="rule-head"><h2>Browse by job</h2><a href="/browse">All {plugins.length.toLocaleString("en-GB")} plugins</a></div>
@@ -192,32 +293,6 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
   </div>
 
   <Findings plugins={plugins} currentMajor={cur} />
-
-  <div class="wrap end">
-    <section>
-      <div class="rule-head">
-        <h2>New and catching on</h2>
-        <a href="/browse?sort=new">Newest first</a>
-      </div>
-      <p class="lede">Plugins first published in the last {NEW_DAYS} days that the most people have installed.</p>
-      <div class="fresh">
-        {
-          fresh.map((p) => (
-            <a href={`/p/${p.slug}`} class="fc">
-              <span class="fn">
-                <GradeTag grade={p.grade} size="xs" />
-                <strong>{p.name}</strong>
-              </span>
-              <span class="fd">{p.oneLiner}</span>
-              <span class="fm">
-                {[`${p.inUseText} in use`, `since ${fmtDate(p.createdAt).replace(/ \d{4}$/, "")}`, p.docsOnly ? `docs in ${p.docsOnly}` : ""].filter(Boolean).join(" · ")}
-              </span>
-            </a>
-          ))
-        }
-      </div>
-    </section>
-  </div>
   </main>
   <SiteFooter />
 </Base>
@@ -501,8 +576,8 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     line-height: 1.45;
     color: var(--ink-3);
   }
-  /* The most-used plugins: rank, grade, what it does and why, then use and the next Zotero. */
-  .used {
+  /* Picks, most used, rising and new: full-width sections lined up with the 1280px column. */
+  .band {
     max-width: 1280px;
     margin: 0 auto;
     padding: 48px var(--gutter) 8px;
@@ -537,142 +612,166 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     font-size: 14.5px;
     font-weight: 600;
   }
-  /* Two columns on wide screens, ranked down each column: 1–5, then 6–10. */
+  /* Our picks: three cards, each led by a screenshot from the plugin's README. */
+  .picks {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .pick {
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-1);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .pick:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .shot {
+    display: block;
+    aspect-ratio: 16 / 10;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .shot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .pm {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px 16px 16px;
+  }
+  .pt {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .pt strong {
+    font-size: 19px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .pl {
+    font-size: 15px;
+    line-height: 1.35;
+    color: var(--ink-2);
+  }
+  /* Lists: icon, name, one line, then grade, use and stars. Most used is ranked down two columns
+     (1–5, then 6–10); rising and new fill three. */
   .ulist {
     list-style: none;
     margin: 0;
     padding: 0;
     border-top: 2px solid var(--ink);
     display: grid;
+    column-gap: 40px;
+  }
+  .ulist.two {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: repeat(5, auto);
     grid-auto-flow: column;
-    column-gap: 48px;
   }
-  .urow {
-    display: grid;
-    grid-template-columns: 26px 52px minmax(0, 1fr);
-    gap: 4px 14px;
-    align-items: start;
+  .ulist.three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .line {
+    display: flex;
+    gap: 14px;
+    align-items: center;
     padding: 14px 0;
     border-bottom: 1px solid var(--line);
+    min-width: 0;
   }
   .rk {
-    padding-top: 3px;
+    flex: none;
+    width: 22px;
     text-align: right;
     font: 600 14px var(--font-mono);
     color: var(--ink-3);
   }
-  .ug {
-    display: flex;
-    padding-top: 2px;
-  }
-  .ub {
+  .lb {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
     min-width: 0;
+    flex: 1;
   }
-  .un {
-    font-size: 17.5px;
+  .ln {
+    font-size: 17px;
     font-weight: 700;
     color: var(--ink);
     text-decoration: none;
     overflow-wrap: anywhere;
   }
-  .un:hover {
+  .ln:hover {
     text-decoration: underline;
   }
-  .unrow {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    min-width: 0;
-  }
-  .uw {
-    margin: 0;
-    font-size: 14.5px;
-    line-height: 1.45;
-    color: var(--ink);
-  }
-  .uw .muted {
-    color: var(--ink-2);
-  }
-  .uf {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 4px 14px;
-    padding-top: 2px;
-  }
-  .uf :global(.uu) {
-    font-size: 14px;
-    color: var(--ink-2);
-    white-space: nowrap;
-  }
-  .uf :global(.uu strong) {
-    font: 700 15px var(--font-mono);
-    letter-spacing: -0.02em;
-    color: var(--ink);
-  }
-  .uf :global(.nx) {
-    font: 500 12.5px var(--font-mono);
-    white-space: nowrap;
-  }
-  .uf :global(.mk) {
-    font: 700 13px var(--font-sans);
-  }
-  .uf :global(.nx-yes) {
-    color: var(--few-fg);
-  }
-  .uf :global(.nx-no),
-  .uf :global(.nx-unknown) {
-    color: var(--ink-3);
-  }
-  /* New and catching on */
-  .fresh {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
-  }
-  .fc {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 16px 18px;
-    border-radius: 14px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    color: var(--ink);
-    text-decoration: none;
-  }
-  .fc:hover {
-    border-color: var(--ink);
-    color: var(--ink);
-  }
-  .fn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
-  }
-  .fn strong {
-    font-size: 16.5px;
-    overflow-wrap: anywhere;
-  }
-  .fd {
-    flex: 1;
-    font-size: 14px;
-    line-height: 1.45;
-    color: var(--ink-2);
+  /* One line when there's a tagline; a plugin without one (new since the last batch) shows its
+     summary's first sentence, cut at two lines. */
+  .ll,
+  .pl {
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  .fm {
-    font: 500 12.5px var(--font-mono);
+  .ll {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.35;
     color: var(--ink-2);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 12px;
+    padding-top: 4px;
+    font-size: 13.5px;
+    color: var(--ink-2);
+  }
+  .meta :global(.gt) {
+    display: inline-flex;
+  }
+  .meta :global(.uu) {
+    white-space: nowrap;
+  }
+  .meta :global(.uu strong) {
+    font: 700 14px var(--font-mono);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .meta :global(.nx) {
+    font: 500 12.5px var(--font-mono);
+    white-space: nowrap;
+  }
+  .meta :global(.mk) {
+    font: 700 13px var(--font-sans);
+  }
+  .meta :global(.nx-yes) {
+    color: var(--few-fg);
+  }
+  .meta :global(.nx-no),
+  .meta :global(.nx-unknown) {
+    color: var(--ink-3);
+  }
+  .up {
+    font: 600 12.5px var(--font-mono);
+    color: var(--few-fg);
+    white-space: nowrap;
   }
   @media (max-width: 960px) {
     .hero {
@@ -706,19 +805,17 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
       grid-template-columns: 1fr 1fr;
     }
     .wrap,
-    .used,
+    .band,
     .packs-home {
       padding-top: 28px;
       gap: 40px;
     }
+    .band,
     .packs-home {
       gap: 16px;
     }
     .pk-grid {
       grid-template-columns: 1fr 1fr;
-    }
-    .used {
-      gap: 16px;
     }
     .uh h2 {
       font-size: 28px;
@@ -726,25 +823,38 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     .uh p {
       font-size: 15.5px;
     }
-    .fresh {
-      grid-template-columns: 1fr;
-    }
-    .ulist {
+    .ulist.two,
+    .ulist.three {
       grid-template-columns: 1fr;
       grid-template-rows: none;
       grid-auto-flow: row;
+    }
+    /* Picks scroll sideways, one and a bit at a time. */
+    .picks {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: min(82%, 380px);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 6px;
+    }
+    .pick {
+      scroll-snap-align: start;
     }
   }
   @media (max-width: 720px) {
     .pk-grid {
       grid-template-columns: 1fr;
     }
-    .urow {
-      grid-template-columns: 44px minmax(0, 1fr);
-      gap: 6px 12px;
-    }
     .rk {
       display: none;
+    }
+    /* Five rows per list on phones. */
+    .ulist .line:nth-child(n + 6) {
+      display: none;
+    }
+    .ll {
+      font-size: 14.5px;
     }
   }
 </style>

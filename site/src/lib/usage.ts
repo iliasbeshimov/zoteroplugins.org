@@ -95,3 +95,54 @@ export function fmtUse(n: number): string {
 /** The tooltip that explains the number wherever it's shown. */
 export const USE_TIP =
   "An estimate of how many copies of Zotero have it: Zotero downloads each new version once for every copy that has the plugin, so we count the downloads of its most-downloaded recent release. Rounded. Plugins that update from outside GitHub count low.";
+
+/** Growth over the last `days` of the census history: new GitHub stars and new downloads. */
+export interface Growth {
+  stars: number;
+  downloads: number;
+}
+
+/**
+ * owner/repo in lower case → how many stars and downloads it gained between its last row on or
+ * before `days` before the newest date and its newest row. A repository without a row that old
+ * (new to the census, or history shorter than `days`) has no entry.
+ */
+export function loadGrowth(historyDir: string, days: number): Map<string, Growth> {
+  const out = new Map<string, Growth>();
+  if (!existsSync(historyDir)) return out;
+  const files = readdirSync(historyDir)
+    .filter((f) => /^\d{4}-\d{2}\.csv$/.test(f))
+    .sort()
+    .slice(-3);
+  // repo → [date, stars, downloads] rows.
+  const byRepo = new Map<string, [string, number, number][]>();
+  let latest = "";
+  for (const f of files) {
+    const [head, ...lines] = readFileSync(`${historyDir}/${f}`, "utf8").split(/\r?\n/);
+    const at = Object.fromEntries(splitCsv(head).map((n, i) => [n, i]));
+    if (!("repo" in at && "date" in at && "stars" in at && "downloads" in at)) continue;
+    for (const l of lines) {
+      if (!l) continue;
+      const r = splitCsv(l);
+      const stars = Number(r[at.stars]);
+      const dl = Number(r[at.downloads]);
+      if (!r[at.repo] || r[at.stars] === "" || !Number.isFinite(stars) || !Number.isFinite(dl))
+        continue;
+      const k = r[at.repo].toLowerCase();
+      const rows = byRepo.get(k) ?? [];
+      rows.push([r[at.date], stars, dl]);
+      byRepo.set(k, rows);
+      if (r[at.date] > latest) latest = r[at.date];
+    }
+  }
+  if (!latest) return out;
+  const cut = day(latest) - days * 86_400_000;
+  for (const [k, rows] of byRepo) {
+    rows.sort((a, b) => a[0].localeCompare(b[0]));
+    const now = rows[rows.length - 1];
+    const then = rows.filter((r) => day(r[0]) <= cut).pop();
+    if (!then) continue;
+    out.set(k, { stars: now[1] - then[1], downloads: now[2] - then[2] });
+  }
+  return out;
+}

@@ -1,0 +1,47 @@
+---
+/**
+ * A plugin's GitHub stars in a list: the GitHub mark and a short count. Uses the #gh-mark symbol,
+ * which the page defines once. Stars show interest, not quality, so they're never drawn as ★.
+ * `tip` adds the explanation on hover; leave it off inside a link.
+ */
+import Tip from "./Tip.astro";
+
+interface Props {
+  n: string;
+  tip?: boolean;
+}
+const { n, tip = false } = Astro.props;
+const TEXT =
+  "Stars on GitHub: people who starred the plugin's repository, many of them developers. A sign of interest, not a rating.";
+---
+
+{
+  tip ? (
+    <Tip text={TEXT} class="ghs">
+      <svg aria-hidden="true" viewBox="0 0 16 16" width="12" height="12"><use href="#gh-mark" /></svg>
+      {n}
+      <span class="visually-hidden"> stars on GitHub</span>
+    </Tip>
+  ) : (
+    <span class="ghs">
+      <svg aria-hidden="true" viewBox="0 0 16 16" width="12" height="12"><use href="#gh-mark" /></svg>
+      {n}
+      <span class="visually-hidden"> stars on GitHub</span>
+    </span>
+  )
+}
+
+<style>
+  :global(.ghs) {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    font: 500 13px var(--font-mono);
+    color: var(--ink-2);
+  }
+  :global(.ghs svg) {
+    flex: none;
+    fill: currentColor;
+  }
+</style>

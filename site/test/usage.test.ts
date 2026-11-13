@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { fmtUse, loadUsage } from "../src/lib/usage.ts";
+import { fmtUse, loadGrowth, loadUsage } from "../src/lib/usage.ts";
 
 const HEAD = "date,repo,verdict,stars,forks,downloads,latest_downloads,latest_tag";
 const row = (date: string, repo: string, tag: string, latest: number, total = latest * 10) =>
@@ -65,5 +65,38 @@ describe("in-use estimate", () => {
     expect(fmtUse(1_000)).toBe("1k");
     expect(fmtUse(840)).toBe("840");
     expect(fmtUse(87)).toBe("87");
+  });
+});
+
+describe("growth over the last weeks", () => {
+  const H = "date,repo,stars,downloads";
+  function hist(rows: string[]): string {
+    const dir = join(mkdtempSync(join(tmpdir(), "growth-")), "history");
+    mkdirSync(dir);
+    writeFileSync(
+      join(dir, "2026-10.csv"),
+      `${[H, ...rows.filter((r) => r.startsWith("2026-10"))].join("\n")}\n`,
+    );
+    writeFileSync(
+      join(dir, "2026-11.csv"),
+      `${[H, ...rows.filter((r) => r.startsWith("2026-11"))].join("\n")}\n`,
+    );
+    return dir;
+  }
+
+  it("counts from the last row at least that old to the newest", () => {
+    const dir = hist([
+      "2026-10-01,a/plugin,100,5000",
+      "2026-10-05,a/plugin,110,5200",
+      "2026-11-12,a/plugin,150,6000",
+      "2026-11-13,A/Plugin,160,6100",
+    ]);
+    // 42 days before 13 Nov is 2 Oct: the 1 Oct row is the base.
+    expect(loadGrowth(dir, 42).get("a/plugin")).toEqual({ stars: 60, downloads: 1100 });
+  });
+
+  it("leaves out repositories without a row that old", () => {
+    const dir = hist(["2026-11-01,new/one,5,10", "2026-11-13,new/one,50,90"]);
+    expect(loadGrowth(dir, 42).has("new/one")).toBe(false);
   });
 });
