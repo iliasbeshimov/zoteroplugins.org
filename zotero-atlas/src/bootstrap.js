@@ -528,6 +528,230 @@ function holdDecision({ entry, id, v, from, sha256, adv, pinned }) {
   return { hold: false };
 }
 
+/*
+ * Moving plugins to another computer. Export writes a file listing the installed plugins (and,
+ * if asked, their settings); import reads one, plans what to install from the catalogue's checked
+ * files, installs through the same hash-verified path as the Atlas window, then applies settings.
+ * The file stays on the user's computer: nothing about it is sent anywhere.
+ */
+
+/** Pref names that probably hold a credential; left out of an export unless the user asks. */
+const SECRET_PREF = /key|token|secret|passw|auth|cookie|session/i;
+function isSecretPref(name) {
+  return SECRET_PREF.test(String(name).split(".").pop());
+}
+
+/** Zotero's own pref branches: never exported, even when a plugin declares a default there. */
+function zoteroOwnPref(name) {
+  const n = String(name);
+  if (!n.startsWith("extensions.zotero.")) return false;
+  // extensions.zotero.<plugin>.<pref> belongs to the plugin; extensions.zotero.<pref> to Zotero.
+  return n.split(".").length <= 3;
+}
+
+/**
+ * The default prefs a plugin declares in its prefs.js: { name: value } from lines like
+ * pref("extensions.x.y", true);. Anything else in the file is ignored.
+ */
+function parsePrefsJs(text) {
+  const out = {};
+  const re = /^\s*(?:user_)?pref\(\s*(["'])((?:\\.|(?!\1).)+)\1\s*,\s*(.+?)\s*\)\s*;?\s*$/gm;
+  for (const m of String(text || "").matchAll(re)) {
+    const raw = m[3];
+    let value;
+    if (raw === "true" || raw === "false") value = raw === "true";
+    else if (/^-?\d+$/.test(raw)) value = Number(raw);
+    else {
+      try {
+        value = JSON.parse(raw.replace(/^'(.*)'$/s, (_s, x) => JSON.stringify(x)));
+      } catch (_e) {
+        continue;
+      }
+      if (typeof value !== "string") continue;
+    }
+    out[m[2]] = value;
+  }
+  return out;
+}
+
+/**
+ * The branches to read a plugin's settings from: each declared pref's parent ("extensions.x."),
+ * leaving out Zotero's own prefs and branches too short to belong to one plugin.
+ */
+function prefBranches(declared) {
+  const out = new Set();
+  for (const name of Object.keys(declared || {})) {
+    if (zoteroOwnPref(name)) continue;
+    const parts = name.split(".");
+    if (parts.length < 3) continue;
+    out.add(`${parts.slice(0, -1).join(".")}.`);
+  }
+  return [...out].sort();
+}
+
+/**
+ * Which of a plugin's current pref values go in the file: those it declares, and others under the
+ * same branches; never Zotero's own; secrets only with `secrets`. `values` is { name: value } read
+ * from those branches. Returns { prefs, leftOut } where leftOut counts secrets withheld.
+ */
+function prefsToExport(declared, values, { secrets = false } = {}) {
+  const branches = prefBranches(declared);
+  const prefs = {};
+  let leftOut = 0;
+  for (const name of Object.keys(values || {}).sort()) {
+    if (zoteroOwnPref(name)) continue;
+    const mine = Object.hasOwn(declared || {}, name) || branches.some((b) => name.startsWith(b));
+    if (!mine) continue;
+    const v = values[name];
+    if (!["string", "number", "boolean"].includes(typeof v)) continue;
+    if (!secrets && isSecretPref(name)) {
+      leftOut++;
+      continue;
+    }
+    prefs[name] = v;
+  }
+  return { prefs, leftOut };
+}
+
+/** "zotero-plugins-2026-11-13.json" for a Date. */
+function exportName(now) {
+  return `zotero-plugins-${new Date(now).toISOString().slice(0, 10)}.json`;
+}
+
+/**
+ * The export file. `plugins` are installed add-ons with their file's sha256; `byId` maps add-on
+ * IDs to catalogue entries; `settings` (optional) maps add-on IDs to prefs from prefsToExport.
+ */
+function exportDoc({ atlas, zotero, now, plugins, byId, settings }) {
+  const doc = {
+    atlas,
+    exportedAt: new Date(now).toISOString(),
+    zotero,
+    plugins: plugins.map((a) => {
+      const entry = byId[a.id];
+      const file =
+        entry && a.sha256 ? checkedFiles(entry).find((f) => f.sha256 === a.sha256) : null;
+      return {
+        id: a.id,
+        name: a.name,
+        version: a.version,
+        sha256: a.sha256 || null,
+        checked: Boolean(file && file.grade !== "–"),
+      };
+    }),
+  };
+  if (settings) {
+    doc.settings = {};
+    for (const a of plugins)
+      if (settings[a.id] && Object.keys(settings[a.id]).length) doc.settings[a.id] = settings[a.id];
+  }
+  return doc;
+}
+
+/** An export file read back, or null if it isn't one. */
+function readExport(text) {
+  let doc;
+  try {
+    doc = JSON.parse(text);
+  } catch (_e) {
+    return null;
+  }
+  if (!doc || typeof doc !== "object" || !Array.isArray(doc.plugins)) return null;
+  const plugins = doc.plugins
+    .filter((p) => p && typeof p.id === "string" && p.id && p.id !== ID)
+    .map((p) => ({
+      id: p.id,
+      name: typeof p.name === "string" && p.name ? p.name : p.id,
+      version: typeof p.version === "string" ? p.version : "",
+    }));
+  const settings = {};
+  if (doc.settings && typeof doc.settings === "object")
+    for (const [id, prefs] of Object.entries(doc.settings)) {
+      if (!prefs || typeof prefs !== "object") continue;
+      const ok = {};
+      for (const [k, v] of Object.entries(prefs))
+        if (!zoteroOwnPref(k) && ["string", "number", "boolean"].includes(typeof v)) ok[k] = v;
+      settings[id] = ok;
+    }
+  return { plugins, settings };
+}
+
+/**
+ * What import will do with each plugin in the file, on Zotero `zv`:
+ *   installed: already installed (any version);
+ *   install: the file's exact version, a checked file that works here;
+ *   newer: the exact version can't be installed, so the newest checked one that works here;
+ *   incompatible: the directory has checked files, but none for this Zotero;
+ *   unchecked: no file the directory analysed (Atlas only installs those), or blocked.
+ * Items to install carry `build`, `version` and `grade`.
+ */
+function planImport(plugins, { byId, installedIds, zv }) {
+  const have = new Set(installedIds || []);
+  return plugins.map((p) => {
+    const base = { id: p.id, name: p.name, wanted: p.version };
+    if (have.has(p.id)) return { ...base, action: "installed" };
+    const entry = byId[p.id];
+    if (!entry || entry.blocked) return { ...base, action: "unchecked" };
+    const files = checkedFiles(entry).filter((f) => f.build && f.grade !== "–");
+    if (!files.length) return { ...base, action: "unchecked" };
+    const exact = files.find(
+      (f) => p.version && Services.vc.compare(f.version, p.version) === 0 && worksWith(f.build, zv),
+    );
+    if (exact)
+      return {
+        ...base,
+        action: "install",
+        version: exact.version,
+        grade: exact.grade,
+        build: exact.build,
+        slug: entry.slug,
+      };
+    const works = files
+      .filter((f) => worksWith(f.build, zv))
+      .sort((a, b) => Services.vc.compare(b.version, a.version));
+    if (works.length)
+      return {
+        ...base,
+        action: "newer",
+        version: works[0].version,
+        grade: works[0].grade,
+        build: works[0].build,
+        slug: entry.slug,
+      };
+    return { ...base, action: "incompatible" };
+  });
+}
+
+/** The one line the import list shows for a planned item. */
+function planText(item) {
+  switch (item.action) {
+    case "install":
+      return `Installs ${item.version}, checked`;
+    case "newer":
+      return `Installs ${item.version}, the newest checked one`;
+    case "installed":
+      return "Already installed";
+    case "incompatible":
+      return "Doesn't work with this Zotero";
+    default:
+      return "Can't install: no checked file";
+  }
+}
+
+/** Settings to apply after import: only for plugins just installed, only prefs in the file. */
+function settingsToApply(plan, settings, installedNow) {
+  const done = new Set(installedNow || []);
+  const out = {};
+  for (const item of plan)
+    if (
+      (item.action === "install" || item.action === "newer") &&
+      done.has(item.id) &&
+      settings[item.id]
+    )
+      out[item.id] = settings[item.id];
+  return out;
+}
+
 const ago = (t) => Date.now() - (t || 0);
 
 /**

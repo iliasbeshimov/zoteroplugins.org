@@ -1554,6 +1554,149 @@ const run = async (name, fn) => {
       assert.equal(al.install.build.name, "x.xpi");
     },
   );
+  await run("parsePrefsJs: reads pref() lines of every value type", async () => {
+    const t = load();
+    const p = t.s.parsePrefsJs(
+      [
+        'pref("extensions.x.on", true);',
+        "pref('extensions.x.mode', 'fast');",
+        'pref("extensions.x.n", 42);',
+        'pref("extensions.x.s", "a \\"q\\" b");',
+        '// pref("extensions.x.commented", 1);',
+        "not a pref",
+      ].join("\n"),
+    );
+    assert.equal(p["extensions.x.on"], true);
+    assert.equal(p["extensions.x.mode"], "fast");
+    assert.equal(p["extensions.x.n"], 42);
+    assert.equal(p["extensions.x.s"], 'a "q" b');
+    assert.equal("extensions.x.commented" in p, false);
+  });
+
+  await run(
+    "prefsToExport: declared and same-branch prefs; never Zotero's; secrets only when asked",
+    async () => {
+      const t = load();
+      const declared = {
+        "extensions.x.on": true,
+        "extensions.zotero.x.mode": "a",
+        "extensions.zotero.lastViewed": 1,
+      };
+      const values = {
+        "extensions.x.on": false,
+        "extensions.x.extra": 3,
+        "extensions.x.apiKey": "sk-1",
+        "extensions.x.authToken": "t",
+        "extensions.zotero.x.mode": "b",
+        "extensions.zotero.lastViewed": 9,
+        "extensions.zotero.export.lastTranslator": "q",
+        "extensions.other.y": 1,
+      };
+      const { prefs, leftOut } = t.s.prefsToExport(declared, values);
+      assert.deepEqual(Object.keys(prefs).sort(), [
+        "extensions.x.extra",
+        "extensions.x.on",
+        "extensions.zotero.x.mode",
+      ]);
+      assert.equal(leftOut, 2);
+      const all = t.s.prefsToExport(declared, values, { secrets: true });
+      assert.equal(all.prefs["extensions.x.apiKey"], "sk-1");
+      assert.equal(all.leftOut, 0);
+      assert.equal(t.s.isSecretPref("extensions.x.password"), true);
+      assert.equal(
+        t.s.isSecretPref("extensions.keyboard.layout"),
+        false,
+        "only the last part counts",
+      );
+    },
+  );
+
+  await run("exportDoc / readExport: round trip, checked by hash, settings optional", async () => {
+    const t = load();
+    const e = entry({ file: build({ sha256: "b".repeat(64) }) });
+    const doc = t.s.exportDoc({
+      atlas: "1.2.0",
+      zotero: "10.0.7",
+      now: Date.UTC(2026, 10, 13),
+      plugins: [
+        { id: "x@example.org", name: "X", version: "1.2.0", sha256: "b".repeat(64) },
+        { id: "y@example.org", name: "Y", version: "0.1", sha256: "c".repeat(64) },
+      ],
+      byId: { "x@example.org": e },
+    });
+    assert.equal(doc.exportedAt, "2026-11-13T00:00:00.000Z");
+    assert.equal(doc.plugins[0].checked, true);
+    assert.equal(doc.plugins[1].checked, false);
+    assert.equal("settings" in doc, false);
+    assert.equal(t.s.exportName(Date.UTC(2026, 10, 13)), "zotero-plugins-2026-11-13.json");
+    const back = t.s.readExport(
+      JSON.stringify({
+        ...doc,
+        settings: {
+          "x@example.org": {
+            "extensions.x.on": true,
+            "extensions.zotero.lastViewed": 1,
+            "extensions.x.obj": {},
+          },
+        },
+      }),
+    );
+    assert.equal(back.plugins.length, 2);
+    assert.deepEqual(JSON.parse(JSON.stringify(back.settings)), {
+      "x@example.org": { "extensions.x.on": true },
+    });
+    assert.equal(t.s.readExport("not json"), null);
+    assert.equal(t.s.readExport('{"plugins":3}'), null);
+  });
+
+  await run(
+    "planImport: exact, newer, installed, incompatible, unchecked; settings only for what installed",
+    async () => {
+      const t = load();
+      const e = entry({
+        version: "1.2.0",
+        file: build({ sha256: "b".repeat(64) }),
+        previous: [{ version: "1.1.0", grade: "A", file: build({ sha256: "c".repeat(64) }) }],
+      });
+      const old = entry({
+        id: "old@example.org",
+        file: build({ min: "6.0", max: "6.*", supports: [6] }),
+        supports: [6],
+      });
+      const byId = {
+        "x@example.org": e,
+        "old@example.org": old,
+        "bad@example.org": entry({ id: "bad@example.org", blocked: "crashes" }),
+      };
+      const plan = t.s.planImport(
+        [
+          { id: "x@example.org", name: "X", version: "1.1.0" },
+          { id: "x@example.org", name: "X", version: "0.9.0" },
+          { id: "here@example.org", name: "H", version: "1" },
+          { id: "old@example.org", name: "O", version: "1.2.0" },
+          { id: "bad@example.org", name: "B", version: "1.2.0" },
+          { id: "none@example.org", name: "N", version: "1" },
+        ],
+        { byId, installedIds: ["here@example.org"], zv: "10.0.7" },
+      );
+      assert.deepEqual(
+        plan.map((p) => p.action),
+        ["install", "newer", "installed", "incompatible", "unchecked", "unchecked"],
+      );
+      assert.equal(plan[0].version, "1.1.0");
+      assert.equal(plan[1].version, "1.2.0");
+      assert.equal(t.s.planText(plan[0]), "Installs 1.1.0, checked");
+      assert.equal(t.s.planText(plan[1]), "Installs 1.2.0, the newest checked one");
+      assert.equal(t.s.planText(plan[3]), "Doesn't work with this Zotero");
+      assert.equal(t.s.planText(plan[5]), "Can't install: no checked file");
+      const s = t.s.settingsToApply(
+        plan,
+        { "x@example.org": { a: 1 }, "here@example.org": { b: 2 } },
+        ["x@example.org"],
+      );
+      assert.deepEqual(JSON.parse(JSON.stringify(s)), { "x@example.org": { a: 1 } });
+    },
+  );
 })().catch((e) => {
   console.error(e);
   process.exit(1);
