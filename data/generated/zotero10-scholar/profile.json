@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-11-12T11:33:24.064Z",
+ "generatedAt": "2026-11-13T11:18:48.796Z",
  "slug": "zotero10-scholar",
  "repo": "hanxiangmin/zotero10-scholar",
  "repoName": "hanxiangmin/zotero10-scholar",
@@ -29,7 +29,7 @@
  ],
  "about": {
   "githubDescription": "Zotero 10 学术插件：CCF A/B/C 会议与期刊评级、JCR 分区、影响因子 JIF、2025 中科院期刊分区/TOP；索书号显示与备份恢复。Offline academic journal and conference rankings; import your own data.",
-  "manifestDescription": "Zotero 10：元数据整理、DOI 优先与无 DOI 联网核对、CCF/JCR/2025 中科院分区；更新后展示修改对照。",
+  "manifestDescription": "Zotero 10：元数据整理、联网核对、CCF/JCR/中科院分区及手动下载全文 PDF；显示逐项处理结果。",
   "topics": [
    "academic",
    "bibliometrics",
@@ -64,16 +64,16 @@
   "stars": 3,
   "forks": 0,
   "contributors": 2,
-  "downloads": 331,
-  "latestDownloads": 314,
-  "releaseCount": 4,
+  "downloads": 342,
+  "latestDownloads": 3,
+  "releaseCount": 5,
   "createdAt": "2026-08-28T03:34:57Z"
  },
  "maintenance": {
   "status": "active",
-  "lastReleaseAt": "2026-09-05T09:15:53Z",
-  "lastCommitAt": "2026-09-05T09:14:28Z",
-  "lastActivityAt": "2026-09-05T09:15:53Z"
+  "lastReleaseAt": "2026-11-13T08:53:00Z",
+  "lastCommitAt": "2026-11-13T08:51:11Z",
+  "lastActivityAt": "2026-11-13T08:53:00Z"
  },
  "compatibility": {
   "supports": [
@@ -99,15 +99,15 @@
   "blockedByZotero": null
  },
  "install": {
-  "version": "3.1.4",
-  "tag": "v3.1.4",
-  "publishedAt": "2026-09-05T09:15:53Z",
+  "version": "3.2.0",
+  "tag": "v3.2.0",
+  "publishedAt": "2026-11-13T08:53:00Z",
   "prerelease": false,
   "asset": {
-   "name": "zotero10-scholar-3.1.4.xpi",
-   "url": "https://github.com/hanxiangmin/zotero10-scholar/releases/download/v3.1.4/zotero10-scholar-3.1.4.xpi",
-   "size": 1422300,
-   "sha256": "502a2dc0e247592e90c1070719f35d473f7cd21755db9e1f9e3a191cbf53816f"
+   "name": "zotero10-scholar-3.2.0.xpi",
+   "url": "https://github.com/hanxiangmin/zotero10-scholar/releases/download/v3.2.0/zotero10-scholar-3.2.0.xpi",
+   "size": 1427415,
+   "sha256": "3974ef243ef2275f336b5bcb55f31fa33a26e4cf267174fdf691df03484c72d2"
   },
   "otherAssets": [],
   "autoUpdates": false,
@@ -119,7 +119,7 @@
    "project": null,
    "label": "Doesn't update automatically: the update address is a placeholder",
    "check": {
-    "checkedAt": "2026-11-12T11:33:24.064Z",
+    "checkedAt": "2026-11-13T11:18:48.796Z",
     "status": 0,
     "result": "unreachable",
     "version": null,
@@ -130,7 +130,7 @@
     "note": "The update address doesn't respond, so Zotero can't update it"
    }
   },
-  "releaseFile": "zotero10-scholar/3.1.4.json"
+  "releaseFile": "zotero10-scholar/3.2.0.json"
  },
  "fork": null,
  "forks": [],
@@ -139,18 +139,18 @@
  "trust": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-11T11:17:15.991Z",
+  "computedAt": "2026-11-13T11:18:48.796Z",
   "appliesTo": {
    "slug": "zotero10-scholar",
-   "version": "3.1.4",
-   "sha256": "502a2dc0e247592e90c1070719f35d473f7cd21755db9e1f9e3a191cbf53816f"
+   "version": "3.2.0",
+   "sha256": "3974ef243ef2275f336b5bcb55f31fa33a26e4cf267174fdf691df03484c72d2"
   },
   "inputs": {
    "analyzerVersion": "0.13.1",
    "provenanceCheckerVersion": "lite-0.4",
    "hostsTableVersion": "2026.11.03",
    "currentZotero": "10.0.9",
-   "inputHash": "9851d312298f440111048344df652e11324a4ca6b537201c4096ac30fa28ea7c"
+   "inputHash": "3d5415e5da8347338440ca6ef6b0053cdab2f514c46ff00c4726a0915e0edae1"
   },
   "facets": {
    "sourceTransparency": {
@@ -176,13 +176,21 @@
      {
       "category": "scholarly-api",
       "hosts": [
-       "api.crossref.org"
+       "api.crossref.org",
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
       ]
      },
      {
       "category": "zotero",
       "hosts": [
-       "Zotero lookup services"
+       "Zotero lookup services",
+       "services.zotero.org"
+      ],
+      "unconfirmed": [
+       "services.zotero.org"
       ]
      }
     ],
@@ -212,8 +220,8 @@
    },
    "maintenance": {
     "status": "active",
-    "lastReleaseAt": "2026-09-05T09:15:53Z",
-    "lastCommitAt": "2026-09-05T09:14:28Z",
+    "lastReleaseAt": "2026-11-13T08:53:00Z",
+    "lastCommitAt": "2026-11-13T08:51:11Z",
     "concern": "none"
    },
    "compatibility": {
@@ -245,20 +253,6 @@
    "label": "low-concern",
    "ruleId": "OV-LOW",
    "drivers": []
-  },
-  "tested": {
-   "zotero": "10.0.3",
-   "testedAt": "2026-09-27T05:51:28Z",
-   "verdict": "as-described",
-   "exercised": {
-    "itemsSelected": 3,
-    "readerOpened": true,
-    "settingsPane": true,
-    "menuItems": 1,
-    "dialogs": 0
-   },
-   "contacted": [],
-   "unexpected": []
   }
  },
  "provenance": {
@@ -273,7 +267,8 @@
  "requirementsHints": {
   "aiServices": [],
   "otherServices": [
-   "Crossref"
+   "Crossref",
+   "DOI resolver"
   ],
   "storesCredentials": false,
   "localModels": false,
