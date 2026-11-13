@@ -3,7 +3,13 @@
 # Usage: commit-push.sh "<message>" <path>...   Prints changed=true|false to $GITHUB_OUTPUT.
 set -euo pipefail
 msg="$1"; shift
-git add -A -- "$@"
+# A path neither on disk nor tracked (data/submissions/queue once every queued repo is decided and
+# the submitted one is already in review) has nothing to commit, and `git add` would fail on it.
+paths=()
+for p in "$@"; do
+  if [ -e "$p" ] || [ -n "$(git ls-files -- "$p")" ]; then paths+=("$p"); fi
+done
+[ ${#paths[@]} -eq 0 ] || git add -A -- "${paths[@]}"
 if git diff --cached --quiet; then
   echo "changed=false" >> "${GITHUB_OUTPUT:-/dev/null}"
   exit 0
