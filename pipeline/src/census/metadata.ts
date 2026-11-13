@@ -48,6 +48,10 @@ export interface RepoFull {
   lastCommitAt: string | null;
   commitCount: number | null;
   releaseCount: number;
+  /**
+   * The newest releases (50, or 10 for a repo too big to ask more of), then, when none of them ships
+   * an .xpi, the older ones that do, up to the first that isn't a prerelease.
+   */
   releases: ReleaseInfo[];
   totalXpiDownloads: number;
   /**
@@ -128,14 +132,50 @@ async function batched<T>(
 const LIGHT_FIELDS = `
   nameWithOwner stargazerCount isFork
   releases(first: 10, orderBy: {field: CREATED_AT, direction: DESC}) {
+    pageInfo { hasNextPage endCursor }
     nodes { releaseAssets(first: 20) { nodes { name } } }
   }`;
+
+type NamesPage = {
+  pageInfo?: { hasNextPage: boolean; endCursor: string | null };
+  nodes: ({ releaseAssets: { nodes: ({ name: string } | null)[] } } | null)[];
+};
 
 interface LightRaw {
   nameWithOwner: string;
   stargazerCount: number;
   isFork: boolean;
-  releases: { nodes: ({ releaseAssets: { nodes: ({ name: string } | null)[] } } | null)[] } | null;
+  releases: NamesPage | null;
+}
+
+const namesHaveXpi = (page: NamesPage | null | undefined) =>
+  present(page?.nodes).some((rel) => present(rel.releaseAssets.nodes).some((a) => isXpi(a.name)));
+
+/** Pages of 100 releases this far back at most: past them, a repo isn't looked at further. */
+const DEEP_PAGES = 10;
+
+/**
+ * Whether an older release, past the first page, ships an .xpi. A repo whose main project is
+ * something else can release its Zotero add-on under its own tags, far behind the newest
+ * (Heptazero/obsidian-lexis: zotero-v0.2.2 is its 37th newest of 78 releases; jmiba's
+ * zotero-redisearch-rag: v0.6.1, about 90 back).
+ */
+async function xpiFurtherBack(gh: GitHub, nwo: string, cursor: string): Promise<boolean> {
+  const [owner, name] = nwo.split("/");
+  let after: string | null = cursor;
+  for (let page = 0; after && page < DEEP_PAGES; page++) {
+    const res: { data: { repository: { releases: NamesPage } | null } | null } = await gh.graphql(
+      `query { repository(owner: ${lit(owner ?? "")}, name: ${lit(name ?? "")}) {
+        releases(first: 100, after: ${lit(after)}, orderBy: {field: CREATED_AT, direction: DESC}) {
+          pageInfo { hasNextPage endCursor }
+          nodes { releaseAssets(first: 20) { nodes { name } } } } } }`,
+    );
+    const releases = res.data?.repository?.releases;
+    if (!releases) return false;
+    if (namesHaveXpi(releases)) return true;
+    after = releases.pageInfo?.hasNextPage ? releases.pageInfo.endCursor : null;
+  }
+  return false;
 }
 
 export async function fetchLight(
@@ -145,19 +185,35 @@ export async function fetchLight(
 ): Promise<Map<string, RepoLight | null>> {
   const raw = await batched<LightRaw>(gh, keys, 50, LIGHT_FIELDS, log, "pass A");
   const out = new Map<string, RepoLight | null>();
+  const deeper: [string, string, string][] = [];
   for (const [key, r] of raw) {
+    const hasXpi = namesHaveXpi(r?.releases);
+    const next = r?.releases?.pageInfo;
+    if (r && !hasXpi && next?.hasNextPage && next.endCursor)
+      deeper.push([key, r.nameWithOwner, next.endCursor]);
     out.set(
       key,
-      r && {
-        nameWithOwner: r.nameWithOwner,
-        stars: r.stargazerCount,
-        isFork: r.isFork,
-        hasXpi: present(r.releases?.nodes).some((rel) =>
-          present(rel.releaseAssets.nodes).some((a) => isXpi(a.name)),
-        ),
-      },
+      r && { nameWithOwner: r.nameWithOwner, stars: r.stargazerCount, isFork: r.isFork, hasXpi },
     );
   }
+  // No .xpi in the newest 10 releases, but there are more: look through the rest.
+  let found = 0;
+  for (const [key, nwo, cursor] of deeper) {
+    const light = out.get(key);
+    if (!light) continue;
+    try {
+      light.hasXpi = await xpiFurtherBack(gh, nwo, cursor);
+    } catch (error) {
+      // Measure it anyway: pass B reads every release.
+      light.hasXpi = true;
+      log(`  pass A: ${nwo}'s older releases unread, measured anyway: ${(error as Error).message}`);
+    }
+    if (light.hasXpi) found++;
+  }
+  if (deeper.length)
+    log(
+      `  pass A: ${deeper.length} repos with more releases looked at further back, ${found} with an .xpi`,
+    );
   return out;
 }
 
@@ -237,6 +293,8 @@ interface ReleasePage {
       pageInfo: { hasNextPage: boolean; endCursor: string | null };
       nodes: ({
         tagName: string;
+        publishedAt: string | null;
+        isPrerelease: boolean;
         isDraft: boolean;
         releaseAssets: { nodes: (AssetInfo | null)[] };
       } | null)[];
@@ -256,31 +314,52 @@ const manifestOnlyCount = (
       ),
   ).length;
 
-/** Remaining release pages: lifetime download totals, and releases that aren't versions. */
+/**
+ * Remaining release pages: lifetime download totals, and releases that aren't versions. With
+ * `findXpi` (none of the first page's releases ships one), also the releases further back that
+ * ship an .xpi, newest first, up to the first that isn't a prerelease: what pickRelease chooses
+ * from (jmiba/zotero-redisearch-rag's Zotero add-on is in v0.6.1, about 90 releases back).
+ */
 async function olderReleases(
   gh: GitHub,
   nwo: string,
   cursor: string,
-): Promise<{ downloads: number; manifestOnly: number }> {
+  findXpi: boolean,
+): Promise<{ downloads: number; manifestOnly: number; withXpi: ReleaseInfo[] }> {
   const [owner, name] = nwo.split("/");
   let downloads = 0;
   let manifestOnly = 0;
+  const withXpi: ReleaseInfo[] = [];
+  let looking = findXpi;
   let after: string | null = cursor;
   while (after) {
     const res: { data: ReleasePage | null } = await gh.graphql<ReleasePage>(
       `query { repository(owner: ${lit(owner ?? "")}, name: ${lit(name ?? "")}) {
         releases(first: 100, after: ${lit(after)}, orderBy: {field: CREATED_AT, direction: DESC}) {
           pageInfo { hasNextPage endCursor }
-          nodes { tagName isDraft releaseAssets(first: 20) { nodes { ${ASSET_FIELDS} } } } } } }`,
+          nodes { tagName publishedAt isPrerelease isDraft
+            releaseAssets(first: 20) { nodes { ${ASSET_FIELDS} } } } } } }`,
     );
     const page = res.data?.repository?.releases;
     if (!page) break;
     const nodes = present(page.nodes);
     downloads += xpiDownloads(nodes.filter((r) => !r.isDraft));
     manifestOnly += manifestOnlyCount(nodes);
+    for (const r of nodes) {
+      if (!looking || r.isDraft) continue;
+      const assets = present(r.releaseAssets.nodes);
+      if (!assets.some((a) => isXpi(a.name))) continue;
+      withXpi.push({
+        tag: r.tagName,
+        publishedAt: r.publishedAt,
+        prerelease: r.isPrerelease,
+        assets,
+      });
+      if (!r.isPrerelease) looking = false;
+    }
     after = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null;
   }
-  return { downloads, manifestOnly };
+  return { downloads, manifestOnly, withXpi };
 }
 
 export async function fetchFull(
@@ -298,10 +377,21 @@ export async function fetchFull(
     const releases = present(r.releases.nodes).filter((rel) => !rel.isDraft);
     let totalXpiDownloads = xpiDownloads(releases);
     let manifestOnly = manifestOnlyCount(releases);
+    // Kept apart from `releases`, the newest ones: only what pickRelease needs further back.
+    let furtherBack: ReleaseInfo[] = [];
     if (r.releases.pageInfo.hasNextPage && r.releases.pageInfo.endCursor) {
-      const older = await olderReleases(gh, r.nameWithOwner, r.releases.pageInfo.endCursor);
+      const findXpi = !releases.some((rel) =>
+        present(rel.releaseAssets.nodes).some((a) => isXpi(a.name)),
+      );
+      const older = await olderReleases(
+        gh,
+        r.nameWithOwner,
+        r.releases.pageInfo.endCursor,
+        findXpi,
+      );
       totalXpiDownloads += older.downloads;
       manifestOnly += older.manifestOnly;
+      furtherBack = older.withXpi;
     }
     out.set(key, {
       nameWithOwner: r.nameWithOwner,
@@ -334,12 +424,15 @@ export async function fetchFull(
         0,
         listedReleases(r.listed.totalCount, r.releases.totalCount) - manifestOnly,
       ),
-      releases: releases.map((rel) => ({
-        tag: rel.tagName,
-        publishedAt: rel.publishedAt,
-        prerelease: rel.isPrerelease,
-        assets: present(rel.releaseAssets.nodes),
-      })),
+      releases: [
+        ...releases.map((rel) => ({
+          tag: rel.tagName,
+          publishedAt: rel.publishedAt,
+          prerelease: rel.isPrerelease,
+          assets: present(rel.releaseAssets.nodes),
+        })),
+        ...furtherBack,
+      ],
       totalXpiDownloads,
     });
   }

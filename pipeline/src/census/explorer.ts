@@ -31,6 +31,7 @@ const LIST_GROUPS: SourceId[][] = [
   ["zotero-chinese"],
   ["sheet"],
   ["zotero-wiki-archive"],
+  ["zotdex"],
 ];
 
 export function explorerData(census: CensusFile, summaries?: SummariesFile) {

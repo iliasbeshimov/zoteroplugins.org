@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   compareVersions,
   installProblem,
@@ -9,7 +9,7 @@ import {
 import { parseCsv, toCsv } from "../src/census/csv.ts";
 import { fetchFull, fetchLight } from "../src/census/metadata.ts";
 import { maintenanceOf, newOnLists, pickRelease } from "../src/census/run.ts";
-import { repoKeyFromUrl } from "../src/census/sources.ts";
+import { curatedLists, repoKeyFromUrl } from "../src/census/sources.ts";
 import {
   parseInstallRdf,
   parseManifestJson,
@@ -567,6 +567,203 @@ describe("batched GitHub queries", () => {
     expect(full.get("huge/repo")?.releases[0]?.assets[0]?.name).toBe("p.xpi");
     expect(full.get("huge/repo")?.releaseCount).toBe(270);
     expect(full.get("huge/repo")?.issues).toEqual({ enabled: true, open: 3, closed: 41 });
+  });
+});
+
+describe("Zotero add-ons released far behind a repo's newest release", () => {
+  type Node = { tag: string; prerelease?: boolean; files: string[] };
+  const nodesOf = (nodes: Node[]) =>
+    nodes.map((n) => ({
+      tagName: n.tag,
+      publishedAt: "2026-09-03T00:00:00Z",
+      isPrerelease: n.prerelease ?? false,
+      isDraft: false,
+      releaseAssets: {
+        nodes: n.files.map((name) => ({
+          name,
+          size: 1,
+          downloadCount: 2,
+          updatedAt: "",
+          downloadUrl: `https://example.org/${n.tag}/${name}`,
+        })),
+      },
+    }));
+  const obsidian = (from: number, to: number): Node[] =>
+    Array.from({ length: to - from }, (_, i) => ({
+      tag: `1.17.${to - i}`,
+      files: ["main.js", "manifest.json", "styles.css"],
+    }));
+
+  it("pass A looks further back when the newest 10 releases ship no .xpi", async () => {
+    // Pages per repo, after each cursor: Heptazero/obsidian-lexis's Zotero add-on is its 37th
+    // newest release. none/here has 210 releases without one; small/repo has only 10.
+    const pages: Record<string, Record<string, { nodes: Node[]; next: string | null }>> = {
+      "heptazero/obsidian-lexis": {
+        "": { nodes: obsidian(68, 78), next: "c10" },
+        c10: {
+          nodes: [...obsidian(42, 68), { tag: "zotero-v0.2.2", files: ["lexis-zotero-0.2.2.xpi"] }],
+          next: "c110",
+        },
+      },
+      "none/here": {
+        "": { nodes: obsidian(200, 210), next: "n10" },
+        n10: { nodes: obsidian(100, 200), next: "n110" },
+        n110: { nodes: obsidian(0, 100), next: null },
+      },
+      "small/repo": { "": { nodes: obsidian(0, 10), next: null } },
+    };
+    const asked: string[] = [];
+    const page = (key: string, after: string) => {
+      const p = pages[key]?.[after];
+      if (!p) throw new Error(`unexpected page ${key} after ${after}`);
+      asked.push(`${key}@${after}`);
+      return {
+        pageInfo: { hasNextPage: p.next !== null, endCursor: p.next },
+        nodes: nodesOf(p.nodes),
+      };
+    };
+    const gh = {
+      graphql: async (query: string) => {
+        const data: Record<string, unknown> = {};
+        const after = query.match(/after: "([^"]+)"/)?.[1];
+        for (const m of query.matchAll(
+          /(r\d+: )?repository\(owner: "([^"]+)", name: "([^"]+)"\)/g,
+        )) {
+          const key = `${m[2]}/${m[3]}`.toLowerCase();
+          const releases = page(key, after ?? "");
+          if (after) return { data: { repository: { releases } }, errors: [] };
+          data[(m[1] ?? "").replace(": ", "")] = {
+            nameWithOwner: key,
+            stargazerCount: 0,
+            isFork: false,
+            releases,
+          };
+        }
+        return { data, errors: [] };
+      },
+    } as unknown as GitHub;
+    const light = await fetchLight(gh, Object.keys(pages), () => {});
+    expect(light.get("heptazero/obsidian-lexis")?.hasXpi).toBe(true);
+    expect(light.get("none/here")?.hasXpi).toBe(false);
+    expect(light.get("small/repo")?.hasXpi).toBe(false);
+    expect(asked.filter((a) => !a.endsWith("@"))).toEqual([
+      "heptazero/obsidian-lexis@c10",
+      "none/here@n10",
+      "none/here@n110",
+    ]);
+  });
+
+  const full = (name: string, nodes: Node[], next: string | null) => ({
+    nameWithOwner: name,
+    url: `https://github.com/${name}`,
+    stargazerCount: 1,
+    forkCount: 0,
+    isFork: false,
+    isArchived: false,
+    pushedAt: null,
+    createdAt: "2026-01-01T00:00:00Z",
+    description: null,
+    homepageUrl: null,
+    parent: null,
+    licenseInfo: null,
+    repositoryTopics: { nodes: [] },
+    defaultBranchRef: null,
+    listed: { totalCount: 95 },
+    releases: {
+      totalCount: 95,
+      pageInfo: { hasNextPage: next !== null, endCursor: next },
+      nodes: nodesOf(nodes),
+    },
+  });
+  // Further back, for both repos: a prerelease and two stable releases with an .xpi.
+  const older: Node[] = [
+    { tag: "0.9.0", files: ["main.js"] },
+    { tag: "v0.7.0-beta", prerelease: true, files: ["companion.xpi"] },
+    { tag: "v0.6.1", files: ["companion.xpi", "main.js"] },
+    { tag: "v0.5.0", files: ["companion.xpi"] },
+  ];
+  const fullGitHub = (first: Record<string, Node[]>) =>
+    ({
+      graphql: async (query: string) => {
+        if (query.includes("after:"))
+          return {
+            data: {
+              repository: {
+                releases: {
+                  pageInfo: { hasNextPage: false, endCursor: null },
+                  nodes: nodesOf(older),
+                },
+              },
+            },
+            errors: [],
+          };
+        const data: Record<string, unknown> = {};
+        for (const m of query.matchAll(
+          /(r\d+): repository\(owner: "([^"]+)", name: "([^"]+)"\)/g,
+        )) {
+          const key = `${m[2]}/${m[3]}`;
+          data[m[1] as string] = full(key, first[key] ?? [], "p50");
+        }
+        return { data, errors: [] };
+      },
+    }) as unknown as GitHub;
+
+  it("pass B keeps the older releases with an .xpi when none of the newest 50 has one", async () => {
+    const gh = fullGitHub({ "jmiba/zotero-redisearch-rag": obsidian(45, 50) });
+    const repo = (await fetchFull(gh, ["jmiba/zotero-redisearch-rag"], () => {})).get(
+      "jmiba/zotero-redisearch-rag",
+    );
+    // The newest releases first, then the older ones with an .xpi down to the first stable one.
+    expect(repo?.releases.map((r) => r.tag)).toEqual([
+      ...obsidian(45, 50).map((n) => n.tag),
+      "v0.7.0-beta",
+      "v0.6.1",
+    ]);
+    expect(pickRelease(repo?.releases ?? [])?.tag).toBe("v0.6.1");
+    // Downloads still count every release's .xpi files.
+    expect(repo?.totalXpiDownloads).toBe(6);
+  });
+
+  it("pass B leaves a repo whose newest releases ship an .xpi as it was", async () => {
+    const newest: Node[] = [{ tag: "v2.0.0", files: ["plugin.xpi"] }, ...obsidian(46, 50)];
+    const gh = fullGitHub({ "a/plugin": newest });
+    const repo = (await fetchFull(gh, ["a/plugin"], () => {})).get("a/plugin");
+    expect(repo?.releases.map((r) => r.tag)).toEqual(newest.map((n) => n.tag));
+    expect(repo?.totalXpiDownloads).toBe(8);
+  });
+});
+
+describe("ZotDex, a curated list", () => {
+  afterEach(() => vi.unstubAllGlobals());
+  const gh = { rest: async () => ({ status: 200, data: { tree: [] } }) } as unknown as GitHub;
+  const answer = (zotdex: Response) =>
+    vi.stubGlobal("fetch", async (url: string) =>
+      url.includes("zotdex.jmgirard.com") ? zotdex : new Response('repo: "a/b"'),
+    );
+
+  it("names each repository its plugins come from, once", async () => {
+    answer(
+      Response.json({
+        plugins: [
+          { repoUrl: "https://github.com/Heptazero/obsidian-lexis" },
+          { repoUrl: "https://github.com/heptazero/obsidian-lexis/" },
+          { repoUrl: "https://gitlab.com/someone/plugin" },
+          { id: "no-repo@example.org" },
+        ],
+      }),
+    );
+    const lists = await curatedLists(gh, "test", new Map());
+    expect(lists.find((l) => l.source === "zotdex")?.repos).toEqual(["heptazero/obsidian-lexis"]);
+    expect(lists.find((l) => l.source === "zotero-chinese")?.repos).toEqual(["a/b"]);
+  });
+
+  it("leaves the list empty, not the census stopped, when ZotDex can't be read", async () => {
+    answer(new Response("gone", { status: 404 }));
+    const lists = await curatedLists(gh, "test", new Map());
+    const zotdex = lists.find((l) => l.source === "zotdex");
+    expect(zotdex?.repos).toEqual([]);
+    expect(zotdex?.query).toMatch(/unavailable: .*HTTP 404/);
+    expect(lists.find((l) => l.source === "zotero-chinese")?.repos).toEqual(["a/b"]);
   });
 });
 

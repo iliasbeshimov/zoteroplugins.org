@@ -28,6 +28,7 @@ export const CURATED_SOURCES: SourceId[] = [
   "zotero-chinese",
   "sheet",
   "zotero-wiki-archive",
+  "zotdex",
 ];
 
 export type Verdict =

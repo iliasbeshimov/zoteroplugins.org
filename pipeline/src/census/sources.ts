@@ -13,6 +13,7 @@ export const SOURCE_IDS = [
   "zotero-chinese",
   "sheet",
   "zotero-wiki-archive",
+  "zotdex",
   "topic",
   "name-or-description",
   "code-search",
@@ -62,6 +63,9 @@ const ZOTERO_CHINESE_URL =
   "https://raw.githubusercontent.com/zotero-chinese/zotero-plugins/main/src/plugins.ts";
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/1U145pN0sCTudY5GqWpgcw3DmvE91lsB6roBDTLlXgpU/export?format=csv&gid=1815139709";
+// ZotDex (github.com/jmgirard/zotdex), a community index of Zotero plugins: entries added on
+// request and by its bot. Its facts are CC0; only the repository addresses are read.
+const ZOTDEX_URL = "https://zotdex.jmgirard.com/v1/plugins.json";
 // Zotero's own community plugin list, last archived before it was replaced (2026-04-14).
 const ZOTERO_WIKI_ARCHIVE_URL =
   "https://web.archive.org/web/20260414000000id_/https://www.zotero.org/support/plugins";
@@ -207,10 +211,25 @@ export interface Listed {
 
 const isRepoKey = (key: string) => /^[a-z0-9-]+\/[a-z0-9._-]+$/.test(key);
 
+/** ZotDex's repositories. Someone else's site: a failure leaves the list empty for this run. */
+async function zotdexRepos(userAgent: string): Promise<Pick<Listed, "query" | "repos">> {
+  const query = "zotdex.jmgirard.com/v1/plugins.json";
+  try {
+    const { plugins } = JSON.parse(await getText(ZOTDEX_URL, userAgent)) as {
+      plugins?: { repoUrl?: string }[];
+    };
+    if (!Array.isArray(plugins)) throw new Error("no plugins array");
+    const keys = plugins.map((p) => repoKeyFromUrl(p.repoUrl ?? ""));
+    return { query, repos: [...new Set(keys.filter((k): k is string => k !== null))] };
+  } catch (error) {
+    return { query: `${query} (unavailable: ${(error as Error).message})`, repos: [] };
+  }
+}
+
 /**
  * The curated lists new plugins appear on first: syt2's add-on market (its published list, and the
- * addons/ folder its pull requests add to before the list is rebuilt) and zotero-chinese's list.
- * Two requests besides addon_infos.json, so nightly refresh runs read them too.
+ * addons/ folder its pull requests add to before the list is rebuilt), zotero-chinese's list and
+ * ZotDex. Three requests besides addon_infos.json, so nightly refresh runs read them too.
  */
 export async function curatedLists(
   gh: GitHub,
@@ -235,6 +254,7 @@ export async function curatedLists(
       query: "zotero-chinese/zotero-plugins src/plugins.ts",
       repos: chinese,
     },
+    { source: "zotdex", ...(await zotdexRepos(userAgent)) },
   ];
   return lists.map((l) => ({ ...l, repos: l.repos.filter(isRepoKey) }));
 }
