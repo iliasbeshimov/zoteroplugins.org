@@ -21,6 +21,10 @@
  *   a blue dot on the Atlas button (never the red one, which is kept for things that need you)
  *   and a card in "Your plugins" with five stars. At most three plugins at a time, at most once
  *   a month, each plugin asked about once, and no notice. Nothing is sent until you click Post.
+ * - it moves your plugins to another computer: "Move to another computer" saves a list of them
+ *   (and, if you ask, their settings) to a file you choose; opened in Atlas on the other
+ *   computer, it installs the checked files for those plugins and sets those settings. The file
+ *   is only read and written on your computer; nothing about it is sent.
  *
  * What it contacts:
  * - raw.githubusercontent.com, the directory's public repository: the catalogue (catalog.json)
@@ -751,6 +755,233 @@ function settingsToApply(plan, settings, installedNow) {
       out[item.id] = settings[item.id];
   return out;
 }
+
+/** The prefs.js inside an installed plugin's .xpi, as { name: value }; {} if there is none. */
+function declaredPrefs(file) {
+  if (!file) return {};
+  const Cc = Components.classes;
+  const Ci = Components.interfaces;
+  const zip = Cc["@mozilla.org/libjar/zip-reader;1"].createInstance(Ci.nsIZipReader);
+  try {
+    zip.open(file);
+    if (!zip.hasEntry("prefs.js")) return {};
+    const sis = Cc["@mozilla.org/scriptableinputstream;1"].createInstance(
+      Ci.nsIScriptableInputStream,
+    );
+    sis.init(zip.getInputStream("prefs.js"));
+    let raw = "";
+    try {
+      raw = sis.readBytes(sis.available());
+    } finally {
+      sis.close();
+    }
+    let text = raw;
+    try {
+      text = decodeURIComponent(escape(raw)); // the bytes are UTF-8
+    } catch (_e) {
+      // Not UTF-8: the names are ASCII anyway.
+    }
+    return parsePrefsJs(text);
+  } catch (e) {
+    Zotero.debug(`Zotero Atlas: couldn't read prefs.js from ${file.path}: ${e}`);
+    return {};
+  } finally {
+    try {
+      zip.close();
+    } catch (_e) {
+      // never opened
+    }
+  }
+}
+
+/** Current values of these prefs and of every pref under these branches. */
+function prefValues(branches, names) {
+  const P = Services.prefs;
+  const all = new Set(names || []);
+  for (const b of branches) for (const n of P.getChildList(b)) all.add(n);
+  const out = {};
+  for (const n of all) {
+    try {
+      const t = P.getPrefType(n);
+      if (t === P.PREF_BOOL) out[n] = P.getBoolPref(n);
+      else if (t === P.PREF_INT) out[n] = P.getIntPref(n);
+      else if (t === P.PREF_STRING) out[n] = P.getStringPref(n);
+    } catch (_e) {
+      // unreadable: left out
+    }
+  }
+  return out;
+}
+
+/** A plugin's settings as they would be exported, read from its file and the current prefs. */
+function pluginSettings(file, secrets) {
+  const declared = declaredPrefs(file);
+  return prefsToExport(declared, prefValues(prefBranches(declared), Object.keys(declared)), {
+    secrets,
+  });
+}
+
+/**
+ * Set prefs from an import file, but only those the installed plugin owns (`declared` is its
+ * prefs.js; those and others under the same branches), each only as the type it already has,
+ * never Zotero's own. Returns how many were set.
+ */
+function applySettings(declared, prefs) {
+  const own = prefsToExport(declared, prefs, { secrets: true }).prefs;
+  const P = Services.prefs;
+  let n = 0;
+  for (const [k, v] of Object.entries(own)) {
+    try {
+      const t = P.getPrefType(k);
+      if (typeof v === "boolean" && (t === P.PREF_INVALID || t === P.PREF_BOOL))
+        P.setBoolPref(k, v);
+      else if (Number.isInteger(v) && (t === P.PREF_INVALID || t === P.PREF_INT))
+        P.setIntPref(k, v);
+      else if (typeof v === "string" && (t === P.PREF_INVALID || t === P.PREF_STRING))
+        P.setStringPref(k, v);
+      else continue;
+      n++;
+    } catch (e) {
+      Zotero.debug(`Zotero Atlas: couldn't set ${k}: ${e}`);
+    }
+  }
+  return n;
+}
+
+async function catalogById() {
+  const byId = {};
+  let data = null;
+  try {
+    data = await fetchCatalog(false);
+  } catch (_e) {
+    data = catalog?.data || null;
+  }
+  for (const p of data?.plugins || []) if (p.id && !byId[p.id]) byId[p.id] = p;
+  return byId;
+}
+
+function filePicker() {
+  return ChromeUtils.importESModule("chrome://zotero/content/modules/filePicker.mjs").FilePicker;
+}
+
+/** Moving your plugins to another computer: a file you save and open; nothing is sent. */
+const move = {
+  /** The export file for what's installed now: { doc, plugins, settings, leftOut }. */
+  async build({ settings: withSettings = false, secrets = false } = {}) {
+    const byId = await catalogById();
+    const addons = await installed();
+    const hashes = state().hashes || {};
+    const plugins = addons.map((a) => ({ ...a, sha256: installedSha256(a, hashes) }));
+    saveState({ hashes });
+    let settings = null;
+    let leftOut = 0;
+    let count = 0;
+    if (withSettings) {
+      settings = {};
+      for (const a of addons) {
+        const r = pluginSettings(a.file, secrets);
+        settings[a.id] = r.prefs;
+        leftOut += r.leftOut;
+        count += Object.keys(r.prefs).length;
+      }
+    }
+    const doc = exportDoc({
+      atlas: version,
+      zotero: Zotero.version,
+      now: Date.now(),
+      plugins,
+      byId,
+      settings,
+    });
+    return { doc, plugins: doc.plugins.length, settings: count, leftOut };
+  },
+  /** Write the export to `path`. */
+  async write(path, opts) {
+    const r = await move.build(opts);
+    await Zotero.File.putContentsAsync(path, `${JSON.stringify(r.doc, null, 2)}\n`);
+    return { ...r, path };
+  },
+  /** Ask where to save; null if you cancel. */
+  async pickSave(win) {
+    const FP = filePicker();
+    const fp = new FP();
+    fp.init(win, "Save the list of your plugins", fp.modeSave);
+    fp.appendFilter("JSON", "*.json");
+    fp.defaultString = exportName(Date.now());
+    fp.defaultExtension = "json";
+    const rv = await fp.show();
+    return rv === fp.returnOK || rv === fp.returnReplace ? fp.file : null;
+  },
+  /** Ask which file to open; null if you cancel. */
+  async pickOpen(win) {
+    const FP = filePicker();
+    const fp = new FP();
+    fp.init(win, "Open a list of plugins", fp.modeOpen);
+    fp.appendFilter("JSON", "*.json");
+    const rv = await fp.show();
+    return rv === fp.returnOK ? fp.file : null;
+  },
+  /** Read an export file and plan the import: { plan, settings, exportedAt } or { error }. */
+  async read(path) {
+    let text;
+    try {
+      text = await Zotero.File.getContentsAsync(path);
+    } catch (_e) {
+      return { error: "That file couldn't be read." };
+    }
+    const doc = readExport(text);
+    if (!doc) return { error: "That file isn't a list of plugins saved by Zotero Atlas." };
+    const seen = new Set();
+    const plugins = doc.plugins.filter((p) => !seen.has(p.id) && seen.add(p.id));
+    const byId = await catalogById();
+    const installedIds = (await installed()).map((a) => a.id);
+    const plan = planImport(plugins, { byId, installedIds, zv: Zotero.version }).map((p) => ({
+      ...p,
+      text: planText(p),
+      currentGrade: byId[p.id]?.grade ?? null,
+      page: byId[p.id]?.page ?? null,
+    }));
+    let exportedAt = null;
+    try {
+      exportedAt = JSON.parse(text).exportedAt || null;
+    } catch (_e) {
+      // readExport already parsed it
+    }
+    return { plan, settings: doc.settings, exportedAt };
+  },
+  /**
+   * Install what the plan says, one at a time through the hash-checked installer, then apply the
+   * file's settings to the plugins just installed. `onEach(item, result)` reports progress.
+   */
+  async install(plan, settings, onEach) {
+    const done = [];
+    const results = [];
+    for (const item of plan) {
+      if (item.action !== "install" && item.action !== "newer") continue;
+      const r = await installFile({
+        id: item.id,
+        name: item.name,
+        version: item.version,
+        build: item.build,
+      });
+      if (r.ok) done.push(item.id);
+      results.push({ id: item.id, ...r });
+      onEach?.(item, r);
+    }
+    let applied = 0;
+    const apply = settingsToApply(plan, settings || {}, done);
+    for (const [id, prefs] of Object.entries(apply)) {
+      try {
+        const addon = await addonManager().getAddonByID(id);
+        if (addon) applied += applySettings(declaredPrefs(addonFile(addon)), prefs);
+      } catch (e) {
+        Zotero.debug(`Zotero Atlas: couldn't apply ${id}'s settings: ${e}`);
+      }
+    }
+    refreshSoon();
+    return { installed: done.length, failed: results.filter((r) => !r.ok), applied };
+  },
+};
 
 const ago = (t) => Date.now() - (t || 0);
 
@@ -2166,6 +2397,7 @@ const Atlas = {
   ack,
   dismiss,
   decide,
+  move,
   subscribe(fn) {
     listeners.add(fn);
     return () => listeners.delete(fn);

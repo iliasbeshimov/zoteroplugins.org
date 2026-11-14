@@ -687,6 +687,112 @@
     );
   }
 
+  // -------------------------------------------------------------------------------------------
+  // Move to another computer: save a list here, open it there
+
+  let movePlan = null; // { plan, settings, exportedAt } from the file opened
+
+  function say(id, text, bad) {
+    const o = $(id);
+    o.textContent = text || "";
+    o.hidden = !text;
+    o.classList.toggle("bad", Boolean(bad));
+  }
+
+  function syncSecrets() {
+    const on = $("move-settings").checked;
+    $("move-secrets").disabled = !on;
+    if (!on) $("move-secrets").checked = false;
+  }
+
+  async function exportTo(path) {
+    const opts = { settings: $("move-settings").checked, secrets: $("move-secrets").checked };
+    try {
+      const r = await A.move.write(path, opts);
+      let t = `Saved ${r.plugins} plugin${r.plugins === 1 ? "" : "s"} to ${r.path}.`;
+      if (opts.settings) t += ` ${r.settings} setting${r.settings === 1 ? "" : "s"} included.`;
+      if (r.leftOut)
+        t += ` ${r.leftOut} that look${r.leftOut === 1 ? "s" : ""} like a key or password left out.`;
+      say("move-export-out", t);
+      return r;
+    } catch (e) {
+      say("move-export-out", `The file couldn't be saved: ${e.message || e}`, true);
+      return null;
+    }
+  }
+
+  async function importFrom(path) {
+    const r = await A.move.read(path);
+    if (r.error) {
+      movePlan = null;
+      say("move-import-out", r.error, true);
+    } else {
+      movePlan = r;
+      say("move-import-out", `${path}${r.exportedAt ? `, saved ${date(r.exportedAt)}` : ""}`);
+    }
+    renderPlan();
+    return r;
+  }
+
+  function renderPlan() {
+    const box = $("move-plan");
+    box.textContent = "";
+    if (!movePlan) return;
+    const plan = movePlan.plan;
+    const go = plan.filter((p) => p.action === "install" || p.action === "newer");
+    const s = el("div", "block plan");
+    const list = el("div", "box");
+    const rows = new Map();
+    for (const p of plan) {
+      const r = el("div", `prow${go.includes(p) ? " go" : ""}`);
+      const top = el("div", "ptop");
+      top.append(gradePill(p.grade ?? p.currentGrade ?? "–", Boolean(p.page)));
+      top.append(p.page ? link(p.name, p.page) : el("b", "", p.name));
+      if (p.wanted) top.append(el("span", "ver", p.wanted));
+      top.append(el("span", "ptext", p.text));
+      r.append(top);
+      rows.set(p.id, r);
+      list.append(r);
+    }
+    s.append(list);
+    const act = el("div", "plan-act");
+    const note = el("span", "mnote");
+    if (go.length) {
+      const withSettings = go.some((p) => Object.keys(movePlan.settings?.[p.id] || {}).length);
+      note.textContent = withSettings ? "Then it sets their settings from the file." : "";
+      const b = button(
+        `Install ${go.length} plugin${go.length === 1 ? "" : "s"}`,
+        "primary",
+        async () => {
+          for (const p of go) rows.get(p.id).querySelector(".ptext").textContent = "Waiting…";
+          note.textContent = "Installing…";
+          const r = await A.move.install(plan, movePlan.settings, (item, res) => {
+            const row = rows.get(item.id);
+            row.classList.remove("go");
+            row.classList.add(res.ok ? "ok" : "bad");
+            row.querySelector(".ptext").textContent = res.ok
+              ? `Installed ${item.version}`
+              : res.message;
+          });
+          b.remove();
+          let t = `${r.installed} installed.`;
+          if (r.failed.length) t += ` ${r.failed.length} couldn't be installed.`;
+          t += r.applied
+            ? ` ${r.applied} setting${r.applied === 1 ? "" : "s"} set: restart Zotero so the plugins start with them.`
+            : " No restart needed.";
+          note.textContent = t;
+          await refreshInstalled();
+        },
+      );
+      act.append(b, note);
+    } else {
+      note.textContent = "Nothing to install here.";
+      act.append(note);
+    }
+    s.append(act);
+    box.append(s);
+  }
+
   async function refreshInstalled(force) {
     rv = await A.review(Boolean(force));
     show();
@@ -714,14 +820,15 @@
   }
 
   function showTab(which) {
-    tab = which === "mine" ? "mine" : "find";
-    $("find").hidden = tab !== "find";
-    $("mine").hidden = tab !== "mine";
-    $("tab-find").classList.toggle("on", tab === "find");
-    $("tab-mine").classList.toggle("on", tab === "mine");
+    tab = ["mine", "move"].includes(which) ? which : "find";
+    for (const t of ["find", "mine", "move"]) {
+      $(t).hidden = tab !== t;
+      $(`tab-${t}`).classList.toggle("on", tab === t);
+    }
     if (tab === "mine" && rv) A.ack();
   }
   window.zoteroAtlasShow = showTab;
+  window.zoteroAtlasMove = { exportTo, importFrom };
 
   window.addEventListener("load", () => {
     for (const [slug, title] of JOBS) {
@@ -733,6 +840,32 @@
     $("fit-label").textContent = `Works with Zotero ${zv}`;
     $("tab-find").addEventListener("click", () => showTab("find"));
     $("tab-mine").addEventListener("click", () => showTab("mine"));
+    $("tab-move").addEventListener("click", () => showTab("move"));
+    $("move-settings").addEventListener("change", syncSecrets);
+    $("move-export").addEventListener("click", async () => {
+      const b = $("move-export");
+      b.disabled = true;
+      try {
+        const path = await A.move.pickSave(window);
+        if (path) await exportTo(path);
+      } catch (e) {
+        say("move-export-out", String(e.message || e), true);
+      } finally {
+        b.disabled = false;
+      }
+    });
+    $("move-import").addEventListener("click", async () => {
+      const b = $("move-import");
+      b.disabled = true;
+      try {
+        const path = await A.move.pickOpen(window);
+        if (path) await importFrom(path);
+      } catch (e) {
+        say("move-import-out", String(e.message || e), true);
+      } finally {
+        b.disabled = false;
+      }
+    });
     $("refresh").addEventListener("click", () => load(true));
     for (const id of ["q", "job", "sort", "fit"]) {
       $(id).addEventListener("input", () => {

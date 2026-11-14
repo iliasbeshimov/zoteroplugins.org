@@ -275,6 +275,27 @@ function load(opts = {}) {
       vc: { compare },
       uuid: { generateUUID: () => ({ toString: () => "{12345678-1234-4123-8123-123456789abc}" }) },
       prefs: {
+        PREF_INVALID: 0,
+        PREF_STRING: 32,
+        PREF_INT: 64,
+        PREF_BOOL: 128,
+        getPrefType: (k) =>
+          !(k in prefs)
+            ? 0
+            : typeof prefs[k] === "boolean"
+              ? 128
+              : typeof prefs[k] === "number"
+                ? 64
+                : 32,
+        getChildList: (b) => Object.keys(prefs).filter((k) => k.startsWith(b)),
+        getBoolPref: (k) => prefs[k],
+        getIntPref: (k) => prefs[k],
+        setBoolPref: (k, v) => {
+          prefs[k] = v;
+        },
+        setIntPref: (k, v) => {
+          prefs[k] = v;
+        },
         getStringPref: (k, d) => (k in prefs ? prefs[k] : d),
         setStringPref: (k, v) => {
           const was = prefs[k];
@@ -1695,6 +1716,41 @@ const run = async (name, fn) => {
         ["x@example.org"],
       );
       assert.deepEqual(JSON.parse(JSON.stringify(s)), { "x@example.org": { a: 1 } });
+    },
+  );
+
+  await run(
+    "prefValues / applySettings: reads a plugin's branch; sets only its own prefs, same type",
+    async () => {
+      const t = load();
+      Object.assign(t.prefs, {
+        "extensions.x.on": false,
+        "extensions.x.count": 1,
+        "extensions.x.extra": "a",
+        "extensions.y.other": "b",
+      });
+      const declared = { "extensions.x.on": true, "extensions.x.count": 3 };
+      const values = t.s.prefValues(t.s.prefBranches(declared), Object.keys(declared));
+      assert.deepEqual(Object.keys(values).sort(), [
+        "extensions.x.count",
+        "extensions.x.extra",
+        "extensions.x.on",
+      ]);
+      const n = t.s.applySettings(declared, {
+        "extensions.x.on": true,
+        "extensions.x.count": "not a number",
+        "extensions.x.new": 7,
+        "extensions.y.other": "changed",
+        "extensions.zotero.sync": false,
+        "xpinstall.signatures.required": false,
+      });
+      assert.equal(n, 2);
+      assert.equal(t.prefs["extensions.x.on"], true);
+      assert.equal(t.prefs["extensions.x.count"], 1);
+      assert.equal(t.prefs["extensions.x.new"], 7);
+      assert.equal(t.prefs["extensions.y.other"], "b");
+      assert.equal("xpinstall.signatures.required" in t.prefs, false);
+      assert.equal(t.s.applySettings({}, { "extensions.x.on": false }), 0);
     },
   );
 })().catch((e) => {

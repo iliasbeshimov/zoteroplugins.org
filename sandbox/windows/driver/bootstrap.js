@@ -159,4 +159,57 @@ async function run() {
   await check("escape-search", win, "{ESC}", { expect: "stays open, search emptied" }, (w) => ({
     searchAfter: w.document.getElementById("q").value,
   }));
+
+  // Move to another computer: save the list with settings, then open a list and show the plan.
+  // Nothing is installed: the plan is only shown.
+  const mv = A.openWindow("move");
+  if (
+    !(await waitFor(() => mv.zoteroAtlasMove && mv.document.getElementById("move-settings"), 20000))
+  ) {
+    results.push({ step: "move-saved", missing: true });
+    return;
+  }
+  mv.document.getElementById("move-settings").click();
+  const saveTo = PathUtils.join(IO, "zotero-plugins-test.json");
+  const ex = await mv.zoteroAtlasMove.exportTo(saveTo);
+  const saved = JSON.parse(await IOUtils.readUTF8(saveTo));
+  results.push({
+    step: "move-saved",
+    ok: Boolean(ex),
+    plugins: saved.plugins.map((p) => p.id),
+    settings: "settings" in saved,
+  });
+  await check("move-export", mv, "{ESC}", { expect: "the saved line" }, (w) => ({
+    text: w.document.getElementById("move-export-out").textContent,
+  }));
+
+  const list = PathUtils.join(IO, "zotero-plugins-other.json");
+  await IOUtils.writeUTF8(
+    list,
+    JSON.stringify({
+      atlas: "1.2.0",
+      exportedAt: "2026-11-14T00:00:00.000Z",
+      zotero: "10.0.8",
+      plugins: [
+        {
+          id: "Knowledge4Zotero@windingwind.com",
+          name: "Better Notes for Zotero",
+          version: "0.0.1",
+        },
+        { id: "better-bibtex@iris-advies.com", name: "Better BibTeX for Zotero", version: "0.0.1" },
+        { id: "atlas-windows-driver@zoteroplugins.invalid", name: "Driver", version: "1" },
+        { id: "nobody@zoteroplugins.invalid", name: "Not listed", version: "1" },
+      ],
+      settings: {
+        "Knowledge4Zotero@windingwind.com": { "extensions.zotero.Knowledge4Zotero.x": 1 },
+      },
+    }),
+  );
+  const im = A.openWindow("move");
+  await waitFor(() => im.zoteroAtlasMove, 20000);
+  await im.zoteroAtlasMove.importFrom(list);
+  await check("move-import", im, "{ESC}", { expect: "the plan for each plugin" }, (w) => ({
+    rows: [...w.document.querySelectorAll("#move-plan .prow .ptext")].map((e) => e.textContent),
+    button: w.document.querySelector("#move-plan .plan-act button")?.textContent || null,
+  }));
 }

@@ -15,6 +15,7 @@
     <nav class="tabs">
       <button id="tab-find" class="tab on" type="button">Find plugins</button>
       <button id="tab-mine" class="tab" type="button">Your plugins <span id="mine-count" class="count"/></button>
+      <button id="tab-move" class="tab" type="button">Move to another computer</button>
     </nav>
     <div class="status">
       <span id="status"/>
@@ -47,6 +48,31 @@
       <div id="all"/>
       <div id="gone"/>
       <p class="fineprint" id="mine-foot"/>
+    </div>
+  </section>
+  <section id="move" hidden="hidden">
+    <div class="page">
+      <p class="lead">Take the plugins you have here to Zotero on another computer: save a list of them here, then open it in Zotero Atlas there.</p>
+      <p class="privacy"><strong>The file stays on your computer. Zotero Atlas sends nothing about it anywhere.</strong> You move it yourself, by USB stick, email or a shared folder.</p>
+      <div class="block">
+        <h2 class="h">On this computer: save the list</h2>
+        <div class="box mbox">
+          <label class="check"><input id="move-settings" type="checkbox"/> Include their settings</label>
+          <label class="check sub-check"><input id="move-secrets" type="checkbox" disabled="disabled"/> Include API keys and passwords</label>
+          <p class="mnote" id="move-secrets-note">Settings whose names look like keys, tokens or passwords are left out unless you tick this. If you do, keep the file private.</p>
+          <div class="mact"><button id="move-export" class="primary" type="button">Save the list…</button></div>
+          <p class="mresult" id="move-export-out" hidden="hidden"/>
+        </div>
+      </div>
+      <div class="block">
+        <h2 class="h">On the other computer: open the list</h2>
+        <div class="box mbox">
+          <p class="mnote">Zotero Atlas shows what it would install, then installs only files zoteroplugins.org has checked, from GitHub, the same way it installs from Find plugins.</p>
+          <div class="mact"><button id="move-import" type="button">Open a list…</button></div>
+          <p class="mresult" id="move-import-out" hidden="hidden"/>
+        </div>
+        <div id="move-plan"/>
+      </div>
     </div>
   </section>
 </body>

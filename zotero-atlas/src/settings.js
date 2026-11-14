@@ -8,6 +8,9 @@
     if (!open || open.dataset.wired) return;
     open.dataset.wired = "1";
     open.addEventListener("command", () => A.openWindow());
+    document
+      .getElementById("zotero-atlas-move")
+      ?.addEventListener("command", () => A.openWindow("move"));
     const line = document.getElementById("zotero-atlas-id-line");
     const refresh = () => {
       const id = A.usage.id();
