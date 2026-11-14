@@ -282,7 +282,11 @@ if (-not $driverOut) {
   $mi = $by['move-plan']
   $rows = @($mi.rows)
   Check 'Move: an opened list shows what happens to each plugin' ([bool]($mi -and $rows.Count -eq 4 -and $rows[2] -eq 'Already installed' -and $rows[3] -eq "Can't install: no checked file")) "$($rows -join ' | ') ; button: $($mi.button)"
-  foreach ($step in 'firstrun', 'escape', 'ctrl-w', 'dropdown', 'escape-search', 'move-export', 'move-import') {
+  $fp = $by['move-filepicker']
+  Check 'Move: the file picker loads' ([bool]($fp -and $fp.ok)) "$($fp | ConvertTo-Json -Compress)"
+  $mr = $by['move-install']
+  Check 'Move: opening a list installs its checked plugin and sets its setting' ([bool]($mr -and $mr.installed -and $mr.pref -eq 15 -and $mr.row -like 'Installed *')) "$($mr | ConvertTo-Json -Compress)"
+  foreach ($step in 'firstrun', 'escape', 'ctrl-w', 'dropdown', 'escape-search', 'move-export', 'move-import', 'move-installed') {
     if ($os[$step] -and -not $os[$step].focused) { Write-Host "::warning::$step window wasn't in front when the key was pressed" }
   }
 }

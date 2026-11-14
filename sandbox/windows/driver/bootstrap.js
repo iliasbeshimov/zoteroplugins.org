@@ -217,4 +217,78 @@ async function run() {
     button: doc.querySelector("#move-plan .plan-act button")?.textContent || null,
   });
   await check("move-import", im, "{ESC}", { expect: "the plan for each plugin" });
+
+  // The file picker Atlas uses to save and open lists: the module loads and a picker can be set
+  // up on the Atlas window (it isn't shown).
+  const fpWin = A.openWindow("move");
+  await waitFor(() => fpWin.document?.readyState === "complete", 20000);
+  try {
+    const FP = ChromeUtils.importESModule(
+      "chrome://zotero/content/modules/filePicker.mjs",
+    ).FilePicker;
+    const fp = new FP();
+    fp.init(fpWin, "Open a list of plugins", fp.modeOpen);
+    fp.appendFilter("JSON", "*.json");
+    results.push({
+      step: "move-filepicker",
+      ok: typeof fp.show === "function" && fp.returnOK !== undefined,
+    });
+  } catch (e) {
+    results.push({ step: "move-filepicker", ok: false, error: String(e) });
+  }
+  fpWin.close();
+  await delay(800);
+
+  // A real import: a list with one small checked plugin and one of its settings. Install it with
+  // the window's own button, then read what Zotero has.
+  const ADDON = "abbreviation-helper@cydoimos.github.io";
+  const PREF = "extensions.abbreviation-helper.tooltipFontSize";
+  const real = PathUtils.join(IO, "zotero-plugins-real.json");
+  await IOUtils.writeUTF8(
+    real,
+    JSON.stringify({
+      atlas: "1.2.0",
+      exportedAt: "2026-11-14T00:00:00.000Z",
+      zotero: "10.0.8",
+      plugins: [{ id: ADDON, name: "Abbreviation Helper", version: "2.2.0" }],
+      settings: { [ADDON]: { [PREF]: 15 } },
+    }),
+  );
+  const rw = A.openWindow("move");
+  await waitFor(() => rw.zoteroAtlasMove, 20000);
+  await rw.zoteroAtlasMove.importFrom(real);
+  const rdoc = rw.document;
+  const go = rdoc.querySelector("#move-plan .plan-act button");
+  const planned = rdoc.querySelector("#move-plan .prow .ptext")?.textContent || null;
+  let note = null;
+  if (go) {
+    go.click();
+    note = await waitFor(() => {
+      const t = rdoc.querySelector("#move-plan .plan-act .mnote")?.textContent || "";
+      return / installed\./.test(t) ? t : null;
+    }, 120000);
+  }
+  let AM;
+  try {
+    AM = ChromeUtils.importESModule("resource://gre/modules/AddonManager.sys.mjs").AddonManager;
+  } catch (_e) {
+    AM = ChromeUtils.import("resource://gre/modules/AddonManager.jsm").AddonManager;
+  }
+  const addon = await AM.getAddonByID(ADDON);
+  let pref = null;
+  try {
+    pref = Services.prefs.getIntPref(PREF);
+  } catch (_e) {
+    // not set
+  }
+  results.push({
+    step: "move-install",
+    planned,
+    button: go?.textContent || null,
+    row: rdoc.querySelector("#move-plan .prow .ptext")?.textContent || null,
+    note,
+    installed: addon ? addon.version : null,
+    pref,
+  });
+  await check("move-installed", rw, "{ESC}", { expect: "the plugin installed, its setting set" });
 }
