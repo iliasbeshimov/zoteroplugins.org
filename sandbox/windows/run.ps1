@@ -279,7 +279,7 @@ if (-not $driverOut) {
   Check 'Each option in the list shows its text once' ($p -and $p.texts -eq 1) "texts shown in the first option: $($p.texts)"
   $m = $by['move-saved']
   Check 'Move: the list is saved, with settings' ([bool]($m -and $m.ok -and $m.settings -and ($m.plugins -contains 'atlas-windows-driver@zoteroplugins.invalid'))) "$($m | ConvertTo-Json -Compress)"
-  $mi = $by['move-import']
+  $mi = $by['move-plan']
   $rows = @($mi.rows)
   Check 'Move: an opened list shows what happens to each plugin' ([bool]($mi -and $rows.Count -eq 4 -and $rows[2] -eq 'Already installed' -and $rows[3] -eq "Can't install: no checked file")) "$($rows -join ' | ') ; button: $($mi.button)"
   foreach ($step in 'firstrun', 'escape', 'ctrl-w', 'dropdown', 'escape-search', 'move-export', 'move-import') {

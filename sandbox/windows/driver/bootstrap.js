@@ -179,9 +179,11 @@ async function run() {
     plugins: saved.plugins.map((p) => p.id),
     settings: "settings" in saved,
   });
-  await check("move-export", mv, "{ESC}", { expect: "the saved line" }, (w) => ({
-    text: w.document.getElementById("move-export-out").textContent,
-  }));
+  results.push({
+    step: "move-export-text",
+    text: mv.document.getElementById("move-export-out").textContent,
+  });
+  await check("move-export", mv, "{ESC}", { expect: "the saved line" });
 
   const list = PathUtils.join(IO, "zotero-plugins-other.json");
   await IOUtils.writeUTF8(
@@ -208,8 +210,11 @@ async function run() {
   const im = A.openWindow("move");
   await waitFor(() => im.zoteroAtlasMove, 20000);
   await im.zoteroAtlasMove.importFrom(list);
-  await check("move-import", im, "{ESC}", { expect: "the plan for each plugin" }, (w) => ({
-    rows: [...w.document.querySelectorAll("#move-plan .prow .ptext")].map((e) => e.textContent),
-    button: w.document.querySelector("#move-plan .plan-act button")?.textContent || null,
-  }));
+  const doc = im.document;
+  results.push({
+    step: "move-plan",
+    rows: [...doc.querySelectorAll("#move-plan .prow .ptext")].map((e) => e.textContent),
+    button: doc.querySelector("#move-plan .plan-act button")?.textContent || null,
+  });
+  await check("move-import", im, "{ESC}", { expect: "the plan for each plugin" });
 }
