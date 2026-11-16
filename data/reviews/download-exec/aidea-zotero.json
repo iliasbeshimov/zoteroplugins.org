@@ -2,38 +2,44 @@
   "schemaVersion": 1,
   "slug": "aidea-zotero",
   "version": "3.6.0",
-  "sha256": "43567682b242f7e2283bf26cd5d73d74cf07ee3f90fae3e626cdaab3c263d316",
-  "codeKey": "bf182d5c34b4",
-  "reviewedAt": "2026-09-30",
-  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "sha256": "19daa039871cf35b78e2f32bdc226425fe83157aecab0f9a59107033a7b56999",
+  "codeKey": "5dfb562fe69c",
+  "reviewedAt": "2026-11-16",
+  "method": "Evidence from the release files, compared with the reviewed 3.6.0; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
   "real": true,
   "concern": "low",
   "rule": "CAP-DOWNLOAD-EXEC-MAKER",
-  "label": "Downloads and runs a Python installer when you press Install Environment",
-  "summary": "When you press Install Environment, it downloads the Miniconda Python installer (or, if that fails, uv's install script) and runs it, as its README says. It takes the latest of each, and the uv script runs straight from the web.",
+  "label": "Downloads and runs uv's installer, and OpenAI's Codex CLI installer, when you press their install buttons",
+  "summary": "When you press Install/Update Translation Environment, it downloads uv's install script from Astral and runs it (if you don't already have uv), then uses uv to build a Python 3.12 environment from a hash-locked package list, as its README says. For OpenAI sign-in, its install button (after a one-time notice) or update prompt likewise runs OpenAI's Codex CLI install script, which the README also says. Nothing checks either install script; on Windows they run straight from the web.",
   "facts": {
-    "what": "Miniconda (the Anaconda Python installer) from Anaconda's server, or if that fails the uv Python package manager via Astral's install script (piped straight into the shell, no check); then it builds a Python 3.12 environment and installs pdf2zh_next for full-document translation.",
+    "what": "The uv Python package manager's install script from Astral (astral.sh/uv/install.sh, saved to a temporary file and run with sh on Mac/Linux; install.ps1 piped into PowerShell on Windows), only if uv is not already found; then it builds a Python 3.12 environment and installs pdf2zh_next for full-document translation from a package list pinned by hash. Miniconda, which 3.6.0 downloaded first, is no longer downloaded.",
     "urls": [
-      "https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe",
-      "https://repo.anaconda.com/miniconda/Miniconda3-latest-${arch}-${ARCH}.sh",
       "https://astral.sh/uv/install.sh",
-      "https://astral.sh/uv/install.ps1"
+      "https://astral.sh/uv/install.ps1",
+      "https://chatgpt.com/codex/install.sh (and its Windows script, for OpenAI sign-in)"
     ],
     "source": "official",
-    "publisher": "Anaconda and Astral, who make the Miniconda and uv installers",
+    "publisher": "Astral, who make uv, and OpenAI, who make the Codex CLI",
     "transport": "https",
     "integrity": "none",
     "trigger": "user-clicks-install",
     "toldInReadme": "yes",
-    "readmeQuote": "is installed by the **Install Environment** button on the Translate tab and needs an internet connection at that time",
+    "readmeQuote": "button installs a tested dependency set with `uv`",
     "triggerQuote": {
       "file": "content/scripts/aidea.js",
-      "text": "trInstallEnv: \"Install Environment\""
+      "text": "trInstallEnv: \"Install/Update Translation Environment\""
     },
     "integrityQuote": {
       "file": "content/scripts/aidea.js",
-      "text": "curl -LsSf https://astral.sh/uv/install.sh | sh"
+      "text": "\"irm https://astral.sh/uv/install.ps1 | iex\""
     },
-    "notes": "Trigger: the Install Environment button (id llm-tr-install-env) on the Translate tab calls installEnvironment on click. No confirm dialog was found for this button (the 'Install Environment will perform...' oauthInstallNotice text covers the Node.js/CLI provider setup, not this path). The Miniconda installer is saved to /tmp (macOS/Linux) or the temp dir (Windows) and run with no hash check. Miniconda is tried first, uv only if Miniconda fails. The setup also auto-accepts conda Terms of Service for the user, and the README says Miniconda is the fallback, which is partly reversed (code tries conda first). The pdf2zh_next package install comes from the Python package index with no hash pinning seen. README states the Translate-tab button installs the Python environment and that it needs internet; it names uv and Miniconda but does not say the plugin itself pipes a script into the shell. Only the install-script one-liners appear in scanner evidence; Miniconda download lines are at aidea.js lines 57311-57345."
+    "notes": "Trigger: the Install/Update Translation Environment button (id llm-tr-install-env, label trInstallEnv, line 34282) on the Translate tab: its click handler (60208) calls installOrUpdateTranslationEnvironment (58764), which calls installWithCatalog (58668), which calls ensureUvBinary (58186, called at 58673); ensureUvBinary runs installUv (58129) only when no uv is found. The only other caller of installOrUpdateTranslationEnvironment is TranslateController.setupEnv (58954). The Translate tab also checks for an update notice once a day, but that only reads a manifest and never installs. No confirm dialog was found for this button. Unchanged: the uv install script (UV_UNIX_INSTALL_SCRIPT, 58324: curl or wget of https://astral.sh/uv/install.sh to a temp file, then sh; Windows 58138: irm https://astral.sh/uv/install.ps1 | iex) is run with no hash or signature check. Changed from 3.6.0: (1) Miniconda is gone: no download of repo.anaconda.com installers remains (3.6.0 downloaded Miniconda3-latest first and used uv only as a fallback; existing Miniconda environments are still found, 58029-58048, but nothing is downloaded for them). (2) The package install now uses uv to create the Python 3.12 environment, then 'uv pip sync <lock> --only-binary :all: --require-hashes' (58708), so each package file must match a hash in the lock. The lock and its manifest come from the developer's GitHub Pages (TRANSLATION_ENV_URL, 57803: https://visterainer.github.io/aidea-zotero/translate-env/manifest.json; the lock URL must be exactly requirements-<revision>.lock there, 57674-57676), the lock's SHA-256 is checked against the manifest (58491), and a bundled catalog with its own hash is the fallback (58339). The manifest and lock are fetched from the same place, so the hashes protect against a bad mirror, not against the developer. (3) Download-source choice: by preference or locale (Chinese locales) it can use the Aliyun PyPI mirror (57811) and the npmmirror python-build-standalone mirror (57812) for packages and the uv-managed Python (57764-57767); every file is hash-checked against the lock. The uv script itself has no mirror. README (lines 171, 173) says the button 'installs a tested dependency set with `uv`', so the download is told. Not covered by this finding: the provider-card 'Install/Update Env' button for the OAuth CLI (curl of chatgpt.com/codex/install.sh at 26621, behind its own OAuth notice, 54118), which 3.6.0 also had and which the scanner's evidence does not list.",
+    "reviewerNote": "Facts changed from 3.6.0: Miniconda removed, packages now hash-locked; the level-setting facts (official source, https, no check on the downloaded installer, click trigger, told in README) are the same, so the level and rule are unchanged.",
+    "codexInstall": "Also in 3.6.0 and not in that review: for OpenAI sign-in, tryInstallCodexStandalone (aidea.js 27352) runs OpenAI's Codex CLI install script from chatgpt.com/codex/install.sh (getCodexStandaloneInstallCommand, 26617), unchecked, in a hidden shell. It runs from the provider card's install button after a one-time notice (win.confirm(riskMessage), 54128 area; the notice says it downloads and installs OpenAI's official Codex CLI) or from an update prompt's Update button (runOAuthEnvUpdate, with a Later option). The README says so: 'Installs or updates the official standalone Codex CLI using OpenAI's install script.' Same facts as uv (the maker, https, you start it, told), so the level is the same.",
+    "codexQuote": {
+      "file": "content/scripts/aidea.js",
+      "text": "const command = getCodexStandaloneInstallCommand(platform);"
+    },
+    "readmeQuote2": "Installs or updates the official standalone Codex CLI using OpenAI's install script."
   }
 }

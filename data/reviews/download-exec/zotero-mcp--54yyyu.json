@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "slug": "zotero-mcp--54yyyu",
   "version": "0.15.0",
-  "sha256": "438fb529d9ba60976210d96bb9ea060dec1abbbfa3cb9c46bad29d3bd705509b",
-  "codeKey": "5e0c441801f3",
-  "reviewedAt": "2026-10-16",
-  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "sha256": "c1930d033b587f816bace1909f97b9571b58b8ad8b7a1b1121d75cd4d9263b89",
+  "codeKey": "1f130dc1b8ff",
+  "reviewedAt": "2026-11-16",
+  "method": "Evidence from the release files, compared with the reviewed 0.15.0; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
   "real": true,
   "concern": "low",
   "rule": "CAP-DOWNLOAD-EXEC-MAKER",
@@ -25,7 +25,7 @@
     "readmeQuote": "uv tool install zotero-mcp-server",
     "triggerQuote": {
       "file": "panel.js",
-      "text": "fix:{label:\"Install zotero-cli\",run:Oh(t)}"
+      "text": "fix:{label:d(\"doctor.installCli\"),run:Ch(t)}"
     },
     "integrityQuote": {
       "file": "panel.js",
@@ -35,6 +35,13 @@
       "file": "panel.js",
       "text": "uv, the installer zotero-cli uses, is not installed. Fetching it from astral.sh first."
     },
-    "notes": "panel.js is minified; function Oh(r,e) is an async generator: if ge(r,t,'uv',...) finds no uv, it yields the message 'Fetching it from astral.sh first.' then runs /bin/sh -c 'curl -LsSf https://astral.sh/uv/install.sh | sh' with UV_NO_MODIFY_PATH=1 (10 min timeout), then runs 'uv tool install --upgrade zotero-mcp-server' (or pipx / python3 -m pip --user fallbacks if found). Trigger: the setup checklist shows an item 'zotero-cli is not installed' with detail 'One click installs it, and uv (its installer) if you do not have that.' and a button 'Install zotero-cli' (fix.run = Oh); aa() wires it to a click handler. Nothing runs without the click; no separate confirmation dialog, but the item text names uv. Uses /bin/sh so effectively Mac/Linux; on Windows it would likely fail. The shipped README only shows 'uv tool install zotero-mcp-server' as a manual step; it does not say the plugin downloads uv itself (the plugin docs/chat-plugin.md on GitHub were not available locally, so not checked). The uv install is a genuine program download-and-run, so real stays true; the pip-package part is separate. Not a fork of a reviewed plugin; none compared."
-  }
+    "notes": "panel.js is minified; function Ch(n,e) (line 401) is an async generator: if Oe(n,t,'uv',...) finds no uv, it yields the message d('doctor.fetchUv') ('uv, the installer zotero-cli uses, is not installed. Fetching it from astral.sh first.', string table on line 1) then runs /bin/sh -c 'curl -LsSf https://astral.sh/uv/install.sh | sh' with UV_NO_MODIFY_PATH=1 (10 min timeout), then runs 'uv tool install --upgrade zotero-mcp-server' (or pipx / python3 -m pip --user fallbacks if found). Trigger: the setup checklist shows an item 'zotero-cli is not installed' (doctor.cliMissing) with detail 'The agent uses it to work with your library. One click installs it, and uv (its installer) if you do not have that.' and a button 'Install zotero-cli' (doctor.installCli, fix.run = Ch, line 401). Nothing runs without the click; no separate confirmation dialog, but the item text names uv. Uses /bin/sh so effectively Mac/Linux; on Windows it would likely fail. The README at v0.17.2 still only shows 'uv tool install zotero-mcp-server' (line 70) as a manual step; it does not say the plugin downloads uv itself. The uv install is a genuine program download-and-run, so real stays true; the pip-package part is separate. Compared with 0.15.0 (reviewed): the command, URL, trigger, button and item text are unchanged. Changes are only that the strings moved into a translation table (de/es/fr/ja added) and minified names changed (Oh->Ch, ge->Oe, Oa->Fa); the scanner's evidence line moved from panel.js line 392 to 401. No other download was found: panel.js and plugin.js contain no other curl/wget/install commands and the only external fetch is to 127.0.0.1."
+  },
+  "alsoAppliesTo": [
+    {
+      "version": "0.15.0",
+      "sha256": "438fb529d9ba60976210d96bb9ea060dec1abbbfa3cb9c46bad29d3bd705509b",
+      "how": "Compared panel.js of 0.15.0 and 0.17.2 by hand: the same curl -LsSf https://astral.sh/uv/install.sh | sh command with UV_NO_MODIFY_PATH, the same uv/pipx/pip fallbacks, the same 'Install zotero-cli' click, the same item text naming uv; no new download; README unchanged on this point."
+    }
+  ]
 }

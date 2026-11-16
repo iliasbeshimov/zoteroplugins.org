@@ -2,26 +2,26 @@
   "schemaVersion": 1,
   "slug": "zotero-ai-sidebar",
   "version": "0.8.17",
-  "sha256": "d2749830fa80b5d7691ea4be304732bdeb2a402a32faa14e14a2862850252d68",
-  "codeKey": "f40559a04f32",
-  "reviewedAt": "2026-10-16",
-  "method": "Evidence pack from the release file; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
+  "sha256": "aed5b28d993f802df873fded903ac11d836579bdbe3a4fd726948e5bdb78e052",
+  "codeKey": "9279f1e526b1",
+  "reviewedAt": "2026-11-16",
+  "method": "Evidence from the release files, compared with the reviewed 0.8.17; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
   "real": true,
   "concern": "medium",
   "rule": "CAP-DOWNLOAD-EXEC-FIXED",
   "label": "Downloads and runs its Web Agent helper (3.3 MB) when you press Install Web Agent",
   "summary": "When you press Install, Repair or Upgrade in its Web account dialog, it downloads a 3.3 MB Web Agent zip from the developer's GitHub release, as the README says, and runs it with your own Node.js as a local helper that controls a browser.",
   "facts": {
-    "what": "Downloads the Web Agent runtime zip (zai-web-agent-runtime.zip, 3,260,862 bytes: agent.mjs plus bundled node_modules/playwright-core) from the plugin's own GitHub release, unpacks it into the Zotero profile, and runs agent.mjs with the user's installed Node.js as a local companion process that drives a browser.",
+    "what": "Downloads the Web Agent runtime zip (zai-web-agent-runtime.zip, 3,262,477 bytes: agent.mjs plus bundled node_modules/playwright-core) from the plugin's own GitHub release, unpacks it into the Zotero profile, and runs agent.mjs with the user's installed Node.js as a local companion process that drives a browser.",
     "urls": [
-      "https://github.com/xuhan-rgb/zotero-ai-sidebar/releases/download/v0.8.17/zai-web-agent-runtime.zip"
+      "https://github.com/xuhan-rgb/zotero-ai-sidebar/releases/download/v0.8.21/zai-web-agent-runtime.zip"
     ],
     "source": "developer-own",
     "transport": "https",
     "integrity": "pinned",
     "trigger": "user-clicks-install",
     "toldInReadme": "yes",
-    "readmeQuote": "**Install**, **Repair**, or **Upgrade Web Agent** downloads the matching prebuilt runtime from the same GitHub Release, verifies its size and SHA-256",
+    "readmeQuote": "The plugin downloads the prebuilt runtime paired with the XPI and verifies its size and SHA-256",
     "triggerQuote": {
       "file": "content/scripts/zotero-ai-sidebar.js",
       "text": "repair.addEventListener(\"click\", () => void checkAndRepair(true));"
@@ -32,8 +32,15 @@
     },
     "sourceQuote": {
       "file": "content/scripts/zotero-ai-sidebar.js",
-      "text": "downloadUrl: \"https://github.com/xuhan-rgb/zotero-ai-sidebar/releases/download/v0.8.17/zai-web-agent-runtime.zip\","
+      "text": "downloadUrl: \"https://github.com/xuhan-rgb/zotero-ai-sidebar/releases/download/v0.8.21/zai-web-agent-runtime.zip\","
     },
-    "notes": "Only one download exists. The scanner's evidence (line 7166, fetchRuntimeArchive) is a fetch(url) helper whose only caller is repairWebAgentInstallation (6776), which passes release.downloadUrl from webAgentRuntimeRelease() (7219): hardcoded URL, size 3260862 and sha256 \"dccc008e97948db5f3ecdbcb898c5a75bc92ec65a35ad88fb7a06bf0c6287965\". installWebAgentRuntimeArchive (6803) checks byteLength === release.size, then SHA-256 of the bytes against release.sha256, and throws before unzipping/writing on mismatch. gh api for tag v0.8.17 confirms the asset exists with size 3260862 and the same sha256 digest. Trigger: repairWebAgentInstallation is called only inside checkAndRepair(repairIfNeeded=true) (81536-81541) in the WEB 'Account' dialog; that is invoked by the repair button click (81596; button label 'Install Web Agent' / 'Repair Web Agent') or by a manually chosen local ZIP (81609, installLocalWebAgentRuntime, no download). The automatic calls checkAndRepair(false) (81335, 81623) only inspect and never download. Startup, opening WEB mode and sending messages do not download (README line 103 says the same; code consistent). After install, startWebAgent/launchWebAgent (line 205-240) runs `exec(config.nodePath, [agentScript, configPath, instanceId])` using the user's own Node.js (not downloaded; the dialog only links to nodejs.org/en/download and chrome download pages, which open pages and install nothing). Source classification: URL is in xuhan-rgb/zotero-ai-sidebar, the same repo as the plugin (pack Repo line), so developer-own; the same author also builds the runtime zip, so the pinned hash only protects against tampering after release, not against the developer. Also noted: the runtime bundles playwright-core in node_modules, no npm/pip install by the plugin (README: 'The user's computer never runs npm'). The scanner's lack of a source is explained by the 'releases/download' URL being of the plugin's own repo."
-  }
+    "notes": "Only one download exists. The scanner's evidence (line 7344, fetchRuntimeArchive) is a fetch(url) helper whose only caller is repairWebAgentInstallation (6935, call at 6941), which passes release.downloadUrl from webAgentRuntimeRelease() (7396): hardcoded URL, size 3262477 and sha256 \"7d06753a3d471599455abd55f657c3fe77df9e80f3c384a5acf001aafb594aeb\". installWebAgentRuntimeArchive (6962) checks byteLength === release.size (6970), then SHA-256 of the bytes against release.sha256 (6976), and throws before unzipping/writing on mismatch. Checked against the maker's file: the v0.8.21 release asset zai-web-agent-runtime.zip downloaded from GitHub is 3,262,477 bytes with SHA-256 7d06753a...594aeb, and gh release view reports the same digest. Trigger: repairWebAgentInstallation is called only inside checkAndRepair(repairIfNeeded=true) (84452) in the WEB 'Account' dialog; that is invoked by the repair button click (84507; button label 'Install Web Agent' / 'Repair Web Agent') or by a manually chosen local ZIP (84520, installLocalWebAgentRuntime call at 84450, no download). The automatic calls checkAndRepair(false) (84242, 84534) only inspect and never download. After install, startWebAgent/launchWebAgent (lines 222-239) runs `exec(config2.nodePath, ...)` using the user's own Node.js (not downloaded). Source classification: the URL is in xuhan-rgb/zotero-ai-sidebar, the same repo as the plugin, so developer-own; the same author also builds the runtime zip, so the pinned hash only protects against tampering after release, not against the developer. Compared with 0.8.17 (reviewed): the same single download, same trigger, same size and SHA-256 check; only the URL tag (v0.8.17 -> v0.8.21), the pinned size and hash (3260862 / dccc008e... -> 3262477 / 7d06753a...), protocol version, and Firefox-snap/browser-profile handling in the install step changed. The README wording changed to 'The plugin downloads the prebuilt runtime paired with the XPI and verifies its size and SHA-256' (README line 83). The other fetch calls (lines 14066, 93175) are API requests, unchanged from 0.8.17."
+  },
+  "alsoAppliesTo": [
+    {
+      "version": "0.8.17",
+      "sha256": "d2749830fa80b5d7691ea4be304732bdeb2a402a32faa14e14a2862850252d68",
+      "how": "Compared the Web Agent install code of 0.8.17 and 0.8.21 by hand: the same single download of the plugin's own release zip, the same click-only trigger, the same size and SHA-256 check before unpacking; only the version tag, pinned size and hash differ, and the new hash matches the maker's published zip."
+    }
+  ]
 }

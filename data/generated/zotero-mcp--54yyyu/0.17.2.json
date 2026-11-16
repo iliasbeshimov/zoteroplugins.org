@@ -1217,7 +1217,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-16T19:24:29.281Z",
+  "computedAt": "2026-11-16T20:03:01.063Z",
   "appliesTo": {
    "slug": "zotero-mcp--54yyyu",
    "version": "0.17.2",
@@ -1228,7 +1228,7 @@
    "provenanceCheckerVersion": "lite-0.4",
    "hostsTableVersion": "2026.11.13",
    "currentZotero": "10.0.9",
-   "inputHash": "3736c1620891cfcc1ea004786bba7de72567e39b66bcede63e6be559282106e2"
+   "inputHash": "afb54b42596bd3167db78e8222a1f824faa5e9de800a41ba5fd9e174680fdba7"
   },
   "facets": {
    "sourceTransparency": {
@@ -1270,12 +1270,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads and runs a program we haven't reviewed yet",
-      "concern": "high",
-      "detail": "We haven't yet reviewed who publishes the file or whether anything stops it changing, so it counts as a high concern until we do. Not checked against a fingerprint fixed in the plugin."
-     },
-     {
       "id": "package-run",
       "label": "Installs and runs npm or PyPI packages without a fixed version",
       "concern": "high",
@@ -1298,6 +1292,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads and runs uv's installer when you press Install zotero-cli, if you don't have uv",
+      "concern": "low",
+      "detail": "It comes straight from Astral, who make uv, over an encrypted connection, as it would if you installed it yourself. If you don't have uv, pressing Install zotero-cli in its setup checklist runs uv's install script, then uses uv to install the zotero-mcp-server package, which is listed as its own finding. The checklist item says it installs uv too; the README only shows the manual command."
+     },
+     {
       "id": "enables-local-api",
       "label": "Turns on Zotero's local API, so programs on this computer can read your library",
       "concern": "low"
@@ -1317,9 +1317,9 @@
     "drivers": [
      "CAP-CHANGES-SETTINGS",
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-PACKAGE-UNPINNED",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-MAKER"
     ]
    },
    "requirements": {
@@ -1364,7 +1364,6 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads and runs a program we haven't reviewed yet",
     "Installs and runs npm or PyPI packages without a fixed version"
    ]
   }

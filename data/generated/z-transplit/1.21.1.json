@@ -1674,7 +1674,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-16T19:24:29.281Z",
+  "computedAt": "2026-11-16T20:03:04.877Z",
   "appliesTo": {
    "slug": "z-transplit",
    "version": "1.21.1",
@@ -1685,7 +1685,7 @@
    "provenanceCheckerVersion": "lite-0.4",
    "hostsTableVersion": "2026.11.13",
    "currentZotero": "10.0.9",
-   "inputHash": "d07f13407ee2196df0173d707b96256a3028b77b2836ec0926d4417f51af123b"
+   "inputHash": "60c9633579666e31611d3612543af287100c7a7e2cd247b0190f439233962eb3"
   },
   "facets": {
    "sourceTransparency": {
@@ -1771,12 +1771,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads and runs a program we haven't reviewed yet",
-      "concern": "high",
-      "detail": "We haven't yet reviewed who publishes the file or whether anything stops it changing, so it counts as a high concern until we do. From opendataloader-project/opendataloader-pdf on GitHub; checked only against a checksum from the same place, which catches a broken download but not a swapped one."
-     },
-     {
       "id": "process-launch",
       "label": "Launches programs on your computer",
       "concern": "medium",
@@ -1793,6 +1787,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads and runs the OpenDataLoader PDF parser the first time you translate a PDF",
+      "concern": "low",
+      "detail": "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. The download comes from the OpenDataLoader project, which makes opendataloader-pdf. The first time you translate a PDF's full text, it downloads the OpenDataLoader PDF parser (a 24 MB Java program), usually from a PyPI mirror in China, and runs it, showing a progress window but not asking; the README now says it is downloaded on first use. We checked that its fingerprint matches the parser in the project's own release. If you don't have Java, it asks first, then downloads a Java runtime from Adoptium's site or a Chinese mirror of it, checked against Adoptium's checksum. We reviewed version 1.11.0; this release has the same code."
+     },
+     {
       "id": "dynamic-code",
       "label": "Runs code it assembles while running",
       "concern": "low"
@@ -1803,11 +1803,11 @@
       "concern": "low"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-FIXED"
     ]
    },
    "requirements": {
@@ -1846,13 +1846,13 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
     "capabilities"
    ],
    "reasons": [
-    "Downloads and runs a program we haven't reviewed yet"
+    "Launches programs on your computer"
    ]
   }
  }

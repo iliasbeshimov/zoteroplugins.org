@@ -2052,7 +2052,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-16T19:24:29.281Z",
+  "computedAt": "2026-11-16T20:03:02.982Z",
   "appliesTo": {
    "slug": "zotero-ai-sidebar",
    "version": "0.8.21",
@@ -2063,7 +2063,7 @@
    "provenanceCheckerVersion": "lite-0.4",
    "hostsTableVersion": "2026.11.13",
    "currentZotero": "10.0.9",
-   "inputHash": "087dbda03a854507365006dea68645c763456e0267b07feaaf0839bb02950abf"
+   "inputHash": "d262796bd1ef00b73e199612b3499e78599b2100a17349e97eef7f3d63dbd6e8"
   },
   "facets": {
    "sourceTransparency": {
@@ -2156,9 +2156,9 @@
     "badges": [
      {
       "id": "download-exec",
-      "label": "Downloads a program checked against a fixed fingerprint, and runs it",
+      "label": "Downloads and runs its Web Agent helper (3.3 MB) when you press Install Web Agent; we haven't checked what's inside it",
       "concern": "medium",
-      "detail": "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. We haven't yet reviewed what it is."
+      "detail": "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. We haven't checked what's inside it. When you press Install, Repair or Upgrade in its Web account dialog, it downloads a 3.3 MB Web Agent zip from the developer's GitHub release, as the README says, and runs it with your own Node.js as a local helper that controls a browser."
      },
      {
       "id": "link-installs-addons",
@@ -2206,12 +2206,12 @@
     ],
     "concern": "medium",
     "drivers": [
-     "CAP-DOWNLOAD-EXEC-PINNED",
      "CAP-MINOR",
      "CAP-LINK-INSTALL",
      "CAP-LINK-CODE",
      "CAP-INTERCEPT",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-FIXED"
     ]
    },
    "requirements": {
@@ -2256,7 +2256,7 @@
     "capabilities"
    ],
    "reasons": [
-    "Downloads a program checked against a fixed fingerprint, and runs it",
+    "Downloads and runs its Web Agent helper (3.3 MB) when you press Install Web Agent; we haven't checked what's inside it",
     "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from zotero-plugin-toolkit)",
     "A zotero:// link can make it run code if you approve a prompt (from zotero-plugin-toolkit)",
     "Watches Zotero's network traffic",

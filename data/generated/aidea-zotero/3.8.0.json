@@ -2763,7 +2763,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-16T19:24:29.281Z",
+  "computedAt": "2026-11-16T20:02:58.889Z",
   "appliesTo": {
    "slug": "aidea-zotero",
    "version": "3.8.0",
@@ -2774,7 +2774,7 @@
    "provenanceCheckerVersion": "lite-0.4",
    "hostsTableVersion": "2026.11.13",
    "currentZotero": "10.0.9",
-   "inputHash": "d02beef3ea091aa040d1dcefd4c541b16d1d53248d013f6600a91bc90ac3682c"
+   "inputHash": "22a8e86332a83073ca588c8cf093f1155c7b6f535025cd50d323ebe062c20191"
   },
   "facets": {
    "sourceTransparency": {
@@ -2847,12 +2847,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads and runs a program we haven't reviewed yet",
-      "concern": "high",
-      "detail": "We haven't yet reviewed who publishes the file or whether anything stops it changing, so it counts as a high concern until we do. Not checked against a fingerprint fixed in the plugin."
-     },
-     {
       "id": "borrowed-identity",
       "label": "Signs in using another app's identity",
       "concern": "medium",
@@ -2911,6 +2905,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads and runs uv's installer, and OpenAI's Codex CLI installer, when you press their install buttons",
+      "concern": "low",
+      "detail": "It comes straight from Astral, who make uv, and OpenAI, who make the Codex CLI, over an encrypted connection, as it would if you installed it yourself. When you press Install/Update Translation Environment, it downloads uv's install script from Astral and runs it (if you don't already have uv), then uses uv to build a Python 3.12 environment from a hash-locked package list, as its README says. For OpenAI sign-in, its install button (after a one-time notice) or update prompt likewise runs OpenAI's Codex CLI install script, which the README also says. Nothing checks either install script; on Windows they run straight from the web."
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -2921,17 +2921,17 @@
       "concern": "low"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-BORROWED-IDENTITY",
      "CAP-CHANGES-SETTINGS",
      "CAP-MINOR",
      "CAP-DB-WRITE-OWN",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-LINK-INSTALL",
      "CAP-LINK-CODE",
      "CAP-PROCESS",
-     "CAP-REUSED-APP-LOGIN"
+     "CAP-REUSED-APP-LOGIN",
+     "CAP-DOWNLOAD-EXEC-MAKER"
     ]
    },
    "requirements": {
@@ -2970,13 +2970,19 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
     "capabilities"
    ],
    "reasons": [
-    "Downloads and runs a program we haven't reviewed yet"
+    "Signs in using another app's identity",
+    "Changes Zotero settings that aren't its own",
+    "Keeps its own tables in Zotero's database",
+    "A zotero:// link (a web page can open one) can make it install add-ons without asking you (from zotero-plugin-toolkit)",
+    "A zotero:// link can make it run code if you approve a prompt (from zotero-plugin-toolkit)",
+    "Launches programs on your computer",
+    "Reuses a sign-in you saved in another program"
    ]
   }
  }
