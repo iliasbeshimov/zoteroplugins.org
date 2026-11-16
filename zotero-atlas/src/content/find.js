@@ -937,7 +937,11 @@ window.ZoteroAtlasFind = (ctx) => {
     const job = e.jobs[0];
     if (job) {
       const alike = d.plugins
-        .filter((x) => x.slug !== e.slug && x.jobs.includes(job) && good(x))
+        // Like Rising and New, a shelf of suggestions shows B or better.
+        .filter(
+          (x) =>
+            x.slug !== e.slug && x.jobs.includes(job) && good(x) && A.RANK[x.grade] >= A.RANK.B,
+        )
         .sort(byUse)
         .slice(0, 3);
       if (alike.length) {
