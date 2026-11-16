@@ -6,7 +6,18 @@
   X-Frame-Options: DENY
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
 
+# The library-guide box: other sites may frame it (it sets no cookies and has no analytics).
+/embed/*
+  ! X-Frame-Options
+  ! Content-Security-Policy
+  Content-Security-Policy: frame-ancestors *; base-uri 'self'; object-src 'none'; form-action 'self'
+  X-Robots-Tag: noindex
+  Cache-Control: public, max-age=3600
+
 # Data files and badges are for programs, not search results.
+/data/*
+  X-Robots-Tag: noindex
+  Cache-Control: public, max-age=600
 /api/*
   X-Robots-Tag: noindex
 /badge/*

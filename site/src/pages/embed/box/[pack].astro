@@ -1,0 +1,76 @@
+---
+import { SITE } from "../../../lib/links.ts";
+import { PACKS, packPath, packTitle, resolvePack } from "../../../lib/packs.ts";
+
+/**
+ * The library-guide box as a page of its own, for guides that can embed an iframe but not a
+ * script: /embed/box/<pack>. Built with today's picks (so it works without JavaScript) and rebuilt
+ * every night; box.js refreshes it and counts the website showing it. No site header, no
+ * analytics, no cookies. _headers lets other sites frame /embed/*.
+ */
+export function getStaticPaths() {
+  return PACKS.map((k) => ({ params: { pack: k.slug }, props: { slug: k.slug } }));
+}
+const { slug } = Astro.props as { slug: string };
+const pack = PACKS.find((k) => k.slug === slug);
+if (!pack) throw new Error(`no pack ${slug}`);
+const title = packTitle(pack).replace(/^Zotero plugins/, "Plugins");
+const picks = resolvePack(pack);
+const updated = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>{title}: checked Zotero plugins · zoteroplugins.org</title>
+    <link rel="canonical" href={`${SITE}${packPath(pack)}`} />
+    <base target="_blank" />
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      html,
+      body {
+        margin: 0;
+        background: transparent;
+        color: #222;
+        font: 15px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+      }
+      body {
+        padding: 2px 2px 8px;
+      }
+      p {
+        margin: 0 0 0.6em;
+      }
+      a {
+        color: #1a55b5;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-zoteroplugins-box={pack.slug}>
+      <p>
+        Plugins add features to Zotero, but anyone can publish one. Before you install a plugin, look it up on <a href={`${SITE}/`}>zoteroplugins.org</a>, an independent, non-commercial directory that checks the code of every Zotero plugin and grades it from A+ (recommended) to C (not recommended).
+      </p>
+      <div data-zoteroplugins-list>
+        <p class="zpbox-lead"><a href={`${SITE}${packPath(pack)}`}>{title}</a>, checked {updated}:</p>
+        <ul class="zpbox-list">
+          {
+            picks.map((r) => (
+              <li>
+                <span class="zpbox-task">{r.task}</span>
+                <a href={`${SITE}/p/${r.plugin.slug}`}>{r.plugin.name}</a> <span class="zpbox-meta">grade {r.plugin.grade}, Zotero {r.plugin.worksRange}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="zpbox-foot">Updated every night by <a href={`${SITE}/`}>zoteroplugins.org</a>.</p>
+      </div>
+    </div>
+    <script is:inline src="/embed/box.js" async></script>
+  </body>
+</html>

@@ -3,7 +3,7 @@ import Guide from "../layouts/Guide.astro";
 import { CURRENT_ZOTERO_MAJOR } from "../lib/atlas.ts";
 import { breadcrumb, gradeCounts, modifiedAt, num, PUBLISHER } from "../lib/guides.ts";
 import { CONTACT, mailto, REPO, SITE } from "../lib/links.ts";
-import { PACKS, packPath, packPdf, packPdfName, packTitle } from "../lib/packs.ts";
+import { PACKS, packPath, packPdf, packPdfName, packTitle, resolvePack } from "../lib/packs.ts";
 
 /**
  * For librarians: a ready-made box for a library's Zotero guide, as HTML to paste, as a LibGuides
@@ -30,6 +30,29 @@ const link = {
   desc: "Every Zotero plugin, graded from a check of its code: what it does, what it needs and where it sends your data. Includes short lists of checked plugins for undergraduates, graduate students and faculty.",
 };
 const suggest = `${REPO}/issues/new?title=${encodeURIComponent("Plugin pack suggestion from a library")}`;
+
+// The self-updating box: the same words as the box above, plus the chosen pack's picks, which
+// /embed/box.js fills in from /api/v1/box.json (rebuilt every night). An iframe for guides that
+// don't allow scripts. The preview here is built with today's picks.
+const intro = `Plugins add features to Zotero, but anyone can publish one. Before you install a plugin, look it up on <a href="${SITE}/">zoteroplugins.org</a>, an independent, non-commercial directory that checks the code of every Zotero plugin and grades it from A+ (recommended) to C (not recommended).`;
+const live = PACKS.map((k) => {
+  const title = packTitle(k).replace(/^Zotero plugins/, "Plugins");
+  const picks = resolvePack(k);
+  return {
+    slug: k.slug,
+    name: k.name,
+    title,
+    picks,
+    script: `<div data-zoteroplugins-box="${k.slug}">
+<p>${intro}</p>
+<p data-zoteroplugins-list><a href="${SITE}${packPath(k)}">Checked ${packTitle(k)}</a></p>
+</div>
+<script src="${SITE}/embed/box.js" async></script>`,
+    iframe: `<iframe src="${SITE}/embed/box/${k.slug}" title="Checked ${packTitle(k)}" style="width:100%;height:${200 + picks.length * 58}px;border:0" loading="lazy"></iframe>`,
+  };
+});
+const today = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+const firstLive = live.find((k) => k.slug === "phd-students") ?? live[0];
 const write = mailto("Plugin packs: a suggestion from a library");
 
 const graph = [
@@ -55,8 +78,79 @@ const graph = [
     </p>
   </Fragment>
 
+  <section id="check" class="callout">
+    <h2>Check the plugins your guide already recommends</h2>
+    <p class="prose">
+      Paste the address of your guide's plugins page. We find every plugin it links or names and tell you which still work with Zotero {cur}, which have moved or been removed, and how each is graded. You can ask for an email whenever one of them changes, so the page never goes stale without you knowing.
+    </p>
+    <p><a class="btn btn-dark" href="/librarians/check">Check your guide</a></p>
+  </section>
+
+  <section id="live-box">
+    <h2>A box that updates itself</h2>
+    <p class="prose">
+      The same words as the box below, plus our current picks for one stage of study. We rebuild the picks every night: if one stops working with the current Zotero or its grade drops below B, the next-best plugin takes its place, and your guide changes with it.
+    </p>
+    <div class="kit">
+      <div class="preview">
+        <span class="eyebrow">How it looks in a guide</span>
+        <div class="lg-box">
+          <div class="lg-head">Zotero plugins: check before you install</div>
+          <div class="lg-body">
+            <p set:html={intro} />
+            {
+              live.map((k) => (
+                <div class="live-pack" data-pack={k.slug} hidden={k.slug !== firstLive?.slug}>
+                  <p class="zpbox-lead"><a href={`${SITE}/for/${k.slug}`}>{k.title}</a>, checked {today}:</p>
+                  <ul class="zpbox-list">
+                    {k.picks.map((r) => (
+                      <li>
+                        <span class="zpbox-task">{r.task}</span>
+                        <a href={`/p/${r.plugin.slug}`}>{r.plugin.name}</a> <span class="zpbox-meta">grade {r.plugin.grade}, Zotero {r.plugin.worksRange}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p class="zpbox-foot">Updated every night by <a href="/">zoteroplugins.org</a>.</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <p class="small">In your guide the box takes your own fonts and colours.</p>
+      </div>
+      <div class="how">
+        <label class="pick">
+          Picks for
+          <select id="live-pack">
+            {live.map((k) => <option value={k.slug} selected={k.slug === firstLive?.slug}>{k.name}</option>)}
+          </select>
+        </label>
+        <ol class="steps">
+          <li>In LibGuides, add a <strong>Media / Widget</strong> asset to the page.</li>
+          <li>Paste the code and save.</li>
+        </ol>
+        <div class="acts">
+          <button type="button" class="btn btn-dark" data-copy="live-code">Copy the code</button>
+        </div>
+        <details>
+          <summary>Show the code</summary>
+          <pre><code id="live-code">{firstLive?.script}</code></pre>
+        </details>
+        <details>
+          <summary>Your guide doesn't allow scripts? Use a frame</summary>
+          <pre><code id="live-frame">{firstLive?.iframe}</code></pre>
+          <button type="button" class="btn" data-copy="live-frame">Copy the frame code</button>
+        </details>
+        <p class="small privacy">
+          <strong>Privacy:</strong> the box loads one small file from zoteroplugins.org. It sets no cookies, stores nothing in your readers' browsers and loads nothing else. We count how often it's shown on each website (the site's name only) so we know which guides use it, and nothing about your readers. If it can't load, your guide keeps the text and the link.
+        </p>
+      </div>
+    </div>
+    <script type="application/json" id="live-data" set:html={JSON.stringify(Object.fromEntries(live.map((k) => [k.slug, { script: k.script, iframe: k.iframe }])))} />
+  </section>
+
   <section id="box">
-    <h2>The box for your guide</h2>
+    <h2>Or a box that never names a plugin</h2>
     <div class="kit">
       <div class="preview">
         <span class="eyebrow">How it looks in a guide</span>
@@ -148,6 +242,18 @@ const graph = [
 </Guide>
 
 <script>
+  // The self-updating box: switch the preview and both codes to the chosen pack.
+  const liveData = JSON.parse(document.getElementById("live-data")?.textContent ?? "{}") as Record<string, { script: string; iframe: string }>;
+  const livePick = document.getElementById("live-pack") as HTMLSelectElement | null;
+  livePick?.addEventListener("change", () => {
+    const k = livePick.value;
+    for (const d of document.querySelectorAll<HTMLElement>(".live-pack")) d.hidden = d.dataset.pack !== k;
+    const code = document.getElementById("live-code");
+    const frame = document.getElementById("live-frame");
+    if (code && liveData[k]) code.textContent = liveData[k].script;
+    if (frame && liveData[k]) frame.textContent = liveData[k].iframe;
+  });
+
   // Copy the text of the element a button names; say so on the button for a moment.
   for (const b of document.querySelectorAll<HTMLButtonElement>("[data-copy]")) {
     const label = b.textContent;
@@ -343,5 +449,62 @@ const graph = [
       grid-template-columns: 1fr;
       gap: 4px;
     }
+  }
+  .callout {
+    padding: 18px 20px;
+    border: 1px solid var(--accent-soft);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+  .callout h2 {
+    margin-top: 0;
+  }
+  .callout p:last-child {
+    margin-bottom: 0;
+  }
+  .pick {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+  }
+  .pick select {
+    font: inherit;
+    font-weight: 400;
+    padding: 6px 8px;
+    border: 1px solid var(--line-strong, var(--line));
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+  .privacy {
+    color: var(--ink-2);
+  }
+  /* The live box's preview, styled the way box.js styles it in a guide. */
+  .zpbox-lead {
+    margin: 0 0 0.4em;
+  }
+  .zpbox-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.6em;
+  }
+  .zpbox-list li {
+    margin: 0 0 0.5em;
+  }
+  .zpbox-task {
+    display: block;
+    font-size: 0.85em;
+    opacity: 0.8;
+  }
+  .zpbox-meta {
+    font-size: 0.85em;
+    opacity: 0.8;
+    white-space: nowrap;
+  }
+  .zpbox-foot {
+    margin: 0;
+    font-size: 0.85em;
+    opacity: 0.8;
   }
 </style>

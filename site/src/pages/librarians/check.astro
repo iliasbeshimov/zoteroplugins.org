@@ -1,0 +1,547 @@
+---
+import Guide from "../../layouts/Guide.astro";
+import { CURRENT_ZOTERO_MAJOR } from "../../lib/atlas.ts";
+import { breadcrumb, modifiedAt, PUBLISHER } from "../../lib/guides.ts";
+import { SITE } from "../../lib/links.ts";
+
+/**
+ * The guide check: a librarian gives the address of a guide that recommends Zotero plugins; the
+ * server (zotero-atlas/server, guides.js) reads it and reports on every plugin it links or names.
+ * The same page confirms and stops email alerts (?confirm=, ?stop=) and reruns a report (?url=).
+ */
+const path = "/librarians/check";
+const h1 = "Check your library guide's Zotero plugins";
+const cur = CURRENT_ZOTERO_MAJOR();
+const description =
+  "Paste the address of a library guide that recommends Zotero plugins. We find every plugin it links or names and tell you which still work with the current Zotero, which moved or were removed, and how each is graded. Free, no account; optional email alerts.";
+const SITE_KEY = "0x4AAAAAAFLUiYqWzSW4lRSQ";
+const TEST_KEY = "1x00000000000000000000AA";
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || (import.meta.env.DEV ? TEST_KEY : SITE_KEY);
+
+const graph = [
+  {
+    "@type": "WebPage",
+    "@id": `${SITE}${path}`,
+    url: `${SITE}${path}`,
+    name: h1,
+    description,
+    dateModified: modifiedAt("/librarians"),
+    isPartOf: { "@type": "WebSite", name: "Zotero Plugins Atlas", url: `${SITE}/` },
+    publisher: PUBLISHER,
+    audience: { "@type": "Audience", audienceType: "Librarians" },
+  },
+  breadcrumb("Check your guide", path),
+];
+---
+
+<Guide title="Check your library guide's Zotero plugins · Zotero Plugins Atlas" description={description} h1={h1} crumb="Check your guide" graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      Plugin pages in library guides go out of date quietly: Zotero has released four major versions since 2024, and each one left plugins behind. Paste the address of your guide and we'll read it, find every plugin it links or names, and tell you which still work with the current Zotero ({cur}), which have moved or been removed, and how we grade each one.
+    </p>
+  </Fragment>
+
+  <section class="tool" data-sitekey={siteKey}>
+    <form id="check" class="card-form" novalidate>
+      <label class="field" for="guide-url">
+        Your guide's address
+        <input id="guide-url" name="url" type="url" inputmode="url" autocomplete="url" placeholder="https://libguides.example.edu/zotero/plugins" required />
+      </label>
+      <div class="ts" aria-label="Check against bots"></div>
+      <div class="acts">
+        <button type="submit" class="btn btn-dark">Check this guide</button>
+        <p class="status small" role="status" aria-live="polite"></p>
+      </div>
+      <p class="small muted">
+        Free, no account. We read the page the way a browser does and keep only its address and the report, so the next check is faster.
+      </p>
+    </form>
+
+    <div id="notice" class="notice" hidden></div>
+
+    <div id="report" hidden>
+      <h2 id="report-title">What we found</h2>
+      <p id="report-sum" class="sum"></p>
+      <div id="list-zotero" class="flag" hidden>
+        <strong>Your page links Zotero's own plugin list.</strong> That page now says Zotero doesn't provide a list of plugins and that an official directory is planned. To point readers somewhere current, see <a href="/librarians">the box for your guide</a>.
+      </div>
+      <section id="sec-attention" hidden>
+        <h3>Needs attention</h3>
+        <ul class="items" id="items-attention"></ul>
+      </section>
+      <section id="sec-fine" hidden>
+        <h3>Fine today</h3>
+        <ul class="items" id="items-fine"></ul>
+      </section>
+      <details id="sec-unknown" hidden>
+        <summary>Other GitHub links on the page</summary>
+        <p class="small muted">Links we couldn't tie to one plugin: repositories that aren't plugins we know of (other software, or a plugin too new for the catalogue), or that hold several plugins.</p>
+        <ul class="plain" id="items-unknown"></ul>
+      </details>
+      <p class="small muted" id="report-how">
+        We find plugins by their GitHub links, links to their pages here, and a short list of well-known plugin names written without a link. Check that a plugin found by name is the one your page means. <a href="/how-we-grade">How we grade plugins</a>.
+      </p>
+
+      <section class="watch" id="watch">
+        <h2>Get an email when something changes</h2>
+        <p>
+          We'll check your guide every day and email you only when a plugin it names stops working with the current Zotero, is removed from GitHub, moves, or drops to a C grade. Everything on today's report counts as known.
+        </p>
+        <form id="watch-form" class="card-form" novalidate>
+          <label class="field" for="watch-email">
+            Your email address
+            <input id="watch-email" name="email" type="email" autocomplete="email" required />
+          </label>
+          <div class="ts" aria-label="Check against bots"></div>
+          <div class="acts">
+            <button type="submit" class="btn btn-dark">Email me about this guide</button>
+            <p class="status small" role="status" aria-live="polite"></p>
+          </div>
+          <p class="small muted">
+            We send one email to confirm. We keep your address and the guide's address only to send these alerts, never share them, and every email has a link to stop, which deletes both.
+          </p>
+        </form>
+      </section>
+    </div>
+  </section>
+
+  <section class="more">
+    <h2>Rather not check by hand?</h2>
+    <p>
+      <a href="/librarians#live-box">The box for your guide</a> lists our current picks for each stage of study and updates itself every night, so a plugin that stops working is replaced without you editing the page.
+    </p>
+  </section>
+</Guide>
+
+<script>
+  type Turnstile = {
+    render: (el: HTMLElement, o: { sitekey: string; size?: string }) => string;
+    reset: (id?: string) => void;
+    getResponse: (id?: string) => string | undefined;
+  };
+  type Item = {
+    slug: string;
+    name: string;
+    how: "link" | "card" | "name";
+    linked: string | null;
+    movedTo: string | null;
+    said: string | null;
+    status: string;
+    grade: string;
+    because: string;
+    works: string;
+    archived: boolean;
+    alt: { n: string; s: string | null } | null;
+    problems: string[];
+    notes: string[];
+    okNote?: string;
+  };
+  type Report = {
+    url: string;
+    title: string;
+    checkedAt: string;
+    currentMajor: number;
+    zoteroList: boolean;
+    plugins: Item[];
+    unknown: string[];
+    counts: { plugins: number; attention: number };
+  };
+
+  const API = "https://zoteroatlas.com/api/v1/guides";
+  const ERRORS: Record<string, string> = {
+    url: "That doesn't look like a web address. Paste the full address of your guide's page.",
+    turnstile: "The check against bots didn't pass. Please try again.",
+    "too-many": "That's a lot of checks from your network today. Please try again tomorrow.",
+    unreachable: "We couldn't reach that page. Is it public, and is the address right?",
+    status: "That page didn't open for us",
+    "not-html": "That address isn't a web page.",
+    "too-large": "That page is too large for us to read.",
+    "not-open": "The guide check isn't open yet. Please try again soon.",
+    email: "That doesn't look like an email address.",
+    throwaway: "Please use an address you keep: alerts can take months to arrive.",
+    mail: "We couldn't send the confirmation email. Please try again in a moment.",
+    expired: "That link has expired or was already used. Check your guide again to start over.",
+    gone: "There's nothing to stop: that link was already used, or the watch had ended.",
+  };
+
+  const tool = document.querySelector(".tool") as HTMLElement;
+  const sitekey = tool.dataset.sitekey ?? "";
+  const forms = [document.getElementById("check") as HTMLFormElement, document.getElementById("watch-form") as HTMLFormElement];
+  const widgets = new Map<HTMLFormElement, string | undefined>();
+  const ts = () => (window as unknown as { turnstile?: Turnstile }).turnstile;
+  let tsReady: Promise<void> | null = null;
+  function loadTurnstile(): Promise<void> {
+    tsReady ??= new Promise((resolve) => {
+      const s = document.createElement("script");
+      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      s.async = true;
+      s.onload = () => resolve();
+      document.head.append(s);
+    });
+    return tsReady;
+  }
+  async function widgetFor(form: HTMLFormElement) {
+    await loadTurnstile();
+    if (!widgets.has(form)) {
+      const box = form.querySelector(".ts") as HTMLElement;
+      widgets.set(form, ts()?.render(box, { sitekey, size: "flexible" }));
+    }
+    return widgets.get(form);
+  }
+  async function tokenFor(form: HTMLFormElement): Promise<string | null> {
+    const id = await widgetFor(form);
+    for (let i = 0; i < 40; i++) {
+      const t = ts()?.getResponse(id);
+      if (t) return t;
+      await new Promise((r) => setTimeout(r, 250));
+    }
+    return null;
+  }
+  for (const f of forms) {
+    f.addEventListener("focusin", () => void widgetFor(f), { once: true });
+  }
+
+  const $ = (id: string) => document.getElementById(id) as HTMLElement;
+  const el = (tag: string, cls?: string, text?: string) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  };
+  function link(href: string, text: string) {
+    const a = document.createElement("a");
+    a.href = href;
+    a.textContent = text;
+    return a;
+  }
+
+  const TONE: Record<string, string> = {
+    removed: "ser",
+    retired: "ser",
+    z6: "ser",
+    notcur: "ser",
+    norelease: "ser",
+    moved: "rev",
+    notrec: "rev",
+    archived: "rev",
+  };
+  const howText = (x: Item) =>
+    x.how === "name" ? `Named on your page as “${x.said}” (no link)` : x.how === "card" ? "Linked to its page here" : `Linked: github.com/${x.linked}`;
+
+  function gradeChip(g: string) {
+    const tok: Record<string, string> = { "A+": "ap", A: "a", B: "b", C: "c" };
+    const s = el("span", "chip", g in tok ? g : "–");
+    if (tok[g]) {
+      s.style.background = `var(--g-${tok[g]})`;
+      s.style.color = `var(--g-${tok[g]}-on)`;
+    }
+    s.title = `Zotero Plugins grade ${g}`;
+    return s;
+  }
+
+  function render(r: Report) {
+    $("notice").hidden = true;
+    $("report").hidden = false;
+    $("report-title").textContent = r.title ? `What we found on “${r.title}”` : "What we found";
+    const when = new Date(r.checkedAt).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" });
+    $("report-sum").textContent =
+      r.counts.plugins === 0
+        ? `We didn't find any Zotero plugins on this page (checked ${when}). If it names plugins without linking them, they may not be ones we can recognise by name.`
+        : `${r.counts.plugins} plugin${r.counts.plugins === 1 ? "" : "s"} on this page; ${r.counts.attention} need${r.counts.attention === 1 ? "s" : ""} attention. Checked ${when} against the current Zotero (${r.currentMajor}).`;
+    $("list-zotero").hidden = !r.zoteroList;
+    const att = $("items-attention");
+    const fine = $("items-fine");
+    att.replaceChildren();
+    fine.replaceChildren();
+    for (const x of r.plugins) {
+      const li = el("li", `item${x.problems.length ? ` t-${TONE[x.problems[0] ?? ""] ?? "rev"}` : " t-few"}`);
+      const head = el("div", "head");
+      head.append(gradeChip(x.grade), link(`/p/${x.slug}`, x.name));
+      li.append(head);
+      if (x.problems.length) {
+        const ul = el("ul", "probs");
+        x.problems.forEach((c, i) => ul.append(el("li", `p-${TONE[c] ?? "rev"}`, x.notes[i] ?? "")));
+        li.append(ul);
+      } else {
+        li.append(el("p", "ok", x.okNote ?? ""));
+      }
+      li.append(el("p", "how small muted", howText(x)));
+      (x.problems.length ? att : fine).append(li);
+    }
+    $("sec-attention").hidden = !att.children.length;
+    $("sec-fine").hidden = !fine.children.length;
+    const unk = $("items-unknown");
+    unk.replaceChildren(...r.unknown.map((u) => {
+      const li = el("li");
+      li.append(link(`https://github.com/${u}`, `github.com/${u}`));
+      return li;
+    }));
+    $("sec-unknown").hidden = !r.unknown.length;
+    (document.getElementById("watch-form") as HTMLFormElement).dataset.url = r.url;
+    $("report").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function notice(text: string, tone: "few" | "rev" | "ser" = "rev") {
+    const n = $("notice");
+    n.className = `notice t-${tone}`;
+    n.textContent = text;
+    n.hidden = false;
+  }
+
+  async function post(path: string, body: Record<string, unknown>) {
+    const res = await fetch(`${API}/${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const out = await res.json().catch(() => ({}));
+    return { res, out };
+  }
+
+  const checkForm = forms[0];
+  const watchForm = forms[1];
+  async function runCheck(url: string) {
+    const status = checkForm.querySelector(".status") as HTMLElement;
+    const button = checkForm.querySelector("button") as HTMLButtonElement;
+    button.disabled = true;
+    status.textContent = "Checking for bots…";
+    const token = await tokenFor(checkForm);
+    if (!token) {
+      status.textContent = ERRORS.turnstile;
+      button.disabled = false;
+      return;
+    }
+    status.textContent = "Reading your guide…";
+    try {
+      const { res, out } = await post("check", { url, turnstile: token });
+      if (res.ok && out.report) {
+        status.textContent = "";
+        render(out.report as Report);
+        history.replaceState(null, "", `?url=${encodeURIComponent(out.report.url)}`);
+      } else {
+        const msg = ERRORS[out.error] ?? "That didn't work. Please try again in a moment.";
+        status.textContent = out.error === "status" && out.status ? `${msg} (it answered ${out.status}).` : msg;
+      }
+    } catch {
+      status.textContent = "Couldn't reach the guide check. Please try again in a moment.";
+    }
+    ts()?.reset(widgets.get(checkForm));
+    button.disabled = false;
+  }
+
+  checkForm.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const url = String(new FormData(checkForm).get("url") ?? "").trim();
+    if (!url) {
+      (checkForm.querySelector(".status") as HTMLElement).textContent = "Paste your guide's address first.";
+      return;
+    }
+    void runCheck(url);
+  });
+
+  watchForm.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const status = watchForm.querySelector(".status") as HTMLElement;
+    const email = String(new FormData(watchForm).get("email") ?? "").trim();
+    if (!email) {
+      status.textContent = "Enter the address to send alerts to.";
+      return;
+    }
+    const button = watchForm.querySelector("button") as HTMLButtonElement;
+    button.disabled = true;
+    status.textContent = "Checking for bots…";
+    const token = await tokenFor(watchForm);
+    if (!token) {
+      status.textContent = ERRORS.turnstile;
+      button.disabled = false;
+      return;
+    }
+    status.textContent = "Sending…";
+    try {
+      const { res, out } = await post("watch", { url: watchForm.dataset.url, email, turnstile: token });
+      if (res.status === 202) {
+        watchForm.replaceChildren(
+          el("p", "done", `Check your inbox: we sent a link to ${email}. Open it within 24 hours to start the alerts.`),
+        );
+        return;
+      }
+      status.textContent = ERRORS[out.error] ?? "That didn't work. Please try again in a moment.";
+    } catch {
+      status.textContent = "Couldn't reach the guide check. Please try again in a moment.";
+    }
+    ts()?.reset(widgets.get(watchForm));
+    button.disabled = false;
+  });
+
+  // Links from emails: ?confirm=…, ?stop=…, ?url=…
+  const q = new URLSearchParams(location.search);
+  const confirm = q.get("confirm");
+  const stop = q.get("stop");
+  const preset = q.get("url");
+  if (confirm) {
+    notice("Starting your alerts…", "few");
+    void post("confirm", { token: confirm }).then(({ res, out }) => {
+      history.replaceState(null, "", location.pathname);
+      if (res.ok) notice(`You're set. We'll check ${out.url} every day and email you when something changes. We've sent you an email with a link to stop at any time.`, "few");
+      else notice(ERRORS[out.error] ?? "That didn't work. Please try the link again in a moment.", "ser");
+    });
+  } else if (stop) {
+    notice("Stopping your alerts…", "rev");
+    void post("stop", { token: stop }).then(({ res, out }) => {
+      history.replaceState(null, "", location.pathname);
+      if (res.ok) notice(`Done. We've stopped watching ${out.url} and deleted your address.`, "few");
+      else notice(ERRORS[out.error] ?? "That didn't work. Please try the link again in a moment.", "ser");
+    });
+  }
+  if (preset) {
+    (document.getElementById("guide-url") as HTMLInputElement).value = preset;
+    void runCheck(preset);
+  }
+</script>
+
+<style>
+  .tool {
+    display: grid;
+    gap: 20px;
+    margin: 8px 0 32px;
+  }
+  .card-form {
+    display: grid;
+    gap: 12px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+  .field {
+    display: grid;
+    gap: 6px;
+    font-weight: 600;
+  }
+  input[type="url"],
+  input[type="email"] {
+    font: inherit;
+    font-weight: 400;
+    padding: 10px 12px;
+    border: 1px solid var(--line-strong, var(--line));
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .acts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+  }
+  .status {
+    margin: 0;
+  }
+  .status:empty {
+    display: none;
+  }
+  .small {
+    font-size: 0.875rem;
+  }
+  .muted {
+    color: var(--ink-3);
+  }
+  .card-form > p.small {
+    margin: 0;
+  }
+  .notice,
+  .flag,
+  .done {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--rev-line);
+    background: var(--rev-bg);
+    color: var(--ink);
+    margin: 0;
+  }
+  .notice.t-few,
+  .done {
+    border-color: var(--few-line);
+    background: var(--few-bg);
+  }
+  .notice.t-ser {
+    border-color: var(--ser-line);
+    background: var(--ser-bg);
+  }
+  .sum {
+    font-size: 1.05rem;
+  }
+  .items {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: grid;
+    gap: 10px;
+  }
+  .item {
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-left-width: 4px;
+    border-radius: 10px;
+    background: var(--surface);
+  }
+  .item.t-ser {
+    border-left-color: var(--ser-solid, var(--ser-fg));
+  }
+  .item.t-rev {
+    border-left-color: var(--rev-line);
+  }
+  .item.t-few {
+    border-left-color: var(--few-line);
+  }
+  .item .head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+  .chip {
+    display: inline-grid;
+    place-items: center;
+    min-width: 28px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: var(--nd-bg);
+    color: var(--nd-fg);
+    flex: none;
+  }
+  .probs {
+    margin: 8px 0 0;
+    padding-left: 18px;
+  }
+  .probs li {
+    margin: 2px 0;
+  }
+  .ok,
+  .how {
+    margin: 6px 0 0;
+  }
+  .how {
+    overflow-wrap: anywhere;
+  }
+  .plain {
+    padding-left: 18px;
+    overflow-wrap: anywhere;
+  }
+  .watch {
+    margin-top: 28px;
+  }
+  .watch h2 {
+    margin-bottom: 6px;
+  }
+  details summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+</style>

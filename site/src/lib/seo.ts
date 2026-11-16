@@ -22,6 +22,7 @@ const GUIDE_PATHS = [
   "/for",
   ...PACKS.map(packPath),
   "/librarians",
+  "/librarians/check",
   "/works-with-zotero",
   "/ai-without-api-key",
   "/how",
