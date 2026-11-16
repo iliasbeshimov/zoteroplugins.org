@@ -7,7 +7,8 @@ import { stem, tokenize } from "./search.ts";
  * cosine over descriptions, summary, "ways people ask" phrases (counted double) and GitHub topics.
  * It's shown only when it also works with the current Zotero, is graded B or better (A or better
  * for a plugin graded A or A+), isn't a copy or fork of the plugin (those are under "Forks and
- * copies"), and has some users. Closest match first, at most three.
+ * copies"), and has some users. Closest match first, at most three. A plugin with a hand-checked
+ * list (`useInstead`) shows that list instead, whatever its descriptions say.
  */
 export interface Similar {
   p: Plugin;
@@ -17,6 +18,10 @@ export interface Similar {
   matched: string;
   /** What it offers that the plugin doesn't, at most two. */
   labels: string[];
+  /** Checked by hand to do the job (useInstead), not matched from descriptions. */
+  checked?: boolean;
+  /** Worth knowing before switching, from the hand-checked list. */
+  note?: string | null;
 }
 
 /** Below this a match is a shared word or two, not the same job. */
@@ -133,6 +138,17 @@ export const similarFloor = (p: Plugin) => (RANK[p.grade] >= RANK.A ? "A" : "B")
 
 /** Plugins that do the same job as `p` and pass the bar, closest first; `total` counts all that pass. */
 export function similarPlugins(p: Plugin, n = MAX_SHOWN): { shown: Similar[]; total: number } {
+  // Checked by hand: those plugins and no others, when they still work with current Zotero.
+  if (p.useInstead) {
+    const bySlug = new Map(shownPlugins().map((x) => [x.slug, x]));
+    const checked = p.useInstead.plugins.flatMap((c) => {
+      const x = bySlug.get(c.slug);
+      return x?.currentOk && !x.retired
+        ? [{ p: x, score: 1, matched: "", labels: [], checked: true, note: c.note }]
+        : [];
+    });
+    return { shown: checked.slice(0, n), total: checked.length };
+  }
   const floor = RANK[similarFloor(p)];
   const sameJob = shownPlugins()
     .filter((x) => x.slug !== p.slug && !x.retired && x.jobs.some((j) => p.jobs.includes(j)))

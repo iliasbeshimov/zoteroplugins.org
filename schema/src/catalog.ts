@@ -16,9 +16,21 @@ export const CatalogBuild = z.object({
   sha256: Sha256.nullable().describe(
     "The file we analysed; the plugin installs only a file with this hash",
   ),
-  supports: z.array(z.int().positive()).describe("Zotero majors its manifest range covers"),
-  min: z.string().nullable().describe("strict_min_version, compared the way Zotero does"),
-  max: z.string().nullable().describe("strict_max_version"),
+  supports: z
+    .array(z.int().positive())
+    .describe("Zotero majors its range covers, as Zotero applies it (its update file included)"),
+  min: z
+    .string()
+    .nullable()
+    .describe(
+      "strict_min_version, compared the way Zotero does; its update file's when that raised the range",
+    ),
+  max: z
+    .string()
+    .nullable()
+    .describe(
+      "strict_max_version, or the higher one its update file's entry for this version gives (Zotero applies it on install)",
+    ),
 });
 
 export const CatalogEntry = z.object({

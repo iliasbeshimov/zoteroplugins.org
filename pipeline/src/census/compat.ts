@@ -128,3 +128,54 @@ export function supportedMajors(manifests: XpiManifest[], zv: ZoteroVersions): n
     (major) => major <= upTo && manifests.some((m) => supportsMajor(m, major, zv)),
   );
 }
+
+/** An update file's entry, as much of it as Zotero's compatibility update reads (profile/updates.ts). */
+export interface CompatibilityEntry {
+  version: string;
+  /** The entry has a Zotero target (applications.zotero). Zotero skips entries without one. */
+  zotero: boolean;
+  min: string | null;
+  /** strict_max_version, else advisory_max_version; null means any version. */
+  max: string | null;
+}
+
+/** Where a build's effective range comes from: its own manifest, or its update file. */
+export type RangeSource = "release" | "update-file";
+
+/**
+ * The range Zotero applies to a manifest.json build, which its update file can raise without a new
+ * release. Zotero runs Firefox's add-on manager: installing a file that looks incompatible first
+ * checks its update address (XPIInstall's STATE_CHECKING_UPDATE), and the entry for the installed
+ * version replaces the manifest's min and max when the manifest's max is lower than the entry's
+ * (XPIDatabase's applyCompatibilityUpdate). An entry's max is strict_max_version, else
+ * advisory_max_version, else "*" (AddonUpdateChecker's parseJSONManifest), read from its `zotero`
+ * target. So this only ever raises the limit, and only an entry for exactly this version counts.
+ * Without an entry, or when the update file couldn't be fetched or read (`entries` null), the
+ * manifest's range stands, as it does for install.rdf plugins, which Zotero 7+ doesn't load.
+ *
+ * Zotero applies the entry only on a version the entry itself covers (getCompatibilityUpdate's
+ * matchesVersions); elsewhere the manifest's range stands. So the result runs from the lower of the
+ * two minimums (the manifest's when the entry gives none) to the entry's max, unless the entry
+ * starts above the manifest's max, when it's the entry's range alone.
+ */
+export function effectiveRange(
+  m: XpiManifest,
+  version: string,
+  entries: readonly CompatibilityEntry[] | null | undefined,
+): { manifest: XpiManifest; from: RangeSource } {
+  const release = { manifest: m, from: "release" as const };
+  if (m.target !== "zotero" || m.format !== "manifest.json" || !m.maxVersion || !entries)
+    return release;
+  const entry = entries.find((e) => e.zotero && compareVersions(e.version, version) === 0);
+  if (!entry) return release;
+  const max = entry.max ?? "*";
+  if (compareVersions(m.maxVersion, max) >= 0) return release;
+  const lower = (a: string | null, b: string | null) =>
+    a === null || b === null ? null : compareVersions(a, b) <= 0 ? a : b;
+  const min = !entry.min
+    ? m.minVersion
+    : compareVersions(entry.min, m.maxVersion) > 0
+      ? entry.min
+      : lower(m.minVersion, entry.min);
+  return { manifest: { ...m, minVersion: min, maxVersion: max }, from: "update-file" };
+}

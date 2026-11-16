@@ -151,8 +151,8 @@ export function catalogEntry(p: PluginProfile, src: CatalogSources): CatalogEntr
       url: doc?.asset.url ?? `${p.links.releases}/download/${inst.tag}/${b.asset}`,
       sha256: doc?.asset.sha256 ?? null,
       supports: b.supports,
-      min: doc?.manifest.strictMinVersion ?? null,
-      max: doc?.manifest.strictMaxVersion ?? null,
+      min: b.range ? b.range.min : (doc?.manifest.strictMinVersion ?? null),
+      max: b.range ? b.range.max : (doc?.manifest.strictMaxVersion ?? null),
     });
   }
   const check = inst.updates?.check;

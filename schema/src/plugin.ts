@@ -71,6 +71,42 @@ export const Retirement = z.object({
     .describe("What the developer points to instead; `slug` when it's a listed plugin"),
 });
 
+/**
+ * What to use instead of a plugin that doesn't work with current Zotero, checked by hand. Where
+ * it's set, it replaces the plugins matched from descriptions ("Does the same job") on the plugin's
+ * card and on /zotero-6-plugins. The plugin its developer names (`retired.alternative`) and updated
+ * forks are shown as before.
+ */
+export const UseInstead = z.object({
+  builtIn: z
+    .object({
+      what: z
+        .string()
+        .min(1)
+        .max(200)
+        .describe("What Zotero itself now does, in Zotero's words or close to them"),
+      since: z.int().min(7).describe("The Zotero version that added it"),
+      url: z.url().describe("Where Zotero says so"),
+    })
+    .optional()
+    .describe("Zotero now does this job itself"),
+  plugins: z
+    .array(
+      z.object({
+        slug: Slug,
+        note: z
+          .string()
+          .max(80)
+          .optional()
+          .describe("Something worth knowing before switching, e.g. its menus are in Italian"),
+      }),
+    )
+    .default([])
+    .describe(
+      "Listed plugins checked to do the job, from their README; none listed means we found none",
+    ),
+});
+
 // ---------------------------------------------------------------------------
 // Curated, human-edited: data/plugins/<slug>.yaml
 // Anything set here overrides the machine draft of the same field.
@@ -120,6 +156,7 @@ export const PluginCurated = z.object({
   reviews: z.array(Review).default([]),
   responses: z.array(DeveloperResponse).default([]),
   retired: Retirement.optional(),
+  useInstead: UseInstead.optional(),
   internalNotes: z.string().optional().describe("Not published."),
 });
 

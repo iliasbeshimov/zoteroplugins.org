@@ -7,7 +7,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import type { CensusRow } from "../src/census/run.ts";
 import {
   blockedBy,
-  parseBlockedPlugins,
+  parseBlocklist,
   provenanceLite,
   reclassifyHosts,
   updateHostOf,
@@ -237,49 +237,49 @@ describe("Zotero blocklist", () => {
     expect(blockedBy(list, "other@x", "1.0")).toBeNull();
   });
 
-  it("reads the table built into Zotero's plugins.js", () => {
-    // As in zotero/zotero chrome/content/zotero/xpcom/plugins.js (2026-11), plus the string
-    // ranges Zotero also accepts, a comment and a single-quoted reason.
-    const js = `
-	// TODO: Get blocking list from server
-	const BLOCKED_PLUGINS = {
-		"better-bibtex@iris-advies.com": {
-			versionRanges: [{
-				maxVersion: "8.999"
-			}],
-			reason: "Versions of this plugin prior to version 9.0 prevent Zotero from closing properly and cannot be automatically updated.",
-		},
-		"zoterostyle@polygon.org": {
-			versionRanges: [{
-				maxVersion: "4.5.99"
-			}],
-			reason: "Versions of this plugin prior to version 4.6.0 break the Zotero user interface.",
-		},
-		/* every version */
-		"all@x": { versionRanges: ["*"], reason: 'It doesn\\'t start: {}' },
-		"one@x": { versionRanges: ["1.2.3"], reason: "One bad build" },
-	};
-	function getBlockedPlugins() {
-		return BLOCKED_PLUGINS;
-	}`;
-    const parsed = parseBlockedPlugins(js);
+  it("reads Zotero's blocked-plugins.json and checks versions against it", () => {
+    const json = JSON.stringify({
+      version: 3,
+      blockedPlugins: [
+        {
+          id: "better-bibtex@iris-advies.com",
+          versionRanges: [{ maxVersion: "8.999" }],
+          reason:
+            "Versions of this plugin prior to version 9.0 prevent Zotero from closing properly and cannot be automatically updated.",
+        },
+        {
+          id: "zoterostyle@polygon.org",
+          versionRanges: [{ maxVersion: "4.5.99" }],
+          reason: "Versions of this plugin prior to version 4.6.0 break the Zotero user interface.",
+        },
+        { id: "all@x", versionRanges: [{}], reason: "It doesn't start" },
+        { id: "one@x", versionRanges: [{ minVersion: "1.2.3", maxVersion: "1.2.3" }] },
+      ],
+    });
+    const parsed = parseBlocklist(json);
+    expect(parsed.version).toBe(3);
     expect(parsed.blockedPlugins.map((p) => p.id)).toEqual([
       "better-bibtex@iris-advies.com",
       "zoterostyle@polygon.org",
       "all@x",
       "one@x",
     ]);
-    expect(parsed.blockedPlugins[0]?.versionRanges).toEqual([{ maxVersion: "8.999" }]);
+    expect(blockedBy(parsed, "better-bibtex@iris-advies.com", "8.0.5")?.reason).toContain("9.0");
+    expect(blockedBy(parsed, "better-bibtex@iris-advies.com", "9.0.77")).toBeNull();
     expect(blockedBy(parsed, "zoterostyle@polygon.org", "4.5.2")?.reason).toContain("4.6.0");
     expect(blockedBy(parsed, "zoterostyle@polygon.org", "4.6.0")).toBeNull();
-    expect(blockedBy(parsed, "all@x", "9.9")?.reason).toBe("It doesn't start: {}");
+    expect(blockedBy(parsed, "all@x", "9.9")?.reason).toBe("It doesn't start");
     expect(blockedBy(parsed, "one@x", "1.2.3")).not.toBeNull();
     expect(blockedBy(parsed, "one@x", "1.2.4")).toBeNull();
   });
 
-  it("says so when Zotero's plugins.js has no table it can read", () => {
-    expect(() => parseBlockedPlugins("const OTHER = {};")).toThrow(/no BLOCKED_PLUGINS/);
-    expect(() => parseBlockedPlugins("const BLOCKED_PLUGINS = { a: list };")).toThrow(/unreadable/);
+  it("refuses a blocklist Zotero itself would refuse", () => {
+    expect(() => parseBlocklist("<html>")).toThrow(/unreadable/);
+    expect(() => parseBlocklist('{"version": 1}')).toThrow(/no blockedPlugins/);
+    expect(() => parseBlocklist('{"blockedPlugins": [{"id": "a@x"}]}')).toThrow(/invalid entry/);
+    expect(() =>
+      parseBlocklist('{"blockedPlugins": [{"id": "a@x", "versionRanges": ["*"]}]}'),
+    ).toThrow(/invalid version range/);
   });
 });
 
@@ -1382,6 +1382,7 @@ describe("update manifests", () => {
         hash: null,
         min: "5.0.0",
         max: "6.*",
+        zotero: true,
       },
     ]);
     expect(pickUpdate(entries, "6.0.30")?.version).toBe("5.1.2");
@@ -1449,6 +1450,7 @@ describe("update manifests", () => {
       hash,
       min: null,
       max: null,
+      zotero: true,
     });
     const bytes = new TextEncoder().encode("fixture");
     expect(statedHash(entry(`SHA512:${"AB".repeat(64)}`))).toEqual({

@@ -13,9 +13,10 @@ const slugs = bySlug();
 const legacy = all.filter((p) => p.legacy).sort((a, b) => b.downloadsN - a.downloadsN);
 
 /**
- * What to use instead, in order of how sure we are: the plugin its developer points to, an updated
- * fork that works with the current Zotero (graded B or better), then plugins that do the same job
- * (the "Other plugins that do this" match from its card).
+ * What to use instead, in order of how sure we are: the plugin its developer points to, what Zotero
+ * itself now does, an updated fork that works with the current Zotero (graded B or better), then
+ * plugins that do the same job: checked by hand where we have a list (`useInstead`), otherwise the
+ * "Other plugins that do this" match from its card.
  */
 type Replacement = { p: Plugin | null; name: string; href: string; how: string };
 function replacements(p: Plugin): Replacement[] {
@@ -25,13 +26,21 @@ function replacements(p: Plugin): Replacement[] {
     const known = alt.slug ? slugs[alt.slug] : undefined;
     out.push({ p: known ?? null, name: alt.name, href: known ? `/p/${known.slug}` : alt.url, how: "Named by its developer" });
   }
+  const builtIn = p.useInstead?.builtIn;
+  if (builtIn) out.push({ p: null, name: builtIn.what, href: builtIn.url, how: `Built into Zotero ${builtIn.since}` });
   const forks = all
     .filter((x) => x.forkOf?.slug === p.slug && x.currentOk && !x.legacy && !x.retired && !x.removed && x.installUrl && RANK[x.grade] >= RANK.B)
     .sort((a, b) => RANK[b.grade] - RANK[a.grade] || b.downloadsN - a.downloadsN)
     .slice(0, 2);
   for (const f of forks) out.push({ p: f, name: f.name, href: `/p/${f.slug}`, how: "Updated fork" });
   for (const s of similarPlugins(p).shown)
-    if (!out.some((r) => r.p?.slug === s.p.slug)) out.push({ p: s.p, name: s.p.name, href: `/p/${s.p.slug}`, how: "Does the same job" });
+    if (!out.some((r) => r.p?.slug === s.p.slug))
+      out.push({
+        p: s.p,
+        name: s.p.name,
+        href: `/p/${s.p.slug}`,
+        how: s.checked ? `Checked by hand: does the same job${s.note ? ` · ${s.note}` : ""}` : "Does the same job",
+      });
   return out;
 }
 const rows = legacy.map((p) => ({ p, repl: replacements(p) }));
@@ -46,7 +55,7 @@ const graph = collectionPage({ path, name: h1, description, plugins: legacy });
 <Guide title={`${h1} · Zotero Plugins Atlas`} description={description} h1={h1} crumb="Zotero 6 plugins" graph={graph}>
   <Fragment slot="lead">
     <p>
-      Plugins made for Zotero 6 and earlier use the old plugin format, which Zotero 7 and later can't load. We list {num(legacy.length)} of them. For {num(withRepl.length)} we found something that works with Zotero {cur}: a plugin its developer points to, an updated fork, or another plugin that does the same job.
+      Plugins made for Zotero 6 and earlier use the old plugin format, which Zotero 7 and later can't load. We list {num(legacy.length)} of them. For {num(withRepl.length)} we found something that works with Zotero {cur}: a plugin its developer points to, something Zotero now does itself, an updated fork, or another plugin that does the same job.
     </p>
   </Fragment>
 

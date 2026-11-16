@@ -282,24 +282,30 @@ function compute() {
     .slice(0, 3)
     .map(({ r, perDay }) => named(r, Math.round(perDay), MONTHS[r.born.getUTCMonth()]));
 
-  // Compatibility: what installable plugins declare
+  // Compatibility: what installable plugins declare. The census reads release files only; where a
+  // plugin's update file raised its range (Zotero applies that on install), its profile's range counts.
+  const raised = (r: Censused) => r.prof.compatibility?.maxFrom === "update-file";
+  const declares = (r: Censused, v: number) =>
+    raised(r) ? r.prof.compatibility.supports.includes(v) : r.c[`z${v}`] === "true";
+  const maxOf = (r: Censused) =>
+    raised(r) ? (r.prof.compatibility.maxVersion ?? "") : (r.c.max_version ?? "");
   const majors = [6, 7, 8, 9, 10, 11, 12].filter((v) =>
     installable.some((r) => r.c[`z${v}`] !== undefined),
   );
   const versions = majors.map((v) => ({
     v,
-    count: installable.filter((r) => r.c[`z${v}`] === "true").length,
+    count: installable.filter((r) => declares(r, v)).length,
   }));
   const currentMajor = rows.find((r) => r.p.currentMajor)?.p.currentMajor ?? 10;
   const nextMajor = versions.find((v) => v.v === currentMajor + 1) ?? null;
   const maxMajor = (s: string) => (s === "*" ? Number.POSITIVE_INFINITY : n(/^(\d+)/.exec(s)?.[1]));
-  const optimists = installable.filter((r) => maxMajor(r.c.max_version ?? "") >= 99);
+  const optimists = installable.filter((r) => maxMajor(maxOf(r)) >= 99);
   const biggestFinite = Math.max(
-    ...optimists.map((r) => maxMajor(r.c.max_version)).filter(Number.isFinite),
+    ...optimists.map((r) => maxMajor(maxOf(r))).filter(Number.isFinite),
     0,
   );
-  const anyVersion = optimists.filter((r) => r.c.max_version === "*").length;
-  const atBiggest = optimists.filter((r) => maxMajor(r.c.max_version) === biggestFinite).length;
+  const anyVersion = optimists.filter((r) => maxOf(r) === "*").length;
+  const atBiggest = optimists.filter((r) => maxMajor(maxOf(r)) === biggestFinite).length;
 
   // AI
   const aiByYear = years

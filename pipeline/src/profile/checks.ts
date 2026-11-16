@@ -1,17 +1,16 @@
 import type { Analysis, Provenance } from "@atlas/schema";
 import { compareVersions } from "../census/compat.ts";
 import type { GitHub } from "../net/github.ts";
+import { fetchWithRetry } from "../net/http.ts";
 import { type DeveloperHints, isDeveloperHost } from "../scan/analyze.ts";
 import { classifyHost, type HostTable, hostOf } from "../scan/hosts.ts";
 
 // ----------------------------------------------------------------------------------------------
-// Zotero's official blocklist: the table built into Zotero itself (BLOCKED_PLUGINS in plugins.js),
-// the list Zotero acts on. The zotero/plugin-blocklist repository that published it as JSON was
-// deleted (404 from 2026-11-13).
+// Zotero's official blocklist: the list Zotero downloads and acts on (ZOTERO_CONFIG's
+// PLUGIN_BLOCKLIST_URL; builds ship a copy of it). Until 2026-11-13 it was the BLOCKED_PLUGINS
+// table in Zotero's plugins.js, and before that the zotero/plugin-blocklist repository.
 
-export const BLOCKLIST_SOURCE =
-  "https://github.com/zotero/zotero/blob/main/chrome/content/zotero/xpcom/plugins.js";
-const BLOCKLIST_PATH = "/repos/zotero/zotero/contents/chrome/content/zotero/xpcom/plugins.js";
+export const BLOCKLIST_SOURCE = "https://plugins.zotero.org/blocked-plugins.json";
 
 export interface Blocklist {
   version: number;
@@ -22,77 +21,56 @@ export interface Blocklist {
   }[];
 }
 
-/** A JavaScript object literal of plain data, from its opening brace, as JSON. */
-function objectLiteralAsJson(src: string, open: number): string {
-  let out = "";
-  let depth = 0;
-  for (let i = open; i < src.length; i++) {
-    const c = src[i] as string;
-    if (c === '"' || c === "'" || c === "`") {
-      let text = "";
-      let j = i + 1;
-      for (; j < src.length && src[j] !== c; j++) {
-        if (src[j] === "\\") {
-          j++;
-          const e = src[j] ?? "";
-          text += e === "n" ? "\n" : e === "t" ? "\t" : e;
-        } else text += src[j];
-      }
-      out += JSON.stringify(text);
-      i = j;
-    } else if (c === "/" && src[i + 1] === "/") {
-      while (i < src.length && src[i] !== "\n") i++;
-    } else if (c === "/" && src[i + 1] === "*") {
-      i = src.indexOf("*/", i + 2) + 1 || src.length;
-    } else if (/[A-Za-z_$]/.test(c)) {
-      const id = /^[\w$]+/.exec(src.slice(i))?.[0] ?? c;
-      i += id.length - 1;
-      // A key, quoted; true, false and null as they are. Anything else (a variable) isn't data.
-      out += /^\s*:/.test(src.slice(i + 1)) ? JSON.stringify(id) : id;
-    } else if (c === "}" || c === "]") {
-      out = `${out.replace(/,\s*$/, "")}${c}`;
-      if (--depth === 0) return out;
-    } else {
-      if (c === "{" || c === "[") depth++;
-      out += c;
-    }
-  }
-  throw new Error("unterminated object");
-}
-
 /**
- * The BLOCKED_PLUGINS table in Zotero's plugins.js. A version range there is an object with
- * minVersion and maxVersion, "*" for every version, or one exact version.
+ * Zotero's blocked-plugins.json, checked the way Zotero checks it (blockedPluginsToMap in
+ * plugins.js): every entry has a string ID and a list of ranges, each an object whose minVersion
+ * and maxVersion, when present, are strings. A range with neither covers every version.
  */
-export function parseBlockedPlugins(pluginsJs: string): Blocklist {
-  const start = /\bBLOCKED_PLUGINS\s*=\s*\{/.exec(pluginsJs);
-  if (!start) throw new Error("blocklist: no BLOCKED_PLUGINS table in Zotero's plugins.js");
-  let table: Record<string, { versionRanges?: unknown[]; reason?: string }>;
+export function parseBlocklist(text: string): Blocklist {
+  let data: { version?: unknown; blockedPlugins?: unknown };
   try {
-    table = JSON.parse(objectLiteralAsJson(pluginsJs, start.index + start[0].length - 1));
+    data = JSON.parse(text);
   } catch (error) {
-    throw new Error(`blocklist: Zotero's BLOCKED_PLUGINS unreadable: ${(error as Error).message}`);
+    throw new Error(
+      `blocklist: Zotero's blocked-plugins.json unreadable: ${(error as Error).message}`,
+    );
   }
+  if (!Array.isArray(data?.blockedPlugins))
+    throw new Error("blocklist: no blockedPlugins list in Zotero's blocked-plugins.json");
+  const optional = (v: unknown) => v === undefined || typeof v === "string";
   return {
-    version: 1,
-    blockedPlugins: Object.entries(table).map(([id, p]) => ({
-      id,
-      versionRanges: (p.versionRanges ?? []).map((r) =>
-        r === "*"
-          ? {}
-          : typeof r === "string"
-            ? { minVersion: r, maxVersion: r }
-            : (r as { minVersion?: string; maxVersion?: string }),
-      ),
-      reason: p.reason ?? "",
-    })),
+    version: typeof data.version === "number" ? data.version : 0,
+    blockedPlugins: data.blockedPlugins.map((p) => {
+      const e = p as { id?: unknown; versionRanges?: unknown; reason?: unknown };
+      if (typeof e?.id !== "string" || !Array.isArray(e.versionRanges))
+        throw new Error(`blocklist: invalid entry ${JSON.stringify(p)}`);
+      for (const r of e.versionRanges) {
+        const range = r as { minVersion?: unknown; maxVersion?: unknown };
+        if (!range || typeof range !== "object" || Array.isArray(range))
+          throw new Error(`blocklist: invalid version range for ${e.id}`);
+        if (!optional(range.minVersion) || !optional(range.maxVersion))
+          throw new Error(`blocklist: invalid version range for ${e.id}`);
+      }
+      return {
+        id: e.id,
+        versionRanges: e.versionRanges as { minVersion?: string; maxVersion?: string }[],
+        reason: typeof e.reason === "string" ? e.reason : "",
+      };
+    }),
   };
 }
 
-export async function fetchBlocklist(gh: GitHub): Promise<Blocklist> {
-  const res = await gh.rest<{ content: string }>(BLOCKLIST_PATH);
-  if (res.status !== 200 || !res.data) throw new Error(`blocklist: HTTP ${res.status}`);
-  return parseBlockedPlugins(Buffer.from(res.data.content, "base64").toString("utf8"));
+export async function fetchBlocklist(userAgent: string): Promise<Blocklist> {
+  const res = await fetchWithRetry(
+    BLOCKLIST_SOURCE,
+    { headers: { "user-agent": userAgent, accept: "application/json" } },
+    2,
+  );
+  if (!res.ok) {
+    await res.body?.cancel();
+    throw new Error(`blocklist: HTTP ${res.status}`);
+  }
+  return parseBlocklist(await res.text());
 }
 
 export function blockedBy(

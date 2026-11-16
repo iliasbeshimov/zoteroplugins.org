@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Category, IsoDate, IsoDateTime, RepoKey, SchemaVersion, Sha256, Slug } from "./common.ts";
-import { DeveloperResponse, Retirement } from "./plugin.ts";
+import { DeveloperResponse, Retirement, UseInstead } from "./plugin.ts";
 import { ProvenanceLevel } from "./provenance.ts";
 import { PluginContent, Requirements } from "./requirements.ts";
 import { TrustCard } from "./trust-card.ts";
@@ -111,8 +111,21 @@ export const PluginProfile = z.object({
     supports: z
       .array(z.int().positive())
       .describe("Zotero majors the manifest range covers; none for a file Zotero won't install"),
-    minVersion: z.string().nullable(),
+    minVersion: z
+      .string()
+      .nullable()
+      .describe("The headline build's range as Zotero applies it (see maxFrom)"),
     maxVersion: z.string().nullable(),
+    releaseRange: z
+      .object({ min: z.string().nullable(), max: z.string().nullable() })
+      .optional()
+      .describe("The headline build's own strict_min_version and strict_max_version"),
+    maxFrom: z
+      .enum(["release", "update-file"])
+      .optional()
+      .describe(
+        "Where minVersion and maxVersion come from: the release file (also when absent), or its update file's entry for this version, which Zotero applies as a compatibility update when its maximum is higher",
+      ),
     current: CompatTarget.nullable(),
     previous: CompatTarget.nullable(),
     next: CompatTarget.nullable().describe("Next major on the beta/dev channel"),
@@ -148,7 +161,13 @@ export const PluginProfile = z.object({
           z.object({
             asset: z.string(),
             version: z.string(),
-            supports: z.array(z.int()).describe("Zotero majors this build declares"),
+            supports: z
+              .array(z.int())
+              .describe("Zotero majors this build works with, its update file's entry included"),
+            range: z
+              .object({ min: z.string().nullable(), max: z.string().nullable() })
+              .optional()
+              .describe("The build's range when its update file raised it"),
             label: z
               .enum([
                 "low-concern",
@@ -312,6 +331,9 @@ export const PluginProfile = z.object({
     .describe("Developers' responses to the card, with our replies (data/plugins/<slug>.yaml)"),
   retired: Retirement.optional().describe(
     "Set when the developer has retired the plugin (data/plugins/<slug>.yaml)",
+  ),
+  useInstead: UseInstead.optional().describe(
+    "What to use instead, checked by hand (data/plugins/<slug>.yaml); replaces description matches",
   ),
   removed: z
     .object({

@@ -13,7 +13,9 @@ import {
 } from "@atlas/schema";
 import { parse as parseYaml } from "yaml";
 import {
+  type CompatibilityEntry,
   compareVersions,
+  effectiveRange,
   installProblem,
   newestRelease,
   supportedMajors,
@@ -72,6 +74,7 @@ import {
   fetchUpdateText,
   type HashAlgorithm,
   isoTime,
+  isUpdateRdf,
   matchesStatedHash,
   parseUpdateManifest,
   pickUpdate,
@@ -226,10 +229,14 @@ export function selectCandidates(
 const BLOCKLIST_CACHE = "blocklist.json";
 
 /** Zotero's blocklist from GitHub, kept in the cache so offline runs can use the same list. */
-async function loadBlocklist(gh: GitHub | null, cacheDir: string): Promise<Blocklist> {
+async function loadBlocklist(
+  gh: GitHub | null,
+  cacheDir: string,
+  userAgent: string,
+): Promise<Blocklist> {
   const file = join(cacheDir, BLOCKLIST_CACHE);
   if (gh) {
-    const list = await fetchBlocklist(gh);
+    const list = await fetchBlocklist(userAgent);
     await mkdir(cacheDir, { recursive: true });
     await writeFile(file, JSON.stringify(list));
     return list;
@@ -251,7 +258,11 @@ export async function makeContext(
           config.userAgent,
           httpCache,
         );
-  const blocklist = await loadBlocklist(opts.offline ? null : gh, config.cacheDir);
+  const blocklist = await loadBlocklist(
+    opts.offline ? null : gh,
+    config.cacheDir,
+    config.userAgent,
+  );
   return {
     gh: gh as GitHub,
     table: prep.table,
@@ -382,8 +393,13 @@ export interface Gathered {
   alternates: string[];
   /** What the update address offers today; `target` is the file when it isn't this release's. */
   update?: { check: UpdateCheck; target: Artifact | null } | null;
+  /**
+   * Each build's entries in its update file for its own version, by the build's SHA-256: Zotero
+   * applies them as a compatibility update (effectiveRange).
+   */
+  compatEntries?: Record<string, CompatibilityEntry[]>;
   /** Developer responses, notices and retirement from data/plugins/<slug>.yaml. */
-  curated?: Pick<PluginCurated, "responses" | "notices" | "retired"> | null;
+  curated?: Pick<PluginCurated, "responses" | "notices" | "retired" | "useInstead"> | null;
   /** The plugin sandbox's record (data/sandbox/<slug>.json), for the one file it ran. */
   sandbox?: SandboxRecord | null;
   /** Reviewed findings (data/reviews/<capability-id>/<slug>.json). */
@@ -403,8 +419,13 @@ async function readCurated(slug: string): Promise<Gathered["curated"]> {
   const parsed = PluginCurated.safeParse(parseYaml(text));
   if (!parsed.success)
     throw new Error(`data/plugins/${slug}.yaml: ${parsed.error.issues[0]?.message ?? "invalid"}`);
-  const { responses, notices, retired } = parsed.data;
-  return { responses, notices, ...(retired ? { retired } : {}) };
+  const { responses, notices, retired, useInstead } = parsed.data;
+  return {
+    responses,
+    notices,
+    ...(retired ? { retired } : {}),
+    ...(useInstead ? { useInstead } : {}),
+  };
 }
 
 /** Everything that needs GitHub or the .xpi files: the release, its analysed files, the README. */
@@ -497,15 +518,21 @@ export async function gather(
   // offers analysed when it isn't one of this release's.
   let update: Gathered["update"] = null;
   let lead = orderBuilds(artifacts, ctx.zv)[0];
+  // Update addresses checkUpdates fetched this run (it reads them from the cache offline).
+  const fetched = new Set<string>();
+  const checkFrom = (from: Artifact) => {
+    if (from.doc.manifest.updateUrl) fetched.add(from.doc.manifest.updateUrl);
+    return checkUpdates(from, artifacts, row, slug, known, developer, ctx, existing);
+  };
   if (release && lead) {
     try {
-      update = await checkUpdates(lead, artifacts, row, slug, known, developer, ctx, existing);
+      update = await checkFrom(lead);
       // The update address serves another build of this release (z-transplit serves its lean
       // z-transplit.xpi, not the -full one): that build leads, so check again from it.
       const served = orderBuilds(artifacts, ctx.zv, update?.check)[0];
       if (served && served !== lead) {
         lead = served;
-        update = await checkUpdates(lead, artifacts, row, slug, known, developer, ctx, existing);
+        update = await checkFrom(lead);
       }
       // The project's own update address serves a newer file than its latest release
       // (zotero-plugin-paper-reading: release 0.6.3, its update address 0.6.15 from the repo):
@@ -522,11 +549,34 @@ export async function gather(
         };
         artifacts.splice(0, artifacts.length, target);
         lead = target;
-        update = await checkUpdates(lead, artifacts, row, slug, known, developer, ctx, existing);
+        update = await checkFrom(lead);
       }
     } catch {
       update = null;
     }
+  }
+
+  // Each build's entry for its own version in its update file: Zotero applies it as a
+  // compatibility update, which can raise the build's maximum Zotero version without a release.
+  // Only updates.json counts: Zotero 7+ doesn't read update.rdf, and install.rdf builds are Zotero 6's.
+  const compatEntries: Record<string, CompatibilityEntry[]> = {};
+  const texts = new Map<string, string | null>();
+  for (const art of artifacts) {
+    const m = art.doc.manifest;
+    const url = m.updateUrl;
+    if (m.format !== "manifest.json" || !url || !/^https?:\/\//i.test(url)) continue;
+    if (!texts.has(url)) texts.set(url, await updateFileText(url, ctx, fetched.has(url)));
+    const text = texts.get(url);
+    const entries = text && !isUpdateRdf(text) ? parseUpdateManifest(text, m.addonId) : null;
+    const version = m.version || art.doc.version;
+    const own = (entries ?? []).filter((e) => compareVersions(e.version, version) === 0);
+    if (own.length)
+      compatEntries[art.doc.asset.sha256] = own.map((e) => ({
+        version: e.version,
+        zotero: e.zotero,
+        min: e.min,
+        max: e.max,
+      }));
   }
 
   // README languages. A README only changes with a commit, so reuse them until the next one.
@@ -559,11 +609,31 @@ export async function gather(
     docs,
     alternates,
     update,
+    ...(Object.keys(compatEntries).length ? { compatEntries } : {}),
     curated: await readCurated(slug),
     sandbox: await readSandboxRecord(slug),
     findingReviews: await readFindingReviews(slug),
     networkReview: await readNetworkReview(slug),
   };
+}
+
+/**
+ * The text at an update address: as fetched earlier this run (or, offline, as last fetched), else
+ * fetched now. Null when it couldn't be fetched: then a build's own range stands.
+ */
+async function updateFileText(
+  url: string,
+  ctx: Context,
+  fetchedThisRun: boolean,
+): Promise<string | null> {
+  if (ctx.offline || fetchedThisRun)
+    return (await cachedUpdateText(url, ctx.updateCache))?.text ?? null;
+  try {
+    const got = await fetchUpdateText(url, ctx.updateCache, ctx.userAgent);
+    return got.status === 200 ? got.text : null;
+  } catch {
+    return null;
+  }
 }
 
 /** A template's default name ("Zotero Plugin Template") says nothing: use the repository's. */
@@ -885,17 +955,36 @@ export function assemble(
       next: zv.nextMajor && devVersion ? at(zv.nextMajor, devVersion) : null,
     };
   };
+  // Each build's range as Zotero applies it: its manifest's, raised by its update file's entry for
+  // its version when that entry's maximum is higher.
+  const rangeOf = (art: Artifact) =>
+    effectiveRange(
+      asXpiManifest(art.doc.manifest),
+      art.doc.manifest.version || art.doc.version,
+      g.compatEntries?.[art.doc.asset.sha256],
+    );
+  const primaryRange = primary ? rangeOf(primary) : null;
   // The census reads the release's first file; the builds we analysed decide, so a build Zotero
   // won't install counts for no Zotero 7+ major (Zotero 6 reads install.rdf, which the release
   // records don't keep). Without analysed builds, the census's majors.
-  const manifests = artifacts.map((art) => asXpiManifest(art.doc.manifest));
+  const manifests = artifacts.map((art) => rangeOf(art).manifest);
+  const raised = artifacts
+    .map(rangeOf)
+    .filter((r) => r.from === "update-file")
+    .map((r) => r.manifest);
   // A card for its update address's file: the census only read the older release, so that
-  // file's own range decides.
-  const supports = !manifests.length
+  // file's own range decides. Majors an update file adds count as well.
+  const declared = !manifests.length
     ? row.supports
     : primary?.doc.source === "update-feed"
       ? supportedMajors(manifests, zv)
-      : row.supports.filter((m) => m < 7 || manifests.some((x) => supportsMajor(x, m, zv)));
+      : row.supports.filter(
+          (m) =>
+            m < 7 || artifacts.some((art) => supportsMajor(asXpiManifest(art.doc.manifest), m, zv)),
+        );
+  const supports = raised.length
+    ? [...new Set([...declared, ...supportedMajors(raised, zv)])].sort((a, b) => a - b)
+    : declared;
   const { current, previous, next } = targets(
     (m, v) =>
       manifests.length ? manifests.some((x) => supportsVersion(x, v)) : supports.includes(m),
@@ -1027,7 +1116,7 @@ export function assemble(
         lastReleaseAt: maintenance.lastReleaseAt,
         lastCommitAt: maintenance.lastCommitAt,
       },
-      compatibility: compatOf(asXpiManifest(art.doc.manifest)),
+      compatibility: compatOf(rangeOf(art).manifest),
       currentZotero: current.zoteroVersion,
       computedAt: ctx.now,
       ...(record ? { tested: { record, hosts: observedHosts(record, ctx.table, developer) } } : {}),
@@ -1159,10 +1248,26 @@ export function assemble(
     maintenance,
     compatibility: {
       supports,
-      // The headline build's range: the census reads the release's first file, which for
-      // zotero-reference is its Zotero 7–9 build.
-      minVersion: primary?.doc.manifest.strictMinVersion ?? row.minVersion,
-      maxVersion: primary?.doc.manifest.strictMaxVersion ?? row.maxVersion,
+      // The headline build's range as Zotero applies it: the census reads the release's first
+      // file, which for zotero-reference is its Zotero 7–9 build.
+      minVersion:
+        (primaryRange?.from === "update-file"
+          ? primaryRange.manifest.minVersion
+          : primary?.doc.manifest.strictMinVersion) ?? row.minVersion,
+      maxVersion:
+        (primaryRange?.from === "update-file"
+          ? primaryRange.manifest.maxVersion
+          : primary?.doc.manifest.strictMaxVersion) ?? row.maxVersion,
+      // Recorded when the update file raised it; otherwise the range above is the release's own.
+      ...(primary && primaryRange?.from === "update-file"
+        ? {
+            releaseRange: {
+              min: primary.doc.manifest.strictMinVersion ?? null,
+              max: primary.doc.manifest.strictMaxVersion ?? null,
+            },
+            maxFrom: "update-file" as const,
+          }
+        : {}),
       current: kind === "no-release" ? null : current,
       previous: kind === "no-release" ? null : previous,
       next: kind === "no-release" ? null : next,
@@ -1206,7 +1311,15 @@ export function assemble(
               .map((art) => ({
                 asset: art.doc.asset.name,
                 version: art.doc.version,
-                supports: supportedMajors([asXpiManifest(art.doc.manifest)], ctx.zv),
+                supports: supportedMajors([rangeOf(art).manifest], ctx.zv),
+                ...(rangeOf(art).from === "update-file"
+                  ? {
+                      range: {
+                        min: rangeOf(art).manifest.minVersion,
+                        max: rangeOf(art).manifest.maxVersion,
+                      },
+                    }
+                  : {}),
                 label: art.doc.trustCard?.overall.label ?? null,
                 releaseFile: `${slug}/${art.file}`,
               })),
@@ -1237,6 +1350,7 @@ export function assemble(
     ...(g.curated?.responses.length ? { responses: g.curated.responses } : {}),
     ...(g.curated?.notices.length ? { notices: g.curated.notices } : {}),
     ...(g.curated?.retired ? { retired: g.curated.retired } : {}),
+    ...(g.curated?.useInstead ? { useInstead: g.curated.useInstead } : {}),
     content: existing?.content ?? null,
     categories: existing?.categories ?? null,
     requirements: existing?.requirements ?? null,

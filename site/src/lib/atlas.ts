@@ -123,6 +123,35 @@ export interface Notice {
   mark?: string;
 }
 
+/** "7–8" for a manifest range of 6.999 to 8.0.*: the majors it names, as people read them. */
+function majorsOf(min: string | null, max: string | null): string | null {
+  const parts = (v: string) => v.split(".").map((x) => Number.parseInt(x, 10));
+  const lo = min ? parts(min) : [7];
+  // "6.999" and "7.99" are the usual ways to say "from the next major".
+  const from = (lo[0] ?? 7) + ((lo[1] ?? 0) >= 99 ? 1 : 0);
+  const to = max && max !== "*" ? parts(max)[0] : undefined;
+  if (to === undefined || Number.isNaN(to)) return null;
+  return from >= to ? String(to) : `${from}–${to}`;
+}
+
+/**
+ * The plain-words line for a plugin whose update file raised its release's maximum Zotero version:
+ * "Its release lists Zotero 7–8; its update file extends support to later versions."
+ */
+function updateFileText(
+  release: { min: string | null; max: string | null } | undefined,
+  max: string | null,
+): string {
+  const listed = release ? majorsOf(release.min, release.max) : null;
+  const upTo = !max || max === "*" ? null : max.replace(/(\.\*)+$/, "");
+  const extends_ = upTo
+    ? `its update file extends support up to Zotero ${upTo}`
+    : "its update file extends support to later versions";
+  return listed
+    ? `Its release lists Zotero ${listed}; ${extends_}.`
+    : `${extends_.charAt(0).toUpperCase()}${extends_.slice(1)}.`;
+}
+
 export interface Plugin {
   slug: string;
   name: string;
@@ -198,6 +227,14 @@ export interface Plugin {
     reason: string;
     url: string;
     alternative: { name: string; url: string; slug: string | null } | null;
+  } | null;
+  /**
+   * What to use instead, checked by hand (data/plugins/<slug>.yaml): it replaces the plugins
+   * matched from descriptions. `plugins` empty with no `builtIn` means we found none.
+   */
+  useInstead: {
+    builtIn: { what: string; since: number; url: string } | null;
+    plugins: { slug: string; note: string | null }[];
   } | null;
   /**
    * Set when its GitHub repository is gone: the page says so and offers no install.
@@ -697,6 +734,11 @@ function build(
         ...(notYet && { notYet }),
       };
     });
+  // Its update file raised the release's range, which Zotero applies when it installs or updates it.
+  const raisedBy =
+    p.compatibility.maxFrom === "update-file" && !legacy && !blocked && !installProblem
+      ? updateFileText(p.compatibility.releaseRange, p.compatibility.maxVersion)
+      : null;
   const okList = compat.filter((c) => c.ok).map((c) => c.v);
   const noList = compat.filter((c) => c.ok === false).map((c) => c.v);
   const autoText = blocked
@@ -719,7 +761,8 @@ function build(
           : okList.length
             ? `Zotero ${okList.join(", ")}${noList.length ? ` · not ${noList.join(", ")}` : ""}`
             : "No Zotero version we know of",
-    sub: currentOk ? autoText : `Doesn't work with the current Zotero (${currentMajor})`,
+    sub:
+      raisedBy ?? (currentOk ? autoText : `Doesn't work with the current Zotero (${currentMajor})`),
     groups: [
       {
         name: null,
@@ -1007,6 +1050,12 @@ function build(
           alternative: p.retired.alternative
             ? { ...p.retired.alternative, slug: p.retired.alternative.slug ?? null }
             : null,
+        }
+      : null,
+    useInstead: p.useInstead
+      ? {
+          builtIn: p.useInstead.builtIn ?? null,
+          plugins: p.useInstead.plugins.map((x) => ({ slug: x.slug, note: x.note ?? null })),
         }
       : null,
     removed: p.removed

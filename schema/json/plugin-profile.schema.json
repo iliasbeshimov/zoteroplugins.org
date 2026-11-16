@@ -391,6 +391,7 @@
           "description": "Zotero majors the manifest range covers; none for a file Zotero won't install"
         },
         "minVersion": {
+          "description": "The headline build's range as Zotero applies it (see maxFrom)",
           "type": [
             "string",
             "null"
@@ -400,6 +401,36 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "releaseRange": {
+          "description": "The headline build's own strict_min_version and strict_max_version",
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "max": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "min",
+            "max"
+          ]
+        },
+        "maxFrom": {
+          "description": "Where minVersion and maxVersion come from: the release file (also when absent), or its update file's entry for this version, which Zotero applies as a compatibility update when its maximum is higher",
+          "type": "string",
+          "enum": [
+            "release",
+            "update-file"
           ]
         },
         "current": {
@@ -646,7 +677,29 @@
                       "minimum": -9007199254740991,
                       "maximum": 9007199254740991
                     },
-                    "description": "Zotero majors this build declares"
+                    "description": "Zotero majors this build works with, its update file's entry included"
+                  },
+                  "range": {
+                    "description": "The build's range when its update file raised it",
+                    "type": "object",
+                    "properties": {
+                      "min": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "max": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "min",
+                      "max"
+                    ]
                   },
                   "label": {
                     "anyOf": [
@@ -2159,6 +2212,64 @@
         "reason",
         "url"
       ]
+    },
+    "useInstead": {
+      "description": "What to use instead, checked by hand (data/plugins/<slug>.yaml); replaces description matches",
+      "type": "object",
+      "properties": {
+        "builtIn": {
+          "description": "Zotero now does this job itself",
+          "type": "object",
+          "properties": {
+            "what": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "description": "What Zotero itself now does, in Zotero's words or close to them"
+            },
+            "since": {
+              "type": "integer",
+              "minimum": 7,
+              "maximum": 9007199254740991,
+              "description": "The Zotero version that added it"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "description": "Where Zotero says so"
+            }
+          },
+          "required": [
+            "what",
+            "since",
+            "url"
+          ]
+        },
+        "plugins": {
+          "default": [],
+          "description": "Listed plugins checked to do the job, from their README; none listed means we found none",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "slug": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 100,
+                "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+              },
+              "note": {
+                "description": "Something worth knowing before switching, e.g. its menus are in Italian",
+                "type": "string",
+                "maxLength": 80
+              }
+            },
+            "required": [
+              "slug"
+            ]
+          }
+        }
+      }
     },
     "removed": {
       "description": "Set when the plugin's GitHub repository is gone (GitHub answers 404, 410 or 451): the page stays, hidden from lists, with no install",

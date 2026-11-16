@@ -307,11 +307,28 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
       </section>
 
       {
-        similar.shown.length > 0 && (
+        (similar.shown.length > 0 || p.useInstead?.builtIn) && (
           <section id="similar">
-            <div class="sh"><h2>Other plugins that do this</h2><span class="mono-sm">Matched on what they do</span></div>
-            <p class="muted">For the same job, work with Zotero {p.currentMajor} and graded {similarFloor(p)} or better. Closest match first.</p>
-            <ul class="sim">
+            {p.useInstead ? (
+              <>
+                <div class="sh"><h2>What to use instead</h2><span class="mono-sm">Checked by hand</span></div>
+                {p.useInstead.builtIn && (
+                  <p class="builtin">
+                    <strong>Built into Zotero {p.useInstead.builtIn.since}.</strong>{" "}
+                    <a href={p.useInstead.builtIn.url}>{p.useInstead.builtIn.what}</a>.
+                  </p>
+                )}
+                {similar.shown.length > 0 && (
+                  <p class="muted">We read their documentation to check they do this job, and they work with Zotero {p.currentMajor}.</p>
+                )}
+              </>
+            ) : (
+              <>
+                <div class="sh"><h2>Other plugins that do this</h2><span class="mono-sm">Matched on what they do</span></div>
+                <p class="muted">For the same job, work with Zotero {p.currentMajor} and graded {similarFloor(p)} or better. Closest match first.</p>
+              </>
+            )}
+            {similar.shown.length > 0 && <ul class="sim">
               {similar.shown.map((s) => (
                 <li>
                   <GradeTag grade={s.p.grade} size="sm" />
@@ -319,7 +336,7 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
                     <a href={`/p/${s.p.slug}`} class="sim-name">{s.p.name}</a>
                     <p class="sim-does">{s.p.oneLiner}</p>
                     <span class="sim-meta">
-                      {[s.matched && `Matches “${s.matched}”`, `${s.p.downloads} downloads`, s.p.maint, `Zotero ${s.p.worksRange}`].filter(Boolean).join(" · ")}
+                      {[s.matched && `Matches “${s.matched}”`, s.note, `${s.p.downloads} downloads`, s.p.maint, `Zotero ${s.p.worksRange}`].filter(Boolean).join(" · ")}
                     </span>
                   </div>
                   {s.labels.length > 0 && (
@@ -329,16 +346,22 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
                   )}
                 </li>
               ))}
-            </ul>
-            <div class="sim-foot">
-              <a href={`/compare?p=${[p, ...similar.shown.map((s) => s.p)].map((x) => x.slug).join(",")}`} class="btn">
-                Compare all {similar.shown.length + 1} side by side
-              </a>
-              <details class="sim-how">
-                <summary>How we pick these</summary>
-                <p>By how closely what they do matches this plugin, using descriptions and the phrases people search with. Copies and forks of this plugin are listed under Forks and copies instead. No plugin pays to appear here.</p>
-              </details>
-            </div>
+            </ul>}
+            {similar.shown.length > 0 && (
+              <div class="sim-foot">
+                <a href={`/compare?p=${[p, ...similar.shown.map((s) => s.p)].map((x) => x.slug).join(",")}`} class="btn">
+                  Compare all {similar.shown.length + 1} side by side
+                </a>
+                <details class="sim-how">
+                  <summary>How we pick these</summary>
+                  {p.useInstead ? (
+                    <p>By hand: we read each plugin's documentation to check it does what this one did. Copies and forks of this plugin are listed under Forks and copies instead. No plugin pays to appear here.</p>
+                  ) : (
+                    <p>By how closely what they do matches this plugin, using descriptions and the phrases people search with. Copies and forks of this plugin are listed under Forks and copies instead. No plugin pays to appear here.</p>
+                  )}
+                </details>
+              </div>
+            )}
           </section>
         )
       }
@@ -981,6 +1004,11 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     color: var(--few-fg);
     border: 1px solid var(--few-line);
     white-space: nowrap;
+  }
+  .builtin {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
   }
   .sim-foot {
     display: flex;

@@ -1417,6 +1417,63 @@
         "url"
       ]
     },
+    "useInstead": {
+      "type": "object",
+      "properties": {
+        "builtIn": {
+          "description": "Zotero now does this job itself",
+          "type": "object",
+          "properties": {
+            "what": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "description": "What Zotero itself now does, in Zotero's words or close to them"
+            },
+            "since": {
+              "type": "integer",
+              "minimum": 7,
+              "maximum": 9007199254740991,
+              "description": "The Zotero version that added it"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "description": "Where Zotero says so"
+            }
+          },
+          "required": [
+            "what",
+            "since",
+            "url"
+          ]
+        },
+        "plugins": {
+          "default": [],
+          "description": "Listed plugins checked to do the job, from their README; none listed means we found none",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "slug": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 100,
+                "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+              },
+              "note": {
+                "description": "Something worth knowing before switching, e.g. its menus are in Italian",
+                "type": "string",
+                "maxLength": 80
+              }
+            },
+            "required": [
+              "slug"
+            ]
+          }
+        }
+      }
+    },
     "internalNotes": {
       "description": "Not published.",
       "type": "string"

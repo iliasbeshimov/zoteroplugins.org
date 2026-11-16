@@ -14,7 +14,13 @@ export interface UpdateEntry {
   /** `sha512:…` (or another algorithm) as the manifest states it. */
   hash: string | null;
   min: string | null;
+  /**
+   * strict_max_version, else advisory_max_version, as Firefox's add-on manager reads an update
+   * entry (AddonUpdateChecker's parseJSONManifest); null means any version ("*").
+   */
   max: string | null;
+  /** The entry has a Zotero target (applications.zotero, or a Zotero target in update.rdf). */
+  zotero: boolean;
 }
 
 export interface UpdateFeed {
@@ -142,6 +148,7 @@ function parseUpdateRdf(text: string, addonId: string): UpdateEntry[] | null {
         hash: rdfValue(zotero, "updateHash"),
         min: rdfValue(zotero, "minVersion"),
         max: rdfValue(zotero, "maxVersion"),
+        zotero: true,
       },
     ];
   });
@@ -149,7 +156,7 @@ function parseUpdateRdf(text: string, addonId: string): UpdateEntry[] | null {
 
 /** The entries for `addonId` in an updates.json (Zotero 7+) or an update.rdf (Zotero 5 and 6). */
 export function parseUpdateManifest(text: string, addonId: string): UpdateEntry[] | null {
-  if (/^\s*(?:\uFEFF)?</.test(text)) return parseUpdateRdf(text, addonId);
+  if (isUpdateRdf(text)) return parseUpdateRdf(text, addonId);
   let json: unknown;
   try {
     json = JSON.parse(text.replace(/^﻿/, ""));
@@ -167,18 +174,23 @@ export function parseUpdateManifest(text: string, addonId: string): UpdateEntry[
     const version = str(o.version);
     if (!version) return [];
     const apps = (o.applications ?? {}) as Record<string, Record<string, unknown> | undefined>;
-    const target = apps.zotero ?? apps.gecko ?? {};
+    const zotero = apps.zotero && typeof apps.zotero === "object" ? apps.zotero : null;
+    const target = zotero ?? apps.gecko ?? {};
     return [
       {
         version,
         link: str(o.update_link),
         hash: str(o.update_hash),
         min: str(target.strict_min_version),
-        max: str(target.strict_max_version),
+        max: str(target.strict_max_version) ?? str(target.advisory_max_version),
+        zotero: zotero !== null,
       },
     ];
   });
 }
+
+/** Whether the text is an update.rdf (Zotero 5 and 6) rather than an updates.json. */
+export const isUpdateRdf = (text: string) => /^\s*(?:\uFEFF)?</.test(text);
 
 /** The entry Zotero `zoteroVersion` would update to: the newest version whose range covers it. */
 export function pickUpdate(entries: UpdateEntry[], zoteroVersion: string): UpdateEntry | null {
