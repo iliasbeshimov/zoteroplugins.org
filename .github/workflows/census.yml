@@ -20,6 +20,8 @@ on:
 
 permissions:
   contents: write
+  # The last step keeps one open issue while nightly steps fail.
+  issues: write
 
 # Shared with the submit workflow: both write data/census and data/generated.
 concurrency:
@@ -62,6 +64,7 @@ jobs:
           echo "mode=$mode" >> "$GITHUB_OUTPUT"
 
       - name: Run census
+        id: census
         env:
           # A fine-grained PAT with public read-only access gets 5,000 requests/hour and code
           # search; the built-in token works for refresh runs but is limited to 1,000/hour.
@@ -79,6 +82,7 @@ jobs:
       # Submissions still in the queue (a waiting submit run can be cancelled by GitHub): decide them
       # now, so the profile step below grades the ones that are Zotero plugins.
       - name: Process submissions
+        id: submissions
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.CENSUS_GITHUB_TOKEN || github.token }}
@@ -86,10 +90,12 @@ jobs:
 
       # Before profiling: the catalogue the profile run writes carries the ratings.
       - name: Fetch ratings
+        id: ratings
         continue-on-error: true
         run: pnpm atlas ratings
 
       - name: Profile plugins
+        id: profile
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.CENSUS_GITHUB_TOKEN || github.token }}
@@ -97,6 +103,7 @@ jobs:
 
       # Each plugin's own icon, from the release file just graded; only changed files are redone.
       - name: Plugin icons
+        id: icons
         continue-on-error: true
         run: pnpm atlas icons
 
@@ -119,6 +126,7 @@ jobs:
       # Publish the new grades the same night: a developer who ships a fix sees it on the site and
       # on their README badge the next day. HEAD is the main just pushed, rebased on anything newer.
       - name: Deploy
+        id: deploy
         if: always() && steps.commit.outputs.changed == 'true'
         # Only this step gets the token; a step's own env isn't visible to its `if`, so it's checked here.
         env:
@@ -130,3 +138,38 @@ jobs:
           if [ -z "$CLOUDFLARE_API_TOKEN" ]; then echo "::warning::CLOUDFLARE_API_TOKEN is not set; not deploying."; exit 0; fi
           pnpm site:build
           cd site && npx -y wrangler@4 pages deploy dist --project-name zoteroplugins --branch main --commit-hash "$(git rev-parse HEAD)" --commit-dirty=false
+
+      # The steps above carry on when one fails, so the snapshot still gets committed, but then the
+      # run looked green (the profile step failed unseen from 2026-11-13 to 11-16). A step allowed to
+      # fail still records its outcome: fail the run if any did (GitHub emails the owner), and keep
+      # one open issue listing them. The next run with no failed step closes it.
+      - name: Report failed steps
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          OUTCOMES: |
+            Run census=${{ steps.census.outcome }}
+            Process submissions=${{ steps.submissions.outcome }}
+            Fetch ratings=${{ steps.ratings.outcome }}
+            Profile plugins=${{ steps.profile.outcome }}
+            Plugin icons=${{ steps.icons.outcome }}
+            Commit snapshot=${{ steps.commit.outcome }}
+            Deploy=${{ steps.deploy.outcome }}
+        run: |
+          label=nightly-failure
+          failed=$(printf '%s\n' "$OUTCOMES" | awk -F= '$2 == "failure" { print "- " $1 }')
+          open=$(gh issue list --label "$label" --state open --limit 1 --json number --jq '.[0].number // empty' 2>/dev/null || true)
+          if [ -z "$failed" ]; then
+            if [ -n "$open" ]; then gh issue close "$open" --comment "Every step passed: $RUN_URL"; fi
+            exit 0
+          fi
+          body=$(printf 'Failed on %s:\n\n%s\n\nLogs: %s\n' "$(date -u +%F)" "$failed" "$RUN_URL")
+          if [ -n "$open" ]; then
+            gh issue comment "$open" --body "$body"
+          else
+            gh label create "$label" --color B60205 --description "A step of the nightly census failed" 2>/dev/null || true
+            gh issue create --title "Nightly census: a step failed" --label "$label" --body "$body"
+          fi
+          echo "::error::Failed steps: $(printf '%s' "$failed" | tr '\n' ' ')"
+          exit 1
