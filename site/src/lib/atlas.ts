@@ -7,7 +7,8 @@ import {
   type Grade,
   gradeOf,
   JOB_BY_SLUG,
-  jobsFor,
+  type JobPick,
+  jobsOf,
   type PluginProfile,
 } from "@atlas/schema";
 
@@ -424,12 +425,6 @@ function censusDate(fallback: string): string {
       : null;
   }
   return censusAt ?? fallback;
-}
-/** A plugin's jobs as judged from its summary: the main one, then up to two it also does. */
-interface JobPick {
-  main: string | null;
-  also: string[];
-  notZotero?: boolean;
 }
 let jobPicks: Record<string, JobPick> | undefined;
 function jobPick(p: PluginProfile): JobPick | undefined {
@@ -943,12 +938,7 @@ function build(
   const size = p.install ? fmtSize(p.install.asset.size) : "";
   const inUse = usage.get(p.repo.toLowerCase()) ?? null;
   // The jobs judged from its summary (data/census/jobs.json), or the keyword guess without one.
-  const pick = jobPick(p);
-  const jobs = pick
-    ? [pick.main, ...pick.also].filter(
-        (j, i, a): j is string => !!j && j in JOB_BY_SLUG && a.indexOf(j) === i,
-      )
-    : jobsFor(p);
+  const jobs = jobsOf(p, jobPick(p));
 
   return {
     slug: p.slug,

@@ -250,3 +250,23 @@ export function jobsFor(p: PluginProfile): string[] {
   if ((p.requirementsHints?.aiServices.length ?? 0) > 0 && !out.includes("ai")) out.push("ai");
   return out;
 }
+
+/** A plugin's jobs as judged from its summary (data/census/jobs.json): the main one, then up to two it also does. */
+export interface JobPick {
+  main: string | null;
+  also: string[];
+  notZotero?: boolean;
+}
+
+/**
+ * A plugin's jobs, main job first: the ones judged from its summary when it has been judged, else
+ * the keyword guess. The site and the catalogue Zotero Atlas reads both use this, so a plugin sits
+ * under the same jobs, and gets the same tile, in both.
+ */
+export function jobsOf(p: PluginProfile, pick: JobPick | undefined): string[] {
+  return pick
+    ? [pick.main, ...pick.also].filter(
+        (j, i, a): j is string => !!j && j in JOB_BY_SLUG && a.indexOf(j) === i,
+      )
+    : jobsFor(p);
+}

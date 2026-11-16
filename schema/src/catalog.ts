@@ -28,7 +28,11 @@ export const CatalogEntry = z.object({
   repo: z.url(),
   page: z.url().describe("The plugin's page on the site, with the full card"),
   summary: z.string().nullable(),
-  jobs: z.array(z.string()).describe("The site's job slugs (reading, citing, ai, …)"),
+  jobs: z
+    .array(z.string())
+    .describe(
+      "The site's job slugs (reading, citing, ai, …), main job first, as the site lists them",
+    ),
   grade: CatalogGrade,
   because: z.string().describe("The card's 'because …' line, without 'because'"),
   version: z.string(),
@@ -120,6 +124,12 @@ export const CatalogEntry = z.object({
     .nullish()
     .describe(
       "About how many copies of Zotero have it, estimated from the census history like the site's 'in use'. Absent in catalogues written before Atlas 1.3",
+    ),
+  ask: z
+    .array(z.string())
+    .optional()
+    .describe(
+      "How people ask for it, in the words they type into a search box (data/search/phrases.json), for search. Absent when none are written, and in catalogues written before Atlas 1.3.1",
     ),
 });
 

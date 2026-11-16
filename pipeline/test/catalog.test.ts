@@ -398,10 +398,30 @@ describe("lists and shelves in the catalogue", () => {
     expect(plain).toMatchObject({ line: "Adds a button.", icon: false, inUse: null });
   });
 
+  it("carries how people ask for it, matched by owner/name ignoring case, and leaves it out when there are none", () => {
+    const phrases = new Map([["dev/asked", ["merge duplicate items", "dedupe my library"]]]);
+    const asked = catalogEntry(profile({ slug: "asked" }), sources({ phrases }));
+    expect(asked?.ask).toEqual(["merge duplicate items", "dedupe my library"]);
+    const quiet = catalogEntry(profile({ slug: "quiet" }), sources({ phrases }));
+    expect(quiet && "ask" in quiet).toBe(false);
+  });
+
+  it("lists the jobs judged from the summary, main job first, as the site does", () => {
+    const jobPicks = {
+      "Dev/judged": { main: "translation", also: ["reading", "nope", "reading"] },
+    };
+    const judged = catalogEntry(profile({ slug: "judged" }), sources({ jobPicks }));
+    expect(judged?.jobs).toEqual(["translation", "reading"]);
+    // Not judged yet: the keyword guess, the same as without the picks loaded.
+    const guessed = catalogEntry(profile({ slug: "guessed" }), sources({ jobPicks }));
+    expect(guessed?.jobs).toEqual(catalogEntry(profile({ slug: "guessed" }), sources())?.jobs);
+  });
+
   it("leaves the new fields and the shelves out when their sources aren't loaded", () => {
     const e = catalogEntry(profile({ slug: "old" }), sources());
     expect(e && "icon" in e).toBe(false);
     expect(e && "inUse" in e).toBe(false);
+    expect(e && "ask" in e).toBe(false);
     expect(buildCatalog([profile({})], sources(), at).shelves).toBeUndefined();
   });
 

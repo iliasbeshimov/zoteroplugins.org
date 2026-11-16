@@ -9,7 +9,9 @@ import {
   type CatalogGrade,
   type Growth,
   gradeOf,
+  type JobPick,
   jobsFor,
+  jobsOf,
   newest,
   PACKS,
   PICKS,
@@ -58,6 +60,10 @@ export interface CatalogSources {
   growth?: Map<string, Growth>;
   /** Slugs with an icon at site/public/icons/<slug>.png. */
   icons?: Set<string>;
+  /** owner/name in lower case → how people ask for it (data/search/phrases.json). */
+  phrases?: Map<string, string[]>;
+  /** Jobs judged from each summary (data/census/jobs.json), keyed by owner/name like the site's. */
+  jobPicks?: Record<string, JobPick>;
 }
 
 /** How many plugins the Rising and New shelves carry, so Atlas can skip ones it already shows. */
@@ -167,6 +173,8 @@ export function catalogEntry(p: PluginProfile, src: CatalogSources): CatalogEntr
     p.about.githubDescription ??
     p.about.manifestDescription ??
     undefined;
+  // Matched like the site's search: owner/name ignoring case, the current name before the old.
+  const ask = src.phrases?.get(p.repoName.toLowerCase()) ?? src.phrases?.get(p.repo.toLowerCase());
   return {
     slug: p.slug,
     name: p.name,
@@ -174,7 +182,8 @@ export function catalogEntry(p: PluginProfile, src: CatalogSources): CatalogEntr
     repo: p.links.repo,
     page: `${SITE}/p/${p.slug}`,
     summary,
-    jobs: jobsFor(p),
+    // Main job first, as on the site; the keyword guess for a catalogue built without the picks.
+    jobs: src.jobPicks ? jobsOf(p, src.jobPicks[p.repoName] ?? src.jobPicks[p.repo]) : jobsFor(p),
     grade,
     because: becauseOf(p, grade),
     version: inst.version,
@@ -204,6 +213,7 @@ export function catalogEntry(p: PluginProfile, src: CatalogSources): CatalogEntr
     ...(line ? { line } : {}),
     ...(src.icons ? { icon: src.icons.has(p.slug) } : {}),
     ...(src.usage ? { inUse: src.usage.get(p.repoName.toLowerCase()) ?? null } : {}),
+    ...(ask?.length ? { ask } : {}),
   };
 }
 
@@ -389,6 +399,16 @@ export async function loadCatalogSources(profiles: PluginProfile[]): Promise<Cat
       .filter(([slug, r]) => r.status === "ok" && existsSync(join(ICON_DIR, `${slug}.png`)))
       .map(([slug]) => slug),
   );
+  const asked = await readJson<{ phrases: Record<string, string[]> }>(
+    join(paths.root, "data", "search", "phrases.json"),
+  );
+  const phrases = new Map(
+    Object.entries(asked?.phrases ?? {}).map(([repo, list]) => [repo.toLowerCase(), list]),
+  );
+  const jobPicks =
+    (await readJson<{ jobs: Record<string, JobPick> }>(
+      join(paths.root, "data", "census", "jobs.json"),
+    )) ?? null;
   return {
     summaries,
     requirements,
@@ -396,6 +416,8 @@ export async function loadCatalogSources(profiles: PluginProfile[]): Promise<Cat
     usage: loadUsage(history),
     growth: loadGrowth(history, RISING_DAYS),
     icons,
+    phrases,
+    ...(jobPicks ? { jobPicks: jobPicks.jobs } : {}),
     release: (file) => releases.get(file) ?? null,
     ratings: ratings.success ? ratings.data.plugins : {},
     releasesOf: (slug) => versions.get(slug) ?? [],
