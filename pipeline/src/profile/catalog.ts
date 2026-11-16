@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import {
@@ -6,14 +7,22 @@ import {
   type CatalogBuild,
   type CatalogEntry,
   type CatalogGrade,
+  type Growth,
   gradeOf,
   jobsFor,
+  newest,
+  PACKS,
+  PICKS,
   type PluginProfile,
   PublicRatings,
   type Release,
+  RISING_DAYS,
+  rising,
+  type ShelfPlugin,
 } from "@atlas/schema";
+import { loadGrowth, loadUsage } from "@atlas/schema/usage";
 import { compareVersions } from "../census/compat.ts";
-import { paths } from "../paths.ts";
+import { paths, repoRoot } from "../paths.ts";
 import { RULES_VERSION } from "./score.ts";
 
 /**
@@ -24,6 +33,8 @@ import { RULES_VERSION } from "./score.ts";
 export const CATALOG_FILE = join(paths.generated, "catalog.json");
 export const RATINGS_FILE = join(paths.generated, "ratings.json");
 export const SITE = "https://zoteroplugins.org";
+/** Where `atlas icons` writes each plugin's icon (profile/icons.ts). */
+const ICON_DIR = join(repoRoot, "site", "public", "icons");
 
 export interface CatalogSources {
   /** The site's one-line summaries (data/census/summaries.json), keyed by owner/name. */
@@ -39,7 +50,18 @@ export interface CatalogSources {
   ratings?: PublicRatings["plugins"];
   /** The release documents of a plugin's analysed versions (data/generated/<slug>/<version>.json). */
   releasesOf?: (slug: string) => Release[];
+  /** The site's one-line taglines (data/census/taglines.json), keyed by owner/name. */
+  taglines?: Record<string, string>;
+  /** owner/name in lower case → about how many copies of Zotero have it (census history). */
+  usage?: Map<string, number>;
+  /** owner/name in lower case → stars and downloads gained in the last RISING_DAYS. */
+  growth?: Map<string, Growth>;
+  /** Slugs with an icon at site/public/icons/<slug>.png. */
+  icons?: Set<string>;
 }
+
+/** How many plugins the Rising and New shelves carry, so Atlas can skip ones it already shows. */
+const SHELF_LENGTH = 20;
 
 /** How many earlier releases a catalogue row carries for Atlas to go back to. */
 const PREVIOUS = 3;
@@ -138,6 +160,13 @@ export function catalogEntry(p: PluginProfile, src: CatalogSources): CatalogEntr
       : null;
   const need = req?.apiKey.need;
   const tested = p.trust?.tested;
+  const line =
+    src.taglines?.[p.repoName] ??
+    src.taglines?.[p.repo] ??
+    (src.summaries[p.repoName] ?? src.summaries[p.repo])?.does.split(/(?<=\.)\s/)[0] ??
+    p.about.githubDescription ??
+    p.about.manifestDescription ??
+    undefined;
   return {
     slug: p.slug,
     name: p.name,
@@ -172,6 +201,9 @@ export function catalogEntry(p: PluginProfile, src: CatalogSources): CatalogEntr
     docsChineseOnly: p.languages.chineseOnlyDocs,
     previous: previousReleases(src.releasesOf?.(p.slug) ?? [], inst.version),
     ratings: ratingsOf(src.ratings?.[p.slug], inst.version),
+    ...(line ? { line } : {}),
+    ...(src.icons ? { icon: src.icons.has(p.slug) } : {}),
+    ...(src.usage ? { inUse: src.usage.get(p.repoName.toLowerCase()) ?? null } : {}),
   };
 }
 
@@ -204,6 +236,7 @@ export function buildCatalog(
         a.name.localeCompare(b.name, "en") ||
         a.slug.localeCompare(b.slug, "en"),
     );
+  const shelves = src.usage ? buildShelves(profiles, plugins, src, generatedAt) : undefined;
   const currentZotero =
     profiles.find((p) => p.trust)?.trust?.inputs.currentZotero ??
     profiles.find((p) => p.compatibility.current)?.compatibility.current?.zoteroVersion ??
@@ -214,7 +247,67 @@ export function buildCatalog(
     currentZotero,
     rulesVersion: RULES_VERSION,
     site: SITE,
+    ...(shelves ? { shelves } : {}),
     plugins,
+  };
+}
+
+/**
+ * The site's home-page shelves for Atlas: our picks, Rising, New and catching on, and the plugin
+ * packs, chosen by the same code as the site (schema/src/shelves.ts, schema/src/packs.ts). Picks
+ * and packs keep every listed plugin they name, fallbacks included: Atlas picks the ones that
+ * work with the reader's own Zotero.
+ */
+export function buildShelves(
+  profiles: PluginProfile[],
+  plugins: CatalogEntry[],
+  src: CatalogSources,
+  generatedAt: string,
+): NonNullable<Catalog["shelves"]> {
+  const listed = new Set(plugins.map((e) => e.slug));
+  const profileOf = new Map(profiles.map((p) => [p.slug, p]));
+  const candidates: (ShelfPlugin & { since: string | null })[] = plugins.map((e) => {
+    const p = profileOf.get(e.slug);
+    return {
+      slug: e.slug,
+      repo: p?.repoName ?? "",
+      grade: e.grade,
+      currentOk: e.current?.status === "compatible" && !e.blocked,
+      inUse: e.inUse ?? null,
+      createdAt: p?.popularity.createdAt ?? null,
+      since: p?.popularity.createdAt ?? null,
+    };
+  });
+  const keep = (slugs: string[]) => slugs.filter((s) => listed.has(s));
+  return {
+    picks: PICKS.filter((k) => listed.has(k.slug)).map((k) => ({
+      slug: k.slug,
+      shot: k.shot.replace(/^\//, ""),
+      w: k.w,
+      h: k.h,
+      alt: k.alt,
+    })),
+    rising: rising(candidates, src.growth ?? new Map(), new Set(), SHELF_LENGTH).map((r) => ({
+      slug: r.plugin.slug,
+      stars: r.stars,
+    })),
+    new: newest(candidates, Date.parse(generatedAt), SHELF_LENGTH).map((p) => ({
+      slug: p.slug,
+      since: p.since ?? generatedAt,
+    })),
+    packs: PACKS.map((pack) => ({
+      slug: pack.slug,
+      name: pack.name,
+      who: pack.who,
+      lead: pack.lead,
+      picks: pack.picks.map((k) => ({
+        task: k.task,
+        why: k.why,
+        ifYou: k.ifYou ?? null,
+        plugins: keep(k.plugins),
+        or: k.or ? { ifYou: k.or.ifYou, why: k.or.why, plugins: keep(k.or.plugins) } : null,
+      })),
+    })),
   };
 }
 
@@ -283,9 +376,26 @@ export async function loadCatalogSources(profiles: PluginProfile[]): Promise<Cat
     }
     versions.set(p.slug, [...own, ...other]);
   }
+  const history = join(paths.root, "data", "census", "history");
+  const taglines =
+    (await readJson<{ taglines: Record<string, string> }>(
+      join(paths.root, "data", "census", "taglines.json"),
+    )) ?? null;
+  const iconIndex = await readJson<{ icons: Record<string, { status: string }> }>(
+    join(paths.generated, "icons.json"),
+  );
+  const icons = new Set(
+    Object.entries(iconIndex?.icons ?? {})
+      .filter(([slug, r]) => r.status === "ok" && existsSync(join(ICON_DIR, `${slug}.png`)))
+      .map(([slug]) => slug),
+  );
   return {
     summaries,
     requirements,
+    taglines: taglines?.taglines ?? {},
+    usage: loadUsage(history),
+    growth: loadGrowth(history, RISING_DAYS),
+    icons,
     release: (file) => releases.get(file) ?? null,
     ratings: ratings.success ? ratings.data.plugins : {},
     releasesOf: (slug) => versions.get(slug) ?? [],

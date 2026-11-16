@@ -362,3 +362,92 @@ describe("previousReleases", () => {
     expect(previousReleases([own, other as Release], "2.0.0")[0]?.file.name).toBe("demo-1.0.0.xpi");
   });
 });
+
+describe("lists and shelves in the catalogue", () => {
+  const at = "2026-11-03T00:00:00.000Z";
+  const withPopularity = (
+    slug: string,
+    inUse: number,
+    createdAt: string,
+    grade = "low-concern",
+  ) => {
+    const p = profile({ slug, label: grade });
+    (p.popularity as { createdAt?: string }).createdAt = createdAt;
+    return { p, inUse };
+  };
+
+  it("carries the tagline, else the summary's first sentence, the icon and the in-use estimate", () => {
+    const tagged = catalogEntry(
+      profile({ slug: "tagged" }),
+      sources({
+        taglines: { "Dev/tagged": "Cite in Word" },
+        usage: new Map([["dev/tagged", 4200]]),
+        icons: new Set(["tagged"]),
+      }),
+    );
+    expect(tagged).toMatchObject({ line: "Cite in Word", icon: true, inUse: 4200 });
+    const plain = catalogEntry(
+      profile({ slug: "plain" }),
+      sources({
+        summaries: { "Dev/plain": { does: "Adds a button. It also does more." } },
+        taglines: {},
+        usage: new Map(),
+        icons: new Set(),
+      }),
+    );
+    expect(plain).toMatchObject({ line: "Adds a button.", icon: false, inUse: null });
+  });
+
+  it("leaves the new fields and the shelves out when their sources aren't loaded", () => {
+    const e = catalogEntry(profile({ slug: "old" }), sources());
+    expect(e && "icon" in e).toBe(false);
+    expect(e && "inUse" in e).toBe(false);
+    expect(buildCatalog([profile({})], sources(), at).shelves).toBeUndefined();
+  });
+
+  it("writes New as B or better, created in the last 90 days, most used first; packs keep only listed slugs", () => {
+    const rows = [
+      withPopularity("fresh-a", 300, "2026-10-01T00:00:00Z"),
+      withPopularity("fresh-b", 900, "2026-09-15T00:00:00Z"),
+      withPopularity("fresh-c", 5000, "2026-10-10T00:00:00Z", "high-concern"),
+      withPopularity("old", 9000, "2025-01-01T00:00:00Z"),
+    ];
+    const catalog = buildCatalog(
+      rows.map((r) => r.p),
+      sources({
+        usage: new Map(rows.map((r) => [`dev/${r.p.slug}`, r.inUse])),
+        growth: new Map(),
+        icons: new Set(),
+      }),
+      at,
+    );
+    const shelves = catalog.shelves;
+    expect(shelves?.new.map((n) => n.slug)).toEqual(["fresh-b", "fresh-a"]);
+    expect(shelves?.new[0]?.since).toBe("2026-09-15T00:00:00Z");
+    expect(shelves?.packs.length).toBeGreaterThan(0);
+    // None of the demo slugs is in a pack, so every pack's plugin lists come out empty.
+    expect(shelves?.packs.flatMap((k) => k.picks.flatMap((p) => p.plugins))).toEqual([]);
+    expect(shelves?.picks).toEqual([]);
+    expect(Catalog.parse(JSON.parse(serializeCatalog(catalog)))).toEqual(catalog);
+  });
+
+  it("writes Rising from the growth in stars, with the downloads check", () => {
+    const rows = [
+      withPopularity("riser", 20_000, "2024-01-01T00:00:00Z"),
+      withPopularity("flat", 20_000, "2024-01-01T00:00:00Z"),
+    ];
+    const catalog = buildCatalog(
+      rows.map((r) => r.p),
+      sources({
+        usage: new Map(rows.map((r) => [`dev/${r.p.slug}`, r.inUse])),
+        growth: new Map([
+          ["dev/riser", { stars: 80, downloads: 400 }],
+          ["dev/flat", { stars: 90, downloads: 0 }],
+        ]),
+        icons: new Set(),
+      }),
+      at,
+    );
+    expect(catalog.shelves?.rising).toEqual([{ slug: "riser", stars: 80 }]);
+  });
+});

@@ -102,6 +102,72 @@ export const CatalogEntry = z.object({
     .describe(
       "Published ratings from Zotero Atlas and zoteroplugins.org; never part of the grade. Absent in catalogues written before ratings",
     ),
+  line: z
+    .string()
+    .optional()
+    .describe(
+      "One line for lists: the site's tagline, or the summary's first sentence. Absent in catalogues written before Atlas 1.3",
+    ),
+  icon: z
+    .boolean()
+    .optional()
+    .describe(
+      "The plugin's own icon is in the repository at site/public/icons/<slug>.png (96 px). Absent in catalogues written before Atlas 1.3",
+    ),
+  inUse: z
+    .int()
+    .nonnegative()
+    .nullish()
+    .describe(
+      "About how many copies of Zotero have it, estimated from the census history like the site's 'in use'. Absent in catalogues written before Atlas 1.3",
+    ),
+});
+
+/** A plugin pack's task, with the plugin for it and fallbacks, best first. */
+export const CatalogPackPick = z.object({
+  task: z.string(),
+  why: z.string(),
+  ifYou: z.string().nullable(),
+  plugins: z.array(Slug).describe("The plugin for the task, then fallbacks; listed slugs only"),
+  or: z
+    .object({ ifYou: z.string(), why: z.string(), plugins: z.array(Slug) })
+    .nullable()
+    .describe("A plugin for readers who work differently"),
+});
+
+/** The site's home-page shelves, for Zotero Atlas's Find plugins page. */
+export const CatalogShelves = z.object({
+  picks: z
+    .array(
+      z.object({
+        slug: Slug,
+        shot: z
+          .string()
+          .regex(/^shots\/[a-z0-9-]+\.(jpg|png)$/)
+          .describe("The screenshot's path under site/public in the repository"),
+        w: z.int().positive(),
+        h: z.int().positive(),
+        alt: z.string(),
+      }),
+    )
+    .describe("Chosen by hand, in order; a reader is shown the first few that fit"),
+  rising: z
+    .array(z.object({ slug: Slug, stars: z.int().positive() }))
+    .describe(
+      "Most new GitHub stars in the last six weeks, among plugins whose downloads grew too",
+    ),
+  new: z
+    .array(z.object({ slug: Slug, since: IsoDateTime }))
+    .describe("Repositories created in the last 90 days, B or better, most used first"),
+  packs: z.array(
+    z.object({
+      slug: Slug,
+      name: z.string(),
+      who: z.string(),
+      lead: z.string(),
+      picks: z.array(CatalogPackPick),
+    }),
+  ),
 });
 
 export const Catalog = z.object({
@@ -112,6 +178,9 @@ export const Catalog = z.object({
     .describe("The Zotero version the grades and 'current' were computed for"),
   rulesVersion: z.string().nullable(),
   site: z.url(),
+  shelves: CatalogShelves.optional().describe(
+    "The site's home-page shelves. Absent in catalogues written before Atlas 1.3",
+  ),
   plugins: z.array(CatalogEntry),
 });
 
