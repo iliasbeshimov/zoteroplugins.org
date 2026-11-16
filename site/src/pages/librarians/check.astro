@@ -41,7 +41,7 @@ const graph = [
     </p>
   </Fragment>
 
-  <section class="tool" data-sitekey={siteKey}>
+  <section class="tool gc" data-sitekey={siteKey}>
     <form id="check" class="card-form" novalidate>
       <label class="field" for="guide-url">
         Your guide's address
@@ -105,7 +105,7 @@ const graph = [
     </div>
   </section>
 
-  <section class="more">
+  <section class="more gc">
     <h2>Rather not check by hand?</h2>
     <p>
       <a href="/librarians#live-box">The box for your guide</a> lists our current picks for each stage of study and updates itself every night, so a plugin that stops working is replaced without you editing the page.
@@ -399,13 +399,14 @@ const graph = [
   }
 </script>
 
-<style>
-  .tool {
+<style is:global>
+  .gc {
     display: grid;
     gap: 20px;
     margin: 8px 0 32px;
   }
-  .card-form {
+
+  .gc .card-form {
     display: grid;
     gap: 12px;
     padding: 18px;
@@ -413,13 +414,15 @@ const graph = [
     border-radius: 12px;
     background: var(--surface);
   }
-  .field {
+
+  .gc .field {
     display: grid;
     gap: 6px;
     font-weight: 600;
   }
-  input[type="url"],
-  input[type="email"] {
+
+  .gc input[type="url"],
+  .gc input[type="email"] {
     font: inherit;
     font-weight: 400;
     padding: 10px 12px;
@@ -430,30 +433,37 @@ const graph = [
     width: 100%;
     box-sizing: border-box;
   }
-  .acts {
+
+  .gc .acts {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 10px 14px;
   }
-  .status {
+
+  .gc .status {
     margin: 0;
   }
-  .status:empty {
+
+  .gc .status:empty {
     display: none;
   }
-  .small {
+
+  .gc .small {
     font-size: 0.875rem;
   }
-  .muted {
+
+  .gc .muted {
     color: var(--ink-3);
   }
-  .card-form > p.small {
+
+  .gc .card-form > p.small {
     margin: 0;
   }
-  .notice,
-  .flag,
-  .done {
+
+  .gc .notice,
+  .gc .flag,
+  .gc .done {
     padding: 12px 14px;
     border-radius: 10px;
     border: 1px solid var(--rev-line);
@@ -461,49 +471,59 @@ const graph = [
     color: var(--ink);
     margin: 0;
   }
-  .notice.t-few,
-  .done {
+
+  .gc .notice.t-few,
+  .gc .done {
     border-color: var(--few-line);
     background: var(--few-bg);
   }
-  .notice.t-ser {
+
+  .gc .notice.t-ser {
     border-color: var(--ser-line);
     background: var(--ser-bg);
   }
-  .sum {
+
+  .gc .sum {
     font-size: 1.05rem;
   }
-  .items {
+
+  .gc .items {
     list-style: none;
     padding: 0;
     margin: 0 0 20px;
     display: grid;
     gap: 10px;
   }
-  .item {
+
+  .gc .item {
     padding: 12px 14px;
     border: 1px solid var(--line);
     border-left-width: 4px;
     border-radius: 10px;
     background: var(--surface);
   }
-  .item.t-ser {
+
+  .gc .item.t-ser {
     border-left-color: var(--ser-solid, var(--ser-fg));
   }
-  .item.t-rev {
+
+  .gc .item.t-rev {
     border-left-color: var(--rev-line);
   }
-  .item.t-few {
+
+  .gc .item.t-few {
     border-left-color: var(--few-line);
   }
-  .item .head {
+
+  .gc .item .head {
     display: flex;
     align-items: center;
     gap: 10px;
     font-weight: 600;
     overflow-wrap: anywhere;
   }
-  .chip {
+
+  .gc .chip {
     display: inline-grid;
     place-items: center;
     min-width: 28px;
@@ -516,32 +536,41 @@ const graph = [
     color: var(--nd-fg);
     flex: none;
   }
-  .probs {
+
+  .gc .probs {
     margin: 8px 0 0;
     padding-left: 18px;
   }
-  .probs li {
+
+  .gc .probs li {
     margin: 2px 0;
   }
-  .ok,
-  .how {
+
+  .gc .ok,
+  .gc .how {
     margin: 6px 0 0;
   }
-  .how {
+
+  .gc .how {
     overflow-wrap: anywhere;
   }
-  .plain {
+
+  .gc .plain {
     padding-left: 18px;
     overflow-wrap: anywhere;
   }
-  .watch {
+
+  .gc .watch {
     margin-top: 28px;
   }
-  .watch h2 {
+
+  .gc .watch h2 {
     margin-bottom: 6px;
   }
-  details summary {
+
+  .gc details summary {
     cursor: pointer;
     font-weight: 600;
   }
+
 </style>

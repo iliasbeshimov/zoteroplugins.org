@@ -50,8 +50,10 @@
         });
   }
 
-  function render(box, data) {
-    const pack = data?.packs?.[0];
+  function render(box, data, want) {
+    const packs = data?.packs ?? [];
+    // The pack asked for, by name; if the answer doesn't have it, the box keeps what it has.
+    const pack = packs.find((k) => k.slug === want) ?? (want ? null : packs[0]);
     if (!pack?.picks?.length) return;
     const wrap = el("div", "zpbox");
     const lead = el("p", "zpbox-lead");
@@ -103,7 +105,7 @@
     fetch(API + q, { credentials: "omit", referrerPolicy: "origin" })
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
-        if (d) render(box, d);
+        if (d) render(box, d, pack);
       })
       .catch(() => {});
   }
