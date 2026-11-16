@@ -121,4 +121,15 @@ responses:
          provisioning the backend engine is part of the extension's lifecycle (with progress displayed via
          the onboarding progress card in the sidebar).
     url: https://github.com/iliasbeshimov/zoteroplugins.org/issues/9
-    status: open
+    status: corrected
+    reply: |-
+      Thanks for the detailed response, and for 0.93.1, which came out while we were checking. We've now read both releases.
+
+      You're right about the package install. Our scanner misread it three ways. It took the dev-only install from the `backendSourceDir` setting (empty by default) as an unpinned package. It missed that the real install uses the wheel shipped in the .xpi. And it missed the `--constraint` option that `buildWheelInstallArgs` adds with `args.push`, so it never saw that constraints.txt pins all 223 dependencies. We've fixed this for every plugin. Of the 35 with a package install that we re-checked, only Zocrates' card changed: it now says "Installs a locked set of packages", which is medium, not high. It still says "at startup, without asking", because setup runs from Zotero's startup with no prompt. As you say, that's only the first time and after an update, with progress in the sidebar.
+
+      The download was rated high only because we hadn't reviewed it yet. In 0.92.1, both downloads came from their makers over https and your README names them, which is low under our rules. 0.93.1 goes further. It downloads uv 0.13.8 only and checks it against the SHA-256 values in bootstrap.js before unpacking it. All six match the checksums Astral publishes. It also no longer downloads the Visual C++ runtime, and asks the user to install it instead. One small thing: the README still says setup "automatically detects and installs" the runtime.
+
+      Our host list didn't know aka.ms either, which is why "Where your data goes" showed a server we couldn't identify. It now lists it as Microsoft's.
+
+      Zocrates is at B, from installing packages and launching programs, which are medium for every plugin that runs its own Python backend. Your response stays next to the card.
+    repliedAt: "2026-11-16"
