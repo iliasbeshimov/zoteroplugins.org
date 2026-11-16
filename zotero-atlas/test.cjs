@@ -452,9 +452,20 @@ const run = async (name, fn) => {
     "lifecycle: menu under Plugins, the button by sync, the bar, pane once; all removed; uninstall clears everything",
     async () => {
       const t = load();
+      // An update, as Zotero 7–10 run it: uninstall(ADDON_UPGRADE) on the old version, then
+      // install(ADDON_INSTALL) on the new one. The answers, the ID and the state stay.
       t.prefs["extensions.zotero-atlas.usage"] = "yes";
+      t.prefs["extensions.zotero-atlas.updates"] = "hold";
+      t.prefs["extensions.zotero-atlas.id"] = "abc";
+      t.prefs["extensions.zotero-atlas.state"] = '{"seen":{}}';
+      t.s.uninstall({}, 7);
       t.s.install({}, 5);
-      assert.ok(!("extensions.zotero-atlas.usage" in t.prefs), "a new install starts unasked");
+      assert.deepEqual(Object.keys(t.prefs).sort(), [
+        "extensions.zotero-atlas.id",
+        "extensions.zotero-atlas.state",
+        "extensions.zotero-atlas.updates",
+        "extensions.zotero-atlas.usage",
+      ]);
       t.s.startup({ id: "atlas@zoteroatlas.com", version: "0.1.0", rootURI: "jar:x!/" });
       t.s.startup({ id: "atlas@zoteroatlas.com", version: "0.1.0", rootURI: "jar:x!/" });
       assert.deepEqual(t.chrome, [["content", "zotero-atlas", "content/"]]);

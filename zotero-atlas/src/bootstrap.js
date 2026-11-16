@@ -1,4 +1,4 @@
-/* global Zotero, Services, Components, ChromeUtils, ADDON_INSTALL, ADDON_UNINSTALL, setTimeout, clearTimeout */
+/* global Zotero, Services, Components, ChromeUtils, ADDON_UNINSTALL, setTimeout, clearTimeout */
 /*
  * Zotero Atlas
  *
@@ -125,10 +125,12 @@ const allowOnce = new Set(); // "id@version": installs Atlas started or you allo
 // ---------------------------------------------------------------------------------------------
 // Lifecycle
 
-// A new install starts with nothing: not asked yet, no ID, nothing seen.
-function install(_data, reason) {
-  if (reason === ADDON_INSTALL) clearPrefs();
-}
+// Nothing to set up, and nothing to clear: Zotero 7–10 call install() with ADDON_INSTALL for an
+// update too (plugins.js forgets the old version in onInstalling, before onInstalled reads it), so
+// clearing here wiped the first-run answers, the ID and what Atlas remembers on every update. A
+// removal clears everything in uninstall(), which Zotero does call with ADDON_UNINSTALL, so a
+// later install still starts with nothing.
+function install() {}
 
 function startup({ id, version: v, rootURI: root }) {
   if (started) return;
