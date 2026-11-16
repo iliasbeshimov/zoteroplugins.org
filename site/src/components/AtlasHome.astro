@@ -1,0 +1,243 @@
+---
+import { bySlug } from "../lib/atlas.ts";
+import { atlasLink } from "../lib/links.ts";
+import AtlasIcon from "./AtlasIcon.astro";
+
+/**
+ * The home page's section about Zotero Atlas, our plugin. It sits after "Most used": a visitor has
+ * just seen the grades of plugins they probably have, and Atlas is how to see theirs and keep them
+ * checked. It leads with what the site can't do on its own (know what you have, watch updates),
+ * says plainly that it's ours, and gives its own grade from its card.
+ */
+const own = bySlug()["zotero-atlas"];
+const points: [string, string][] = [
+  ["See how the plugins you have are graded.", "Each grade appears next to the plugin, in Zotero's own Plugins window."],
+  [
+    "No update goes in before we've checked it.",
+    "Zotero installs plugin updates by itself, unseen. Atlas holds each update to a plugin listed here until we've checked it, usually under a day, and asks you first if it's graded lower. If one still goes wrong, go back to the version that worked.",
+  ],
+  ["Hear only what matters.", "If a plugin you have gets a known security problem, Atlas tells you. Otherwise it stays quiet."],
+  ["Install in one click.", "Find any plugin from this site inside Zotero. Atlas installs the exact file we checked."],
+];
+---
+
+<section class="atlas-home" aria-labelledby="atlas-h" data-atlas-pitch>
+  <div class="in">
+    <div class="txt">
+      <span class="eyebrow"><AtlasIcon size={26} /> Zotero Atlas · free, from us</span>
+      <h2 id="atlas-h">Checked before you install.<br />Still checked after every update.</h2>
+      <p class="lede">
+        This site checks a plugin the day you look it up. Zotero Atlas, our free plugin, keeps checking the
+        plugins you have, from inside Zotero.
+      </p>
+      <ul>
+        {
+          points.map(([b, t]) => (
+            <li>
+              <span class="tick" aria-hidden="true" />
+              <span>
+                <strong>{b}</strong> {t}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="acts">
+        <a href={atlasLink("home-section")} class="go">Get Zotero Atlas, free <span aria-hidden="true">→</span></a>
+        <a href={`${atlasLink("home-section")}#watch`} class="more">How it watches updates</a>
+      </div>
+      <p class="fine">
+        For Zotero 7 to 11 on Mac, Windows and Linux. It never sends your library, notes or files: only your list of
+        plugins, if you say yes.
+        {own && <> Made by us and graded by the same rules: <a href={`/p/${own.slug}`}>Zotero Plugins grade {own.grade}</a>.</>}
+      </p>
+    </div>
+    <figure>
+      <img
+        src="/atlas/plugins-window.png"
+        width="1374"
+        height="1291"
+        loading="lazy"
+        decoding="async"
+        alt="Zotero's Plugins window with Zotero Atlas installed: a grade next to each plugin (A, B, A, A+, A+) and a Find more plugins button"
+      />
+      <figcaption>Zotero's own Plugins window, with Zotero Atlas</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  /* Full-width parchment, Atlas's own colour, its content lined up with the 1280px column. */
+  .atlas-home {
+    margin-top: 56px;
+    background: var(--atlas-bg);
+    color: var(--atlas-ink);
+    border-top: 1px solid var(--atlas-line);
+    border-bottom: 1px solid var(--atlas-line);
+  }
+  .in {
+    max-width: 1280px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 56px var(--gutter);
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 56px;
+    align-items: center;
+  }
+  .txt {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 650;
+    color: var(--atlas-ink-2);
+  }
+  .eyebrow :global(.atlas-icon) {
+    border-radius: 7px;
+    box-shadow: 0 0 0 1px var(--atlas-line);
+  }
+  h2 {
+    margin: 0;
+    font-size: 40px;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-weight: 780;
+    text-wrap: balance;
+  }
+  .lede {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.45;
+    max-width: 38em;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  li {
+    display: flex;
+    gap: 12px;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+  li strong {
+    font-weight: 700;
+  }
+  .tick {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    border-radius: 50%;
+    background: var(--atlas-btn);
+    position: relative;
+  }
+  .tick::after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 4px;
+    width: 4px;
+    height: 8px;
+    border: solid var(--atlas-btn-ink);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .acts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 22px;
+    padding-top: 4px;
+  }
+  .go {
+    padding: 12px 20px;
+    border-radius: 999px;
+    background: var(--atlas-btn);
+    color: var(--atlas-btn-ink);
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .go:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .more {
+    color: var(--atlas-ink);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .go:focus-visible,
+  .more:focus-visible,
+  .fine a:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .fine {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--atlas-ink-2);
+    max-width: 44em;
+  }
+  .fine a {
+    color: inherit;
+    font-weight: 600;
+  }
+  figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    border: 1px solid var(--atlas-line);
+    box-shadow: 0 18px 40px -18px rgb(28 25 23 / 0.35);
+    background: #fff;
+  }
+  figcaption {
+    font-size: 13px;
+    color: var(--atlas-ink-2);
+    text-align: center;
+  }
+  @media (max-width: 960px) {
+    .atlas-home {
+      margin-top: 40px;
+    }
+    .in {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding-top: 36px;
+      padding-bottom: 36px;
+    }
+    h2 {
+      font-size: 30px;
+    }
+    .lede {
+      font-size: 16.5px;
+    }
+    li {
+      font-size: 15px;
+    }
+    figure {
+      max-width: 520px;
+    }
+  }
+</style>

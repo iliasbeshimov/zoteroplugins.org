@@ -1,4 +1,6 @@
 ---
+import AtlasHome from "../components/AtlasHome.astro";
+import AtlasIcon from "../components/AtlasIcon.astro";
 import Findings from "../components/Findings.astro";
 import GradeTag from "../components/GradeTag.astro";
 import PluginIcon from "../components/PluginIcon.astro";
@@ -9,6 +11,7 @@ import Tip from "../components/Tip.astro";
 import Base from "../layouts/Base.astro";
 import { CURRENT_ZOTERO_MAJOR, fmtDate, GRADES, type Plugin, ROOT, shownPlugins } from "../lib/atlas.ts";
 import { JOBS, NEW_DAYS, newest } from "@atlas/schema";
+import { atlasLink } from "../lib/links.ts";
 import { siteLd } from "../lib/meta.ts";
 import { countWord, PACKS, packPath, resolvePack } from "../lib/packs.ts";
 import { PICK_GRADES, PICKS } from "../lib/picks.ts";
@@ -76,6 +79,11 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
         <span>Try</span>
         {tries.map((t) => <a href={`/browse?q=${encodeURIComponent(t)}`}>{t}</a>)}
       </div>
+      <a href={atlasLink("home-hero")} class="atl" data-atlas-pitch>
+        <AtlasIcon size={30} />
+        <span class="atl-t"><strong>Already use plugins?</strong> Zotero Atlas, our free plugin, shows their grades inside Zotero and holds their updates until we've checked them.</span>
+        <span class="atl-go">Get it <span aria-hidden="true">→</span></span>
+      </a>
       <p class="getz">New to Zotero? <a href="https://www.zotero.org/download/">Download it free from zotero.org</a></p>
     </div>
     <div class="ladder">
@@ -182,6 +190,8 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
       }
     </ol>
   </section>
+
+  <AtlasHome />
 
   {
     risers.length > 0 && (
@@ -343,6 +353,58 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     height: 15px;
     border: 2.5px solid var(--ink);
     border-radius: 50%;
+  }
+  /* One line about Zotero Atlas under the search, on Atlas's parchment. */
+  .atl {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: var(--atlas-bg);
+    color: var(--atlas-ink);
+    border: 1px solid var(--atlas-line);
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  .atl :global(.atlas-icon) {
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px var(--atlas-line);
+  }
+  .atl-t {
+    flex: 1;
+    min-width: 0;
+  }
+  .atl-go {
+    flex: none;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--atlas-btn);
+    color: var(--atlas-btn-ink);
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .atl:hover {
+    border-color: var(--atlas-ink-2);
+    color: var(--atlas-ink);
+  }
+  .atl:hover .atl-go {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  @media (max-width: 720px) {
+    .atl {
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+    .atl-t {
+      flex-basis: calc(100% - 44px);
+    }
+    .atl-go {
+      margin-left: 44px;
+    }
   }
   .getz {
     margin: 0;

@@ -11,5 +11,7 @@ export const mailto = (subject: string) =>
  * zoteroatlas.com, home of Zotero Atlas, our plugin that brings the catalogue into Zotero. The
  * utm_ parameters tell that site's analytics which spot here the visit came from.
  */
-export const atlasLink = (medium: "band" | "install-sheet" | "install-guide") =>
+export const atlasLink = (
+  medium: "band" | "install-sheet" | "install-guide" | "home-hero" | "home-section" | "plugin-page",
+) =>
   `https://zoteroatlas.com/?utm_source=zoteroplugins.org&utm_medium=${medium}&utm_campaign=atlas`;

@@ -25,8 +25,9 @@ const canonical = new URL(path, Astro.site);
 // pages say, so search engines get the plugin pages instead.
 const noindex =
   Astro.props.noindex || notFound || /^\/(developers|id)\/./.test(path) || path === "/compare";
-// The band about Zotero Atlas would only repeat Zotero Atlas's own card and its reviews.
-const atlasBand = !notFound && !/^\/p\/zotero-atlas(\/|$)/.test(path);
+// The band about Zotero Atlas would only repeat Zotero Atlas's own card and its reviews; the home
+// page has its own line and section about it.
+const atlasBand = !notFound && path !== "/" && !/^\/p\/zotero-atlas(\/|$)/.test(path);
 ---
 
 <!doctype html>
@@ -36,16 +37,20 @@ const atlasBand = !notFound && !/^\/p\/zotero-atlas(\/|$)/.test(path);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script is:inline>
       // The band about Zotero Atlas stays hidden once closed. Links opened from inside the plugin
-      // carry ?ref=atlas (they have it already), which counts as closed; the parameter is taken out
-      // of the address at once, before analytics or anything else reads it.
+      // carry ?ref=atlas: that visitor has it already, so the band and every other pitch for it
+      // ([data-atlas-pitch]) stay hidden from then on. The parameter is taken out of the address at
+      // once, before analytics or anything else reads it.
       (() => {
         const k = "zp-atlas-band";
+        const has = "zp-has-atlas";
         const root = document.documentElement;
         const q = new URLSearchParams(location.search);
         if (q.get("ref") === "atlas") {
           root.dataset.atlasBand = "off";
+          root.dataset.hasAtlas = "";
           try {
             localStorage.setItem(k, "closed");
+            localStorage.setItem(has, "1");
           } catch {}
           q.delete("ref");
           const rest = q.toString();
@@ -54,6 +59,7 @@ const atlasBand = !notFound && !/^\/p\/zotero-atlas(\/|$)/.test(path);
         }
         try {
           if (localStorage.getItem(k) === "closed") root.dataset.atlasBand = "off";
+          if (localStorage.getItem(has)) root.dataset.hasAtlas = "";
         } catch {}
       })();
     </script>

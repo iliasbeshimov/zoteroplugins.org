@@ -1,4 +1,5 @@
 ---
+import AtlasIcon from "../../components/AtlasIcon.astro";
 import GradeTag from "../../components/GradeTag.astro";
 import InstallSheet from "../../components/InstallSheet.astro";
 import PluginIcon from "../../components/PluginIcon.astro";
@@ -16,7 +17,7 @@ import { REVIEWS_OPEN, ratingsOf } from "../../lib/ratings.ts";
 import { indexable } from "../../lib/seo.ts";
 import { checkedOn, pluginDescription, pluginLd, pluginTitle, verdictSentence } from "../../lib/meta.ts";
 import { JOB_BY_SLUG } from "@atlas/schema";
-import { REPORT_URL, RESPOND_URL } from "../../lib/links.ts";
+import { atlasLink, REPORT_URL, RESPOND_URL } from "../../lib/links.ts";
 import { blocks, folded } from "../../lib/response-text.ts";
 import { similarFloor, similarPlugins } from "../../lib/similar.ts";
 import { USE_TIP } from "../../lib/usage.ts";
@@ -37,6 +38,11 @@ const data = p.areas.find((a) => a.key === "data")!;
 const job0 = p.jobs[0] ? JOB_BY_SLUG[p.jobs[0]] : null;
 const blocked = !!p.banner;
 const canInstall = !!p.installUrl;
+// A line under Install offering Zotero Atlas, our plugin, which installs the release we checked.
+// Not for C or ungraded plugins (we don't want to make those easier to install), Atlas's own page,
+// or plugins Atlas's catalogue leaves out.
+const atlasLine =
+  canInstall && !blocked && !p.retired && !p.removed && !p.hidden && p.slug !== "zotero-atlas" && ["A+", "A", "B"].includes(p.grade);
 const installLabel = blocked
   ? "Blocked by Zotero"
   : p.retired
@@ -196,6 +202,20 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
         <a href={p.repoUrl} class="btn">View source</a>
       </div>
       <span class="note">{installNote}</span>
+      {
+        atlasLine && (
+          <p class="atl-line" data-atlas-pitch>
+            <AtlasIcon size={24} />
+            <span>
+              <strong>Or skip the file:</strong> Zotero Atlas, our free plugin, installs this checked release from inside
+              Zotero in one click, then holds its updates until we've checked them.{" "}
+              <a href={atlasLink("plugin-page")}>
+                Get Zotero Atlas <span aria-hidden="true">→</span>
+              </a>
+            </span>
+          </p>
+        )
+      }
       <dl class="stats">
         {
           stats.map(([k, v, tip]) => (
@@ -621,6 +641,29 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     font-size: 13.5px;
     line-height: 1.5;
     color: var(--ink-2);
+  }
+  .atl-line {
+    margin: 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--atlas-bg);
+    color: var(--atlas-ink);
+    border: 1px solid var(--atlas-line);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .atl-line :global(.atlas-icon) {
+    margin-top: 1px;
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px var(--atlas-line);
+  }
+  .atl-line a {
+    color: var(--atlas-ink);
+    font-weight: 700;
+    white-space: nowrap;
   }
   /* No overflow clipping here: it would cut off the labels' tooltips. */
   .stats {
