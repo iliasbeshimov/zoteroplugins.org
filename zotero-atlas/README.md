@@ -22,13 +22,13 @@ plugins, see what each one's code does, and install in one click.</p>
 </p>
 
 <p align="center"><img src="docs/readme/search-demo.gif" width="880" alt="Searching in Zotero Atlas: each result shows the plugin's grade and the reason for it, and C-graded plugins say to read the card first"></p>
-<p align="center"><sub>The search example from zoteroatlas.com, with real catalogue entries. The screenshots below are Zotero Atlas 1.0 in Zotero 10.</sub></p>
+<p align="center"><sub>The search example from zoteroatlas.com, with real catalogue entries. The screenshots below are Zotero Atlas 1.3 in Zotero 10.</sub></p>
 
 ## What it does
 
 ### Find, and install the file that was checked
 
-<p align="center"><img src="docs/readme/find-plugins.png" width="880" alt="Find plugins in Zotero Atlas: the most downloaded plugins that work with this Zotero, each with its grade, the reason, and an Install button"></p>
+<p align="center"><img src="docs/readme/find-plugins.png" width="880" alt="Find plugins in Zotero Atlas: a search box that asks what you want Zotero to do, then our picks, each with a screenshot, its grade, about how many people use it and an Install button"></p>
 
 - **Find.** Tools → Zotero Atlas opens on the same shelves as zoteroplugins.org: our picks, the
   most used plugins, plugin packs for students and researchers, Rising, New and catching on, and
@@ -82,6 +82,14 @@ plugins, see what each one's code does, and install in one click.</p>
   the Zotero Atlas button asks how it's working (the red dot stays for things that need you). At
   most three plugins at a time, at most once a month, and each plugin only once. No notices, and
   nothing is sent unless you click Post.
+
+### Move to another computer
+
+- **Take your plugins with you.** Save a list of the plugins in this Zotero, with their settings
+  if you want them (API keys and passwords go in only when you tick that), then open the list in
+  Zotero Atlas on the other computer. It shows what it would install, then installs only files
+  the catalogue checked, the same way Install does. The file stays where you save it: Atlas sends
+  nothing about it anywhere.
 
 Every grade comes from the catalogue's published checks: see
 [how plugins are graded](https://zoteroplugins.org/how-we-grade). The plugin itself is listed and
