@@ -18,6 +18,7 @@ export const GUIDES = [
   { path: "/how", name: "Asked on the Zotero forum" },
   { path: "/zotero-6-plugins", name: "Zotero 6 plugin replacements" },
   { path: "/state-of-zotero-plugins", name: "The state of Zotero plugins" },
+  { path: "/where-plugins-send-data", name: "Where plugins send your data" },
 ] as const;
 
 export const PUBLISHER = { "@type": "Organization", name: "Zotero Plugins Atlas", url: `${SITE}/` };

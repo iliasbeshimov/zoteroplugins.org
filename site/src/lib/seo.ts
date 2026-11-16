@@ -29,6 +29,7 @@ const GUIDE_PATHS = [
   ...howPages().map((p) => p.path),
   "/zotero-6-plugins",
   "/state-of-zotero-plugins",
+  "/where-plugins-send-data",
 ];
 /** Pages that aren't plugin cards, in the order they appear in the sitemap. */
 const PAGES = [

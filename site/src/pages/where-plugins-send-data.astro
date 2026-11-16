@@ -1,0 +1,423 @@
+---
+import EcoBars from "../components/EcoBars.astro";
+import GradeTag from "../components/GradeTag.astro";
+import PluginRow from "../components/PluginRow.astro";
+import Guide from "../layouts/Guide.astro";
+import { CURRENT_ZOTERO_MAJOR } from "../lib/atlas.ts";
+import { dataflow } from "../lib/dataflow.ts";
+import { ecosystem } from "../lib/ecosystem.ts";
+import { PUBLISHER, breadcrumb, modifiedAt, num } from "../lib/guides.ts";
+import { SITE } from "../lib/links.ts";
+
+const path = "/where-plugins-send-data";
+const h1 = "Where do Zotero plugins send my data?";
+const cur = CURRENT_ZOTERO_MAJOR();
+const d = dataflow();
+const tested = ecosystem().privacy;
+
+const rest = d.scanned - d.noRequests - d.bundledOnly - d.ownServers;
+const kind = (k: string) => d.kinds.find((x) => x.kind === k)?.count ?? 0;
+const aiPlugins = kind("llm-provider");
+
+const SHOWN = 20;
+const top = d.quiet.slice(0, SHOWN);
+const others = d.quiet.slice(SHOWN);
+const quietShare = Math.round((100 * d.noRequests) / d.scanned);
+
+/** How many AI plugins show first in the table; the button shows the rest. */
+const AI_FIRST = 40;
+const keyText = { required: "Yes", optional: "Optional", none: "No", unknown: "Unknown" } as const;
+const FEW = 3;
+
+const description = `Of ${num(d.scanned)} listed Zotero plugins whose code we checked, ${num(d.noRequests)} name no web address at all. ${num(aiPlugins)} can contact an AI service. Lists of plugins whose code names no web address, and of AI plugins and the services they name.`;
+const graph = [
+  {
+    "@type": "Article",
+    "@id": `${SITE}${path}`,
+    url: `${SITE}${path}`,
+    headline: h1,
+    description,
+    dateModified: modifiedAt(path),
+    isPartOf: { "@type": "WebSite", name: "Zotero Plugins Atlas", url: `${SITE}/` },
+    author: PUBLISHER,
+    publisher: PUBLISHER,
+  },
+  breadcrumb(h1, path),
+];
+---
+
+<Guide title={`${h1} · Zotero Plugins Atlas`} description={description} h1={h1} crumb="Where plugins send data" graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      Of the {num(d.scanned)} plugins we list and could check, {num(d.noRequests)} name no web address in their code, and {num(d.ownServers)} more only contact servers you set up yourself. The rest can contact at least one service, and {num(aiPlugins)} of those can contact an AI service. This page shows which, and how we know.
+    </p>
+  </Fragment>
+
+  <section id="short-answer">
+    <h2>The short answer</h2>
+    <p class="prose">
+      We read the released code of every plugin we list, and note each web address it names. Of the {num(d.scanned)} plugins we could check:
+    </p>
+    <ul class="answer">
+      <li><strong>{num(d.noRequests)}</strong> ({quietShare}%) name no web address. Nothing in their code is set up to contact a website.</li>
+      <li><strong>{num(d.ownServers)}</strong> only contact servers you set up yourself.</li>
+      {d.bundledOnly > 0 && <li><strong>{num(d.bundledOnly)}</strong> have web code only inside the libraries they bundle, and none of their own.</li>}
+      <li><strong>{num(rest)}</strong> name at least one address they can contact. The chart shows what kind.</li>
+    </ul>
+    <EcoBars items={d.kinds.map((k) => ({ name: k.name, value: k.count }))} caption="Listed plugins whose code names each kind of address. A plugin can appear in several rows." />
+    <p class="prose small">
+      "AI services" are the providers named in a plugin's code, such as OpenAI, Google Gemini or DeepSeek. "Scholarly services" are databases such as Crossref and OpenAlex. Each plugin's page lists its addresses under "Where your data goes".
+    </p>
+  </section>
+
+  <section id="stay-local">
+    <div class="rule-head">
+      <h2>Plugins whose code names no web address</h2>
+    </div>
+    <p class="prose">
+      {num(d.quiet.length)} plugins name no web address in their code and work with Zotero {cur}. Best grade first, then most downloaded. The {SHOWN} at the top are below, and the rest are listed after them.
+    </p>
+    <ul class="rows">
+      {top.map((p) => <PluginRow p={p} />)}
+    </ul>
+    {
+      others.length > 0 && (
+        <details class="more">
+          <summary>Show the other {num(others.length)}</summary>
+          <ul class="compact">
+            {others.map((p) => (
+              <li>
+                <GradeTag grade={p.grade} size="sm" />
+                <a href={`/p/${p.slug}`}>{p.name}</a>
+                <span class="dl">{p.downloads} downloads</span>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )
+    }
+    <p class="prose small">
+      "No web address" means we found none in the plugin's own code. It says nothing about what a plugin does with the files on your computer.
+    </p>
+  </section>
+
+  <section id="ai">
+    <h2>AI plugins and which services they can call</h2>
+    <p class="prose">
+      {num(d.ai.length)} AI plugins work with Zotero {cur}. The table shows the AI services each one names in its code. {num(d.aiLocal)} can use a model running on your own computer, and {num(d.aiNoKey)} need no API key.
+    </p>
+    <div class="toggles" role="group" aria-label="Filter the table">
+      <button type="button" class="chip-btn" aria-pressed="false" data-filter="local" hidden>Can use a local model</button>
+      <button type="button" class="chip-btn" aria-pressed="false" data-filter="nokey" hidden>No API key needed</button>
+      <span class="count" aria-live="polite" data-count></span>
+    </div>
+    <div class="tablewrap">
+      <table class="ai" data-ai data-first={AI_FIRST}>
+        <thead>
+          <tr>
+            <th scope="col">Plugin</th>
+            <th scope="col">AI services named in its code</th>
+            <th scope="col">Local model</th>
+            <th scope="col">API key</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            d.ai.map((r) => (
+              <tr data-local={r.p.localModel ? "1" : "0"} data-key={r.p.keyNeed}>
+                <th scope="row">
+                  <GradeTag grade={r.p.grade} size="sm" />
+                  <a href={`/p/${r.p.slug}`}>{r.p.name}</a>
+                </th>
+                <td data-label="AI services">
+                  {r.services.length === 0 ? (
+                    <span class="none">None named</span>
+                  ) : r.services.length <= FEW + 1 ? (
+                    r.services.join(", ")
+                  ) : (
+                    <>
+                      {r.services.slice(0, FEW).join(", ")}
+                      <details class="inline">
+                        <summary>and {r.services.length - FEW} more</summary>
+                        {r.services.slice(FEW).join(", ")}
+                      </details>
+                    </>
+                  )}
+                </td>
+                <td data-label="Local model">{r.p.localModel ? "Can use one" : <span class="none">Not found</span>}</td>
+                <td data-label="API key">{keyText[r.p.keyNeed]}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn more-btn" data-more hidden></button>
+    <p class="prose small">
+      Most downloaded first. "Local model": its documentation or code says it can use a model on your computer, such as one run by Ollama. "API key": whether you need to supply a key. The key and local-model answers each quote the plugin's own documentation or code. Plugins that can use several services are shown with the first few; the rest open under "and N more". Each plugin's page has the full list.
+    </p>
+  </section>
+
+  <section id="before-you-use">
+    <h2>Before you use an AI plugin with licensed or sensitive documents</h2>
+    <div class="two">
+      <div>
+        <h3>What we can tell you</h3>
+        <ul class="plain">
+          <li>Which AI services a plugin's code names, and so which companies a request <em>can</em> go to.</li>
+          <li>Whether it can use a model on your own computer instead.</li>
+          <li>Whether it needs an API key, and which kind of address it names besides AI services.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What we can't tell you</h3>
+        <ul class="plain">
+          <li>What a plugin actually sends when you use it, such as whether it sends a whole PDF, a page, or only a selected passage. We have run live tests on only some plugins.</li>
+          <li>What an AI service does with what it receives. That is set by its terms and by your account.</li>
+          <li>What your library's licences, a publisher's terms or your institution's rules allow.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="prose">
+      Some publishers' licences limit what you can do with their PDFs, and some institutions have rules about sharing documents with outside services. If you aren't sure, ask your library or your institution before you use an AI plugin with licensed or sensitive documents. A plugin that can use a local model can keep the text on your computer when you set it up that way.
+    </p>
+  </section>
+
+  <section id="method">
+    <h2>How we know</h2>
+    <p class="prose">
+      We download each plugin's latest release and read its code. We note every web address it names, and group them by what kind of service they belong to. For {num(tested.tested)} plugins we also installed them in a real copy of Zotero and recorded the servers they contacted. {num(tested.asDescribed)} of those did only what their card here already describes.
+    </p>
+    <p class="prose">
+      Two limits matter here. A name in the code shows that a plugin can contact an address, not that it does so for every user or sends your library to it. And a plugin can send data to an address you type in yourself, such as an AI server of your own. Those addresses aren't in the plugin's code, so this page can't list them. The <a href="/how-we-grade">Zotero Plugins grade</a> explains how each finding counts, and "<a href="/are-zotero-plugins-safe">Are Zotero plugins safe?</a>" covers the other checks. The numbers here refresh every night.
+    </p>
+  </section>
+</Guide>
+
+<script>
+  const table = document.querySelector<HTMLTableElement>("[data-ai]");
+  if (table) {
+    const rows = [...table.querySelectorAll<HTMLTableRowElement>("tbody tr")];
+    const buttons = [...document.querySelectorAll<HTMLButtonElement>("[data-filter]")];
+    const more = document.querySelector<HTMLButtonElement>("[data-more]");
+    const count = document.querySelector<HTMLElement>("[data-count]");
+    const first = Number(table.dataset.first) || 40;
+    let all = false;
+    const on = new Set<string>();
+    const render = () => {
+      let matched = 0;
+      let shown = 0;
+      for (const tr of rows) {
+        const ok =
+          (!on.has("local") || tr.dataset.local === "1") &&
+          (!on.has("nokey") || tr.dataset.key === "none");
+        if (ok) matched++;
+        const show = ok && (all || matched <= first);
+        if (show) shown++;
+        tr.hidden = !show;
+      }
+      if (count) count.textContent = `${matched} of ${rows.length} AI plugins`;
+      if (more) {
+        more.hidden = all || matched <= first;
+        more.textContent = `Show all ${matched}`;
+      }
+    };
+    for (const b of buttons) {
+      b.hidden = false;
+      b.addEventListener("click", () => {
+        const k = b.dataset.filter ?? "";
+        if (on.has(k)) on.delete(k);
+        else on.add(k);
+        b.setAttribute("aria-pressed", String(on.has(k)));
+        render();
+      });
+    }
+    more?.addEventListener("click", () => {
+      all = true;
+      render();
+    });
+    render();
+  }
+</script>
+
+<style>
+  .answer {
+    margin: 0;
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 780px;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+  .rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+  .more summary,
+  details.inline summary {
+    cursor: pointer;
+    width: fit-content;
+    color: var(--accent-fg);
+    font-weight: 600;
+  }
+  .compact {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 24px;
+  }
+  .compact li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+    min-width: 0;
+  }
+  .compact a {
+    overflow-wrap: anywhere;
+    font-weight: 600;
+  }
+  .dl {
+    margin-left: auto;
+    font: 500 12.5px var(--font-mono);
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+  .toggles {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+  .count {
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .tablewrap {
+    min-width: 0;
+  }
+  table.ai {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  .ai th,
+  .ai td {
+    text-align: left;
+    vertical-align: top;
+    padding: 12px 14px 12px 0;
+    border-bottom: 1px solid var(--line);
+    font-weight: 400;
+    overflow-wrap: anywhere;
+  }
+  .ai thead th {
+    font-size: 13px;
+    font-weight: 650;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .ai tbody th {
+    font-weight: 650;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 180px;
+  }
+  .ai tbody th a {
+    min-width: 0;
+  }
+  .ai td:nth-child(2) {
+    width: 42%;
+  }
+  .none {
+    color: var(--ink-3);
+  }
+  details.inline {
+    margin-top: 2px;
+    font-size: 14px;
+  }
+  details.inline summary {
+    font-weight: 500;
+  }
+  .more-btn {
+    align-self: flex-start;
+  }
+  .two {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .two > div {
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+  h3 {
+    margin: 0 0 8px;
+    font-size: 17px;
+  }
+  .plain {
+    margin: 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+  [hidden] {
+    display: none !important;
+  }
+  @media (max-width: 760px) {
+    .two,
+    .compact {
+      grid-template-columns: 1fr;
+    }
+    .ai thead {
+      display: none;
+    }
+    .ai,
+    .ai tbody {
+      display: block;
+    }
+    .ai tbody tr {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .ai tbody tr[hidden] {
+      display: none;
+    }
+    .ai th,
+    .ai td {
+      border: 0;
+      padding: 0;
+    }
+    .ai tbody th {
+      grid-column: 1 / -1;
+      min-width: 0;
+    }
+    .ai td:nth-child(2) {
+      grid-column: 1 / -1;
+      width: auto;
+    }
+    .ai td::before {
+      content: attr(data-label) ": ";
+      color: var(--ink-3);
+      font-size: 13px;
+    }
+    .ai td:nth-child(2)::before {
+      display: block;
+    }
+  }
+</style>

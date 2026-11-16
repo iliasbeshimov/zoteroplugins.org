@@ -385,7 +385,7 @@ const MAINT: Record<string, string> = {
   unknown: "Unknown",
 };
 
-const HOST_GROUP: Record<string, [string, Tone | null]> = {
+export const HOST_GROUP: Record<string, [string, Tone | null]> = {
   "llm-provider": ["AI services", null],
   translation: ["Translation", null],
   "scholarly-api": ["Scholarly services", null],
