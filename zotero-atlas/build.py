@@ -10,6 +10,7 @@ unzipping the file gives back those files.
 
 import hashlib
 import json
+import re
 import sys
 import zipfile
 from pathlib import Path
@@ -49,6 +50,14 @@ repo = manifest["homepage_url"]
 if zotero["update_url"] != f"{repo}/releases/latest/download/updates.json":
     sys.exit("update_url must be homepage_url + /releases/latest/download/updates.json")
 name = f"zotero-atlas-{version}.xpi"
+
+# Zotero keeps a stylesheet it has loaded until it quits, even across an update, so the pages'
+# stylesheet addresses carry the version: an update without a restart then gets its own styles.
+stamp = f"?v={version}"
+for page in ("content/atlas.xhtml", "content/firstrun.xhtml"):
+    hrefs = re.findall(r'href="([^"]+\.css[^"]*)"', (SRC / page).read_text(encoding="utf-8"))
+    if not hrefs or any(not h.endswith(stamp) for h in hrefs):
+        sys.exit(f"{page}: each stylesheet's address must end in {stamp}; it has {hrefs}")
 
 DIST.mkdir(exist_ok=True)
 xpi = DIST / name

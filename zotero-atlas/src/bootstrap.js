@@ -101,6 +101,10 @@ const ASK_EVERY = 30 * DAY; // at most one round of asking a month; a round's ca
 const ASK_AT_MOST = 3; // plugins asked about in one round
 const MAX_REVIEW = 1000;
 const XHTML = "http://www.w3.org/1999/xhtml";
+// Zotero keeps every stylesheet it has loaded, by its address, until it quits, and an update
+// doesn't clear them. So each stylesheet's address ends in ?v=<this version>: after an update
+// without a restart, the new version's pages get its own styles, not the old version's
+// (build.py checks the two .xhtml pages; the two added here use `version`).
 const CONTENT = "chrome://zotero-atlas/content";
 
 let rootURI = "";
@@ -1986,7 +1990,12 @@ function addToWindow(win) {
   const parts = {};
   // The window's styles for the button and the bar.
   try {
-    parts.style = el(doc, "link", { rel: "stylesheet", href: `${CONTENT}/zotero.css` }, XHTML);
+    parts.style = el(
+      doc,
+      "link",
+      { rel: "stylesheet", href: `${CONTENT}/zotero.css?v=${version}` },
+      XHTML,
+    );
     doc.documentElement.appendChild(parts.style);
   } catch (_e) {
     parts.style = null;
@@ -2258,7 +2267,7 @@ function decorate(doc) {
     pages.add(doc);
     const link = doc.createElement("link");
     link.rel = "stylesheet";
-    link.href = `${CONTENT}/plugins.css`;
+    link.href = `${CONTENT}/plugins.css?v=${version}`;
     link.id = "zotero-atlas-style";
     doc.head.appendChild(link);
     const obs = new doc.defaultView.MutationObserver(() => {

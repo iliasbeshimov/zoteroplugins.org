@@ -472,6 +472,12 @@ const run = async (name, fn) => {
       assert.equal(t.log.filter((l) => l.startsWith("pane:")).length, 1);
       assert.ok(t.s.Zotero.ZoteroAtlas, "API exposed");
       t.s.onMainWindowLoad({ window: t.window });
+      const style = t.window.document.documentElement.children.find((c) => c.tag === "link");
+      assert.equal(
+        style?.attrs.href,
+        "chrome://zotero-atlas/content/zotero.css?v=0.1.0",
+        "the stylesheet's address carries the version, so an update gets its own styles",
+      );
       assert.equal(t.ours().length, 1);
       assert.equal(t.popup.children[1], t.ours()[0], "right under Plugins");
       assert.equal(t.ours()[0].attrs.label, "Zotero Atlas…");
