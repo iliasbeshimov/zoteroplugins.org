@@ -2,7 +2,7 @@
 
 The server behind the plugin's "Send my plugin list" choice and its ratings: a Cloudflare Worker
 with a D1 database. The routes are in `worker.js`, its checks and conversions in `lib.js` (tested
-by `node --test test.mjs`), the tables in `schema.sql`.
+by `node --test test.mjs test-guides.mjs`), the tables in `schema.sql`.
 
 **Plugin lists.** Per reporting install: the random ID the plugin made, the Zotero version, the
 operating system, the plugin's version, and the installed plugins (ID, version, enabled), replaced
