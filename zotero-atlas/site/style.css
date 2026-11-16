@@ -590,14 +590,6 @@ button.linkish {
   border-width: 0 1.5px 1.5px 0;
   transform: rotate(45deg) translateY(-2px);
 }
-.works {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 13.5px;
-  color: var(--ui-text);
-  white-space: nowrap;
-}
 .cb {
   width: 14px;
   height: 14px;
@@ -621,68 +613,173 @@ button.linkish {
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
+.back {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ui-link);
+}
+.win-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px 16px 4px;
+}
+.win-filters .sel {
+  min-width: 0;
+  height: 28px;
+  font-size: 13px;
+}
+.win-filters .sort {
+  margin-left: auto;
+}
+.fchip {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 11px;
+  border-radius: 13px;
+  border: 1px solid var(--ui-line);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+.fchip.on {
+  background: var(--ui-ink);
+  border-color: var(--ui-ink);
+  color: var(--on-accent);
+}
+.res-count {
+  padding: 6px 16px 8px;
+  font-size: 12.5px;
+  color: var(--ui-muted);
+  border-bottom: 1px solid var(--ui-line2);
+  margin-inline: 16px;
+  padding-inline: 0;
+}
+.res-count span {
+  color: var(--ui-link);
+  font-weight: 600;
+}
 .results {
-  padding: 4px 6px 10px;
+  padding: 0 16px 10px;
   transition: opacity 0.25s ease;
 }
 .results.fading {
   opacity: 0.25;
 }
+/* A result as Zotero Atlas 1.3 draws it: icon, name and version, the one-line description, the
+   grade with its reason, in use and GitHub stars, what it needs, and Install. */
 .res {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 4px 18px;
-  padding: 12px 10px;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  gap: 4px 14px;
+  padding: 14px 0;
   border-bottom: 1px solid var(--ui-line2);
 }
 .res:last-child {
   border-bottom: 0;
 }
+.res-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 22%;
+  object-fit: contain;
+  background: var(--ui-bg);
+}
+.res-icon.jtile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Tiles for plugins without an icon: the job's colours (findlib.js JOB_ART, light). */
+.jtile.j-reading {
+  background: #d3efff;
+  color: #265b8d;
+}
+.jtile.j-citing {
+  background: #e4e8ff;
+  color: #4e508e;
+}
+.jtile.j-ai {
+  background: #f4e3ff;
+  color: #674689;
+}
+.jtile.j-translation {
+  background: #cbf3fe;
+  color: #006477;
+}
+.jtile.j-organising {
+  background: #ffdef0;
+  color: #803f60;
+}
+.jtile.j-metadata {
+  background: #f1e7f3;
+  color: #625166;
+}
+.jtile.j-interface {
+  background: #e6ebf7;
+  color: #4f586b;
+}
+.jtile.j-files {
+  background: #f5e8df;
+  color: #685342;
+}
 .res-main {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   min-width: 0;
 }
 .res-name {
   display: flex;
-  align-items: center;
-  gap: 4px 9px;
+  align-items: baseline;
+  gap: 4px 8px;
   flex-wrap: wrap;
-  font-size: 14px;
+  font-size: 14.5px;
 }
 .res-name b {
-  color: var(--ui-link);
-  font-weight: 500;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  font-weight: 650;
 }
 .res-name small {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--ui-muted);
 }
-.res-sum {
+.res-line {
   font-size: 13.5px;
-  color: var(--ui-ink);
 }
 .res-why {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   font-size: 13px;
+}
+.res-why .pill {
+  margin-top: 1px;
+}
+.res-meta {
+  font-size: 12.5px;
   color: var(--ui-muted);
 }
-.res-links {
+.res-needs {
   display: flex;
-  gap: 12px;
-  font-size: 13px;
-  color: var(--ui-link);
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+.res-needs span {
+  font-size: 11.5px;
+  padding: 1px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--ui-line);
+  background: var(--ui-soft);
 }
 .res-act {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 6px;
-  max-width: 190px;
+  max-width: 170px;
 }
 .res-act small {
   font-size: 11.5px;
@@ -722,12 +819,21 @@ button.ui-btn {
   border-color: var(--ui-line2);
   font-weight: 600;
 }
+.ui-btn.soft {
+  background: var(--ui-blue-soft);
+  border-color: var(--ui-blue-soft);
+  color: var(--ui-blue);
+  font-weight: 650;
+  border-radius: 15px;
+  padding: 0 16px;
+}
 .ui-btn.done {
   color: var(--gAp);
   cursor: default;
 }
 @container (max-width: 640px) {
-  .refresh {
+  .refresh,
+  .tab.move {
     display: none;
   }
   .sel {
@@ -748,10 +854,31 @@ button.ui-btn {
   .win-tools {
     padding: 12px 10px 4px;
   }
+  .win-filters {
+    padding-inline: 10px;
+  }
+  .win-filters .sel:not(.sort) {
+    display: none;
+  }
+  .res-count {
+    margin-inline: 10px;
+  }
+  .results {
+    padding-inline: 10px;
+  }
   .res {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+  .res-icon {
+    width: 36px;
+    height: 36px;
+  }
+  .res-icon svg {
+    width: 22px;
+    height: 22px;
   }
   .res-act {
+    grid-column: 2;
     align-items: flex-start;
     max-width: none;
   }
