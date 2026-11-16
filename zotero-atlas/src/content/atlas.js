@@ -3,17 +3,6 @@
 // comes from Zotero.ZoteroAtlas (bootstrap.js); this file only draws it.
 (() => {
   const A = Zotero.ZoteroAtlas;
-  const JOBS = [
-    ["reading", "Reading & PDFs"],
-    ["citing", "Citing & writing"],
-    ["ai", "AI & summaries"],
-    ["translation", "Translation"],
-    ["organising", "Organising & tags"],
-    ["metadata", "Import & metadata"],
-    ["interface", "Interface & look"],
-    ["files", "Files, sync & backup"],
-  ];
-  const JOB_TITLE = Object.fromEntries(JOBS);
   const CHIP = {
     blocked: ["Blocked by Zotero", "red"],
     advisory: ["Known security problem", "red"],
@@ -702,8 +691,6 @@
       link,
       gradePill,
       status,
-      JOBS,
-      JOB_TITLE,
       getData: () => data,
       installedFor,
       refreshInstalled,

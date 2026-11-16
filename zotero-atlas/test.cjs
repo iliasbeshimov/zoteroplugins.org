@@ -1799,6 +1799,60 @@ const run = async (name, fn) => {
       assert.equal(t.s.applySettings({}, { "extensions.x.on": false }), 0);
     },
   );
+
+  // findlib.js, as the Atlas window loads it: a script that sets window.ZoteroAtlasLib.
+  const lib = (() => {
+    const box = { window: {} };
+    vm.runInNewContext(fs.readFileSync(`${__dirname}/src/content/findlib.js`, "utf8"), box);
+    return box.window.ZoteroAtlasLib;
+  })();
+
+  await run("search words: stop words dropped, British and American spellings share a stem", () => {
+    assert.deepEqual([...lib.words("Find duplicates in my library")], ["duplicate", "library"]);
+    assert.deepEqual([...lib.words("summarise")], [...lib.words("summarize")]);
+    assert.deepEqual([...lib.words("summaries")], ["summary"]);
+    // Only stop words: search for them anyway rather than for nothing.
+    assert.deepEqual([...lib.words("how to")], ["how", "to"]);
+  });
+
+  await run(
+    "search: a plugin is found by how people ask for it, and that counts towards Best match",
+    () => {
+      const asked = entry({
+        slug: "asked",
+        name: "Paper Digest",
+        summary: "Writes a digest.",
+        ask: ["summarize this paper"],
+        inUse: 100,
+      });
+      const stray = entry({
+        slug: "stray",
+        name: "Metadata Tool",
+        summary: "Fixes fields; a summary of each paper's journal is shown too.",
+        inUse: 100,
+      });
+      const ws = lib.words("summarise a paper");
+      assert.ok(ws.every((w) => lib.haystack(asked).includes(w)));
+      assert.ok(lib.score(asked, ws) > lib.score(stray, ws));
+      // A catalogue without phrases (before 1.3.1) still searches and scores.
+      assert.ok(Number.isFinite(lib.score(entry({ ask: undefined }), ws)));
+    },
+  );
+
+  await run(
+    "tiles: a plugin without an icon gets its first job that has art; none without a job",
+    () => {
+      assert.equal(lib.tileJob(entry({ jobs: ["nope", "files", "ai"] })), "files");
+      assert.equal(lib.tileJob(entry({ jobs: [] })), null);
+      const hex = /^#[0-9a-f]{6}$/;
+      for (const [slug] of lib.JOBS) {
+        const art = lib.JOB_ART[slug];
+        assert.ok(art, `no art for ${slug}`);
+        assert.ok(/^[MmLlHhVvCcSsQqTtAaZz0-9 .,-]+$/.test(art.path), `${slug}: path`);
+        for (const c of [...art.light, ...art.dark]) assert.match(c, hex);
+      }
+    },
+  );
 })().catch((e) => {
   console.error(e);
   process.exit(1);

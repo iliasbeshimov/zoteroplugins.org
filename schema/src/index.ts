@@ -43,6 +43,7 @@ export const documentSchemas = {
   advisories: Advisories,
 } as const;
 export * from "./grade.ts";
+export * from "./jobArt.ts";
 export * from "./jobs.ts";
 export * from "./packs.ts";
 export * from "./shelves.ts";

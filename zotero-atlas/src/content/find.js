@@ -3,7 +3,9 @@
 // every install goes through. Drawn from the catalogue Zotero.ZoteroAtlas fetched; atlas.js owns
 // the window and hands over what it knows (the catalogue, what's installed, its helpers).
 window.ZoteroAtlasFind = (ctx) => {
-  const { A, zv, el, gradePill, status, JOBS, JOB_TITLE } = ctx;
+  const { A, zv, el, gradePill, status } = ctx;
+  const L = window.ZoteroAtlasLib; // findlib.js: jobs, tiles, Best match
+  const { JOBS, JOB_TITLE } = L;
   const $ = (id) => document.getElementById(id);
   const major = String(zv).split(".")[0];
 
@@ -54,11 +56,11 @@ window.ZoteroAtlasFind = (ctx) => {
   const fits = (e) => Boolean(A.fileFor(e, zv));
   const good = (e) => fits(e) && !e.blocked;
   const mine = (e) => ctx.installedFor(e);
-  const use = (e) => (typeof e.inUse === "number" ? e.inUse : null);
+  const use = L.useOf;
   const byUse = (a, b) =>
     (use(b) ?? -1) - (use(a) ?? -1) || (b.downloads || 0) - (a.downloads || 0);
   const owner = (e) => (e.repo || "").replace(/^https:\/\/github\.com\//, "").split("/")[0];
-  const lineOf = (e) => e.line || (e.summary || "").split(/(?<=\.)\s/)[0] || "";
+  const lineOf = L.lineOf;
 
   /** 572,471 → "570k", 1,234,567 → "1.2M", 840 → "840": two significant figures, as on the site. */
   function fmtUse(n) {
@@ -144,12 +146,48 @@ window.ZoteroAtlasFind = (ctx) => {
   }
   const pluginLink = (child, e, cls) => viewLink(child, { name: "plugin", slug: e.slug }, cls);
 
-  /** The plugin's own icon from the directory's repository, or its initial on a tint. */
+  const SVG = "http://www.w3.org/2000/svg";
+  /**
+   * The plugin's own icon from the directory's repository; without one, its first job's symbol
+   * on that job's colour, as on zoteroplugins.org; with no job either, its initial on a tint.
+   */
   function icon(e, size) {
     const tile = () => {
+      const job = L.tileJob(e);
+      if (job) {
+        const art = L.JOB_ART[job];
+        const t = el("span", "icon tile job");
+        t.style.width = `${size}px`;
+        t.style.height = `${size}px`;
+        t.style.setProperty("--jb", art.light[0]);
+        t.style.setProperty("--jf", art.light[1]);
+        t.style.setProperty("--jbd", art.dark[0]);
+        t.style.setProperty("--jfd", art.dark[1]);
+        const svg = document.createElementNS(SVG, "svg");
+        const g = String(Math.round(size * 0.6));
+        for (const [k, v] of [
+          ["width", g],
+          ["height", g],
+          ["viewBox", "0 0 24 24"],
+          ["fill", art.fill ? "currentColor" : "none"],
+          ["stroke", "currentColor"],
+          ["stroke-width", "2"],
+          ["stroke-linecap", "round"],
+          ["stroke-linejoin", "round"],
+        ])
+          svg.setAttribute(k, v);
+        const path = document.createElementNS(SVG, "path");
+        path.setAttribute("d", art.path);
+        svg.append(path);
+        t.append(svg);
+        t.setAttribute("aria-hidden", "true");
+        return t;
+      }
       let h = 0;
       for (const c of e.slug || "") h = (h * 31 + c.charCodeAt(0)) % 6;
-      const t = el("span", `icon tile t${h}`, (e.name || "?").trim().charAt(0).toUpperCase());
+      // The first letter after a leading "Zotero", as on the site.
+      const letter = (e.name || "").replace(/^zotero[\s-]*/i, "").match(/[\p{L}\p{N}]/u)?.[0];
+      const t = el("span", `icon tile t${h}`, (letter || "?").toUpperCase());
       t.style.width = `${size}px`;
       t.style.height = `${size}px`;
       t.style.fontSize = `${Math.round(size * 0.42)}px`;
@@ -532,61 +570,19 @@ window.ZoteroAtlasFind = (ctx) => {
   // -------------------------------------------------------------------------------------------
   // Search results and job lists
 
-  /** Best match leans a little towards better grades: worth about a third of a tenfold in use. */
-  const GRADE_NUDGE = { "A+": 6, A: 6, B: 2, C: -8, "–": -4 };
-  // Words a search can leave out: "find duplicates" means "duplicates".
-  const STOP = new Set(
-    "a an the in on of for to with and or my me i want can how do get find from into by zotero plugin plugins".split(
-      " ",
-    ),
-  );
-  /** A word's stem, so "summarise", "summarize" and "summaries" all find "summar…". */
-  function stem(w) {
-    let s = w.replace(/(is|iz)(e|es|ed|er|ing)$/, "").replace(/ies$/, "y");
-    if (s === w && s.length > 3 && s.endsWith("s") && !s.endsWith("ss")) s = s.slice(0, -1);
-    return s.length >= 3 ? s : w;
-  }
-  function words(q) {
-    const all = q.toLowerCase().split(/\s+/).filter(Boolean);
-    const kept = all.filter((w) => !STOP.has(w));
-    return (kept.length ? kept : all).map(stem);
-  }
-
+  /** Everything a search looks in, worked out once per plugin per catalogue. */
   function hay(e) {
     let h = cache.hay.get(e.slug);
     if (!h) {
-      h =
-        `${e.name} ${e.line || ""} ${e.summary || ""} ${e.slug} ${e.jobs.map((j) => JOB_TITLE[j] || j).join(" ")}`.toLowerCase();
+      h = L.haystack(e);
       cache.hay.set(e.slug, h);
     }
     return h;
   }
 
-  /**
-   * Best match: how well the words match (the name counts most, then the one-line description,
-   * then the jobs), blended with how many people use the plugin, so a widely used plugin isn't
-   * buried under small namesakes and an exact name still comes first.
-   */
-  function score(e, ws) {
-    const name = e.name.toLowerCase();
-    const line = lineOf(e).toLowerCase();
-    const jobs = e.jobs.map((j) => (JOB_TITLE[j] || j).toLowerCase()).join(" ");
-    const phrase = ws.join(" ");
-    let s = name === phrase ? 60 : name.includes(phrase) ? 30 : 0;
-    for (const w of ws) {
-      if (name.includes(w)) s += 12;
-      if (line.includes(w)) s += 8;
-      if (jobs.includes(w)) s += 3;
-    }
-    // Every word in the name or the one-line description, not only somewhere in the summary.
-    if (ws.every((w) => name.includes(w) || line.includes(w))) s += 15;
-    const n = use(e) ?? Math.round((e.downloads || 0) / 20);
-    return s + Math.log10(n + 1) * 12 + (GRADE_NUDGE[e.grade] ?? 0);
-  }
-
   function matching(v, fit) {
     const d = catalogue();
-    const ws = words(v.q || "");
+    const ws = L.words(v.q || "");
     let list = d.plugins;
     if (fit) list = list.filter(fits);
     if (v.job) list = list.filter((e) => e.jobs.includes(v.job));
@@ -595,7 +591,7 @@ window.ZoteroAtlasFind = (ctx) => {
     if (ws.length) list = list.filter((e) => ws.every((w) => hay(e).includes(w)));
     const sort = v.sort === "match" && !ws.length ? "used" : v.sort;
     if (sort === "match") {
-      const sc = new Map(list.map((e) => [e.slug, score(e, ws)]));
+      const sc = new Map(list.map((e) => [e.slug, L.score(e, ws)]));
       list = [...list].sort((a, b) => sc.get(b.slug) - sc.get(a.slug) || byUse(a, b));
     } else if (sort === "name") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
     else if (sort === "updated")
@@ -663,8 +659,8 @@ window.ZoteroAtlasFind = (ctx) => {
       ["updated", "Recently updated"],
       ["name", "Name"],
     ];
-    if (words(v.q || "").length) sorts.unshift(["match", "Best match"]);
-    const sortValue = v.sort === "match" && !words(v.q || "").length ? "used" : v.sort;
+    if (L.words(v.q || "").length) sorts.unshift(["match", "Best match"]);
+    const sortValue = v.sort === "match" && !L.words(v.q || "").length ? "used" : v.sort;
     bar.append(select("sort", "Sort", sorts, sortValue, set("sort")));
     box.append(bar);
 

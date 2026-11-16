@@ -1,23 +1,57 @@
 ---
+import { JOB_ART, tileJob } from "@atlas/schema";
 import { iconLetter, iconOf } from "../lib/icons.ts";
 
 /**
- * A plugin's own icon on a white tile (white in dark mode too, so dark glyphs stay visible), or its
- * initial on a plain tile. Decorative: the plugin's name always sits next to it.
+ * A plugin's own icon on a white tile (white in dark mode too, so dark glyphs stay visible). A
+ * plugin without one gets its main job's symbol on that job's colour (JOB_ART, the same in Zotero
+ * Atlas), and one without a job either its initial on a plain tile. Decorative: the plugin's name
+ * always sits next to it.
  */
 interface Props {
   slug: string;
   name: string;
+  /** Its jobs, main job first: the tile for a plugin without an icon. */
+  jobs?: readonly string[];
   /** The tile's side in px. */
   size?: number;
 }
-const { slug, name, size = 32 } = Astro.props;
+const { slug, name, jobs = [], size = 32 } = Astro.props;
 const src = iconOf(slug);
 const inner = size - 2 * Math.max(2, Math.round(size * 0.1));
+const job = src ? null : tileJob(jobs);
+const art = job ? JOB_ART[job] : null;
+const glyph = Math.round(size * 0.6);
+const vars = art
+  ? `;--jb:${art.light[0]};--jf:${art.light[1]};--jbd:${art.dark[0]};--jfd:${art.dark[1]}`
+  : "";
 ---
 
-<span class:list={["picon", !src && "none"]} style={`--s:${size}px;--i:${inner}px`} aria-hidden="true">
-  {src ? <img src={src} alt="" width={inner} height={inner} loading="lazy" decoding="async" /> : iconLetter(name)}
+<span
+  class:list={["picon", !src && (art ? "job" : "none")]}
+  style={`--s:${size}px;--i:${inner}px${vars}`}
+  aria-hidden="true"
+>
+  {
+    src ? (
+      <img src={src} alt="" width={inner} height={inner} loading="lazy" decoding="async" />
+    ) : art ? (
+      <svg
+        width={glyph}
+        height={glyph}
+        viewBox="0 0 24 24"
+        fill={art.fill ? "currentColor" : "none"}
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d={art.path} />
+      </svg>
+    ) : (
+      iconLetter(name)
+    )
+  }
 </span>
 
 <style>
@@ -44,5 +78,20 @@ const inner = size - 2 * Math.max(2, Math.round(size * 0.1));
     background: var(--surface-2);
     color: var(--ink-3);
     font: 700 calc(var(--s) * 0.44) / 1 var(--font-sans);
+  }
+  .picon.job {
+    background: var(--jb);
+    color: var(--jf);
+    border-color: transparent;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) .picon.job {
+      background: var(--jbd);
+      color: var(--jfd);
+    }
+  }
+  :global(:root[data-theme="dark"]) .picon.job {
+    background: var(--jbd);
+    color: var(--jfd);
   }
 </style>
