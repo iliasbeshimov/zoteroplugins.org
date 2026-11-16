@@ -21,7 +21,7 @@ plugins, see what each one's code does, and install in one click.</p>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/iliasbeshimov/zotero-atlas?color=777" alt="MIT"></a>
 </p>
 
-<p align="center"><img src="docs/readme/search-demo.gif" width="880" alt="Searching in Zotero Atlas: each result shows the plugin's grade and the reason for it, and C-graded plugins say to read the card first"></p>
+<p align="center"><img src="docs/readme/search-demo.gif" width="880" alt="Searching in Zotero Atlas: each result shows the plugin's icon, its grade and the reason for it, how many people use it and what it needs, and a C-graded plugin says to read why first"></p>
 <p align="center"><sub>The search example from zoteroatlas.com, with real catalogue entries. The screenshots below are Zotero Atlas 1.3 in Zotero 10.</sub></p>
 
 ## What it does
