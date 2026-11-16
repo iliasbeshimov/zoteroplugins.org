@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
   "slug": "llm-for-zotero",
-  "version": "3.9.12",
-  "sha256": "92a7047d73856c5a416381f9751ceeb987b09b7c98f027b45a30be29e05de142",
-  "codeKey": "685dba5f961f",
-  "reviewedAt": "2026-10-16",
-  "method": "Read from the release file by Claude Opus 5.5: the agent's run_command and zotero_script tools, the action authorization policy, the permission-mode setting and its migration, and the mode descriptions shown in the plugin.",
+  "version": "3.9.17",
+  "sha256": "a7593175f042f9df96805e6fc335bef659e5ebcdce733fa89afea0341fb57011",
+  "codeKey": "f41313b400ba",
+  "reviewedAt": "2026-11-16",
+  "method": "Evidence from the release files, compared with the reviewed 3.9.12; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
   "real": true,
   "concern": "high",
-  "rule": "CAP-RUNS-SENT-CODE-AI-REVIEWED",
-  "label": "Its AI agent can run commands and code on your computer; by default, an AI check decides when to ask you",
-  "summary": "In agent mode the AI can run shell commands and JavaScript inside Zotero. Commands that only read (ls, find, head, tail, rg and a few others) run without asking in every mode. The rest depends on a setting: Safe asks you every time; Auto, the default, runs ordinary and reversible changes and has a second AI call decide about the rest, asking you only when it judges the action unclear or risky; Yolo never asks. Commands run as you, so they can read and change any of your files.",
+  "rule": "CAP-SENT-CODE-UNASKED",
+  "label": "Its AI agent can run commands and code on your computer; by default its JavaScript runs without asking you",
+  "summary": "In agent mode the AI can run shell commands and JavaScript inside Zotero. Commands that only read (ls, find, head, tail, rg and a few others) run without asking in every mode. The rest depends on a setting: Safe asks you every time; Yolo never asks; Auto, the default, runs ordinary and reversible changes and has a second AI call decide about other shell commands, but unlike 3.9.12, which we reviewed before, it now runs all of the AI's JavaScript without asking you or that check, including scripts with full access to your files and the network. The plugin's own description of Auto, and its README, still say such actions get a review. Commands and scripts run as you, so they can read and change any of your files.",
   "facts": {
     "tools": [
       "run_command: a shell command passed to the native shell (zsh, bash or cmd.exe)",
@@ -19,6 +19,7 @@
     "defaultMode": "auto",
     "defaultModeQuote": {
       "file": "content/scripts/llmforzotero.js",
+      "line": 332386,
       "text": "const migrated = legacyValue === \"safe\" || legacyValue === \"auto\" || legacyValue === \"yolo\" ? legacyValue : \"auto\";"
     },
     "modes": {
@@ -26,9 +27,26 @@
       "auto": "Reads, ordinary writes and recoverable changes run automatically. Other actions receive model review; confirmation is requested only for unclear intent, excessive risk, or unavailable review.",
       "yolo": "The Original Agent acts without permission prompts or approval-model calls, including ambiguous or dangerous actions."
     },
-    "readsWithoutAsking": "authorizeOriginalAction runs any action whose plan is read_only with a known assurance before checking the mode. isReadOnlyCommand accepts pwd, echo, printf, wc, rg, find, git, head, ls, stat and tail with listed flags and no output redirection; head, tail and rg print file contents, which go to the AI model.",
-    "modelReview": "ActionAuthorizationService asks a reviewer model to return execute or confirm; an invalid or failed review becomes confirm.",
-    "privilegedScripts": "A zotero_script with access 'privileged' is planned as ambiguous (filesystem, network, delete, egress), so Auto sends it to the model review.",
-    "externalAgents": "When Claude Code, Codex or another MCP client drives the tools, that client's own permission settings apply instead of these modes."
+    "modeDescriptionLines": "These are the descriptions shown in the plugin (content/scripts/llmforzotero.js lines 124760, 124768, 124776). The Auto text no longer matches zotero_script, which Auto runs without review (see scriptsInAuto).",
+    "readsWithoutAsking": "authorizeOriginalAction (line 180864) runs any action whose plan is read_only with a known assurance before checking the mode. isReadOnlyCommand (line 190764, unchanged) accepts pwd, echo, printf, wc, rg, find, git, head, ls, stat and tail with listed flags and no output redirection; head, tail and rg print file contents, which go to the AI model.",
+    "modelReview": "ActionAuthorizationService (line 180936) asks a reviewer model to return execute or confirm; an invalid or failed review becomes confirm. This still applies to run_command in Auto.",
+    "scriptsInAuto": {
+      "summary": "Changed since 3.9.12. In 3.9.12 a zotero_script with access 'privileged' was planned as ambiguous (filesystem, network, delete, egress) or as an unknown-assurance state change, so Auto sent it to the model review. In 3.9.17 authorizeOriginalAction returns execute for every zotero_script plan that reaches the Auto branch, so Auto runs it with no review and no prompt. Safe still confirms and Yolo still executes, because those checks come first; scripts that touch raw Zotero database access or the authorization state are blocked as before.",
+      "quote": {
+        "file": "content/scripts/llmforzotero.js",
+        "line": 180895,
+        "text": "if (plan.mechanism === \"zotero_script\") {"
+      },
+      "privilegedPlan": {
+        "file": "content/scripts/llmforzotero.js",
+        "line": 150605,
+        "text": "reason: \"Privileged JavaScript is not runtime-confined to reads; static inspection cannot prove arbitrary code harmless.\""
+      },
+      "newWriteGate": "A write script must call env.snapshot, env.recordCreatedItem or env.addInverse (a text match on the script, line 150555), so a journal can describe recovery; this does not limit what the script does.",
+      "readme": "README line 363 still says zotero_script runs 'Zotero JavaScript with write confirmations'."
+    },
+    "privilegedScripts": "A zotero_script with access 'privileged' gets fetch and runs with the system principal (createScriptSandbox, line 149804). Its plan is still ambiguous (line 150605), but in Auto that no longer leads to the model review.",
+    "externalAgents": "When Claude Code, Codex or another MCP client drives the tools, that client's own permission settings apply instead of these modes.",
+    "reviewerNote": "Rule CAP-SENT-CODE-UNASKED (high), the scanner's rule for an AI tool's code that runs without the user seeing it: in the default Auto mode a zotero_script returns execute before the model review (line 180895), and access 'privileged' is a tool parameter the model sets, planned as ambiguous rather than prohibited, so nothing blocks it. The 3.9.12 review's rule, CAP-RUNS-SENT-CODE-AI-REVIEWED, no longer fits: run_command still goes to the AI review in Auto, but scripts don't. Checked by hand against both release files; which of 3.9.13-3.9.16 introduced the change was not checked."
   }
 }

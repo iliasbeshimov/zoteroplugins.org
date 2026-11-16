@@ -1,37 +1,54 @@
 {
   "schemaVersion": 1,
   "slug": "zotero-gpt",
-  "version": "3.1.142",
-  "sha256": "f30bbfd04dfbc0dc7144a6a3286c0d315c366b21c0d85374bbcbbc43e63bbd75",
-  "codeKey": "ab662a28203d",
-  "reviewedAt": "2026-11-03",
-  "method": "Read from the release file by Claude Opus 5.5: the zotero://meet-awesome-gpt handler (doAction), decryptCode and getAesKey; then read the same handler in 3.1.200, the version its update channel serves.",
+  "version": "3.1.200",
+  "sha256": "29f0be7a437d304768e866db37e3bdcf4d24e6f21ebf636b37cfe875ad8c7b3f",
+  "codeKey": "b4beeaa2bc71",
+  "reviewedAt": "2026-11-16",
+  "method": "Evidence from the release files; the reviewed 3.1.142 is no longer downloadable, so each fact of that review was re-checked against 3.1.200; one Sonnet 5.5 agent established the facts with exact quotes; every quote checked against the release files and README by script; the facts that set the level checked again by hand; level from the fixed rule; label and summary written by Claude Opus 5.5.",
   "real": true,
-  "concern": "high",
+  "concern": "medium",
   "rule": "CAP-LINK-CODE",
-  "label": "A zotero:// link (a web page can open one) can make it run anyone's code without asking you",
-  "summary": "Its zotero://meet-awesome-gpt link runs the JavaScript it carries, after decrypting it with a key made from a phrase written into the plugin, so anyone who reads the plugin can make a working link and any web page can open it. Version 3.1.200, which Zotero updates it to from Gitee, no longer runs code from this link: it only opens the item a citation link points to.",
+  "label": "A zotero:// link (a web page can open one) can make it run code, but only after asking you",
+  "summary": "Its zotero://ztoolkit-debug link, from a bundled toolkit, runs the JavaScript it carries, but first shows you the command in a confirm box (or needs a matching password setting). The plugin's own zotero://meet-awesome-gpt link no longer runs code: since 3.1.200 it only opens the item a citation link points to, where 3.1.142 ran whatever code the link carried without asking.",
   "facts": {
-    "handler": "zotero://meet-awesome-gpt, registered when the plugin starts; reads iv and data from the link",
-    "check": "none that proves who made the link: data is decrypted with AES-GCM under a key that is the SHA-256 of a phrase written into the plugin, so the same key is in every copy",
-    "runs": "new AsyncFunction(\"Zotero\", \"window\", source) with Zotero's full privileges, no prompt",
-    "keyInPlugin": true,
-    "replay": "no expiry, nonce or origin check",
+    "handler": "zotero://ztoolkit-debug, the debug bridge of the bundled zotero-plugin-toolkit; reads run (code) or file from the link",
+    "check": "asks first: unless a password is set, a confirm box shows the command and 'If you do not know what it is, please click Cancel to deny'; when a password setting is set, the link must carry the same password or nothing runs. The plugin sets disableDebugBridgePassword to false, so that check stays on",
+    "runs": "new AsyncFunction(\"Zotero,window\", run) with Zotero's full privileges, after the prompt or password",
+    "asksFirst": true,
     "quotes": [
       {
         "file": "chrome/content/scripts/zoterogpt.js",
-        "text": "window.crypto.subtle.digest(\"SHA-256\",r.encode(this.SECRET_PHRASE))"
+        "text": "l=o.confirm(`External App ${a.app} wants to execute command without password."
       },
       {
         "file": "chrome/content/scripts/zoterogpt.js",
-        "text": "await new c(\"Zotero\",\"window\",s)(i,l)"
+        "text": "l=this.password===a.password,l){if(a.run)try{let d=Object.getPrototypeOf(async()=>{}).constructor;await new d(\"Zotero,window\",a.run)(r,o)}"
       },
       {
         "file": "chrome/content/scripts/zoterogpt.js",
-        "text": "r._extensions[\"zotero://meet-awesome-gpt\"]=t"
+        "text": "_extensions[\"zotero://ztoolkit-debug\"]=t"
       }
     ],
-    "laterVersions": "3.1.200 (sha256 29f0be7a437d304768e866db37e3bdcf4d24e6f21ebf636b37cfe875ad8c7b3f, from the Gitee update channel) keeps the handler and the phrase but accepts only a canvas-citation JSON or a Zotero.Reader.open(id, {position}) string matched by a regular expression, and opens that item; anything else is rejected. The scanner stops flagging this handler from 3.1.181.",
-    "notes": "The finding's other link, zotero://ztoolkit-debug, asks before running code. The developer was asked on 2026-11-03 to replace the GitHub release file (MuiseDestiny/zotero-gpt#526)."
+    "otherLink": "zotero://meet-awesome-gpt (the plugin's own link) no longer runs code: it decrypts its data with AES-GCM under a key made from the phrase by-polygon, written into the plugin, but then accepts only a canvas-citation JSON or a Zotero.Reader.open(id, {position}) string matched by a regular expression, and opens that item or reader position; anything else throws. Anyone can still make such a link, but the most it does is open an item.",
+    "otherQuotes": [
+      {
+        "file": "chrome/content/scripts/zoterogpt.js",
+        "text": "this.SECRET_PHRASE=\"by-polygon\""
+      },
+      {
+        "file": "chrome/content/scripts/zoterogpt.js",
+        "text": "if(l.kind!==\"canvas-citation\"||!l.target)throw new Error(\"Invalid Canvas citation payload\")"
+      },
+      {
+        "file": "chrome/content/scripts/zoterogpt.js",
+        "text": "throw new Error(\"Unsupported Canvas link payload\")"
+      },
+      {
+        "file": "chrome/content/scripts/zoterogpt.js",
+        "text": "n._extensions[\"zotero://meet-awesome-gpt\"]=t"
+      }
+    ],
+    "notes": "zoterogpt.js lines 1824-1827: the toolkit's ztoolkit-debug handler (the prompt at 1824; the password check, the code run and the registration at 1827, where the scanner's evidence is); line 3048: disableDebugBridgePassword set to false; line 1234: the meet-awesome-gpt handler. The reviewed 3.1.142 ran the decrypted source of meet-awesome-gpt links with no prompt (new AsyncFunction(\"Zotero\",\"window\",source)); that release file is no longer downloadable, the tag now serves 3.1.200. The developer was asked on 2026-11-03 to replace the GitHub release file (MuiseDestiny/zotero-gpt#526)."
   }
 }
