@@ -1,0 +1,600 @@
+{
+ "schemaVersion": 1,
+ "slug": "zoteconf",
+ "repo": "shinmohuang/zoteconf",
+ "version": "0.4.0",
+ "tag": "v0.4.0",
+ "releaseAuthor": "shinmohuang",
+ "publishedAt": "2026-11-13T18:09:05Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zoteconf-0.4.0.xpi",
+  "url": "https://github.com/shinmohuang/ZoteConf/releases/download/v0.4.0/zoteconf-0.4.0.xpi",
+  "size": 23898,
+  "sha256": "48143484d75f3111c2766ad2ab8290355749bfa13b2ee41d45aab4461598fb96",
+  "githubAssetId": 744657256,
+  "uploader": "shinmohuang",
+  "uploadedAt": "2026-11-13T18:09:04Z",
+  "fetchedAt": "2026-11-16T19:24:29.281Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zoteconf@shinmohuang.github.io",
+  "name": "ZoteConf",
+  "version": "0.4.0",
+  "description": "Finds the published conference/journal version of arXiv preprints and updates the item in place",
+  "homepageUrl": "https://github.com/shinmohuang/ZoteConf",
+  "updateUrl": "https://raw.githubusercontent.com/shinmohuang/ZoteConf/main/update.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1142,
+   "sha256": "110dd865590fd721bdba8823d3035137b7ac6a934f3a6d0a4a605e1f8bd00494"
+  },
+  {
+   "path": "content/icons/icon.png",
+   "size": 1783,
+   "sha256": "f3fbf2aac32a3cd242aa9a1bd534466f6e7d8700f17597cb5fa7c6638059d8cd"
+  },
+  {
+   "path": "content/icons/icon.svg",
+   "size": 1139,
+   "sha256": "772903f54b81f30eecd9f9fd231da1be3225790632e7c20376df1dc2faa89cff"
+  },
+  {
+   "path": "content/icons/icon@2x.png",
+   "size": 3338,
+   "sha256": "5cb81ae4cb8ed84f00b4fe2999410e1e139e372ae6a18a31fed3ac37a6890a11"
+  },
+  {
+   "path": "locale/en-US/zoteconf.ftl",
+   "size": 67,
+   "sha256": "095511efa0e4736af4600455ff56f0d580693f951a3fa55d70fbc8558149ea87"
+  },
+  {
+   "path": "locale/zh-CN/zoteconf.ftl",
+   "size": 69,
+   "sha256": "bb4b890a6ae567390f578b2f1e6510919c9244fb6e873ac53b035bf21638808e"
+  },
+  {
+   "path": "manifest.json",
+   "size": 626,
+   "sha256": "3ae5af570e9bcb0faaafb43d718397836acb89f4cf32658043d6fbebdc62dafc"
+  },
+  {
+   "path": "prefs.js",
+   "size": 174,
+   "sha256": "39584a7d53c23c62bb70a0ca0b6b933ad044c26486297fa1a3cd44382a0a8985"
+  },
+  {
+   "path": "src/core.js",
+   "size": 34380,
+   "sha256": "d7af47c9e9025c6762148873a36aa078608de10408cc143c21b6f5ba89a68236"
+  },
+  {
+   "path": "src/plugin.js",
+   "size": 15172,
+   "sha256": "f7c24ec963118571a912c65b29d10b693a364079749293e41fc1530953e13b69"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-16T19:24:29.281Z",
+  "input": {
+   "slug": "zoteconf",
+   "version": "0.4.0",
+   "sha256": "48143484d75f3111c2766ad2ab8290355749bfa13b2ee41d45aab4461598fb96"
+  },
+  "coverage": {
+   "filesTotal": 10,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "content/icons/icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "content/icons/icon@2x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "locale/en-US/zoteconf.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/zoteconf.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 50868,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 432,
+       "column": 24,
+       "snippet": "var res = await ctx.fetch(\"https://export.arxiv.org/api/query?id_list=\" + encodeURIComponent(paper.arxivId), { headers: {} });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 445,
+       "column": 26,
+       "snippet": "var res = await ctx.fetch(url, { headers: headers });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 501,
+       "column": 24,
+       "snippet": "var res = await ctx.fetch(\"https://export.arxiv.org/api/query?search_query=\" +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/plugin.js",
+       "line": 155,
+       "column": 20,
+       "snippet": "var xhr = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/plugin.js",
+       "line": 166,
+       "column": 22,
+       "snippet": "var translate = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 473,
+       "column": 10,
+       "snippet": "\"https://api.crossref.org/works?query.bibliographic=\" + encodeURIComponent(q.trim()) +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openalex.org",
+     "category": "scholarly-api",
+     "provider": "OpenAlex",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 463,
+       "column": 10,
+       "snippet": "\"https://api.openalex.org/works?filter=title.search:\" + encodeURIComponent(q) +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 442,
+       "column": 18,
+       "snippet": "var url = \"https://api.semanticscholar.org/graph/v1/paper/ARXIV:\" + encodeURIComponent(paper.arxivId) + \"?fields=\" + S2_FIELDS;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api2.openreview.net",
+     "category": "scholarly-api",
+     "provider": "OpenReview",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 482,
+       "column": 10,
+       "snippet": "\"https://api2.openreview.net/notes/search?term=\" + encodeURIComponent(paper.title) +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 140,
+       "column": 6,
+       "snippet": "\" ?corr dblp:doi ?d . FILTER(?d IN (<https://doi.org/10.48550/ARXIV.\" + arxivId + \">, <https://doi.org/10.48550/arXiv.\" + arxivId + \">))\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 140,
+       "column": 89,
+       "snippet": "?corr dblp:doi ?d . FILTER(?d IN (<https://doi.org/10.48550/ARXIV.\" + arxivId + \">, <https://doi.org/10.48550/arXiv.\" + arxivId + \">))\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 755,
+       "column": 47,
+       "snippet": "fill(\"url\", candidate.url || (fields.DOI ? \"https://doi.org/\" + fields.DOI : undefined));",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "export.arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 432,
+       "column": 34,
+       "snippet": "var res = await ctx.fetch(\"https://export.arxiv.org/api/query?id_list=\" + encodeURIComponent(paper.arxivId), { headers: {} });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 501,
+       "column": 34,
+       "snippet": "var res = await ctx.fetch(\"https://export.arxiv.org/api/query?search_query=\" +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "openreview.net",
+     "category": "scholarly-api",
+     "provider": "OpenReview",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 384,
+       "column": 31,
+       "snippet": "url: doi ? undefined : \"https://openreview.net/forum?id=\" + (note.forum || note.id),",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "sparql.dblp.org",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 413,
+       "column": 23,
+       "snippet": "var endpoint = \"https://sparql.dblp.org/sparql?query=\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://export.arxiv.org/api/query?id_list=<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 432,
+       "column": 24,
+       "snippet": "var res = await ctx.fetch(\"https://export.arxiv.org/api/query?id_list=\" + encodeURIComponent(paper.arxivId), { headers: {} });",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "https://export.arxiv.org/api/query?search_query=<expr>&max_results=5",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/core.js",
+       "line": 501,
+       "column": 24,
+       "snippet": "var res = await ctx.fetch(\"https://export.arxiv.org/api/query?search_query=\" +",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 3,
+      "column": 0,
+      "snippet": "pref(\"extensions.zoteconf.s2ApiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zoteconf.s2ApiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/shinmohuang/ZoteConf/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/shinmohuang/ZoteConf/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-16T19:24:29.281Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the shinmohuang account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-16T19:24:29.281Z",
+  "appliesTo": {
+   "slug": "zoteconf",
+   "version": "0.4.0",
+   "sha256": "48143484d75f3111c2766ad2ab8290355749bfa13b2ee41d45aab4461598fb96"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.13",
+   "currentZotero": "10.0.9",
+   "inputHash": "c4355667fb083e896a69511c9b8d9f91fc0d72ffc30e757dfee46f0f3ea491eb"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "api.openalex.org",
+       "api.semanticscholar.org",
+       "api2.openreview.net",
+       "doi.org",
+       "export.arxiv.org",
+       "openreview.net"
+      ],
+      "unconfirmed": [
+       "api.crossref.org",
+       "api.openalex.org",
+       "api2.openreview.net",
+       "doi.org",
+       "openreview.net"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-13T18:09:05Z",
+    "lastCommitAt": "2026-11-16T09:42:57Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

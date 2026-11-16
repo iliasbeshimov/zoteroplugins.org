@@ -1,0 +1,328 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-remarkable-desktop",
+ "repo": "matanecon/zotero-remarkable-desktop",
+ "version": "1.0.1",
+ "tag": "v1.0.1",
+ "releaseAuthor": "MatanEcon",
+ "publishedAt": "2026-11-12T09:24:29Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-remarkable-desktop-1.0.1.xpi",
+  "url": "https://github.com/MatanEcon/zotero-remarkable-desktop/releases/download/v1.0.1/zotero-remarkable-desktop-1.0.1.xpi",
+  "size": 4531,
+  "sha256": "a5a3ff0c82d2afad92e79e258eacbbb009738460de72317e1446ed10e5a28107",
+  "githubAssetId": 738853016,
+  "uploader": "MatanEcon",
+  "uploadedAt": "2026-11-12T09:24:28Z",
+  "fetchedAt": "2026-11-16T19:24:29.281Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "remarkable-desktop@matan.local",
+  "name": "Send to reMarkable",
+  "version": "1.0.1",
+  "description": "Send a PDF from Zotero to My files using the installed reMarkable Windows desktop app.",
+  "homepageUrl": "https://github.com/MatanEcon/zotero-remarkable-desktop",
+  "updateUrl": "https://github.com/MatanEcon/zotero-remarkable-desktop/releases/latest/download/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1929,
+   "sha256": "0b74f2469317abdc6df53ed4e5e8e6de61d735abeef9889bc431e9234879c3ca"
+  },
+  {
+   "path": "icon.svg",
+   "size": 337,
+   "sha256": "37709ec17e9c90161c4d481d8b00d7132684e5b5b83dcfe37ccb30453e5e0d9b"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1070,
+   "sha256": "5bd4456a027a74e5f020f0786daa9601a9ebefc928186e759145b998b8ad15f3"
+  },
+  {
+   "path": "locale/en-US/remarkable-desktop.ftl",
+   "size": 58,
+   "sha256": "c09a5fafcdb022503f4b512e9b295b5e939e496d17562c979b35e4773e06f60e"
+  },
+  {
+   "path": "manifest.json",
+   "size": 626,
+   "sha256": "9f57115166377540e1b3c6cf054caf9cec95c77792d6ffd36e0e430053eafad3"
+  },
+  {
+   "path": "remarkable.js",
+   "size": 4699,
+   "sha256": "2bae1ad4542415ce40b1b2be2b1d4572b8c5eac5e6792005da835ffcda58b824"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-16T19:24:29.281Z",
+  "input": {
+   "slug": "zotero-remarkable-desktop",
+   "version": "1.0.1",
+   "sha256": "a5a3ff0c82d2afad92e79e258eacbbb009738460de72317e1446ed10e5a28107"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/remarkable-desktop.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 6628,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "9df7e09b1253",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "remarkable.js",
+      "line": 44,
+      "column": 36,
+      "snippet": "const file = Components.classes['@mozilla.org/file/local;1']",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "remarkable.js",
+      "line": 45,
+      "column": 22,
+      "snippet": ".createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "user-chosen",
+     "apis": [
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "163eaddc17f8",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "remarkable.js",
+      "line": 85,
+      "column": 39,
+      "snippet": "const process = Components.classes['@mozilla.org/process/util;1']",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "remarkable.js",
+      "line": 86,
+      "column": 22,
+      "snippet": ".createInstance(Components.interfaces.nsIProcess);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIProcess"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/MatanEcon/zotero-remarkable-desktop/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/MatanEcon/zotero-remarkable-desktop/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-16T19:24:29.281Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the MatanEcon account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-16T19:24:29.281Z",
+  "appliesTo": {
+   "slug": "zotero-remarkable-desktop",
+   "version": "1.0.1",
+   "sha256": "a5a3ff0c82d2afad92e79e258eacbbb009738460de72317e1446ed10e5a28107"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.13",
+   "currentZotero": "10.0.9",
+   "inputHash": "41cc9041d79353afb9b07327b19ea944f67b1c5b05b8f6b87cf678f679629d49"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-12T09:24:29Z",
+    "lastCommitAt": "2026-11-12T09:24:01Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

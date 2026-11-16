@@ -1,0 +1,349 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-codex-listener",
+ "repo": "fade-r/zotero-codex-listener",
+ "version": "0.1.7",
+ "tag": "v0.1.7",
+ "releaseAuthor": "Fade-r",
+ "publishedAt": "2026-11-12T11:25:35Z",
+ "prerelease": true,
+ "asset": {
+  "name": "zotero-codex-listener-0.1.7.xpi",
+  "url": "https://github.com/Fade-r/zotero-codex-listener/releases/download/v0.1.7/zotero-codex-listener-0.1.7.xpi",
+  "size": 26324,
+  "sha256": "fee954a8a29b16ecb2e07b22f9bc4aea926e75c8fee35eba55d361834c717d58",
+  "githubAssetId": 739216790,
+  "uploader": "Fade-r",
+  "uploadedAt": "2026-11-12T11:25:34Z",
+  "fetchedAt": "2026-11-16T19:24:29.281Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-codex-listener@fade-r.github.io",
+  "name": "Zotero Codex Listener",
+  "version": "0.1.7",
+  "description": "Send annotation changes to a chosen Codex desktop conversation.",
+  "homepageUrl": "https://github.com/Fade-r/zotero-codex-listener",
+  "updateUrl": "https://raw.githubusercontent.com/Fade-r/zotero-codex-listener/codex/initial-release/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 771,
+   "sha256": "055fef0b292f51c5d516878aed48bd251c6e7a2cd9b539f7506bb6aecd77cc69"
+  },
+  {
+   "path": "content/bridge.mjs",
+   "size": 4429,
+   "sha256": "31f83b418dd3a029f20acaf79a0d71567e76386ee77d707d354647509a59916a"
+  },
+  {
+   "path": "content/core.js",
+   "size": 1518,
+   "sha256": "3b36acdfe4c20a0d5d9324840a2ed32927cc5e9cbc9c046202b7a47b6d479e9f"
+  },
+  {
+   "path": "content/listener.js",
+   "size": 18515,
+   "sha256": "7c3b4aef9698d63cb7b88b958dc43894e0ed7fe3b193234a6ba8774bdceebd29"
+  },
+  {
+   "path": "manifest.json",
+   "size": 535,
+   "sha256": "d4fa32bcf42a6849b014eacabdeec372af1bfb9d88923a145c126dda4f0d4963"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-16T19:24:29.281Z",
+  "input": {
+   "slug": "zotero-codex-listener",
+   "version": "0.1.7",
+   "sha256": "fee954a8a29b16ecb2e07b22f9bc4aea926e75c8fee35eba55d361834c717d58"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 25233,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "nsi-channel",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/listener.js",
+       "line": 319,
+       "column": 20,
+       "snippet": "const channel = NetUtil.newChannel({ uri: rootURI + 'content/bridge.mjs', loadUsingSystemPrincipal: true });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "a5e0ec15c119",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/listener.js",
+      "line": 320,
+      "column": 25,
+      "snippet": "const source = await Zotero.File.getContentsAsync(channel, 'UTF-8');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/listener.js",
+      "line": 324,
+      "column": 10,
+      "snippet": "await Zotero.File.putContentsAsync(bridgeFile.path, source);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "1bc04538d49e",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/listener.js",
+      "line": 5,
+      "column": 52,
+      "snippet": "const { Subprocess } = ChromeUtils.importESModule('resource://gre/modules/Subprocess.sys.mjs');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/listener.js",
+      "line": 24,
+      "column": 24,
+      "snippet": "const environment = Subprocess.getEnvironment();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/listener.js",
+      "line": 27,
+      "column": 23,
+      "snippet": "try { return await Subprocess.pathSearch('node.exe', { ...environment, PATH: path }); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/listener.js",
+      "line": 37,
+      "column": 27,
+      "snippet": "this.process = await Subprocess.call({ command, arguments: [bridgeFile.path], stderr: 'pipe' });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ],
+     "programs": [
+      "node"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 19,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Fade-r/zotero-codex-listener/codex/initial-release/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Fade-r/zotero-codex-listener/codex/initial-release/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-16T19:24:29.281Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Fade-r account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-16T19:24:29.281Z",
+  "appliesTo": {
+   "slug": "zotero-codex-listener",
+   "version": "0.1.7",
+   "sha256": "fee954a8a29b16ecb2e07b22f9bc4aea926e75c8fee35eba55d361834c717d58"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.13",
+   "currentZotero": "10.0.9",
+   "inputHash": "38c1003a95e8b88f514e1be9ce081454436df80652c84ca82f84d3cfde7abfc7"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [],
+    "concern": "medium",
+    "label": "Uses the network; we couldn't tell where",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include node"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-12T11:25:35Z",
+    "lastCommitAt": "2026-11-12T11:25:15Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing",
+    "capabilities"
+   ],
+   "reasons": [
+    "Uses the network; we couldn't tell where",
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

@@ -1,0 +1,396 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-highlight-mirror",
+ "repo": "songheeinformatics/zotero-highlight-mirror",
+ "version": "0.5.4",
+ "tag": "v0.5.4",
+ "releaseAuthor": "songheeinformatics",
+ "publishedAt": "2026-11-16T03:08:24Z",
+ "prerelease": false,
+ "asset": {
+  "name": "highlight-mirror-0.5.4.xpi",
+  "url": "https://github.com/songheeinformatics/zotero-highlight-mirror/releases/download/v0.5.4/highlight-mirror-0.5.4.xpi",
+  "size": 33773,
+  "sha256": "2d19ca375b01fa37e0df8b30166a051c76163cf16c253438e746febeb7a3fa3f",
+  "githubAssetId": 753247214,
+  "uploader": "songheeinformatics",
+  "uploadedAt": "2026-11-16T03:08:12Z",
+  "fetchedAt": "2026-11-16T19:24:29.281Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "highlight-mirror@songhee.kr",
+  "name": "Highlight Mirror",
+  "version": "0.5.4",
+  "description": "번역 노트의 하이라이트를 원문 PDF 주석으로 미러링하고, Claude API로 번역 노트를 만듭니다.",
+  "homepageUrl": "https://github.com/songheeinformatics/zotero-highlight-mirror",
+  "updateUrl": "https://raw.githubusercontent.com/songheeinformatics/zotero-highlight-mirror/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1444,
+   "sha256": "8f10eeeb08464717585ac4fd582523cff52f17b6e276a6f58ed1c66ea59e1bcd"
+  },
+  {
+   "path": "content/highlightMirror.js",
+   "size": 87759,
+   "sha256": "002169b4e6d127aeb61e229b2f3f591e63e7f02793f6d2219ef9124627e87465"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 5444,
+   "sha256": "ce059ac77c237ee9363df6ec8162e413a9132a8960fdfcc1525b354483b7d038"
+  },
+  {
+   "path": "manifest.json",
+   "size": 606,
+   "sha256": "2c012f0fbbfb4929618199523335833fc024b236edd883589c45e58d663e6ca3"
+  },
+  {
+   "path": "prefs.js",
+   "size": 681,
+   "sha256": "d71ee8c0a8871cd8b5070dd5c807132dba03d50f62ef4b073508314c89b6e4af"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-16T19:24:29.281Z",
+  "input": {
+   "slug": "zotero-highlight-mirror",
+   "version": "0.5.4",
+   "sha256": "2d19ca375b01fa37e0df8b30166a051c76163cf16c253438e746febeb7a3fa3f"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 95328,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/highlightMirror.js",
+       "line": 1596,
+       "column": 17,
+       "snippet": "xhr = await Zotero.HTTP.request(\"POST\", HighlightMirror.API_URL, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.anthropic.com",
+     "category": "llm-provider",
+     "provider": "Anthropic",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/highlightMirror.js",
+       "line": 19,
+       "column": 10,
+       "snippet": "API_URL: \"https://api.anthropic.com/v1/messages\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/highlightMirror.js",
+       "line": 608,
+       "column": 31,
+       "snippet": "if (meta.doi) headParas.push(`<p>DOI: <a href=\"https://doi.org/${this.escape(meta.doi)}\">https://doi.org/${this.escape(meta.doi)}</a></p>`);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 1,
+      "column": 0,
+      "snippet": "pref(\"extensions.highlightmirror.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.highlightmirror.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "e34fd0afc5ba",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/highlightMirror.js",
+      "line": 1035,
+      "column": 17,
+      "snippet": "lib = await HighlightMirror.win().eval(`import(\"${url}\")`);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "HighlightMirror.win().eval"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "1d28eda1a456",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/highlightMirror.js",
+      "line": 1917,
+      "column": 26,
+      "snippet": "if (!Zotero.Server || !Zotero.Server.Endpoints) return;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/highlightMirror.js",
+      "line": 1920,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[path] = function () {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/highlightMirror.js",
+      "line": 1946,
+      "column": 26,
+      "snippet": "if (!Zotero.Server || !Zotero.Server.Endpoints) return;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/songheeinformatics/zotero-highlight-mirror/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/songheeinformatics/zotero-highlight-mirror/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-16T19:24:29.281Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the songheeinformatics account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-16T19:24:29.281Z",
+  "appliesTo": {
+   "slug": "zotero-highlight-mirror",
+   "version": "0.5.4",
+   "sha256": "2d19ca375b01fa37e0df8b30166a051c76163cf16c253438e746febeb7a3fa3f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.13",
+   "currentZotero": "10.0.9",
+   "inputHash": "e85fe20abcda6f91b85de9126a497dd58e6ee248a6e37af879b21bb2a8ec8a02"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.anthropic.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "dynamic-code",
+      "label": "Runs code it assembles while running",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-16T03:08:24Z",
+    "lastCommitAt": "2026-11-16T03:07:37Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

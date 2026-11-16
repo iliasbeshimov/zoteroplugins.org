@@ -1,0 +1,344 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-mcp-connector",
+ "repo": "robert-xiong1117/zotero-mcp-connector",
+ "version": "1.4.0",
+ "source": "update-feed",
+ "tag": null,
+ "publishedAt": "2026-11-16T12:54:19Z",
+ "prerelease": false,
+ "asset": {
+  "name": "ZoteroMCP-Bridge-1.4.0.xpi",
+  "url": "https://github.com/Robert-Xiong1117/zotero-mcp-connector/releases/download/v1.4.0/ZoteroMCP-Bridge-1.4.0.xpi",
+  "size": 2653,
+  "sha256": "445fd662040736a08e9e372ba34afe72c040b40b2ab3f7dc44f5033ff3473d87",
+  "githubAssetId": null,
+  "uploader": null,
+  "uploadedAt": "2026-11-16T12:54:13.000Z",
+  "fetchedAt": "2026-11-16T19:24:29.281Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "bridge@zoteromcp.robertxiong.com",
+  "name": "ZoteroMCP Bridge",
+  "version": "1.4.0",
+  "description": "Local write bridge for Zotero MCP Connector: PDF highlights and Find Available PDF. Token-protected, 127.0.0.1 only.",
+  "homepageUrl": "https://github.com/Robert-Xiong1117/zotero-mcp-connector",
+  "updateUrl": "https://github.com/Robert-Xiong1117/zotero-mcp-connector/releases/latest/download/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 5575,
+   "sha256": "27e42b069401d8b130b9c668f9039106489283bd0a56b1093d14f399ef774129"
+  },
+  {
+   "path": "manifest.json",
+   "size": 608,
+   "sha256": "afdfaf6f864e46a31f6c617f57e2e7c0328e7943ecb38c75102b5c82fbb4c203"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-16T19:24:29.281Z",
+  "input": {
+   "slug": "zotero-mcp-connector",
+   "version": "1.4.0",
+   "sha256": "445fd662040736a08e9e372ba34afe72c040b40b2ab3f7dc44f5033ff3473d87"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 5575,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 112,
+       "column": 20,
+       "snippet": "var att = await Zotero.Attachments.addAvailableFile(item);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.13"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "594234049e86",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 30,
+      "column": 24,
+      "snippet": "var expected = String(Zotero.Prefs.get(TOKEN_PREF, true) || \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 123,
+      "column": 4,
+      "snippet": "Services.prefs.getDefaultBranch(\"\").setStringPref(TOKEN_PREF, \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zmc-bridge.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "5cd401d78bb1",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 125,
+      "column": 26,
+      "snippet": "for (var path of PATHS) Zotero.Server.Endpoints[path] = handlers[path];",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zmc/ping"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/Robert-Xiong1117/zotero-mcp-connector/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/Robert-Xiong1117/zotero-mcp-connector/releases/latest/download/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "7d6d06aed3bd",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 97,
+      "column": 22,
+      "snippet": "var saved = await Zotero.Annotations.saveFromJSON(att, annotation);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 125,
+      "column": 26,
+      "snippet": "for (var path of PATHS) Zotero.Server.Endpoints[path] = handlers[path];",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zmc/ping"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-16T19:24:29.281Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-16T19:24:29.281Z",
+  "appliesTo": {
+   "slug": "zotero-mcp-connector",
+   "version": "1.4.0",
+   "sha256": "445fd662040736a08e9e372ba34afe72c040b40b2ab3f7dc44f5033ff3473d87"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.13",
+   "currentZotero": "10.0.9",
+   "inputHash": "588afd1930efa6063e09b3584461e331be910994f68b7c4173c6fa72bdd85081"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-16T12:54:19Z",
+    "lastCommitAt": "2026-11-15T13:46:28Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

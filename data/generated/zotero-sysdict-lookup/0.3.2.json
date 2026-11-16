@@ -1,0 +1,379 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-sysdict-lookup",
+ "repo": "peberwang/zotero-sysdict-lookup",
+ "version": "0.3.2",
+ "tag": "v0.3.2",
+ "releaseAuthor": "PeberWang",
+ "publishedAt": "2026-11-14T09:38:52Z",
+ "prerelease": false,
+ "asset": {
+  "name": "sysdict-lookup.xpi",
+  "url": "https://github.com/PeberWang/zotero-sysdict-lookup/releases/download/v0.3.2/sysdict-lookup.xpi",
+  "size": 77973,
+  "sha256": "fbf733396e96878f0da9a0658356f5ec17c4f1f6c5e75be30fa5d946721e03df",
+  "githubAssetId": 747001182,
+  "uploader": "PeberWang",
+  "uploadedAt": "2026-11-14T09:38:51Z",
+  "fetchedAt": "2026-11-16T19:24:29.281Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "sysdict-lookup@mingpei.local",
+  "name": "System Dictionary Lookup",
+  "version": "0.3.2",
+  "description": "Look up words in macOS's built-in dictionaries from Zotero's PDF reader selection popup: IPA plus two or three concise English senses, offline and instant. 在 Zotero 划词弹窗里直接显示 macOS 系统词典的音标与简明英英释义。",
+  "homepageUrl": "https://github.com/PeberWang",
+  "updateUrl": "https://example.com/sysdict/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.9.9"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 15621,
+   "sha256": "77d051f2e6ae5033a0e4621b9e60ab72fef4904c2d918403c8236a2d51e36cb2"
+  },
+  {
+   "path": "content/icons/icon.png",
+   "size": 13370,
+   "sha256": "9976912860b6777d94b55d43817d127d0a231358f27d1a7b2b1a820b21a55dfc"
+  },
+  {
+   "path": "content/icons/icon@0.5x.png",
+   "size": 2419,
+   "sha256": "d0dd95492d1e92572f523209b5079904e1b24f6a73ae9bf6037656f6294417cb"
+  },
+  {
+   "path": "manifest.json",
+   "size": 753,
+   "sha256": "ef8c4909654097e3416615f2e1e8e8e99cd53f458f096d1991f626ad02908153"
+  },
+  {
+   "path": "native/dictlookup.b64.js",
+   "size": 115762,
+   "sha256": "cfa6d711fe9be47196059f34037e222150490c01e3d4c8889c483af8060914a9"
+  },
+  {
+   "path": "native/dictsummary.b64.js",
+   "size": 184968,
+   "sha256": "f8b1d5c85fd29d1ff9d1228b26309d8f8d001de3d81c42d71c0a72f1608b972c"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-16T19:24:29.281Z",
+  "input": {
+   "slug": "zotero-sysdict-lookup",
+   "version": "0.3.2",
+   "sha256": "fbf733396e96878f0da9a0658356f5ec17c4f1f6c5e75be30fa5d946721e03df"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "content/icons/icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/icons/icon@0.5x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 316351,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 9,
+    "inVendoredCodeOnly": false,
+    "codeKey": "d2229a8c06fa",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 21,
+      "column": 43,
+      "snippet": "var home = Services.dirsvc.get(\"Home\", Components.interfaces.nsIFile).clone();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 66,
+      "column": 19,
+      "snippet": "String(Zotero.File.getContents(marker)).trim() === version) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 82,
+      "column": 8,
+      "snippet": "Zotero.File.putContents(marker, version);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 93,
+      "column": 38,
+      "snippet": "var file = Components.classes[\"@mozilla.org/file/local;1\"]",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 94,
+      "column": 28,
+      "snippet": ".createInstance(Components.interfaces.nsIFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 196,
+      "column": 42,
+      "snippet": "var tmp = Services.dirsvc.get(\"TmpD\", Components.interfaces.nsIFile).clone();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 199,
+      "column": 35,
+      "snippet": ".then(function () { return Zotero.File.getContentsAsync(tmp.path); })",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 227,
+      "column": 30,
+      "snippet": "var data = JSON.parse(Zotero.File.getContents(file));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 236,
+      "column": 8,
+      "snippet": "Zotero.File.putContents(cacheFile(word), JSON.stringify({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "8fabeb78cb55",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 105,
+      "column": 11,
+      "snippet": "return Zotero.Utilities.Internal.subprocess(\"/usr/bin/open\", [url])",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 211,
+      "column": 11,
+      "snippet": "return Zotero.Utilities.Internal",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Zotero.Utilities.Internal.exec",
+      "system openers only"
+     ],
+     "programs": [
+      "open"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 15,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://example.com/sysdict/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://example.com/sysdict/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-16T19:24:29.281Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the PeberWang account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-16T19:24:29.281Z",
+  "appliesTo": {
+   "slug": "zotero-sysdict-lookup",
+   "version": "0.3.2",
+   "sha256": "fbf733396e96878f0da9a0658356f5ec17c4f1f6c5e75be30fa5d946721e03df"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.13",
+   "currentZotero": "10.0.9",
+   "inputHash": "103de6445195568b3ac9f76513b02e43570cb4650cfa0cd159b16a2415afccf1"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "process-launch",
+      "label": "Opens files or links with your system's own apps",
+      "concern": "low",
+      "detail": "Programs it names include open"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-14T09:38:52Z",
+    "lastCommitAt": "2026-11-16T01:13:46Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

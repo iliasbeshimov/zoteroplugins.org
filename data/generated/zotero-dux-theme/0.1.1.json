@@ -1,0 +1,353 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-dux-theme",
+ "repo": "arqueon/zotero-dux-theme",
+ "version": "0.1.1",
+ "tag": "v0.1.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-11-16T00:43:26Z",
+ "prerelease": false,
+ "asset": {
+  "name": "dux-theme@arqueon.org.xpi",
+  "url": "https://github.com/arqueon/zotero-dux-theme/releases/download/v0.1.1/dux-theme%40arqueon.org.xpi",
+  "size": 9558,
+  "sha256": "1ece1a68af869d81b73066fd91b0bc955907e7daf15df75d1dc08ae3a5c8421b",
+  "githubAssetId": 752888221,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-11-16T00:43:25Z",
+  "fetchedAt": "2026-11-16T19:24:29.281Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "dux-theme@arqueon.org",
+  "name": "Dux Theme Sync",
+  "version": "0.1.1",
+  "description": "Synchronizes Dux Shell (Matugen / Material 3) colors and typography live into Zotero and its reader.",
+  "homepageUrl": "https://github.com/arqueon/zotero-dux-theme",
+  "updateUrl": "https://github.com/arqueon/zotero-dux-theme/releases/latest/download/update.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 2414,
+   "sha256": "64e114a735f61df0899081c8ea2afe8f26c1798bdbff77fdf4c75c9f87e6ae18"
+  },
+  {
+   "path": "content/dux-theme.js",
+   "size": 31495,
+   "sha256": "dd0c4b128f2cb663aa83a0c900ef2de7211adf86be30cd12993a25f1e76c14cc"
+  },
+  {
+   "path": "manifest.json",
+   "size": 547,
+   "sha256": "d67cb7056365ef5e1f27f00049decdaaa0a52bb27bc12a4ea086f134380ec79d"
+  },
+  {
+   "path": "prefs.js",
+   "size": 219,
+   "sha256": "b1f918d937a4ea3a3870b4519527151af400c2ca77a75840ef4ae598e711403d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-16T19:24:29.281Z",
+  "input": {
+   "slug": "zotero-dux-theme",
+   "version": "0.1.1",
+   "sha256": "1ece1a68af869d81b73066fd91b0bc955907e7daf15df75d1dc08ae3a5c8421b"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 34128,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "8ea97ba2a182",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/dux-theme.js",
+      "line": 389,
+      "column": 41,
+      "snippet": "return Services.dirsvc.get(\"Home\", Ci.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/dux-theme.js",
+      "line": 431,
+      "column": 25,
+      "snippet": "const info = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/dux-theme.js",
+      "line": 441,
+      "column": 18,
+      "snippet": "if (await IOUtils.exists(candidate)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/dux-theme.js",
+      "line": 452,
+      "column": 25,
+      "snippet": "const text = await IOUtils.readUTF8(path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "codeKey": "eef686322e7d",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/dux-theme.js",
+      "line": 726,
+      "column": 9,
+      "snippet": "if (!Zotero.Server?.Endpoints) return;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/dux-theme.js",
+      "line": 737,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[\"/dux-theme/reload\"] = ReloadEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/dux-theme.js",
+      "line": 748,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[\"/dux-theme/status\"] = StatusEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/dux-theme.js",
+      "line": 752,
+      "column": 9,
+      "snippet": "if (!Zotero.Server?.Endpoints) return;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/dux-theme.js",
+      "line": 753,
+      "column": 11,
+      "snippet": "delete Zotero.Server.Endpoints[\"/dux-theme/reload\"];",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/dux-theme.js",
+      "line": 754,
+      "column": 11,
+      "snippet": "delete Zotero.Server.Endpoints[\"/dux-theme/status\"];",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/dux-theme/reload",
+      "/dux-theme/status"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/arqueon/zotero-dux-theme/releases/latest/download/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/arqueon/zotero-dux-theme/releases/latest/download/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-16T19:24:29.281Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-16T19:24:29.281Z",
+  "appliesTo": {
+   "slug": "zotero-dux-theme",
+   "version": "0.1.1",
+   "sha256": "1ece1a68af869d81b73066fd91b0bc955907e7daf15df75d1dc08ae3a5c8421b"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.13",
+   "currentZotero": "10.0.9",
+   "inputHash": "8ff25a6aca438530705656ae1cc616af5ed142c25c4750358d3a4679e64ca370"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-16T00:43:26Z",
+    "lastCommitAt": "2026-11-16T00:43:10Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

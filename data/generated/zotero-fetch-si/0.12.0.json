@@ -1,0 +1,666 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-fetch-si",
+ "repo": "haoli2030/zotero-fetch-si",
+ "version": "0.12.0",
+ "tag": "v0.12.0",
+ "releaseAuthor": "HaoLi2030",
+ "publishedAt": "2026-11-10T09:00:24Z",
+ "prerelease": false,
+ "asset": {
+  "name": "fetch-si.xpi",
+  "url": "https://github.com/HaoLi2030/zotero-fetch-si/releases/download/v0.12.0/fetch-si.xpi",
+  "size": 14615,
+  "sha256": "432fc878311978d11ca2c92f33384c037b93ca19801537e37b71726bff19799f",
+  "githubAssetId": 730771648,
+  "uploader": "HaoLi2030",
+  "uploadedAt": "2026-11-10T09:00:23Z",
+  "fetchedAt": "2026-11-16T19:24:29.281Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "fetch-si@haoli2030",
+  "name": "Sidecar",
+  "version": "0.12.0",
+  "description": "Attach Supplementary Information (Nature, Science, PNAS, AGU/Wiley, Cell Press) and Peer Review PDFs (Nature); deleting a linked attachment also trashes its file.",
+  "updateUrl": "https://raw.githubusercontent.com/HaoLi2030/zotero-fetch-si/main/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 710,
+   "sha256": "3de36e2fcc9caa8ee66be8d77d1c147186c2e3be7f1f445c1e0aa9a5da50d925"
+  },
+  {
+   "path": "dedupe.js",
+   "size": 4284,
+   "sha256": "b225925adee5537f13fe3d10ef1079629144e150f2a20d71efbec3b147a47b9b"
+  },
+  {
+   "path": "fetchsi.js",
+   "size": 24418,
+   "sha256": "57434b81c790d9786bd2dd12a271edc09f483cf5bdc1e5ac20c062c04593e7e4"
+  },
+  {
+   "path": "icons/icon.svg",
+   "size": 1233,
+   "sha256": "3346c4f96c017801b56c039ae543ebf6b5ff370b30a0e71032793629456fc0b9"
+  },
+  {
+   "path": "icons/menu.svg",
+   "size": 545,
+   "sha256": "f2188e658f5e04ea0c450cf233a8a2ebfd4995c8faa4e190a36f8e7e018591d3"
+  },
+  {
+   "path": "linkedcleanup.js",
+   "size": 4549,
+   "sha256": "738a65122c99a4ec594349988c3d5174724633252d28602238a3a95a8a53b2ec"
+  },
+  {
+   "path": "manifest.json",
+   "size": 591,
+   "sha256": "5e7d3ec5a534f81f05ae3db9a3d1b2e0d2f3a0835273af0733c7c9582556e8e6"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-16T19:24:29.281Z",
+  "input": {
+   "slug": "zotero-fetch-si",
+   "version": "0.12.0",
+   "sha256": "432fc878311978d11ca2c92f33384c037b93ca19801537e37b71726bff19799f"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "icons/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "icons/menu.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 33961,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 5,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 329,
+       "column": 24,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", pageURL, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 365,
+       "column": 12,
+       "snippet": "await Zotero.Attachments.importFromURL({",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 416,
+       "column": 12,
+       "snippet": "await Zotero.Attachments.importFromURL({",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 442,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", `https://api.crossref.org/works/${encodeURIComponent(doi)}`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 478,
+       "column": 24,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url, { responseType: \"document\", timeout: 20000 });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "agupubs.onlinelibrary.wiley.com",
+     "category": "scholarly-api",
+     "provider": "Wiley",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 38,
+       "column": 135,
+       "snippet": "pubs.onlinelibrary.wiley.com\", match: \"onlinelibrary.wiley.com\", page: (doi) => `https://agupubs.onlinelibrary.wiley.com/doi/${doi}`, pdf: (doi) => `https://agupubs.onlinelibrary.wiley.com/doi/pdfdire",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 38,
+       "column": 203,
+       "snippet": "e: (doi) => `https://agupubs.onlinelibrary.wiley.com/doi/${doi}`, pdf: (doi) => `https://agupubs.onlinelibrary.wiley.com/doi/pdfdirect/${doi}?download=true` },",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 442,
+       "column": 49,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", `https://api.crossref.org/works/${encodeURIComponent(doi)}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "onlinelibrary.wiley.com",
+     "category": "scholarly-api",
+     "provider": "Wiley Online Library",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 39,
+       "column": 129,
+       "snippet": "st: \"onlinelibrary.wiley.com\", match: \"onlinelibrary.wiley.com\", page: (doi) => `https://onlinelibrary.wiley.com/doi/${doi}`, pdf: (doi) => `https://onlinelibrary.wiley.com/doi/pdfdirect/${doi}?downlo",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 39,
+       "column": 189,
+       "snippet": "om\", page: (doi) => `https://onlinelibrary.wiley.com/doi/${doi}`, pdf: (doi) => `https://onlinelibrary.wiley.com/doi/pdfdirect/${doi}?download=true` },",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 48,
+       "column": 129,
+       "snippet": "st: \"onlinelibrary.wiley.com\", match: \"onlinelibrary.wiley.com\", page: (doi) => `https://onlinelibrary.wiley.com/doi/${doi}`, pdf: (doi) => `https://onlinelibrary.wiley.com/doi/pdfdirect/${doi}?downlo",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 48,
+       "column": 189,
+       "snippet": "om\", page: (doi) => `https://onlinelibrary.wiley.com/doi/${doi}`, pdf: (doi) => `https://onlinelibrary.wiley.com/doi/pdfdirect/${doi}?download=true` },",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.cell.com",
+     "category": "scholarly-api",
+     "provider": "Cell Press (Elsevier)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 452,
+       "column": 12,
+       "snippet": "page: `https://www.cell.com/${path}/fulltext/${pii}`,",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 453,
+       "column": 11,
+       "snippet": "pdf: `https://www.cell.com/action/showPdf?pii=${pii}`,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.nature.com",
+     "category": "scholarly-api",
+     "provider": "Springer Nature",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 33,
+       "column": 69,
+       "snippet": "\"10.1038\": { name: \"Nature\", browser: false, page: (doi, sfx) => `https://www.nature.com/articles/${sfx}`, pdf: (doi, sfx) => `https://www.nature.com/articles/${sfx}.pdf` },",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 33,
+       "column": 130,
+       "snippet": "age: (doi, sfx) => `https://www.nature.com/articles/${sfx}`, pdf: (doi, sfx) => `https://www.nature.com/articles/${sfx}.pdf` },",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.pnas.org",
+     "category": "scholarly-api",
+     "provider": "PNAS",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 35,
+       "column": 126,
+       "snippet": "host: \"www.pnas.org\", match: \"://www.pnas.org\", supplPage: true, page: (doi) => `https://www.pnas.org/doi/${doi}`, pdf: (doi) => `https://www.pnas.org/doi/pdf/${doi}?download=true` },",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 35,
+       "column": 175,
+       "snippet": "upplPage: true, page: (doi) => `https://www.pnas.org/doi/${doi}`, pdf: (doi) => `https://www.pnas.org/doi/pdf/${doi}?download=true` },",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.science.org",
+     "category": "scholarly-api",
+     "provider": "Science (AAAS)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 34,
+       "column": 135,
+       "snippet": "\"www.science.org\", match: \"://www.science.org\", supplPage: true, page: (doi) => `https://www.science.org/doi/${doi}`, pdf: (doi) => `https://www.science.org/doi/pdf/${doi}?download=true` },",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 34,
+       "column": 187,
+       "snippet": "lPage: true, page: (doi) => `https://www.science.org/doi/${doi}`, pdf: (doi) => `https://www.science.org/doi/pdf/${doi}?download=true` },",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://<expr>/doi/suppl/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 325,
+       "column": 24,
+       "snippet": "const suppURL = `https://${pub.host}/doi/suppl/${doi}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "pattern": "https://api.crossref.org/works/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "fetchsi.js",
+       "line": 442,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", `https://api.crossref.org/works/${encodeURIComponent(doi)}`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.13"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "codeKey": "09c208bd8d52",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "dedupe.js",
+      "line": 66,
+      "column": 33,
+      "snippet": "const size = path ? (await IOUtils.stat(path)).size : -1;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "dedupe.js",
+      "line": 81,
+      "column": 24,
+      "snippet": "const size = (await IOUtils.stat(path)).size;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "dedupe.js",
+      "line": 92,
+      "column": 19,
+      "snippet": "if ((await IOUtils.stat(p)).size !== size) continue;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "dedupe.js",
+      "line": 93,
+      "column": 32,
+      "snippet": "bytes = bytes || (await IOUtils.read(path));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "dedupe.js",
+      "line": 94,
+      "column": 43,
+      "snippet": "same = this.sameBytes(bytes, await IOUtils.read(p));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "linkedcleanup.js",
+      "line": 108,
+      "column": 18,
+      "snippet": "if (!(await IOUtils.exists(path))) continue;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "linkedcleanup.js",
+      "line": 125,
+      "column": 29,
+      "snippet": "const children = await IOUtils.getChildren(dir);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "linkedcleanup.js",
+      "line": 128,
+      "column": 12,
+      "snippet": "await IOUtils.remove(dir, { recursive: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "f47b2787f3c0",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "linkedcleanup.js",
+      "line": 110,
+      "column": 14,
+      "snippet": "await Zotero.Utilities.Internal.exec(\"/usr/bin/trash\", [path]);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Zotero.Utilities.Internal.exec"
+     ],
+     "programs": [
+      "trash"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/HaoLi2030/zotero-fetch-si/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/HaoLi2030/zotero-fetch-si/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-16T19:24:29.281Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the HaoLi2030 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-16T19:24:29.281Z",
+  "appliesTo": {
+   "slug": "zotero-fetch-si",
+   "version": "0.12.0",
+   "sha256": "432fc878311978d11ca2c92f33384c037b93ca19801537e37b71726bff19799f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.13",
+   "currentZotero": "10.0.9",
+   "inputHash": "e9cbb572d67506f0689798f2db0d9a00c6d82080cc65b28538299201f6cc8993"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "agupubs.onlinelibrary.wiley.com",
+       "api.crossref.org",
+       "onlinelibrary.wiley.com",
+       "www.cell.com",
+       "www.nature.com",
+       "www.pnas.org",
+       "www.science.org"
+      ],
+      "unconfirmed": [
+       "agupubs.onlinelibrary.wiley.com",
+       "onlinelibrary.wiley.com",
+       "www.cell.com",
+       "www.nature.com",
+       "www.pnas.org",
+       "www.science.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include trash"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-10T09:00:24Z",
+    "lastCommitAt": "2026-11-10T09:04:03Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}
