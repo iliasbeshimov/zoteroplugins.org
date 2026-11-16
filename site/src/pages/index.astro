@@ -8,10 +8,10 @@ import Stars from "../components/Stars.astro";
 import Tip from "../components/Tip.astro";
 import Base from "../layouts/Base.astro";
 import { CURRENT_ZOTERO_MAJOR, fmtDate, GRADES, type Plugin, ROOT, shownPlugins } from "../lib/atlas.ts";
-import { JOBS } from "@atlas/schema";
+import { JOBS, NEW_DAYS, newest } from "@atlas/schema";
 import { siteLd } from "../lib/meta.ts";
 import { countWord, PACKS, packPath, resolvePack } from "../lib/packs.ts";
-import { PICKS } from "../lib/picks.ts";
+import { PICK_GRADES, PICKS } from "../lib/picks.ts";
 import { RISING_DAYS, rising } from "../lib/rising.ts";
 import { loadGrowth, USE_TIP } from "../lib/usage.ts";
 
@@ -33,19 +33,15 @@ const nextTip = {
   no: `Its latest release doesn't work with Zotero ${nextLabel} yet. Developers often update before a version comes out of beta.`,
   unknown: `We couldn't tell whether it works with Zotero ${nextLabel}.`,
 };
-// New: repositories created in the last 90 days of the census, most used first.
-const NEW_DAYS = 90;
+// New: repositories created in the last 90 days of the census, B or better, most used first.
 const asOf = Math.max(...plugins.map((p) => Date.parse(p.checkedAt)));
-const fresh = plugins
-  .filter((p) => p.currentOk && p.inUse != null && p.createdAt && asOf - Date.parse(p.createdAt) < NEW_DAYS * 86_400_000)
-  .sort(byUse)
-  .slice(0, 6);
+const fresh = newest(plugins, asOf, 6);
 // Our picks: chosen by hand, each with a screenshot from its README (lib/picks.ts).
 const bySlug = new Map(plugins.map((p) => [p.slug, p]));
 const picks = PICKS.flatMap((k) => {
   const plugin = bySlug.get(k.slug);
-  return plugin?.currentOk ? [{ ...k, plugin }] : [];
-});
+  return plugin?.currentOk && PICK_GRADES.has(plugin.grade) ? [{ ...k, plugin }] : [];
+}).slice(0, 3);
 // Rising: the most new GitHub stars in six weeks, among plugins whose downloads grew too (lib/rising.ts).
 const shown = new Set([...picks.map((k) => k.slug), ...used.map((p) => p.slug)]);
 const risers = rising(plugins, loadGrowth(`${ROOT}census/history`, RISING_DAYS), shown, 6);
@@ -222,7 +218,7 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     <div class="uhead">
       <div class="uh">
         <h2 id="new-h">New and catching on</h2>
-        <p>Plugins first published in the last {NEW_DAYS} days that the most people have installed.</p>
+        <p>Plugins first published in the last {NEW_DAYS} days that the most people have installed, graded B or better.</p>
       </div>
       <a href="/browse?sort=new">Newest first</a>
     </div>

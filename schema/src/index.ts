@@ -44,3 +44,5 @@ export const documentSchemas = {
 } as const;
 export * from "./grade.ts";
 export * from "./jobs.ts";
+export * from "./packs.ts";
+export * from "./shelves.ts";
