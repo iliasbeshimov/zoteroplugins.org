@@ -139,6 +139,36 @@ jobs:
           pnpm site:build
           cd site && npx -y wrangler@4 pages deploy dist --project-name zoteroplugins --branch main --commit-hash "$(git rev-parse HEAD)" --commit-dirty=false
 
+      # A hand review covers one release's code. When a new release changes that code, its card goes
+      # back to the scanner's verdict until someone reviews it again, and nothing else said so: keep
+      # one open issue listing them, comment when a new one appears (that's what notifies), and close
+      # it when none are left.
+      - name: Lapsed reviews
+        id: lapsed
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pnpm atlas queue --out "$RUNNER_TEMP/queue"
+          label=review-lapsed
+          list=$(jq -r '.items[] | select(.kind == "review-lapsed") | "- [\(.name // .slug)](https://zoteroplugins.org/p/\(.slug)) \(.version): `\(.details.capability)`, reviewed in \(.details.reviewedVersion)"' "$RUNNER_TEMP/queue/queue.json")
+          open=$(gh issue list --label "$label" --state open --limit 1 --json number --jq '.[0].number // empty')
+          if [ -z "$list" ]; then
+            if [ -n "$open" ]; then gh issue close "$open" --comment "Every hand review covers the current release again."; fi
+            exit 0
+          fi
+          body=$(printf 'A new release changed the code a hand review covered, so these cards show the scanner'"'"'s verdict until the finding is reviewed again (`data/reviews/<capability>/<slug>.json`):\n\n%s\n' "$list")
+          if [ -z "$open" ]; then
+            gh label create "$label" --color FBCA04 --description "A new release changed reviewed code" 2>/dev/null || true
+            gh issue create --title "Hand reviews to redo" --label "$label" --body "$body"
+            exit 0
+          fi
+          old=$(gh issue view "$open" --json body --jq .body)
+          added=$(printf '%s\n' "$list" | grep -vxF -f <(printf '%s\n' "$old") || true)
+          gh issue edit "$open" --body "$body"
+          if [ -n "$added" ]; then gh issue comment "$open" --body "$(printf 'New since the last run:\n\n%s\n' "$added")"; fi
+
       # The steps above carry on when one fails, so the snapshot still gets committed, but then the
       # run looked green (the profile step failed unseen from 2026-11-13 to 11-16). A step allowed to
       # fail still records its outcome: fail the run if any did (GitHub emails the owner), and keep
@@ -156,6 +186,7 @@ jobs:
             Plugin icons=${{ steps.icons.outcome }}
             Commit snapshot=${{ steps.commit.outcome }}
             Deploy=${{ steps.deploy.outcome }}
+            Lapsed reviews=${{ steps.lapsed.outcome }}
         run: |
           label=nightly-failure
           failed=$(printf '%s\n' "$OUTCOMES" | awk -F= '$2 == "failure" { print "- " $1 }')
