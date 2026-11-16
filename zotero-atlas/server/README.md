@@ -34,6 +34,22 @@ wrangler d1 execute zotero-atlas --remote --command "SELECT addon_id, COUNT(*) A
 wrangler d1 execute zotero-atlas --remote --command "SELECT zotero, os, COUNT(*) AS n FROM installs GROUP BY 1, 2 ORDER BY n DESC"
 ```
 
+**Library guides** (`guides.js`; zoteroplugins.org/librarians/check and the box on /librarians).
+`POST /api/v1/guides/check` reads a public guide page and reports on every plugin it links or
+names, from zoteroplugins.org/data/guide-index.json; GitHub is asked about repositories the index
+doesn't know (renamed ones redirect). `/watch`, `/confirm` and `/stop` run the email alerts: a
+watch keeps the guide's address, the email address, the stop link's token and what was last
+found, and is deleted by the stop link or after two weeks the guide can't be read. Every 10
+minutes the oldest guide not checked for 20 hours is checked; a problem is emailed only when it's
+seen on two runs in a row. `GET zoteroplugins.org/api/v1/box.json?pack=…` serves the box's picks
+(zoteroplugins.org/data/box.json) and counts views per website by host name only. Owner's view:
+
+```sh
+wrangler d1 execute zotero-atlas --remote --command "SELECT host, url, checks, plugins, attention, first_checked FROM guide_reports WHERE checks > 0 ORDER BY first_checked DESC"
+wrangler d1 execute zotero-atlas --remote --command "SELECT url, created_at, last_ok, alerts FROM guide_watches"
+wrangler d1 execute zotero-atlas --remote --command "SELECT host, SUM(n) AS views FROM box_views GROUP BY host ORDER BY views DESC"
+```
+
 Deploy:
 
 ```sh
@@ -43,6 +59,7 @@ wrangler d1 create zotero-atlas            # paste the database_id into wrangler
 wrangler d1 execute zotero-atlas --remote --file schema.sql
 # the live database, once per file in migrations/, in order
 wrangler d1 execute zotero-atlas --remote --file migrations/0002-ratings.sql
+wrangler d1 execute zotero-atlas --remote --file migrations/0003-guides.sql
 # website reviews (without these the form answers that reviews aren't open yet)
 wrangler secret put TURNSTILE_SECRET       # the zoteroplugins.org Turnstile widget's secret
 wrangler secret put EMAIL_KEY              # 64 hex characters, made once and kept
