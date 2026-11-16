@@ -54,6 +54,9 @@ const live = PACKS.map((k) => {
 const today = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
 const firstLive = live.find((k) => k.slug === "phd-students") ?? live[0];
 const write = mailto("Plugin packs: a suggestion from a library");
+// Each pack's code for the copy buttons. The code holds "</script>", which would end the data
+// block early and spill the rest onto the page, so "<" goes in as \u003c (JSON.parse reads it back).
+const liveJson = JSON.stringify(Object.fromEntries(live.map((k) => [k.slug, { script: k.script, iframe: k.iframe }]))).replace(/</g, "\\u003c");
 
 const graph = [
   {
@@ -146,7 +149,7 @@ const graph = [
         </p>
       </div>
     </div>
-    <script type="application/json" id="live-data" set:html={JSON.stringify(Object.fromEntries(live.map((k) => [k.slug, { script: k.script, iframe: k.iframe }])))} />
+    <script type="application/json" id="live-data" set:html={liveJson} />
   </section>
 
   <section id="box">
