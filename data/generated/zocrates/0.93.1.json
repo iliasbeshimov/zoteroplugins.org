@@ -2515,7 +2515,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-16T19:24:29.281Z",
+  "computedAt": "2026-11-16T19:57:44.125Z",
   "appliesTo": {
    "slug": "zocrates",
    "version": "0.93.1",
@@ -2526,7 +2526,7 @@
    "provenanceCheckerVersion": "lite-0.4",
    "hostsTableVersion": "2026.11.13",
    "currentZotero": "10.0.9",
-   "inputHash": "52a961126408eadd0e7269f8da0375f127eff75d015b9783356d5df1f43a1bd4"
+   "inputHash": "7136abf89a3814df4c75aa5abdee2c8a9ac82be857a35201fae573606bdb2c6e"
   },
   "facets": {
    "sourceTransparency": {
@@ -2594,12 +2594,6 @@
    "capabilities": {
     "badges": [
      {
-      "id": "download-exec",
-      "label": "Downloads and runs a program we haven't reviewed yet",
-      "concern": "high",
-      "detail": "We haven't yet reviewed who publishes the file or whether anything stops it changing, so it counts as a high concern until we do. From astral-sh/uv on GitHub; checked only against a checksum from the same place, which catches a broken download but not a swapped one."
-     },
-     {
       "id": "package-run",
       "label": "Installs and runs software packages from npm or PyPI",
       "concern": "medium",
@@ -2621,6 +2615,12 @@
       "concern": "low"
      },
      {
+      "id": "download-exec",
+      "label": "Downloads a fixed version of uv when it first sets up its Python",
+      "concern": "low",
+      "detail": "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. The download comes from Astral, who make uv. The first time Zotero starts with it, it sets up its own Python: if it can't find uv on the computer, it downloads uv 0.13.8 from Astral's GitHub releases, and uv then installs Python 3.13. We checked that the fingerprints in the plugin match the ones Astral publishes for that version. Its README says it sets up Python with uv. On Windows, if Microsoft's C++ runtime is missing, it asks you to install it yourself rather than downloading it."
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -2631,12 +2631,12 @@
       "concern": "low"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-PACKAGE-RUN",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-FIXED"
     ]
    },
    "requirements": {
@@ -2675,13 +2675,14 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
     "capabilities"
    ],
    "reasons": [
-    "Downloads and runs a program we haven't reviewed yet"
+    "Installs and runs software packages from npm or PyPI",
+    "Launches programs on your computer"
    ]
   }
  }
