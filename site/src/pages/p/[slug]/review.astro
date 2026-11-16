@@ -1,0 +1,551 @@
+---
+import { existsSync, readFileSync } from "node:fs";
+import GradeTag from "../../../components/GradeTag.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import Base from "../../../layouts/Base.astro";
+import { allPlugins, type Plugin, ROOT, testedText } from "../../../lib/atlas.ts";
+import { SITE } from "../../../lib/links.ts";
+import { checkedOn } from "../../../lib/meta.ts";
+
+/** A one-page review sheet for IT approval, built for the same plugins as the plugin pages. */
+export function getStaticPaths() {
+  return allPlugins().map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+
+const { p } = Astro.props as { p: Plugin };
+
+// The checked file's name, size and SHA-256, and where its updates come from: the plugin's profile.
+interface Install {
+  asset?: { name?: string; size?: number; sha256?: string };
+  updates?: { url?: string; label?: string };
+}
+const file = `${ROOT}generated/${p.slug}/profile.json`;
+const install: Install = existsSync(file) ? ((JSON.parse(readFileSync(file, "utf8")) as { install?: Install }).install ?? {}) : {};
+const asset = install.asset;
+const updates = install.updates;
+
+const area = (k: string) => p.areas.find((a) => a.key === k);
+const compat = area("compat");
+const maint = area("maint");
+const graded = ["code", "data", "caps"].map(area).filter((a) => a !== undefined);
+
+// Levels as words, the same ones the card's tags use.
+const LEVEL: Record<string, string> = {
+  low: "Low concern",
+  medium: "Medium concern",
+  high: "High concern",
+  unknown: "Not checked yet",
+};
+
+const alt = p.retired?.alternative;
+const removedText = p.removed
+  ? [
+      `Its repository was gone when we checked on ${p.removed.since}.`,
+      p.version ? `The last version we checked was ${p.version}, released ${p.released}${p.grade === "–" ? "" : `, graded ${p.grade}`}.` : "",
+      p.removed.updatesStopped ? "We no longer offer it for install, and its updates came from that repository, so they've stopped too." : "We no longer offer it for install.",
+    ]
+      .filter(Boolean)
+      .join(" ")
+  : "";
+
+type Row = [string, string, { href?: string; mono?: boolean }?];
+const identity = ([
+  ["Developer", p.author],
+  ["Repository", `github.com/${p.repo}`, { href: p.repoUrl }],
+  ["Licence", p.license],
+  ...(p.version ? ([["Version checked", `v${p.version}, released ${p.released}`]] as Row[]) : []),
+  ...(asset?.name ? ([["File", `${asset.name}${asset.size ? ` (${p.size})` : ""}`, { mono: true }]] as Row[]) : []),
+  ...(asset?.sha256 ? ([["SHA-256 of file", asset.sha256, { mono: true }]] as Row[]) : []),
+  ...(p.addonId ? ([["Add-on ID", p.addonId, { mono: true }]] as Row[]) : []),
+  ...(updates?.label ? ([["Updates", `${updates.label}${updates.url ? `: ${updates.url}` : ""}`]] as Row[]) : []),
+] as Row[]).filter((r) => r[1]);
+const notices = p.notices.filter((n) => n.kind !== "lang");
+const anyNotice = notices.length > 0 || p.banner || p.retired || p.removed;
+---
+
+<Base
+  title={`Plugin review sheet: ${p.name} · Zotero Plugins Atlas`}
+  description={`A one-page review sheet for ${p.name}, from the checks on zoteroplugins.org.`}
+  canonical={`/p/${p.slug}`}
+  noindex
+>
+  <SiteHeader />
+  <main class="sheet">
+    <div class="tools">
+      <a href={`/p/${p.slug}`}>← {p.name} on the catalogue</a>
+      <button type="button" class="btn btn-primary" data-print>Print or save as PDF</button>
+    </div>
+
+    <article class="page">
+      <header class="top">
+        <span class="eyebrow">Source: zoteroplugins.org</span>
+        <h1>Plugin review sheet: {p.name}</h1>
+        <p class="sub">Last checked {checkedOn(p)} · {SITE.replace("https://", "")}/p/{p.slug}</p>
+      </header>
+
+      {
+        anyNotice && (
+          <section class="notices" aria-label="Notices">
+            {p.banner && (
+              <p>
+                <strong>On Zotero's official blocklist.</strong> {p.banner}
+              </p>
+            )}
+            {p.retired && (
+              <p>
+                <strong>Retired by its developer.</strong> {p.retired.reason}
+                {alt ? ` They point to ${alt.name} instead.` : ""} Their note, {p.retired.date}: {p.retired.url}
+              </p>
+            )}
+            {p.removed && (
+              <p>
+                <strong>Removed from GitHub.</strong> {removedText}
+              </p>
+            )}
+            {notices.map((n) => (
+              <p>
+                <strong>{n.t}</strong>
+                {n.sub ? ` ${n.sub}` : ""}
+              </p>
+            ))}
+          </section>
+        )
+      }
+
+      <section>
+        <h2>Identity</h2>
+        <dl class="kv">
+          {
+            identity.map(([k, v, o]) => (
+              <>
+                <dt>{k}</dt>
+                <dd class:list={{ mono: o?.mono }}>{o?.href ? <a href={o.href}>{v}</a> : v}</dd>
+              </>
+            ))
+          }
+        </dl>
+      </section>
+
+      <section>
+        <h2>Works with</h2>
+        <p class="line">
+          {p.legacy ? "Zotero 6 only: Zotero 7 and later can't load it." : p.worksWith.length ? `Zotero ${p.worksRange}.` : (compat?.value ?? "")}{" "}
+          {p.legacy || !p.worksWith.length ? "" : p.currentOk ? `It works with the current Zotero (${p.currentMajor}).` : `It doesn't work with the current Zotero (${p.currentMajor}).`}
+        </p>
+        {compat?.sub && !p.legacy && <p class="small">{compat.sub}</p>}
+      </section>
+
+      <section class="grade">
+        <GradeTag grade={p.grade} size="lg" />
+        <div>
+          <h2>Zotero Plugins grade: {p.grade === "–" ? "not graded yet" : `${p.grade}, ${p.gradeWord.toLowerCase()}`}</h2>
+          <p class="line">Because {p.because}. {p.next}</p>
+          <p class="small">
+            {p.version ? (p.fromUpdateAddress ? `Applies to v${p.version}, the file its update address serves, first seen ${p.released}. ` : `Applies to v${p.version}, released ${p.released}. `) : ""}<a href="/how-we-grade">How we grade</a>
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>What we found in the code</h2>
+        <ul class="areas">
+          {
+            graded.map((a) => (
+              <li>
+                <div class="ah">
+                  <strong>{a.title}</strong>
+                  {LEVEL[a.level] && <span class={`lv lv-${a.level}`}>{LEVEL[a.level]}</span>}
+                </div>
+                <p class="line">
+                  {a.key === "data" ? `We found: ${a.value.charAt(0).toLowerCase()}${a.value.slice(1)}.` : a.value}
+                  {a.sub ? `${a.key === "data" || /[.!?]$/.test(a.value) ? "" : "."} ${a.sub}` : ""}
+                </p>
+                {a.groups.map((g) => (
+                  <div class="grp">
+                    {g.name && <span class="gname">{g.name}</span>}
+                    <span class="items">
+                      {g.items.map((c) => (
+                        <span class:list={["item", { mono: c.mono }]}>
+                          {c.t}
+                          {c.note && <span class="note"> ({c.note})</span>}
+                        </span>
+                      ))}
+                    </span>
+                  </div>
+                ))}
+                {a.evidence.length > 0 && (
+                  <p class="small">Where we found it: {a.evidence.map((e) => `${e.what} (${e.loc})`).join("; ")}.</p>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section>
+        <h2>Live test, maintenance and what it needs</h2>
+        <dl class="kv">
+          <dt>Live test</dt>
+          <dd>{testedText(p)}</dd>
+          {
+            maint && (
+              <>
+                <dt>Maintenance</dt>
+                <dd>
+                  {maint.value}
+                  {maint.sub ? `, ${maint.sub}` : ""}
+                </dd>
+              </>
+            )
+          }
+          <dt>What it needs</dt>
+          <dd>
+            {
+              p.needs.length
+                ? p.needs.map((n) => `${n.t}${n.sub ? ` (${n.sub})` : ""}`).join("; ")
+                : "We haven't detected any setup requirements. That isn't the same as none: check the developer's README."
+            }
+          </dd>
+        </dl>
+      </section>
+
+      <section class="what">
+        <h2>What this sheet is</h2>
+        <p class="small">
+          We read the code of a plugin's latest release. Three things set the grade: whether the code can be read, where your data goes, and what powerful capabilities it uses. For an A+, we also install it in a fresh copy of Zotero and record every server it contacts. Reading code shows what a plugin could do.
+        </p>
+        <p class="small">
+          This sheet summarises those checks for the release named above. It is not a security audit and not a guarantee. Compiled code can't be read like the rest of a plugin, so our checks can't see what it does. Each new release is checked again: check the date and version. Every finding, with its file and line, is at {SITE.replace("https://", "")}/p/{p.slug}.
+        </p>
+      </section>
+    </article>
+  </main>
+  <SiteFooter />
+</Base>
+
+<script>
+  document.querySelector("[data-print]")?.addEventListener("click", () => window.print());
+</script>
+
+<style>
+  .sheet {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 28px var(--gutter) 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  .page {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    color: var(--ink);
+    min-width: 0;
+  }
+  .top {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 14px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    font-weight: 760;
+    overflow-wrap: anywhere;
+  }
+  h2 {
+    margin: 0 0 8px;
+    font-size: 15px;
+    line-height: 1.3;
+    font-weight: 720;
+    letter-spacing: -0.01em;
+  }
+  section {
+    min-width: 0;
+    break-inside: avoid;
+  }
+  .sub,
+  .small {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  .line {
+    margin: 0 0 4px;
+    font-size: 14.5px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+  .kv {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 11.5rem minmax(0, 1fr);
+    gap: 6px 16px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .kv dt {
+    font: 500 11px/1.6 var(--font-mono);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .kv dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+  }
+  .grade {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .grade > div {
+    min-width: 0;
+  }
+  .notices {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .notices p {
+    margin: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--rev-line);
+    background: var(--rev-bg);
+    color: var(--ink);
+    border-radius: 8px;
+    font-size: 13.5px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+  .areas {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .areas li {
+    border-left: 3px solid var(--line-strong);
+    padding-left: 12px;
+    min-width: 0;
+  }
+  .ah {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    align-items: center;
+    font-size: 14px;
+  }
+  .lv {
+    font: 600 11.5px/1 var(--font-mono);
+    padding: 3px 7px;
+    border-radius: 999px;
+    border: 1px solid var(--nd-line);
+    background: var(--nd-bg);
+    color: var(--nd-fg);
+  }
+  .lv-low {
+    background: var(--few-bg);
+    color: var(--few-fg);
+    border-color: var(--few-line);
+  }
+  .lv-medium {
+    background: var(--rev-bg);
+    color: var(--rev-fg);
+    border-color: var(--rev-line);
+  }
+  .lv-high {
+    background: var(--ser-bg);
+    color: var(--ser-fg);
+    border-color: var(--ser-line);
+  }
+  .grp {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 8px;
+    margin-top: 4px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .gname {
+    font-weight: 650;
+  }
+  .items {
+    display: inline;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .item:not(:last-child)::after {
+    content: ";";
+    margin-right: 6px;
+  }
+  .note {
+    color: var(--ink-2);
+  }
+  .what {
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  @media (max-width: 560px) {
+    .page {
+      padding: 20px 16px;
+    }
+    h1 {
+      font-size: 24px;
+    }
+    .kv {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+    .kv dd {
+      margin-bottom: 8px;
+    }
+    .grade {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<style is:global>
+  @media print {
+    @page {
+      margin: 9mm;
+    }
+    .site-header,
+    .site-footer,
+    .atlas-band,
+    .consent,
+    .tools,
+    .btn {
+      display: none !important;
+    }
+    :root:root:root:root {
+      color-scheme: light;
+      --bg: #fff;
+      --surface: #fff;
+      --ink: #111;
+      --ink-2: #333;
+      --ink-3: #444;
+      --line: #bbb;
+      --line-strong: #888;
+      --few-fg: #1b5e3f;
+      --few-bg: #fff;
+      --few-line: #1b5e3f;
+      --rev-fg: #7a4a00;
+      --rev-bg: #fff;
+      --rev-line: #7a4a00;
+      --ser-fg: #8a1c1c;
+      --ser-bg: #fff;
+      --ser-line: #8a1c1c;
+      --nd-fg: #333;
+      --nd-bg: #fff;
+      --nd-line: #666;
+    }
+    html,
+    body {
+      background: #fff !important;
+      color: #111;
+      font-size: 9pt;
+    }
+    .sheet {
+      max-width: none;
+      padding: 0;
+      display: block;
+    }
+    .page.page {
+      border: 0;
+      border-radius: 0;
+      padding: 0;
+      gap: 5px;
+      background: #fff;
+    }
+    .page h1 {
+      font-size: 16pt;
+    }
+    .page h2 {
+      font-size: 10.5pt;
+      margin-bottom: 3px;
+    }
+    .page .line,
+    .page .kv {
+      font-size: 8pt;
+      line-height: 1.3;
+    }
+    .page .small,
+    .page .sub,
+    .page .grp {
+      font-size: 7pt;
+      line-height: 1.3;
+    }
+    .page .mono {
+      font-size: 7.5pt;
+    }
+    .page .kv {
+      grid-template-columns: 10rem minmax(0, 1fr);
+      gap: 1px 10px;
+    }
+    .page .top {
+      padding-bottom: 6px;
+    }
+    .page .what {
+      padding-top: 6px;
+      gap: 3px;
+    }
+    .page .grp {
+      margin-top: 1px;
+      gap: 0 8px;
+    }
+    .page .ah {
+      font-size: 9pt;
+    }
+    .page .areas {
+      gap: 3px;
+    }
+    .page .notices {
+      gap: 2px;
+    }
+    .page .notices p {
+      padding: 2px 6px;
+      font-size: 7.5pt;
+      line-height: 1.25;
+      border-radius: 4px;
+    }
+    a {
+      color: #111;
+      text-decoration: none;
+    }
+    * {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>

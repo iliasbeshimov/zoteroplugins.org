@@ -1,0 +1,145 @@
+---
+import Guide from "../layouts/Guide.astro";
+import { shownPlugins } from "../lib/atlas.ts";
+import { breadcrumb, modifiedAt, num, PUBLISHER } from "../lib/guides.ts";
+import { SITE } from "../lib/links.ts";
+
+const path = "/review-sheets";
+const h1 = "Plugin review sheets for IT approval";
+const plugins = shownPlugins()
+  .slice()
+  .sort((a, b) => a.name.localeCompare(b.name, "en"));
+const example = plugins.find((p) => p.slug === "zotero-better-bibtex") ?? plugins[0];
+
+const description = `A one-page sheet for each of the ${num(plugins.length)} Zotero plugins we list: who makes it, what we found in its code and where its data goes. Print it for your IT team.`;
+const graph = [
+  {
+    "@type": "Article",
+    "@id": `${SITE}${path}`,
+    url: `${SITE}${path}`,
+    headline: h1,
+    description,
+    about: { "@type": "Thing", name: "Zotero plugins" },
+    dateModified: modifiedAt(path),
+    author: PUBLISHER,
+    publisher: PUBLISHER,
+  },
+  breadcrumb(h1, path),
+];
+---
+
+<Guide title={`${h1} · Zotero Plugins Atlas`} description={description} h1={h1} crumb="Review sheets" graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      Before staff install software on managed computers, IT often has to approve it. Every plugin on the catalogue has a one-page review sheet you can print or save as a PDF and hand over.
+    </p>
+  </Fragment>
+
+  <section class="text">
+    <h2>What the sheet has</h2>
+    <p>
+      Who makes the plugin and where its code is, its licence, the version and file we checked with the file's SHA-256, its add-on ID, and where its updates come from. Which Zotero versions it works with. Its Zotero Plugins grade and why. What we found in its code: whether the code can be read, where its data goes, and what powerful capabilities it uses. What it needs, how it's maintained, and any notice, such as a plugin that only works with Zotero 6.
+    </p>
+    <h2>What it isn't</h2>
+    <p>
+      It summarises our checks of one release. It is not a security audit and not a guarantee. Each new release is checked again, so the sheet shows the date and version it applies to. <a href="/how-we-grade">How we grade</a> explains the checks.
+    </p>
+    <h2>How to get one</h2>
+    <p>
+      Find the plugin below, or add <code>/review</code> to the end of its page address. For example, <a href={`/p/${example.slug}/review`}>the sheet for {example.name}</a> is at <code>zoteroplugins.org/p/{example.slug}/review</code>. Use "Print or save as PDF" at the top of the sheet.
+    </p>
+  </section>
+
+  <section>
+    <h2>Find a plugin</h2>
+    <label class="find">
+      <span>Search by name</span>
+      <input type="search" id="find" placeholder="Zotero Better BibTeX" autocomplete="off" />
+    </label>
+    <p class="count" id="count" aria-live="polite">{num(plugins.length)} plugins</p>
+    <ul class="list" id="list">
+      {
+        plugins.map((p) => (
+          <li data-name={p.name.toLowerCase()}>
+            <a href={`/p/${p.slug}/review`}>{p.name}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Guide>
+
+<script>
+  const input = document.getElementById("find") as HTMLInputElement | null;
+  const items = [...document.querySelectorAll<HTMLElement>("#list li")];
+  const count = document.getElementById("count");
+  input?.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    let n = 0;
+    for (const li of items) {
+      const show = !q || (li.dataset.name ?? "").includes(q);
+      li.hidden = !show;
+      if (show) n++;
+    }
+    if (count) count.textContent = `${n.toLocaleString("en-GB")} plugin${n === 1 ? "" : "s"}`;
+  });
+</script>
+
+<style>
+  .text {
+    max-width: 780px;
+  }
+  .text p {
+    margin: 0 0 18px;
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .text code {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+  .find {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 420px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .find input {
+    min-height: 44px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink);
+    font: 500 16px var(--font-sans);
+  }
+  .count {
+    margin: 10px 0;
+    font: 500 12.5px var(--font-mono);
+    color: var(--ink-3);
+  }
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    columns: 3 220px;
+    column-gap: 24px;
+    max-height: 520px;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    padding: 14px 16px;
+  }
+  .list li {
+    break-inside: avoid;
+    padding: 3px 0;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+</style>

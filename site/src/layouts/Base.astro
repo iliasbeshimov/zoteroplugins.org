@@ -9,6 +9,8 @@ interface Props {
   description: string;
   /** Keep this page out of search indexes (it stays reachable and its links are still followed). */
   noindex?: boolean;
+  /** The canonical path, when it isn't this page's own (a printable sheet points to its plugin page). */
+  canonical?: string;
   /** Structured data for the page (see lib/meta.ts). */
   jsonld?: Record<string, unknown> | Record<string, unknown>[];
   /** Open Graph type: "website" for most pages, "article" for guides. */
@@ -20,7 +22,7 @@ const { title, description, jsonld, ogType = "website" } = Astro.props;
 // address drops ".html" and "index".
 const path = Astro.url.pathname.replace(/\.html$/, "").replace(/(^|\/)index$/, "$1") || "/";
 const notFound = path === "/404";
-const canonical = new URL(path, Astro.site);
+const canonical = new URL(Astro.props.canonical ?? path, Astro.site);
 // Per-plugin developer checklists, shared-ID pages and the compare tool repeat what the plugin
 // pages say, so search engines get the plugin pages instead.
 const noindex =

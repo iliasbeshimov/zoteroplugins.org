@@ -13,6 +13,7 @@ export const GUIDES = [
   { path: "/best", name: "Best-graded plugins by job" },
   { path: "/for", name: "Plugin packs for students and researchers" },
   { path: "/librarians", name: "For librarians: a box for your guide" },
+  { path: "/review-sheets", name: "Plugin review sheets for IT approval" },
   { path: "/works-with-zotero", name: "Plugins for the current Zotero" },
   { path: "/ai-without-api-key", name: "AI plugins without an API key" },
   { path: "/how", name: "Asked on the Zotero forum" },

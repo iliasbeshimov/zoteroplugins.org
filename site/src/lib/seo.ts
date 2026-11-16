@@ -24,6 +24,7 @@ const GUIDE_PATHS = [
   "/librarians",
   "/librarians/check",
   "/works-with-zotero",
+  "/review-sheets",
   "/ai-without-api-key",
   "/how",
   ...howPages().map((p) => p.path),
