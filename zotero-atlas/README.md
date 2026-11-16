@@ -30,12 +30,18 @@ plugins, see what each one's code does, and install in one click.</p>
 
 <p align="center"><img src="docs/readme/find-plugins.png" width="880" alt="Find plugins in Zotero Atlas: the most downloaded plugins that work with this Zotero, each with its grade, the reason, and an Install button"></p>
 
-- **Find.** Tools → Zotero Atlas lists every plugin in the catalogue, filtered to your Zotero
-  version by default, with each plugin's grade and the one line that explains it. Search, or
-  pick a job (reading, citing, AI, translation, organising, metadata, interface, files).
-- **Install the file we checked.** Install hands the release file to Zotero's own installer with
-  the SHA-256 of the file we analysed. Zotero refuses the file if it doesn't match, so what you
-  get is exactly what the card describes. A file we haven't analysed can't be installed from here.
+- **Find.** Tools → Zotero Atlas opens on the same shelves as zoteroplugins.org: our picks, the
+  most used plugins, plugin packs for students and researchers, Rising, New and catching on, and
+  the eight jobs (reading, citing, AI, translation, organising, metadata, interface, files), all
+  filtered to the plugins that work with your Zotero. Search for what you want Zotero to do: each
+  result shows its grade and the reason for it, what it needs from you (an API key, a local
+  model) and about how many people use it. A plugin's page in Atlas has the rest: what we found,
+  ratings, and the versions we checked. Nobody pays to be on a shelf.
+- **Install the file we checked.** Every install, a whole pack included, goes through one sheet
+  that shows the grade and its reason first, then what the plugin needs, then the file. Install
+  hands that release file to Zotero's own installer with the SHA-256 of the file we analysed.
+  Zotero refuses the file if it doesn't match, so what you get is exactly what the card
+  describes. A file we haven't analysed can't be installed from here.
 
 ### Grades in Tools → Plugins
 
@@ -113,7 +119,9 @@ how fake ones are spotted isn't published, so it can't be gamed.
 
 Whatever you choose, the plugin fetches the catalogue once a day and its list of
 known security problems every 6 hours, both from GitHub (raw.githubusercontent.com, the
-catalogue's public repository), and when you click Install or go back to an earlier version,
+catalogue's public repository). Find plugins shows plugin icons and screenshots from the same
+repository; pictures from anywhere else, a README's own host for example, are never loaded. When
+you click Install or go back to an earlier version,
 Zotero downloads the plugin file from GitHub. Nothing else is contacted, except zoteroatlas.com
 when you post a rating. Links to zoteroplugins.org open in your browser with `?ref=atlas` added,
 which only tells the site not to show its note about Atlas; the site takes it out of the address

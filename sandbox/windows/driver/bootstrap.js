@@ -113,8 +113,11 @@ async function run() {
   await check("escape", A.openWindow("find"), "{ESC}");
   await check("ctrl-w", A.openWindow("find"), "^w");
 
-  // The "All jobs" list, opened with Alt+Down: does it have a background?
+  // The "All jobs" list, opened with Alt+Down: does it have a background? It's on the results
+  // view of Find plugins, so open that first.
   const listWin = A.openWindow("find");
+  await waitFor(() => listWin.zoteroAtlasFind, 20000);
+  listWin.zoteroAtlasFind?.showList();
   await waitFor(() => listWin.document?.getElementById("job"), 20000);
   listWin.document.getElementById("job").focus();
   await check(

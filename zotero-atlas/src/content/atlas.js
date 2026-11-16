@@ -14,7 +14,6 @@
     ["files", "Files, sync & backup"],
   ];
   const JOB_TITLE = Object.fromEntries(JOBS);
-  const PAGE = 150;
   const CHIP = {
     blocked: ["Blocked by Zotero", "red"],
     advisory: ["Known security problem", "red"],
@@ -75,7 +74,6 @@
   let data = null; // the catalogue
   let rv = null; // the latest review of installed plugins
   let byId = new Map(); // addon ID → review item
-  let shown = PAGE;
   let tab = "find";
 
   function status(text) {
@@ -97,155 +95,20 @@
     return entry.id ? byId.get(entry.id) : undefined;
   }
 
-  // -------------------------------------------------------------------------------------------
-  // Find plugins
+  /** Find plugins: Discover, results, a plugin's page, packs (find.js). */
+  let find = null;
+  const renderFind = () => find?.render();
 
-  /** The row's button: what clicking Install would do for this Zotero. */
-  function action(entry) {
-    const build = A.fileFor(entry, zv);
-    const mine = installedFor(entry);
-    const btn = el("button", "", "Install");
-    const note = el("span", "note");
-    if (mine?.same) {
-      btn.textContent = "Installed";
-      btn.disabled = true;
-    } else if (!build) {
-      btn.textContent = "Not for your Zotero";
-      btn.disabled = true;
-      note.textContent = entry.supports.length
-        ? `Works with Zotero ${entry.supports.join(", ")}`
-        : "Zotero won't install this release";
-    } else if (!build.sha256) {
-      btn.textContent = "Not analysed";
-      btn.disabled = true;
-      note.textContent = "We haven't checked this file";
-    } else {
-      btn.textContent = mine ? `Update to ${entry.version}` : "Install";
-      btn.className = entry.grade === "C" ? "" : "primary";
-      if (entry.grade === "C") note.textContent = "Serious concerns found: read the card first";
-      btn.addEventListener("click", async () => {
-        btn.disabled = true;
-        btn.textContent = "Installing…";
-        const r = await A.install(entry, build, window);
-        if (r.ok) status(r.message);
-        else if (!r.cancelled) Zotero.alert(window, "Zotero Atlas", r.message);
-        await refreshInstalled();
-      });
-    }
-    const act = el("div", "act");
-    act.append(btn);
-    if (note.textContent) act.append(note);
-    return act;
-  }
-
-  function needsLine(entry) {
-    const n = entry.needs;
-    const parts = [];
-    if (n.apiKey === "required")
-      parts.push(`needs an API key${n.services.length ? ` (${n.services.join(", ")})` : ""}`);
-    else if (n.apiKey === "optional")
-      parts.push(`API key optional${n.services.length ? ` (${n.services.join(", ")})` : ""}`);
-    else if (n.services.length) parts.push(`can use ${n.services.join(", ")}`);
-    if (n.localModel) parts.push("can use a local model");
-    if (n.launchesPrograms) parts.push("launches programs");
-    return parts.join(" · ");
-  }
-
-  /** "★ 4.6 (96 ratings of 2.1.0)" once the listed version has 10, "too few ratings yet" before. */
-  function ratingText(entry) {
-    const r = entry.ratings;
-    if (!r?.count) return "";
-    const v = r.version;
-    if (v && v.count >= 10)
-      return `★ ${v.average.toFixed(1)} (${v.count} ratings of ${entry.version})`;
-    return "too few ratings yet";
-  }
-
-  function row(entry) {
-    const r = el("div", "row");
-    const main = el("div", "main");
-    const title = el("div", "title");
-    title.append(
-      gradePill(entry.grade),
-      link(entry.name, entry.page),
-      el("span", "ver", entry.version),
-    );
-    const meta = [];
-    if (entry.downloads) meta.push(`${num(entry.downloads)} downloads`);
-    const rating = ratingText(entry);
-    if (rating) meta.push(rating);
-    if (entry.jobs.length) meta.push(entry.jobs.map((j) => JOB_TITLE[j] || j).join(", "));
-    if (entry.lastReleaseAt) meta.push(`updated ${date(entry.lastReleaseAt)}`);
-    title.append(el("span", "meta", meta.join(" · ")));
-    main.append(title);
-    if (entry.summary) main.append(el("p", "summary", entry.summary));
-    const why = el("div", "why");
-    why.append(
-      el(
-        "span",
-        "",
-        `${entry.grade === "–" ? "Not graded yet" : `Grade ${entry.grade}`}: ${entry.because}.`,
-      ),
-    );
-    const needs = needsLine(entry);
-    if (needs) why.append(el("span", "", ` ${needs[0].toUpperCase()}${needs.slice(1)}.`));
-    if (entry.tested)
-      why.append(
-        el(
-          "span",
-          "",
-          ` Live test in Zotero ${entry.tested.zotero}: ${entry.tested.verdict.replace(/-/g, " ")}.`,
-        ),
-      );
-    why.append(
-      el("br"),
-      link("Full card on zoteroplugins.org", entry.page),
-      link("GitHub", entry.repo),
-    );
-    if (entry.ratings?.count) why.append(link("Reviews", `${entry.page}#reviews`));
-    main.append(why);
-    for (const al of installedFor(entry)?.alerts || [])
-      if (al.level !== "info") main.append(el("span", `flag ${al.level}`, al.text));
-    r.append(main, action(entry));
-    return r;
-  }
-
-  function filtered() {
-    const q = $("q").value.trim().toLowerCase();
-    const job = $("job").value;
-    const fit = $("fit").checked;
-    const sort = $("sort").value;
-    let list = data.plugins;
-    if (fit) list = list.filter((p) => A.fileFor(p, zv));
-    if (job) list = list.filter((p) => p.jobs.includes(job));
-    if (q) {
-      const words = q.split(/\s+/);
-      list = list.filter((p) => {
-        const hay = `${p.name} ${p.summary || ""} ${p.slug} ${p.jobs.join(" ")}`.toLowerCase();
-        return words.every((w) => hay.includes(w));
-      });
-    }
-    if (sort === "name") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
-    else if (sort === "updated")
-      list = [...list].sort((a, b) => (b.lastReleaseAt || "").localeCompare(a.lastReleaseAt || ""));
-    else if (sort === "grade")
-      list = [...list].sort(
-        (a, b) => A.RANK[b.grade] - A.RANK[a.grade] || (b.downloads || 0) - (a.downloads || 0),
-      );
-    return list;
-  }
-
-  function renderFind() {
-    if (!data) return;
-    const list = $("list");
-    list.textContent = "";
-    const all = filtered();
-    if (!all.length) list.append(el("div", "empty", "No plugins match."));
-    for (const p of all.slice(0, shown)) list.append(row(p));
-    $("more").hidden = all.length <= shown;
-    $("more").textContent = `Show more (${all.length - Math.min(shown, all.length)} left)`;
-    $("foot").textContent =
-      `${all.length} of ${data.plugins.length} plugins · catalogue from ${date(data.generatedAt)}, graded for Zotero ${data.currentZotero} · you run Zotero ${zv}`;
+  /** A plugin's name that opens its page in Find plugins. */
+  function pageLink(text, slug) {
+    const a = el("a", "", text);
+    a.href = "#";
+    a.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      showTab("find");
+      find?.showPlugin(slug);
+    });
+    return a;
   }
 
   // -------------------------------------------------------------------------------------------
@@ -388,7 +251,7 @@
   function askCard(i) {
     const card = el("div", "card ask");
     const head = el("div", "card-head");
-    const name = link(i.entry.name, i.entry.page);
+    const name = pageLink(i.entry.name, i.entry.slug);
     name.className = "card-name";
     head.append(
       name,
@@ -613,8 +476,9 @@
       for (const i of [...items].sort((a, b) => nameOf(a).localeCompare(nameOf(b)))) {
         const r = el("div", "prow");
         const top = el("div", "ptop");
+        if (i.entry && find) top.append(find.icon(i.entry, 20));
         top.append(gradePill(i.entry?.grade ?? "–", Boolean(i.entry)));
-        top.append(i.entry ? link(nameOf(i), i.entry.page) : el("b", "", nameOf(i)));
+        top.append(i.entry ? pageLink(nameOf(i), i.entry.slug) : el("b", "", nameOf(i)));
         top.append(el("span", "ver", i.addon.version + (i.addon.enabled ? "" : " · turned off")));
         r.append(top);
         const quiet = i.alerts.filter(
@@ -831,14 +695,24 @@
   window.zoteroAtlasMove = { exportTo, importFrom };
 
   window.addEventListener("load", () => {
-    for (const [slug, title] of JOBS) {
-      const o = document.createElement("option");
-      o.value = slug;
-      o.textContent = title;
-      $("job").append(o);
-    }
-    $("fit-label").textContent = `Works with Zotero ${zv}`;
-    $("tab-find").addEventListener("click", () => showTab("find"));
+    find = window.ZoteroAtlasFind({
+      A,
+      zv,
+      el,
+      link,
+      gradePill,
+      status,
+      JOBS,
+      JOB_TITLE,
+      getData: () => data,
+      installedFor,
+      refreshInstalled,
+      alert: (msg) => Zotero.alert(window, "Zotero Atlas", msg),
+    });
+    window.zoteroAtlasFind = find;
+    renderFind();
+    // The Find plugins tab, clicked again, goes back to Discover.
+    $("tab-find").addEventListener("click", () => (tab === "find" ? find.home() : showTab("find")));
     $("tab-mine").addEventListener("click", () => showTab("mine"));
     $("tab-move").addEventListener("click", () => showTab("move"));
     $("move-settings").addEventListener("change", syncSecrets);
@@ -867,31 +741,13 @@
       }
     });
     $("refresh").addEventListener("click", () => load(true));
-    for (const id of ["q", "job", "sort", "fit"]) {
-      $(id).addEventListener("input", () => {
-        shown = PAGE;
-        renderFind();
-      });
-      $(id).addEventListener("change", () => {
-        shown = PAGE;
-        renderFind();
-      });
-    }
-    $("more").addEventListener("click", () => {
-      shown += PAGE;
-      renderFind();
-    });
     // Zotero places the window after this load event; then make sure its title bar is on screen.
     window.setTimeout(() => A.keepOnScreen(window));
     A.closeOnEscape(window, (ev) => {
       const t = ev.target;
-      // Escape empties the search box first, and never throws away a review being written.
-      if (t?.id === "q" && t.value) {
-        t.value = "";
-        shown = PAGE;
-        renderFind();
-        return true;
-      }
+      // In Find plugins, Escape closes the install sheet, empties the search box or goes back
+      // before it closes the window; it never throws away a review being written.
+      if (tab === "find" && find?.escape(ev)) return true;
       return t?.localName === "textarea" && t.value.trim() !== "";
     });
     const args = window.arguments?.[0]?.wrappedJSObject ?? window.arguments?.[0];

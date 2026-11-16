@@ -22,6 +22,7 @@ FILES = [
     "content/atlas.css",
     "content/atlas.js",
     "content/atlas.xhtml",
+    "content/find.js",
     "content/firstrun.css",
     "content/firstrun.js",
     "content/firstrun.xhtml",

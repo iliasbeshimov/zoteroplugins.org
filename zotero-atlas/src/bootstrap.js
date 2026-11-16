@@ -28,7 +28,9 @@
  *
  * What it contacts:
  * - raw.githubusercontent.com, the directory's public repository: the catalogue (catalog.json)
- *   once a day, and the list of known security problems (advisories.json) every 6 hours.
+ *   once a day, and the list of known security problems (advisories.json) every 6 hours. Find
+ *   plugins shows plugin icons and screenshots from the same repository (site/public/icons and
+ *   site/public/shots); pictures from anywhere else are never loaded.
  *   github.com for a plugin file when you click Install or go back to an earlier version.
  *   Zotero's own installer downloads the file and refuses it unless it matches the SHA-256 we
  *   analysed.
@@ -55,6 +57,10 @@ const ADVISORIES_URL = `${RAW}/advisories.json`;
 const USAGE_URL = "https://zoteroatlas.com/api/v1/plugins";
 const RATINGS_URL = "https://zoteroatlas.com/api/v1/ratings";
 const SITE = "https://zoteroplugins.org";
+// Plugin icons and screenshots, copied into the directory's repository: never a README's own host.
+const ASSETS =
+  "https://raw.githubusercontent.com/iliasbeshimov/zoteroplugins.org/main/site/public/";
+const ASSET_PATH = /^(icons|shots)\/[a-z0-9][a-z0-9._-]*\.(png|jpg)$/;
 const HOME = "https://zoteroatlas.com";
 
 /**
@@ -1653,17 +1659,32 @@ const decide = {
 // ---------------------------------------------------------------------------------------------
 // Installing: Zotero's own installer, which refuses a file that doesn't match the hash
 
-async function installPlugin(entry, build, window) {
-  if (!build)
-    return {
-      ok: false,
-      message: `No listed version of ${entry.name} works with Zotero ${Zotero.version}.`,
-    };
+/** Why Atlas won't install this file, or null when it will. */
+function cantInstall(entry, build) {
+  if (!build) return `No listed version of ${entry.name} works with Zotero ${Zotero.version}.`;
   if (!build.sha256)
-    return {
-      ok: false,
-      message: `We haven't analysed ${build.name}, so Zotero Atlas won't install it. You can install it from its GitHub page.`,
-    };
+    return `We haven't analysed ${build.name}, so Zotero Atlas won't install it. You can install it from its GitHub page.`;
+  return null;
+}
+
+/**
+ * Install a listed plugin after the Atlas window's own install sheet, which shows the grade, what
+ * it needs and the checked file, and asked you. The same hash-checked installer as installPlugin.
+ */
+async function installChecked(entry, build) {
+  const no = cantInstall(entry, build);
+  if (no) return { ok: false, message: no };
+  return installFile({ id: entry.id, name: entry.name, version: entry.version, build });
+}
+
+/** A picture from the directory's repository ("icons/<slug>.png", "shots/<slug>.jpg"), or null. */
+function assetURL(path) {
+  return typeof path === "string" && ASSET_PATH.test(path) ? ASSETS + path : null;
+}
+
+async function installPlugin(entry, build, window) {
+  const no = cantInstall(entry, build);
+  if (no) return { ok: false, message: no };
   const p = Services.prompt;
   const flags =
     p.BUTTON_TITLE_IS_STRING * p.BUTTON_POS_0 +
@@ -2389,6 +2410,9 @@ const Atlas = {
   worksWith,
   fileFor,
   install: installPlugin,
+  installChecked,
+  iconURL: (entry) => (entry?.icon ? assetURL(`icons/${entry.slug}.png`) : null),
+  assetURL,
   openWindow,
   keepOnScreen,
   closeOnEscape,

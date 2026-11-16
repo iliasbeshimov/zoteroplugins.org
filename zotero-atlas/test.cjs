@@ -848,6 +848,52 @@ const run = async (name, fn) => {
   );
 
   await run(
+    "installChecked (after the window's sheet): no dialog of its own, same refusals, same hash check",
+    async () => {
+      const t = load({ answer: [1] });
+      t.s.startup({ id: "a", version: "1.3.0", rootURI: "r/" });
+      const A = t.s.Zotero.ZoteroAtlas;
+      const e = entry({});
+      let r = await A.installChecked(e, build({ sha256: null }));
+      assert.ok(!r.ok && /haven't analysed/.test(r.message));
+      r = await A.installChecked(e, null);
+      assert.ok(!r.ok && /No listed version/.test(r.message));
+      assert.equal(t.installs.length, 0);
+      r = await A.installChecked(e, e.file);
+      assert.ok(r.ok && /is installed/.test(r.message));
+      assert.equal(t.dialogs.length, 0, "the sheet asked, not a dialog");
+      assert.deepEqual(t.installs[0].opts.hash, `sha256:${"a".repeat(64)}`);
+    },
+  );
+
+  await run(
+    "pictures: only icons and shots from the directory's repository, never another host or path",
+    async () => {
+      const t = load();
+      t.s.startup({ id: "a", version: "1.3.0", rootURI: "r/" });
+      const A = t.s.Zotero.ZoteroAtlas;
+      const base =
+        "https://raw.githubusercontent.com/iliasbeshimov/zoteroplugins.org/main/site/public/";
+      assert.equal(A.assetURL("shots/zoplicate.jpg"), `${base}shots/zoplicate.jpg`);
+      assert.equal(A.iconURL({ slug: "zoplicate", icon: true }), `${base}icons/zoplicate.png`);
+      assert.equal(A.iconURL({ slug: "zoplicate", icon: false }), null);
+      assert.equal(A.iconURL({ slug: "zoplicate" }), null, "a catalogue from before icons");
+      for (const bad of [
+        "https://example.org/x.png",
+        "//example.org/x.png",
+        "shots/../../x.jpg",
+        "icons/x.svg",
+        "data/generated/catalog.json",
+        "shots/x.jpg?y=1",
+        null,
+        42,
+      ])
+        assert.equal(A.assetURL(bad), null, String(bad));
+      assert.equal(A.iconURL({ slug: "../x", icon: true }), null);
+    },
+  );
+
+  await run(
     "ratings: a slow hash of Zotero's key, never the key; exactly these fields; the list ID only while sending",
     async () => {
       const t = load({ http: () => ({ status: 204, responseText: "" }) });

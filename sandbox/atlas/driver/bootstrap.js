@@ -269,9 +269,10 @@ async function run() {
     await delay(500);
     await snap(aw, "07-your-plugins-bottom");
     aw.document.getElementById("tab-find").click();
-    await delay(1500);
+    await delay(4000);
     await snap(aw, "08-find-plugins");
     out.dotAfterLooking = tb?.getAttribute("attention") ?? null;
+    await findViews(aw);
     aw.close();
   }
 
@@ -287,6 +288,111 @@ async function run() {
   }
   await delay(2000);
   await snap(win, "09-main-after");
+}
+
+/**
+ * Find plugins: Discover scrolled down, a search, a plugin's page and its install sheet
+ * (cancelled: nothing is installed), a pack, Escape going back, and the narrowest window.
+ */
+async function findViews(aw) {
+  const d = aw.document;
+  const F = aw.zoteroAtlasFind;
+  const fs = d.getElementById("find");
+  const texts = (sel, n = 12) => [...d.querySelectorAll(sel)].slice(0, n).map((x) => x.textContent);
+  const icons = () => {
+    const imgs = [...d.querySelectorAll("#fview img.icon")];
+    return {
+      img: imgs.length,
+      loaded: imgs.filter((i) => i.complete && i.naturalWidth > 0).length,
+    };
+  };
+  out.find = {
+    shelves: texts(".shelf-head h2"),
+    picks: texts(".pick .sname"),
+    used: texts(".cols .sname"),
+    tiles: d.querySelectorAll("#fview .icon.tile").length,
+    icons: icons(),
+  };
+  step("find: scroll");
+  fs.scrollTop = 760;
+  await delay(1500);
+  await snap(aw, "08b-find-shelves");
+  fs.scrollTop = fs.scrollHeight;
+  await delay(1500);
+  await snap(aw, "08c-find-bottom");
+
+  step("find: search");
+  const q = d.getElementById("q");
+  q.value = "translate pdfs";
+  q.dispatchEvent(new aw.Event("input"));
+  await delay(2500);
+  await snap(aw, "08d-search");
+  const top = async (text) => {
+    q.value = text;
+    q.dispatchEvent(new aw.Event("input"));
+    await delay(400);
+    return texts(".rrow .rname", 4);
+  };
+  out.find.searches = {};
+  for (const text of ["find duplicates", "cite in word", "summarise a paper", "better notes"])
+    out.find.searches[text] = await top(text);
+  q.value = "translate pdfs";
+  q.dispatchEvent(new aw.Event("input"));
+  await delay(800);
+  out.find.search = {
+    view: F.view.name,
+    count: d.querySelector(".count-line")?.textContent,
+    first: texts(".rrow .rname", 6),
+  };
+
+  step("find: plugin page");
+  F.showPlugin("zotero-pdf-translate");
+  await delay(2500);
+  await snap(aw, "08e-plugin-page");
+  fs.scrollTop = 640;
+  await delay(800);
+  await snap(aw, "08f-plugin-page-lower");
+  const hero = d.querySelector(".hero .ibtn");
+  out.find.plugin = { title: d.querySelector(".who h1")?.textContent, button: hero?.textContent };
+  if (hero && !hero.disabled) {
+    hero.click();
+    await delay(800);
+    await snap(aw, "08g-install-sheet");
+    out.find.sheet = d.getElementById("sheet")?.textContent?.slice(0, 500) ?? null;
+    out.find.sheetFocus = d.activeElement?.textContent ?? null;
+    d.querySelector(".sheet-act button")?.click(); // Cancel
+    await delay(400);
+    out.find.sheetClosed = d.getElementById("sheet")?.hidden ?? null;
+  }
+
+  step("find: back");
+  F.home();
+  await delay(800);
+  d.querySelector(".pack-link")?.click();
+  await delay(2500);
+  await snap(aw, "08h-pack");
+  out.find.pack = {
+    title: d.querySelector(".pack-head h1")?.textContent,
+    rows: texts(".pk-row .sname", 8),
+    bar: d.querySelector(".pack-bar")?.textContent,
+  };
+  F.escape({ target: d.body });
+  await delay(600);
+  out.find.afterEscape = F.view.name;
+
+  step("find: narrow");
+  aw.resizeTo(600, aw.outerHeight);
+  await delay(1500);
+  F.home();
+  await delay(2000);
+  await snap(aw, "08i-narrow");
+  fs.scrollTop = 820;
+  await delay(1000);
+  await snap(aw, "08j-narrow-lower");
+  F.showPlugin("zoplicate");
+  await delay(2000);
+  await snap(aw, "08k-narrow-plugin");
+  out.find.iconsEnd = icons();
 }
 
 async function done() {
