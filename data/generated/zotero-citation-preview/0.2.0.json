@@ -1,0 +1,389 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-citation-preview",
+ "repo": "yulong-ge/zotero-citation-preview",
+ "version": "0.2.0",
+ "tag": "v0.2.0",
+ "releaseAuthor": "yulong-ge",
+ "publishedAt": "2026-11-17T05:15:39Z",
+ "prerelease": false,
+ "asset": {
+  "name": "citation-preview-0.2.0.xpi",
+  "url": "https://github.com/yulong-ge/zotero-citation-preview/releases/download/v0.2.0/citation-preview-0.2.0.xpi",
+  "size": 40326,
+  "sha256": "6ab3bbdf8c16cbbab324e10f8993dcd286e4cf1ede1bde67acf8a6d2113b30b8",
+  "githubAssetId": 757744298,
+  "uploader": "yulong-ge",
+  "uploadedAt": "2026-11-17T05:15:38Z",
+  "fetchedAt": "2026-11-17T12:13:10.449Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "citation-preview@local",
+  "name": "Citation Preview",
+  "version": "0.2.0",
+  "description": "Verified metadata and abstracts inside Zotero native citation popovers",
+  "updateUrl": "https://github.com/yulong-ge/zotero-citation-preview/releases/latest/download/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 545,
+   "sha256": "d1fa5de9e0c8137986e63f4d302f07e7f8ed4ad644fe9178ea892dec855c81b8"
+  },
+  {
+   "path": "core.js",
+   "size": 6053,
+   "sha256": "2984e7f5777d3d69fe4075a8bac9b3661fc44dc04bfe7ed228cf0936cf8f8616"
+  },
+  {
+   "path": "icons/icon-128.png",
+   "size": 19049,
+   "sha256": "1549ec608542bc3bc0094c8b5c8b6c370177507c557589876956534221915a95"
+  },
+  {
+   "path": "icons/icon-32.png",
+   "size": 2127,
+   "sha256": "69a10f2cfead3236a87a11a7851b969f5d534994e767ec104c59579144b868d0"
+  },
+  {
+   "path": "icons/icon-64.png",
+   "size": 6088,
+   "sha256": "8a87dd58410c47f9d5b1c91ddde47e9b77b0d12c0caf8202291bff9c38214fcb"
+  },
+  {
+   "path": "manifest.json",
+   "size": 578,
+   "sha256": "78978a1ad9fdd54b90c38a2b02daf6b0480d11d53b874cf20b8f3d8bfe42c957"
+  },
+  {
+   "path": "preview.js",
+   "size": 32123,
+   "sha256": "6f3051d0b7621bdce9270c860606662377553239463331c7fb2041aa88569128"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-17T12:13:10.449Z",
+  "input": {
+   "slug": "zotero-citation-preview",
+   "version": "0.2.0",
+   "sha256": "6ab3bbdf8c16cbbab324e10f8993dcd286e4cf1ede1bde67acf8a6d2113b30b8"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "icons/icon-128.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icons/icon-32.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icons/icon-64.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 38721,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preview.js",
+       "line": 50,
+       "column": 29,
+       "snippet": "const response = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preview.js",
+       "line": 274,
+       "column": 12,
+       "snippet": "? \"https://api.crossref.org/works/\" + encodeURIComponent(doi)",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "preview.js",
+       "line": 275,
+       "column": 12,
+       "snippet": ": \"https://api.crossref.org/works?rows=5&query.bibliographic=\" +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openalex.org",
+     "category": "scholarly-api",
+     "provider": "OpenAlex",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preview.js",
+       "line": 317,
+       "column": 12,
+       "snippet": "\"https://api.openalex.org/works/https://doi.org/\" +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preview.js",
+       "line": 252,
+       "column": 11,
+       "snippet": "url: \"https://arxiv.org/abs/\" + (identifier || match.id),",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preview.js",
+       "line": 307,
+       "column": 15,
+       "snippet": "url: \"https://doi.org/\" + work.DOI,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "export.arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "preview.js",
+       "line": 183,
+       "column": 6,
+       "snippet": "\"https://export.arxiv.org/api/query?\" + query,",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.13"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/yulong-ge/zotero-citation-preview/releases/latest/download/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/yulong-ge/zotero-citation-preview/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-17T12:13:10.449Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the yulong-ge account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-17T12:13:10.449Z",
+  "appliesTo": {
+   "slug": "zotero-citation-preview",
+   "version": "0.2.0",
+   "sha256": "6ab3bbdf8c16cbbab324e10f8993dcd286e4cf1ede1bde67acf8a6d2113b30b8"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.13",
+   "currentZotero": "10.0.9",
+   "inputHash": "00d41e1c0a8ca6bdbb168c8b4a378df66f392a194019d4000f80e342575e9139"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "api.openalex.org",
+       "arxiv.org",
+       "doi.org",
+       "export.arxiv.org"
+      ],
+      "unconfirmed": [
+       "arxiv.org",
+       "doi.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-17T05:15:39Z",
+    "lastCommitAt": "2026-11-17T05:35:36Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
