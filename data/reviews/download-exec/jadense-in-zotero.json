@@ -1,37 +1,72 @@
 {
   "schemaVersion": 1,
   "slug": "jadense-in-zotero",
-  "version": "0.6.3",
-  "sha256": "28eee02c2e4673dc584b6bda2f74b33d4d991c4ff96c279046d7ce9d7e437790",
-  "codeKey": "2bc1e7e79be6",
-  "reviewedAt": "2026-09-30",
-  "method": "Evidence pack from the release file; one Sonnet 5 agent established the facts and a second checked them independently; every quote verified against the release files and README; disputed fields corrected by hand; level and summary written by Claude Opus 5.5.",
+  "version": "0.6.17",
+  "sha256": "6ce9303fc1ffa5f9a7b9184cb0e1eaaa8d975af31f55931ad1922d7d0124f3b7",
+  "codeKey": "3fc6caeb09e8",
+  "reviewedAt": "2026-11-18",
+  "method": "Read by hand in the release file (the OCR and PDF engine installers, bundles.json, install-environment.ps1, and the setup code in bootstrap.js and preferences.js), compared with 0.6.16, with the README and usage guide at v0.6.17; every quote checked against the release file and README by script; the pinned engine hashes checked against GitHub's digests for the v0.6.5 release files; level from the fixed rule; label and summary written by Claude Opus 5.5.",
   "real": true,
-  "concern": "low",
-  "rule": "CAP-DOWNLOAD-EXEC-MAKER",
-  "label": "Downloads uv and installs Python packages when you turn on local OCR or PDF translation",
-  "summary": "When you press Enable local OCR, or prepare PDF translation, in its settings, it downloads uv, as its README says, and uses it to install Python packages.",
+  "concern": "medium",
+  "rule": "CAP-DOWNLOAD-EXEC-FIXED",
+  "label": "On Windows, downloads a prebuilt engine package from its developer when you set up OCR or PDF translation",
+  "summary": "On 64-bit Windows, pressing Enable local OCR or Prepare PDF translation engine in its settings, or starting a PDF translation before the engine is ready, downloads that engine (about 860 MB for OCR, 450 MB for PDF translation) from the developer's GitHub releases and runs the Python inside it, as its README says. On Mac, Linux and Windows on ARM it downloads uv from Astral and installs locked Python packages instead. On Windows, if Microsoft's Visual C++ runtime is missing, it also downloads Microsoft's installer, checks Microsoft's signature, and runs it once Windows asks you for administrator approval; the README doesn't mention that.",
   "facts": {
-    "what": "uv (the open-source Python package manager from Astral, v0.9.3) as a tar.gz from its GitHub release, only if no suitable uv is already on the computer. It is then used to install a private Python 3.12 and locked Python packages (Docling, RapidOCR, onnxruntime, or BabelDOC/PyMuPDF) for optional local OCR and PDF-translation engines. On Windows x64 the PDF engine may come as a prebuilt ZIP from the developer's GitHub release (sha256 pinned in bundles.json).",
+    "what": "On Windows x64 (both engines are marked published in bundles.json): a prebuilt engine ZIP from the developer's own GitHub release v0.6.5, jadense-ocr-engine-2.126.0-3.9.2-1-windows-x64.zip (856,821,566 bytes) for OCR and jadense-pdf-engine-0.6.4-1-windows-x64.zip (454,424,663 bytes) for PDF translation; each holds a Python runtime, its packages and the engine code, which the plugin unpacks and runs. On macOS, Linux and Windows ARM64: uv 0.9.3 from Astral's GitHub releases (only if no uv 0.9.3 or later is found), then a private Python 3.12 and packages from the bundled uv.lock. On Windows, when the Visual C++ runtime is missing (or is the old 14.26 build that fails the OCR engine's torch check), Microsoft's vc_redist installer from aka.ms.",
     "urls": [
-      "https://github.com/astral-sh/uv/releases/download/0.9.3/uv-$target.tar.gz",
-      "https://github.com/astral-sh/uv/releases/download/0.9.3/uv-$target.tar.gz.sha256"
+      "https://github.com/jadense-ai/jadense-in-zotero/releases/download/v0.6.5/jadense-ocr-engine-2.126.0-3.9.2-1-windows-x64.zip",
+      "https://github.com/jadense-ai/jadense-in-zotero/releases/download/v0.6.5/jadense-pdf-engine-0.6.4-1-windows-x64.zip",
+      "https://github.com/astral-sh/uv/releases/download/0.9.3/uv-$target.tar.gz (and the Windows ARM64 zip)",
+      "https://aka.ms/vc14/vc_redist.$Architecture.exe"
     ],
-    "source": "official",
-    "publisher": "Astral, who make uv",
+    "source": "developer-own",
     "transport": "https",
-    "integrity": "same-source-checksum",
-    "trigger": "user-clicks-install",
+    "integrity": "pinned",
+    "trigger": "automatic-on-feature-use",
     "toldInReadme": "yes",
-    "readmeQuote": "首次需联网下载 Python、依赖和模型，预留数 GB 空间，无需预装 Python 或配置 CUDA。",
+    "readmeQuote": "v0.6.5 正式 XPI 在 Windows x64 优先下载匹配的完整引擎包；其他平台按库内安装器准备独立 Python、锁定依赖、模型和字体。",
     "triggerQuote": {
       "file": "content/preferences.js",
-      "text": "make(\"button\", uiText(\"启用本机 OCR\", \"Enable local OCR\"))"
+      "text": "k=r(\"button\",c(\"\\u542F\\u7528\\u672C\\u673A OCR\",\"Enable local OCR\"))"
+    },
+    "trigger2Quote": {
+      "file": "content/preferences.js",
+      "text": "\"Prepare PDF translation engine\""
+    },
+    "trigger3Quote": {
+      "file": "bootstrap.js",
+      "text": "await Bg(this.host,i.signal,"
+    },
+    "sourceQuote": {
+      "file": "content/pdf-translation/bundles.json",
+      "text": "\"urls\": [\"https://github.com/jadense-ai/jadense-in-zotero/releases/download/v0.6.5/jadense-pdf-engine-0.6.4-1-windows-x64.zip\"]"
+    },
+    "pinnedQuote": {
+      "file": "content/pdf-translation/bundles.json",
+      "text": "\"sha256\": \"579e19fc3e09ff1532f739aa0ab2c715a9047396daca23fb427bb82f4c7c9ebd\""
     },
     "integrityQuote": {
-      "file": "content/ocr/install.sh",
-      "text": "[ \"$expected\" = \"$actual\" ] || { echo 'uv checksum mismatch' >&2; exit 1; }"
+      "file": "content/pdf-translation/install-bundle.ps1",
+      "text": "if ($archiveLock.Length -ne [long]$entry.size -or (Hash $archive) -ne $entry.sha256) {"
     },
-    "notes": "Mac/Linux uv download: both ocr/install.sh and pdf-translation/install.sh fetch uv 0.9.3 from astral-sh GitHub releases, and compare its SHA-256 to a .sha256 file fetched from the same release URL (same-source checksum, not a hash pinned in the plugin). Skipped if a uv >= 0.9.3 is already found on PATH or common locations. Download is not automatic: the installer runs only from buttons in Settings (\"Enable local OCR\" / \"Continue setup\" / \"Repair\", and \"Prepare PDF translation engine\", English UI text from uiText in content/preferences.js); startup/check calls pass --check, which downloads nothing. After uv, `uv sync --frozen` installs Python 3.12 and packages from uv.lock, which pins sha256 hashes for PyPI packages (uv.lock contains hash = \"sha256:...\" entries), then runs an import test python -c. Models are also downloaded (README: first run downloads Python, dependencies and models, several GB). Windows install.ps1 uses the same pattern (Invoke-WebRequest of $url.sha256 plus SHA256 compare). Windows x64 prebuilt PDF engine ZIP is verified against a sha256 pinned in content/pdf-translation/bundles.json (line 9), hosted on the developer's own GitHub release. README also states the plugin runs PowerShell with -ExecutionPolicy Bypass. Scanner's other findings (process-launch, package-run, self-update, dynamic-code) not examined here. I did not verify the pdf-engine README anchor text for Mac/Linux beyond the OCR section. The README explicitly calls out the install path in sections 'OCR 依赖安装' and '版面解析引擎安装'."
+    "uvQuote": {
+      "file": "content/ocr/install.sh",
+      "text": "url=\"https://github.com/astral-sh/uv/releases/download/0.9.3/uv-$target.tar.gz\""
+    },
+    "runtimeInstall": "On Windows, install-environment.ps1 (new in 0.6.17, shared by both engines) checks the registry and System32 for the Visual C++ 2015-2022 runtime (Get-EngineMSVC, lines 37-58). Only when it is missing (Initialize-EngineMSVC, 87-143), or is the old 14.26.28720.3 build and the OCR engine's torch import fails with WinError 1114 (Test-EngineNative, 157-158), it downloads vc_redist.<arch>.exe from https://aka.ms/vc14/ (96) to a temporary folder, rejects it unless its Authenticode signature is valid and signed by Microsoft Corporation and its file and product names match (Assert-EngineRedist, 79-85), then runs it with Start-Process -Verb RunAs and '/install /quiet /norestart' (113), so Windows asks for administrator approval first; cancelling stops setup. It runs before the engine download on the Windows x64 path (install-bundle.ps1 line 34), after the packages on the uv path (ocr/install.ps1 87, pdf-translation/install.ps1 91), and in the repair step (install.ps1 -NativeOnly, ocr/install.ps1 39-46). With an offline ZIP it never downloads: it asks you to put Microsoft's installer beside the ZIP (install-environment.ps1 102). The README doesn't mention it; the usage guide (lines 221, 229) tells you to get the installer from Microsoft yourself if the engine check reports it missing, and the v0.6.17 release notes say the UAC flow wasn't tested on a clean system.",
+    "vcQuote": {
+      "file": "content/pdf-translation/install-environment.ps1",
+      "text": "$url = \"https://aka.ms/vc14/$name\""
+    },
+    "signatureQuote": {
+      "file": "content/pdf-translation/install-environment.ps1",
+      "text": "$sig.SignerCertificate.GetNameInfo('SimpleName',$false) -ne 'Microsoft Corporation'"
+    },
+    "elevateQuote": {
+      "file": "content/pdf-translation/install-environment.ps1",
+      "text": "Start-Process -FilePath $exe -Verb RunAs"
+    },
+    "notes": "What changed from 0.6.16 (the scanner's code key covers the two install.sh files): in both install.sh files only the last step changed, from an inline python -c import test to running the bundled native-probe.py (ocr/install.sh 61, pdf-translation/install.sh 63), which imports the engine's modules in the engine's own Python and touches no network. The uv download (install.sh 43-50: uv 0.9.3 from astral-sh GitHub releases, checked against a .sha256 file from the same release) is unchanged. New on Windows: install-environment.ps1 and the Visual C++ runtime install (see runtimeInstall), install-stage.ps1 (unpacking the checked ZIP), and requirements (unpacked size, tree hash) in both bundles.json files; the engine ZIP URLs and their pinned SHA-256s are unchanged from 0.6.16. Which download runs: setup on Windows x64 takes the prebuilt ZIP whenever bundles.json marks it published (PDF: Bg in bootstrap.js, h=...published===!0; OCR: Vw, f?.published===!0), which both are; otherwise uv. The ZIP comes from the developer's GitHub release v0.6.5 over https, resumes partial downloads, and is rejected unless its size and SHA-256 match bundles.json (ocr/install-bundle.ps1 76, pdf-translation/install-bundle.ps1 75); the pinned hashes match GitHub's own digests for those release files (sha256:775db690... OCR, sha256:579e19fc... PDF). An offline ZIP you import is checked against the same hash before anything in it runs (pdf-translation/install-bundle.ps1 102, ocr/install-bundle.ps1 103). When: the Enable local OCR / Continue setup button and the Prepare PDF translation engine button in Settings (preferences.js line 64), and also a PDF translation job, which calls the same prepare step before it runs (bootstrap.js, dispatch: await Bg(...)) and installs the engine if its check fails. The OCR status check run elsewhere only checks (install.ps1 -CheckOnly / install.sh --check). The README's PDF engine section says the Windows x64 XPI downloads the matching full engine package first and other platforms use the installer in the repository; its OCR section says the first setup downloads Python, dependencies and models. The plugin starts PowerShell with -ExecutionPolicy Bypass, as the README says.",
+    "reviewerNote": "Rated medium where 0.6.3 was low, because the 0.6.3 review rated the uv download, which is what runs on Mac and Linux. Since 0.6.5 both engines on Windows x64 come as the developer's prebuilt ZIPs, about 1.3 GB of Python, packages and engine code we haven't looked inside; they are pinned by hash, so only a new plugin release can change them. The Visual C++ runtime download is new in 0.6.17; on its own it would be low (Microsoft's file, signature-checked, Windows asks you first)."
   }
 }

@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "profilerVersion": "0.1.2",
- "generatedAt": "2026-11-18T12:03:33.448Z",
+ "generatedAt": "2026-11-18T17:16:59.249Z",
  "slug": "jadense-in-zotero",
  "repo": "jadense-ai/jadense-in-zotero",
  "repoName": "jadense-ai/jadense-in-zotero",
@@ -138,7 +138,7 @@
  "trust": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-18T12:03:33.448Z",
+  "computedAt": "2026-11-18T17:16:59.249Z",
   "appliesTo": {
    "slug": "jadense-in-zotero",
    "version": "0.6.17",
@@ -149,7 +149,7 @@
    "provenanceCheckerVersion": "lite-0.4",
    "hostsTableVersion": "2026.11.13",
    "currentZotero": "10.0.9",
-   "inputHash": "3f8fbd76c76d7985de615f3f2f647e13d9839e172f88ac245ad1f34f93ca55dc"
+   "inputHash": "1417e7e8a0f19415c4ce544e52a530b2beb57f6d44d45bcb17cb349953055b7a"
   },
   "facets": {
    "sourceTransparency": {
@@ -292,9 +292,9 @@
     "badges": [
      {
       "id": "download-exec",
-      "label": "Downloads and runs a program we haven't reviewed yet",
-      "concern": "high",
-      "detail": "We haven't yet reviewed who publishes the file or whether anything stops it changing, so it counts as a high concern until we do. Not checked against a fingerprint fixed in the plugin."
+      "label": "On Windows, downloads a prebuilt engine package from its developer when you set up OCR or PDF translation; we haven't checked what's inside it",
+      "concern": "medium",
+      "detail": "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. We haven't checked what's inside it. On 64-bit Windows, pressing Enable local OCR or Prepare PDF translation engine in its settings, or starting a PDF translation before the engine is ready, downloads that engine (about 860 MB for OCR, 450 MB for PDF translation) from the developer's GitHub releases and runs the Python inside it, as its README says. On Mac, Linux and Windows on ARM it downloads uv from Astral and installs locked Python packages instead. On Windows, if Microsoft's Visual C++ runtime is missing, it also downloads Microsoft's installer, checks Microsoft's signature, and runs it once Windows asks you for administrator approval; the README doesn't mention that."
      },
      {
       "id": "package-run",
@@ -329,12 +329,12 @@
       "concern": "low"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
      "CAP-PACKAGE-RUN",
-     "CAP-PROCESS"
+     "CAP-PROCESS",
+     "CAP-DOWNLOAD-EXEC-FIXED"
     ]
    },
    "requirements": {
@@ -373,13 +373,17 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
+    "dataSharing",
     "capabilities"
    ],
    "reasons": [
-    "Downloads and runs a program we haven't reviewed yet"
+    "Its code names a developer's server: jadense.cn",
+    "On Windows, downloads a prebuilt engine package from its developer when you set up OCR or PDF translation; we haven't checked what's inside it",
+    "Installs and runs software packages from npm or PyPI",
+    "Launches programs on your computer"
    ]
   }
  },
