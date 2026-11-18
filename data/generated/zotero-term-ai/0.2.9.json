@@ -1,0 +1,448 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-term-ai",
+ "repo": "daewaf/zotero-term-ai",
+ "version": "0.2.9",
+ "tag": "v0.2.9",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-11-16T15:39:43Z",
+ "prerelease": false,
+ "asset": {
+  "name": "term-ai-0.2.9.xpi",
+  "url": "https://github.com/daewaf/zotero-term-ai/releases/download/v0.2.9/term-ai-0.2.9.xpi",
+  "size": 16956,
+  "sha256": "8b92f7116caa0baf137e6ef46dcd3622ec4fd823f0a139c75472ed57604ee709",
+  "githubAssetId": 755399677,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-11-16T15:39:18Z",
+  "fetchedAt": "2026-11-18T12:03:33.448Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "term-ai@local.research",
+  "name": "论文术语 AI 解释",
+  "version": "0.2.9",
+  "description": "API 配置一次保存，选中术语即可将 AI 解释直接追加到高亮评论。",
+  "homepageUrl": "https://github.com/daewaf/zotero-term-ai",
+  "updateUrl": "https://github.com/daewaf/zotero-term-ai/releases/latest/download/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1864,
+   "sha256": "ccf8038fad8996883f237187eb7e2be7330843c939526e5dddf53ddf2316a14f"
+  },
+  {
+   "path": "content/core.js",
+   "size": 16043,
+   "sha256": "5cc3a6cd92123d14674699d761a518e31fe5aca1d7544300be85b4e63d0dc4bb"
+  },
+  {
+   "path": "content/dialog.js",
+   "size": 11616,
+   "sha256": "8604baab08588165b26ebe7383022c6fc0235efce9a7ce8aae05026bd3656c43"
+  },
+  {
+   "path": "content/dialog.xhtml",
+   "size": 6113,
+   "sha256": "8a6883391e4f2a951b8312af751d8b7044a141513a935ab6da149128be9526fb"
+  },
+  {
+   "path": "content/preferences.js",
+   "size": 877,
+   "sha256": "c06b0cb55a80f1f0a909c44181a4acdeb60f191c7d3296c089e5d2de4f7b667a"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 1594,
+   "sha256": "5dee92412a09f35cddd8f9447dcfa055c354d56143de1463a48edeb17a382d1b"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1084,
+   "sha256": "6a5749e9ebc5782ef5b36b8e1d9c7d705425daedbd1b14dd2fe3ee8f7e08080e"
+  },
+  {
+   "path": "manifest.json",
+   "size": 558,
+   "sha256": "52937105c5ca7ae5dc02051ccf825f7fc816f09b65874265fe51eae3310f886f"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-18T12:03:33.448Z",
+  "input": {
+   "slug": "zotero-term-ai",
+   "version": "0.2.9",
+   "sha256": "8b92f7116caa0baf137e6ef46dcd3622ec4fd823f0a139c75472ed57604ee709"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 38107,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "xhr",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/core.js",
+       "line": 210,
+       "column": 18,
+       "snippet": "const req = new XMLHttpRequest({ mozAnon: true });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/dialog.js",
+       "line": 149,
+       "column": 62,
+       "snippet": "const urls = {openai:'https://api.openai.com/v1',deepseek:'https://api.deepseek.com/v1',siliconflow:'https://api.siliconflow.cn/v1',local:'http://localhost:1234/v1',openailiked:''};",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openai.com",
+     "category": "llm-provider",
+     "provider": "OpenAI",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/dialog.js",
+       "line": 149,
+       "column": 25,
+       "snippet": "const urls = {openai:'https://api.openai.com/v1',deepseek:'https://api.deepseek.com/v1',siliconflow:'https://api.siliconflow.cn/v1',local:'http://localhost:1234/v1',openailiked:''};",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.siliconflow.cn",
+     "category": "llm-provider",
+     "provider": "SiliconFlow",
+     "flags": [
+      "china-only"
+     ],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/dialog.js",
+       "line": 149,
+       "column": 104,
+       "snippet": ":'https://api.openai.com/v1',deepseek:'https://api.deepseek.com/v1',siliconflow:'https://api.siliconflow.cn/v1',local:'http://localhost:1234/v1',openailiked:''};",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "localhost",
+     "port": 1234,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/dialog.js",
+       "line": 149,
+       "column": 142,
+       "snippet": "'https://api.deepseek.com/v1',siliconflow:'https://api.siliconflow.cn/v1',local:'http://localhost:1234/v1',openailiked:''};",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "base",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/dialog.xhtml",
+       "line": 17,
+       "column": 41,
+       "snippet": "<label for=\"base\">Base URL · 基础地址</label><input id=\"base\" placeholder=\"https://你的服务/v1\"/>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.11.13"
+  },
+  "capabilities": [
+   {
+    "id": "login-manager",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "codeKey": "6b01461a90e6",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/core.js",
+      "line": 194,
+      "column": 25,
+      "snippet": "const logins = await Services.logins.searchLoginsAsync({origin:'chrome://term-ai', httpRealm:'API'});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/core.js",
+      "line": 198,
+      "column": 25,
+      "snippet": "const logins = await Services.logins.searchLoginsAsync({origin:'chrome://term-ai', httpRealm:'API'});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/core.js",
+      "line": 200,
+      "column": 25,
+      "snippet": "if (!key) { if (old) Services.logins.removeLogin(old); return; }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/core.js",
+      "line": 203,
+      "column": 13,
+      "snippet": "if (old) Services.logins.modifyLogin(old, login); else await Services.logins.addLoginAsync(login);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/core.js",
+      "line": 203,
+      "column": 65,
+      "snippet": "if (old) Services.logins.modifyLogin(old, login); else await Services.logins.addLoginAsync(login);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsILoginManager"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/daewaf/zotero-term-ai/releases/latest/download/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/daewaf/zotero-term-ai/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-18T12:03:33.448Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-18T12:03:33.448Z",
+  "appliesTo": {
+   "slug": "zotero-term-ai",
+   "version": "0.2.9",
+   "sha256": "8b92f7116caa0baf137e6ef46dcd3622ec4fd823f0a139c75472ed57604ee709"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.13",
+   "currentZotero": "10.0.9",
+   "inputHash": "4daf96a795baa776185ab98972101a38bad1d91208e1e0313722ed2b90855841"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com",
+       "api.openai.com",
+       "api.siliconflow.cn"
+      ],
+      "unconfirmed": [
+       "api.deepseek.com",
+       "api.openai.com",
+       "api.siliconflow.cn"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "localhost"
+      ],
+      "unconfirmed": [
+       "localhost"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "login-manager",
+      "label": "Uses Zotero's password manager",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-16T15:39:43Z",
+    "lastCommitAt": "2026-11-16T15:58:47Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
