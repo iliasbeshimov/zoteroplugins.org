@@ -9,7 +9,7 @@
   <link rel="canonical" href="https://zoteroatlas.com/privacy">
   <link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/style.css?v=1596c074e1">
+  <link rel="stylesheet" href="/style.css?v=80f8e96fa0">
   <script src="/consent.js?v=38e1ca9900" defer></script>
 </head>
 <body>
@@ -42,11 +42,11 @@
       <p class="never">Zotero Atlas never sends your library, notes, files, Zotero account, email or anything that identifies you.</p>
 
       <div class="prose">
-        <h2>The one thing it can send</h2>
-        <p>The first time it runs it asks one question, with <strong>Send my plugin list</strong> as the default answer and <strong>Don't send</strong> one click away. With <strong>Send my plugin list</strong>, it sends one message to zoteroatlas.com:</p>
+        <h2>The one thing it sends</h2>
+        <p>Sharing isn't asked when you install it: <strong>Share my plugin list</strong> starts ticked; the box is at the bottom of <strong>About</strong> in the Zotero Atlas window, and in Zotero's settings under Zotero Atlas. While it's ticked, the plugin sends one message to zoteroatlas.com:</p>
 <pre><code>{
   "id": "4c9d3b2e-…",          a random ID made on this computer
-  "atlas": "1.3.2",            this plugin's version
+  "atlas": "1.4.0",            this plugin's version
   "zotero": "7.0.32",          your Zotero version
   "os": "mac",                 "mac", "windows" or "linux"
   "event": "weekly",           "first-run", "changed" or "weekly"
@@ -55,20 +55,20 @@
     …
   ]
 }</code></pre>
-        <p>It is sent when you turn the choice on, when the list of plugins changes, and once a week. The ID is a random UUID the plugin generates on your computer; it is not derived from your hardware, your Zotero account or anything else, and it is the only thing that links one report to the next. <strong>Show what would be sent</strong>, in Zotero's settings under Zotero Atlas, shows your exact message.</p>
+        <p>It is sent shortly after you install the plugin (or tick the box again), when the list of plugins changes, and once a week. The ID is a random UUID the plugin generates on your computer; it is not derived from your hardware, your Zotero account or anything else, and it is the only thing that links one report to the next. <strong>Exactly what's sent</strong>, under the box in About, shows your exact message. If you chose <strong>Don't send</strong> in an earlier version, that choice stays, and nothing is sent.</p>
 
         <h2>Ratings and reviews</h2>
-        <p>Nothing is sent until you click <strong>Post</strong> on a rating. Then it sends the plugin and version you rate, your stars and your review if you wrote one, your Zotero version and operating system, this plugin's version, and a scrambled ID for this Zotero, so rating again replaces your rating. That ID is a slow hash of a random key Zotero makes for its database; the key itself is never sent, and nothing is stored on your computer for it. While <strong>Send my plugin list</strong> is chosen, the rating also carries that list's random ID, so the rating can say how long you had the plugin.</p>
+        <p>Nothing is sent until you click <strong>Post</strong> on a rating. Then it sends the plugin and version you rate, your stars and your review if you wrote one, your Zotero version and operating system, this plugin's version, and a scrambled ID for this Zotero, so rating again replaces your rating. That ID is a slow hash of a random key Zotero makes for its database; the key itself is never sent, and nothing is stored on your computer for it. While <strong>Share my plugin list</strong> is ticked, the rating also carries that list's random ID, so the rating can say how long you had the plugin.</p>
         <p>Reviews are public, shown as "Zotero Atlas user" with your Zotero version. Links are removed. <strong>We never store your IP address.</strong> For ratings, the server keeps a scrambled code made from it, and the name of your network's operator, for 30 days to catch fake reviews. The code is made with a secret key that's replaced every month; after 30 days the code is cleared and its key deleted, and even we can't match it to anything. Every rating is checked before it's published; how fake ones are spotted isn't published, so it can't be gamed.</p>
         <p>You can also review plugins on <a href="https://zoteroplugins.org">zoteroplugins.org</a>, with an email address that you confirm by a link. The address is never shown and never stored: it's used to send the link, and we keep only a fingerprint of it, so one address gets one review per plugin. The service that delivers the email sees the address, as any mail service does.</p>
 
         <h2>What the server keeps</h2>
-        <p>Per reporting install: the random ID, the Zotero version, the operating system, the plugin's version, and the plugin list, replaced on every report, except that a plugin you remove is remembered for 30 days so a rating can say how long it was used; and the date of every report with its reason (first run, list changed, weekly). Nothing else from the request is kept: no IP address, no user agent, no headers. A nightly job deletes all of it for an install not heard from for 180 days. Choosing <strong>Don't send</strong> deletes it at once; your ratings stay, without the link to your plugin list.</p>
+        <p>Per reporting install: the random ID, the Zotero version, the operating system, the plugin's version, and the plugin list, replaced on every report, except that a plugin you remove is remembered for 30 days so a rating can say how long it was used; and the date of every report with its reason (first run, list changed, weekly). Nothing else from the request is kept: no IP address, no user agent, no headers. A nightly job deletes all of it for an install not heard from for 180 days. Unticking <strong>Share my plugin list</strong> deletes it at once; your ratings stay, without the link to your plugin list.</p>
         <p>Cloudflare, which runs the server, sees requests the way any web host does. We keep none of that, and the server code that decides what is stored is public.</p>
         <p>None of it is published. It stays in the server's database, which only we can read, and we use it as counts: how many installs report, which plugins they have, and which Zotero versions and systems they run. That tells us which plugins people actually use.</p>
 
         <h2>Turning it off, and deleting your record</h2>
-        <p>Open Zotero's settings, choose <strong>Zotero Atlas</strong>, and pick <strong>Don't send</strong>. The plugin then asks the server to delete everything it holds for its ID, report dates included, and stops sending. Uninstalling the plugin stops the sending and removes everything it stored on your computer, but doesn't contact the server: to delete your record, pick <strong>Don't send</strong> before you uninstall. Otherwise the server deletes it after 180 days without a report, as above.</p>
+        <p>Open <strong>About</strong> in the Zotero Atlas window (or Zotero's settings, under <strong>Zotero Atlas</strong>) and untick <strong>Share my plugin list</strong>. The plugin stops sending and asks the server to delete everything it holds for its ID, report dates included. Uninstalling the plugin stops the sending and removes everything it stored on your computer, but doesn't contact the server: to delete your record, untick the box before you uninstall. Otherwise the server deletes it after 180 days without a report, as above. Installing the plugin again starts with the box ticked.</p>
 
         <h2>What happens whatever you choose</h2>
         <ul class="tight">
