@@ -19,8 +19,8 @@ import { fmtUse, loadUsage } from "./usage.ts";
  * Turns data/generated/<slug>/profile.json into what the pages show: the Zotero Plugins grade, its
  * "because" line, the scorecard's areas and the notices. Everything comes from the deterministic
  * profile; the only AI-written text is the summaries in data/census/summaries.json, the taglines
- * made from them in data/census/taglines.json and the search phrases in data/search/phrases.json,
- * tagged as such.
+ * made from them in data/census/taglines.json, the search phrases in data/search/phrases.json and
+ * the screenshot captions in data/census/gallery.json (lib/gallery.ts), tagged as such.
  */
 
 /** The repository's data/ folder, found from where the build runs (the site or the repo root). */
@@ -264,6 +264,8 @@ export interface Plugin {
   needs: { t: string; sub: string }[];
   docs: string;
   ui: string;
+  /** How many interface languages it declares (0 when none). */
+  uiCount: number;
   /** `notYet`: the next major, in beta, before Zotero opens its compatibility testing (testingOpen). */
   compat: { v: string; cur: boolean; ok: boolean | null; notYet?: boolean }[];
   autoText: string;
@@ -1083,6 +1085,7 @@ function build(
     needs,
     docs,
     ui,
+    uiCount: uiNames.length,
     compat,
     autoText,
     ownUpdates: p.install?.updates?.kind === "this-project",

@@ -1,5 +1,8 @@
 ---
 import AtlasIcon from "../../components/AtlasIcon.astro";
+import Gallery from "../../components/Gallery.astro";
+import GitHubMark from "../../components/GitHubMark.astro";
+import GradeSummary from "../../components/GradeSummary.astro";
 import GradeTag from "../../components/GradeTag.astro";
 import InstallSheet from "../../components/InstallSheet.astro";
 import PluginIcon from "../../components/PluginIcon.astro";
@@ -8,17 +11,20 @@ import ReadmeBadge from "../../components/ReadmeBadge.astro";
 import Scorecard from "../../components/Scorecard.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
+import StarsPanel from "../../components/StarsPanel.astro";
 import StatusIcon from "../../components/StatusIcon.astro";
 import Tip from "../../components/Tip.astro";
 import Base from "../../layouts/Base.astro";
 import SameIdRow from "../../components/SameIdRow.astro";
 import WorkingVersions from "../../components/WorkingVersions.astro";
 import { allPlugins, alternatives, bySlug, fmtDate, listedForks, type Plugin, sameIdGroupOf, sameIdOthers, sameIdText, workingVersions } from "../../lib/atlas.ts";
-import { REVIEWS_OPEN, ratingsOf } from "../../lib/ratings.ts";
+import { galleryOf } from "../../lib/gallery.ts";
+import { MIN_SHOWN, REVIEWS_OPEN, ratingsOf } from "../../lib/ratings.ts";
+import { starHistory } from "../../lib/stars.ts";
 import { indexable } from "../../lib/seo.ts";
 import { checkedOn, pluginDescription, pluginLd, pluginTitle, verdictSentence } from "../../lib/meta.ts";
 import { JOB_BY_SLUG } from "@atlas/schema";
-import { atlasLink, REPORT_URL, RESPOND_URL } from "../../lib/links.ts";
+import { atlasLink, offersBadge, REPORT_URL, RESPOND_URL } from "../../lib/links.ts";
 import { blocks, folded } from "../../lib/response-text.ts";
 import { similarFloor, similarPlugins } from "../../lib/similar.ts";
 import { USE_TIP } from "../../lib/usage.ts";
@@ -93,27 +99,39 @@ const RESPONSE_ABOUT: Record<string, string> = {
   updates: "updates",
   other: "the listing",
 };
-const stats = [
-  ["In use", p.inUseText || "—", USE_TIP],
-  ["Downloads", p.downloads, "All-time downloads of its release files from GitHub, counting every update. Installs from elsewhere aren't counted."],
+const owner = p.repo.split("/")[0];
+const ownerUrl = `https://github.com/${owner}`;
+// Information, in the sidebar: [label, value, tooltip, link, highlight].
+const info: [string, string, string | null, string | null, boolean][] = [
+  ["Developer", p.author, null, ownerUrl, false],
+  ["Source", `github.com/${p.repo}`, null, p.repoUrl, false],
+  ["In use", p.inUseText || "—", USE_TIP, null, false],
+  ["Downloads", p.downloads, "All-time downloads of its release files from GitHub, counting every update. Installs from elsewhere aren't counted.", null, false],
   [
-    "Latest release",
+    "This version",
     p.latestDownloads,
     p.version
       ? `Downloads of version ${p.version}, its latest release, since it came out on ${p.released}. A new release starts from zero; Downloads counts every release.`
       : "Downloads of its latest release. A new release starts from zero; Downloads counts every release.",
+    null,
+    false,
   ],
-  ["Releases", p.releases, "Versions published on GitHub. Everyone who has the plugin downloads each one again, which adds up in Downloads."],
+  ["Releases", p.releases, "Versions published on GitHub. Everyone who has the plugin downloads each one again, which adds up in Downloads.", null, false],
   [
     "Age",
     p.age || "—",
     p.createdAt
       ? `Time since its GitHub repository was created, on ${fmtDate(p.createdAt)}. The plugin can be younger than its repository.`
       : "Time since its GitHub repository was created.",
+    null,
+    false,
   ],
-  ["Stars", p.stars, "People who starred the repository on GitHub: a rough measure of interest."],
-  ["Contributors", p.contributors, "People who have committed code to this plugin. Bots don't count, nor do the authors of a template or project it was copied from."],
-  ["Licence", p.license, "The licence the code is published under, as GitHub reports it."],
+  ["Stars", p.stars, "People who starred the repository on GitHub: a rough measure of interest.", null, false],
+  ["Contributors", p.contributors, "People who have committed code to this plugin. Bots don't count, nor do the authors of a template or project it was copied from.", null, false],
+  ["Licence", p.license, "The licence the code is published under, as GitHub reports it.", null, false],
+  ...(p.installUrl ? ([["Size", p.size, "The size of its .xpi file.", null, false]] as [string, string, string | null, string | null, boolean][]) : []),
+  ["Interface", p.ui, null, null, false],
+  ["Documentation", p.docs, null, null, Boolean(p.docsOnly)],
 ];
 const forkSlug = p.forkOf?.slug && all[p.forkOf.slug] ? p.forkOf.slug : null;
 const crumbs: [string, string][] = [
@@ -123,6 +141,42 @@ const crumbs: [string, string][] = [
   [p.name, `/p/${p.slug}`],
 ];
 const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.level === "medium" || a.level === "high").map((a) => a.key) : [];
+// README screenshots, but not for a plugin Zotero blocks or whose repository is gone.
+const gallery = p.banner || p.removed ? null : galleryOf(p.repo);
+const starH = starHistory(p.repo);
+const rat = ratingsOf(p.slug);
+const ratedV = p.version && rat ? (rat.versions[p.version] ?? null) : null;
+// Once a version has MIN_SHOWN ratings, their average takes GitHub stars' place.
+const avg = ratedV && ratedV.count >= MIN_SHOWN && ratedV.average !== null ? { count: ratedV.count, average: ratedV.average } : null;
+const showRatings = REVIEWS_OPEN || Boolean(rat) || Boolean(starH);
+const fromDev = allPlugins()
+  .filter((x) => !x.hidden && x.slug !== p.slug && x.repo.split("/")[0].toLowerCase() === owner.toLowerCase())
+  .sort((a, b) => (b.inUse ?? 0) - (a.inUse ?? 0) || b.downloadsN - a.downloadsN)
+  .slice(0, 6)
+  .map((x) => ({ p: x, shot: galleryOf(x.repo)?.shots[0] ?? null }));
+const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+// "10 Nov" this year, "Nov 2025" before.
+const shortDate = (iso: string) => {
+  const d = new Date(iso);
+  return d.getUTCFullYear() === new Date(p.checkedAt).getUTCFullYear()
+    ? `${d.getUTCDate()} ${MON[d.getUTCMonth()]}`
+    : `${MON[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+};
+// The strip under the header, after the grade.
+const strip = (
+  [
+    { k: "in use", v: p.inUseText || "—" },
+    avg
+      ? { k: `${avg.count} ratings of v${p.version}`, v: `${avg.average.toFixed(1)} ★` }
+      : p.starsShort
+        ? { k: "stars on GitHub", v: p.starsShort, gh: true }
+        : null,
+    p.worksWith.length ? { k: "Zotero versions", v: p.worksRange.replace(/, \d+ beta$/, "") } : null,
+    p.releasedAt ? { k: "latest release", v: shortDate(p.releasedAt) } : null,
+    p.uiCount ? { k: p.uiCount === 1 ? "language" : "languages", v: String(p.uiCount) } : null,
+  ] as ({ k: string; v: string; gh?: boolean } | null)[]
+).filter((c) => c !== null);
+const ctaNote = canInstall ? `${p.size} .xpi file${p.worksWith.length ? ` · Zotero ${p.worksRange}` : ""}` : installNote;
 ---
 
 <Base title={pluginTitle(p)} description={pluginDescription(p)} noindex={!indexable(p)} jsonld={indexable(p) ? pluginLd(p, crumbs) : undefined}>
@@ -171,385 +225,453 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     )
   }
 
-  <div class="hero">
-    <div class="intro">
-      <span class="crumb"><a href="/browse">Plugins</a>{job0 && <> / <a href={`/c/${job0.slug}`}>{job0.title}</a></>}</span>
-      <div class="h1row">
-        <PluginIcon slug={p.slug} name={p.name} jobs={p.jobs} size={60} />
+  <main class="page">
+    <span class="crumb"><a href="/browse">Plugins</a>{job0 && <> / <a href={`/c/${job0.slug}`}>{job0.title}</a></>}</span>
+    <div class="phead">
+      <span class="bigicon"><PluginIcon slug={p.slug} name={p.name} jobs={p.jobs} size={112} /></span>
+      <div class="ptext">
         <h1>{p.name}</h1>
+        <p class="lead">{p.line}</p>
+        <p class="by">
+          by <a href={ownerUrl}>{p.author}</a>
+          {p.jobs.map((j) => (
+            <>
+              {" · "}
+              <a href={`/c/${j}`} class="job">{JOB_BY_SLUG[j].title}</a>
+            </>
+          ))}
+        </p>
+        <p class="verdict">
+          {verdictSentence(p)}{" "}
+          {p.legacy && (
+            <>
+              <a href={`/zotero-6-plugins#${p.slug}`}>What to use instead</a>.{" "}
+            </>
+          )}
+          <span class="checked">Last checked {checkedOn(p)}.</span>
+        </p>
+        {working.length > 0 && <div class="wv"><WorkingVersions p={p} versions={working} /></div>}
       </div>
-      <span class="by">by {p.author} · <a href={p.repoUrl}>github.com/{p.repo}</a></span>
-      <p class="lead">{p.oneLiner}</p>
-      <p class="verdict">
-        {verdictSentence(p)}{" "}
-        {p.legacy && (
-          <>
-            <a href={`/zotero-6-plugins#${p.slug}`}>What to use instead</a>.{" "}
-          </>
-        )}
-        <span class="checked">Last checked {checkedOn(p)}.</span>
-      </p>
-      {
-        p.jobs.length > 0 && (
-          <div class="cats">
-            {p.jobs.map((j) => (
-              <a href={`/c/${j}`}>{JOB_BY_SLUG[j].title}</a>
-            ))}
-          </div>
-        )
-      }
-      {working.length > 0 && <WorkingVersions p={p} versions={working} />}
-      <div class="actions">
+      <div class="cta">
         <button type="button" class="btn btn-primary install" disabled={!canInstall} data-open-install={canInstall ? "" : undefined}>{installLabel}</button>
         <a href={p.repoUrl} class="btn">View source</a>
+        <span class="note">{ctaNote}</span>
       </div>
-      <span class="note">{installNote}</span>
-      {
-        atlasLine && (
-          <p class="atl-line" data-atlas-pitch>
-            <AtlasIcon size={24} />
-            <span>
-              <strong>Or skip the file:</strong> Zotero Atlas, our free plugin, installs this checked release from inside
-              Zotero in one click, then holds its updates until we've checked them.{" "}
-              <a href={atlasLink("plugin-page")}>
-                Get Zotero Atlas <span aria-hidden="true">→</span>
-              </a>
-            </span>
-          </p>
-        )
-      }
-      <dl class="stats">
-        {
-          stats.map(([k, v, tip]) => (
-            <div>
-              <dt>
-                <Tip text={tip} class="tip-start">{k}</Tip>
-              </dt>
-              <dd>{v}</dd>
-            </div>
-          ))
-        }
-      </dl>
     </div>
-    <div class="card" id="scorecard">
-      <Scorecard p={p} open={openAreas} readmeJump />
-    </div>
-  </div>
+    {
+      atlasLine && (
+        <p class="atl-line" data-atlas-pitch>
+          <AtlasIcon size={24} />
+          <span>
+            <strong>Or skip the file:</strong> Zotero Atlas, our free plugin, installs this checked release from inside
+            Zotero in one click, then holds its updates until we've checked them.{" "}
+            <a href={atlasLink("plugin-page")}>
+              Get Zotero Atlas <span aria-hidden="true">→</span>
+            </a>
+          </span>
+        </p>
+      )
+    }
 
-  <div class="body">
-    <main>
-      <section>
-        {p.description ? <div class="sh"><h2>What it does</h2><span class="mono-sm">Written by AI from the README</span></div> : <h2>What it does</h2>}
-        {
-          p.description ? (
-            p.description.map((d) => <p class="prose">{d}</p>)
-          ) : (
-            <div class="dashed-note">
-              <strong style="color:var(--ink)">Description coming soon.</strong> We haven't written a summary yet. {p.descSoon ? "" : "The line above is the developer's own description; "}the developer's README is linked above.
-            </div>
-          )
-        }
-      </section>
-
-      <section>
-        <div class="sh"><h2>What you'll need</h2><span class="mono-sm">Detected automatically</span></div>
-        {
-          p.needs.length ? (
-            <ul class="needs">
-              {p.needs.map((n) => (
-                <li>
-                  <span aria-hidden="true" class="dot" />
-                  <span class="nt">
-                    <strong>{n.t}</strong>
-                    {n.sub && <span>{n.sub}</span>}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p class="muted">We haven't detected any setup requirements. That isn't the same as none: check the developer's README.</p>
-          )
-        }
-      </section>
-
-      <section>
-        <h2>Where your data goes</h2>
-        <p class="prose"><strong>We found: {data.value.charAt(0).toLowerCase() + data.value.slice(1)}.</strong> {data.sub}</p>
-        {
-          data.groups.map((g) => (
-            <div class="dg">
-              {g.name && <span class="eyebrow">{g.name}</span>}
-              <div class="chips">
-                {g.items.map((c) => (
-                  <span class:list={["chip", c.tone && `t-${c.tone}`, { mono: c.mono }]}>
-                    {c.t}
-                    {c.note && <span class="cn">{c.note}</span>}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))
-        }
-        {
-          data.evidence.length > 0 && (
-            <div class="evs">
-              <span class="eyebrow">Evidence · file and line</span>
-              {data.evidence.map((e) => (
-                <div class="ev">
-                  <div class="evh">
-                    <strong>{e.what}</strong>
-                    <span>{e.loc}</span>
-                  </div>
-                  <pre>{e.code}</pre>
-                </div>
-              ))}
-            </div>
-          )
-        }
-      </section>
-
-      {
-        (similar.shown.length > 0 || p.useInstead?.builtIn) && (
-          <section id="similar">
-            {p.useInstead ? (
-              <>
-                <div class="sh"><h2>What to use instead</h2><span class="mono-sm">Checked by hand</span></div>
-                {p.useInstead.builtIn && (
-                  <p class="builtin">
-                    <strong>Built into Zotero {p.useInstead.builtIn.since}.</strong>{" "}
-                    <a href={p.useInstead.builtIn.url}>{p.useInstead.builtIn.what}</a>.
-                  </p>
-                )}
-                {similar.shown.length > 0 && (
-                  <p class="muted">We read their documentation to check they do this job, and they work with Zotero {p.currentMajor}.</p>
-                )}
-              </>
-            ) : (
-              <>
-                <div class="sh"><h2>Other plugins that do this</h2><span class="mono-sm">Matched on what they do</span></div>
-                <p class="muted">For the same job, work with Zotero {p.currentMajor} and graded {similarFloor(p)} or better. Closest match first.</p>
-              </>
-            )}
-            {similar.shown.length > 0 && <ul class="sim">
-              {similar.shown.map((s) => (
-                <li>
-                  <GradeTag grade={s.p.grade} size="sm" />
-                  <div class="sim-body">
-                    <a href={`/p/${s.p.slug}`} class="sim-name">{s.p.name}</a>
-                    <p class="sim-does">{s.p.oneLiner}</p>
-                    <span class="sim-meta">
-                      {[s.matched && `Matches “${s.matched}”`, s.note, `${s.p.downloads} downloads`, s.p.maint, `Zotero ${s.p.worksRange}`].filter(Boolean).join(" · ")}
-                    </span>
-                  </div>
-                  {s.labels.length > 0 && (
-                    <span class="sim-labels">
-                      {s.labels.map((l) => <span class="sim-label">{l}</span>)}
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>}
-            {similar.shown.length > 0 && (
-              <div class="sim-foot">
-                <a href={`/compare?p=${[p, ...similar.shown.map((s) => s.p)].map((x) => x.slug).join(",")}`} class="btn">
-                  Compare all {similar.shown.length + 1} side by side
+    <dl class="strip">
+      <div class="sg">
+        <dt class="visually-hidden">Zotero Plugins grade</dt>
+        <dd>
+          <span class="gw"><GradeTag grade={p.grade} size="sm" /><strong>{p.gradeWord}</strong></span>
+          <span class="sls">
+            <a href="#safety" class="sl">Safety report <span aria-hidden="true">↓</span></a>
+            {
+              offersBadge(p.grade) && (
+                <a href="#readme-badge" class="sl sj" data-readme-jump>
+                  <GitHubMark size={12} />
+                  Add this grade to your README <span aria-hidden="true">↓</span>
                 </a>
-                <details class="sim-how">
-                  <summary>How we pick these</summary>
-                  {p.useInstead ? (
-                    <p>By hand: we read each plugin's documentation to check it does what this one did. Copies and forks of this plugin are listed under Forks and copies instead. No plugin pays to appear here.</p>
-                  ) : (
-                    <p>By how closely what they do matches this plugin, using descriptions and the phrases people search with. Copies and forks of this plugin are listed under Forks and copies instead. No plugin pays to appear here.</p>
-                  )}
-                </details>
-              </div>
-            )}
-          </section>
-        )
+              )
+            }
+          </span>
+        </dd>
+      </div>
+      {
+        strip.map((c) => (
+          <div>
+            <dt>{c.k}</dt>
+            <dd>
+              {c.gh && <GitHubMark size={16} />}
+              <strong>{c.v}</strong>
+            </dd>
+          </div>
+        ))
       }
+    </dl>
 
-      <section>
-        <h2>Forks and copies</h2>
-        {p.forkOf && <p>Fork of {forkSlug ? <a href={`/p/${forkSlug}`} style="font-weight:650">{p.forkOf.name}</a> : <strong>{p.forkOf.name}</strong>}.</p>}
-        {
-          sid && sidText && (
-            <details class="sameid">
-              <summary>
-                <span class="si">
-                  <StatusIcon kind="review" size={18} />
-                </span>
-                <span>
-                  <strong>{sidText.heading}.</strong> {sidText.tag} {sidText.why}
-                  <span class="more">Show what this means</span>
-                </span>
-              </summary>
-              <div class="sid-body">
-                <ul class="sid-points">
-                  <li><strong>You can only have one.</strong> Zotero sees them as the same plugin.</li>
-                  <li><strong>Installing another replaces it.</strong> If you install one of the others, it takes this one's place.</li>
-                  <li>{sid.cause === "copies" ? <><strong>Check what you install.</strong> Several share this plugin's name, so make sure the file comes from the one you meant.</> : <><strong>They do different things.</strong> The one you install may have nothing to do with the one it replaces.</>}</li>
-                </ul>
-                <div>
-                  <SameIdRow p={p} current />
-                  {sidTop.map((x) => <SameIdRow p={x.p} note={x.note} />)}
-                </div>
-                <a href={`/id/${sid.path}`} class="sid-all">See all {sid.plugins.length} and how they differ →</a>
-              </div>
-            </details>
-          )
-        }
-        <p class="muted">
+    {gallery && <Gallery g={gallery} name={p.name} />}
+
+    <div class="cols">
+      <div class="cmain">
+        <section class="o1">
+          {p.description ? <div class="sh"><h2>What it does</h2><span class="mono-sm">Written by AI from the README</span></div> : <h2>What it does</h2>}
           {
-            forks.length ? (
-              <>
-                {forks.length} listed fork{forks.length > 1 ? "s" : ""}:{" "}
-                {forks.map((f, i) => (
-                  <>
-                    {i > 0 && (i === forks.length - 1 ? " and " : ", ")}
-                    <a href={`/p/${f.slug}`}>{f.repo}</a>
-                  </>
-                ))}
-                .
-              </>
+            p.description ? (
+              p.description.map((d) => <p class="prose">{d}</p>)
             ) : (
-              "No forks listed."
+              <div class="dashed-note">
+                <strong style="color:var(--ink)">Description coming soon.</strong> We haven't written a summary yet. {p.descSoon ? "" : "The line at the top is the developer's own description; "}the developer's README is linked above.
+              </div>
             )
           }
-        </p>
-      </section>
+        </section>
 
-      <section>
-        <h2 id="developer-response">{p.responses.length > 1 ? "The developer's responses" : "The developer's response"}</h2>
-        {
-          p.responses.length ? (
-            <>
-              {p.responses.map((r) => (
-                <figure class="resp">
-                  <span class="rstatus mono-sm" data-status={r.status}>
-                    {RESPONSE_STATUS[r.status] ?? r.status}
-                  </span>
-                  {(() => {
-                    const { shown, more } = folded(r.text);
-                    return (
-                      <blockquote>
-                        <Fragment set:html={shown.join("")} />
-                        {more.length > 0 && (
-                          <details class="more">
-                            <summary>Read the full response</summary>
-                            <Fragment set:html={more.join("")} />
-                          </details>
-                        )}
-                      </blockquote>
-                    );
-                  })()}
-                  <figcaption class="mono-sm">
-                    {r.who} · <a href={r.url}>{r.date}</a> · about {RESPONSE_ABOUT[r.about] ?? r.about}
-                    {r.version && <> in v{r.version}</>}
-                  </figcaption>
-                  {r.reply && (
-                    <div class="reply">
-                      <strong>Our reply</strong>
-                      <Fragment set:html={blocks(r.reply).join("")} />
-                    </div>
-                  )}
-                </figure>
-              ))}
-              <a href={RESPOND_URL} class="small">Respond as the developer</a>
-            </>
-          ) : (
-            <div class="nodev">
-              <span class="muted" style="max-width:48ch">
-                <strong style="color:var(--ink)">The developer hasn't responded.</strong> Developers can reply here, and their reply sits next to our findings.
-              </span>
-              <a href={RESPOND_URL} class="btn">I'm the developer</a>
-            </div>
-          )
-        }
-      </section>
-      {
-        (REVIEWS_OPEN || ratingsOf(p.slug)) && (
-          <section id="reviews">
-            <h2>Ratings and reviews</h2>
-            <Ratings slug={p.slug} name={p.name} version={p.version ?? null} />
-          </section>
-        )
-      }
-    </main>
-
-    <aside>
-      <section>
-        <h2 class="h3">Compatibility</h2>
-        <div class="compat">
+        <section class="o3">
+          <div class="sh"><h2>What you'll need</h2><span class="mono-sm">Detected automatically</span></div>
           {
-            p.compat.map((c) => (
-              <div>
-                <span class="cv">
-                  Zotero {c.v}
-                  {c.cur && <Tip text="The newest stable Zotero release." class="curtag plain">CURRENT</Tip>}
-                </span>
-                <span style={`color:${c.ok ? "var(--few-fg)" : c.ok === null || c.v.includes("beta") ? "var(--ink-2)" : "var(--rev-fg)"}`}>
-                  {c.ok ? (
-                    "✓ Works"
-                  ) : c.notYet ? (
-                    <Tip
-                      text={`Zotero hasn't opened Zotero ${Number.parseInt(c.v, 10)} testing yet. Until it does, it asks developers not to declare Zotero ${Number.parseInt(c.v, 10)}, and the beta loads plugins anyway.`}
-                      class="tip-end"
-                    >
-                      Not tested yet
-                    </Tip>
-                  ) : c.ok === null ? (
-                    "? Not known"
-                  ) : (
-                    "✗ Doesn't work"
-                  )}
-                </span>
-              </div>
-            ))
+            p.needs.length ? (
+              <ul class="needs">
+                {p.needs.map((n) => (
+                  <li>
+                    <span aria-hidden="true" class="dot" />
+                    <span class="nt">
+                      <strong>{n.t}</strong>
+                      {n.sub && <span>{n.sub}</span>}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="muted">We haven't detected any setup requirements. That isn't the same as none: check the developer's README.</p>
+            )
           }
-        </div>
-        <span class="muted small">{p.autoText}</span>
-      </section>
-      <section>
-        <h2 class="h3">Languages</h2>
-        <div class="langs">
-          <span class="muted">Documentation</span><span><span class:list={{ hl: Boolean(p.docsOnly) }}>{p.docs}</span></span>
-          <span class="muted">Interface</span><span>{p.ui}</span>
-        </div>
-      </section>
-      <section>
-        <h2 class="h3">Version history</h2>
+        </section>
+
+        <section class="o4" id="release">
+          <h2>Latest release</h2>
+          {
+            p.version ? (
+              <div class="rel">
+                <GradeTag grade={p.grade} size="xs" />
+                <span class="rv">v{p.version}</span>
+                <span class="muted">{p.fromUpdateAddress ? `first seen ${p.released}` : p.released}</span>
+                <span class="rg" style={`color:var(--${p.gradeTone}-fg)`}>{p.gradeLong}</span>
+              </div>
+            ) : (
+              <p class="muted">No release file.</p>
+            )
+          }
+          <p class="muted small">
+            We grade the latest release{p.fromUpdateAddress ? ": here, the file its update address serves, newer than its latest GitHub release" : ""}.{" "}
+            <a href={p.releasesUrl}>Release notes and all {p.releases} releases on GitHub</a>
+          </p>
+        </section>
+
         {
-          p.version ? (
-            <ol class="versions">
-              <li>
-                <span class="vg">
-                  <GradeTag grade={p.grade} size="xs" />
-                </span>
-                <span class="vl">
-                  <span>v{p.version}</span>
-                  <span class="muted">{p.released}</span>
-                </span>
-                <span style={`color:var(--${p.gradeTone}-fg);font-size:13.5px;font-weight:600`}>{p.gradeLong}</span>
-              </li>
-            </ol>
-          ) : (
-            <p class="muted">No release file.</p>
+          showRatings && (
+            <section id="reviews" class="o5">
+              <h2>Ratings and reviews</h2>
+              {(REVIEWS_OPEN || rat) && <Ratings slug={p.slug} name={p.name} version={p.version ?? null} />}
+              {starH && !avg && <StarsPanel h={starH} />}
+            </section>
           )
         }
-        <span class="muted small">We grade the latest release. <a href={p.releasesUrl}>All releases on GitHub</a></span>
-      </section>
-      <section id="readme-badge">
-        <h2 class="h3">Is this your plugin?</h2>
-        <ReadmeBadge p={p} />
-      </section>
-      <section class="report">
-        <h2 class="h3">Report a problem</h2>
-        <p class="muted">Something wrong on this page, or something we missed in the code? Tell us. We read every report.</p>
-        <a href={REPORT_URL} class="btn btn-dark">Report a problem</a>
-        <a href={`/p/${p.slug}/review`} class="small">Review sheet for IT approval</a>
-      </section>
-    </aside>
-  </div>
+
+        {
+          fromDev.length > 0 && (
+            <section class="o7">
+              <h2>More from {owner}</h2>
+              <ul class="dev">
+                {fromDev.map((x) => (
+                  <li>
+                    <a href={`/p/${x.p.slug}`} class="dcard">
+                      <span class="dthumb">
+                        {x.shot ? (
+                          <img src={`/gallery/${x.shot.file}`} alt="" width={x.shot.w} height={x.shot.h} loading="lazy" decoding="async" />
+                        ) : (
+                          <PluginIcon slug={x.p.slug} name={x.p.name} jobs={x.p.jobs} size={56} />
+                        )}
+                      </span>
+                      <span class="dname">{x.p.name}</span>
+                      <span class="dline">{x.p.line}</span>
+                      <span class="dmeta">
+                        <GradeTag grade={x.p.grade} size="xs" />
+                        {x.p.inUseText && <span>{x.p.inUseText} in use</span>}
+                        {x.p.starsShort && (
+                          <span class="dstars">
+                            <GitHubMark size={12} />
+                            {x.p.starsShort}
+                          </span>
+                        )}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          (similar.shown.length > 0 || p.useInstead?.builtIn) && (
+            <section id="similar" class="o8">
+              {p.useInstead ? (
+                <>
+                  <div class="sh"><h2>What to use instead</h2><span class="mono-sm">Checked by hand</span></div>
+                  {p.useInstead.builtIn && (
+                    <p class="builtin">
+                      <strong>Built into Zotero {p.useInstead.builtIn.since}.</strong>{" "}
+                      <a href={p.useInstead.builtIn.url}>{p.useInstead.builtIn.what}</a>.
+                    </p>
+                  )}
+                  {similar.shown.length > 0 && (
+                    <p class="muted">We read their documentation to check they do this job, and they work with Zotero {p.currentMajor}.</p>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div class="sh"><h2>Other plugins that do this</h2><span class="mono-sm">Matched on what they do</span></div>
+                  <p class="muted">For the same job, work with Zotero {p.currentMajor} and graded {similarFloor(p)} or better. Closest match first.</p>
+                </>
+              )}
+              {similar.shown.length > 0 && <ul class="sim">
+                {similar.shown.map((s) => (
+                  <li>
+                    <GradeTag grade={s.p.grade} size="sm" />
+                    <div class="sim-body">
+                      <a href={`/p/${s.p.slug}`} class="sim-name">{s.p.name}</a>
+                      <p class="sim-does">{s.p.oneLiner}</p>
+                      <span class="sim-meta">
+                        {[s.matched && `Matches “${s.matched}”`, s.note, `${s.p.downloads} downloads`, s.p.maint, `Zotero ${s.p.worksRange}`].filter(Boolean).join(" · ")}
+                      </span>
+                    </div>
+                    {s.labels.length > 0 && (
+                      <span class="sim-labels">
+                        {s.labels.map((l) => <span class="sim-label">{l}</span>)}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>}
+              {similar.shown.length > 0 && (
+                <div class="sim-foot">
+                  <a href={`/compare?p=${[p, ...similar.shown.map((s) => s.p)].map((x) => x.slug).join(",")}`} class="btn">
+                    Compare all {similar.shown.length + 1} side by side
+                  </a>
+                  <details class="sim-how">
+                    <summary>How we pick these</summary>
+                    {p.useInstead ? (
+                      <p>By hand: we read each plugin's documentation to check it does what this one did. Copies and forks of this plugin are listed under Forks and copies instead. No plugin pays to appear here.</p>
+                    ) : (
+                      <p>By how closely what they do matches this plugin, using descriptions and the phrases people search with. Copies and forks of this plugin are listed under Forks and copies instead. No plugin pays to appear here.</p>
+                    )}
+                  </details>
+                </div>
+              )}
+            </section>
+          )
+        }
+
+        <section id="safety" class="o10 safety">
+          <div class="sh"><h2>Safety report</h2><span class="mono-sm">Sets the grade</span></div>
+          <div class="card" id="scorecard">
+            <Scorecard p={p} open={openAreas} />
+          </div>
+
+          <div class="sub">
+            <h3>Where your data goes</h3>
+            <p class="prose"><strong>We found: {data.value.charAt(0).toLowerCase() + data.value.slice(1)}.</strong> {data.sub}</p>
+            {
+              data.groups.map((g) => (
+                <div class="dg">
+                  {g.name && <span class="eyebrow">{g.name}</span>}
+                  <div class="chips">
+                    {g.items.map((c) => (
+                      <span class:list={["chip", c.tone && `t-${c.tone}`, { mono: c.mono }]}>
+                        {c.t}
+                        {c.note && <span class="cn">{c.note}</span>}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))
+            }
+            {
+              data.evidence.length > 0 && (
+                <div class="evs">
+                  <span class="eyebrow">Evidence · file and line</span>
+                  {data.evidence.map((e) => (
+                    <div class="ev">
+                      <div class="evh">
+                        <strong>{e.what}</strong>
+                        <span>{e.loc}</span>
+                      </div>
+                      <pre>{e.code}</pre>
+                    </div>
+                  ))}
+                </div>
+              )
+            }
+          </div>
+
+          <div class="sub">
+            <h3>Forks and copies</h3>
+            {p.forkOf && <p>Fork of {forkSlug ? <a href={`/p/${forkSlug}`} style="font-weight:650">{p.forkOf.name}</a> : <strong>{p.forkOf.name}</strong>}.</p>}
+            {
+              sid && sidText && (
+                <details class="sameid">
+                  <summary>
+                    <span class="si">
+                      <StatusIcon kind="review" size={18} />
+                    </span>
+                    <span>
+                      <strong>{sidText.heading}.</strong> {sidText.tag} {sidText.why}
+                      <span class="more">Show what this means</span>
+                    </span>
+                  </summary>
+                  <div class="sid-body">
+                    <ul class="sid-points">
+                      <li><strong>You can only have one.</strong> Zotero sees them as the same plugin.</li>
+                      <li><strong>Installing another replaces it.</strong> If you install one of the others, it takes this one's place.</li>
+                      <li>{sid.cause === "copies" ? <><strong>Check what you install.</strong> Several share this plugin's name, so make sure the file comes from the one you meant.</> : <><strong>They do different things.</strong> The one you install may have nothing to do with the one it replaces.</>}</li>
+                    </ul>
+                    <div>
+                      <SameIdRow p={p} current />
+                      {sidTop.map((x) => <SameIdRow p={x.p} note={x.note} />)}
+                    </div>
+                    <a href={`/id/${sid.path}`} class="sid-all">See all {sid.plugins.length} and how they differ →</a>
+                  </div>
+                </details>
+              )
+            }
+            <p class="muted">
+              {
+                forks.length ? (
+                  <>
+                    {forks.length} listed fork{forks.length > 1 ? "s" : ""}:{" "}
+                    {forks.map((f, i) => (
+                      <>
+                        {i > 0 && (i === forks.length - 1 ? " and " : ", ")}
+                        <a href={`/p/${f.slug}`}>{f.repo}</a>
+                      </>
+                    ))}
+                    .
+                  </>
+                ) : (
+                  "No forks listed."
+                )
+              }
+            </p>
+          </div>
+
+          <div class="sub">
+            <h3 id="developer-response">{p.responses.length > 1 ? "The developer's responses" : "The developer's response"}</h3>
+            {
+              p.responses.length ? (
+                <>
+                  {p.responses.map((r) => (
+                    <figure class="resp">
+                      <span class="rstatus mono-sm" data-status={r.status}>
+                        {RESPONSE_STATUS[r.status] ?? r.status}
+                      </span>
+                      {(() => {
+                        const { shown, more } = folded(r.text);
+                        return (
+                          <blockquote>
+                            <Fragment set:html={shown.join("")} />
+                            {more.length > 0 && (
+                              <details class="more">
+                                <summary>Read the full response</summary>
+                                <Fragment set:html={more.join("")} />
+                              </details>
+                            )}
+                          </blockquote>
+                        );
+                      })()}
+                      <figcaption class="mono-sm">
+                        {r.who} · <a href={r.url}>{r.date}</a> · about {RESPONSE_ABOUT[r.about] ?? r.about}
+                        {r.version && <> in v{r.version}</>}
+                      </figcaption>
+                      {r.reply && (
+                        <div class="reply">
+                          <strong>Our reply</strong>
+                          <Fragment set:html={blocks(r.reply).join("")} />
+                        </div>
+                      )}
+                    </figure>
+                  ))}
+                  <a href={RESPOND_URL} class="small">Respond as the developer</a>
+                </>
+              ) : (
+                <div class="nodev">
+                  <span class="muted" style="max-width:48ch">
+                    <strong style="color:var(--ink)">The developer hasn't responded.</strong> Developers can reply here, and their reply sits next to our findings.
+                  </span>
+                  <a href={RESPOND_URL} class="btn">I'm the developer</a>
+                </div>
+              )
+            }
+          </div>
+        </section>
+      </div>
+
+      <div class="cside">
+        <div class="o2 gsum">
+          <GradeSummary p={p} />
+        </div>
+        <section class="o6">
+          <h2 class="h3">Compatibility</h2>
+          <div class="compat">
+            {
+              p.compat.map((c) => (
+                <div>
+                  <span class="cv">
+                    Zotero {c.v}
+                    {c.cur && <Tip text="The newest stable Zotero release." class="curtag plain">CURRENT</Tip>}
+                  </span>
+                  <span style={`color:${c.ok ? "var(--few-fg)" : c.ok === null || c.v.includes("beta") ? "var(--ink-2)" : "var(--rev-fg)"}`}>
+                    {c.ok ? (
+                      "✓ Works"
+                    ) : c.notYet ? (
+                      <Tip
+                        text={`Zotero hasn't opened Zotero ${Number.parseInt(c.v, 10)} testing yet. Until it does, it asks developers not to declare Zotero ${Number.parseInt(c.v, 10)}, and the beta loads plugins anyway.`}
+                        class="tip-end"
+                      >
+                        Not tested yet
+                      </Tip>
+                    ) : c.ok === null ? (
+                      "? Not known"
+                    ) : (
+                      "✗ Doesn't work"
+                    )}
+                  </span>
+                </div>
+              ))
+            }
+          </div>
+          <span class="muted small">{p.autoText}</span>
+        </section>
+        <section class="o9">
+          <h2 class="h3">Information</h2>
+          <dl class="info">
+            {
+              info.map(([k, v, tip, href, hl]) => (
+                <div>
+                  <dt>{tip ? <Tip text={tip} class="tip-start">{k}</Tip> : k}</dt>
+                  <dd>{href ? <a href={href}>{v}</a> : hl ? <span class="hl">{v}</span> : v}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </section>
+        <section id="readme-badge" class="o11">
+          <h2 class="h3">Is this your plugin?</h2>
+          <ReadmeBadge p={p} />
+        </section>
+        <section class="report o12">
+          <h2 class="h3">Report a problem</h2>
+          <p class="muted">Something wrong on this page, or something we missed in the code? Tell us. We read every report.</p>
+          <a href={REPORT_URL} class="btn btn-dark">Report a problem</a>
+          <a href={`/p/${p.slug}/review`} class="small">Review sheet for IT approval</a>
+        </section>
+      </div>
+    </div>
+  </main>
 
   {canInstall && <InstallSheet p={p} better={better} />}
   <SiteFooter />
@@ -581,22 +703,10 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     padding-top: 1px;
     display: flex;
   }
-  .hero {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 36px 44px;
-    padding: 44px var(--gutter) 24px;
-    align-items: flex-start;
+  .page {
     max-width: 1440px;
     margin: 0 auto;
-  }
-  .intro {
-    flex: 1 1 340px;
-    min-width: 0;
-    max-width: 460px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+    padding: 28px var(--gutter) 64px;
   }
   .crumb {
     font: 500 12.5px/1.3 var(--font-mono);
@@ -605,68 +715,81 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
   .crumb a {
     color: var(--ink-2);
   }
-  .h1row {
+  /* Header: icon, name and the line under it, install on the right. */
+  .phead {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr) auto;
+    gap: 14px 28px;
+    align-items: start;
+    margin-top: 18px;
+  }
+  .bigicon {
     display: flex;
-    align-items: center;
-    gap: 18px;
+  }
+  .bigicon :global(.picon) {
+    --i: 76px !important;
+    border-radius: 26px;
+    box-shadow: var(--shadow-2);
+  }
+  .ptext {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     min-width: 0;
   }
   h1 {
-    margin: 0;
-    font-size: 54px;
-    line-height: 1.02;
-    letter-spacing: -0.035em;
+    margin: 2px 0 0;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
     font-weight: 760;
     text-wrap: balance;
     overflow-wrap: anywhere;
   }
-  .verdict {
+  .lead {
     margin: 0;
-    font-size: 15px;
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+  }
+  .by {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--ink-3);
+    overflow-wrap: anywhere;
+  }
+  .by a {
+    font-weight: 600;
+  }
+  .by .job {
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+  .verdict {
+    margin-top: 4px;
+    font-size: 14.5px;
     line-height: 1.5;
     color: var(--ink-2);
+    max-width: 72ch;
     text-wrap: pretty;
     overflow-wrap: anywhere;
   }
   .verdict .checked {
     white-space: nowrap;
   }
-  .by {
-    font: 500 13px/1.4 var(--font-mono);
-    color: var(--ink-2);
-    overflow-wrap: anywhere;
-  }
-  .lead {
-    margin: 0;
-    font-size: 20px;
-    line-height: 1.42;
-    text-wrap: pretty;
-    overflow-wrap: anywhere;
-  }
-  .cats {
+  .cta {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+    flex-direction: column;
+    gap: 8px;
+    width: 220px;
   }
-  .cats a {
-    padding: 4px 11px;
-    border-radius: 999px;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    color: var(--ink);
-    font-size: 13.5px;
-    font-weight: 560;
-    text-decoration: none;
-  }
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding-top: 4px;
+  .cta .btn {
+    min-height: 46px;
+    justify-content: center;
   }
   .install {
-    min-height: 48px;
-    padding: 0 22px;
     font-size: 16px;
     font-weight: 700;
     box-shadow: var(--shadow-1);
@@ -678,16 +801,15 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     cursor: not-allowed;
     filter: none;
   }
-  .actions .btn {
-    min-height: 48px;
-  }
   .note {
-    font-size: 13.5px;
-    line-height: 1.5;
-    color: var(--ink-2);
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--ink-3);
+    text-align: center;
   }
   .atl-line {
-    margin: 0;
+    margin: 18px 0 0 140px;
+    max-width: 760px;
     display: flex;
     gap: 12px;
     align-items: flex-start;
@@ -709,72 +831,93 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     font-weight: 700;
     white-space: nowrap;
   }
-  /* No overflow clipping here: it would cut off the labels' tooltips. */
-  .stats {
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-radius: 12px;
-    border: 1px solid var(--line);
-    background: var(--surface);
-  }
-  .stats div {
-    padding: 10px 12px;
+  /* The strip: the grade, then a few numbers. It scrolls sideways on narrow screens. */
+  .strip {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
-  }
-  .stats div:not(:nth-child(3n + 1)) {
-    border-left: 1px solid var(--line);
-  }
-  .stats div:nth-child(n + 4) {
+    margin: 26px 0 24px;
     border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+    scrollbar-width: none;
   }
-  /* A last stat alone in the middle column fills the rest of its row. */
-  .stats div:last-child:nth-child(3n + 2) {
-    grid-column: span 2;
+  .strip > div {
+    flex: 1 0 auto;
+    min-width: 108px;
+    padding: 12px 18px;
+    border-left: 1px solid var(--line);
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    text-align: center;
   }
-  dt {
-    font: 500 11px/1.2 var(--font-mono);
-    color: var(--ink-3);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+  .strip > .sg {
+    border-left: 0;
+    padding-left: 0;
+    align-items: flex-start;
+    text-align: left;
   }
-  dd {
+  .strip dd {
     margin: 0;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    overflow-wrap: anywhere;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 20px;
+    font-weight: 720;
+    line-height: 1.3;
+    white-space: nowrap;
   }
-  .card {
-    flex: 1.5 1 540px;
-    min-width: 0;
-    scroll-margin-top: 16px;
+  .strip dt {
+    font-size: 12.5px;
+    color: var(--ink-3);
+    white-space: nowrap;
   }
-  .body {
+  .strip .sg dd {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+  .gw {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .gw strong {
+    font-size: 18px;
+  }
+  .sls {
     display: flex;
     flex-wrap: wrap;
-    gap: 48px 56px;
-    padding: 40px var(--gutter) 64px;
-    align-items: flex-start;
-    max-width: 1440px;
-    margin: 0 auto;
+    gap: 2px 14px;
   }
-  main {
-    flex: 1.6 1 540px;
-    min-width: 0;
+  .sl {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink-3);
+  }
+  /* For the plugin's developer: the README badge, a quiet link under the grade. */
+  .sj {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--accent-fg);
+    font-weight: 600;
+  }
+  /* Two columns: the plugin on the left, the grade in brief and the facts on the right. */
+  .cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 56px;
+    align-items: start;
+    margin-top: 44px;
+  }
+  .cmain,
+  .cside {
     display: flex;
     flex-direction: column;
-    gap: 48px;
-  }
-  aside {
-    flex: 1 1 300px;
+    gap: 44px;
     min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
   }
   section {
     border-top: 2px solid var(--ink);
@@ -1052,19 +1195,6 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     line-height: 1.5;
   }
   @media (max-width: 720px) {
-    .h1row {
-      gap: 12px;
-    }
-    .h1row :global(.picon) {
-      width: 44px !important;
-      height: 44px !important;
-    }
-    .h1row :global(.picon img) {
-      width: 36px !important;
-      height: 36px !important;
-    }
-  }
-  @media (max-width: 720px) {
     .sim li {
       grid-template-columns: auto minmax(0, 1fr);
     }
@@ -1219,45 +1349,137 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
     border-radius: 5px;
     background: var(--accent-soft);
   }
-  .langs {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 6px 14px;
-    font-size: 15px;
-  }
-  .langs > span:nth-child(even) {
-    font-weight: 650;
-  }
   .hl {
     background: var(--accent-soft);
     padding: 1px 6px;
     border-radius: 5px;
   }
-  .versions {
+  h3 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+  .safety,
+  .safety .card {
+    scroll-margin-top: 16px;
+  }
+  .sub {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .rel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+  }
+  .rv {
+    font: 600 14.5px/1.3 var(--font-mono);
+  }
+  .rg {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .dev {
     margin: 0;
     padding: 0;
     list-style: none;
-  }
-  .versions li {
     display: grid;
-    grid-template-columns: 40px 1fr;
-    gap: 2px 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--line);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
   }
-  .vg {
-    grid-row: span 2;
-    padding-top: 1px;
+  .dcard {
+    height: 100%;
     display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    color: var(--ink);
+    text-decoration: none;
   }
-  .vl {
+  .dcard:hover {
+    border-color: var(--line-strong);
+  }
+  .dcard:hover .dname {
+    text-decoration: underline;
+  }
+  .dthumb {
+    height: 96px;
+    margin-bottom: 6px;
+    border-radius: 9px;
+    background: var(--surface-2);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .dthumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+  }
+  .dname {
+    font-size: 15.5px;
+    font-weight: 680;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+  .dline {
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .dmeta {
+    margin-top: auto;
+    padding-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+  .dstars {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .info {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .info div {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
-    font: 600 14px/1.3 var(--font-mono);
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14.5px;
   }
-  .vl .muted {
-    font-weight: 500;
+  .info dt {
+    flex: none;
+    color: var(--ink-2);
+  }
+  .info dd {
+    margin: 0;
+    min-width: 0;
+    text-align: right;
+    font-weight: 600;
+    overflow-wrap: anywhere;
   }
   .report {
     border-top: 0;
@@ -1273,37 +1495,104 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
   .report p {
     font-size: 14.5px;
   }
-  @media (max-width: 720px) {
-    .hero {
-      padding-top: 24px;
+  @media (max-width: 1100px) {
+    .cols {
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 40px;
+    }
+  }
+  /* One column: the icon beside the name, the rest under it, and the sections in reading order. */
+  @media (max-width: 900px) {
+    .page {
+      padding-top: 18px;
+    }
+    .phead {
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 10px 16px;
+      align-items: center;
+    }
+    .bigicon :global(.picon) {
+      --s: 72px !important;
+      --i: 52px !important;
+      border-radius: 18px;
+    }
+    .bigicon :global(.picon svg) {
+      width: 42px;
+      height: 42px;
+    }
+    .ptext {
+      display: contents;
+    }
+    .ptext > :not(h1) {
+      grid-column: 1 / -1;
     }
     h1 {
-      font-size: 38px;
+      margin: 0;
+      font-size: 30px;
     }
     .lead {
-      font-size: 18px;
+      font-size: 17px;
     }
-    .intro {
-      max-width: none;
+    .cta {
+      grid-column: 1 / -1;
+      width: auto;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-top: 4px;
     }
-    .stats {
+    .cta .btn {
+      flex: 1 1 150px;
+    }
+    .note {
+      flex-basis: 100%;
+      text-align: left;
+    }
+    .atl-line {
+      margin-left: 0;
+    }
+    .strip > div {
+      min-width: 96px;
+      padding: 10px 14px;
+    }
+    .strip dd {
+      font-size: 17px;
+    }
+    .cols {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 40px;
+      margin-top: 32px;
+    }
+    .cmain,
+    .cside {
+      display: contents;
+    }
+    .o1 { order: 1; }
+    .o2 { order: 2; }
+    .o3 { order: 3; }
+    .o4 { order: 4; }
+    .o5 { order: 5; }
+    .o6 { order: 6; }
+    .o7 { order: 7; }
+    .o8 { order: 8; }
+    .o9 { order: 9; }
+    .o10 { order: 10; }
+    .o11 { order: 11; }
+    .o12 { order: 12; }
+    .dev {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-    .stats div:nth-child(odd) {
-      border-left: 0;
+  }
+  @media (max-width: 560px) {
+    .dev {
+      grid-template-columns: minmax(0, 1fr);
     }
-    .stats div:nth-child(even) {
-      border-left: 1px solid var(--line);
+    .dev li:nth-child(n + 4) {
+      display: none;
     }
-    .stats div:nth-child(n + 3) {
-      border-top: 1px solid var(--line);
-    }
-    .stats div:last-child:nth-child(3n + 2) {
-      grid-column: auto;
-    }
-    .card,
-    main {
-      flex-basis: 100%;
+    .dthumb {
+      height: 120px;
     }
   }
 </style>

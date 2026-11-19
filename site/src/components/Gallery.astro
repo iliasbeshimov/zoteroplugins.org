@@ -1,0 +1,351 @@
+---
+import type { PluginGallery } from "../lib/gallery.ts";
+
+/**
+ * Screenshots from the plugin's README in a row that scrolls sideways, each opening larger in a
+ * viewer. Animated pictures show a still; the animation loads only when someone opens it. Every
+ * file is our own copy (site/public/gallery), so nothing loads from the developer's servers.
+ */
+interface Props {
+  g: PluginGallery;
+  name: string;
+}
+const { g, name } = Astro.props;
+// Each frame is as tall as the row and as wide as its picture, within limits: a very wide or very
+// tall picture fits inside its frame instead.
+const shots = g.shots.map((s) => ({ ...s, r: Math.min(2.4, Math.max(0.6, s.w / s.h)) }));
+const more = g.readmeImages - shots.length;
+---
+
+<div class="gal" data-gallery>
+  <div class="track" role="list" aria-label={`Screenshots of ${name}`}>
+    {
+      shots.map((s, i) => (
+        <figure class="shot" role="listitem" style={`--r:${s.r.toFixed(3)}`}>
+          <button
+            type="button"
+            class="frame"
+            data-shot={i}
+            data-src={`/gallery/${s.anim ?? s.file}`}
+            data-cap={s.caption}
+            aria-label={s.anim ? `Play the animation: ${s.caption}` : `Show larger: ${s.caption}`}
+          >
+            <img
+              src={`/gallery/${s.file}`}
+              alt={s.caption}
+              width={s.w}
+              height={s.h}
+              loading={i < 2 ? "eager" : "lazy"}
+              decoding="async"
+            />
+            {s.anim && (
+              <span class="play" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="11" height="11">
+                  <path d="M4 2.5v11l9-5.5z" fill="currentColor" />
+                </svg>
+                Animation
+              </span>
+            )}
+          </button>
+          <figcaption>{s.caption}</figcaption>
+        </figure>
+      ))
+    }
+  </div>
+  <button type="button" class="nav prev" data-nav="-1" aria-label="Previous screenshots" hidden>
+    <span aria-hidden="true">‹</span>
+  </button>
+  <button type="button" class="nav next" data-nav="1" aria-label="More screenshots" hidden>
+    <span aria-hidden="true">›</span>
+  </button>
+  <p class="gnote">
+    <span>From the developer's README · captions written by AI</span>
+    {more > 0 && <span>{shots.length} of {g.readmeImages} README pictures shown</span>}
+  </p>
+  <dialog class="viewer" data-viewer aria-label={`Screenshots of ${name}`}>
+    <div class="vbox">
+      <img alt="" data-vimg />
+      <p class="vcap" data-vcap></p>
+    </div>
+    <button type="button" class="vbtn vclose" data-vclose aria-label="Close">
+      <span aria-hidden="true">✕</span>
+    </button>
+    {
+      shots.length > 1 && (
+        <>
+          <button type="button" class="vbtn vprev" data-vstep="-1" aria-label="Previous screenshot">
+            <span aria-hidden="true">‹</span>
+          </button>
+          <button type="button" class="vbtn vnext" data-vstep="1" aria-label="Next screenshot">
+            <span aria-hidden="true">›</span>
+          </button>
+        </>
+      )
+    }
+  </dialog>
+</div>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
+    const track = root.querySelector<HTMLElement>(".track")!;
+    const navs = [...root.querySelectorAll<HTMLButtonElement>("[data-nav]")];
+    const frames = [...root.querySelectorAll<HTMLButtonElement>("[data-shot]")];
+    const dlg = root.querySelector<HTMLDialogElement>("[data-viewer]")!;
+    const img = dlg.querySelector<HTMLImageElement>("[data-vimg]")!;
+    const cap = dlg.querySelector<HTMLElement>("[data-vcap]")!;
+    let at = 0;
+
+    // Arrows only when the row overflows, each hidden at its end.
+    const sync = () => {
+      const over = track.scrollWidth > track.clientWidth + 4;
+      navs[0].hidden = !over || track.scrollLeft < 4;
+      navs[1].hidden = !over || track.scrollLeft + track.clientWidth > track.scrollWidth - 4;
+    };
+    track.addEventListener("scroll", sync, { passive: true });
+    addEventListener("resize", sync);
+    for (const im of track.querySelectorAll("img")) im.addEventListener("load", sync);
+    sync();
+    for (const b of navs)
+      b.addEventListener("click", () =>
+        track.scrollBy({ left: Number(b.dataset.nav) * track.clientWidth * 0.8, behavior: "smooth" }),
+      );
+
+    // Larger than the file when there's room, up to 1.6 times, so a small picture isn't lost in the viewer.
+    const fit = () => {
+      const box = img.parentElement!;
+      if (!img.naturalWidth || !box.clientWidth) return;
+      const k = Math.min(1.6, box.clientWidth / img.naturalWidth, (box.clientHeight - 48) / img.naturalHeight);
+      img.style.width = `${Math.round(img.naturalWidth * k)}px`;
+      img.style.height = `${Math.round(img.naturalHeight * k)}px`;
+    };
+    img.addEventListener("load", fit);
+    addEventListener("resize", () => dlg.open && fit());
+    const show = (i: number) => {
+      img.style.width = "";
+      img.style.height = "";
+      at = (i + frames.length) % frames.length;
+      const f = frames[at];
+      img.src = f.dataset.src ?? "";
+      img.alt = f.dataset.cap ?? "";
+      cap.textContent = f.dataset.cap ?? "";
+    };
+    for (const f of frames)
+      f.addEventListener("click", () => {
+        show(Number(f.dataset.shot));
+        dlg.showModal();
+      });
+    for (const b of dlg.querySelectorAll<HTMLElement>("[data-vstep]"))
+      b.addEventListener("click", () => show(at + Number(b.dataset.vstep)));
+    dlg.querySelector("[data-vclose]")!.addEventListener("click", () => dlg.close());
+    // A click on the dimmed backdrop, outside the picture and the buttons, closes it.
+    dlg.addEventListener("click", (e) => {
+      if (e.target === dlg) dlg.close();
+    });
+    dlg.addEventListener("keydown", (e) => {
+      if (frames.length < 2) return;
+      if (e.key === "ArrowRight") show(at + 1);
+      else if (e.key === "ArrowLeft") show(at - 1);
+    });
+    // Stop an animation from playing on behind a closed viewer.
+    dlg.addEventListener("close", () => {
+      img.removeAttribute("src");
+      frames[at]?.focus();
+    });
+  }
+</script>
+
+<style>
+  .gal {
+    position: relative;
+    min-width: 0;
+  }
+  .track {
+    --fh: 280px;
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+  }
+  .shot {
+    flex: none;
+    margin: 0;
+    scroll-snap-align: start;
+    width: min(calc(var(--fh) * var(--r)), 86vw, 680px);
+  }
+  .frame {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: var(--fh);
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--surface-2);
+    cursor: zoom-in;
+  }
+  .frame:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .play {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 9px;
+    border-radius: 7px;
+    background: oklch(0.22 0.02 265 / 0.84);
+    color: #fff;
+    font: 600 11.5px/1 var(--font-mono);
+    letter-spacing: 0.03em;
+  }
+  figcaption {
+    margin-top: 8px;
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .nav {
+    position: absolute;
+    top: calc(var(--fh, 280px) / 2 - 22px);
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: var(--shadow-2);
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    padding: 0 0 3px;
+  }
+  .nav[hidden] {
+    display: none;
+  }
+  .prev {
+    left: -14px;
+  }
+  .next {
+    right: -14px;
+  }
+  .gnote {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2px 16px;
+    margin: 8px 0 0;
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+  .viewer {
+    max-width: none;
+    max-height: none;
+    width: 100vw;
+    height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+  }
+  .viewer::backdrop {
+    background: oklch(0.12 0.01 265 / 0.9);
+  }
+  .vbox {
+    position: absolute;
+    inset: 56px 72px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    pointer-events: none;
+  }
+  .vbox img {
+    max-width: 100%;
+    max-height: calc(100% - 48px);
+    object-fit: contain;
+    image-rendering: auto;
+    border-radius: 8px;
+    background: #fff;
+    pointer-events: auto;
+  }
+  .vcap {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.4;
+    text-align: center;
+    max-width: 70ch;
+    pointer-events: auto;
+  }
+  .vbtn {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    border: 1px solid oklch(1 0 0 / 0.3);
+    background: oklch(0.22 0.02 265 / 0.7);
+    color: #fff;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+  }
+  .vclose {
+    top: 12px;
+    right: 12px;
+    font-size: 18px;
+  }
+  .vprev {
+    left: 12px;
+    top: calc(50% - 24px);
+  }
+  .vnext {
+    right: 12px;
+    top: calc(50% - 24px);
+  }
+  @media (hover: none) {
+    .nav {
+      display: none;
+    }
+  }
+  @media (max-width: 720px) {
+    .track {
+      --fh: 200px;
+    }
+    .nav {
+      top: calc(200px / 2 - 22px);
+    }
+    .vbox {
+      inset: 64px 12px 72px;
+    }
+    .vprev,
+    .vnext {
+      top: auto;
+      bottom: 12px;
+    }
+    .vprev {
+      left: calc(50% - 56px);
+    }
+    .vnext {
+      right: calc(50% - 56px);
+    }
+  }
+</style>

@@ -1,0 +1,178 @@
+---
+import { type Plugin } from "../lib/atlas.ts";
+import { offersBadge } from "../lib/links.ts";
+import GitHubMark from "./GitHubMark.astro";
+import GradeTag from "./GradeTag.astro";
+
+/**
+ * The grade in brief, beside the plugin's description: the grade and why, one row per code area
+ * with its level, and the notices that warn. The full scorecard, with the evidence, is the page's
+ * safety report (#safety); this card links to it.
+ */
+interface Props {
+  p: Plugin;
+}
+const { p } = Astro.props;
+const LV: Record<string, [string, string]> = {
+  low: ["Low", "few"],
+  medium: ["Medium", "rev"],
+  high: ["High", "ser"],
+  unknown: ["Unknown", "nd"],
+};
+const ORDER = ["data", "caps", "code"];
+const rows = ORDER.map((k) => p.areas.find((a) => a.key === k)).filter((a) => a !== undefined);
+// Notices that warn get a line here too; the rest wait in the full report.
+const WARN: Record<string, string> = { blocklist: "ser", id: "rev", compat: "rev", legacy: "rev", release: "nd", analysis: "nd" };
+const warns = p.notices.filter((n) => n.kind in WARN);
+const k = p.gradeTone;
+const jump = offersBadge(p.grade);
+---
+
+<div class="gs">
+  <div class="top" style={`background:var(--${k}-bg);border-color:var(--${k}-line)`}>
+    <span class="eyebrow" style={`color:var(--${k}-fg)`}>Zotero Plugins grade</span>
+    <div class="gw">
+      <GradeTag grade={p.grade} size="md" />
+      <span class="word" style={`color:var(--${k}-fg)`}>{p.gradeWord}</span>
+    </div>
+    <p class="because">because {p.because}</p>
+  </div>
+  {
+    rows.map((a) => {
+      const lv = LV[a.level];
+      return (
+        <div class="row">
+          <div class="rt">
+            <span class="k">{a.title}</span>
+            <span class="v">{a.value}</span>
+          </div>
+          {lv && (
+            <span class="pill" style={`background:var(--${lv[1]}-bg);color:var(--${lv[1]}-fg);border-color:var(--${lv[1]}-line)`}>
+              {lv[0]}
+            </span>
+          )}
+        </div>
+      );
+    })
+  }
+  {
+    warns.map((n) => (
+      <div class="warn" style={`background:var(--${WARN[n.kind]}-bg);color:var(--${WARN[n.kind]}-fg);border-color:var(--${WARN[n.kind]}-line)`}>
+        {n.t}
+      </div>
+    ))
+  }
+  <div class="foot">
+    <a href="#safety">Full safety report <span aria-hidden="true">↓</span></a>
+    {
+      jump && (
+        <a href="#readme-badge" class="readme-jump" data-readme-jump>
+          <GitHubMark size={15} />
+          <span>Add this grade to your README</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .gs {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+  }
+  .top {
+    padding: 16px 18px;
+    border-bottom: 1px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .gw {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .word {
+    font-size: 22px;
+    line-height: 1.1;
+    font-weight: 720;
+    letter-spacing: -0.015em;
+  }
+  .because {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+  }
+  .row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 11px 18px;
+    border-top: 1px solid var(--line);
+    font-size: 14.5px;
+    line-height: 1.4;
+  }
+  .row:first-of-type {
+    border-top: 0;
+  }
+  .rt {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .k {
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+  .pill {
+    margin-left: auto;
+    flex: none;
+    font: 600 11px/1 var(--font-mono);
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .warn {
+    padding: 10px 18px;
+    border-top: 1px solid;
+    font-size: 13.5px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+    padding: 12px 18px;
+    border-top: 1px solid var(--line);
+    font-size: 14.5px;
+    font-weight: 650;
+  }
+  .readme-jump {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink);
+    font: 600 13.5px/1.2 var(--font-sans);
+    text-decoration: none;
+  }
+  .readme-jump:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+</style>
