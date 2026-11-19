@@ -26,7 +26,10 @@ const more = g.readmeImages - shots.length;
             type="button"
             class="frame"
             data-shot={i}
-            data-src={`/gallery/${s.anim ?? s.file}`}
+            data-still={`/gallery/${s.file}`}
+            data-anim={s.anim ? `/gallery/${s.anim}` : undefined}
+            data-w={s.anim && s.animW ? s.animW : s.w}
+            data-h={s.anim && s.animH ? s.animH : s.h}
             data-cap={s.caption}
             aria-label={s.anim ? `Play the animation: ${s.caption}` : `Show larger: ${s.caption}`}
           >
@@ -65,7 +68,7 @@ const more = g.readmeImages - shots.length;
   <dialog class="viewer" data-viewer aria-label={`Screenshots of ${name}`}>
     <div class="vbox">
       <img alt="" data-vimg />
-      <p class="vcap" data-vcap></p>
+      <p class="vcap"><span data-vcap></span> <span class="vload" data-vload hidden>Loading the animation…</span></p>
     </div>
     <button type="button" class="vbtn vclose" data-vclose aria-label="Close">
       <span aria-hidden="true">✕</span>
@@ -110,24 +113,39 @@ const more = g.readmeImages - shots.length;
         track.scrollBy({ left: Number(b.dataset.nav) * track.clientWidth * 0.8, behavior: "smooth" }),
       );
 
-    // Larger than the file when there's room, up to 1.6 times, so a small picture isn't lost in the viewer.
+    const load = dlg.querySelector<HTMLElement>("[data-vload]")!;
+    // The picture at its own size, or smaller to fit; never stretched past it. An animation's still
+    // stands in at the animation's size while the animation loads, so nothing jumps when it starts.
     const fit = () => {
+      const f = frames[at];
       const box = img.parentElement!;
-      if (!img.naturalWidth || !box.clientWidth) return;
-      const k = Math.min(1.6, box.clientWidth / img.naturalWidth, (box.clientHeight - 48) / img.naturalHeight);
-      img.style.width = `${Math.round(img.naturalWidth * k)}px`;
-      img.style.height = `${Math.round(img.naturalHeight * k)}px`;
+      const w = Number(f.dataset.w);
+      const h = Number(f.dataset.h);
+      if (!w || !h || !box.clientWidth) return;
+      const k = Math.min(1, box.clientWidth / w, (box.clientHeight - 48) / h);
+      img.style.width = `${Math.round(w * k)}px`;
+      img.style.height = `${Math.round(h * k)}px`;
     };
-    img.addEventListener("load", fit);
     addEventListener("resize", () => dlg.open && fit());
+    let shown = 0;
     const show = (i: number) => {
-      img.style.width = "";
-      img.style.height = "";
       at = (i + frames.length) % frames.length;
       const f = frames[at];
-      img.src = f.dataset.src ?? "";
+      const t = ++shown;
+      img.src = f.dataset.still ?? "";
       img.alt = f.dataset.cap ?? "";
       cap.textContent = f.dataset.cap ?? "";
+      fit();
+      load.hidden = !f.dataset.anim;
+      if (f.dataset.anim) {
+        const pre = new Image();
+        pre.onload = () => {
+          if (t !== shown || !dlg.open) return;
+          img.src = pre.src;
+          load.hidden = true;
+        };
+        pre.src = f.dataset.anim;
+      }
     };
     for (const f of frames)
       f.addEventListener("click", () => {
@@ -148,6 +166,7 @@ const more = g.readmeImages - shots.length;
     });
     // Stop an animation from playing on behind a closed viewer.
     dlg.addEventListener("close", () => {
+      shown++;
       img.removeAttribute("src");
       frames[at]?.focus();
     });
@@ -285,6 +304,12 @@ const more = g.readmeImages - shots.length;
     border-radius: 8px;
     background: #fff;
     pointer-events: auto;
+  }
+  .vload {
+    color: oklch(1 0 0 / 0.7);
+  }
+  .vload[hidden] {
+    display: none;
   }
   .vcap {
     margin: 0;

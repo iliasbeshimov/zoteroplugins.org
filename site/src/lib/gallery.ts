@@ -15,8 +15,11 @@ export interface Shot {
   h: number;
   /** What it shows, written by AI; also the image's alt text. */
   caption: string;
-  /** The animation, under /gallery/, for an animated picture. */
+  /** The animation, under /gallery/, for an animated picture: full size, every frame, lossless. */
   anim: string | null;
+  /** The animation's size, which can be larger than the still's. */
+  animW?: number;
+  animH?: number;
 }
 
 export interface PluginGallery {
