@@ -50,7 +50,7 @@ export const GET: APIRoute = () => {
     link(
       "All plugins as JSON",
       "/api/plugins.json",
-      "one row per plugin: name, repository, version, grade and the reason, Zotero compatibility, jobs",
+      "one row per plugin: name, repository, version, grade and the reason, Zotero compatibility, jobs, popularity and dates, where its data goes and what it can do",
     ),
     `- Each plugin page has a JSON version at ${SITE}/p/<slug>.json with the full profile.`,
     "",
