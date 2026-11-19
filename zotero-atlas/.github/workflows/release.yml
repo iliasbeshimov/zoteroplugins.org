@@ -1,12 +1,20 @@
 # Builds the plugin file from the tagged commit and publishes it with GitHub's build attestation:
 # a signed statement that this workflow built these files from that commit. See the README for
 # how to check a downloaded file.
+# Pushing a v* tag starts it. It can also be started by hand on main with the version in
+# src/manifest.json: it then checks that the files the release is built from match the monorepo's
+# zotero-atlas/, pushes the tag itself and publishes the same way.
 name: Release
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, as in src/manifest.json (e.g. 1.5.1)"
+        required: true
 permissions:
-  contents: write # create the release
+  contents: write # create the release (and, when started by hand, push the tag)
   id-token: write # sign the attestation
   attestations: write
 jobs:
@@ -15,15 +23,38 @@ jobs:
     defaults:
       run:
         shell: bash # stops on any failed command, including inside a pipe
+    env:
+      TAG: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: The tag is a plain version matching manifest.json, and the addresses are this repo's
         run: |
-          [[ "${GITHUB_REF_NAME}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
-          test "${GITHUB_REF_NAME}" = "v$(jq -r .version src/manifest.json)"
+          [[ "${TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          test "${TAG}" = "v$(jq -r .version src/manifest.json)"
           test "$(jq -r .homepage_url src/manifest.json)" = "https://github.com/${GITHUB_REPOSITORY}"
+      - name: "Started by hand: on main, the tag is new, and the release files match the monorepo"
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "${GITHUB_REF}" = "refs/heads/main"
+          if git ls-remote --exit-code --tags "https://github.com/${GITHUB_REPOSITORY}" "refs/tags/${TAG}"; then
+            echo "${TAG} already exists"; exit 1
+          fi
+          git clone -q --depth 1 --filter=blob:none --sparse https://github.com/iliasbeshimov/zoteroplugins.org "${RUNNER_TEMP}/mono"
+          git -C "${RUNNER_TEMP}/mono" sparse-checkout set zotero-atlas
+          for f in src build.py LICENSE; do
+            diff -r "${f}" "${RUNNER_TEMP}/mono/zotero-atlas/${f}"
+          done
+      - name: "Started by hand: push the tag"
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git tag "${TAG}" "${GITHUB_SHA}"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}" "refs/tags/${TAG}"
       - name: Build
         run: python3 build.py | tee build.txt
       - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
@@ -42,5 +73,5 @@ jobs:
             cat build.txt
             echo '```'
           } > notes.md
-          gh release create "${GITHUB_REF_NAME}" dist/*.xpi dist/updates.json --verify-tag \
-            --title "${GITHUB_REF_NAME}" --notes-file notes.md
+          gh release create "${TAG}" dist/*.xpi dist/updates.json --verify-tag \
+            --title "${TAG}" --notes-file notes.md
