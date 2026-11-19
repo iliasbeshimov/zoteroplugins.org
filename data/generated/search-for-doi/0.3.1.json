@@ -1,0 +1,338 @@
+{
+ "schemaVersion": 1,
+ "slug": "search-for-doi",
+ "repo": "erlichlab/search-for-doi",
+ "version": "0.3.1",
+ "tag": "v0.3.1",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-11-19T15:23:52Z",
+ "prerelease": false,
+ "asset": {
+  "name": "search-for-doi.xpi",
+  "url": "https://github.com/erlichlab/search-for-doi/releases/download/v0.3.1/search-for-doi.xpi",
+  "size": 8260,
+  "sha256": "3d1942cb2a5053ca4288613112c5cbde4e9e7d2b87eab68f354c0704f123a29d",
+  "githubAssetId": 768194096,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-11-19T15:23:51Z",
+  "fetchedAt": "2026-11-19T16:07:08.839Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "search-for-doi@jerlich.local",
+  "name": "Search for DOI",
+  "version": "0.3.1",
+  "description": "Search Crossref by title and import a result into Zotero by DOI.",
+  "updateUrl": "https://search-for-doi.invalid/update.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 3228,
+   "sha256": "633f7e6c15204f39079471d74c6aebc317231b487db0d6a7a0602306316823be"
+  },
+  {
+   "path": "content/crossref.js",
+   "size": 2827,
+   "sha256": "3398f2fca4aaf7f92fba50b9efdb1b31e823b6b7a8321d3866885899393a4d1c"
+  },
+  {
+   "path": "content/icon.svg",
+   "size": 234,
+   "sha256": "e7fbf8f1e0ea56e7f9dc9fcb924b428b5dde6e0d333ad929d7e12234fa55646c"
+  },
+  {
+   "path": "content/prefs.js",
+   "size": 1224,
+   "sha256": "04aa36169316d3d3c60e2b0fbbe91bdb30e08a93b509359d8c7fb2e4c1f5cf9b"
+  },
+  {
+   "path": "content/prefs.xhtml",
+   "size": 856,
+   "sha256": "7f8c5c615d68133b69fa6b50c258e3405e5fc508d4a3c2917f73ad0b950bb19f"
+  },
+  {
+   "path": "content/search.js",
+   "size": 5099,
+   "sha256": "ea5a404f16bae429fabcdd48537ba5e8d35e7a542ed9c09587ef823089980430"
+  },
+  {
+   "path": "content/search.xhtml",
+   "size": 1642,
+   "sha256": "8b0b8b13d3c87e42815503080e994dbb8b11b2ea4d7f551ce963ed6c0080ebf1"
+  },
+  {
+   "path": "manifest.json",
+   "size": 414,
+   "sha256": "73407e7b5dc614e2fc5bb8a9b3ef7c70b50c4264dc71cc55e756cbedbcbf9928"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-19T16:07:08.839Z",
+  "input": {
+   "slug": "search-for-doi",
+   "version": "0.3.1",
+   "sha256": "3d1942cb2a5053ca4288613112c5cbde4e9e7d2b87eab68f354c0704f123a29d"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "content/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 14876,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/crossref.js",
+       "line": 72,
+       "column": 20,
+       "snippet": "const res = await fetchImpl(buildUrl(title, rows, mailto), {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/search.js",
+       "line": 134,
+       "column": 16,
+       "snippet": "(...a) => window.fetch(...a),",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/search.js",
+       "line": 100,
+       "column": 22,
+       "snippet": "const translate = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/crossref.js",
+       "line": 6,
+       "column": 12,
+       "snippet": "const API = \"https://api.crossref.org/works\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/crossref.js",
+       "line": 21,
+       "column": 9,
+       "snippet": "return `${API}?${params}`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/crossref.js",
+       "line": 72,
+       "column": 20,
+       "snippet": "const res = await fetchImpl(buildUrl(title, rows, mailto), {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://search-for-doi.invalid/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://search-for-doi.invalid/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-19T16:07:08.839Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-19T16:07:08.839Z",
+  "appliesTo": {
+   "slug": "search-for-doi",
+   "version": "0.3.1",
+   "sha256": "3d1942cb2a5053ca4288613112c5cbde4e9e7d2b87eab68f354c0704f123a29d"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "2e2c02119769b08e287af121b319ad9f7c4049be2075df54fba40ff24c9b8cf2"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-19T15:23:52Z",
+    "lastCommitAt": "2026-11-19T15:23:39Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
