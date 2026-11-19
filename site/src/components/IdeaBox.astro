@@ -44,13 +44,9 @@ import { siteKey } from "../lib/turnstile.ts";
 </dialog>
 
 <script>
-  type Turnstile = {
-    render: (el: HTMLElement, o: { sitekey: string; size?: string }) => string | undefined;
-    getResponse: (id?: string) => string | undefined;
-    reset: (id?: string) => void;
-  };
+  import { loadTurnstile, type Turnstile } from "../lib/turnstileClient.ts";
+
   const MIN_CHARS = 10;
-  const API = "https://challenges.cloudflare.com/turnstile/v0/api.js";
   const dlg = document.querySelector<HTMLDialogElement>("dialog[data-idea]");
   const pill = document.querySelector<HTMLButtonElement>("button.pill[data-idea-open]");
   if (dlg) {
@@ -63,21 +59,13 @@ import { siteKey } from "../lib/turnstile.ts";
     const ts = () => (window as unknown as { turnstile?: Turnstile }).turnstile;
     let widget: string | undefined;
 
-    // The check against bots, once: reuses Turnstile if a form on the page has loaded it already.
+    // The check against bots, rendered once, when the dialog first opens.
     const check = () => {
       if (box.dataset.loaded) return;
       box.dataset.loaded = "1";
-      const render = () => {
-        widget = ts()?.render(box, { sitekey: dlg.dataset.sitekey ?? "", size: "flexible" });
-      };
-      if (ts()) return render();
-      const old = document.querySelector<HTMLScriptElement>(`script[src^="${API}"]`);
-      if (old) return old.addEventListener("load", render);
-      const s = document.createElement("script");
-      s.src = `${API}?render=explicit`;
-      s.async = true;
-      s.onload = render;
-      document.head.append(s);
+      void loadTurnstile().then((t) => {
+        widget = t?.render(box, { sitekey: dlg.dataset.sitekey ?? "", size: "flexible" });
+      });
     };
     const open = () => {
       if (!dlg.open) dlg.showModal();
