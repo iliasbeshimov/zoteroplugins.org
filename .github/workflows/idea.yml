@@ -3,8 +3,8 @@ run-name: An idea from the suggestion box
 
 # An idea someone sent with the site's suggestion box (site/src/components/IdeaBox.astro). The
 # function at site/functions/api/idea.ts checks Turnstile and starts this with the text and the
-# page it was sent from. It opens a public issue labelled `idea`, written by github-actions, so
-# GitHub notifies the repository's watchers. The text reaches the script only through the
+# page it was sent from. It opens a public issue labelled `idea`, written by github-actions and
+# assigned to the maintainer, whom GitHub then notifies. The text reaches the script only through the
 # environment, never the script's own source. @-mentions are broken so nobody gets notified, and
 # HTML comments show as text.
 on:
@@ -59,4 +59,4 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           gh label create idea --color FBCA04 --description "Sent with the site's suggestion box" --force
-          gh issue create --title "$(cat title.txt)" --body-file body.md --label idea
+          gh issue create --title "$(cat title.txt)" --body-file body.md --label idea --assignee iliasbeshimov
