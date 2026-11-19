@@ -4,7 +4,7 @@ import SameIdRow from "../../components/SameIdRow.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import Base from "../../layouts/Base.astro";
-import { type Plugin, type SameIdGroup, sameIdGroups, sameIdText } from "../../lib/atlas.ts";
+import { type SameIdGroup, sameIdGroups, sameIdNote, sameIdText } from "../../lib/atlas.ts";
 
 export function getStaticPaths() {
   return [...sameIdGroups().values()].map((g) => ({ params: { id: g.path }, props: { g } }));
@@ -15,13 +15,6 @@ const t = sameIdText(g);
 const [top, ...rest] = g.plugins;
 const shown = rest.filter((p) => !p.hidden);
 const hidden = rest.filter((p) => p.hidden);
-const how = (p: Plugin) => {
-  const bits: string[] = [];
-  if (g.cause === "copies") bits.push(p.forkOf?.slug === top.slug ? "Fork" : "Copy");
-  if (p.hiddenReason === "legacy") bits.push("for an older Zotero");
-  if (p.hiddenReason === "no-release") bits.push("no release to install");
-  return bits.join(", ");
-};
 const copies = g.cause === "copies";
 ---
 
@@ -51,12 +44,12 @@ const copies = g.cause === "copies";
     <section class="list" aria-label="Plugins with this ID">
       <div class="head" aria-hidden="true"><span>Plugin</span><span>Our rating</span><span>Downloads</span><span>Last release</span></div>
       <h3>The most used</h3>
-      <SameIdRow p={top} note={top.hiddenReason === "legacy" ? "for an older Zotero" : ""} />
+      <SameIdRow p={top} note={sameIdNote(g, top)} />
       {
         shown.length > 0 && (
           <>
             <h3>{copies ? "Copies of it" : "Others"}, shown in the directory ({shown.length})</h3>
-            {shown.map((p) => <SameIdRow p={p} note={how(p)} />)}
+            {shown.map((p) => <SameIdRow p={p} note={sameIdNote(g, p)} />)}
           </>
         )
       }
@@ -64,8 +57,8 @@ const copies = g.cause === "copies";
         hidden.length > 0 && (
           <details>
             <summary>{copies ? "Copies" : "Others"} we hide by default ({hidden.length})</summary>
-            <p class="muted">Forks, versions for an older Zotero and plugins with no release to install. They still have pages and ratings.</p>
-            {hidden.map((p) => <SameIdRow p={p} note={how(p)} />)}
+            <p class="muted">Forks, versions for an older Zotero and plugins you can't install. They still have pages and ratings.</p>
+            {hidden.map((p) => <SameIdRow p={p} note={sameIdNote(g, p)} />)}
           </details>
         )
       }

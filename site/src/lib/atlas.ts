@@ -259,7 +259,6 @@ export interface Plugin {
   docsMark: string;
   forkOf: { name: string; slug: string | null } | null;
   sameId: number;
-  forksCount: number;
   notices: Notice[];
   areas: Area[];
   needs: { t: string; sub: string }[];
@@ -1079,7 +1078,6 @@ function build(
     docsMark: noEnglish?.mark ?? "",
     forkOf: p.fork ? { name: p.fork.of, slug: p.fork.ofSlug } : null,
     sameId: p.addonIdSharedWith.length,
-    forksCount: p.forks.length,
     notices,
     areas,
     needs,
@@ -1220,6 +1218,47 @@ export function sameIdGroups(): Map<string, SameIdGroup> {
   return groups;
 }
 export const sameIdGroupOf = (p: Plugin) => (p.addonId ? sameIdGroups().get(p.addonId) : undefined);
+
+/** Why a plugin is out of the directory's lists, in a few words; "fork" goes without saying next to "Fork". */
+const HIDDEN_WHY: Record<string, string> = {
+  legacy: "for an older Zotero",
+  "no-release": "no release to install",
+  removed: "removed from GitHub",
+  retired: "retired by its developer",
+};
+
+/**
+ * A plugin's note in a shared-ID list: how it relates to the most used one, and why we hide it if
+ * we do. The /id page groups hidden ones under their own heading; a plugin page's short list
+ * (`inList`) says "hidden by default" on the row instead, and names the most used one.
+ */
+export function sameIdNote(g: SameIdGroup, x: Plugin, inList = false): string {
+  const top = g.plugins[0];
+  const bits: string[] = [];
+  if (x.slug === top.slug) {
+    if (inList) bits.push("The most used");
+  } else if (x.forkOf?.slug === top.slug) bits.push("Fork");
+  else if (g.cause === "copies") bits.push("Copy");
+  if (x.hiddenReason && HIDDEN_WHY[x.hiddenReason]) bits.push(HIDDEN_WHY[x.hiddenReason]);
+  if (inList && x.hidden) bits.push("hidden by default");
+  const note = bits.join(", ");
+  return note.charAt(0).toUpperCase() + note.slice(1);
+}
+
+/**
+ * The others a plugin page lists under its shared-ID box: the most used one first, then those in
+ * the directory, then hidden ones (forks, older versions, removed), so the rows match the count in
+ * the box's heading whenever there are `n` or fewer; the link to the /id page covers the rest.
+ */
+export function sameIdOthers(g: SameIdGroup, from: Plugin, n = 3): { p: Plugin; note: string }[] {
+  const top = g.plugins[0];
+  const rank = (x: Plugin) => (x.slug === top.slug ? 0 : x.hidden ? 2 : 1);
+  return g.plugins
+    .filter((x) => x.slug !== from.slug)
+    .sort((a, b) => rank(a) - rank(b)) // stable: most downloaded first within each rank
+    .slice(0, n)
+    .map((x) => ({ p: x, note: sameIdNote(g, x, true) }));
+}
 export const bySlug = () => Object.fromEntries(allPlugins().map((p) => [p.slug, p]));
 
 /** Other shown plugins for the same job, best grade first, then most downloaded. */
@@ -1252,6 +1291,8 @@ function forksOf(): Map<string, Plugin[]> {
   forksBySlug = m;
   return m;
 }
+/** The plugins in the catalogue that are GitHub forks of this one, most downloaded first. */
+export const listedForks = (p: Plugin) => forksOf().get(p.slug) ?? [];
 const ownerOf = (p: Plugin) => p.repo.split("/")[0].toLowerCase();
 
 /**

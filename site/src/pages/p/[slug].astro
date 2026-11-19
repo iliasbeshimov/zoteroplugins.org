@@ -12,7 +12,7 @@ import Tip from "../../components/Tip.astro";
 import Base from "../../layouts/Base.astro";
 import SameIdRow from "../../components/SameIdRow.astro";
 import WorkingVersions from "../../components/WorkingVersions.astro";
-import { allPlugins, alternatives, bySlug, fmtDate, type Plugin, sameIdGroupOf, sameIdText, workingVersions } from "../../lib/atlas.ts";
+import { allPlugins, alternatives, bySlug, fmtDate, listedForks, type Plugin, sameIdGroupOf, sameIdOthers, sameIdText, workingVersions } from "../../lib/atlas.ts";
 import { REVIEWS_OPEN, ratingsOf } from "../../lib/ratings.ts";
 import { indexable } from "../../lib/seo.ts";
 import { checkedOn, pluginDescription, pluginLd, pluginTitle, verdictSentence } from "../../lib/meta.ts";
@@ -31,7 +31,8 @@ const all = bySlug();
 const similar = similarPlugins(p);
 const sid = sameIdGroupOf(p);
 const sidText = sid ? sameIdText(sid, p) : null;
-const sidTop = sid ? sid.plugins.filter((x) => x.slug !== p.slug && !x.hidden).slice(0, 3) : [];
+const sidTop = sid ? sameIdOthers(sid, p) : [];
+const forks = listedForks(p);
 const better = alternatives(p, 3, p.grade);
 const working = workingVersions(p);
 const data = p.areas.find((a) => a.key === "data")!;
@@ -387,18 +388,33 @@ const openAreas = p.grade === "B" || p.grade === "C" ? p.areas.filter((a) => a.l
                   <li><strong>Installing another replaces it.</strong> If you install one of the others, it takes this one's place.</li>
                   <li>{sid.cause === "copies" ? <><strong>Check what you install.</strong> Several share this plugin's name, so make sure the file comes from the one you meant.</> : <><strong>They do different things.</strong> The one you install may have nothing to do with the one it replaces.</>}</li>
                 </ul>
-                {sid.plugins.filter((x) => !x.hidden).length > 0 && (
-                  <div>
-                    <SameIdRow p={p} current />
-                    {sidTop.map((x) => <SameIdRow p={x} note={sid.cause === "copies" ? (x.forkOf?.slug === sid.plugins[0].slug ? "Fork" : x.slug === sid.plugins[0].slug ? "The most used" : "Copy") : ""} />)}
-                  </div>
-                )}
+                <div>
+                  <SameIdRow p={p} current />
+                  {sidTop.map((x) => <SameIdRow p={x.p} note={x.note} />)}
+                </div>
                 <a href={`/id/${sid.path}`} class="sid-all">See all {sid.plugins.length} and how they differ →</a>
               </div>
             </details>
           )
         }
-        <p class="muted">{p.forksCount ? `${p.forksCount} listed fork${p.forksCount > 1 ? "s" : ""}.` : "No forks listed."}</p>
+        <p class="muted">
+          {
+            forks.length ? (
+              <>
+                {forks.length} listed fork{forks.length > 1 ? "s" : ""}:{" "}
+                {forks.map((f, i) => (
+                  <>
+                    {i > 0 && (i === forks.length - 1 ? " and " : ", ")}
+                    <a href={`/p/${f.slug}`}>{f.repo}</a>
+                  </>
+                ))}
+                .
+              </>
+            ) : (
+              "No forks listed."
+            )
+          }
+        </p>
       </section>
 
       <section>
