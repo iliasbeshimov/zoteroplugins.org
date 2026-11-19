@@ -4766,8 +4766,9 @@ function analyzeJs(
             holder: fnNode ? holderOf(anc, fnNode, base) : null,
           });
         }
-        // Other add-ons held back, cancelled, turned off or on: an install listener that returns
-        // false, `addon.disable()` on what AddonManager returned for another ID.
+        // Other add-ons held back, cancelled, turned off or on, or removed: an install listener
+        // that returns false, `addon.disable()` or `addon.uninstall()` on what AddonManager
+        // returned for another ID (`uninstall(true)` is Zotero's removal with Undo).
         if (!isNew && own(base + n.start)) {
           const method = c.split(".").at(-1) ?? "";
           const target = c.includes(".") ? c.slice(0, c.lastIndexOf(".")) : "";
@@ -4775,13 +4776,21 @@ function analyzeJs(
             const arg = args[0];
             if (holdingHandlers(code, arg ? code.slice(arg.start, arg.end) : "") > 0)
               col.addonChanges.push({ hit: hit(n), kind: ADDON_CHANGE.holds, arg: "" });
-          } else if (args.length === 0 && (method === "disable" || method === "enable")) {
+          } else if (
+            (args.length === 0 && (method === "disable" || method === "enable")) ||
+            (args.length <= 1 && method === "uninstall")
+          ) {
             const before = code.slice(Math.max(0, n.start - 3000), n.start);
             const arg = addonReceiver(before, target, managerNames(code));
             if (arg !== null)
               col.addonChanges.push({
                 hit: hit(n),
-                kind: method === "disable" ? ADDON_CHANGE.off : ADDON_CHANGE.on,
+                kind:
+                  method === "disable"
+                    ? ADDON_CHANGE.off
+                    : method === "enable"
+                      ? ADDON_CHANGE.on
+                      : ADDON_CHANGE.removes,
                 arg,
               });
           } else if (method === "cancel" || method === "postpone") {
@@ -10289,6 +10298,7 @@ export const ADDON_CHANGE = {
   off: "turns other add-ons off",
   on: "turns other add-ons on",
   sets: "turns other add-ons off or on",
+  removes: "removes other add-ons",
   updates: "changes other add-ons' update setting",
 } as const;
 
@@ -11230,7 +11240,7 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
       for (const t of col.installTargets) col.cap("self-installs", t.hit, "getInstallForURL");
     }
   }
-  // Other add-ons held back, cancelled, turned off or on (the plugin acting on its own ID is not).
+  // Other add-ons held back, cancelled, turned off or on, removed (not when it's its own ID).
   const ownId = primary?.addonId;
   const texts = col.addonChanges.length && ownId ? files.map((e) => decoder.decode(e.data)) : [];
   for (const a of col.addonChanges)

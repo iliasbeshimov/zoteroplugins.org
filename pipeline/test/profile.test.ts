@@ -2542,4 +2542,18 @@ describe("badge wording for changing other plugins", () => {
       detail: "Holds back other plugins' updates, turns other plugins off",
     });
   });
+
+  it("says when it removes other plugins too", () => {
+    const b = cardFor("", {
+      analysis: analyze(
+        `async function off(id) { const a = await AddonManager.getAddonByID(id); a.disable(); }
+         async function on(id) { const a = await AddonManager.getAddonByID(id); a.enable(); }
+         async function remove(id) { const a = await AddonManager.getAddonByID(id); await a.uninstall(true); }`,
+      ),
+    }).facets.capabilities.badges.find((x) => x.id === "changes-addons");
+    expect(b).toMatchObject({
+      concern: "medium",
+      detail: "Removes other plugins, turns other plugins off or on",
+    });
+  });
 });

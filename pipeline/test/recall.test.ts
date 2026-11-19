@@ -4551,6 +4551,27 @@ describe("changing other add-ons (changes-addons)", () => {
     expect(apis(r)).toEqual(["turns other add-ons off", "turns other add-ons on"]);
   });
 
+  it("flags removing another add-on, with or without Undo; not removing itself", async () => {
+    const r = await scanFiles({
+      "content/a.js": `async function remove(id) { const addon = await AddonManager.getAddonByID(id); await addon.uninstall(true); }
+        async function finish(id) { const a = await AddonManager.getAddonByID(id); if (a) await a.uninstall(); }`,
+    });
+    expect(apis(r)).toEqual(["removes other add-ons"]);
+    expect(r.card.capabilities).toContainEqual({ id: "changes-addons", concern: "medium" });
+    const own = await scanFiles({
+      "manifest.json": JSON.stringify({
+        manifest_version: 2,
+        name: "Fixture",
+        version: "1.0.0",
+        applications: { zotero: { id: "fixture@example.org" } },
+      }),
+      "bootstrap.js": `const PLUGIN_ID = "fixture@example.org";
+        async function selfRemove() { const me = await AddonManager.getAddonByID(PLUGIN_ID); await me.uninstall(); }
+        function uninstall(data, reason) { cleanUp(); }`,
+    });
+    expect(capIn(own, "changes-addons")).toBeUndefined();
+  });
+
   it("flags every add-on from a list, and a changed update setting", async () => {
     const r = await scanFiles({
       "content/a.js": `async function all() { for (const a of await AddonManager.getAllAddons()) { if (a.type === "extension") a.applyBackgroundUpdates = AddonManager.AUTOUPDATE_DISABLE; } }`,
