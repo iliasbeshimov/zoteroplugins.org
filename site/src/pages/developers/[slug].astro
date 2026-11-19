@@ -5,7 +5,7 @@ import SiteHeader from "../../components/SiteHeader.astro";
 import StatusIcon from "../../components/StatusIcon.astro";
 import Base from "../../layouts/Base.astro";
 import { allPlugins, type Plugin } from "../../lib/atlas.ts";
-import { RESPOND_URL, SITE } from "../../lib/links.ts";
+import { badgeMarkdown, RESPOND_URL } from "../../lib/links.ts";
 
 /**
  * Where the grade works as an incentive: the checklist for the next rung, each item pointing to the
@@ -17,7 +17,7 @@ export function getStaticPaths() {
 }
 const { p } = Astro.props as { p: Plugin };
 const target = p.grade === "C" ? "B" : p.grade === "B" ? "A" : p.grade === "A" ? "A+" : null;
-const badgeMd = `[![Zotero Plugins grade](${SITE}/badge/${p.slug}.svg)](${SITE}/p/${p.slug})`;
+const badgeMd = badgeMarkdown(p.slug);
 const kind = (l: string) => (l === "high" ? "serious" : l === "medium" ? "review" : "nodata");
 ---
 

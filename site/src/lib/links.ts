@@ -3,6 +3,11 @@ export const REPO = "https://github.com/iliasbeshimov/zoteroplugins.org";
 export const REPORT_URL = `${REPO}/issues/new`;
 export const RESPOND_URL = `${REPO}/issues/new?template=card-response.yml`;
 export const SITE = "https://zoteroplugins.org";
+/** The README badge's Markdown: the grade image, linked to the plugin's page. */
+export const badgeMarkdown = (slug: string) =>
+  `[![Zotero Plugins grade](${SITE}/badge/${slug}.svg)](${SITE}/p/${slug})`;
+/** The plugin page offers the README badge at these grades; below them, the developer checklist. */
+export const offersBadge = (grade: string) => grade === "A+" || grade === "A" || grade === "B";
 /** Where librarians and readers write to us; forwards to the maintainer. */
 export const CONTACT = "hello@zoteroplugins.org";
 export const mailto = (subject: string) =>
