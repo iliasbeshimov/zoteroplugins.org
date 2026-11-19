@@ -56,4 +56,11 @@ responses:
 
       We'd be grateful if you'd grade 1.3.0 with the Gateway identified.
     url: https://github.com/iliasbeshimov/zoteroplugins.org/issues/14
-    status: open
+    status: noted
+    reply: |-
+      Thanks for identifying the server. We checked 1.3.0, the release on the card now, and the code matches your description. The Gateway is the default provider (`aiProvider` is `"cail"` in prefs.js). The model list is a plain GET to tools.ailab.gc.cuny.edu/v1/catalog with no key and no library data, refreshed at most once a day (zotero-metadata-assistant.js:941 and 974). AI requests to /v1/chat/completions (line 1325) are sent only once a Gateway key is set. One detail for readers: besides pasted bibliography text, the AI features send an item's title, author and year, and when assessing matches, the candidate records' title, author, year, publisher and ISBN (lines 1431 to 1481).
+
+      The card now lists tools.ailab.gc.cuny.edu as a developer's server, in place of "a server we couldn't identify." Our rules give the developer's own servers the same level as an unidentified one, medium. We can say where data goes, not what happens to it once it arrives. So data sharing stays medium, and the grade stays B. That isn't a judgment of the Gateway. A user who prefers a provider the card lists as a named AI service can choose OpenRouter or their own endpoint in the plugin's settings. With OpenRouter selected, the code doesn't contact the Gateway at all, though the card grades the default setup.
+
+      The 1.3.0 catalogue changes are on the card as you describe them: the same four catalogue hosts (openlibrary.org, api.crossref.org, api.semanticscholar.org, www.googleapis.com), and it works with Zotero 10 and the Zotero 11 beta.
+    repliedAt: "2026-11-18"
