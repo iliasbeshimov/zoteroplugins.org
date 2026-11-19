@@ -11,11 +11,19 @@ name: Card response
 # Each run goes through every open card-response issue, and closed ones whose author closed them
 # before a run reached them (idempotent: one note per issue, a response changes only until we
 # reply), so a run GitHub cancels while the census holds the group loses nothing. A run can wait
-# hours behind the census, so "within a minute or two" holds only when the census isn't running. Our reply and the final status are written by hand after re-checking the finding.
+# hours behind the census, so "within a minute or two" holds only when the census isn't running. Our reply and the final status come
+# from Ilias's comment that carries the reply mark (below), after the finding is re-checked.
 # Nothing from an issue passes through this file: the script reads the issues through the API.
 on:
   issues:
     types: [opened, edited, labeled]
+  # Our reply: an owner comment carrying <!-- zoteroplugins:reply status=... --> (the reply flow in
+  # the private outreach repository adds it when Ilias approves a draft) goes on the page too.
+  issue_comment:
+    types: [created, edited]
+  # A safety net: anything a cancelled or dropped run missed.
+  schedule:
+    - cron: "41 */6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -24,7 +32,12 @@ permissions:
 
 jobs:
   publish:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.issue.labels.*.name, 'card-response')
+    if: >-
+      github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' ||
+      (contains(github.event.issue.labels.*.name, 'card-response') &&
+       (github.event_name == 'issues' ||
+        (github.event.comment.user.login == 'iliasbeshimov' &&
+         contains(github.event.comment.body, 'zoteroplugins:reply'))))
     runs-on: ubuntu-latest
     timeout-minutes: 20
     # Shared with the census and submissions: one writer of data/ at a time.

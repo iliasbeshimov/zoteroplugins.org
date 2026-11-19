@@ -277,14 +277,19 @@ export function buildProgram(): Command {
     )
     .option("--no-note", "write the files only; don't comment on or label the issues")
     .action(async (issue: string | undefined, opts: { note: boolean }) => {
-      const { intakeIssue, intakeOpen, restClient } = await import("./responses/intake.ts");
+      const { intakeIssue, intakeOpen, recordReplies, restClient } = await import(
+        "./responses/intake.ts"
+      );
       const client = restClient(process.env.GITHUB_TOKEN);
       const gh = opts.note ? client : { get: client.get };
       const results = issue ? [await intakeIssue(Number(issue), gh)] : await intakeOpen(gh);
-      console.log(JSON.stringify(results, null, 1));
+      // Our replies, from the owner's comments that carry the reply mark.
+      const replies = await recordReplies(client.get);
+      console.log(JSON.stringify({ responses: results, replies }, null, 1));
       // The workflow commits and deploys only when a page changes.
+      const changed = results.some((r) => r.changed) || replies.length > 0;
       if (process.env.GITHUB_OUTPUT)
-        await appendFile(process.env.GITHUB_OUTPUT, `changed=${results.some((r) => r.changed)}\n`);
+        await appendFile(process.env.GITHUB_OUTPUT, `changed=${changed}\n`);
     });
   submit
     .command("check")

@@ -193,7 +193,7 @@ export function noteFor(login: string, slug: string | null, v: Verification | nu
     return `${NOTE_MARK}\nThanks, @${login}. We couldn't tell which listed plugin this is about from the "Plugin" field. Could you edit the issue and put the plugin's page on zoteroplugins.org or its GitHub repository there? We'll pick it up from the edit.`;
   if (!v?.ok)
     return `${NOTE_MARK}\nThanks, @${login}. We publish responses from people who maintain the plugin's repository, and we couldn't confirm that automatically. We'll check by hand and reply here.`;
-  return `${NOTE_MARK}\nThanks, @${login}. Your response is now on the plugin's page, https://zoteroplugins.org/p/${slug}#developer-response (it can take a few minutes to appear), marked "We're checking". We'll re-check the finding against the release file and reply here, usually within a week. If our check was wrong, we fix it for every plugin, and the card changes with it.`;
+  return `${NOTE_MARK}\nThanks, @${login}. Your response is now on the plugin's page, https://zoteroplugins.org/p/${slug}#developer-response (it can take a few minutes to appear), marked "We're checking". We'll re-check the finding against the release file and reply here, usually within a day. If our check was wrong, we fix it for every plugin, and the card changes with it.`;
 }
 
 export interface IntakeResult {
@@ -236,9 +236,15 @@ export function shouldRead(
   return byAuthor && completed && !comments.some((c) => c.body?.includes(NOTE_MARK));
 }
 
-async function commentsOf(get: Get, number: number): Promise<{ body?: string }[]> {
+interface Comment {
+  body?: string;
+  created_at?: string;
+  user?: { login: string };
+}
+
+async function commentsOf(get: Get, number: number): Promise<Comment[]> {
   const res = await get(`/repos/${SITE_REPO}/issues/${number}/comments?per_page=100`);
-  return (Array.isArray(res.data) ? res.data : []) as { body?: string }[];
+  return (Array.isArray(res.data) ? res.data : []) as Comment[];
 }
 
 /** The plugin's profile gets the curated responses, as `atlas profile` would write them. */
@@ -392,4 +398,100 @@ export function restClient(token: string | undefined) {
       return { status: r.status };
     },
   };
+}
+
+/** The site's owner: only their comment can be our reply. */
+export const OWNER = "iliasbeshimov";
+/**
+ * Marks a comment as our reply to the response, with its final status. The reply flow in the
+ * private outreach repository adds it when Ilias approves a draft; an owner comment without it is
+ * conversation, and the page keeps what it has.
+ */
+export const REPLY_MARK = /<!--\s*zoteroplugins:reply\s+status=([a-z-]+)\s*-->/;
+const REPLY_STATUSES = ["corrected", "fixed", "finding-stands", "noted"] as const;
+/** What a page holds (DeveloperResponse.reply). */
+export const MAX_REPLY = 2000;
+
+export interface Reply {
+  status: (typeof REPLY_STATUSES)[number];
+  text: string;
+  date: string;
+}
+
+/** Our reply: the owner's last comment that carries REPLY_MARK. Fails loudly on a bad one. */
+export function replyFrom(comments: Comment[], where: string): Reply | null {
+  for (const c of [...comments].reverse()) {
+    if (c.user?.login !== OWNER || !c.body) continue;
+    const m = c.body.match(REPLY_MARK);
+    if (!m) continue;
+    const status = REPLY_STATUSES.find((s) => s === m[1]);
+    if (!status) throw new Error(`${where}: unknown reply status "${m[1]}"`);
+    const text = c.body.replace(REPLY_MARK, "").trim();
+    if (text.length > MAX_REPLY)
+      throw new Error(
+        `${where}: our reply is ${text.length} characters and a page holds ${MAX_REPLY}; shorten the comment on GitHub and the next run records it`,
+      );
+    return { status, text, date: (c.created_at ?? new Date().toISOString()).slice(0, 10) };
+  }
+  return null;
+}
+
+/** The plugin file with our reply on the response from `url`; null when it already says so. */
+export function setReply(yamlText: string, url: string, reply: Reply): string | null {
+  const doc = parseDocument(yamlText);
+  const list = doc.get("responses");
+  const item = isSeq(list)
+    ? (list as YAMLSeq).items.find((i) => isMap(i) && i.get("url") === url)
+    : undefined;
+  if (!item || !isMap(item)) return null;
+  if (
+    item.get("status") === reply.status &&
+    item.get("reply") === reply.text &&
+    item.get("repliedAt") === reply.date
+  )
+    return null;
+  item.set("status", reply.status);
+  item.set("reply", Object.assign(new Scalar(reply.text), { type: Scalar.BLOCK_LITERAL }));
+  item.set("repliedAt", Object.assign(new Scalar(reply.date), { type: Scalar.QUOTE_DOUBLE }));
+  const out = doc.toString({ lineWidth: 0 });
+  PluginCurated.parse(parseDocument(out).toJS());
+  return out;
+}
+
+/**
+ * Puts our replies on the plugins' pages: every card-response issue updated in the last 30 days,
+ * open or closed (we close right after replying), whose response is published.
+ */
+export async function recordReplies(
+  get: Get,
+): Promise<{ issue: number; slug: string; status: string }[]> {
+  const since = new Date(Date.now() - 30 * 86_400_000).toISOString();
+  const res = await get(
+    `/repos/${SITE_REPO}/issues?labels=${LABEL}&state=all&since=${since}&per_page=100`,
+  );
+  if (res.status !== 200 || !Array.isArray(res.data)) throw new Error(`issues: HTTP ${res.status}`);
+  const slugs = JSON.parse(
+    await readFile(join(paths.root, "data", "slugs.json"), "utf8"),
+  ) as Record<string, string>;
+  const out: { issue: number; slug: string; status: string }[] = [];
+  for (const issue of res.data as Issue[]) {
+    if (issue.pull_request) continue;
+    const reply = replyFrom(await commentsOf(get, issue.number), `#${issue.number}`);
+    if (!reply) continue;
+    const slug = slugFor(parseForm(issue.body ?? "").plugin, slugs);
+    if (!slug) continue;
+    const file = join(paths.root, "data", "plugins", `${slug}.yaml`);
+    let text: string;
+    try {
+      text = await readFile(file, "utf8");
+    } catch {
+      continue;
+    }
+    const next = setReply(text, issue.html_url, reply);
+    if (!next) continue;
+    await writeFile(file, next);
+    await patchProfile(slug, PluginCurated.parse(parseDocument(next).toJS()).responses);
+    out.push({ issue: issue.number, slug, status: reply.status });
+  }
+  return out;
 }

@@ -8,7 +8,10 @@ import {
   NOTE_MARK,
   noteFor,
   parseForm,
+  REPLY_MARK,
+  replyFrom,
   responseText,
+  setReply,
   shouldRead,
   slugFor,
   upsertResponse,
@@ -157,5 +160,46 @@ describe("which issues a run reads", () => {
     expect(
       shouldRead({ state: "closed", user: dev, closed_by: dev, state_reason: "completed" }, []),
     ).toBe(true);
+  });
+});
+
+describe("our reply, from the owner's comment", () => {
+  const mark = (status: string) => `<!-- zoteroplugins:reply status=${status} -->`;
+  const owner = { login: "iliasbeshimov" };
+  const at = "2026-11-19T06:50:00Z";
+  it("is the owner's last comment with the mark, without the mark", () => {
+    const r = replyFrom(
+      [
+        { user: owner, created_at: at, body: `First.\n${mark("noted")}` },
+        { user: owner, created_at: at, body: "Just talking, no mark." },
+        { user: owner, created_at: at, body: `We checked 1.3.1.\n\n${mark("fixed")}` },
+      ],
+      "#11",
+    );
+    expect(r).toEqual({ status: "fixed", text: "We checked 1.3.1.", date: "2026-11-19" });
+  });
+  it("never a developer's comment, even with the mark", () => {
+    const dev = { login: "Marco0431" };
+    expect(replyFrom([{ user: dev, created_at: at, body: `Ours!\n${mark("fixed")}` }], "#11")).toBe(
+      null,
+    );
+  });
+  it("fails loudly when too long for the page or the status is unknown", () => {
+    const long = `${"x".repeat(2001)}\n${mark("noted")}`;
+    expect(() => replyFrom([{ user: owner, created_at: at, body: long }], "#14")).toThrow(/2001/);
+    expect(() => replyFrom([{ user: owner, created_at: at, body: mark("open") }], "#14")).toThrow(
+      /unknown/,
+    );
+    expect(REPLY_MARK.test(mark("finding-stands"))).toBe(true);
+  });
+  it("is written onto the response once", () => {
+    const url = "https://github.com/iliasbeshimov/zoteroplugins.org/issues/11";
+    const yaml = `schemaVersion: 1\nslug: askgpt-zotero\nrepo: marco0431/askgpt-zotero\nstatus: listed\nresponses:\n  - date: "2026-11-15"\n    from: Marco0431\n    about: capabilities\n    text: |-\n      1.3.1 removes it.\n    url: ${url}\n    status: open\n`;
+    const reply = { status: "fixed" as const, text: "We checked 1.3.1.", date: "2026-11-19" };
+    const out = setReply(yaml, url, reply);
+    expect(out).toContain("status: fixed");
+    expect(out).toContain('repliedAt: "2026-11-19"');
+    expect(setReply(out ?? "", url, reply)).toBe(null);
+    expect(setReply(yaml, "https://github.com/x/y/issues/1", reply)).toBe(null);
   });
 });
