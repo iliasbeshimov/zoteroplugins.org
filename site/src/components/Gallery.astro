@@ -3,7 +3,8 @@ import type { PluginGallery } from "../lib/gallery.ts";
 
 /**
  * Screenshots from the plugin's README in a row that scrolls sideways, each opening larger in a
- * viewer. Animated pictures show a still; the animation loads only when someone opens it. Every
+ * viewer. Animated pictures show a still and play in place while the pointer is over them (or
+ * they have keyboard focus), and in the viewer; the animation loads only then. Every
  * file is our own copy (site/public/gallery), so nothing loads from the developer's servers.
  */
 interface Props {
@@ -147,6 +148,37 @@ const more = g.readmeImages - shots.length;
         pre.src = f.dataset.anim;
       }
     };
+    // Hovering an animated picture (or tabbing to it) plays it in place; leaving puts the still
+    // back. Not for people who ask for less motion: theirs plays when opened.
+    const calm = matchMedia("(prefers-reduced-motion: reduce)");
+    for (const f of frames) {
+      const anim = f.dataset.anim;
+      const pic = f.querySelector("img");
+      if (!anim || !pic) continue;
+      let on = false;
+      const start = () => {
+        if (calm.matches || on) return;
+        on = true;
+        f.classList.add("loading");
+        const pre = new Image();
+        pre.onload = () => {
+          if (!on) return;
+          pic.src = anim;
+          f.classList.replace("loading", "playing");
+        };
+        pre.src = anim;
+      };
+      const stop = () => {
+        if (!on) return;
+        on = false;
+        f.classList.remove("loading", "playing");
+        pic.src = f.dataset.still ?? pic.src;
+      };
+      f.addEventListener("pointerenter", (e) => e.pointerType === "mouse" && start());
+      f.addEventListener("pointerleave", stop);
+      f.addEventListener("focus", () => f.matches(":focus-visible") && start());
+      f.addEventListener("blur", stop);
+    }
     for (const f of frames)
       f.addEventListener("click", () => {
         show(Number(f.dataset.shot));
@@ -216,7 +248,14 @@ const more = g.readmeImages - shots.length;
     height: 100%;
     object-fit: contain;
   }
+  .playing .play {
+    opacity: 0;
+  }
+  .loading .play {
+    opacity: 0.6;
+  }
   .play {
+    transition: opacity 0.2s;
     position: absolute;
     left: 10px;
     top: 10px;
