@@ -31,14 +31,18 @@ export const REVIEWS_OPEN = import.meta.env.PUBLIC_REVIEWS_OPEN === "1";
 /** A version needs this many ratings before it shows an average. */
 export const MIN_SHOWN = 10;
 
-/** "used for 3 months", "used for less than a day", or null without history. */
+/**
+ * "used for at least 3 months", or null. usedDays counts from when Zotero Atlas first saw the
+ * plugin installed, and the rater may have used it long before, so it's only a lower bound; under
+ * a day it says nothing worth printing.
+ */
 export function usedFor(days: number | null): string | null {
-  if (days === null) return null;
-  if (days < 1) return "used for less than a day";
-  if (days < 14) return `used for ${days} day${days === 1 ? "" : "s"}`;
-  if (days < 60) return `used for ${Math.round(days / 7)} weeks`;
-  if (days < 730) return `used for ${Math.round(days / 30.4)} months`;
-  return `used for ${Math.floor(days / 365)} years`;
+  if (days === null || days < 1) return null;
+  const d = Math.floor(days);
+  if (d < 14) return `used for at least ${d} day${d === 1 ? "" : "s"}`;
+  if (d < 60) return `used for at least ${Math.round(d / 7)} weeks`;
+  if (d < 730) return `used for at least ${Math.round(d / 30.4)} months`;
+  return `used for at least ${Math.floor(d / 365)} years`;
 }
 
 export const starsText = (n: number) => "★".repeat(n) + "☆".repeat(5 - n);
