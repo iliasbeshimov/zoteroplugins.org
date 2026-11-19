@@ -96,18 +96,44 @@ async function run() {
   if (!A) throw new Error("Zotero Atlas didn't start");
   results.push({ step: "atlas", version: A.version, zotero: Zotero.version });
 
-  // The first-run screen opens by itself a few seconds after the main window. A test run never
-  // sends a plugin list: choose "Don't send", then Enter means Done.
-  const first = await waitFor(() => windowAt("firstrun.xhtml"), 60000);
+  // A new install asks nothing: sharing and holding start on. run.ps1 points zoteroatlas.com at
+  // this computer, so the first report (with the first check, 20 s after start) can't leave it.
+  // A release from before 1.4 still opens its first-run screen: answer "Don't send" as before.
+  const first = await waitFor(() => windowAt("firstrun.xhtml"), 15000);
   if (first) {
     await waitFor(() => first.document?.getElementById("no"), 20000);
     first.document.getElementById("no").click();
     await check("firstrun", first, "{ENTER}");
   } else results.push({ step: "firstrun", missing: true });
+  await delay(30000);
+  const atlasPref = (k) => Services.prefs.getStringPref(`extensions.zotero-atlas.${k}`, "");
   results.push({
     step: "answers",
-    usage: Services.prefs.getStringPref("extensions.zotero-atlas.usage", ""),
+    usage: atlasPref("usage"),
+    updates: atlasPref("updates"),
+    sentAt: JSON.parse(atlasPref("state") || "{}").sentAt || 0,
   });
+
+  // About: four tabs that fit, the box ticked; unticking it turns sharing off. Then Escape.
+  const ab = A.openWindow("about");
+  if (await waitFor(() => ab.document?.getElementById("share"), 20000)) {
+    await delay(1500);
+    const d = ab.document;
+    const head = d.querySelector("header").getBoundingClientRect();
+    const tabs = [...d.querySelectorAll(".tabs .tab")];
+    const info = {
+      tabs: tabs.length,
+      tabsFit: tabs.every((t) => t.getBoundingClientRect().right <= head.right),
+      shown: !d.getElementById("about").hidden,
+      checked: d.getElementById("share").checked,
+    };
+    d.getElementById("share").click();
+    await delay(1500);
+    info.usageAfter = atlasPref("usage");
+    info.checkedAfter = d.getElementById("share").checked;
+    await check("about", ab, "{ESC}", info);
+    Object.assign(results[results.length - 1], info);
+  } else results.push({ step: "about", missing: true });
 
   // The Atlas window: Escape closes it, and so does Ctrl+W.
   await check("escape", A.openWindow("find"), "{ESC}");

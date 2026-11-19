@@ -51,7 +51,6 @@ ensure_machine() {
 setup() {
   ensure_machine
   mkdir -p "$IO/ca" "$IO/proxy" "$IO/template" "$IO/runs"
-  cp "$ROOT/sandbox/proxy/atlas_log.py" "$IO/proxy/atlas_log.py"
   # The proxy's CA, made once by mitmproxy itself; its key never leaves $IO/ca.
   if [ ! -f "$IO/ca/mitmproxy-ca-cert.pem" ]; then
     chmod 777 "$IO/ca"
@@ -95,8 +94,11 @@ run_one() {
   id="$(echo "$name" | tr -c 'A-Za-z0-9._-' '_' | cut -c1-60)-$(date +%Y%m%d-%H%M%S)-$SLOT"
   local dir="$IO/runs/$id" net="atlas-sbx-$SLOT"
   local proxy_ip="10.90.$SLOT.2" zotero_ip="10.90.$SLOT.3"
-  mkdir -p "$dir/in" "$dir/results" "$dir/proxy" "$dir/monitor"
+  mkdir -p "$dir/in" "$dir/results" "$dir/proxy" "$dir/monitor" "$dir/addon"
   chmod 777 "$dir/results" "$dir/proxy" "$dir/monitor"
+  # The proxy's addon from this checkout, for this run: a copy shared between runs could be an
+  # older one, without the stand-in for Zotero Atlas's reports.
+  cp "$ROOT/sandbox/proxy/atlas_log.py" "$dir/addon/atlas_log.py"
   [ -n "$xpi" ] && cp "$xpi" "$dir/in/target.xpi"
   if [ -n "${EXTRA:-}" ]; then mkdir -p "$dir/in/extra" && cp "$EXTRA" "$dir/in/extra/"; fi
   # Several add-ons beside it, and files for Zotero Atlas's data folder (the atlas mode).
@@ -122,7 +124,7 @@ run_one() {
     --network podman --network "$net:ip=$proxy_ip" \
     --cap-drop ALL --security-opt no-new-privileges --memory 1g --pids-limit 256 \
     --user 65534:65534 --entrypoint mitmdump -e HOME=/tmp \
-    -v /io/ca:/ca:ro -v "/io/proxy/atlas_log.py:/addon/atlas_log.py:ro" -v "/io/runs/$id/proxy:/log" \
+    -v /io/ca:/ca:ro -v "/io/runs/$id/addon/atlas_log.py:/addon/atlas_log.py:ro" -v "/io/runs/$id/proxy:/log" \
     "$MITM" --listen-host "$proxy_ip" --listen-port 8080 -s /addon/atlas_log.py \
     --set confdir=/ca --set connection_strategy=lazy -q > /dev/null
   sleep 2

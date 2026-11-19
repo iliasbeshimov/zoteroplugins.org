@@ -1,6 +1,7 @@
 # zoteroatlas.com/api/v1
 
-The server behind the plugin's "Send my plugin list" choice and its ratings: a Cloudflare Worker
+The server behind the plugin's "Share my plugin list" box (ticked from the start since 1.4.0) and
+its ratings: a Cloudflare Worker
 with a D1 database. The routes are in `worker.js`, its checks and conversions in `lib.js` (tested
 by `node --test test.mjs test-guides.mjs`), the tables in `schema.sql`.
 
@@ -9,8 +10,8 @@ operating system, the plugin's version, and the installed plugins (ID, version, 
 on every report except that a plugin gone from the list is kept, marked removed, for 30 days (so a
 rating can say how long it was used); and the date and reason of every report (`events`). Nothing
 else from the request is kept: no IP address, no user agent. The nightly job deletes all of it for
-an install not heard from for 180 days. `DELETE /api/v1/plugins/<id>` (sent when the user picks
-"Don't send"; uninstalling sends nothing) removes all of it at once; that install's ratings stay,
+an install not heard from for 180 days. `DELETE /api/v1/plugins/<id>` (sent when the user unticks
+the box; uninstalling sends nothing) removes all of it at once; that install's ratings stay,
 unlinked.
 
 **Ratings and reviews** (`POST /api/v1/ratings` from the plugin; `POST /api/v1/reviews` and

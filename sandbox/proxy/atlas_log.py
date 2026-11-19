@@ -1,6 +1,8 @@
 """mitmproxy addon for the sandbox: log every request as a JSON line, and refuse destinations on
 this computer or a private network (the host Mac, its LAN), so a plugin can only reach the
-public internet. Loaded with `mitmdump -s atlas_log.py`; writes /log/flows.jsonl."""
+public internet. Zotero Atlas's plugin-list reports (zoteroatlas.com/api/v1/plugins) are logged
+and answered here, never passed on, so a sandbox Zotero never becomes a record in the real
+database. Loaded with `mitmdump -s atlas_log.py`; writes /log/flows.jsonl."""
 
 import ipaddress
 import json
@@ -11,6 +13,8 @@ from mitmproxy import http
 
 LOG = "/log/flows.jsonl"
 CGNAT = ipaddress.ip_network("100.64.0.0/10")
+# Answered by the proxy itself, as the real server would answer a good request.
+STAND_IN = ("zoteroatlas.com", "/api/v1/plugins")
 BODY_BYTES = 2000
 
 
@@ -39,6 +43,11 @@ def refused(host: str) -> str | None:
         ):
             return str(ip)
     return None
+
+
+def stand_in(req) -> bool:
+    host, path = STAND_IN
+    return req.pretty_host == host and (req.path == path or req.path.startswith(path + "/"))
 
 
 def body(message) -> str:
@@ -70,10 +79,13 @@ class AtlasLog:
                 "bodyBytes": len(req.raw_content or b""),
                 "body": body(req),
                 "refused": ip,
+                "standIn": stand_in(req),
             }
         )
         if ip:
             flow.response = http.Response.make(403, b"refused by the sandbox")
+        elif stand_in(req):
+            flow.response = http.Response.make(204)
 
     def response(self, flow: http.HTTPFlow) -> None:
         res = flow.response

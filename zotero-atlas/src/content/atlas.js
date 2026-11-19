@@ -535,8 +535,9 @@
       el(
         "span",
         "",
-        ` · Checked against Zotero's blocklist and our list of known security problems${rv?.fetchedAt ? `, ${ago(Math.max(rv.fetchedAt, rv.advisoriesAt || 0))}` : ""} · Usage data: ${A.usage.choice() === "yes" ? "on" : "off"}`,
+        ` · Checked against Zotero's blocklist and our list of known security problems${rv?.fetchedAt ? `, ${ago(Math.max(rv.fetchedAt, rv.advisoriesAt || 0))}` : ""} · Sharing your plugin list: ${A.usage.choice() === "yes" ? "on" : "off"} · `,
       ),
+      button("Change", "linkish", () => showTab("about")),
     );
   }
 
@@ -672,9 +673,40 @@
     $("refresh").disabled = false;
   }
 
+  // -------------------------------------------------------------------------------------------
+  // About: what Zotero Atlas does, and the box that turns sharing the plugin list on and off
+
+  function renderAbout() {
+    $("about-version").textContent = A.version;
+    const on = A.usage.choice() === "yes";
+    $("share").checked = on;
+    const id = A.usage.id();
+    const sent = A.usage.lastSent();
+    $("share-status").textContent = on
+      ? id && sent
+        ? `Last sent ${ago(sent)}, under the random ID ${id}.`
+        : "Nothing sent yet: the first report goes with Zotero Atlas's next check."
+      : "Off: nothing is sent.";
+  }
+
+  async function showSent() {
+    const out = $("share-json");
+    if (!out.hidden) {
+      out.hidden = true;
+      return;
+    }
+    try {
+      out.textContent = JSON.stringify(await A.usage.payload("weekly"), null, 2);
+    } catch (_e) {
+      out.textContent = "The list couldn't be read.";
+    }
+    out.hidden = false;
+  }
+
   function showTab(which) {
-    tab = ["mine", "move"].includes(which) ? which : "find";
-    for (const t of ["find", "mine", "move"]) {
+    tab = ["mine", "move", "about"].includes(which) ? which : "find";
+    if (tab === "about") renderAbout();
+    for (const t of ["find", "mine", "move", "about"]) {
       $(t).hidden = tab !== t;
       $(`tab-${t}`).classList.toggle("on", tab === t);
     }
@@ -702,6 +734,14 @@
     $("tab-find").addEventListener("click", () => (tab === "find" ? find.home() : showTab("find")));
     $("tab-mine").addEventListener("click", () => showTab("mine"));
     $("tab-move").addEventListener("click", () => showTab("move"));
+    $("tab-about").addEventListener("click", () => showTab("about"));
+    $("share").addEventListener("change", () => A.usage.set($("share").checked ? "yes" : "no"));
+    $("share-show").addEventListener("click", showSent);
+    for (const a of document.querySelectorAll("#about a[data-url]"))
+      a.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        A.openPage(a.dataset.url);
+      });
     $("move-settings").addEventListener("change", syncSecrets);
     $("move-export").addEventListener("click", async () => {
       const b = $("move-export");
@@ -740,6 +780,7 @@
     const args = window.arguments?.[0]?.wrappedJSObject ?? window.arguments?.[0];
     showTab(args?.tab || "find");
     const off = A.subscribe(() => {
+      if (tab === "about") renderAbout();
       if (data) show();
     });
     window.addEventListener("unload", off, { once: true });

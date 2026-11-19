@@ -1,10 +1,11 @@
 /* global Zotero, Services, ChromeUtils, IOUtils */
 /*
  * Zotero Atlas's walk-through in the sandbox (sandbox/run.sh atlas). Beside Atlas and the test
- * plugins from sandbox/atlas/prepare.py, it answers the first-run screen, lets Zotero check for
- * updates (one is graded lower in the test catalogue, so Atlas holds it), and takes pictures of
+ * plugins from sandbox/atlas/prepare.py, it checks that a new install asks nothing (sharing and
+ * holding start on, a "ready" notice, the first report: the sandbox proxy answers it, so it never
+ * reaches zoteroatlas.com), lets Zotero check for updates (one is graded lower in the test catalogue, so Atlas holds it), and takes pictures of
  * what Atlas adds: the button and its dot, the bar, the Tools menu, Tools → Plugins, and the
- * Atlas window. Pictures go to /results/shots, what it saw to /results/atlas.json. Then it tells
+ * Atlas window, About last, where it unticks "Share my plugin list". Pictures go to /results/shots, what it saw to /results/atlas.json. Then it tells
  * the harness it's done.
  */
 const XHTML = "http://www.w3.org/1999/xhtml";
@@ -137,27 +138,33 @@ async function run() {
   await IOUtils.makeDirectory(SHOTS, { ignoreExisting: true });
   out.zotero = Zotero.version;
 
-  // 1. The first-run screen: "Don't send" (no sandbox record on zoteroatlas.com), keep holding.
-  const fr = await waitFor(() => windowAt("firstrun.xhtml"), 30000);
-  out.firstRun = Boolean(fr);
-  if (fr) {
-    await delay(1200);
-    await snap(fr, "01-first-run");
-    const d = fr.document;
-    out.firstRunDefaults = {
-      hold: d.getElementById("hold").checked,
-      send: d.getElementById("yes").checked,
-    };
-    d.getElementById("no").click();
-    await delay(300);
-    d.getElementById("done").click();
-  }
-  await delay(1500);
+  // 1. A new install asks nothing: no first-run screen, sharing and holding on, a "ready" notice,
+  // then the first report with the first check (answered by the sandbox proxy, not passed on).
   const A = await waitFor(() => Zotero.ZoteroAtlas, 10000);
   out.prefs = {
     usage: Services.prefs.getStringPref("extensions.zotero-atlas.usage", ""),
     updates: Services.prefs.getStringPref("extensions.zotero-atlas.updates", ""),
   };
+  // Zotero shows other progress windows too ("Addon is loading"): wait for Atlas's own.
+  const text = (w) => w.document.documentElement?.textContent?.replace(/\s+/g, " ").trim() ?? "";
+  const notice = await waitFor(() => {
+    for (const w of Services.wm.getEnumerator(null))
+      if (
+        !w.closed &&
+        w.location?.href?.includes("progressWindow") &&
+        text(w).includes("Zotero Atlas")
+      )
+        return w;
+    return null;
+  }, 30000);
+  if (notice) {
+    await delay(800);
+    out.notice = text(notice);
+    await snapScreen("01-ready-notice");
+  } else out.notice = null;
+  out.firstRun = Boolean(windowAt("firstrun"));
+  out.firstReport = Boolean(await waitFor(() => state().sentAt, 40000));
+  out.idAfterReport = A.usage.id();
 
   // 2. Zotero checks for plugin updates; ZotMoov 1.2.34 is graded lower in the test catalogue.
   step("update check");
@@ -273,6 +280,7 @@ async function run() {
     await snap(aw, "08-find-plugins");
     out.dotAfterLooking = tb?.getAttribute("attention") ?? null;
     await findViews(aw);
+    await about(aw, A);
     aw.close();
   }
 
@@ -393,6 +401,46 @@ async function findViews(aw) {
   await delay(2000);
   await snap(aw, "08k-narrow-plugin");
   out.find.iconsEnd = icons();
+}
+
+/** About, at the narrowest window and then wider; then "Share my plugin list" unticked. */
+async function about(aw, A) {
+  const d = aw.document;
+  step("about");
+  d.getElementById("tab-about").click();
+  await delay(1200);
+  const tabs = [...d.querySelectorAll(".tabs .tab")];
+  const head = d.querySelector("header").getBoundingClientRect();
+  out.about = {
+    tabs: tabs.map((t) => t.textContent.trim()),
+    tabsFit: tabs.every((t) => t.getBoundingClientRect().right <= head.right),
+    width: aw.innerWidth,
+    version: d.getElementById("about-version").textContent,
+    checked: d.getElementById("share").checked,
+    status: d.getElementById("share-status").textContent,
+    links: [...d.querySelectorAll("#about a[data-url]")].map((a) => a.dataset.url),
+  };
+  await snap(aw, "10-about-narrow");
+  aw.resizeTo(1000, aw.outerHeight);
+  await delay(1200);
+  await snap(aw, "10b-about");
+  d.getElementById("share-show").click();
+  await delay(800);
+  out.about.shown = d.getElementById("share-json").textContent.slice(0, 400);
+  const page = d.getElementById("about");
+  page.scrollTop = page.scrollHeight;
+  await delay(500);
+  await snap(aw, "10c-about-sent");
+  d.getElementById("share").click();
+  await delay(3000);
+  out.about.after = {
+    checked: d.getElementById("share").checked,
+    usage: A.usage.choice(),
+    id: A.usage.id(),
+    status: d.getElementById("share-status").textContent,
+    foot: d.getElementById("mine-foot")?.textContent ?? null,
+  };
+  await snap(aw, "10d-about-off");
 }
 
 async function done() {

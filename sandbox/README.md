@@ -34,6 +34,9 @@ everything it did during the test is something its card already says.
   any destination on this computer or a private network (the Mac, the local network, the VM's
   gateway), so a plugin can reach only the public internet. It decrypts HTTPS with its own CA,
   which only the throwaway profile trusts.
+  Zotero Atlas's plugin-list reports (`zoteroatlas.com/api/v1/plugins`, which a new Atlas install
+  sends by default) are logged and answered by the proxy itself, never passed on, so no sandbox
+  run becomes a record in the real database.
 - A monitor container shares the Zotero container's process and network namespaces with only the
   capabilities to capture packets. It records processes, listening sockets and every connection
   attempt that bypasses the proxy.
@@ -68,10 +71,12 @@ EXTRA_DIR=.cache/atlas-sandbox/extra ATLAS_DATA=.cache/atlas-sandbox/data \
 ```
 
 `sandbox/run.sh atlas` walks through Zotero Atlas itself, beside three test plugins
-(`sandbox/atlas/prepare.py`): it answers the first-run screen, lets Zotero check for updates (the
-test catalogue grades ZotMoov's newer release lower, so Atlas holds it), and takes pictures of the
-button and its dot, the bar for a known security problem, the Tools menu, Tools → Plugins and the
-Atlas window (`results/shots/`), with what it found in `results/atlas.json`. The driver is
+(`sandbox/atlas/prepare.py`): it checks that a new install asks nothing (sharing the plugin list
+and holding updates start on, a "ready" notice, the first report, which the proxy answers), lets
+Zotero check for updates (the test catalogue grades ZotMoov's newer release lower, so Atlas holds
+it), and takes pictures of the button and its dot, the bar for a known security problem, the Tools
+menu, Tools → Plugins and the Atlas window, About last, where it unticks "Share my plugin list"
+(`results/shots/`), with what it found in `results/atlas.json`. The driver is
 `sandbox/atlas/driver/`; the harness only records. Pictures of the whole screen, menus included,
 come from Xvfb's framebuffer file.
 

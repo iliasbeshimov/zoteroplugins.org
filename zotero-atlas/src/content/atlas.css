@@ -79,6 +79,7 @@ header .status {
   gap: 6px;
 }
 .tab {
+  white-space: nowrap;
   border: 1px solid var(--line);
   background: transparent;
   color: var(--fg);
@@ -91,6 +92,18 @@ header .status {
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
+}
+/* Four tabs in a narrow window: "Move to another computer" becomes "Move". */
+.tab .short {
+  display: none;
+}
+@media (max-width: 760px) {
+  .tab .long {
+    display: none;
+  }
+  .tab .short {
+    display: inline;
+  }
 }
 .count:empty {
   display: none;
@@ -687,7 +700,8 @@ summary.h {
 }
 
 /* Move to another computer: save a list here, open it there. */
-#move {
+#move,
+#about {
   background: var(--page);
   padding: 18px 20px;
 }
@@ -1719,4 +1733,107 @@ summary.h {
   .tries .spacer + .muted {
     display: none;
   }
+}
+
+/* About: what Atlas does, then the box that turns sharing the plugin list on and off. */
+#about .page {
+  max-width: 720px;
+}
+.about-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.about-logo {
+  flex-shrink: 0;
+}
+.about-name {
+  margin: 0 0 2px;
+  font-size: 19px;
+  font-weight: 700;
+}
+.about-v {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--muted);
+}
+#about .lead {
+  margin: 0;
+  font-size: 13.5px;
+}
+.about-list {
+  margin: 0;
+  padding: 4px 14px;
+  list-style: none;
+}
+.about-list li {
+  padding: 8px 0;
+  line-height: 1.45;
+}
+.about-list li + li {
+  border-top: 1px solid var(--line);
+}
+.about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 2px 0 0;
+}
+.about-links a {
+  color: var(--accent);
+}
+.share {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+}
+.share .never {
+  margin: 0;
+  font-weight: 600;
+}
+.share-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+.share-opt input {
+  margin: 2px 0 0;
+  flex-shrink: 0;
+}
+.share-opt > span {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  line-height: 1.45;
+}
+.share-t {
+  font-weight: 600;
+}
+.share-d {
+  color: var(--muted);
+}
+.share-what {
+  margin: 0;
+  padding-inline-start: 18px;
+}
+.share-status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.share-act {
+  display: flex;
+}
+.share-json {
+  margin: 0;
+  padding: 10px;
+  max-height: 240px;
+  overflow: auto;
+  border-radius: 6px;
+  background: var(--row);
+  font-size: 11px;
+  white-space: pre-wrap;
 }

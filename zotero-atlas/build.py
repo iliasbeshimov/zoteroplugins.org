@@ -25,9 +25,6 @@ FILES = [
     "content/atlas.xhtml",
     "content/find.js",
     "content/findlib.js",
-    "content/firstrun.css",
-    "content/firstrun.js",
-    "content/firstrun.xhtml",
     "content/icons/atlas-mono.svg",
     "content/icons/atlas.svg",
     "content/plugins.css",
@@ -54,7 +51,7 @@ name = f"zotero-atlas-{version}.xpi"
 # Zotero keeps a stylesheet it has loaded until it quits, even across an update, so the pages'
 # stylesheet addresses carry the version: an update without a restart then gets its own styles.
 stamp = f"?v={version}"
-for page in ("content/atlas.xhtml", "content/firstrun.xhtml"):
+for page in ("content/atlas.xhtml",):
     hrefs = re.findall(r'href="([^"]+\.css[^"]*)"', (SRC / page).read_text(encoding="utf-8"))
     if not hrefs or any(not h.endswith(stamp) for h in hrefs):
         sys.exit(f"{page}: each stylesheet's address must end in {stamp}; it has {hrefs}")

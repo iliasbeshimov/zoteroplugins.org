@@ -56,8 +56,8 @@ plugins, see what each one's code does, and install in one click.</p>
 <p align="center"><img src="docs/readme/your-plugins.png" width="880" alt="Your plugins in Zotero Atlas: a plugin with a known security problem needs you, the rest are fine"></p>
 <p align="center"><sub>Example: Lab Tools is a made-up plugin with a made-up advisory, from the project's test setup.</sub></p>
 
-- **Hold updates until they're checked** (recommended on the first-run screen, and a setting
-  afterwards). Zotero installs plugin updates by itself without looking at what changed. With
+- **Hold updates until they're checked** (on from the start; turn it off in "Your plugins" or
+  Zotero's settings). Zotero installs plugin updates by itself without looking at what changed. With
   this on, an update whose file the catalogue has analysed, and whose grade isn't lower than the
   version you have, installs as usual, usually within a day. Anything else waits in "Your
   plugins" for you to update anyway or keep your version. Plugins the catalogue doesn't list are
@@ -100,25 +100,25 @@ graded there like any other.
 **It never sends your library, notes, files, Zotero account, email or anything that identifies
 you.**
 
-<p align="center"><img src="docs/readme/first-run.png" width="420" alt="Zotero Atlas's first-run screen: hold plugin updates until they're checked, and send my plugin list or don't send"></p>
+<p align="center"><img src="docs/readme/about-sharing.png" width="640" alt="The bottom of About in Zotero Atlas: what is never sent, and the Share my plugin list box with exactly what it sends"></p>
 
-The first time it runs it shows one screen with two settings: holding updates until they're
-checked (on, recommended), and **Send my plugin list** as the default answer with **Don't send**
-one click away. With **Send my plugin list**, it sends one thing: the list of
-plugins installed in this Zotero, with
-their versions and whether each is enabled, under a random ID created on this computer, together
-with your Zotero version, operating system and this plugin's version. That goes to zoteroatlas.com
-when you turn it on, when the list changes, and once a week. We use the totals to see which
-plugins people actually use, and we don't publish them. Choose **Don't send** later, in Zotero's settings under
-Zotero Atlas, and the plugin asks the server to delete the record. "Show what would be sent" in
-the settings shows the exact message. The server's code is in [server/](server/); it stores
-nothing from the request but those fields, no IP address.
+It asks nothing when you install it. **Share my plugin list** starts ticked; the box is at the
+bottom of **About** in the Zotero Atlas window, and in Zotero's settings under Zotero Atlas. While
+it's ticked, the plugin sends one thing: the list of plugins installed in this Zotero, with their
+versions and whether each is turned on, under a random ID created on this computer, together with
+your Zotero version, operating system and this plugin's version. That goes to zoteroatlas.com
+shortly after you install it, when the list changes, and once a week. We use the totals to see
+which plugins people actually use, and we don't publish them. Untick the box and nothing more is
+sent: the plugin asks the server to delete the record, and works just the same. If you chose
+**Don't send** in an earlier version, that choice stays. "Exactly what's sent", under the box,
+shows the exact message. The server's code is in [server/](server/); it stores nothing from the
+request but those fields, no IP address.
 
 **When you post a rating**, and only then, it sends to zoteroatlas.com: the plugin and version you
 rate, your stars and review, your Zotero version and operating system, this plugin's version, and
 a scrambled ID for this Zotero, so rating again replaces your rating. The ID is a slow hash of a
 random key Zotero makes for its database; the key itself is never sent, and nothing is stored on
-your computer for it. While **Send my plugin list** is chosen, the rating also carries that list's
+your computer for it. While **Share my plugin list** is ticked, the rating also carries that list's
 random ID, so the rating can say how long you had the plugin. Reviews are public, shown as
 "Zotero Atlas user" with your Zotero version; links are removed. We never store your IP address:
 for ratings, the server keeps a scrambled code made from it for 30 days to catch fake reviews,
@@ -151,7 +151,7 @@ pipeline as every other plugin's and nothing on its card is edited by hand.
 
 All the plugin's code is in [src/](src/): `bootstrap.js` (what it does), `content/` (the window),
 `settings.xhtml` and `settings.js` (the settings pane), `prefs.js` (the defaults), `manifest.json`
-and `icon.svg`. `content/` holds the Atlas window, the first-run screen, the styles it adds to
+and `icon.svg`. `content/` holds the Atlas window (About included), the styles it adds to
 Zotero's main window and to Tools → Plugins, and the two icons. The plugin file is those files zipped as they are, with nothing compiled or bundled:
 
 - **Unzip it and compare** (rename the `.xpi` to `.zip` if your computer won't open it): the files
@@ -178,8 +178,9 @@ python3 build.py       # dist/zotero-atlas-<version>.xpi and dist/updates.json
 ```
 
 Before a release it's also walked through in real Zotero 7, 8, 9 and 10 by the catalogue's
-sandbox (`sandbox/run.sh atlas` in the catalogue's repository): first run, a real update held,
-the button and the bar, Tools → Plugins and the Atlas window, with pictures of each.
+sandbox (`sandbox/run.sh atlas` in the catalogue's repository): a new install, a real update held,
+the button and the bar, Tools → Plugins and the Atlas window, About and its box last, with
+pictures of each.
 
 Needs Zotero 7.0 or later. The catalogue it reads is written by the catalogue's pipeline
 (`atlas catalog`); its shape is published as `catalog.schema.json` in the catalogue's repository.

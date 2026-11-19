@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8"/>
   <title>Zotero Atlas</title>
-  <link rel="stylesheet" href="chrome://zotero-atlas/content/atlas.css?v=1.3.2"/>
+  <link rel="stylesheet" href="chrome://zotero-atlas/content/atlas.css?v=1.4.0"/>
   <script src="chrome://zotero/content/include.js"></script>
   <script src="chrome://zotero-atlas/content/findlib.js"></script>
   <script src="chrome://zotero-atlas/content/find.js"></script>
@@ -17,7 +17,8 @@
     <nav class="tabs">
       <button id="tab-find" class="tab on" type="button">Find plugins</button>
       <button id="tab-mine" class="tab" type="button">Your plugins <span id="mine-count" class="count"/></button>
-      <button id="tab-move" class="tab" type="button">Move to another computer</button>
+      <button id="tab-move" class="tab" type="button" title="Move to another computer"><span class="long">Move to another computer</span><span class="short">Move</span></button>
+      <button id="tab-about" class="tab" type="button">About</button>
     </nav>
     <div class="status">
       <span id="status"/>
@@ -69,6 +70,57 @@
           <p class="mresult" id="move-import-out" hidden="hidden"/>
         </div>
         <div id="move-plan"/>
+      </div>
+    </div>
+  </section>
+  <section id="about" hidden="hidden">
+    <div class="page">
+      <div class="about-top">
+        <img class="about-logo" src="chrome://zotero-atlas/content/icons/atlas.svg" width="44" height="44" alt=""/>
+        <div>
+          <h1 class="about-name">Zotero Atlas <span class="about-v" id="about-version"/></h1>
+          <p class="lead">Finds plugins for Zotero, and looks after the ones you have.</p>
+        </div>
+      </div>
+      <div class="block">
+        <h2 class="h">What it does</h2>
+        <ul class="box about-list">
+          <li><strong>Find plugins.</strong> Say what you want Zotero to do, and see the plugins that work with your Zotero, each with its grade from zoteroplugins.org and what it needs. Install puts in the exact file that was checked.</li>
+          <li><strong>Your plugins.</strong> Tells you when a plugin is blocked, has a known security problem, drops a grade or gets an update graded lower. It holds each update until it's been checked (unless you turn that off), and lets you go back to the version you had.</li>
+          <li><strong>Tools → Plugins.</strong> Shows each plugin's grade beside it.</li>
+          <li><strong>Move to another computer.</strong> Saves your plugins, and their settings if you like, to a file that Zotero Atlas on the other computer installs from.</li>
+          <li><strong>Ratings.</strong> After you've used a plugin for a couple of weeks, asks how it's working. Nothing is sent until you click Post.</li>
+        </ul>
+        <p class="about-links">
+          <a href="#" data-url="https://zoteroatlas.com">zoteroatlas.com</a>
+          <a href="#" data-url="https://zoteroplugins.org">The catalogue: zoteroplugins.org</a>
+          <a href="#" data-url="https://zoteroatlas.com/privacy.html">Privacy</a>
+          <a href="#" data-url="https://github.com/iliasbeshimov/zotero-atlas">Source code</a>
+        </p>
+      </div>
+      <div class="block">
+        <h2 class="h">Your plugin list</h2>
+        <div class="box share">
+          <p class="never">Zotero Atlas never sends your library, notes, files, Zotero account, email or anything that identifies you.</p>
+          <label class="share-opt">
+            <input id="share" type="checkbox"/>
+            <span>
+              <span class="share-t">Share my plugin list with zoteroatlas.com</span>
+              <span class="share-d">While this is ticked, Zotero Atlas sends:</span>
+              <ul class="share-what">
+                <li>the plugins installed in this Zotero: each one's ID, version, and whether it's turned on</li>
+                <li>your Zotero version, your operating system (Windows, Mac or Linux) and this plugin's version</li>
+                <li>a random ID made on this computer, so each report replaces the last one</li>
+              </ul>
+              <span class="share-d">It sends them when your plugins change, and once a week. We use the totals to see which plugins people actually use, and we don't publish them. Untick the box and nothing more is sent: Zotero Atlas asks zoteroatlas.com to delete what it has, and works just the same.</span>
+            </span>
+          </label>
+          <p class="share-status" id="share-status"/>
+          <div class="share-act">
+            <button type="button" class="linkish" id="share-show">Exactly what's sent</button>
+          </div>
+          <pre class="share-json" id="share-json" hidden="hidden"/>
+        </div>
       </div>
     </div>
   </section>
