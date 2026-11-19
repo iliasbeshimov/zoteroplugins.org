@@ -288,6 +288,7 @@
       if (r && r.ok === false && r.message) Zotero.alert(window, "Zotero Atlas", r.message);
     };
     if (al.off) act.append(button("Turn it off", "danger", () => A.decide.off(i.addon.id)));
+    if (al.off && i.addon.canRemove) act.append(button("Remove…", "", (b) => removeSheet(i, b)));
     if (al.url) act.append(button("What we know", "", () => A.openPage(al.url)));
     if (al.flag === "held") {
       act.append(button("Update anyway", "", () => A.decide.update(i.addon.id)));
@@ -380,6 +381,150 @@
     return s;
   }
 
+  /** Turn off or on, and Remove…, at the end of a plugin's line in All your plugins. */
+  function rowActions(i) {
+    const a = i.addon;
+    const box = el("span", "pacts");
+    if (a.removing) box.append(button("Undo", "linkish", () => A.decide.undoRemove(a.id)));
+    else {
+      if (a.enabled && a.canOff)
+        box.append(button("Turn off", "linkish", () => A.decide.off(a.id)));
+      else if (!a.enabled && !a.appDisabled && a.canOn)
+        box.append(button("Turn on", "linkish", () => A.decide.on(a.id)));
+      if (a.canRemove) box.append(button("Remove…", "linkish", (b) => removeSheet(i, b)));
+    }
+    return box.childNodes.length ? box : null;
+  }
+
+  // -------------------------------------------------------------------------------------------
+  // Removing a plugin: asked first; then Undo, and a rating if you'd like, until you're done
+
+  let closeRemove = null; // while the remove sheet is open: close it, finishing the removal
+
+  function removeSheet(i, opener) {
+    const name = nameOf(i);
+    const id = i.addon.id;
+    const back = el("div", "sheet-back");
+    const box = el("div", "sheet");
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-modal", "true");
+    box.setAttribute("aria-labelledby", "remove-h");
+    back.append(box);
+    $("sheet").after(back);
+    let removed = false;
+    // Closing never deletes: the plugin's line keeps Undo until the window closes.
+    const close = () => {
+      back.remove();
+      closeRemove = null;
+      if (opener?.isConnected) opener.focus();
+      if (removed) status(`Removed ${name}.`);
+    };
+    closeRemove = close;
+    const head = (title, sub) => {
+      const h = el("h2", "", title);
+      h.id = "remove-h";
+      const t = el("div", "");
+      t.append(h, el("span", "muted", sub));
+      const hd = el("div", "sheet-head");
+      if (i.entry && find) hd.append(find.icon(i.entry, 44));
+      hd.append(t);
+      return hd;
+    };
+    const acts = (...buttons) => {
+      const a = el("div", "sheet-act");
+      a.append(...buttons);
+      return a;
+    };
+
+    // First: are you sure? Turning it off keeps everything.
+    const msg = el("p", "note bad");
+    const cancel = button("Cancel", "", close);
+    const off =
+      i.addon.enabled && i.addon.canOff
+        ? button("Turn off instead", "", async () => {
+            await A.decide.off(id);
+            close();
+            status(`Turned ${name} off.`);
+          })
+        : null;
+    const go = button("Remove", "danger", async () => {
+      const r = await A.decide.remove(id);
+      if (!r.ok) {
+        msg.textContent = r.message;
+        return;
+      }
+      removed = true;
+      showRemoved();
+    });
+    box.append(
+      head(`Remove ${name}?`, `Version ${i.addon.version}`),
+      el(
+        "p",
+        "",
+        "Zotero stops it now and deletes it when you close this window. Until then, Undo brings it back.",
+      ),
+      el(
+        "p",
+        "muted",
+        "Some plugins delete their settings as soon as they're removed, and Undo doesn't bring those back. Turning it off keeps them.",
+      ),
+      msg,
+      acts(...[cancel, off, go].filter(Boolean)),
+    );
+
+    // Then: removed. Undo, and how was it? (not asked about a blocked or unsafe plugin)
+    const showRemoved = () => {
+      box.textContent = "";
+      box.append(
+        head(
+          `${name} is removed`,
+          `Version ${i.addon.version} · deleted when you close this window`,
+        ),
+      );
+      const flagged = i.alerts.some((a) => a.flag === "blocked" || a.flag === "advisory");
+      if (i.entry && !flagged) {
+        const target = {
+          slug: i.entry.slug,
+          addon: id,
+          version: i.addon.version,
+          name: i.entry.name,
+        };
+        box.append(
+          el(
+            "p",
+            "ask-lead",
+            "How was it? A rating helps other Zotero users choose, and tells the developer what didn't work.",
+          ),
+          rateBox(target, !A.ratings.rated(target.slug, target.version)),
+        );
+      }
+      const undo = button("Undo", "", async () => {
+        await A.decide.undoRemove(id);
+        removed = false;
+        close();
+        status(`${name} is back.`);
+      });
+      const done = button("Done", "primary", close);
+      box.append(acts(undo, done));
+      done.focus();
+    };
+
+    // Backdrop: Cancel before removing; after, only Done or Undo close it (a review may be open).
+    back.addEventListener("click", (ev) => {
+      if (ev.target === back && !removed) close();
+    });
+    // Tab stays inside the sheet.
+    box.addEventListener("keydown", (ev) => {
+      if (ev.key !== "Tab") return;
+      const f = [...box.querySelectorAll("button:not(:disabled), a[href], textarea")];
+      const k = f.indexOf(document.activeElement);
+      const j = ev.shiftKey ? (k <= 0 ? f.length - 1 : k - 1) : k === f.length - 1 ? 0 : k + 1;
+      ev.preventDefault();
+      f[j]?.focus();
+    });
+    cancel.focus();
+  }
+
   function renderMine() {
     const items = rv?.items || [];
     const attention = items.flatMap((i) =>
@@ -468,7 +613,10 @@
         if (i.entry && find) top.append(find.icon(i.entry, 20));
         top.append(gradePill(i.entry?.grade ?? "–", Boolean(i.entry)));
         top.append(i.entry ? pageLink(nameOf(i), i.entry.slug) : el("b", "", nameOf(i)));
-        top.append(el("span", "ver", i.addon.version + (i.addon.enabled ? "" : " · turned off")));
+        const state = i.addon.removing ? " · removed" : i.addon.enabled ? "" : " · turned off";
+        top.append(el("span", "ver", i.addon.version + state));
+        const acts = rowActions(i);
+        if (acts) top.append(acts);
         r.append(top);
         const quiet = i.alerts.filter(
           (a) => a.level === "info" && !["updated", "waiting", "kept", "pinned"].includes(a.flag),
@@ -777,7 +925,11 @@
       // In Find plugins, Escape closes the install sheet, empties the search box or goes back
       // before it closes the window; it never throws away a review being written.
       if (tab === "find" && find?.escape(ev)) return true;
-      return t?.localName === "textarea" && t.value.trim() !== "";
+      const writing = t?.localName === "textarea" && t.value.trim() !== "";
+      // The remove sheet: Escape is Cancel, or Done once removed (Undo stays); not the window.
+      const sheet = closeRemove;
+      if (sheet && !writing) sheet();
+      return Boolean(sheet) || writing;
     });
     const args = window.arguments?.[0]?.wrappedJSObject ?? window.arguments?.[0];
     showTab(args?.tab || "find");
@@ -786,6 +938,8 @@
       if (data) show();
     });
     window.addEventListener("unload", off, { once: true });
+    // Plugins removed here, Undo no longer possible: Zotero deletes them now.
+    window.addEventListener("unload", () => A.decide.finishRemove(), { once: true });
     load(false);
   });
 })();

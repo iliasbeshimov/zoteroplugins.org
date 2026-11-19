@@ -330,4 +330,63 @@ async function run() {
     pref,
   });
   await check("move-installed", rw, "{ESC}", { expect: "the plugin installed, its setting set" });
+
+  // Removing it (from 1.5.0): Escape on the remove sheet is Cancel and keeps the window; Remove
+  // and Undo bring it back; Remove, Done, then closing the window (Ctrl+W) deletes it.
+  const btn = (root, text) =>
+    [...(root?.querySelectorAll("button") || [])].find((b) => b.textContent === text) || null;
+  const mine = async () => {
+    const w = A.openWindow("mine");
+    await waitFor(() => w.document?.querySelector("#all .prow"), 30000);
+    await delay(1500);
+    const all = w.document.querySelector("#all details");
+    if (all) all.open = true;
+    const row = [...w.document.querySelectorAll("#all .prow")].find((r) =>
+      r.textContent.includes("Abbreviation Helper"),
+    );
+    return { w, row };
+  };
+  const sheetIn = (w) => w.document.querySelector(".sheet-back:not(#sheet) .sheet");
+  const pending = (a) => Boolean(a && a.pendingOperations & AM.PENDING_UNINSTALL);
+  let m = await mine();
+  if (!m.w.document.querySelector(".pacts") || !m.row || !addon) {
+    results.push({ step: "remove-escape", missing: true });
+    m.w.close();
+    return;
+  }
+  btn(m.row, "Remove…")?.click();
+  await waitFor(() => sheetIn(m.w), 5000);
+  await check(
+    "remove-escape",
+    m.w,
+    "{ESC}",
+    { expect: "the sheet closes, the window stays" },
+    (w) => ({
+      sheet: Boolean(sheetIn(w)),
+    }),
+  );
+  m = await mine();
+  btn(m.row, "Remove…")?.click();
+  await waitFor(() => sheetIn(m.w), 5000);
+  btn(sheetIn(m.w), "Remove")?.click();
+  await delay(1500);
+  const removedNow = pending(await AM.getAddonByID(ADDON));
+  btn(sheetIn(m.w), "Undo")?.click();
+  await delay(2500);
+  let a = await AM.getAddonByID(ADDON);
+  results.push({ step: "remove-undo", removedNow, pending: pending(a), active: a?.isActive });
+  m.w.close();
+  await delay(1000);
+  m = await mine();
+  btn(m.row, "Remove…")?.click();
+  await waitFor(() => sheetIn(m.w), 5000);
+  btn(sheetIn(m.w), "Remove")?.click();
+  await delay(1500);
+  btn(sheetIn(m.w), "Done")?.click();
+  await delay(1000);
+  const beforeClose = pending(await AM.getAddonByID(ADDON));
+  await check("remove-close", m.w, "^w", { expect: "closing the window deletes it" });
+  await delay(3000);
+  a = await AM.getAddonByID(ADDON);
+  Object.assign(results[results.length - 1], { beforeClose, gone: a === null });
 }

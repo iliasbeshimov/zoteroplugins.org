@@ -284,8 +284,26 @@ async function run() {
     await snap(aw, "08-find-plugins");
     out.dotAfterLooking = tb?.getAttribute("attention") ?? null;
     await findViews(aw);
+    await removing(aw);
     await about(aw, A);
     aw.close();
+    // Closing the window deletes what was removed in it; then it's listed to rate.
+    await delay(3000);
+    out.remove.afterClose = {
+      gone: (await AddonManager.getAddonByID("delitemwithatt@redleaf.me")) === null,
+      zotmoov: Boolean(await AddonManager.getAddonByID("zotmoov@wileyy.com")),
+    };
+    A.openWindow("mine");
+    const again = await waitFor(() => windowAt("zotero-atlas/content/atlas.xhtml"), 10000);
+    if (again) {
+      await delay(4000);
+      const gone = again.document.getElementById("gone");
+      out.remove.afterClose.listed = gone.textContent.includes("Item With Attachment");
+      gone.scrollIntoView();
+      await delay(400);
+      await snap(again, "12-removed-listed");
+      again.close();
+    }
   }
 
   // 7. "Turn it off" from the bar.
@@ -405,6 +423,145 @@ async function findViews(aw) {
   await delay(2000);
   await snap(aw, "08k-narrow-plugin");
   out.find.iconsEnd = icons();
+}
+
+const d0 = (root, text) =>
+  [...(root?.querySelectorAll("button") || [])].find((b) => b.textContent === text) || null;
+
+/**
+ * Your plugins: Turn off and on; then Remove… on Del Item With Attachment: Cancel, Escape, Remove
+ * and Undo, Remove and Done (its line keeps Undo; Zotero deletes it when the window closes, after
+ * About). Lab Tools from its Needs you card: removed, its setting is deleted at once (it deletes
+ * it in uninstall), and Undo brings the plugin back but not the setting.
+ */
+async function removing(aw) {
+  const d = aw.document;
+  const { AddonManager } = ChromeUtils.importESModule(
+    "resource://gre/modules/AddonManager.sys.mjs",
+  );
+  const DEL = "delitemwithatt@redleaf.me";
+  const addon = () => AddonManager.getAddonByID(DEL);
+  const pending = (a) => Boolean(a && a.pendingOperations & AddonManager.PENDING_UNINSTALL);
+  const row = () =>
+    [...d.querySelectorAll("#all .prow")].find((r) => /Item With Attachment/i.test(r.textContent));
+  const acts = () =>
+    [...(row()?.querySelectorAll(".pacts button") || [])].map((b) => b.textContent);
+  const sheet = () => d.querySelector(".sheet-back:not(#sheet) .sheet");
+  const sheetButtons = () =>
+    [...(sheet()?.querySelectorAll(".sheet-act button") || [])].map((b) => b.textContent);
+  const openAll = () => {
+    const all = d.querySelector("#all details");
+    if (all) all.open = true;
+  };
+  step("remove");
+  aw.resizeTo(1000, aw.outerHeight);
+  d.getElementById("tab-mine").click();
+  await delay(1500);
+  openAll();
+  out.remove = { acts: acts() };
+  const r = out.remove;
+
+  d0(row(), "Turn off")?.click();
+  await delay(3000);
+  openAll();
+  r.off = {
+    active: (await addon())?.isActive,
+    acts: acts(),
+    ver: row()?.querySelector(".ver")?.textContent,
+  };
+  d0(row(), "Turn on")?.click();
+  await delay(3000);
+  openAll();
+  r.on = { active: (await addon())?.isActive, acts: acts() };
+
+  // Asked first; Cancel and Escape change nothing.
+  row()?.scrollIntoView();
+  d0(row(), "Remove…")?.click();
+  await delay(600);
+  r.ask = {
+    title: sheet()?.querySelector("h2")?.textContent,
+    text: [...(sheet()?.querySelectorAll("p") || [])].map((p) => p.textContent),
+    buttons: sheetButtons(),
+    focus: d.activeElement?.textContent,
+  };
+  await snap(aw, "11-remove-ask");
+  d0(sheet(), "Cancel")?.click();
+  await delay(600);
+  r.cancel = { sheet: Boolean(sheet()), active: (await addon())?.isActive };
+  d0(row(), "Remove…")?.click();
+  await delay(500);
+  sheet()?.dispatchEvent(new aw.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+  await delay(600);
+  r.escape = { sheet: Boolean(sheet()), windowOpen: !aw.closed, pending: pending(await addon()) };
+
+  // Removed: stopped at once, Undo and a rating offered; Undo puts it back.
+  d0(row(), "Remove…")?.click();
+  await delay(500);
+  d0(sheet(), "Remove")?.click();
+  await delay(1500);
+  let a = await addon();
+  r.removed = {
+    title: sheet()?.querySelector("h2")?.textContent,
+    stars: sheet()?.querySelectorAll(".star").length ?? 0,
+    buttons: sheetButtons(),
+    pending: pending(a),
+    active: a?.isActive,
+  };
+  await snap(aw, "11b-removed");
+  aw.resizeTo(600, aw.outerHeight);
+  await delay(800);
+  await snap(aw, "11c-removed-narrow");
+  aw.resizeTo(1000, aw.outerHeight);
+  await delay(500);
+  d0(sheet(), "Undo")?.click();
+  await delay(3000);
+  openAll();
+  a = await addon();
+  r.undo = { sheet: Boolean(sheet()), pending: pending(a), active: a?.isActive, acts: acts() };
+
+  // Remove, then Done: still there until the window closes, its line showing Undo.
+  d0(row(), "Remove…")?.click();
+  await delay(500);
+  d0(sheet(), "Remove")?.click();
+  await delay(1000);
+  d0(sheet(), "Done")?.click();
+  await delay(3000);
+  openAll();
+  a = await addon();
+  r.done = {
+    sheet: Boolean(sheet()),
+    pending: pending(a),
+    status: d.getElementById("status").textContent,
+    ver: row()?.querySelector(".ver")?.textContent,
+    acts: acts(),
+  };
+  row()?.scrollIntoView();
+  await delay(400);
+  await snap(aw, "11d-removed-line");
+
+  // Lab Tools, from its card: its setting goes at Remove, and Undo doesn't bring it back.
+  const SETTING = "extensions.lab-tools.setting";
+  const setting = () => Services.prefs.getStringPref(SETTING, "(none)");
+  Services.prefs.setStringPref(SETTING, "mine");
+  const card = [...d.querySelectorAll("#needs .card")].find((c) =>
+    c.textContent.includes("Lab Tools"),
+  );
+  r.lab = { card: Boolean(card), before: setting() };
+  d0(card, "Remove…")?.click();
+  await delay(500);
+  r.lab.offInstead = sheetButtons().includes("Turn off instead");
+  d0(sheet(), "Remove")?.click();
+  await delay(1500);
+  r.lab.removed = setting();
+  r.lab.rating = (sheet()?.querySelectorAll(".star").length ?? 0) > 0;
+  d0(sheet(), "Undo")?.click();
+  await delay(3000);
+  const lab = await AddonManager.getAddonByID("lab-tools@example.org");
+  r.lab.undo = { active: lab?.isActive, pending: pending(lab), setting: setting() };
+
+  // About runs at the narrowest window, as before.
+  aw.resizeTo(600, aw.outerHeight);
+  await delay(800);
 }
 
 /** About, at the narrowest window and then wider; then "Share my plugin list" unticked. */

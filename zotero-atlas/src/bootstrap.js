@@ -18,6 +18,10 @@
  *   Atlas button by the sync button until you look).
  * - it shows each plugin's grade in Tools → Plugins, marks the plugins it can't check, and after
  *   an update lets you go back to the version you had (the file we analysed).
+ * - it turns plugins off and on, and removes them: "Remove…" asks first, then Zotero stops the
+ *   plugin at once (and runs its uninstall, which may delete its settings) and deletes it when
+ *   the Atlas window closes, with Undo until then: Zotero's own Plugins window does the same.
+ *   Nothing is sent about it.
  * - two weeks after it first sees a listed plugin turned on, it asks how that plugin is working:
  *   a blue dot on the Atlas button (never the red one, which is kept for things that need you)
  *   and a card in "Your plugins" with five stars. At most three plugins at a time, at most once
@@ -129,6 +133,7 @@ const pages = new Set(); // open Plugins window documents we've added to
 const listeners = new Set(); // the Atlas window's refresh, while it's open
 const paused = new Map(); // add-on ID → an update download held this session
 const allowOnce = new Set(); // "id@version": installs Atlas started or you allowed
+const removing = new Set(); // add-on IDs removed from the Atlas window, with Undo until it's done
 
 // ---------------------------------------------------------------------------------------------
 // Lifecycle
@@ -415,7 +420,10 @@ function addonManager() {
 }
 
 async function installed() {
-  const all = await addonManager().getAllAddons();
+  const AM = addonManager();
+  const all = await AM.getAllAddons();
+  // What Zotero lets you do with each one (an add-on without permissions, in tests: anything).
+  const may = (a, perm) => typeof a.permissions !== "number" || Boolean(a.permissions & perm);
   return all
     .filter((a) => a.type === "extension" && a.id && a.id !== ID)
     .map((a) => ({
@@ -425,6 +433,11 @@ async function installed() {
       enabled: Boolean(a.isActive),
       appDisabled: Boolean(a.appDisabled),
       userDisabled: Boolean(a.userDisabled),
+      // Removed, and deleted when the window that removed it closes (or at the next start).
+      removing: Boolean(a.pendingOperations & AM.PENDING_UNINSTALL),
+      canRemove: may(a, AM.PERM_CAN_UNINSTALL),
+      canOff: may(a, AM.PERM_CAN_DISABLE),
+      canOn: may(a, AM.PERM_CAN_ENABLE),
       file: addonFile(a),
     }))
     .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
@@ -894,7 +907,7 @@ const move = {
   /** The export file for what's installed now: { doc, plugins, settings, leftOut }. */
   async build({ settings: withSettings = false, secrets = false } = {}) {
     const byId = await catalogById();
-    const addons = await installed();
+    const addons = (await installed()).filter((a) => !a.removing);
     const hashes = state().hashes || {};
     const plugins = addons.map((a) => ({ ...a, sha256: installedSha256(a, hashes) }));
     saveState({ hashes });
@@ -1026,7 +1039,7 @@ function alertsFor(item, ctx) {
     add(
       !a.enabled ? "info" : x.severity === "critical" ? "critical" : "important",
       "advisory",
-      `${x.name} ${a.version} ${x.title}. ${a.enabled ? x.text : "It's turned off; you can remove it in Tools → Plugins."}`,
+      `${x.name} ${a.version} ${x.title}. ${a.enabled ? x.text : "It's turned off; you can remove it."}`,
       { url: x.url, off: a.enabled },
       x.id,
     );
@@ -1295,7 +1308,7 @@ async function review(force) {
     }
     item.since = since;
     item.early = early;
-    item.alerts = alertsFor(item, ctx);
+    item.alerts = a.removing ? [] : alertsFor(item, ctx); // going: nothing more to say
     for (const al of item.alerts) item.flags.push(al.flag);
     for (const al of item.alerts) {
       if (al.level === "info" || noticed[al.key]) continue;
@@ -1486,6 +1499,8 @@ const addonListener = {
   onEnabled: refreshSoon,
   onDisabled: refreshSoon,
   onInstalled: refreshSoon,
+  onUninstalling: refreshSoon, // removed with Undo, here or in Tools → Plugins
+  onOperationCancelled: refreshSoon, // and Undo
   onUninstalled: refreshSoon,
 };
 
@@ -1611,7 +1626,7 @@ async function releaseHeld() {
   saveState({ held });
 }
 
-/** "Update anyway", "Keep mine", "Go back", "Update" after going back, "Turn it off". */
+/** "Update anyway", "Keep mine", "Go back", "Update" after going back, turn off or on, remove. */
 const decide = {
   async update(id) {
     const held = state().held || {};
@@ -1672,6 +1687,57 @@ const decide = {
     await addon.disable();
     refreshSoon();
     return true;
+  },
+  async on(id) {
+    const addon = await addonManager().getAddonByID(id);
+    if (!addon) return false;
+    await addon.enable();
+    refreshSoon();
+    return true;
+  },
+  /**
+   * Remove a plugin, with Undo: like Zotero's Plugins window, Zotero stops it now (running its
+   * uninstall) and deletes it when finishRemove() runs, which the Atlas window does as it closes,
+   * or at the next start if Zotero quits first.
+   */
+  async remove(id) {
+    if (!id || id === ID) return { ok: false, message: "Zotero Atlas doesn't remove itself." };
+    const AM = addonManager();
+    try {
+      const addon = await AM.getAddonByID(id);
+      if (!addon) return { ok: false, message: "It isn't installed any more." };
+      if (!(addon.pendingOperations & AM.PENDING_UNINSTALL)) await addon.uninstall(true);
+    } catch (e) {
+      Zotero.debug(`Zotero Atlas: couldn't remove ${id}: ${e}`);
+      return { ok: false, message: "Zotero couldn't remove it. Try Tools → Plugins." };
+    }
+    removing.add(id);
+    refreshSoon();
+    return { ok: true };
+  },
+  async undoRemove(id) {
+    removing.delete(id);
+    const AM = addonManager();
+    const addon = await AM.getAddonByID(id);
+    if (!addon || !(addon.pendingOperations & AM.PENDING_UNINSTALL)) return false;
+    await addon.cancelUninstall();
+    refreshSoon();
+    return true;
+  },
+  /** Delete what was removed here: one plugin, or all of them. */
+  async finishRemove(id) {
+    const AM = addonManager();
+    for (const x of id ? [id] : [...removing]) {
+      removing.delete(x);
+      try {
+        const addon = await AM.getAddonByID(x);
+        if (addon && (addon.pendingOperations & AM.PENDING_UNINSTALL) !== 0)
+          await addon.uninstall();
+      } catch (e) {
+        Zotero.debug(`Zotero Atlas: couldn't finish removing ${x}: ${e}`);
+      }
+    }
+    refreshSoon();
   },
 };
 
@@ -1904,7 +1970,8 @@ function os() {
 }
 
 /** Exactly what is sent, and nothing else. */
-function payload(addons, event) {
+function payload(all, event) {
+  const addons = all.filter((a) => !a.removing);
   return {
     id: pref(PREF.id),
     atlas: version,
@@ -1916,7 +1983,10 @@ function payload(addons, event) {
 }
 
 function pluginsHash(addons) {
-  return addons.map((a) => `${a.id}@${a.version}:${a.enabled ? 1 : 0}`).join("\n");
+  return addons
+    .filter((a) => !a.removing)
+    .map((a) => `${a.id}@${a.version}:${a.enabled ? 1 : 0}`)
+    .join("\n");
 }
 
 async function send(event, addons) {

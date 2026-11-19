@@ -63,6 +63,13 @@ plugins, see what each one's code does, and install in one click.</p>
   plugins" for you to update anyway or keep your version. Plugins the catalogue doesn't list are
   never held: we can't check them. Holding uses Zotero's own install listeners and changes no
   Zotero setting, so removing the plugin gives Zotero back its own updates.
+- **Turn plugins off and on, or remove them.** Each plugin in "All your plugins" has Turn off
+  (or Turn on) and Remove…. Remove asks first, and offers to turn it off instead: some plugins
+  delete their settings as soon as they're removed, and Undo doesn't bring those back. Then
+  Zotero stops the plugin at once and deletes it when you close the Atlas window, with Undo
+  until then, the way Zotero's own Plugins window does. It also asks, if you'd like, how the
+  plugin was: the people who remove a plugin are the ones other Zotero users most need to hear
+  from. Nothing is sent unless you post a rating.
 - **Go back after an update.** "Your plugins" lists the month's updates, and for each one whose
   earlier version we analysed, offers to go back to it: the file we checked, after which its
   updates wait until you choose.

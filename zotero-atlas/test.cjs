@@ -369,6 +369,10 @@ function load(opts = {}) {
   };
   t.AM = {
     ERROR_INCORRECT_HASH: -2,
+    PENDING_UNINSTALL: 4,
+    PERM_CAN_UNINSTALL: 1,
+    PERM_CAN_ENABLE: 2,
+    PERM_CAN_DISABLE: 4,
     STATE_DOWNLOADED: 6,
     UPDATE_WHEN_USER_REQUESTED: 1,
     installListeners: [],
@@ -394,6 +398,30 @@ function load(opts = {}) {
           a.isActive = false;
           a.userDisabled = true;
           t.log.push(`disabled:${id}`);
+        },
+        enable: async () => {
+          a.isActive = true;
+          a.userDisabled = false;
+          t.log.push(`enabled:${id}`);
+        },
+        // As Zotero does it: with Undo, the add-on stops and waits; without, it's deleted.
+        uninstall: async (undo) => {
+          if (t.uninstallError) throw new Error(t.uninstallError);
+          if (undo) {
+            a.pendingOperations = 4;
+            a.wasActive = a.isActive;
+            a.isActive = false;
+            t.log.push(`removing:${id}`);
+            return;
+          }
+          t.addons = t.addons.filter((x) => x !== a);
+          t.log.push(`removed:${id}`);
+          for (const l of t.AM.addonListeners) l.onUninstalled?.(a);
+        },
+        cancelUninstall: async () => {
+          a.pendingOperations = 0;
+          a.isActive = a.wasActive;
+          t.log.push(`kept:${id}`);
         },
         findUpdates: (l) => {
           t.log.push(`findUpdates:${id}`);
@@ -444,6 +472,8 @@ const tick = () => new Promise((r) => setImmediate(r));
 const settle = async (n = 6) => {
   for (let i = 0; i < n; i++) await tick();
 };
+// What was done to add-ons, in order (the log also has other things in it).
+const ops = (t) => t.log.filter((l) => /^(removing|kept|removed|disabled|enabled):/.test(l));
 const run = async (name, fn) => {
   await fn();
   console.log("ok:", name);
@@ -1055,6 +1085,109 @@ const run = async (name, fn) => {
     t.prefs["extensions.zotero-atlas.state"] = JSON.stringify(st);
     await A.review(false);
     assert.deepEqual(A.ratings.removed(), [], "forgotten after 30 days");
+  });
+
+  await run(
+    "remove: stopped at once with Undo; Undo puts it back; done, it's deleted and can be rated",
+    async () => {
+      const x = {
+        id: "x@example.org",
+        type: "extension",
+        name: "X",
+        version: "1.2.0",
+        isActive: true,
+      };
+      const y = { id: "y@x", type: "extension", name: "Y", version: "2.0", isActive: true };
+      const t = load({ addons: [x, y], http: () => ok200(catalogJson([entry({})])) });
+      t.prefs["extensions.zotero-atlas.usage"] = "yes";
+      t.prefs["extensions.zotero-atlas.id"] = "abc";
+      t.s.startup({ id: "a", version: "1.5.0", rootURI: "r/" });
+      const A = t.s.Zotero.ZoteroAtlas;
+      await A.review(true);
+
+      assert.deepEqual(await A.decide.remove("x@example.org"), { ok: true });
+      assert.deepEqual(ops(t), ["removing:x@example.org"], "stopped, not deleted yet");
+      let mine = (await t.s.installed()).find((a) => a.id === "x@example.org");
+      assert.equal(mine.removing, true);
+      // Being removed: not in what's sent, nothing more said about it, nothing remembered as gone.
+      const sent = await A.usage.payload("weekly");
+      assert.deepEqual(
+        sent.plugins.map((p) => p.id),
+        ["y@x"],
+      );
+      const rv = await A.review(false);
+      assert.deepEqual(rv.items.find((i) => i.addon.id === "x@example.org").alerts, []);
+      assert.deepEqual(A.ratings.removed(), []);
+
+      assert.equal(await A.decide.undoRemove("x@example.org"), true);
+      mine = (await t.s.installed()).find((a) => a.id === "x@example.org");
+      assert.equal(mine.removing, false);
+      assert.equal(mine.enabled, true, "Undo: running again");
+
+      await A.decide.remove("x@example.org");
+      await A.decide.finishRemove();
+      assert.deepEqual(ops(t), [
+        "removing:x@example.org",
+        "kept:x@example.org",
+        "removing:x@example.org",
+        "removed:x@example.org",
+      ]);
+      await settle();
+      t.flush();
+      await settle(20);
+      assert.deepEqual(
+        A.ratings.removed().map((g) => [g.id, g.slug, g.version]),
+        [["x@example.org", "x", "1.2.0"]],
+        "gone: in Removed in the last 30 days, to rate",
+      );
+      await A.decide.finishRemove();
+      assert.equal(ops(t).length, 4, "finishing again does nothing");
+    },
+  );
+
+  await run(
+    "remove: never Atlas itself; Zotero's refusal is said, and nothing changes",
+    async () => {
+      const x = { id: "x@example.org", type: "extension", name: "X", version: "1", isActive: true };
+      const t = load({ addons: [x] });
+      t.s.startup({ id: "a", version: "1.5.0", rootURI: "r/" });
+      const A = t.s.Zotero.ZoteroAtlas;
+      const self = await A.decide.remove("atlas@zoteroatlas.com");
+      assert.equal(self.ok, false);
+      assert.deepEqual(await A.decide.remove("nope@x"), {
+        ok: false,
+        message: "It isn't installed any more.",
+      });
+      t.uninstallError = "locked";
+      const r = await A.decide.remove("x@example.org");
+      assert.equal(r.ok, false);
+      assert.match(r.message, /Tools → Plugins/);
+      assert.deepEqual(ops(t), []);
+      await A.decide.finishRemove();
+      assert.deepEqual(ops(t), [], "nothing to finish");
+      assert.equal(await A.decide.undoRemove("x@example.org"), false, "nothing to undo");
+    },
+  );
+
+  await run("turn off and on, and what Zotero allows for each plugin", async () => {
+    const x = { id: "x@example.org", type: "extension", name: "X", version: "1", isActive: true };
+    const sys = {
+      id: "sys@x",
+      type: "extension",
+      name: "Locked",
+      version: "1",
+      isActive: true,
+      permissions: 4, // can be turned off, not removed
+    };
+    const t = load({ addons: [x, sys] });
+    t.s.startup({ id: "a", version: "1.5.0", rootURI: "r/" });
+    const A = t.s.Zotero.ZoteroAtlas;
+    assert.equal(await A.decide.off("x@example.org"), true);
+    assert.equal(await A.decide.on("x@example.org"), true);
+    assert.deepEqual(ops(t), ["disabled:x@example.org", "enabled:x@example.org"]);
+    assert.equal(await A.decide.on("nope@x"), false);
+    const locked = (await t.s.installed()).find((a) => a.id === "sys@x");
+    assert.deepEqual([locked.canRemove, locked.canOff, locked.canOn], [false, true, false]);
   });
 
   await run("worksWith and fileFor compare versions the way Zotero does", async () => {

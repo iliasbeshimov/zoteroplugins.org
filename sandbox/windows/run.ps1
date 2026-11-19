@@ -294,7 +294,15 @@ if (-not $driverOut) {
   Check 'Move: the file picker loads' ([bool]($fp -and $fp.ok)) "$($fp | ConvertTo-Json -Compress)"
   $mr = $by['move-install']
   Check 'Move: opening a list installs its checked plugin and sets its setting' ([bool]($mr -and $mr.installed -and $mr.pref -eq 15 -and $mr.row -like 'Installed *')) "$($mr | ConvertTo-Json -Compress)"
-  foreach ($step in 'firstrun', 'about', 'escape', 'ctrl-w', 'dropdown', 'escape-search', 'move-export', 'move-import', 'move-installed') {
+  $re = $by['remove-escape']
+  if ($re -and -not $re.missing) {
+    Check 'Remove: Escape closes the remove sheet and keeps the window' ([bool](-not $re.closed -and -not $re.sheet)) "closed=$($re.closed) sheet=$($re.sheet)"
+    $ru = $by['remove-undo']
+    Check 'Remove: the plugin stops at once, and Undo brings it back' ([bool]($ru -and $ru.removedNow -and $ru.active -and -not $ru.pending)) "$($ru | ConvertTo-Json -Compress)"
+    $rc = $by['remove-close']
+    Check 'Remove: Done keeps Undo; closing the window deletes it' ([bool]($rc -and $rc.beforeClose -and $rc.closed -and $rc.gone)) "$($rc | ConvertTo-Json -Compress)"
+  }
+  foreach ($step in 'firstrun', 'about', 'escape', 'ctrl-w', 'dropdown', 'escape-search', 'move-export', 'move-import', 'move-installed', 'remove-escape', 'remove-close') {
     if ($os[$step] -and -not $os[$step].focused) { Write-Host "::warning::$step window wasn't in front when the key was pressed" }
   }
 }
