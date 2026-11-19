@@ -273,7 +273,7 @@ export function buildProgram(): Command {
   program
     .command("response [issue]")
     .description(
-      "publish developers' responses to their cards from open card-response issues (or one issue), marked \"We're checking\", when they maintain the plugin",
+      "publish developers' responses to their cards from open card-response issues, and ones their author closed before a run reached them (or one issue), marked \"We're checking\", when they maintain the plugin",
     )
     .option("--no-note", "write the files only; don't comment on or label the issues")
     .action(async (issue: string | undefined, opts: { note: boolean }) => {

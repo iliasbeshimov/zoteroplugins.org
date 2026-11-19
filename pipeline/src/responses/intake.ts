@@ -214,6 +214,27 @@ interface Issue {
   user: { login: string; type?: string };
   labels: { name: string }[];
   pull_request?: unknown;
+  closed_by?: { login: string } | null;
+}
+
+/**
+ * Whether a run reads this issue. An open one, always. A closed one only when its own author
+ * closed it before any run left our note: a run can wait hours behind the census, and a developer
+ * who sees the card already fixed may close the issue meanwhile (#11, closed 49 minutes after it
+ * was opened, while the run waited 4 hours). Issues we closed after replying stay closed to it.
+ */
+export function shouldRead(
+  issue: Pick<Issue, "state" | "user" | "closed_by">,
+  comments: { body?: string }[],
+): boolean {
+  if (issue.state === "open") return true;
+  const byAuthor = issue.closed_by?.login.toLowerCase() === issue.user.login.toLowerCase();
+  return byAuthor && !comments.some((c) => c.body?.includes(NOTE_MARK));
+}
+
+async function commentsOf(get: Get, number: number): Promise<{ body?: string }[]> {
+  const res = await get(`/repos/${SITE_REPO}/issues/${number}/comments?per_page=100`);
+  return (Array.isArray(res.data) ? res.data : []) as { body?: string }[];
 }
 
 /** The plugin's profile gets the curated responses, as `atlas profile` would write them. */
@@ -256,7 +277,8 @@ export async function intakeIssue(
   };
   if (issue.pull_request) return { ...base, skipped: "a pull request" };
   if (!issue.labels.some((l) => l.name === LABEL)) return { ...base, skipped: `no ${LABEL} label` };
-  if (issue.state !== "open") return { ...base, skipped: "closed" };
+  if (issue.state !== "open" && !shouldRead(issue, await commentsOf(gh.get, number)))
+    return { ...base, skipped: "closed" };
   const form = parseForm(issue.body ?? "");
   if (!form.text) return { ...base, skipped: "no response text" };
   const slugs = JSON.parse(
@@ -298,9 +320,7 @@ export async function intakeIssue(
   // One note per issue: an edit that fixes the plugin link gets the published note.
   let note: string | null = null;
   if (gh.post) {
-    const comments = await gh.get(`/repos/${SITE_REPO}/issues/${number}/comments?per_page=100`);
-    const ours = (Array.isArray(comments.data) ? comments.data : []) as { body?: string }[];
-    const noted = ours.filter((c) => c.body?.includes(NOTE_MARK));
+    const noted = (await commentsOf(gh.get, number)).filter((c) => c.body?.includes(NOTE_MARK));
     const wanted = noteFor(issue.user.login, slug, verification);
     const already = noted.some(
       (c) =>
@@ -322,18 +342,26 @@ export async function intakeIssue(
 }
 
 /**
- * Every open card-response issue, oldest first. The workflow runs this whichever issue started it:
- * GitHub keeps one waiting run per concurrency group, so a run cancelled while the census held the
- * group loses nothing.
+ * Every open card-response issue, oldest first, then the ones closed in the last 30 days that
+ * `shouldRead` lets through. The workflow runs this whichever issue started it: GitHub keeps one
+ * waiting run per concurrency group, so a run cancelled while the census held the group loses
+ * nothing.
  */
 export async function intakeOpen(gh: Parameters<typeof intakeIssue>[1]): Promise<IntakeResult[]> {
-  const res = await gh.get(
-    `/repos/${SITE_REPO}/issues?labels=${LABEL}&state=open&per_page=100&sort=created&direction=asc`,
-  );
-  if (res.status !== 200 || !Array.isArray(res.data)) throw new Error(`issues: HTTP ${res.status}`);
+  const since = new Date(Date.now() - 30 * 86_400_000).toISOString();
   const out: IntakeResult[] = [];
-  for (const i of res.data as Issue[])
-    if (!i.pull_request) out.push(await intakeIssue(i.number, gh));
+  for (const state of ["open", `closed&since=${since}`]) {
+    const res = await gh.get(
+      `/repos/${SITE_REPO}/issues?labels=${LABEL}&state=${state}&per_page=100&sort=created&direction=asc`,
+    );
+    if (res.status !== 200 || !Array.isArray(res.data))
+      throw new Error(`issues: HTTP ${res.status}`);
+    for (const i of res.data as Issue[]) {
+      if (i.pull_request) continue;
+      const r = await intakeIssue(i.number, gh);
+      if (r.skipped !== "closed") out.push(r);
+    }
+  }
   return out;
 }
 

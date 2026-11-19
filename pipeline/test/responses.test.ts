@@ -9,6 +9,7 @@ import {
   noteFor,
   parseForm,
   responseText,
+  shouldRead,
   slugFor,
   upsertResponse,
   verifyMaintainer,
@@ -127,5 +128,25 @@ describe("who counts as a maintainer", () => {
     expect(noteFor("dev", "zocrates", { ok: false, how: "" })).toContain("check by hand");
     expect(noteFor("dev", null, null)).toContain("couldn't tell which listed plugin");
     expect(noteFor("dev", null, null).startsWith(NOTE_MARK)).toBe(true);
+  });
+});
+
+describe("which issues a run reads", () => {
+  const dev = { login: "Marco0431" };
+  const note = [{ body: `${NOTE_MARK}\nThanks, @Marco0431.` }];
+  it("every open one", () => {
+    expect(shouldRead({ state: "open", user: dev }, [])).toBe(true);
+  });
+  it("a closed one its author closed before any run reached it (#11)", () => {
+    expect(shouldRead({ state: "closed", user: dev, closed_by: { login: "marco0431" } }, [])).toBe(
+      true,
+    );
+  });
+  it("not one we closed after replying (#3), nor one already noted (#9)", () => {
+    const owner = { login: "iliasbeshimov" };
+    expect(shouldRead({ state: "closed", user: dev, closed_by: owner }, [])).toBe(false);
+    expect(shouldRead({ state: "closed", user: dev, closed_by: owner }, note)).toBe(false);
+    expect(shouldRead({ state: "closed", user: dev, closed_by: dev }, note)).toBe(false);
+    expect(shouldRead({ state: "closed", user: dev, closed_by: null }, [])).toBe(false);
   });
 });

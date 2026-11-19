@@ -8,9 +8,10 @@ name: Card response
 #   "We're checking", and this commits and deploys, so it shows on the plugin's page;
 # - it leaves one note on the issue saying what happened (or that we'll check by hand, labelled
 #   needs-check, or that it couldn't tell which plugin the issue is about).
-# Each run goes through every open card-response issue (idempotent: one note per issue, a response
-# changes only until we reply), so a run GitHub cancels while the census holds the group loses
-# nothing. Our reply and the final status are written by hand after re-checking the finding.
+# Each run goes through every open card-response issue, and closed ones whose author closed them
+# before a run reached them (idempotent: one note per issue, a response changes only until we
+# reply), so a run GitHub cancels while the census holds the group loses nothing. A run can wait
+# hours behind the census, so "within a minute or two" holds only when the census isn't running. Our reply and the final status are written by hand after re-checking the finding.
 # Nothing from an issue passes through this file: the script reads the issues through the API.
 on:
   issues:
