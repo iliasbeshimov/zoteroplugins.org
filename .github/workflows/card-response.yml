@@ -21,9 +21,6 @@ on:
   # the private outreach repository adds it when Ilias approves a draft) goes on the page too.
   issue_comment:
     types: [created, edited]
-  # A safety net: anything a cancelled or dropped run missed.
-  schedule:
-    - cron: "41 */6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -33,7 +30,7 @@ permissions:
 jobs:
   publish:
     if: >-
-      github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch' ||
       (contains(github.event.issue.labels.*.name, 'card-response') &&
        (github.event_name == 'issues' ||
         (github.event.comment.user.login == 'iliasbeshimov' &&
