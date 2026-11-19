@@ -3,7 +3,8 @@ name: Zotero Atlas on Windows
 # Opens Zotero Atlas's windows in a real Zotero on a Windows desktop (sandbox/windows/): each
 # window's title bar, close button included, must be on screen at 1280x720 (a 1080p laptop at
 # 150%), Escape and Ctrl+W must close the Atlas window, and its dropdown lists must have a
-# background. The released .xpi runs too, to show the check catches what users reported.
+# background. The released .xpi runs too, to show the check catches what users reported. The
+# current Zotero beta runs too; its row may fail without failing the run.
 on:
   push:
     paths: ["zotero-atlas/src/**", "sandbox/windows/**", ".github/workflows/atlas-windows.yml"]
@@ -17,6 +18,7 @@ jobs:
     name: ${{ matrix.os }}, Zotero ${{ matrix.zotero }}, ${{ matrix.xpi }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
+    continue-on-error: ${{ matrix.zotero == 'beta' }}
     strategy:
       fail-fast: false
       matrix:
@@ -26,6 +28,7 @@ jobs:
           - { os: windows-11-arm, arch: arm64, zotero: "10.0.8", xpi: this-commit }
           - { os: windows-11-arm, arch: arm64, zotero: "10.0.8", xpi: released }
           - { os: windows-2025, arch: x64, zotero: "7.0.32", xpi: this-commit }
+          - { os: windows-2025, arch: x64, zotero: beta, xpi: this-commit }
     steps:
       - uses: actions/checkout@v7
 
@@ -37,9 +40,20 @@ jobs:
       - name: Zotero
         shell: pwsh
         run: |
-          $zip = "Zotero-${{ matrix.zotero }}_win-${{ matrix.arch }}.zip"
-          curl.exe -sSfL -A "zoteroplugins.org atlas (+https://zoteroplugins.org)" -o "$env:RUNNER_TEMP\$zip" "https://download.zotero.org/client/release/${{ matrix.zotero }}/$zip"
-          Expand-Archive "$env:RUNNER_TEMP\$zip" "$env:RUNNER_TEMP\zotero"
+          $ua = "zoteroplugins.org atlas (+https://zoteroplugins.org)"
+          $channel = 'release'
+          $version = '${{ matrix.zotero }}'
+          if ($version -eq 'beta') {
+            # The current beta, e.g. 11.0-beta.4+045d52044; "+" is %2B in its addresses.
+            $channel = 'beta'
+            $version = (curl.exe -sSfL -A $ua "https://www.zotero.org/download/client/version?channel=beta&platform=win-${{ matrix.arch }}").Trim()
+            if (-not $version) { throw "no beta version" }
+            "Zotero beta: $version" >> $env:GITHUB_STEP_SUMMARY
+            $version = $version.Replace('+', '%2B')
+          }
+          $zip = "Zotero-${version}_win-${{ matrix.arch }}.zip"
+          curl.exe -sSfL -A $ua -o "$env:RUNNER_TEMP\zotero.zip" "https://download.zotero.org/client/$channel/$version/$zip"
+          Expand-Archive "$env:RUNNER_TEMP\zotero.zip" "$env:RUNNER_TEMP\zotero"
           $exe = (Get-ChildItem "$env:RUNNER_TEMP\zotero" -Recurse -Filter zotero.exe | Select-Object -First 1).FullName
           if (-not $exe) { throw "no zotero.exe in $zip" }
           "ZOTERO_EXE=$exe" >> $env:GITHUB_ENV
