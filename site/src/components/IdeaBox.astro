@@ -1,0 +1,310 @@
+---
+/**
+ * The suggestion box, on every page: a small floating "Suggest an idea" button (desktop only; it
+ * steps aside while the footer, which has the same link, is in view) and the dialog it opens. Any
+ * link to "#idea" opens the dialog too (the footer's, the about page's), and so does an address
+ * ending in #idea. Ideas go to /api/idea (functions/api/idea.ts), which posts each one as a public
+ * GitHub issue labelled `idea`. Turnstile loads only when the dialog first opens.
+ */
+import { IDEAS_URL } from "../lib/links.ts";
+import { siteKey } from "../lib/turnstile.ts";
+---
+
+<button type="button" class="pill" data-idea-open aria-haspopup="dialog">
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4"></path><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1v.2h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"></path></svg>
+  Suggest an idea
+</button>
+
+<dialog class="idea" data-idea data-sitekey={siteKey} aria-labelledby="idea-h">
+  <div class="top">
+    <h2 id="idea-h">Suggest an idea</h2>
+    <button type="button" class="x" data-idea-close aria-label="Close">×</button>
+  </div>
+  <form data-idea-form novalidate>
+    <label for="idea-text">What would make this site more useful to you? A feature, a fix, something confusing, a guide you'd like.</label>
+    <textarea id="idea-text" name="text" rows="5" maxlength="2000" required placeholder="I'd like to…"></textarea>
+    <p class="note">
+      Ideas go on our <a href={IDEAS_URL}>public list on GitHub</a> without your name, with the page you sent it from, so please leave out personal details. To write privately: ilias [at] zoteroplugins.org.
+    </p>
+    <p class="note">Missing a plugin? <a href="/submit">Submit it</a> and it's added within minutes.</p>
+    <div class="ts"></div>
+    <div class="row">
+      <button type="submit" class="btn btn-primary">Send idea</button>
+      <button type="button" class="btn" data-idea-close>Cancel</button>
+    </div>
+    <p class="status" role="status" aria-live="polite"></p>
+  </form>
+  <div class="done" data-idea-done hidden>
+    <p><strong>Thanks, it's sent.</strong></p>
+    <p>It will be on the <a href={IDEAS_URL}>public list of ideas</a> in a minute or two. That's where we answer, so keep the link if you'd like to see what happens to it.</p>
+    <div class="row">
+      <button type="button" class="btn" data-idea-close>Close</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  type Turnstile = {
+    render: (el: HTMLElement, o: { sitekey: string; size?: string }) => string | undefined;
+    getResponse: (id?: string) => string | undefined;
+    reset: (id?: string) => void;
+  };
+  const MIN_CHARS = 10;
+  const API = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+  const dlg = document.querySelector<HTMLDialogElement>("dialog[data-idea]");
+  const pill = document.querySelector<HTMLButtonElement>("button.pill[data-idea-open]");
+  if (dlg) {
+    const form = dlg.querySelector("form") as HTMLFormElement;
+    const text = dlg.querySelector("textarea") as HTMLTextAreaElement;
+    const status = dlg.querySelector(".status") as HTMLElement;
+    const box = dlg.querySelector(".ts") as HTMLElement;
+    const done = dlg.querySelector("[data-idea-done]") as HTMLElement;
+    const send = form.querySelector("button[type=submit]") as HTMLButtonElement;
+    const ts = () => (window as unknown as { turnstile?: Turnstile }).turnstile;
+    let widget: string | undefined;
+
+    // The check against bots, once: reuses Turnstile if a form on the page has loaded it already.
+    const check = () => {
+      if (box.dataset.loaded) return;
+      box.dataset.loaded = "1";
+      const render = () => {
+        widget = ts()?.render(box, { sitekey: dlg.dataset.sitekey ?? "", size: "flexible" });
+      };
+      if (ts()) return render();
+      const old = document.querySelector<HTMLScriptElement>(`script[src^="${API}"]`);
+      if (old) return old.addEventListener("load", render);
+      const s = document.createElement("script");
+      s.src = `${API}?render=explicit`;
+      s.async = true;
+      s.onload = render;
+      document.head.append(s);
+    };
+    const open = () => {
+      if (!dlg.open) dlg.showModal();
+      check();
+      if (done.hidden) text.focus();
+    };
+    const close = () => dlg.close();
+
+    document.addEventListener("click", (e) => {
+      const t = e.target as Element | null;
+      if (t?.closest('[data-idea-open], a[href="#idea"]')) {
+        e.preventDefault();
+        open();
+      } else if (t?.closest("[data-idea-close]")) close();
+    });
+    // A click on the backdrop closes it (the dialog has padding, so check where the click was).
+    dlg.addEventListener("click", (e) => {
+      if (e.target !== dlg) return;
+      const r = dlg.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close();
+    });
+    if (location.hash === "#idea") open();
+    addEventListener("hashchange", () => location.hash === "#idea" && open());
+    dlg.addEventListener("close", () => {
+      if (location.hash === "#idea") history.replaceState(history.state, "", location.pathname + location.search);
+      // After a sent idea, the next opening starts with an empty form.
+      if (!done.hidden) {
+        done.hidden = true;
+        form.hidden = false;
+        status.textContent = "";
+      }
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const idea = text.value.trim();
+      if (idea.length < MIN_CHARS) {
+        status.textContent = "Tell us a little more: a sentence is enough.";
+        return text.focus();
+      }
+      const token = ts()?.getResponse(widget);
+      if (!token) {
+        status.textContent = "Please wait for the check against bots to finish, then send it again.";
+        return;
+      }
+      status.textContent = "Sending…";
+      send.disabled = true;
+      try {
+        const r = await fetch("/api/idea", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ text: idea, page: location.pathname, token }),
+        });
+        const j = (await r.json()) as { status: string; message?: string };
+        if (j.status === "sent") {
+          text.value = "";
+          status.textContent = "";
+          form.hidden = true;
+          done.hidden = false;
+          done.querySelector<HTMLButtonElement>("[data-idea-close]")?.focus();
+        } else status.textContent = j.message ?? "Something went wrong. Please try again.";
+      } catch {
+        status.textContent = "We couldn't reach the server. Please try again.";
+      } finally {
+        send.disabled = false;
+        ts()?.reset(widget);
+      }
+    });
+
+    // The floating button steps aside while the footer, which has the same link, is in view.
+    const foot = document.querySelector(".site-footer");
+    if (pill && foot && "IntersectionObserver" in window)
+      new IntersectionObserver(([en]) => pill.classList.toggle("away", en.isIntersecting)).observe(foot);
+  }
+</script>
+
+<style>
+  .pill {
+    display: none;
+  }
+  /* Desktop with a mouse only: on phones it would sit over the page, and the footer has the link. */
+  @media (min-width: 900px) and (hover: hover) and (pointer: fine) {
+    .pill {
+      position: fixed;
+      z-index: 20;
+      right: 16px;
+      bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 40px;
+      padding: 0 16px 0 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+      color: var(--ink);
+      box-shadow: var(--shadow-2);
+      font: 600 14px var(--font-sans);
+      cursor: pointer;
+      transition:
+        opacity 0.2s,
+        transform 0.2s;
+    }
+    .pill:hover {
+      border-color: var(--ink);
+    }
+    .pill:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .pill svg {
+      color: var(--accent-fg);
+    }
+    .pill.away {
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+    }
+    /* The compare tray takes the bottom of the list while it's showing. */
+    :global(body:has(.tray:not([hidden]))) .pill {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pill {
+      transition: none;
+    }
+  }
+  @media print {
+    .pill {
+      display: none !important;
+    }
+  }
+
+  .idea {
+    margin: auto;
+    width: min(500px, calc(100vw - 32px));
+    max-height: calc(100dvh - 32px);
+    padding: 22px 24px 20px;
+    border: 0;
+    border-radius: 18px;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: var(--shadow-2);
+  }
+  .idea::backdrop {
+    background: oklch(0.2 0.02 265 / 0.55);
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  h2 {
+    margin: 0;
+    font-size: 21px;
+    letter-spacing: -0.015em;
+    font-weight: 720;
+  }
+  .x {
+    all: unset;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+    color: var(--ink-2);
+    padding: 0 4px;
+  }
+  .x:focus-visible {
+    outline: 2px solid var(--focus);
+    border-radius: 6px;
+  }
+  form,
+  .done {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  form[hidden],
+  .done[hidden] {
+    display: none;
+  }
+  label {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  textarea {
+    font: inherit;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line-strong);
+    background: var(--bg);
+    color: var(--ink);
+    resize: vertical;
+    min-height: 120px;
+  }
+  textarea:focus {
+    outline: 2px solid var(--focus);
+    outline-offset: 1px;
+  }
+  .note {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+  .ts:empty {
+    display: none;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .status {
+    margin: 0;
+    min-height: 1.5em;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .done p {
+    margin: 0;
+    line-height: 1.55;
+  }
+</style>

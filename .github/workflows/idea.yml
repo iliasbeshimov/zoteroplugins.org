@@ -1,0 +1,62 @@
+name: Idea
+run-name: An idea from the suggestion box
+
+# An idea someone sent with the site's suggestion box (site/src/components/IdeaBox.astro). The
+# function at site/functions/api/idea.ts checks Turnstile and starts this with the text and the
+# page it was sent from. It opens a public issue labelled `idea`, written by github-actions, so
+# GitHub notifies the repository's watchers. The text reaches the script only through the
+# environment, never the script's own source. @-mentions are broken so nobody gets notified, and
+# HTML comments show as text.
+on:
+  workflow_dispatch:
+    inputs:
+      text:
+        description: "The idea, as written"
+        required: true
+        type: string
+      page:
+        description: "The site page it was sent from (a path)"
+        required: false
+        type: string
+
+permissions:
+  issues: write
+
+jobs:
+  file:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Write the issue
+        env:
+          TEXT: ${{ inputs.text }}
+          PAGE: ${{ inputs.page }}
+        run: |
+          python3 - <<'PY'
+          import os, re
+
+          def quiet(s):
+              return s.replace("@", "@​").replace("<!--", "&lt;!--")
+
+          raw = os.environ.get("TEXT", "").replace("\r\n", "\n").strip()[:2000]
+          text = quiet(raw)
+          page = os.environ.get("PAGE", "").strip()
+          # A title isn't Markdown: only the @-mentions need breaking there.
+          one = re.sub(r"\s+", " ", raw).replace("@", "@​")
+          title = "Idea: " + (one if len(one) <= 70 else one[:69].rstrip() + "…")
+          quoted = "\n".join(f"> {line}" if line else ">" for line in text.split("\n"))
+          where = "zoteroplugins.org"
+          if re.fullmatch(r"/(?!/)[A-Za-z0-9/._~%+-]{0,200}", page):
+              where = f"https://zoteroplugins.org{page}"
+          with open("title.txt", "w") as f:
+              f.write(title)
+          with open("body.md", "w") as f:
+              f.write(f"{quoted}\n\nSent with the suggestion box on {where}\n")
+          PY
+      - name: Open the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh label create idea --color FBCA04 --description "Sent with the site's suggestion box" --force
+          gh issue create --title "$(cat title.txt)" --body-file body.md --label idea

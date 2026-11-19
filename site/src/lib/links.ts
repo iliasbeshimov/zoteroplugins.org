@@ -2,6 +2,8 @@
 export const REPO = "https://github.com/iliasbeshimov/zoteroplugins.org";
 export const REPORT_URL = `${REPO}/issues/new`;
 export const RESPOND_URL = `${REPO}/issues/new?template=card-response.yml`;
+/** Ideas sent with the suggestion box (components/IdeaBox.astro): public issues labelled `idea`. */
+export const IDEAS_URL = `${REPO}/issues?q=label%3Aidea`;
 export const SITE = "https://zoteroplugins.org";
 /** The README badge's Markdown: the grade image, linked to the plugin's page. */
 export const badgeMarkdown = (slug: string) =>

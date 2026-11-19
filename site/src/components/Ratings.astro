@@ -5,6 +5,7 @@
  * and the review has been checked. Turnstile loads only when someone opens the form.
  */
 import { MIN_SHOWN, REVIEWS_OPEN, ratingsOf, starsText, usedFor } from "../lib/ratings.ts";
+import { siteKey } from "../lib/turnstile.ts";
 
 interface Props {
   slug: string;
@@ -23,10 +24,6 @@ const day = (d: string) =>
     year: "numeric",
     timeZone: "UTC",
   });
-const SITE_KEY = "0x4AAAAAAFLUiYqWzSW4lRSQ";
-const TEST_KEY = "1x00000000000000000000AA";
-const siteKey =
-  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || (import.meta.env.DEV ? TEST_KEY : SITE_KEY);
 ---
 
 <p class="lead muted">
