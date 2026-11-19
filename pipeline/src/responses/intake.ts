@@ -215,21 +215,25 @@ interface Issue {
   labels: { name: string }[];
   pull_request?: unknown;
   closed_by?: { login: string } | null;
+  state_reason?: string | null;
 }
 
 /**
  * Whether a run reads this issue. An open one, always. A closed one only when its own author
- * closed it before any run left our note: a run can wait hours behind the census, and a developer
- * who sees the card already fixed may close the issue meanwhile (#11, closed 49 minutes after it
- * was opened, while the run waited 4 hours). Issues we closed after replying stay closed to it.
+ * closed it as completed before any run left our note: a run can wait hours behind the census,
+ * and a developer who sees the card already fixed may close the issue meanwhile (#11, closed 49
+ * minutes after it was opened, while the run waited 4 hours). Closed as not planned or as a
+ * duplicate reads as withdrawn, so it isn't published. Issues we closed after replying stay
+ * closed to it.
  */
 export function shouldRead(
-  issue: Pick<Issue, "state" | "user" | "closed_by">,
+  issue: Pick<Issue, "state" | "user" | "closed_by" | "state_reason">,
   comments: { body?: string }[],
 ): boolean {
   if (issue.state === "open") return true;
   const byAuthor = issue.closed_by?.login.toLowerCase() === issue.user.login.toLowerCase();
-  return byAuthor && !comments.some((c) => c.body?.includes(NOTE_MARK));
+  const completed = !issue.state_reason || issue.state_reason === "completed";
+  return byAuthor && completed && !comments.some((c) => c.body?.includes(NOTE_MARK));
 }
 
 async function commentsOf(get: Get, number: number): Promise<{ body?: string }[]> {

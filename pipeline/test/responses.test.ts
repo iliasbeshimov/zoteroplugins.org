@@ -137,7 +137,7 @@ describe("which issues a run reads", () => {
   it("every open one", () => {
     expect(shouldRead({ state: "open", user: dev }, [])).toBe(true);
   });
-  it("a closed one its author closed before any run reached it (#11)", () => {
+  it("a closed one its author closed as completed before any run reached it", () => {
     expect(shouldRead({ state: "closed", user: dev, closed_by: { login: "marco0431" } }, [])).toBe(
       true,
     );
@@ -148,5 +148,14 @@ describe("which issues a run reads", () => {
     expect(shouldRead({ state: "closed", user: dev, closed_by: owner }, note)).toBe(false);
     expect(shouldRead({ state: "closed", user: dev, closed_by: dev }, note)).toBe(false);
     expect(shouldRead({ state: "closed", user: dev, closed_by: null }, [])).toBe(false);
+  });
+  it("not one its author closed as not planned or as a duplicate", () => {
+    for (const state_reason of ["not_planned", "duplicate"])
+      expect(shouldRead({ state: "closed", user: dev, closed_by: dev, state_reason }, [])).toBe(
+        false,
+      );
+    expect(
+      shouldRead({ state: "closed", user: dev, closed_by: dev, state_reason: "completed" }, []),
+    ).toBe(true);
   });
 });
