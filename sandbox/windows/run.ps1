@@ -261,17 +261,19 @@ if (-not $driverOut) {
   foreach ($e in $driverOut.errors) { Check 'driver error' $false $e }
   $by = @{}
   foreach ($r in $driverOut.results) { $by[$r.step] = $r }
-  foreach ($step in 'about', 'escape') {
+  foreach ($step in 'firstrun', 'about', 'escape') {
     $o = $os[$step]
     if (-not $o -or -not $o.found) { Check "$step window found" $false 'no window titled Zotero Atlas'; continue }
     Check "$step title bar on screen" ([bool]$o.closeButtonOnScreen) ("window top {0}, right {1}; work area top {2}, right {3}" -f $o.frame.top, $o.frame.right, $o.workArea.top, $o.workArea.right)
   }
   $ans = $by['answers']
-  Check 'A new install asks nothing (no first-run screen)' ([bool]$by['firstrun'].missing) ''
-  Check 'Sharing the plugin list and holding updates start on' ($ans.usage -eq 'yes' -and $ans.updates -eq 'hold') "usage = $($ans.usage), updates = $($ans.updates)"
+  $first = $by['firstrun']
+  if ($first -and -not $first.missing) { Check 'Enter closes the first-run screen' ([bool]$first.closed) '' }
+  Check 'The first-run screen asks only about holding updates (ticked), nothing about sharing' ([bool]($first -and $first.holdTicked -and -not $first.mentionsSharing)) "$($first | ConvertTo-Json -Compress)"
+  Check 'Sharing starts on; holding as answered (kept ticked)' ($ans.usage -eq 'yes' -and $ans.updates -eq 'hold') "usage = $($ans.usage), updates = $($ans.updates)"
   Check 'No report left this computer (zoteroatlas.com points here)' ($ans.sentAt -eq 0) "sentAt = $($ans.sentAt)"
   $ab = $by['about']
-  Check 'About: four tabs that fit, About shown, the box ticked' ([bool]($ab -and $ab.tabs -eq 4 -and $ab.tabsFit -and $ab.shown -and $ab.checked)) "$($ab | ConvertTo-Json -Compress)"
+  Check 'About: four tabs that fit, About shown, both boxes ticked' ([bool]($ab -and $ab.tabs -eq 4 -and $ab.tabsFit -and $ab.shown -and $ab.hold -and $ab.checked)) "$($ab | ConvertTo-Json -Compress)"
   Check 'About: unticking the box turns sharing off' ([bool]($ab -and $ab.usageAfter -eq 'no' -and -not $ab.checkedAfter)) "usage = $($ab.usageAfter)"
   Check 'Escape closes About' ([bool]$ab.closed) ''
   Check 'Escape closes the Atlas window' ([bool]$by['escape'].closed) ''
@@ -292,7 +294,7 @@ if (-not $driverOut) {
   Check 'Move: the file picker loads' ([bool]($fp -and $fp.ok)) "$($fp | ConvertTo-Json -Compress)"
   $mr = $by['move-install']
   Check 'Move: opening a list installs its checked plugin and sets its setting' ([bool]($mr -and $mr.installed -and $mr.pref -eq 15 -and $mr.row -like 'Installed *')) "$($mr | ConvertTo-Json -Compress)"
-  foreach ($step in 'about', 'escape', 'ctrl-w', 'dropdown', 'escape-search', 'move-export', 'move-import', 'move-installed') {
+  foreach ($step in 'firstrun', 'about', 'escape', 'ctrl-w', 'dropdown', 'escape-search', 'move-export', 'move-import', 'move-installed') {
     if ($os[$step] -and -not $os[$step].focused) { Write-Host "::warning::$step window wasn't in front when the key was pressed" }
   }
 }

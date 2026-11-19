@@ -96,14 +96,23 @@ async function run() {
   if (!A) throw new Error("Zotero Atlas didn't start");
   results.push({ step: "atlas", version: A.version, zotero: Zotero.version });
 
-  // A new install asks nothing: sharing and holding start on. run.ps1 points zoteroatlas.com at
-  // this computer, so the first report (with the first check, 20 s after start) can't leave it.
-  // A release from before 1.4 still opens its first-run screen: answer "Don't send" as before.
-  const first = await waitFor(() => windowAt("firstrun.xhtml"), 15000);
+  // The first-run screen opens by itself a few seconds after the main window: one question,
+  // holding updates, ticked; Enter means Done. Sharing isn't on it and starts on by itself;
+  // run.ps1 points zoteroatlas.com at this computer, so the first report (with the first check,
+  // 20 s after start) can't leave it. A release from before 1.4 asks about sharing too: answer
+  // "Don't send" there.
+  const first = await waitFor(() => windowAt("firstrun.xhtml"), 60000);
   if (first) {
-    await waitFor(() => first.document?.getElementById("no"), 20000);
-    first.document.getElementById("no").click();
-    await check("firstrun", first, "{ENTER}");
+    await waitFor(() => first.document?.getElementById("done"), 20000);
+    const d = first.document;
+    const text = d.body.textContent.replace(/\s+/g, " ");
+    const screen = {
+      holdTicked: d.getElementById("hold")?.checked,
+      mentionsSharing: /plugin list|send|shar/i.test(text),
+    };
+    d.getElementById("no")?.click();
+    await check("firstrun", first, "{ENTER}", screen);
+    Object.assign(results[results.length - 1], screen);
   } else results.push({ step: "firstrun", missing: true });
   await delay(30000);
   const atlasPref = (k) => Services.prefs.getStringPref(`extensions.zotero-atlas.${k}`, "");
@@ -125,6 +134,7 @@ async function run() {
       tabs: tabs.length,
       tabsFit: tabs.every((t) => t.getBoundingClientRect().right <= head.right),
       shown: !d.getElementById("about").hidden,
+      hold: d.getElementById("hold")?.checked,
       checked: d.getElementById("share").checked,
     };
     d.getElementById("share").click();

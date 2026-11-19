@@ -56,8 +56,8 @@ plugins, see what each one's code does, and install in one click.</p>
 <p align="center"><img src="docs/readme/your-plugins.png" width="880" alt="Your plugins in Zotero Atlas: a plugin with a known security problem needs you, the rest are fine"></p>
 <p align="center"><sub>Example: Lab Tools is a made-up plugin with a made-up advisory, from the project's test setup.</sub></p>
 
-- **Hold updates until they're checked** (on from the start; turn it off in "Your plugins" or
-  Zotero's settings). Zotero installs plugin updates by itself without looking at what changed. With
+- **Hold updates until they're checked** (the one question when you install it, recommended; a
+  setting afterwards, in About and Zotero's settings). Zotero installs plugin updates by itself without looking at what changed. With
   this on, an update whose file the catalogue has analysed, and whose grade isn't lower than the
   version you have, installs as usual, usually within a day. Anything else waits in "Your
   plugins" for you to update anyway or keep your version. Plugins the catalogue doesn't list are
@@ -102,7 +102,7 @@ you.**
 
 <p align="center"><img src="docs/readme/about-sharing.png" width="640" alt="The bottom of About in Zotero Atlas: what is never sent, and the Share my plugin list box with exactly what it sends"></p>
 
-It asks nothing when you install it. **Share my plugin list** starts ticked; the box is at the
+Sharing isn't asked when you install it: **Share my plugin list** starts ticked. The box is at the
 bottom of **About** in the Zotero Atlas window, and in Zotero's settings under Zotero Atlas. While
 it's ticked, the plugin sends one thing: the list of plugins installed in this Zotero, with their
 versions and whether each is turned on, under a random ID created on this computer, together with
@@ -151,7 +151,7 @@ pipeline as every other plugin's and nothing on its card is edited by hand.
 
 All the plugin's code is in [src/](src/): `bootstrap.js` (what it does), `content/` (the window),
 `settings.xhtml` and `settings.js` (the settings pane), `prefs.js` (the defaults), `manifest.json`
-and `icon.svg`. `content/` holds the Atlas window (About included), the styles it adds to
+and `icon.svg`. `content/` holds the Atlas window (About included), the first-run screen, the styles it adds to
 Zotero's main window and to Tools → Plugins, and the two icons. The plugin file is those files zipped as they are, with nothing compiled or bundled:
 
 - **Unzip it and compare** (rename the `.xpi` to `.zip` if your computer won't open it): the files
@@ -178,7 +178,7 @@ python3 build.py       # dist/zotero-atlas-<version>.xpi and dist/updates.json
 ```
 
 Before a release it's also walked through in real Zotero 7, 8, 9 and 10 by the catalogue's
-sandbox (`sandbox/run.sh atlas` in the catalogue's repository): a new install, a real update held,
+sandbox (`sandbox/run.sh atlas` in the catalogue's repository): first run, a real update held,
 the button and the bar, Tools → Plugins and the Atlas window, About and its box last, with
 pictures of each.
 

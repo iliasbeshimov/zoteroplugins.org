@@ -71,8 +71,8 @@ EXTRA_DIR=.cache/atlas-sandbox/extra ATLAS_DATA=.cache/atlas-sandbox/data \
 ```
 
 `sandbox/run.sh atlas` walks through Zotero Atlas itself, beside three test plugins
-(`sandbox/atlas/prepare.py`): it checks that a new install asks nothing (sharing the plugin list
-and holding updates start on, a "ready" notice, the first report, which the proxy answers), lets
+(`sandbox/atlas/prepare.py`): it answers the first-run screen (one question, holding updates;
+sharing the plugin list starts on without one, and the first report is answered by the proxy), lets
 Zotero check for updates (the test catalogue grades ZotMoov's newer release lower, so Atlas holds
 it), and takes pictures of the button and its dot, the bar for a known security problem, the Tools
 menu, Tools → Plugins and the Atlas window, About last, where it unticks "Share my plugin list"

@@ -4,8 +4,9 @@
  *
  * Finds and installs plugins from zoteroplugins.org inside Zotero, filtered to this Zotero's
  * version, with each plugin's grade, and looks after the plugins already installed:
- * - it holds each update until the directory has checked it (on from the start; turned off in
- *   "Your plugins" or Zotero's settings). An update whose file we analysed and
+ * - it can hold each update until the directory has checked it (the one question on the first-run
+ *   screen, recommended; a setting afterwards, in About and Zotero's settings). An update whose
+ *   file we analysed and
  *   whose grade isn't lower than the version you have installs as usual; anything else waits in
  *   "Your plugins" for you to decide. Plugins the directory doesn't list are never held: we
  *   can't check them. Holding uses Zotero's own install listeners and changes no Zotero setting,
@@ -79,7 +80,9 @@ function openPage(url) {
 }
 const PREF = {
   usage: "extensions.zotero-atlas.usage", // "yes" or "no"; "" only before the first start
-  updates: "extensions.zotero-atlas.updates", // "hold" or "off" ("" from before 1.0: not holding)
+  // "hold" or "off"; "ask" from a new install until the first-run screen is answered (not holding
+  // meanwhile); "" from before 1.0, when it wasn't asked ("Your plugins" offers it): not holding.
+  updates: "extensions.zotero-atlas.updates",
   id: "extensions.zotero-atlas.id", // the random ID, only while usage is "yes"
   state: "extensions.zotero-atlas.state", // JSON, see state()
 };
@@ -88,7 +91,7 @@ const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 const WEEK = 7 * DAY;
 const START_DELAY = 20 * 1000; // after startup, before the first check: let Zotero settle
-const WELCOME_DELAY = 8 * 1000; // after the main window opens, before the "ready" notice
+const ASK_DELAY = 8 * 1000; // after the main window opens, before the first-run screen
 const ADVISORIES_EVERY = 6 * HOUR;
 const STUCK_AFTER = 3 * DAY; // behind the listed version this long, with nothing held: tell
 const RECENT = 30 * DAY; // updates shown under "Updates", with a way back
@@ -114,9 +117,9 @@ let chromeHandle = null;
 let started = false;
 let timer = null;
 let advTimer = null;
-let welcomeTimer = null;
+let askTimer = null;
 let refreshTimer = null;
-let fresh = false; // installed just now, in this session: say where Atlas is, once
+let asked = false;
 let atlasWindow = null;
 let catalog = null; // { data, fetchedAt }
 let advisories = null; // { data, fetchedAt }
@@ -149,14 +152,13 @@ function startup({ id, version: v, rootURI: root }) {
     ["content", "zotero-atlas", "content/"],
   ]);
   Zotero.ZoteroAtlas = Atlas;
-  // A new install: nothing to ask. Sharing the plugin list and holding updates start on, and
-  // About (or Zotero's settings) turns either off. An update keeps whatever was chosen before,
-  // "Don't send" included. Set before the observers, so this sends nothing by itself: the first
-  // check, a little later, sends the first report.
+  // A new install: sharing the plugin list starts on, without a question (the box in About, or
+  // Zotero's settings, turns it off), and holding updates is asked on the first-run screen. An
+  // update keeps whatever was chosen before, "Don't send" included. Set before the observers, so
+  // this sends nothing by itself: the first check, a little later, sends the first report.
   if (!pref(PREF.usage)) {
-    fresh = true;
     setPref(PREF.usage, "yes");
-    if (!pref(PREF.updates)) setPref(PREF.updates, "hold");
+    if (!pref(PREF.updates)) setPref(PREF.updates, "ask");
   }
   Services.prefs.addObserver(PREF.usage, onUsagePref);
   Services.prefs.addObserver(PREF.updates, onUpdatesPref);
@@ -184,7 +186,7 @@ function startup({ id, version: v, rootURI: root }) {
     const win = Zotero.getMainWindows()[0];
     if (!win) return;
     addToWindow(win);
-    maybeWelcome();
+    maybeAsk(win);
   });
   timer = setTimeout(check, START_DELAY);
 }
@@ -192,8 +194,8 @@ function startup({ id, version: v, rootURI: root }) {
 function shutdown() {
   if (!started) return;
   started = false;
-  for (const t of [timer, advTimer, welcomeTimer, refreshTimer]) clearTimeout(t);
-  timer = advTimer = welcomeTimer = refreshTimer = null;
+  for (const t of [timer, advTimer, askTimer, refreshTimer]) clearTimeout(t);
+  timer = advTimer = askTimer = refreshTimer = null;
   Services.prefs.removeObserver(PREF.usage, onUsagePref);
   Services.prefs.removeObserver(PREF.updates, onUpdatesPref);
   try {
@@ -228,33 +230,20 @@ function uninstall(_data, reason) {
 
 function onMainWindowLoad({ window }) {
   addToWindow(window);
-  maybeWelcome();
+  maybeAsk(window);
 }
 
 function onMainWindowUnload({ window }) {
   removeFromWindow(window);
 }
 
-// After a new install, once, a moment after the window is there: where Atlas is, and what it
-// shares. It asks nothing.
-function maybeWelcome() {
-  if (!fresh) return;
-  fresh = false;
-  welcomeTimer = setTimeout(welcome, WELCOME_DELAY);
-}
-
-function welcome() {
-  welcomeTimer = null;
-  const win = new Zotero.ProgressWindow({ closeOnClick: true });
-  win.changeHeadline("Zotero Atlas is ready");
-  win.addDescription(
-    "Find plugins in Tools → Zotero Atlas, or with the Zotero Atlas button by the sync button.",
-  );
-  win.addDescription(
-    "It shares the list of plugins you have, never your library. To turn that off, open About in Zotero Atlas.",
-  );
-  win.show();
-  win.startCloseTimer(15000);
+// The first-run screen, once per session, a moment after the window is there, until it's answered:
+// whether to hold plugin updates. Only a new install is asked ("ask"); someone from before 1.0
+// ("") gets the offer in "Your plugins" instead.
+function maybeAsk(window) {
+  if (asked || pref(PREF.updates) !== "ask") return;
+  asked = true;
+  askTimer = setTimeout(() => ask(window), ASK_DELAY);
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -1857,6 +1846,50 @@ async function rate(r, win) {
   rated[`${r.slug}|${r.version}`] = { stars, at: Date.now() };
   saveState({ rated });
   return { ok: true, message: "Thanks. Your rating is in." };
+}
+
+const ASK_TEXT =
+  "Hold plugin updates until they're checked? (Recommended)\n\n" +
+  "Zotero installs plugin updates by itself without looking at what changed. With this on, an " +
+  "update we've checked that isn't graded lower installs as usual, usually within a day. " +
+  "Anything else waits for you in Zotero Atlas.\n\n" +
+  "You can change this any time in Zotero Atlas, under About.";
+
+function ask(window) {
+  askTimer = null;
+  if (pref(PREF.updates) !== "ask") return;
+  // The recommended answer to start with; closing the screen keeps it.
+  const answer = { updates: "hold", done: false };
+  answer.wrappedJSObject = answer;
+  try {
+    (window || Zotero.getMainWindow()).openDialog(
+      `${CONTENT}/firstrun.xhtml`,
+      "zotero-atlas-firstrun",
+      "chrome,modal,centerscreen,titlebar",
+      answer,
+    );
+  } catch (e) {
+    // The screen couldn't open: the same question, the plain way.
+    Zotero.debug(`Zotero Atlas: first-run screen failed: ${e}`);
+    const p = Services.prompt;
+    const flags =
+      p.BUTTON_TITLE_IS_STRING * p.BUTTON_POS_0 +
+      p.BUTTON_TITLE_IS_STRING * p.BUTTON_POS_1 +
+      p.BUTTON_POS_0_DEFAULT;
+    const choice = p.confirmEx(
+      window || null,
+      "Zotero Atlas",
+      ASK_TEXT,
+      flags,
+      "Hold updates",
+      "Leave them to Zotero",
+      null,
+      null,
+      {},
+    );
+    answer.updates = choice === 1 ? "off" : "hold";
+  }
+  setPref(PREF.updates, answer.updates === "off" ? "off" : "hold");
 }
 
 // ---------------------------------------------------------------------------------------------

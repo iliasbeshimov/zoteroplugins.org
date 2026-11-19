@@ -1,12 +1,13 @@
 /* global Zotero, Services, ChromeUtils, IOUtils */
 /*
  * Zotero Atlas's walk-through in the sandbox (sandbox/run.sh atlas). Beside Atlas and the test
- * plugins from sandbox/atlas/prepare.py, it checks that a new install asks nothing (sharing and
- * holding start on, a "ready" notice, the first report: the sandbox proxy answers it, so it never
- * reaches zoteroatlas.com), lets Zotero check for updates (one is graded lower in the test catalogue, so Atlas holds it), and takes pictures of
- * what Atlas adds: the button and its dot, the bar, the Tools menu, Tools → Plugins, and the
- * Atlas window, About last, where it unticks "Share my plugin list". Pictures go to /results/shots, what it saw to /results/atlas.json. Then it tells
- * the harness it's done.
+ * plugins from sandbox/atlas/prepare.py, it answers the first-run screen (one question, holding
+ * updates; sharing starts on without one, and the first report is answered by the sandbox proxy,
+ * so it never reaches zoteroatlas.com), lets Zotero check for updates (one is graded lower in the
+ * test catalogue, so Atlas holds it), and takes pictures of what Atlas adds: the button and its
+ * dot, the bar, the Tools menu, Tools → Plugins, and the Atlas window, About last, where it
+ * unticks "Share my plugin list". Pictures go to /results/shots, what it saw to
+ * /results/atlas.json. Then it tells the harness it's done.
  */
 const XHTML = "http://www.w3.org/1999/xhtml";
 const ADDONS = "chrome://mozapps/content/extensions/aboutaddons.html";
@@ -27,6 +28,7 @@ function startup() {
   Services.prefs.setStringPref(
     "extensions.zotero-atlas.state",
     JSON.stringify({
+      ...state(),
       seen: {
         "delitemwithatt@redleaf.me": {
           grade: "A",
@@ -138,31 +140,33 @@ async function run() {
   await IOUtils.makeDirectory(SHOTS, { ignoreExisting: true });
   out.zotero = Zotero.version;
 
-  // 1. A new install asks nothing: no first-run screen, sharing and holding on, a "ready" notice,
-  // then the first report with the first check (answered by the sandbox proxy, not passed on).
+  // 1. A new install: one question on the first-run screen, holding updates (ticked); nothing
+  // about sharing, which starts on by itself. Done keeps the tick. The first report goes with
+  // the first check (answered by the sandbox proxy, not passed on).
   const A = await waitFor(() => Zotero.ZoteroAtlas, 10000);
+  out.prefsBefore = {
+    usage: Services.prefs.getStringPref("extensions.zotero-atlas.usage", ""),
+    updates: Services.prefs.getStringPref("extensions.zotero-atlas.updates", ""),
+  };
+  const fr = await waitFor(() => windowAt("firstrun.xhtml"), 30000);
+  out.firstRun = Boolean(fr);
+  if (fr) {
+    await delay(1200);
+    await snap(fr, "01-first-run");
+    const d = fr.document;
+    const text = d.body.textContent.replace(/\s+/g, " ");
+    out.firstRunScreen = {
+      holdTicked: d.getElementById("hold")?.checked,
+      inputs: d.querySelectorAll("input").length,
+      mentionsSharing: /plugin list|send|shar/i.test(text),
+    };
+    d.getElementById("done").click();
+  }
+  await delay(1500);
   out.prefs = {
     usage: Services.prefs.getStringPref("extensions.zotero-atlas.usage", ""),
     updates: Services.prefs.getStringPref("extensions.zotero-atlas.updates", ""),
   };
-  // Zotero shows other progress windows too ("Addon is loading"): wait for Atlas's own.
-  const text = (w) => w.document.documentElement?.textContent?.replace(/\s+/g, " ").trim() ?? "";
-  const notice = await waitFor(() => {
-    for (const w of Services.wm.getEnumerator(null))
-      if (
-        !w.closed &&
-        w.location?.href?.includes("progressWindow") &&
-        text(w).includes("Zotero Atlas")
-      )
-        return w;
-    return null;
-  }, 30000);
-  if (notice) {
-    await delay(800);
-    out.notice = text(notice);
-    await snapScreen("01-ready-notice");
-  } else out.notice = null;
-  out.firstRun = Boolean(windowAt("firstrun"));
   out.firstReport = Boolean(await waitFor(() => state().sentAt, 40000));
   out.idAfterReport = A.usage.id();
 
@@ -416,6 +420,7 @@ async function about(aw, A) {
     tabsFit: tabs.every((t) => t.getBoundingClientRect().right <= head.right),
     width: aw.innerWidth,
     version: d.getElementById("about-version").textContent,
+    hold: d.getElementById("hold").checked,
     checked: d.getElementById("share").checked,
     status: d.getElementById("share-status").textContent,
     links: [...d.querySelectorAll("#about a[data-url]")].map((a) => a.dataset.url),

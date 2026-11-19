@@ -674,10 +674,11 @@
   }
 
   // -------------------------------------------------------------------------------------------
-  // About: what Zotero Atlas does, and the box that turns sharing the plugin list on and off
+  // About: what Zotero Atlas does, and its two settings: holding updates, sharing the plugin list
 
   function renderAbout() {
     $("about-version").textContent = A.version;
+    $("hold").checked = A.updates.choice() === "hold";
     const on = A.usage.choice() === "yes";
     $("share").checked = on;
     const id = A.usage.id();
@@ -735,6 +736,7 @@
     $("tab-mine").addEventListener("click", () => showTab("mine"));
     $("tab-move").addEventListener("click", () => showTab("move"));
     $("tab-about").addEventListener("click", () => showTab("about"));
+    $("hold").addEventListener("change", () => A.updates.set($("hold").checked ? "hold" : "off"));
     $("share").addEventListener("change", () => A.usage.set($("share").checked ? "yes" : "no"));
     $("share-show").addEventListener("click", showSent);
     for (const a of document.querySelectorAll("#about a[data-url]"))
