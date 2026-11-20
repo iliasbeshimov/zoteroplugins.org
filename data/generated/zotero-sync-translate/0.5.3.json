@@ -1,0 +1,336 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-sync-translate",
+ "repo": "liuguanlin80-cell/zotero-sync-translate",
+ "version": "0.5.3",
+ "tag": "v0.5.3",
+ "releaseAuthor": "liuguanlin80-cell",
+ "publishedAt": "2026-11-18T07:48:46Z",
+ "prerelease": false,
+ "asset": {
+  "name": "sync-translate-0.5.3.xpi",
+  "url": "https://github.com/liuguanlin80-cell/zotero-sync-translate/releases/download/v0.5.3/sync-translate-0.5.3.xpi",
+  "size": 53582,
+  "sha256": "040ff690507733e44f580f67e9732fbf1aa8ab71ac81353344a9c7c3f7eece94",
+  "githubAssetId": 762450875,
+  "uploader": "liuguanlin80-cell",
+  "uploadedAt": "2026-11-18T07:48:45Z",
+  "fetchedAt": "2026-11-20T11:59:53.588Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "sync-translate-companion@local.zotero",
+  "name": "Sync Translate",
+  "version": "0.5.3",
+  "description": "Select translated text to highlight its source in the PDF. Works with Translate for Zotero.",
+  "homepageUrl": "https://github.com/liuguanlin80-cell/zotero-sync-translate",
+  "updateUrl": "https://raw.githubusercontent.com/liuguanlin80-cell/zotero-sync-translate/main/update.json",
+  "strictMinVersion": "9.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1009,
+   "sha256": "c57e7005edf24728afdd4c897de0557e4372186808ef424dac00554dd2f53c6c"
+  },
+  {
+   "path": "content/icons/icon.png",
+   "size": 2392,
+   "sha256": "96f1fecd384b11779738a0ca8e07224118902b943a6ca21fa3662599695155c3"
+  },
+  {
+   "path": "content/icons/icon@2x.png",
+   "size": 4882,
+   "sha256": "e28ebd859c97416ef3497e1b9e401bb463bce97b6ad0acecdfd06a2d0b5d6b61"
+  },
+  {
+   "path": "content/preferences.js",
+   "size": 3143,
+   "sha256": "5a6b9854feec21a71b0b5e0731576a796ee0f5da299dd07e098b7669d2ac61b3"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 2911,
+   "sha256": "1443d78a150b42bf008ef90efac5e20599772d29e50801802416b86dc6dc221a"
+  },
+  {
+   "path": "content/sync-translate.js",
+   "size": 140431,
+   "sha256": "41532c66b1c6158ffa6b0c287ac5962d1166f2210ed48f73efcae57f87f0f79c"
+  },
+  {
+   "path": "manifest.json",
+   "size": 678,
+   "sha256": "c1a5be80f6d3c432321caf5e911e39e2d236b4f04585d9618db2cd1014d933ab"
+  },
+  {
+   "path": "prefs.js",
+   "size": 456,
+   "sha256": "1e31d863850a9bdd5bc83c6930126df732a0b71cb73d223fa7962ca1acbfe336"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-20T11:59:53.588Z",
+  "input": {
+   "slug": "zotero-sync-translate",
+   "version": "0.5.3",
+   "sha256": "040ff690507733e44f580f67e9732fbf1aa8ab71ac81353344a9c7c3f7eece94"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "content/icons/icon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "content/icons/icon@2x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 147950,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/sync-translate.js",
+       "line": 1286,
+       "column": 22,
+       "snippet": "const res = await Z.HTTP.request('POST', url, { headers, body: JSON.stringify(body), responseType: 'text', timeout });",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.typesafe.ai",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/sync-translate.js",
+       "line": 1075,
+       "column": 16,
+       "snippet": "const JEV_URL = 'https://api.typesafe.ai/v1/systemone';",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "sync-translate-pref-alignEndpoint",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 16,
+       "column": 129,
+       "snippet": "f-alignEndpoint\" id=\"sync-translate-pref-endpoint-label\">Endpoint: </html:label><html:input id=\"sync-translate-pref-alignEndpoint\" type=\"url\" size=\"44\"/></html:p>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 5,
+      "column": 0,
+      "snippet": "pref('extensions.zotero.SyncTranslate.alignApiKey', '');",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.SyncTranslate.alignApiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 16,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/liuguanlin80-cell/zotero-sync-translate/main/update.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/liuguanlin80-cell/zotero-sync-translate/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-20T11:59:53.588Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the liuguanlin80-cell account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-20T11:59:53.588Z",
+  "appliesTo": {
+   "slug": "zotero-sync-translate",
+   "version": "0.5.3",
+   "sha256": "040ff690507733e44f580f67e9732fbf1aa8ab71ac81353344a9c7c3f7eece94"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "ebdf0df48e344e968b243eeee6e233641bfccdf9b0782a82096f40a8bb9d4745"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [],
+    "concern": "none",
+    "label": "Only contacts servers you set up",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-18T07:48:46Z",
+    "lastCommitAt": "2026-11-18T07:48:35Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

@@ -1,0 +1,809 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-local-write-api",
+ "repo": "dzackgarza/zotero-local-write-api",
+ "version": "3.11.2",
+ "tag": "v3.11.2",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-11-20T09:34:21Z",
+ "prerelease": false,
+ "asset": {
+  "name": "local-write-api-3.11.2.xpi",
+  "url": "https://github.com/dzackgarza/zotero-local-write-api/releases/download/v3.11.2/local-write-api-3.11.2.xpi",
+  "size": 59921,
+  "sha256": "27fe68fcc1d888c2dd6e95a0779a4652618d3e1038d0c41245f9a67aa7190e4a",
+  "githubAssetId": 771233000,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-11-20T09:34:20Z",
+  "fetchedAt": "2026-11-20T11:59:53.588Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "local-write-api@dzackgarza.com",
+  "name": "Local Write API",
+  "version": "3.11.2",
+  "description": "Exposes write endpoints on Zotero's local HTTP server, covering the gap left by the read-only built-in API.",
+  "homepageUrl": "https://github.com/dzackgarza/zotero-local-write-api",
+  "updateUrl": "https://raw.githubusercontent.com/dzackgarza/zotero-local-write-api/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 289793,
+   "sha256": "088072c96af9f4b85261607d78d46b8290f2ade6fff6b299e45c3423c16dc97d"
+  },
+  {
+   "path": "icons/favicon.png",
+   "size": 3652,
+   "sha256": "11f22a389189fb48926ddd8e6874199e8e404c4b7958278370966cbe6f019664"
+  },
+  {
+   "path": "icons/favicon@0.5x.png",
+   "size": 1264,
+   "sha256": "6fc36ae4058e89f99db5f69381afef4efdba531f700fb878100f80779bcd2313"
+  },
+  {
+   "path": "manifest.json",
+   "size": 664,
+   "sha256": "aa959a113c462b697c28079aeee40d1fa21967b8e1f86aef2d5562b743925113"
+  },
+  {
+   "path": "openapi.yaml",
+   "size": 76495,
+   "sha256": "7dfab14b3921067bb9bc86c32066947ae20e4aa1192eb525f7882781ceda8011"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-20T11:59:53.588Z",
+  "input": {
+   "slug": "zotero-local-write-api",
+   "version": "3.11.2",
+   "sha256": "27fe68fcc1d888c2dd6e95a0779a4652618d3e1038d0c41245f9a67aa7190e4a"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "icons/favicon.png",
+     "reason": "binary"
+    },
+    {
+     "path": "icons/favicon@0.5x.png",
+     "reason": "binary"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "openapi.yaml",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 289793,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "async-mutex",
+     "files": [
+      "bootstrap.js"
+     ],
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
+    },
+    {
+     "name": "valibot",
+     "files": [
+      "bootstrap.js"
+     ],
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 6686,
+       "column": 25,
+       "snippet": "return serviceAnswerOf(Zotero.HTTP.request(\"GET\", url2, options));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 6763,
+       "column": 17,
+       "snippet": "return await Zotero.HTTP.download(url2, path);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 23119,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 8949,
+       "column": 23,
+       "snippet": "let loopbackServer = \"url: http://127.0.0.1:23119\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 6996,
+       "column": 17,
+       "snippet": "let url2 = \"https://api.crossref.org/works?rows=20&select=DOI,title,author,issued&query.bibliographic=\" + encodeURIComponent(seed.title) + \"&query.author=\" + encodeURIComponent(seed.surname);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.zbmath.org",
+     "category": "unknown",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 7008,
+       "column": 17,
+       "snippet": "let url2 = \"https://api.zbmath.org/v1/document/_search?page=0&results_per_page=20&search_string=\" + encodeURIComponent(query);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "export.arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 7027,
+       "column": 17,
+       "snippet": "let url2 = \"https://export.arxiv.org/api/query?max_results=20&search_query=\" + encodeURIComponent(query);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 8923,
+       "column": 18,
+       "snippet": "homepage_url: \"https://github.com/dzackgarza/zotero-local-write-api\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "openlibrary.org",
+     "category": "scholarly-api",
+     "provider": "Open Library",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 7043,
+       "column": 17,
+       "snippet": "let url2 = \"https://openlibrary.org/search.json?limit=20&fields=key,title,author_name,first_publish_year,editions,editions.isbn&title=\" + encodeURIComponent(seed.title) + \"&author=\" + encodeURIC",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "raw.githubusercontent.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 8924,
+       "column": 16,
+       "snippet": "update_url: \"https://raw.githubusercontent.com/dzackgarza/zotero-local-write-api/main/updates.json\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero.localWriteAPI.publicBaseURL",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 8964,
+       "column": 22,
+       "snippet": "let publicBaseUrl = Zotero.Prefs.get(PUBLIC_BASE_URL_PREF, true);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 8994,
+       "column": 19,
+       "snippet": "let publicPref = Zotero.Prefs.get(PUBLIC_BASE_URL_PREF, true);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "recognize.url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 7911,
+       "column": 19,
+       "snippet": "let configured = Zotero.Prefs.get(\"recognize.url\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "services.url",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 7915,
+       "column": 17,
+       "snippet": "let services = Zotero.Prefs.get(\"services.url\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "bf5b10989fca",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 8993,
+      "column": 18,
+      "snippet": "let tokenPref = Zotero.Prefs.get(TOKEN_PREF, true);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.localWriteAPI.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "dynamic-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "47cae4f09552",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 8805,
+      "column": 11,
+      "snippet": "let fn = new AsyncFunction(\"Zotero\", code);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "AsyncFunction"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 12,
+    "inVendoredCodeOnly": false,
+    "codeKey": "891e941027ea",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 88,
+      "column": 8,
+      "snippet": "await Zotero.File.copyDirectory(sourceDir, destDir);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 224,
+      "column": 21,
+      "snippet": "let safeFileName = Zotero.File.getValidFileName(fileName.trim());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 247,
+      "column": 8,
+      "snippet": "await Zotero.File.putContentsAsync(tempPath, base64Stream(fileBytesBase64));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 310,
+      "column": 6,
+      "snippet": "Zotero.File.pathToFile(tempPath).remove(false);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 323,
+      "column": 25,
+      "snippet": "let name = fileName ?? Zotero.File.pathToFile(requirePresent(filePath, \"file_name must be a non-empty string\")).leafName;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 6712,
+      "column": 24,
+      "snippet": "let directory = await IOUtils.createUniqueDirectory(",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 6719,
+      "column": 10,
+      "snippet": "await IOUtils.remove(directory, { recursive: true, ignoreAbsent: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 6723,
+      "column": 19,
+      "snippet": "let path = await IOUtils.createUniqueFile(directory, \"body\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 6751,
+      "column": 22,
+      "snippet": "new Blob([await IOUtils.read(body.path)]),",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 8112,
+      "column": 10,
+      "snippet": "await IOUtils.copy(pdf.file, PathUtils.join(directory, filename));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "installs-translators",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "76e99900eb51",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 8982,
+      "column": 7,
+      "snippet": "void Zotero.Translators.init().then(",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "bundled"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 9,
+    "inVendoredCodeOnly": false,
+    "codeKey": "ff25f42d4df5",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 9048,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/attach\"] = AttachEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 9049,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/write\"] = WriteEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 9050,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/version\"] = VersionEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 9051,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/openapi.yaml\"] = OpenApiEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 9063,
+      "column": 27,
+      "snippet": "Reflect.deleteProperty(Zotero.Server.Endpoints, path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/attach",
+      "/openapi.yaml",
+      "/version",
+      "/write"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "runs-sent-code",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "7d032570b1b5",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 8805,
+      "column": 11,
+      "snippet": "let fn = new AsyncFunction(\"Zotero\", code);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "local endpoint"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 7,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/dzackgarza/zotero-local-write-api/main/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/dzackgarza/zotero-local-write-api/main/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "813eefd72f73",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 285,
+      "column": 25,
+      "snippet": "let attachment = await Zotero.Attachments.importFromFile({",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 9048,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints[\"/attach\"] = AttachEndpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/attach",
+      "/write"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-20T11:59:53.588Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-20T11:59:53.588Z",
+  "appliesTo": {
+   "slug": "zotero-local-write-api",
+   "version": "3.11.2",
+   "sha256": "27fe68fcc1d888c2dd6e95a0779a4652618d3e1038d0c41245f9a67aa7190e4a"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "2119c31e0c3f275381dd2e3b9211cb2dccce32ac2a3b29696852e2412b8226d1"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ],
+      "unconfirmed": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "export.arxiv.org",
+       "openlibrary.org"
+      ]
+     },
+     {
+      "category": "unknown",
+      "hosts": [
+       "api.zbmath.org"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts a server we couldn't identify: api.zbmath.org",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "runs-sent-code",
+      "label": "Runs code other programs on this computer send it",
+      "concern": "medium"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "dynamic-code",
+      "label": "Runs code it assembles while running",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "installs-translators",
+      "label": "Adds Zotero translators it ships",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-SENT-CODE"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-20T09:34:21Z",
+    "lastCommitAt": "2026-11-20T10:13:54Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing",
+    "capabilities"
+   ],
+   "reasons": [
+    "Contacts a server we couldn't identify: api.zbmath.org",
+    "Runs code other programs on this computer send it"
+   ]
+  }
+ }
+}

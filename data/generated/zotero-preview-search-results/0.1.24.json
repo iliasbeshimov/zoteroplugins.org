@@ -1,0 +1,308 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-preview-search-results",
+ "repo": "abdullahmushtaq19/zotero-preview-search-results",
+ "version": "0.1.24",
+ "tag": "v0.1.24",
+ "releaseAuthor": "abdullahmushtaq19",
+ "publishedAt": "2026-11-16T20:15:14Z",
+ "prerelease": false,
+ "asset": {
+  "name": "preview-search-results.xpi",
+  "url": "https://github.com/abdullahmushtaq19/zotero-preview-search-results/releases/download/v0.1.24/preview-search-results.xpi",
+  "size": 13472,
+  "sha256": "9b7c4ceaae6e7e0b56bdf3de37e875da6ce630d218cca364d4b37676fc3c041c",
+  "githubAssetId": 756317731,
+  "uploader": "abdullahmushtaq19",
+  "uploadedAt": "2026-11-16T20:23:27Z",
+  "fetchedAt": "2026-11-20T11:59:53.588Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "passage-search@local",
+  "name": "Preview Search Results",
+  "version": "0.1.24",
+  "description": "Search the selected collection; each match appears as a text preview under the book.",
+  "updateUrl": "https://raw.githubusercontent.com/abdullahmushtaq19/zotero-preview-search-results/main/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 712,
+   "sha256": "8e786615aea151c5d712ff7f95623ef2dc897953716b09507a98970cac082a53"
+  },
+  {
+   "path": "content/passageSearch.js",
+   "size": 33251,
+   "sha256": "af20c6403f1048e9485b345c8a9677a57e264d75cce52f15cf065013a7daa97f"
+  },
+  {
+   "path": "content/snippets.js",
+   "size": 6171,
+   "sha256": "866439e853a74fe9febcd413c598d0187a5f5eb8f9b451cf0db181ab6097d0db"
+  },
+  {
+   "path": "content/style.css",
+   "size": 6729,
+   "sha256": "bb991cf197a261e91bb200e749d94034d264ab99c3c7a19ca8343c4cd518e92b"
+  },
+  {
+   "path": "manifest.json",
+   "size": 484,
+   "sha256": "fedd03592e257470a69cbb9038cd48b972b37d5e4de7baa7a50f5e2e3e3f9eb5"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-20T11:59:53.588Z",
+  "input": {
+   "slug": "zotero-preview-search-results",
+   "version": "0.1.24",
+   "sha256": "9b7c4ceaae6e7e0b56bdf3de37e875da6ce630d218cca364d4b37676fc3c041c"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "content/style.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 40134,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 6,
+    "inVendoredCodeOnly": false,
+    "codeKey": "e21791675010",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/passageSearch.js",
+      "line": 400,
+      "column": 39,
+      "snippet": "if (typeof IOUtils !== 'undefined' && IOUtils.exists) return IOUtils.exists(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/passageSearch.js",
+      "line": 400,
+      "column": 62,
+      "snippet": "if (typeof IOUtils !== 'undefined' && IOUtils.exists) return IOUtils.exists(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/passageSearch.js",
+      "line": 401,
+      "column": 50,
+      "snippet": "if (typeof OS !== 'undefined' && OS.File) return OS.File.exists(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/passageSearch.js",
+      "line": 409,
+      "column": 9,
+      "snippet": "return Zotero.File.getContentsAsync(path, 'utf-8');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/passageSearch.js",
+      "line": 414,
+      "column": 9,
+      "snippet": "return Zotero.File.getContentsAsync(filePath, item.attachmentCharset || 'utf-8');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/passageSearch.js",
+      "line": 774,
+      "column": 21,
+      "snippet": "const data = await IOUtils.read(path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "OS.File",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/abdullahmushtaq19/zotero-preview-search-results/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/abdullahmushtaq19/zotero-preview-search-results/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-20T11:59:53.588Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the abdullahmushtaq19 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-20T11:59:53.588Z",
+  "appliesTo": {
+   "slug": "zotero-preview-search-results",
+   "version": "0.1.24",
+   "sha256": "9b7c4ceaae6e7e0b56bdf3de37e875da6ce630d218cca364d4b37676fc3c041c"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "8407a83b024761ec6aa64e358c82de9c7ed2e9d1a50303bde443e223615e772f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-16T20:15:14Z",
+    "lastCommitAt": "2026-11-16T20:21:30Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
