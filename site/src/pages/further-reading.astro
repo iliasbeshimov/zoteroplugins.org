@@ -2,7 +2,6 @@
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import Base from "../layouts/Base.astro";
-import { mailto } from "../lib/links.ts";
 
 // Pages about Zotero plugins worth reading next to the catalogue. A page is listed because it's
 // useful, current and free to read, and the plugins it recommends hold up in our checks; nobody
@@ -93,7 +92,6 @@ const host = (url: string) => new URL(url).hostname.replace(/^www\./, "");
     <nav aria-label="On this page" class="toc">
       <span class="eyebrow">On this page</span>
       {sections.map((s) => <a href={`#${s.id}`}>{s.title}</a>)}
-      <a href="#choosing">How we choose</a>
     </nav>
     <article>
       <div class="intro">
@@ -125,12 +123,6 @@ const host = (url: string) => new URL(url).hostname.replace(/^www\./, "");
           </section>
         ))
       }
-
-      <section id="choosing" class="box">
-        <strong>How we choose</strong>
-        <span>A page is listed here because it's useful, current and free to read, and the plugins it recommends hold up in our checks. Nobody pays to be listed.</span>
-        <span>Know a page that belongs here? <a href={mailto("Further reading suggestion")}>Tell us</a>.</span>
-      </section>
     </article>
   </main>
   <SiteFooter />
@@ -255,21 +247,6 @@ const host = (url: string) => new URL(url).hostname.replace(/^www\./, "");
     line-height: 1.55;
     color: var(--ink-2);
     text-wrap: pretty;
-  }
-  .box {
-    gap: 8px;
-    padding: 20px;
-    border-radius: 14px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-  }
-  .box strong {
-    font-size: 18px;
-  }
-  .box span {
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--ink-2);
   }
   @media (max-width: 860px) {
     .wrap {
