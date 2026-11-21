@@ -1,0 +1,287 @@
+---
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Base from "../layouts/Base.astro";
+import { mailto } from "../lib/links.ts";
+
+// Pages about Zotero plugins worth reading next to the catalogue. A page is listed because it's
+// useful, current and free to read, and the plugins it recommends hold up in our checks; nobody
+// pays to be here. `text` is trusted HTML written here (it may link to plugin cards).
+interface Entry {
+  name: string;
+  url: string;
+  text: string;
+}
+const card = (slug: string, name: string) => `<a href="/p/${slug}">${name}</a>`;
+
+const sections: { id: string; title: string; lead: string; entries: Entry[] }[] = [
+  {
+    id: "reviews",
+    title: "Reviews and walkthroughs",
+    lead: "People who use the plugins every day, showing how they fit into real research work.",
+    entries: [
+      {
+        name: "The Effortless Academic",
+        url: "https://effortlessacademic.com/the-best-zotero-plugins-for-2026/",
+        text: "Ilya Shabanov tries popular plugins in everyday academic work and shows how to set them up. His yearly guide to the best Zotero plugins is updated for Zotero 10.",
+      },
+      {
+        name: "Catherine Pope: Managing Zotero attachments with ZotMoov",
+        url: "https://catherinepope.com/posts/managing-zotero-attachments-with-zotmoov/",
+        text: `A step-by-step guide to keeping your PDFs in Dropbox or OneDrive with ${card("zotmoov", "ZotMoov")}, now that ZotFile no longer works.`,
+      },
+    ],
+  },
+  {
+    id: "libraries",
+    title: "Library guides",
+    lead: "University libraries that teach Zotero and recommend plugins that still work.",
+    entries: [
+      {
+        name: "Duke University Libraries: Zotero",
+        url: "https://guides.library.duke.edu/citing/zotero",
+        text: `Setting up Zotero 10, plus three plugins the library recommends: ${card("zoplicate", "Zoplicate")} for duplicates, ${card("zotmoov", "ZotMoov")} for storage and ${card("zotero-format-metadata", "Linter for Zotero")} for tidy metadata.`,
+      },
+      {
+        name: "MIT Libraries: LaTeX and BibTeX",
+        url: "https://libguides.mit.edu/latex-bibtex",
+        text: `How to keep a .bib file in step with your Zotero library using ${card("zotero-better-bibtex", "Better BibTeX")}, for writing in LaTeX and Overleaf.`,
+      },
+    ],
+  },
+  {
+    id: "zotero",
+    title: "From the Zotero team",
+    lead: "The people who make Zotero.",
+    entries: [
+      {
+        name: "Plugins for Zotero",
+        url: "https://www.zotero.org/support/plugins",
+        text: "Zotero's documentation on installing a plugin, with its reminder that plugins get full access to your Zotero and your computer.",
+      },
+      {
+        name: "Zotero Forums",
+        url: "https://forums.zotero.org/",
+        text: "Where most plugins are announced and discussed, and where Zotero's own team answers questions.",
+      },
+    ],
+  },
+  {
+    id: "developers",
+    title: "For plugin developers",
+    lead: "Building a plugin, or updating one for a new Zotero.",
+    entries: [
+      {
+        name: "Zotero Plugin Development",
+        url: "https://www.zotero.org/support/dev/client_coding/plugin_development",
+        text: "Zotero's starting point for writing a plugin: the sample plugin, setting up a development environment, and when a plugin isn't the right tool.",
+      },
+      {
+        name: "Zotero 10 for Developers",
+        url: "https://www.zotero.org/support/dev/zotero_10_for_developers",
+        text: "What changed for plugins in Zotero 10, and how to mark yours as compatible.",
+      },
+    ],
+  },
+];
+const host = (url: string) => new URL(url).hostname.replace(/^www\./, "");
+---
+
+<Base title="Zotero plugin reviews, tutorials and guides · Zotero Plugins Atlas" description="Hand-picked reviews, library guides and Zotero's own documentation about Zotero plugins: current, free to read, and their advice holds up in our checks.">
+  <SiteHeader />
+  <main class="wrap">
+    <nav aria-label="On this page" class="toc">
+      <span class="eyebrow">On this page</span>
+      {sections.map((s) => <a href={`#${s.id}`}>{s.title}</a>)}
+      <a href="#choosing">How we choose</a>
+    </nav>
+    <article>
+      <div class="intro">
+        <h1>Further reading</h1>
+        <p>This site checks what each Zotero plugin does with your library. These pages show you how to use plugins well, from people who teach Zotero, the Zotero team and plugin builders.</p>
+      </div>
+
+      {
+        sections.map((s) => (
+          <section id={s.id}>
+            <h2>{s.title}</h2>
+            <p class="lead">{s.lead}</p>
+            <ul class="entries">
+              {s.entries.map((e) => (
+                <li>
+                  <a class="name" href={e.url}>
+                    {e.name}
+                  </a>
+                  <span class="host">{host(e.url)}</span>
+                  <p set:html={e.text} />
+                </li>
+              ))}
+            </ul>
+            {s.id === "developers" && (
+              <p class="prose">
+                Before you release, run through <a href="/developers">your plugin's checklist</a>: what our checks look for, so your plugin gets the grade it deserves.
+              </p>
+            )}
+          </section>
+        ))
+      }
+
+      <section id="choosing" class="box">
+        <strong>How we choose</strong>
+        <span>A page is listed here because it's useful, current and free to read, and the plugins it recommends hold up in our checks. Nobody pays to be listed.</span>
+        <span>Know a page that belongs here? <a href={mailto("Further reading suggestion")}>Tell us</a>.</span>
+      </section>
+    </article>
+  </main>
+  <SiteFooter />
+</Base>
+
+<style>
+  .wrap {
+    max-width: 1184px;
+    margin: 0 auto;
+    padding: 48px var(--gutter) 64px;
+    display: grid;
+    grid-template-columns: 220px minmax(0, 760px);
+    gap: 64px;
+  }
+  .toc {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 14.5px;
+    position: sticky;
+    top: 16px;
+    align-self: start;
+  }
+  .toc .eyebrow {
+    margin-bottom: 10px;
+  }
+  .toc a {
+    padding: 7px 0 7px 12px;
+    border-left: 2px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .toc a:hover {
+    border-left-color: var(--ink);
+  }
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+    min-width: 0;
+  }
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 52px;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    font-weight: 780;
+  }
+  .intro p {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scroll-margin-top: 16px;
+  }
+  h2 {
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: -0.025em;
+    font-weight: 720;
+    border-top: 2px solid var(--ink);
+    padding-top: 14px;
+  }
+  .lead,
+  .prose {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+  .lead {
+    color: var(--ink-2);
+  }
+  .entries {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .entries li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 10px;
+    row-gap: 4px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .entries li:first-child {
+    padding-top: 4px;
+  }
+  .name {
+    font-size: 18px;
+    font-weight: 650;
+    color: var(--ink);
+    text-underline-offset: 3px;
+  }
+  .name:hover {
+    color: var(--accent-fg);
+  }
+  .host {
+    font: 500 13px var(--font-mono);
+    color: var(--ink-3);
+  }
+  .entries p {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .box {
+    gap: 8px;
+    padding: 20px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+  .box strong {
+    font-size: 18px;
+  }
+  .box span {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  @media (max-width: 860px) {
+    .wrap {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding-top: 28px;
+    }
+    .toc {
+      position: static;
+    }
+    h1 {
+      font-size: 38px;
+    }
+  }
+</style>

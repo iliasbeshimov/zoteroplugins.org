@@ -44,6 +44,7 @@ const PAGES = [
   "/developers",
   "/submit",
   "/about",
+  "/further-reading",
 ];
 /** Pages whose content moves with the data (lists, counts, the log). */
 const DATA_PAGES = new Set([

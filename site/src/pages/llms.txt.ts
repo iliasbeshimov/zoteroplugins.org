@@ -33,6 +33,11 @@ export const GET: APIRoute = () => {
     link("How to install a Zotero plugin", "/install", "step by step, with pictures"),
     link("Grade log", "/log", "every grade change, up or down"),
     link("About", "/about", "who runs it, how it's made and where AI is used"),
+    link(
+      "Further reading",
+      "/further-reading",
+      "hand-picked reviews, library guides and Zotero's own documentation about plugins",
+    ),
     "",
     "## Guides",
     "",
