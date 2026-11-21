@@ -4,6 +4,7 @@ import { PluginCurated } from "@atlas/schema";
 import { describe, expect, it } from "vitest";
 import { parse } from "yaml";
 import {
+  isCardResponse,
   MAX_TEXT,
   NOTE_MARK,
   noteFor,
@@ -201,5 +202,24 @@ describe("our reply, from the owner's comment", () => {
     expect(out).toContain('repliedAt: "2026-11-19"');
     expect(setReply(out ?? "", url, reply)).toBe(null);
     expect(setReply(yaml, "https://github.com/x/y/issues/1", reply)).toBe(null);
+  });
+});
+
+describe("which issues are responses to a card", () => {
+  const form =
+    "### Plugin\n\nhttps://zoteroplugins.org/p/zusia\n\n### Your response\n\nTwo corrections.";
+  it("one with the form's label", () => {
+    expect(isCardResponse({ labels: [{ name: "card-response" }], title: "x", body: "" })).toBe(
+      true,
+    );
+  });
+  it("one filed through the API, where GitHub dropped the label (#18)", () => {
+    expect(
+      isCardResponse({ labels: [], title: "[card] Zusia: no API key needed", body: form }),
+    ).toBe(true);
+  });
+  it('not a "[card]" title without the form, nor the form without the title', () => {
+    expect(isCardResponse({ labels: [], title: "[card] hello", body: "just text" })).toBe(false);
+    expect(isCardResponse({ labels: [], title: "Update my listing", body: form })).toBe(false);
   });
 });

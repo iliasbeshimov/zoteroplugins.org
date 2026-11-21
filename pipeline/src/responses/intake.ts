@@ -212,10 +212,24 @@ interface Issue {
   html_url: string;
   created_at: string;
   user: { login: string; type?: string };
+  title?: string;
   labels: { name: string }[];
   pull_request?: unknown;
   closed_by?: { login: string } | null;
   state_reason?: string | null;
+}
+
+/**
+ * Whether an issue is a response to a card: it has the form's label or, when GitHub dropped the
+ * label, the form's "[card]" title and its "Your response" field. GitHub silently ignores labels a
+ * non-collaborator sets through the API (an agent or `gh issue create` filing the form's text):
+ * #10 and #18 arrived that way, and #18 never reached its page.
+ */
+export function isCardResponse(issue: Pick<Issue, "labels" | "title" | "body">): boolean {
+  if (issue.labels.some((l) => l.name === LABEL)) return true;
+  return (
+    /^\s*\[card\]/i.test(issue.title ?? "") && /^###\s*Your response\s*$/im.test(issue.body ?? "")
+  );
 }
 
 /**
@@ -286,9 +300,12 @@ export async function intakeIssue(
     note: null,
   };
   if (issue.pull_request) return { ...base, skipped: "a pull request" };
-  if (!issue.labels.some((l) => l.name === LABEL)) return { ...base, skipped: `no ${LABEL} label` };
+  if (!isCardResponse(issue)) return { ...base, skipped: "not a card response" };
   if (issue.state !== "open" && !shouldRead(issue, await commentsOf(gh.get, number)))
     return { ...base, skipped: "closed" };
+  // Give it the label GitHub dropped, so it's listed and handled like any other response.
+  if (gh.post && !issue.labels.some((l) => l.name === LABEL))
+    await gh.post(`/repos/${SITE_REPO}/issues/${number}/labels`, { labels: [LABEL] });
   const form = parseForm(issue.body ?? "");
   if (!form.text) return { ...base, skipped: "no response text" };
   const slugs = JSON.parse(
@@ -352,7 +369,7 @@ export async function intakeIssue(
 }
 
 /**
- * Every open card-response issue, oldest first, then the ones closed in the last 30 days that
+ * Every open card response (see `isCardResponse`), oldest first, then the ones closed in the last 30 days that
  * `shouldRead` lets through. The workflow runs this whichever issue started it: GitHub keeps one
  * waiting run per concurrency group, so a run cancelled while the census held the group loses
  * nothing.
@@ -362,12 +379,12 @@ export async function intakeOpen(gh: Parameters<typeof intakeIssue>[1]): Promise
   const out: IntakeResult[] = [];
   for (const state of ["open", `closed&since=${since}`]) {
     const res = await gh.get(
-      `/repos/${SITE_REPO}/issues?labels=${LABEL}&state=${state}&per_page=100&sort=created&direction=asc`,
+      `/repos/${SITE_REPO}/issues?state=${state}&per_page=100&sort=created&direction=asc`,
     );
     if (res.status !== 200 || !Array.isArray(res.data))
       throw new Error(`issues: HTTP ${res.status}`);
     for (const i of res.data as Issue[]) {
-      if (i.pull_request) continue;
+      if (i.pull_request || !isCardResponse(i)) continue;
       const r = await intakeIssue(i.number, gh);
       if (r.skipped !== "closed") out.push(r);
     }
@@ -466,16 +483,14 @@ export async function recordReplies(
   get: Get,
 ): Promise<{ issue: number; slug: string; status: string }[]> {
   const since = new Date(Date.now() - 30 * 86_400_000).toISOString();
-  const res = await get(
-    `/repos/${SITE_REPO}/issues?labels=${LABEL}&state=all&since=${since}&per_page=100`,
-  );
+  const res = await get(`/repos/${SITE_REPO}/issues?state=all&since=${since}&per_page=100`);
   if (res.status !== 200 || !Array.isArray(res.data)) throw new Error(`issues: HTTP ${res.status}`);
   const slugs = JSON.parse(
     await readFile(join(paths.root, "data", "slugs.json"), "utf8"),
   ) as Record<string, string>;
   const out: { issue: number; slug: string; status: string }[] = [];
   for (const issue of res.data as Issue[]) {
-    if (issue.pull_request) continue;
+    if (issue.pull_request || !isCardResponse(issue)) continue;
     const reply = replyFrom(await commentsOf(get, issue.number), `#${issue.number}`);
     if (!reply) continue;
     const slug = slugFor(parseForm(issue.body ?? "").plugin, slugs);

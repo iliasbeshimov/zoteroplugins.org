@@ -31,7 +31,8 @@ jobs:
   publish:
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (contains(github.event.issue.labels.*.name, 'card-response') &&
+      ((contains(github.event.issue.labels.*.name, 'card-response') ||
+        startsWith(github.event.issue.title, '[card]')) &&
        (github.event_name == 'issues' ||
         (github.event.comment.user.login == 'iliasbeshimov' &&
          contains(github.event.comment.body, 'zoteroplugins:reply'))))
