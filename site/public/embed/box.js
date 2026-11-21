@@ -7,7 +7,8 @@
  *
  * Privacy: this script sets no cookies, stores nothing in the browser and loads nothing else. Its
  * one request goes to zoteroplugins.org, which counts how often the box is shown on each website
- * (the site's name only) and nothing about the reader.
+ * (the site's name only) and nothing about the reader. The box's links carry the same site name
+ * (utm_source), so a visit they lead to counts as coming from that guide, not as typed in.
  */
 (() => {
   const API = "https://zoteroplugins.org/api/v1/box.json";
@@ -93,6 +94,28 @@
     }
   }
 
+  /** The website showing the box: the page itself, or, inside our framed page, its referrer. */
+  function site() {
+    if (location.hostname !== "zoteroplugins.org") return location.hostname;
+    return via() || "library-guide";
+  }
+
+  /** Our links in the box name the guide's website and the pack, for zoteroplugins.org's analytics. */
+  function tag(box, pack) {
+    const links = box.querySelectorAll('a[href^="https://zoteroplugins.org/"]');
+    for (const link of links) {
+      try {
+        const u = new URL(link.href);
+        u.searchParams.set("utm_source", site());
+        u.searchParams.set("utm_medium", "library-box");
+        if (pack) u.searchParams.set("utm_campaign", pack);
+        link.href = u.href;
+      } catch (_e) {
+        // An address this browser can't parse keeps its plain link.
+      }
+    }
+  }
+
   const boxes = document.querySelectorAll("[data-zoteroplugins-box]");
   if (!boxes.length || !window.fetch) return;
   addCss();
@@ -100,12 +123,14 @@
     if (box.getAttribute("data-zoteroplugins-done")) continue;
     box.setAttribute("data-zoteroplugins-done", "1");
     const pack = box.getAttribute("data-zoteroplugins-box") || "";
+    tag(box, pack);
     const v = via();
     const q = `?pack=${encodeURIComponent(pack)}${v ? `&via=${encodeURIComponent(v)}` : ""}`;
     fetch(API + q, { credentials: "omit", referrerPolicy: "origin" })
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
         if (d) render(box, d, pack);
+        tag(box, pack);
       })
       .catch(() => {});
   }

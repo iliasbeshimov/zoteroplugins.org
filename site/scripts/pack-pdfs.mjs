@@ -4,6 +4,10 @@
  * plugins. Runs after `astro build`. The pages are served from dist on a local port, and Google's
  * analytics hosts don't resolve, so a render never counts as a visit.
  *
+ * The page's links are made absolute for the PDF (otherwise they'd point at the local server),
+ * and links to our pages carry utm_ parameters, so a visit from a handout counts as coming from
+ * it rather than as typed in.
+ *
  * Without Chrome a local build skips the PDFs with a warning; in CI it fails, since the pages link
  * to them. CHROME_PATH picks a browser explicitly.
  */
@@ -59,6 +63,27 @@ const TYPES = {
   ".woff2": "font/woff2",
 };
 
+const SITE = "https://zoteroplugins.org";
+
+/**
+ * A pack page's HTML for its PDF: every link to this site absolute, and links to its pages (not
+ * files) tagged with the handout and its pack. Stylesheets, fonts and images keep their local paths.
+ */
+function forPdf(html, slug) {
+  return html.replace(/(<a\b[^>]*?\shref=")([^"]*)(")/g, (all, pre, raw, post) => {
+    const href = raw.replace(/&amp;/g, "&");
+    if (!href.startsWith("/") && !href.startsWith(`${SITE}/`) && href !== SITE) return all;
+    if (href.startsWith("//")) return all;
+    const u = new URL(href, SITE);
+    if (!/\.[a-z0-9]+$/i.test(u.pathname)) {
+      u.searchParams.set("utm_source", "pack-pdf");
+      u.searchParams.set("utm_medium", "pdf");
+      u.searchParams.set("utm_campaign", slug);
+    }
+    return `${pre}${u.href.replace(/&/g, "&amp;")}${post}`;
+  });
+}
+
 // dist as the site serves it: /for/phd-students is dist/for/phd-students.html.
 const server = createServer((req, res) => {
   const url = new URL(req.url ?? "/", "http://localhost");
@@ -71,7 +96,10 @@ const server = createServer((req, res) => {
     return;
   }
   res.writeHead(200, { "Content-Type": TYPES[extname(file)] ?? "application/octet-stream" });
-  res.end(readFileSync(file));
+  const pack = /^for[/\\]([^/\\]+)\.html$/.exec(file.slice(dist.length))?.[1];
+  res.end(
+    pack && slugs.includes(pack) ? forPdf(readFileSync(file, "utf8"), pack) : readFileSync(file),
+  );
 });
 await new Promise((ok) => server.listen(0, "127.0.0.1", ok));
 const port = server.address().port;
