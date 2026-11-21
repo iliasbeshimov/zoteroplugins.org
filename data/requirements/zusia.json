@@ -1,11 +1,11 @@
 {
  "schemaVersion": 1,
  "slug": "zusia",
- "checkedAt": "2026-09-30",
- "method": "requirements-check-1 (Sonnet 5 judge + Sonnet 5 check; disagreements unknown; quotes verified)",
+ "checkedAt": "2026-11-21",
+ "method": "hand check of release 1.8.0 after the developer's response (iliasbeshimov/zoteroplugins.org#18); rules of requirements-check-1",
  "apiKey": {
   "need": "required",
-  "keyFor": "a sign-in of your own to an assistant CLI (Claude Code, Codex or Antigravity); no API key is entered in the plugin",
+  "keyFor": "your own sign-in to an assistant: Claude Code (the default), Codex, Antigravity or an ACP agent. No API key is entered for these; only the Custom API backend takes an optional key",
   "worksWithout": "",
   "services": [
    "Claude Code",
@@ -13,14 +13,32 @@
    "Antigravity"
   ]
  },
- "localModel": "unknown",
+ "localModel": "yes",
  "evidence": [
   {
-   "source": "readme",
-   "where": "README, Install",
-   "quote": "**Install one assistant CLI** and sign in: [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Codex](https://github.com/openai/codex) or Antigravity (`agy`).",
+   "source": "defaults",
+   "where": "prefs.js",
+   "quote": "pref(\"extensions.zusia.backend\", \"claude\");",
    "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/modules/binaries.js",
+   "quote": "// Force subscription logins instead of pay-per-token API keys. delete env.ANTHROPIC_API_KEY; delete env.ANTHROPIC_AUTH_TOKEN; delete env.OPENAI_API_KEY;",
+   "supports": "apiKey"
+  },
+  {
+   "source": "code",
+   "where": "content/zusia.js",
+   "quote": "ollama: { label: \"Ollama\", fullName: \"Ollama API\", kind: \"api\", baseURL: \"http://127.0.0.1:11434/v1\"",
+   "supports": "localModel"
+  },
+  {
+   "source": "code",
+   "where": "content/zusia.js",
+   "quote": "unsloth: { label: \"Unsloth\", fullName: \"Unsloth API\", kind: \"api\", baseURL: \"http://127.0.0.1:8888/v1\"",
+   "supports": "localModel"
   }
  ],
- "checkNote": "README Install: \"**Install one assistant CLI** and sign in\", so the main feature needs the user's own sign-in (the README also says \"No API keys\"). Grep of the release code found no Ollama, LM Studio or llama.cpp mention; the CLIs might be configurable for local models, but the pack doesn't say, so unknown."
+ "checkNote": "Default backend is the Claude Code CLI (prefs.js), run on the user's own sign-in with API keys removed from its environment (binaries.js), so the default setup needs a sign-in of the user's own: \"required\" under the rule (a key, token, password or sign-in). Not an API key. Codex, Antigravity and ACP agents work the same way; the Custom API (OpenAI-compatible) backend offers \"No authentication\" or an API key. Ollama and Unsloth backends on 127.0.0.1 run a local model. The 2026-09-30 check (README only) had localModel unknown."
 }
