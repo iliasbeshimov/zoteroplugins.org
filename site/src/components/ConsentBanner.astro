@@ -1,9 +1,10 @@
 ---
 // Google Analytics, through Google Tag Manager. In the EEA, the UK and Switzerland it loads only
 // after the visitor accepts; elsewhere it loads unless the browser sends Global Privacy Control
-// or the visitor has turned it off. The country comes from Cloudflare's /cdn-cgi/trace on this
-// site (from the visitor's IP; only the country is read, and it's kept for the session). If the
-// country can't be told, the visitor is asked.
+// or the visitor has turned it off. It never loads in a browser driven by a program
+// (navigator.webdriver). The country comes from Cloudflare's /cdn-cgi/trace on this site (from
+// the visitor's IP; only the country is read, and it's kept for the session). If the country
+// can't be told, the visitor is asked.
 //
 // An answer is kept in localStorage, never a cookie. Turning it off while it's loaded deletes
 // Google's cookies and reloads the page, so the tag is gone. Any element with data-consent-open
@@ -98,6 +99,10 @@
   }
 
   async function start() {
+    // A browser driven by a program (headless crawlers, test and screenshot scripts) says so in
+    // navigator.webdriver; a person's browser never does. Nothing loads for it, so it isn't
+    // counted as a visit, and the banner stays hidden.
+    if (navigator.webdriver) return;
     const choice = store(localStorage, KEY);
     if (choice === "granted") return load();
     const gpc = (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl;
