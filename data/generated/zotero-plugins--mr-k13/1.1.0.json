@@ -1,0 +1,286 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-plugins--mr-k13",
+ "repo": "mr-k13/zotero-plugins",
+ "version": "1.1.0",
+ "tag": "v1.1.0",
+ "releaseAuthor": "Mr-K13",
+ "publishedAt": "2026-11-20T14:00:36Z",
+ "prerelease": false,
+ "asset": {
+  "name": "link-article-to-book.xpi",
+  "url": "https://github.com/Mr-K13/zotero-plugins/releases/download/v1.1.0/link-article-to-book.xpi",
+  "size": 8273,
+  "sha256": "49829e9a99f44e9c8caa8c8ae189d382e205fae5b013f8946dd8d2243879f75a",
+  "githubAssetId": 772037219,
+  "uploader": "Mr-K13",
+  "uploadedAt": "2026-11-20T14:00:35Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "link-article-to-book@zotero-plugins.local",
+  "name": "Link Article to Book",
+  "version": "1.1.0",
+  "description": "Finds the book with the same ISBN in your library, locates the page where the article's title appears, and attaches a page link to it.",
+  "updateUrl": "https://raw.githubusercontent.com/Mr-K13/zotero-plugins/main/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 588,
+   "sha256": "a390efacf9616988aedbc0911f82be37421f38d097ac6d9e82058745712c6964"
+  },
+  {
+   "path": "link-article-to-book.js",
+   "size": 19751,
+   "sha256": "75ec053e68989e6dcc668a1c825b9d6b9e2ed52d6bcb176db657bbc0c95c6fa8"
+  },
+  {
+   "path": "locale/en-US/link-article-to-book.ftl",
+   "size": 72,
+   "sha256": "232a7e12800d2ef76f880c0227c8be2de591ed28bc7c260fa49b807d429f98fa"
+  },
+  {
+   "path": "manifest.json",
+   "size": 532,
+   "sha256": "2c22b08d40610fa6dae5885d43b2887668c167273ab6fc95a56758134cbd16fe"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "zotero-plugins--mr-k13",
+   "version": "1.1.0",
+   "sha256": "49829e9a99f44e9c8caa8c8ae189d382e205fae5b013f8946dd8d2243879f75a"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/link-article-to-book.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 20339,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "1e6f4c968e41",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "link-article-to-book.js",
+      "line": 290,
+      "column": 43,
+      "snippet": "if (row && row.indexedPages && await IOUtils.exists(cacheFile)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "link-article-to-book.js",
+      "line": 291,
+      "column": 54,
+      "snippet": "let [cacheStat, pdfStat] = await Promise.all([IOUtils.stat(cacheFile), IOUtils.stat(pdfPath)]);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "link-article-to-book.js",
+      "line": 291,
+      "column": 79,
+      "snippet": "let [cacheStat, pdfStat] = await Promise.all([IOUtils.stat(cacheFile), IOUtils.stat(pdfPath)]);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "link-article-to-book.js",
+      "line": 293,
+      "column": 29,
+      "snippet": "let parts = (await Zotero.File.getContentsAsync(cacheFile)).split(\"\\f\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Mr-K13/zotero-plugins/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Mr-K13/zotero-plugins/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Mr-K13 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "zotero-plugins--mr-k13",
+   "version": "1.1.0",
+   "sha256": "49829e9a99f44e9c8caa8c8ae189d382e205fae5b013f8946dd8d2243879f75a"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "1b4e05fe3f29d3fa1e4b80ac9a2e9c5de3308da9f50d5f3eb94348ba84364695"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-20T14:00:36Z",
+    "lastCommitAt": "2026-11-20T14:00:36Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

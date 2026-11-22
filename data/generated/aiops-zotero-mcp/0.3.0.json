@@ -1,0 +1,445 @@
+{
+ "schemaVersion": 1,
+ "slug": "aiops-zotero-mcp",
+ "repo": "sachajw/aiops-zotero-mcp",
+ "version": "0.3.0",
+ "tag": "v0.3.0",
+ "releaseAuthor": "sachajw",
+ "publishedAt": "2026-11-22T10:59:07Z",
+ "prerelease": false,
+ "asset": {
+  "name": "aiops-zotero-mcp-0.3.0.xpi",
+  "url": "https://github.com/sachajw/aiops-zotero-mcp/releases/download/v0.3.0/aiops-zotero-mcp-0.3.0.xpi",
+  "size": 137117,
+  "sha256": "27f61e00c4b9e90686894d6ce9572ac179cc1f2e3d5190737e9522df4dbae812",
+  "githubAssetId": 778761361,
+  "uploader": "sachajw",
+  "uploadedAt": "2026-11-22T10:59:07Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "aiops-zotero-mcp@sachajw.github.io",
+  "name": "aiops Zotero MCP",
+  "version": "0.3.0",
+  "description": "MCP server inside Zotero for AI agents: localhost only, bearer-token auth",
+  "homepageUrl": "https://github.com/sachajw/aiops-zotero-mcp",
+  "updateUrl": "https://raw.githubusercontent.com/sachajw/aiops-zotero-mcp/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 825,
+   "sha256": "914f240caa5e26ebf9be9fcb8272ac10c4ee9255a3ce30029e0618e1343d006c"
+  },
+  {
+   "path": "content/aiops-zotero-mcp.js",
+   "size": 853599,
+   "sha256": "9d58891d792ea56c97a76977354d88d4cf4bbda46ca131f7cfa2ff7c978e4dad"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1070,
+   "sha256": "f520fc27018dd1f1563239bd1d939158a392f7a5a1c3f86853cb7d14c206f013"
+  },
+  {
+   "path": "manifest.json",
+   "size": 535,
+   "sha256": "aee3d48e0e904e91c8679977df70daca17018e51406d2465fdc474910c0ca4a6"
+  },
+  {
+   "path": "prefs.js",
+   "size": 380,
+   "sha256": "c7cfd2d1e440d8610333e1ceb64cb446c59b5513c83a08f42fb7da3f0c054fd4"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "aiops-zotero-mcp",
+   "version": "0.3.0",
+   "sha256": "27f61e00c4b9e90686894d6ce9572ac179cc1f2e3d5190737e9522df4dbae812"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 854804,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": [
+    {
+     "name": "zod",
+     "files": [
+      "content/aiops-zotero-mcp.js"
+     ],
+     "identifiedBy": "package-json",
+     "match": "not-in-catalogue"
+    }
+   ]
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/aiops-zotero-mcp.js",
+       "line": 20640,
+       "column": 26,
+       "snippet": "const recognizing = Zotero.RecognizeDocument.recognizeItems(items).catch((error62) => {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [
+    {
+     "pattern": "http://[<expr>]",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/aiops-zotero-mcp.js",
+       "line": 3095,
+       "column": 23,
+       "snippet": "return canParseURL(`http://[${value}]`);",
+       "inVendoredCode": true
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "578fb014a7fe",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/aiops-zotero-mcp.js",
+      "line": 20910,
+      "column": 40,
+      "snippet": "{ server, token: () => String(Zotero.Prefs.get(TOKEN_PREF, true) ?? \"\") }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 2,
+      "column": 0,
+      "snippet": "pref(\"extensions.aiops-zotero-mcp.token\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.aiops-zotero-mcp.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "6b3443828ace",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/aiops-zotero-mcp.js",
+      "line": 20048,
+      "column": 31,
+      "snippet": "fileExists: path ? await IOUtils.exists(path) : false,",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/aiops-zotero-mcp.js",
+      "line": 20223,
+      "column": 28,
+      "snippet": "if (!path || !await IOUtils.exists(path)) continue;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/aiops-zotero-mcp.js",
+      "line": 20566,
+      "column": 17,
+      "snippet": "if (!await IOUtils.exists(args.path)) throw new ToolError(`No file at ${args.path}`);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/aiops-zotero-mcp.js",
+      "line": 20567,
+      "column": 25,
+      "snippet": "const stat = await IOUtils.stat(args.path);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "87391bf452e7",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/aiops-zotero-mcp.js",
+      "line": 20921,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINT_PATH] = McpEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/aiops-zotero-mcp.js",
+      "line": 20927,
+      "column": 29,
+      "snippet": "Reflect.deleteProperty(Zotero.Server.Endpoints, ENDPOINT_PATH);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/aiops-mcp"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/sachajw/aiops-zotero-mcp/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/sachajw/aiops-zotero-mcp/main/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "c94e97e8262c",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/aiops-zotero-mcp.js",
+      "line": 20445,
+      "column": 22,
+      "snippet": "await collection.saveTx();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "content/aiops-zotero-mcp.js",
+      "line": 20921,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINT_PATH] = McpEndpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/aiops-mcp"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the sachajw account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "aiops-zotero-mcp",
+   "version": "0.3.0",
+   "sha256": "27f61e00c4b9e90686894d6ce9572ac179cc1f2e3d5190737e9522df4dbae812"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "fb1d4c0454bcc3ecce1241697f5f72b8b70702a9fbfb8b363aa739818a235e12"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-22T10:59:07Z",
+    "lastCommitAt": "2026-11-22T10:58:49Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

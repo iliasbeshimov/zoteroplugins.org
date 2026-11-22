@@ -1,0 +1,444 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-citation-collector",
+ "repo": "chaohuawang-phd/zotero-citation-collector",
+ "version": "1.1.0",
+ "tag": "v1.1.0",
+ "releaseAuthor": "chaohuawang-phd",
+ "publishedAt": "2026-11-10T03:15:12Z",
+ "prerelease": false,
+ "asset": {
+  "name": "Citation-Collector-Zotero10.xpi",
+  "url": "https://github.com/chaohuawang-phd/zotero-citation-collector/releases/download/v1.1.0/Citation-Collector-Zotero10.xpi",
+  "size": 24254,
+  "sha256": "88925a33885a5a8b907223959d325d18dd61875769ecde50e7f7a15aaeca755f",
+  "githubAssetId": 729922113,
+  "uploader": "chaohuawang-phd",
+  "uploadedAt": "2026-11-10T03:15:11Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "citation-collector@research-tools.local",
+  "name": "正文引文收藏",
+  "version": "1.1.0",
+  "description": "从 PDF 正文收藏引文，可添加阅读说明和重要性星级，在文库按优先级阅读。",
+  "updateUrl": "https://citation-collector.invalid/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 77387,
+   "sha256": "7a7891ec158737021d1c683ccccce4b801d68049bdd64be4319a4c18671ef2f6"
+  },
+  {
+   "path": "manifest.json",
+   "size": 450,
+   "sha256": "ae2d16e543bb23c195441d60ae6ba5741fca1f8be935fcc540808efc877ff891"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "zotero-citation-collector",
+   "version": "1.1.0",
+   "sha256": "88925a33885a5a8b907223959d325d18dd61875769ecde50e7f7a15aaeca755f"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 77387,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 859,
+       "column": 24,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url, { responseType: \"json\", timeout: 7000, anon: true,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1104,
+       "column": 29,
+       "snippet": "const result = await files.downloadFirstAvailableFile([resolver], path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 906,
+       "column": 77,
+       "snippet": "if (!id.toLowerCase().startsWith(\"10.48550/arxiv.\")) jobs.push(getJSON(\"https://api.crossref.org/works/\" + enc(id))",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 919,
+       "column": 30,
+       "snippet": "const searches = [getJSON(\"https://api.crossref.org/works?rows=5&query.bibliographic=\" + enc(query))",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.datacite.org",
+     "category": "scholarly-api",
+     "provider": "DataCite",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 908,
+       "column": 24,
+       "snippet": "jobs.push(getJSON(\"https://api.datacite.org/dois/\" + enc(id)).then(res => [dataCite(res?.data)]));",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 991,
+       "column": 106,
+       "snippet": "url || (candidate.doi ? \"https://doi.org/\" + candidate.doi : candidate.arxiv && \"https://arxiv.org/abs/\" + candidate.arxiv);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1056,
+       "column": 37,
+       "snippet": "if (arxivID.test(id)) urls.add(\"https://arxiv.org/pdf/\" + id);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 991,
+       "column": 50,
+       "snippet": "const url = candidate.url || (candidate.doi ? \"https://doi.org/\" + candidate.doi : candidate.arxiv && \"https://arxiv.org/abs/\" + candidate.arxiv);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "openreview.net",
+     "category": "scholarly-api",
+     "provider": "OpenReview",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 895,
+       "column": 16,
+       "snippet": "const url = \"https://openreview.net/forum?id=\" + encodeURIComponent(note.forum || note.id);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 962,
+       "column": 66,
+       "snippet": "arxiv: q.arxiv, forum: q.forum, venue: \"\", url: q.forum ? \"https://openreview.net/forum?id=\" + q.forum : \"\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 1073,
+       "column": 48,
+       "snippet": "if (id && /^[\\w-]+$/.test(id)) urls.add(\"https://openreview.net/pdf?id=\" + id);",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "2ebd744c2ab8",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1023,
+      "column": 25,
+      "snippet": "const sample = await Zotero.File.getBinaryContentsAsync(path, 1024);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1116,
+      "column": 31,
+      "snippet": "const filename = await Zotero.File.rename(path, base + \".pdf\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 1126,
+      "column": 12,
+      "snippet": "await IOUtils.remove(tmp.path, { recursive: true, ignoreAbsent: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://citation-collector.invalid/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://citation-collector.invalid/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the chaohuawang-phd account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "zotero-citation-collector",
+   "version": "1.1.0",
+   "sha256": "88925a33885a5a8b907223959d325d18dd61875769ecde50e7f7a15aaeca755f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "b8616192b41b94ed7b284fee3efddb10d28f4750ad76ae341e38d557200da7dd"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "api.datacite.org",
+       "arxiv.org",
+       "doi.org",
+       "openreview.net"
+      ],
+      "unconfirmed": [
+       "arxiv.org",
+       "doi.org",
+       "openreview.net"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-10T03:15:12Z",
+    "lastCommitAt": "2026-11-10T08:14:24Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

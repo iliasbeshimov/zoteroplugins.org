@@ -1,0 +1,292 @@
+{
+ "schemaVersion": 1,
+ "slug": "sharedocs-zotero-importer",
+ "repo": "jrdavalos/sharedocs-zotero-importer",
+ "version": "0.3.1",
+ "tag": "v0.3.1",
+ "releaseAuthor": "jrdavalos",
+ "publishedAt": "2026-11-19T18:24:47Z",
+ "prerelease": false,
+ "asset": {
+  "name": "sharedocs-zotero-0.3.1.xpi",
+  "url": "https://github.com/jrdavalos/sharedocs-zotero-importer/releases/download/v0.3.1/sharedocs-zotero-0.3.1.xpi",
+  "size": 2995,
+  "sha256": "a21b66eb518a4f7fd369700af7eebfe57c862e71b6b2a80a3ac077edab99600c",
+  "githubAssetId": 768783313,
+  "uploader": "jrdavalos",
+  "uploadedAt": "2026-11-19T18:26:51Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "sharedocs-importer@julio.example.org",
+  "name": "ShareDocs PDF Importer",
+  "version": "0.3.1",
+  "description": "Telecharge manuellement les PDF d'un dossier ShareDocs et compare nom et taille.",
+  "updateUrl": "https://example.org/sharedocs-zotero/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 5308,
+   "sha256": "2ef425ad468a4771f7d905de8018a0e7f936ea1a57ed4481a62440531d4bd03e"
+  },
+  {
+   "path": "manifest.json",
+   "size": 460,
+   "sha256": "e67b6c8a50e80e3fbbc26b8f9de2cfc727be35b6bafbbc75c289e404e9a64ace"
+  },
+  {
+   "path": "README.txt",
+   "size": 196,
+   "sha256": "8b98c67131aeadaf9eb0c75d0644642bbd787e11a7a061044919228abb1c0c86"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "sharedocs-zotero-importer",
+   "version": "0.3.1",
+   "sha256": "a21b66eb518a4f7fd369700af7eebfe57c862e71b6b2a80a3ac077edab99600c"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.txt",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 5308,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 6,
+       "column": 42,
+       "snippet": "async function getText(url) { let r=await Zotero.HTTP.request(\"GET\",url,{followRedirects:true,responseType:\"text\"}); return {text:r.responseText||\"\",url:r.responseURL||url}; }",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 20,
+       "column": 19,
+       "snippet": "try { let r=await Zotero.HTTP.request(\"HEAD\",url,{followRedirects:true}); let n=Number(r.getResponseHeader(\"Content-Length\")); if(Number.isFinite(n)&&n>0)return n; } catch(e){log(\"HEAD indisponible:",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 31,
+       "column": 52,
+       "snippet": "async function add(parent,r,title) { let item=await Zotero.Attachments.importFromURL({url:r.url,parentItemID:parent.id,title:title||r.name,contentType:\"application/pdf\"}); return item; }",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "f7c1b79721ee",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 26,
+      "column": 63,
+      "snippet": "try { let p=await item.getFilePathAsync(); if(p) size=(await IOUtils.stat(p)).size; } catch(e){}",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://example.org/sharedocs-zotero/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://example.org/sharedocs-zotero/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the jrdavalos account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "sharedocs-zotero-importer",
+   "version": "0.3.1",
+   "sha256": "a21b66eb518a4f7fd369700af7eebfe57c862e71b6b2a80a3ac077edab99600c"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "548ba1ced1926c529a0d09d4a633845f42aa0292ed2e9ecda945b82bb7690a9f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [],
+    "concern": "medium",
+    "label": "Uses the network; we couldn't tell where",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN-DESTINATION"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-19T18:24:47Z",
+    "lastCommitAt": "2026-11-19T18:06:42Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "checking",
+   "ruleId": "OV-CHECKING",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "We're still checking where its network code sends data"
+   ]
+  }
+ }
+}

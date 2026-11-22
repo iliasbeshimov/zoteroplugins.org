@@ -1,0 +1,293 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-save-guard",
+ "repo": "ruochenprogh/zotero-save-guard",
+ "version": "1.0.2",
+ "tag": "v1.0.2",
+ "releaseAuthor": "RuochenProGH",
+ "publishedAt": "2026-11-15T22:21:43Z",
+ "prerelease": false,
+ "asset": {
+  "name": "save-guard-companion-1.0.2.xpi",
+  "url": "https://github.com/RuochenProGH/Zotero-Save-Guard/releases/download/v1.0.2/save-guard-companion-1.0.2.xpi",
+  "size": 16369,
+  "sha256": "7582a33533bc7e9b8bac8b800d0486c206cafa9f405aa9960f19d465bed7ee56",
+  "githubAssetId": 752539822,
+  "uploader": "RuochenProGH",
+  "uploadedAt": "2026-11-15T22:21:40Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "save-guard@local.zotero",
+  "name": "Save Guard Companion",
+  "version": "1.0.2",
+  "description": "Local DOI lookup and session-scoped cleanup for the custom Connector.",
+  "homepageUrl": "https://github.com/RuochenProGH/Zotero-Save-Guard",
+  "updateUrl": "https://updates.invalid/connector-save-guard/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 6798,
+   "sha256": "9f6e90ea8aa6079e67ce1ee6c066cbe965c218ca4cfcc863cb27f21043af3d3f"
+  },
+  {
+   "path": "COPYING",
+   "size": 35973,
+   "sha256": "e743191b5ad32d8544388c9ecfc48aca48f1c5e00e2c046495a52ff68a255d14"
+  },
+  {
+   "path": "manifest.json",
+   "size": 527,
+   "sha256": "9f77148ea6cb4ff91bf324f777422670f6a51cec49d28058b876bb27e58038cc"
+  },
+  {
+   "path": "NOTICE.md",
+   "size": 1738,
+   "sha256": "4253115ad7f90ce9767c263d94e341012f4ca0f7a21bba6098e2fb6867380e5d"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "zotero-save-guard",
+   "version": "1.0.2",
+   "sha256": "7582a33533bc7e9b8bac8b800d0486c206cafa9f405aa9960f19d465bed7ee56"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "COPYING",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "NOTICE.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 6798,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "local-http-server",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "64376b2c5d3c",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 76,
+      "column": 29,
+      "snippet": "endpoints[path] = Handler; Zotero.Server.Endpoints[path] = Handler;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://updates.invalid/connector-save-guard/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://updates.invalid/connector-save-guard/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "99e306810462",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 41,
+      "column": 8,
+      "snippet": "await Zotero.DB.executeTransaction(() => Zotero.Items.trash([...ids]));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 127,
+      "column": 10,
+      "snippet": "endpoint('guardCancel', async ({sessionID,finished=false}) => {",
+      "inVendoredCode": false
+     }
+    ]
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the RuochenProGH account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "zotero-save-guard",
+   "version": "1.0.2",
+   "sha256": "7582a33533bc7e9b8bac8b800d0486c206cafa9f405aa9960f19d465bed7ee56"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "cb58409c8baf52645d06661cff47b350f39058c183e0a5462553fbfb8ce714da"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-15T22:21:43Z",
+    "lastCommitAt": "2026-11-15T22:19:46Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

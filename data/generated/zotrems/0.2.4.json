@@ -1,0 +1,459 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotrems",
+ "repo": "pklaschka/zotrems",
+ "version": "0.2.4",
+ "tag": "v0.2.4",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-11-21T23:53:53Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotrems-bridge.xpi",
+  "url": "https://github.com/pklaschka/zotrems/releases/download/v0.2.4/zotrems-bridge.xpi",
+  "size": 7075,
+  "sha256": "cbdc8b976d936dedf9177d4fb33803d857c89281fff45a407f5ceca4c1ae5238",
+  "githubAssetId": 777260531,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-11-21T23:53:52Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotrems-bridge@zotrems.local",
+  "name": "Zotrems Bridge",
+  "version": "0.2.4",
+  "description": "Lets the Zotrems RemNote plugin open Zotero's citation picker and fetch APA-formatted references.",
+  "updateUrl": "https://github.com/pklaschka/zotrems/releases/latest/download/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "11.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 18945,
+   "sha256": "663120b66e200c23bc828cfca00d3ec480fe4af39def98d63edaa4c77ec7fbb9"
+  },
+  {
+   "path": "manifest.json",
+   "size": 455,
+   "sha256": "98ad6f32da3a706562a55b2fe602576161fdc8196f0f341e96a168bdf7715210"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "zotrems",
+   "version": "0.2.4",
+   "sha256": "cbdc8b976d936dedf9177d4fb33803d857c89281fff45a407f5ceca4c1ae5238"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 18945,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 107,
+       "column": 20,
+       "snippet": "const xhr = await Zotero.HTTP.request('POST', url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 197,
+       "column": 15,
+       "snippet": "const base = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/connector/document`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.zotero.org",
+     "category": "zotero",
+     "provider": "Zotero",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 21,
+       "column": 30,
+       "snippet": "const NOTE_PLACEHOLDER_LINK = 'https://www.zotero.org/?';",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "http://127.0.0.1:<expr>/connector/document",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 197,
+       "column": 15,
+       "snippet": "const base = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/connector/document`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "44382b327396",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 42,
+      "column": 9,
+      "snippet": "return Zotero.Prefs.get(PREF_TOKEN, true) || '';",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 452,
+      "column": 6,
+      "snippet": "Zotero.Prefs.set(PREF_TOKEN, token, true);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotrems.token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "94a687f1216e",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 128,
+      "column": 52,
+      "snippet": "const bundle = Services.dirsvc.get('XREExeF', Ci.nsIFile).parent.parent.parent.path;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "codeKey": "ab4d4b4fb4dd",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 429,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints['/zotrems/ping'] = endpoint(['GET'], (request) => reply(200, {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 437,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints['/zotrems/pair'] = endpoint(['GET'], (request) => {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 457,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints['/zotrems/pick'] = endpoint(['GET'], async (request) => {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 482,
+      "column": 2,
+      "snippet": "Zotero.Server.Endpoints['/zotrems/format'] = endpoint(['POST'], async (request) => {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/zotrems/format",
+      "/zotrems/pair",
+      "/zotrems/pick",
+      "/zotrems/ping"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "1f22267d870c",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 129,
+      "column": 12,
+      "snippet": "await Zotero.Utilities.Internal.exec('/usr/bin/open', ['-a', bundle]);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Zotero.Utilities.Internal.exec",
+      "system openers only"
+     ],
+     "programs": [
+      "open"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/pklaschka/zotrems/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/pklaschka/zotrems/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": true,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. GitHub holds a build attestation for this exact file; we haven't checked its signature. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "zotrems",
+   "version": "0.2.4",
+   "sha256": "cbdc8b976d936dedf9177d4fb33803d857c89281fff45a407f5ceca4c1ae5238"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "b1473c517f0eed692e30977c80a4a2f441179a699cde9252ad9dd1b41aecf36f"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ],
+      "unconfirmed": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "www.zotero.org"
+      ],
+      "unconfirmed": [
+       "www.zotero.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "process-launch",
+      "label": "Opens files or links with your system's own apps",
+      "concern": "low",
+      "detail": "Programs it names include open"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-21T23:53:53Z",
+    "lastCommitAt": "2026-11-21T23:53:50Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

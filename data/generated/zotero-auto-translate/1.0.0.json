@@ -1,0 +1,367 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-auto-translate",
+ "repo": "nikstuckenbrock/zotero-auto-translate",
+ "version": "1.0.0",
+ "tag": "v1.0.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-11-20T22:05:27Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-auto-translate-1.0.0.xpi",
+  "url": "https://github.com/nikstuckenbrock/zotero-auto-translate/releases/download/v1.0.0/zotero-auto-translate-1.0.0.xpi",
+  "size": 4996,
+  "sha256": "dd4be5b0b9b0ae007bc21133dac454f8b21b9e1ea86a0be6f70cf3a9b7a55e27",
+  "githubAssetId": 773504522,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-11-20T22:05:26Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-auto-translate@nikstuckenbrock.github.io",
+  "name": "Zotero Auto Translate",
+  "version": "1.0.0",
+  "description": "Automatically translates highlighted text of a chosen color and stores the translation in the annotation comment.",
+  "homepageUrl": "https://github.com/nikstuckenbrock/zotero-auto-translate",
+  "updateUrl": "https://github.com/nikstuckenbrock/zotero-auto-translate/releases/latest/download/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "auto-translate.js",
+   "size": 6233,
+   "sha256": "6b960b00a90c09f3d5421bf4d5f56fac676b9bc1ffc3492d31de8b327d3b7389"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 621,
+   "sha256": "9ee991342bf9223b8688d9875e05238136da11504961a0a37a1016d3f50ae662"
+  },
+  {
+   "path": "manifest.json",
+   "size": 629,
+   "sha256": "a42ea7d2367e0daaea8ac4d059b3461a1b4de2c898b0158f4154aa8286c275c5"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 4375,
+   "sha256": "96fe5a1d8b36ab2f67116ddb07df3d672168c60502063102593214428617606e"
+  },
+  {
+   "path": "prefs.js",
+   "size": 944,
+   "sha256": "07c3aee37083119a273c44eb0d6e8994fff908e99a9caeb44d97c52961c67c25"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "zotero-auto-translate",
+   "version": "1.0.0",
+   "sha256": "dd4be5b0b9b0ae007bc21133dac454f8b21b9e1ea86a0be6f70cf3a9b7a55e27"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 12173,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "auto-translate.js",
+       "line": 115,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url, { responseType: \"json\" });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "auto-translate.js",
+       "line": 135,
+       "column": 24,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"GET\", url, { responseType: \"json\" });",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "auto-translate.js",
+       "line": 152,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"POST\", `https://${host}/v2/translate`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.mymemory.translated.net",
+     "category": "translation",
+     "provider": "MyMemory",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "auto-translate.js",
+       "line": 131,
+       "column": 8,
+       "snippet": "\"https://api.mymemory.translated.net/get\" +",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "translate.googleapis.com",
+     "category": "translation",
+     "provider": "Google Translate",
+     "flags": [
+      "blocked-in-mainland-china"
+     ],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "auto-translate.js",
+       "line": 112,
+       "column": 6,
+       "snippet": "\"https://translate.googleapis.com/translate_a/single?client=gtx&dt=t\" +",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://<expr>/v2/translate",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "auto-translate.js",
+       "line": 152,
+       "column": 22,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"POST\", `https://${host}/v2/translate`, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "auto-translate.js",
+       "line": 152,
+       "column": 50,
+       "snippet": "const xhr = await Zotero.HTTP.request(\"POST\", `https://${host}/v2/translate`, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 11,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero-auto-translate.deeplKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero-auto-translate.deeplKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/nikstuckenbrock/zotero-auto-translate/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/nikstuckenbrock/zotero-auto-translate/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "zotero-auto-translate",
+   "version": "1.0.0",
+   "sha256": "dd4be5b0b9b0ae007bc21133dac454f8b21b9e1ea86a0be6f70cf3a9b7a55e27"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "72b6f320ef2877f3dd0e456729220c2a0bd2b218edc07c021e6c890bc289be7d"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "translation",
+      "hosts": [
+       "api.mymemory.translated.net",
+       "translate.googleapis.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-20T22:05:27Z",
+    "lastCommitAt": "2026-11-20T22:04:10Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

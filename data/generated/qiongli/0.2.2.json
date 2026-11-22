@@ -1,0 +1,327 @@
+{
+ "schemaVersion": 1,
+ "slug": "qiongli",
+ "repo": "jxpeng98/qiongli",
+ "version": "0.2.2",
+ "tag": "v1.16.0",
+ "releaseAuthor": "jxpeng98",
+ "publishedAt": "2026-07-06T12:15:23Z",
+ "prerelease": false,
+ "asset": {
+  "name": "qiongli-zotero-companion-0.2.2.xpi",
+  "url": "https://github.com/jxpeng98/qiongli/releases/download/v1.16.0/qiongli-zotero-companion-0.2.2.xpi",
+  "size": 7469,
+  "sha256": "bc56eea1bf4c4c22ac2abdd5630436f19a6f765346548321fe8ff58d59cb8173",
+  "githubAssetId": 468044880,
+  "uploader": "jxpeng98",
+  "uploadedAt": "2026-07-06T12:15:22Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "qiongli-zotero-companion@qiongli.local",
+  "name": "Qiongli Zotero Companion",
+  "version": "0.2.2",
+  "description": "Local Zotero Desktop companion for Qiongli reference database sync. Tested with Zotero 9.0.4.",
+  "homepageUrl": "https://github.com/jxpeng98/qiongli",
+  "updateUrl": "https://github.com/jxpeng98/qiongli/releases/latest/download/qiongli-zotero-companion-updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "9.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 14161,
+   "sha256": "a7e39d3b312b288f75220c9956f86e5066f5751a720e29d08b953d7c1518b191"
+  },
+  {
+   "path": "chrome/content/qiongli-bridge.js",
+   "size": 7627,
+   "sha256": "95804f41d3287730ae250448606dd4298f11d96f9d0b83d91d5121fdb19d317a"
+  },
+  {
+   "path": "manifest.json",
+   "size": 580,
+   "sha256": "3cbe15a99524b63642e2857cb5a52f8273ed569df88838223a1535f267d1eda0"
+  },
+  {
+   "path": "README.md",
+   "size": 2015,
+   "sha256": "05e4a0097d2b2a6280ddfc0d50f8f48110eb0d9b9e79e065626e2016325f0b16"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "qiongli",
+   "version": "0.2.2",
+   "sha256": "bc56eea1bf4c4c22ac2abdd5630436f19a6f765346548321fe8ff58d59cb8173"
+  },
+  "coverage": {
+   "filesTotal": 4,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 21788,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "local-http-server",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "ebceb22f6cad",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 11,
+      "column": 9,
+      "snippet": "if (!Zotero?.Server?.Endpoints) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 55,
+      "column": 9,
+      "snippet": "if (!Zotero?.Server?.Endpoints) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 77,
+      "column": 19,
+      "snippet": "const endpoint = Zotero.Server.Endpoints[path] = function() {};",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 99,
+      "column": 39,
+      "snippet": "if (typeof Zotero !== \"undefined\" && Zotero?.Server?.Endpoints) {",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/qiongli/collections",
+      "/qiongli/ping",
+      "/qiongli/search",
+      "/qiongli/upsertItems"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 11,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/jxpeng98/qiongli/releases/latest/download/qiongli-zotero-companion-updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/jxpeng98/qiongli/releases/latest/download/qiongli-zotero-companion-updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "bcd3e187e8f7",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 26,
+      "column": 21,
+      "snippet": "registerEndpoint(Zotero, \"/qiongli/search\", [\"POST\"], async (postData, sendResponse) => {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 132,
+      "column": 16,
+      "snippet": "await item.saveTx();",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/qiongli/collections",
+      "/qiongli/search",
+      "/qiongli/upsertItems"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the jxpeng98 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "qiongli",
+   "version": "0.2.2",
+   "sha256": "bc56eea1bf4c4c22ac2abdd5630436f19a6f765346548321fe8ff58d59cb8173"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "5f27dc82b0ad8f96ba4f8c5bdf41477ce519e3db3becf3a1a8f5d9b36fe24174"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address is broken (nothing is there), so Zotero can't update it"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-07-06T12:15:23Z",
+    "lastCommitAt": "2026-11-18T11:24:41Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "incompatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Doesn't work with Zotero 10; works with Zotero 9",
+    "concern": "high"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

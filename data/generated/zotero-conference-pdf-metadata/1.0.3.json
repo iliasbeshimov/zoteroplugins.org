@@ -1,0 +1,306 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-conference-pdf-metadata",
+ "repo": "whitemo0623/zotero-conference-pdf-metadata",
+ "version": "1.0.3",
+ "tag": "v1.0.3",
+ "releaseAuthor": "whiteMo0623",
+ "publishedAt": "2026-11-19T09:43:53Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-conference-pdf-metadata.xpi",
+  "url": "https://github.com/whiteMo0623/zotero-conference-pdf-metadata/releases/download/v1.0.3/zotero-conference-pdf-metadata.xpi",
+  "size": 15064,
+  "sha256": "dc14a6f59251722a55914e7dd42053c03fdc63607e8a79e6af1b7781caab62ba",
+  "githubAssetId": 767098052,
+  "uploader": "whiteMo0623",
+  "uploadedAt": "2026-11-19T09:43:52Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "conference-pdf-metadata@codex.local",
+  "name": "会议论文自动识别",
+  "version": "1.0.3",
+  "description": "识别新导入的会议论文 PDF，并将核实的会议简称和年份写入 Zotero。",
+  "updateUrl": "https://raw.githubusercontent.com/whiteMo0623/zotero-conference-pdf-metadata/main/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 13163,
+   "sha256": "85fb2e3fd94e6a6b2ffe8424b1bfdd2021fe1646a30ad1625e428a7eb4266814"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1100,
+   "sha256": "a43f03ab54d685ec5adb24d639409a53b9b024072df51f964f13ab07f05f2300"
+  },
+  {
+   "path": "manifest.json",
+   "size": 487,
+   "sha256": "e2f6b80165c48dc4ea37e8448ea704b8f3dfc0e1d65f694e7b802c2b56db4430"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "zotero-conference-pdf-metadata",
+   "version": "1.0.3",
+   "sha256": "dc14a6f59251722a55914e7dd42053c03fdc63607e8a79e6af1b7781caab62ba"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 13163,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 107,
+       "column": 27,
+       "snippet": "const response = await Zotero.HTTP.request('GET', url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 257,
+       "column": 37,
+       "snippet": "const result = await requestJSON(`https://api.crossref.org/works/${encodeURIComponent(doi)}`, {});",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 265,
+       "column": 35,
+       "snippet": "const result = await requestJSON('https://api.crossref.org/works', {",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "sparql.dblp.org",
+     "category": "unknown",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 153,
+       "column": 39,
+       "snippet": "const response = await requestJSON('https://sparql.dblp.org/sparql', { query }, 'application/sparql-results+json');",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/whiteMo0623/zotero-conference-pdf-metadata/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/whiteMo0623/zotero-conference-pdf-metadata/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the whiteMo0623 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "zotero-conference-pdf-metadata",
+   "version": "1.0.3",
+   "sha256": "dc14a6f59251722a55914e7dd42053c03fdc63607e8a79e6af1b7781caab62ba"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "ff4cde222c08c7625b0ecb15be2cf32e974d703b7c1c20436965a9f6b3bbb23b"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "unknown-endpoints",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org"
+      ]
+     },
+     {
+      "category": "unknown",
+      "hosts": [
+       "sparql.dblp.org"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Contacts a server we couldn't identify: sparql.dblp.org",
+    "legalRisk": false,
+    "drivers": [
+     "DS-UNKNOWN"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-19T09:43:53Z",
+    "lastCommitAt": "2026-11-19T09:43:28Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Contacts a server we couldn't identify: sparql.dblp.org"
+   ]
+  }
+ }
+}

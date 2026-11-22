@@ -1,0 +1,377 @@
+{
+ "schemaVersion": 1,
+ "slug": "silent-notes",
+ "repo": "albus1446/silent-notes",
+ "version": "0.5.0",
+ "tag": "v0.5.0",
+ "releaseAuthor": "Albus1446",
+ "publishedAt": "2026-11-16T02:31:52Z",
+ "prerelease": false,
+ "asset": {
+  "name": "claude-code-zotero.xpi",
+  "url": "https://github.com/Albus1446/silent-notes/releases/download/v0.5.0/claude-code-zotero.xpi",
+  "size": 8679,
+  "sha256": "3c0ad61f383ebc69842e857df03253bac2cd89a24773ec483627360b21c8522c",
+  "githubAssetId": 753159196,
+  "uploader": "Albus1446",
+  "uploadedAt": "2026-11-16T02:31:51Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "claude-code@zotero.local",
+  "name": "Claude Code for Zotero",
+  "version": "0.5.0",
+  "description": "Quietly send annotations, highlights and notes to Claude Code; answers come back as child notes.",
+  "homepageUrl": "https://github.com/Albus1446/silent-note",
+  "updateUrl": "https://github.com/Albus1446/silent-note/releases/latest/download/updates.json",
+  "strictMinVersion": "7.0.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 21635,
+   "sha256": "cccd926f7e1d26465c10b607172dd94ae2b481932366f1f31dabaf2a3b1d6c70"
+  },
+  {
+   "path": "manifest.json",
+   "size": 550,
+   "sha256": "cc6c39037a4971855e40e9229a3aa2c8ec039978710a1650ad3ff818e0ac7b42"
+  },
+  {
+   "path": "prefs.js",
+   "size": 902,
+   "sha256": "713c5cf6506c0a579070f010667c15f4c2145c667f811aab4787e8821c46f67e"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "silent-notes",
+   "version": "0.5.0",
+   "sha256": "3c0ad61f383ebc69842e857df03253bac2cd89a24773ec483627360b21c8522c"
+  },
+  "coverage": {
+   "filesTotal": 3,
+   "filesAnalyzed": 2,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 22537,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "programs": [
+    {
+     "program": "Claude Code",
+     "provider": "Anthropic",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 32,
+       "column": 8,
+       "snippet": "\"/opt/homebrew/bin/claude\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 9,
+    "inVendoredCodeOnly": false,
+    "codeKey": "3bb01512e000",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 21,
+      "column": 6,
+      "snippet": "IOUtils.writeUTF8(file, `${new Date().toISOString()} ${msg}\\n`, { mode: \"appendOrCreate\" }).catch(e => Zotero.debug(\"[claude-code] log write failed: \" + e));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 28,
+      "column": 45,
+      "snippet": "let home = Services.dirsvc.get(\"Home\", Ci.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 35,
+      "column": 18,
+      "snippet": "if (await IOUtils.exists(p)) return p;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 51,
+      "column": 12,
+      "snippet": "await IOUtils.makeDirectory(dir, { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 106,
+      "column": 20,
+      "snippet": "if (!(await IOUtils.exists(src)) && it.parentItem?.isPDFAttachment()) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 109,
+      "column": 22,
+      "snippet": "return (await IOUtils.exists(src)) ? src : null;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 347,
+      "column": 43,
+      "snippet": "let blob = new win.Blob([await IOUtils.read(s.image)], { type: \"image/png\" });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 463,
+      "column": 8,
+      "snippet": "await IOUtils.makeDirectory(PathUtils.join(Zotero.DataDirectory.dir, \"claude-code\"), { ignoreExisting: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "zotero-data-dir",
+     "apis": [
+      "IOUtils",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "a8396d3ffdae",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 42,
+      "column": 54,
+      "snippet": "let { Subprocess } = ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 52,
+      "column": 23,
+      "snippet": "let proc = await Subprocess.call({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ],
+     "programs": [
+      "claude"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/Albus1446/silent-note/releases/latest/download/updates.json\"",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/Albus1446/silent-note/releases/latest/download/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Albus1446 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "silent-notes",
+   "version": "0.5.0",
+   "sha256": "3c0ad61f383ebc69842e857df03253bac2cd89a24773ec483627360b21c8522c"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "f115a46163f08455276dbbea55a7a7957a822c57eb396ee8fe811bdd16851413"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository (under its old name)",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "Claude Code (Anthropic)"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include claude"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-16T02:31:52Z",
+    "lastCommitAt": "2026-11-16T02:55:41Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

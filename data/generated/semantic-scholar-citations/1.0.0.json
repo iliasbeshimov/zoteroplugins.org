@@ -1,0 +1,350 @@
+{
+ "schemaVersion": 1,
+ "slug": "semantic-scholar-citations",
+ "repo": "linfeng-du/semantic-scholar-citations",
+ "version": "1.0.0",
+ "tag": "v1.0.0",
+ "releaseAuthor": "linfeng-du",
+ "publishedAt": "2026-11-14T17:16:02Z",
+ "prerelease": false,
+ "asset": {
+  "name": "semantic-scholar-citations-1.0.0.xpi",
+  "url": "https://github.com/linfeng-du/semantic-scholar-citations/releases/download/v1.0.0/semantic-scholar-citations-1.0.0.xpi",
+  "size": 19342,
+  "sha256": "d146886e6d05a016d7c29d86c47e3eda6472acb8ceb54ec3c25b7a015c0f218f",
+  "githubAssetId": 748198908,
+  "uploader": "linfeng-du",
+  "uploadedAt": "2026-11-14T17:15:44Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "gs-citation-column@local.codex",
+  "name": "Semantic Scholar Citations",
+  "version": "1.0.0",
+  "description": "Fetch citation counts from Semantic Scholar and display them in the item list.",
+  "updateUrl": "https://127.0.0.1:9/ss-citation-column/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 933,
+   "sha256": "d611759dc42d12dd453aaa0b6ec3e779d2e2df022109c4807468825bfb831bdc"
+  },
+  {
+   "path": "main.js",
+   "size": 34136,
+   "sha256": "2cce3536888fe6007ee1e47eb38a7334b45fc27ba866084c1bbbbc8926c469b5"
+  },
+  {
+   "path": "manifest.json",
+   "size": 449,
+   "sha256": "78c32a13d35714f3a14de215f2a13f76c6bbe7f9db165bf6c6fdd2be51110904"
+  },
+  {
+   "path": "matching.js",
+   "size": 6394,
+   "sha256": "1d17f4171d1f368b4f6d6ed8195b0f541f0cec41d8beb921b6190ec5032e39b6"
+  },
+  {
+   "path": "note-store.js",
+   "size": 12583,
+   "sha256": "82c9e6dcedbabb90645ec17334bfc8cae332be41833e0887d9496ae8248c18c7"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 642,
+   "sha256": "56e95317c13d755b59f7e9c89bbfb4951628c87b5e2c7a7ba2c8e6a37d8ff227"
+  },
+  {
+   "path": "README.md",
+   "size": 4380,
+   "sha256": "410d43407f4154d93e839cd52c280122976cdcf52a6bb5bab25f32efb989ae03"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "semantic-scholar-citations",
+   "version": "1.0.0",
+   "sha256": "d146886e6d05a016d7c29d86c47e3eda6472acb8ceb54ec3c25b7a015c0f218f"
+  },
+  "coverage": {
+   "filesTotal": 7,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "README.md",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 54688,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "main.js",
+       "line": 631,
+       "column": 22,
+       "snippet": "xhr = await this.Zotero.HTTP.request(method, BASE + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "main.js",
+       "line": 4,
+       "column": 15,
+       "snippet": "const BASE = \"https://api.semanticscholar.org/graph/v1\";",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "main.js",
+       "line": 631,
+       "column": 22,
+       "snippet": "xhr = await this.Zotero.HTTP.request(method, BASE + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "d966f1dbc68d",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 115,
+      "column": 10,
+      "snippet": "if (this.Zotero.Prefs.get(API_KEY_PREF) === undefined) this.Zotero.Prefs.set(API_KEY_PREF, \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 115,
+      "column": 61,
+      "snippet": "if (this.Zotero.Prefs.get(API_KEY_PREF) === undefined) this.Zotero.Prefs.set(API_KEY_PREF, \"\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "main.js",
+      "line": 623,
+      "column": 30,
+      "snippet": "const configuredKey = this.Zotero.Prefs.get(API_KEY_PREF);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "ssCitationColumn.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://127.0.0.1:9/ss-citation-column/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://127.0.0.1:9/ss-citation-column/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the linfeng-du account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "semantic-scholar-citations",
+   "version": "1.0.0",
+   "sha256": "d146886e6d05a016d7c29d86c47e3eda6472acb8ceb54ec3c25b7a015c0f218f"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "d3ab56e16de714bf11d6f717fc4ba064ad7de682e9039024dde46f4f6f84e307"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.semanticscholar.org"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-14T17:16:02Z",
+    "lastCommitAt": "2026-11-14T17:14:12Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

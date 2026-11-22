@@ -1,0 +1,329 @@
+{
+ "schemaVersion": 1,
+ "slug": "dpc-palette",
+ "repo": "iniphi/dpc-palette",
+ "version": "0.2.1",
+ "tag": "v0.2.1",
+ "releaseAuthor": "iniphi",
+ "publishedAt": "2026-11-20T17:10:25Z",
+ "prerelease": false,
+ "asset": {
+  "name": "dpc-palette-0.2.1.xpi",
+  "url": "https://github.com/iniphi/dpc-palette/releases/download/v0.2.1/dpc-palette-0.2.1.xpi",
+  "size": 8649,
+  "sha256": "94a9f7b8e3415e5067e1371a02b97217a9b8445644e2494f0691115acc6f25d8",
+  "githubAssetId": 772649284,
+  "uploader": "iniphi",
+  "uploadedAt": "2026-11-20T17:10:24Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "dpc-palette@iniphi.co.uk",
+  "name": "DPC Palette",
+  "version": "0.2.1",
+  "description": "A reading colour code in the Zotero reader: a side-pane palette, named buttons (keys 1-7) in the selection popup, and an instant tap on the desk watcher when a waking colour is used.",
+  "updateUrl": "https://raw.githubusercontent.com/iniphi/dpc-palette/main/updates.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1117,
+   "sha256": "89653ea8b84cda568051bdab9856d93c24314b8f66dedefba7e5fbc3b4a4f084"
+  },
+  {
+   "path": "dpc-logic.js",
+   "size": 3997,
+   "sha256": "cebcc10dc4aad3aaf19143e1676956f44c1c040c2d7b619906551b3cf9d49248"
+  },
+  {
+   "path": "icons/palette.svg",
+   "size": 298,
+   "sha256": "1244083e1e9be13f55956ce7164a8473f4062a2af04a7753f307a5cf9ec8758a"
+  },
+  {
+   "path": "locale/en-US/dpc-palette.ftl",
+   "size": 107,
+   "sha256": "4f092ae510df8833c1b8e62fee1c83c1c3d1536404265042b1ce6e31694a5b7c"
+  },
+  {
+   "path": "manifest.json",
+   "size": 507,
+   "sha256": "bccbd37509d600e6bb2a89a820bdae60e8b229cc5251aa85a0cc205b2f8c2ac8"
+  },
+  {
+   "path": "palette-data.js",
+   "size": 1046,
+   "sha256": "44a18a101f8779c0ddfcbcc5d737bfbfb7c0ae43e219a674b80b3aab992c0153"
+  },
+  {
+   "path": "palette.js",
+   "size": 5099,
+   "sha256": "cc9b48156b568874dd916219539364e0fe5f21b1791d74a46a439b34b36aee77"
+  },
+  {
+   "path": "reader-hooks.js",
+   "size": 5340,
+   "sha256": "1827a6f0b74a9931ad9c7c7a16429ca07303ef5bb4587c860c04987300217b5a"
+  },
+  {
+   "path": "style.css",
+   "size": 1288,
+   "sha256": "790813e5ff202b28d23c2bd1413143078a991108a84cf4e780d31fa49ccf1a29"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "dpc-palette",
+   "version": "0.2.1",
+   "sha256": "94a9f7b8e3415e5067e1371a02b97217a9b8445644e2494f0691115acc6f25d8"
+  },
+  "coverage": {
+   "filesTotal": 9,
+   "filesAnalyzed": 5,
+   "filesSkipped": [
+    {
+     "path": "icons/palette.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/en-US/dpc-palette.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "style.css",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 16599,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "reader-hooks.js",
+       "line": 140,
+       "column": 3,
+       "snippet": "Zotero.HTTP.request(\"POST\", DPCLogic.eventURL(this.port()), {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "dpc-logic.js",
+       "line": 66,
+       "column": 9,
+       "snippet": "return `http://127.0.0.1:${p}/dpc/event`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "reader-hooks.js",
+       "line": 140,
+       "column": 3,
+       "snippet": "Zotero.HTTP.request(\"POST\", DPCLogic.eventURL(this.port()), {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "http://127.0.0.1:<expr>/dpc/event",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "dpc-logic.js",
+       "line": 66,
+       "column": 9,
+       "snippet": "return `http://127.0.0.1:${p}/dpc/event`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 18,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/iniphi/dpc-palette/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/iniphi/dpc-palette/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the iniphi account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "dpc-palette",
+   "version": "0.2.1",
+   "sha256": "94a9f7b8e3415e5067e1371a02b97217a9b8445644e2494f0691115acc6f25d8"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "5d66f2598c452ab0b8af250a4c0ea96cf85020aa9c568ae06f1f4d98400273a7"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "user-configured-only",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "none",
+    "label": "Only contacts programs on this computer",
+    "legalRisk": false,
+    "drivers": [
+     "DS-USER-CONFIGURED"
+    ]
+   },
+   "capabilities": {
+    "badges": [],
+    "concern": "none",
+    "drivers": []
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-20T17:10:25Z",
+    "lastCommitAt": "2026-11-20T17:07:06Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

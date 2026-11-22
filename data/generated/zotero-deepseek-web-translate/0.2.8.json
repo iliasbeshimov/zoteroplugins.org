@@ -1,0 +1,636 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-deepseek-web-translate",
+ "repo": "224-name/zotero-deepseek-web-translate",
+ "version": "0.2.8",
+ "tag": "v0.2.8",
+ "releaseAuthor": "224-name",
+ "publishedAt": "2026-11-09T09:07:47Z",
+ "prerelease": false,
+ "asset": {
+  "name": "deepseek-web-translate-0.2.8.xpi",
+  "url": "https://github.com/224-name/zotero-deepseek-web-translate/releases/download/v0.2.8/deepseek-web-translate-0.2.8.xpi",
+  "size": 29389,
+  "sha256": "79f2aad0cb7a914ffc8529474dddbd44bb938d96842aabfb7496a6694455bb32",
+  "githubAssetId": 726857486,
+  "uploader": "224-name",
+  "uploadedAt": "2026-11-09T09:07:29Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-deepseek-web-translate@local",
+  "name": "DeepSeek 网页翻译",
+  "version": "0.2.8",
+  "description": "用免费的 DeepSeek 网页版（或任意 OpenAI 兼容接口）翻译 PDF 全文与划词文本，生成双语对照文档。",
+  "updateUrl": "https://example.com/zotero-deepseek-web-translate/update.json",
+  "strictMinVersion": "7.0",
+  "strictMaxVersion": "10.9.9"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 46787,
+   "sha256": "aa5203643c337175e8eb1cabac30948d2f9f1b95e57e922986845d744618a311"
+  },
+  {
+   "path": "content/core.js",
+   "size": 30117,
+   "sha256": "cb22e2bab4f3c46c61fdebe75f3697b899e8a65e940ea21c7030664da6a02125"
+  },
+  {
+   "path": "content/icon.svg",
+   "size": 471,
+   "sha256": "4c1c3073e9cc96f48d4834031c89e1480a0cec96bc03bf0f7bfb24e4e4fae173"
+  },
+  {
+   "path": "content/preferences.xhtml",
+   "size": 7101,
+   "sha256": "9d08381beeaf02dfed09a31ca1d7c50aab2c255ef1525fe7e6c065a2f17a786c"
+  },
+  {
+   "path": "manifest.json",
+   "size": 587,
+   "sha256": "fb7169faba12b3913a750ef5a44e785562d6f38a8113d490aced7e3794e85528"
+  },
+  {
+   "path": "prefs.js",
+   "size": 1089,
+   "sha256": "929d7e89761ff0c8ff50f0cb6b3db63376159897bce22fdf9f79f5525afd5e8a"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "zotero-deepseek-web-translate",
+   "version": "0.2.8",
+   "sha256": "79f2aad0cb7a914ffc8529474dddbd44bb938d96842aabfb7496a6694455bb32"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "content/icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 85094,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 52,
+       "column": 3,
+       "snippet": "Zotero.HTTP.request('POST', base + '/v1/bridge/log', {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 195,
+       "column": 14,
+       "snippet": "xhr = await Zotero.HTTP.request(method, url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 8765,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 7,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 50,
+       "column": 36,
+       "snippet": "const base = strPref('bridgeUrl', 'http://127.0.0.1:8765').trim().replace(/\\/+$/, '');",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 241,
+       "column": 35,
+       "snippet": "const base = strPref('bridgeUrl', 'http://127.0.0.1:8765').trim().replace(/\\/+$/, '');",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 243,
+       "column": 14,
+       "snippet": "throw fatal('还没有设置本地中转服务地址。请打开「编辑 → 设置 → DeepSeek 网页翻译」填写，默认 http://127.0.0.1:8765');",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 726,
+       "column": 35,
+       "snippet": "const base = strPref('bridgeUrl', 'http://127.0.0.1:8765').trim().replace(/\\/+$/, '');",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 65,
+       "column": 54,
+       "snippet": "任何兼容 /chat/completions 的服务都能用。想把 API 地址指向本机 Ollama：http://127.0.0.1:11434/v1 ，模型填 qwen2.5:7b 之类。",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 6,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.deepseekweb.bridgeUrl\", \"http://127.0.0.1:8765\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 6,
+       "column": 48,
+       "snippet": "pref(\"extensions.zotero.deepseekweb.bridgeUrl\", \"http://127.0.0.1:8765\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 284,
+       "column": 31,
+       "snippet": "let base = strPref('apiBase', 'https://api.deepseek.com/v1').trim().replace(/\\/+$/, '');",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 714,
+       "column": 10,
+       "snippet": "notify('当前是 API 模式，但还没填 API 地址。\\n示例：https://api.deepseek.com/v1', true);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 7,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.deepseekweb.apiBase\", \"https://api.deepseek.com/v1\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 7,
+       "column": 46,
+       "snippet": "pref(\"extensions.zotero.deepseekweb.apiBase\", \"https://api.deepseek.com/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "chat.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek (web chat)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 736,
+       "column": 4,
+       "snippet": "'2. 浏览器打开了 https://chat.deepseek.com 并已登录；\\n' +",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/v1/bridge/log",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 52,
+       "column": 3,
+       "snippet": "Zotero.HTTP.request('POST', base + '/v1/bridge/log', {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "extensions.zotero.deepseekweb.apiBase",
+     "defaultValue": "https://api.deepseek.com/v1",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 42,
+       "column": 3,
+       "snippet": "<html:input type=\"text\" spellcheck=\"false\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 43,
+       "column": 4,
+       "snippet": "preference=\"extensions.zotero.deepseekweb.apiBase\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 7,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.deepseekweb.apiBase\", \"https://api.deepseek.com/v1\");",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "extensions.zotero.deepseekweb.bridgeUrl",
+     "defaultValue": "http://127.0.0.1:8765",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/preferences.xhtml",
+       "line": 24,
+       "column": 4,
+       "snippet": "preference=\"extensions.zotero.deepseekweb.bridgeUrl\"",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "prefs.js",
+       "line": 6,
+       "column": 0,
+       "snippet": "pref(\"extensions.zotero.deepseekweb.bridgeUrl\", \"http://127.0.0.1:8765\");",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "clipboard",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "52f3c75935bf",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 879,
+      "column": 2,
+      "snippet": "Zotero.Utilities.Internal.copyTextToClipboard(String(text));",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "clipboard"
+     ]
+    }
+   },
+   {
+    "id": "credential-storage",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "prefs.js",
+      "line": 8,
+      "column": 0,
+      "snippet": "pref(\"extensions.zotero.deepseekweb.apiKey\", \"\");",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "extensions.zotero.deepseekweb.apiKey"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 13,
+    "inVendoredCodeOnly": false,
+    "codeKey": "9e789a2c6f3f",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 79,
+      "column": 15,
+      "snippet": "old = await Zotero.File.getContentsAsync(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 84,
+      "column": 8,
+      "snippet": "await Zotero.File.putContentsAsync(path, (old || '') + lines.join('\\n') + '\\n');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 348,
+      "column": 23,
+      "snippet": "const text = await Zotero.File.getContentsAsync(cacheFile);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 360,
+      "column": 21,
+      "snippet": "const text = await Zotero.File.getContentsAsync(file.path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 385,
+      "column": 16,
+      "snippet": "return await Zotero.File.getContentsAsync(await attachment.getFilePathAsync());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 507,
+      "column": 7,
+      "snippet": "await IOUtils.write(path, bytes);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 509,
+      "column": 18,
+      "snippet": "const baseName = Zotero.File.getValidFileName('DeepSeek双语对照-' + docData.title).slice(0, 70);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 515,
+      "column": 14,
+      "snippet": "try { await IOUtils.remove(path, { ignoreAbsent: true }); }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 524,
+      "column": 7,
+      "snippet": "await Zotero.File.putContentsAsync(path, html);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 526,
+      "column": 18,
+      "snippet": "const baseName = Zotero.File.getValidFileName('DeepSeek双语对照-' + docData.title).slice(0, 70);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 14,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://example.com/zotero-deepseek-web-translate/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://example.com/zotero-deepseek-web-translate/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the 224-name account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "zotero-deepseek-web-translate",
+   "version": "0.2.8",
+   "sha256": "79f2aad0cb7a914ffc8529474dddbd44bb938d96842aabfb7496a6694455bb32"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "93d3e279b69936240954257b4dba112007d05397d1bc1bf558063012c5989c99"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com",
+       "chat.deepseek.com"
+      ],
+      "unconfirmed": [
+       "chat.deepseek.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "clipboard",
+      "label": "Uses the clipboard",
+      "concern": "low"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-09T09:07:47Z",
+    "lastCommitAt": "2026-11-09T09:08:36Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}

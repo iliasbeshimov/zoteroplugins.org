@@ -1,0 +1,345 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-word-citation-order",
+ "repo": "dylandai0401/zotero-word-citation-order",
+ "version": "1.5.0",
+ "tag": "v1.5.0",
+ "releaseAuthor": "DylanDai0401",
+ "publishedAt": "2026-11-12T04:40:42Z",
+ "prerelease": false,
+ "asset": {
+  "name": "Zotero.xpi",
+  "url": "https://github.com/DylanDai0401/zotero-word-citation-order/releases/download/v1.5.0/Zotero.xpi",
+  "size": 10257,
+  "sha256": "38396e3fa841f88d81246effed9b1a45d1fd7c983874824736751b0350c13245",
+  "githubAssetId": 738095404,
+  "uploader": "DylanDai0401",
+  "uploadedAt": "2026-11-12T04:43:33Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "word-citation-tags@research-tools.local",
+  "name": "Word 引文顺序",
+  "version": "1.5.0",
+  "description": "在 Zotero 条目列表中显示 Word 稿件的首次引用顺序。",
+  "updateUrl": "https://zotero-word-citation-tags.invalid/updates.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 26965,
+   "sha256": "1f7130ab39b33ec40b976fb73554fab9a03ddfaa39c046848c91565bc49a9e1b"
+  },
+  {
+   "path": "locale/en-US/word-citation-tags.ftl",
+   "size": 114,
+   "sha256": "0f534f2d46b4420ea1ab5402b88f8494e2aeb427dcefc9103fcdee0c66cf2e5c"
+  },
+  {
+   "path": "locale/zh-CN/word-citation-tags.ftl",
+   "size": 111,
+   "sha256": "83d9116629a8951a1ad1edd2328ef07aa24349fae86507a7b8446e4f705f7aa3"
+  },
+  {
+   "path": "manifest.json",
+   "size": 421,
+   "sha256": "479981b1aeefc8036fd89334ec0242d1ea9260479f85278d670e3256862a577e"
+  },
+  {
+   "path": "word-snapshot.ps1",
+   "size": 3736,
+   "sha256": "51324d90d999d65f364ed3cddfffbcbd1f9dad58b5d88b923dad2fcc8c7139de"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "zotero-word-citation-order",
+   "version": "1.5.0",
+   "sha256": "38396e3fa841f88d81246effed9b1a45d1fd7c983874824736751b0350c13245"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/word-citation-tags.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "locale/zh-CN/word-citation-tags.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    },
+    {
+     "path": "word-snapshot.ps1",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 26965,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "purl.oclc.org",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 6,
+       "column": 4,
+       "snippet": "\"http://purl.oclc.org/ooxml/wordprocessingml/main\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "1dac35f73f93",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 376,
+      "column": 48,
+      "snippet": "const windows = Services.dirsvc.get(\"WinD\", Ci.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 378,
+      "column": 25,
+      "snippet": "const script = await Zotero.File.getResourceAsync(snapshotScriptURL);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "ffa96336e9cc",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 375,
+      "column": 54,
+      "snippet": "const { Subprocess } = ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 379,
+      "column": 26,
+      "snippet": "const process = await Subprocess.call({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ],
+     "programs": [
+      "powershell"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://zotero-word-citation-tags.invalid/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://zotero-word-citation-tags.invalid/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the DylanDai0401 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "zotero-word-citation-order",
+   "version": "1.5.0",
+   "sha256": "38396e3fa841f88d81246effed9b1a45d1fd7c983874824736751b0350c13245"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "8be0941dc8cf45706452ba28fac04aeab14d8af2c3d063e4a2b3cc91f6c18e9a"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found; its code names servers we couldn't identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include powershell"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-12T04:40:42Z",
+    "lastCommitAt": "2026-11-12T04:42:24Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}

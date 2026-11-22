@@ -1,0 +1,334 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-copy-attachment-file",
+ "repo": "lislond/zotero-copy-attachment-file",
+ "version": "1.1.0",
+ "tag": "v1.1",
+ "releaseAuthor": "lislond",
+ "publishedAt": "2026-11-10T09:38:48Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-copy-attachment-file-1.1.0.xpi",
+  "url": "https://github.com/lislond/zotero-copy-attachment-file/releases/download/v1.1/zotero-copy-attachment-file-1.1.0.xpi",
+  "size": 3406,
+  "sha256": "b1ae295eb4f3eb93867755b90d4b0abbc993f3ee5250922e66a5364f0c6d3106",
+  "githubAssetId": 730878929,
+  "uploader": "lislond",
+  "uploadedAt": "2026-11-10T09:39:37Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "copy-attachment-file@zotero-local.example",
+  "name": "复制附件文件",
+  "version": "1.1.0",
+  "description": "从 Zotero 附件右键菜单复制文件，可直接在 Windows 资源管理器中粘贴。",
+  "updateUrl": "https://updates.invalid/zotero-copy-attachment-file.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 7642,
+   "sha256": "be5a52029e3fa98b1eaf8b63565661d0a53cc577b61efdd1f40a8250948887ce"
+  },
+  {
+   "path": "manifest.json",
+   "size": 454,
+   "sha256": "3f90b9c3eb72c0b673f053dd6ad8bb4618028a32bba4259e39da74769a1687a0"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "zotero-copy-attachment-file",
+   "version": "1.1.0",
+   "sha256": "b1ae295eb4f3eb93867755b90d4b0abbc993f3ee5250922e66a5364f0c6d3106"
+  },
+  "coverage": {
+   "filesTotal": 2,
+   "filesAnalyzed": 1,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 7642,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "9a83ac26be03",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 114,
+      "column": 25,
+      "snippet": "const sample = await Zotero.File.getSample(file);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "native-code",
+    "occurrences": 10,
+    "inVendoredCodeOnly": false,
+    "codeKey": "b9c129f7b6ec",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 147,
+      "column": 48,
+      "snippet": "const { ctypes } = ChromeUtils.importESModule(\"resource://gre/modules/ctypes.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 150,
+      "column": 19,
+      "snippet": "const hwnd = ptr(ctypes.UInt64(handle));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 153,
+      "column": 15,
+      "snippet": "const user = ctypes.open(\"user32.dll\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 156,
+      "column": 13,
+      "snippet": "kernel = ctypes.open(\"kernel32.dll\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 157,
+      "column": 79,
+      "snippet": "const registerFormat = user.declare(\"RegisterClipboardFormatW\", abi, uint, ctypes.jschar.ptr);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 162,
+      "column": 64,
+      "snippet": "const alloc = kernel.declare(\"GlobalAlloc\", abi, ptr, uint, ctypes.size_t);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 174,
+      "column": 25,
+      "snippet": "const target = ctypes.cast(address, ctypes.uint16_t.array(data.length).ptr).contents;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 174,
+      "column": 46,
+      "snippet": "const target = ctypes.cast(address, ctypes.uint16_t.array(data.length).ptr).contents;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "js-ctypes"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://updates.invalid/zotero-copy-attachment-file.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://updates.invalid/zotero-copy-attachment-file.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the lislond account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "zotero-copy-attachment-file",
+   "version": "1.1.0",
+   "sha256": "b1ae295eb4f3eb93867755b90d4b0abbc993f3ee5250922e66a5364f0c6d3106"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "21e465e83ac82031d3f4d01b1ebce0fe1a3e1d107f09a5b8327e96e24ab34b1e"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "none",
+     "label": "Doesn't update automatically: the update address is a placeholder"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "native-code",
+      "label": "Loads native code",
+      "concern": "medium"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-10T09:38:48Z",
+    "lastCommitAt": "2026-11-10T09:35:48Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Loads native code"
+   ]
+  }
+ }
+}

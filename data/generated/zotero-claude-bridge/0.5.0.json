@@ -1,0 +1,557 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-claude-bridge",
+ "repo": "changlinwu/zotero-claude-bridge",
+ "version": "0.5.0",
+ "tag": "v0.5.0",
+ "releaseAuthor": "ChanglinWu",
+ "publishedAt": "2026-11-21T07:38:31Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-claude-bridge-0.5.0.xpi",
+  "url": "https://github.com/ChanglinWu/zotero-claude-bridge/releases/download/v0.5.0/zotero-claude-bridge-0.5.0.xpi",
+  "size": 25456,
+  "sha256": "3b0a92fe456a2a70d266a81a23a4cd4f2174b02aa0a3250255fb0508a9cc0870",
+  "githubAssetId": 774819997,
+  "uploader": "ChanglinWu",
+  "uploadedAt": "2026-11-21T07:38:32Z",
+  "fetchedAt": "2026-11-22T16:22:10.605Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "claude-bridge@zotero-claude-bridge",
+  "name": "Claude Bridge for Zotero",
+  "version": "0.5.0",
+  "description": "Keyless local MCP server inside Zotero, so Claude Code can search your library and add papers directly.",
+  "homepageUrl": "https://github.com/ChanglinWu/zotero-claude-bridge",
+  "updateUrl": "https://github.com/ChanglinWu/zotero-claude-bridge/releases/latest/download/updates.json",
+  "strictMinVersion": "6.999",
+  "strictMaxVersion": "11.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 756,
+   "sha256": "8fc4d88f720b867ddda78f31c47742e746cdd8a0027e362c98ef4fbe021b64c6"
+  },
+  {
+   "path": "icon.svg",
+   "size": 260,
+   "sha256": "fda2f313485c2bcfba759ff21dd34eb863c7fb3c4a0fcb4821b58efa8dd045de"
+  },
+  {
+   "path": "LICENSE",
+   "size": 1090,
+   "sha256": "7839ab1b9ecd9e1c8e1fa7ce67805529991cf275b4813048bc3b44f1d5560e13"
+  },
+  {
+   "path": "manifest.json",
+   "size": 665,
+   "sha256": "c48369b1b1240614fc30ce04fa8387ab9a366553c3651bad94825c736a32a476"
+  },
+  {
+   "path": "prefs.js",
+   "size": 366,
+   "sha256": "bbb4d0794d41516743f2e36eee1517a95f392249cb84bfbe00c7364793135f35"
+  },
+  {
+   "path": "src/bridge.js",
+   "size": 88731,
+   "sha256": "c8435c7faa6c50ed84e17f263b2a14eb1088c42b25c86d88d9387ae68f4a6243"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "input": {
+   "slug": "zotero-claude-bridge",
+   "version": "0.5.0",
+   "sha256": "3b0a92fe456a2a70d266a81a23a4cd4f2174b02aa0a3250255fb0508a9cc0870"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "icon.svg",
+     "reason": "not-code"
+    },
+    {
+     "path": "LICENSE",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 89853,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 1,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/bridge.js",
+       "line": 1906,
+       "column": 24,
+       "snippet": "att = await Zotero.Attachments.importFromURL({",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 3,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/bridge.js",
+       "line": 706,
+       "column": 24,
+       "snippet": "const att = await Zotero.Attachments.addAvailableFile(item);",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/bridge.js",
+       "line": 1317,
+       "column": 25,
+       "snippet": "const tr = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "src/bridge.js",
+       "line": 1825,
+       "column": 25,
+       "snippet": "const tr = new Zotero.Translate.Search();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/bridge.js",
+       "line": 56,
+       "column": 15,
+       "snippet": "mcp: `http://127.0.0.1:${Zotero.Prefs.get(\"httpServer.port\") || 23119}${ENDPOINT}`,",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doi.org",
+     "category": "scholarly-api",
+     "provider": "DOI resolver",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/bridge.js",
+       "line": 856,
+       "column": 37,
+       "snippet": "if (field(item, \"DOI\")) out.push(`**DOI:** https://doi.org/${field(item, \"DOI\")} `);",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/bridge.js",
+       "line": 216,
+       "column": 25,
+       "snippet": "const MAILBOX_README = `# Claude Bridge for Zotero: folder mailbox",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "http://127.0.0.1:<expr><expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "src/bridge.js",
+       "line": 56,
+       "column": 15,
+       "snippet": "mcp: `http://127.0.0.1:${Zotero.Prefs.get(\"httpServer.port\") || 23119}${ENDPOINT}`,",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 9,
+    "inVendoredCodeOnly": false,
+    "codeKey": "790928c5cf89",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 118,
+      "column": 10,
+      "snippet": "await Zotero.File.putContentsAsync(pu().join(base, \"README.md\"), MAILBOX_README);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 162,
+      "column": 29,
+      "snippet": "req = JSON.parse(await Zotero.File.getContentsAsync(file));",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 212,
+      "column": 10,
+      "snippet": "await Zotero.File.putContentsAsync(tmp, text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 683,
+      "column": 34,
+      "snippet": "return svc.dirsvc.get(\"Home\", Components.interfaces.nsIFile).path;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 794,
+      "column": 20,
+      "snippet": "return path ? Zotero.File.getContentsAsync(path) : \"\";",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 805,
+      "column": 13,
+      "snippet": "return Zotero.File.getContentsAsync(cacheFile.path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 1737,
+      "column": 16,
+      "snippet": "await Zotero.File.putContentsAsync(file, md.text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 1742,
+      "column": 14,
+      "snippet": "await Zotero.File.putContentsAsync(pu().join(folder, \"index.md\"), index.join(\"\\n\") + \"\\n\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 2083,
+      "column": 51,
+      "snippet": "r.indexedChars = cache.exists() ? (await Zotero.File.getContentsAsync(cache.path)).length : \"pending\";",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "Zotero.File",
+      "nsIFile"
+     ]
+    }
+   },
+   {
+    "id": "local-http-server",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "866ead5e4f5e",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 45,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINT] = McpEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 62,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[INFO_ENDPOINT] = InfoEndpoint;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/claude-bridge/info",
+      "/claude-bridge/mcp"
+     ],
+     "apis": [
+      "Zotero.Server.Endpoints"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 12,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://github.com/ChanglinWu/zotero-claude-bridge/releases/latest/download/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://github.com/ChanglinWu/zotero-claude-bridge/releases/latest/download/updates.json"
+    }
+   },
+   {
+    "id": "server-edits-library",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "901647d07657",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 45,
+      "column": 4,
+      "snippet": "Zotero.Server.Endpoints[ENDPOINT] = McpEndpoint;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "src/bridge.js",
+      "line": 1322,
+      "column": 39,
+      "snippet": "const newItems = await tr.translate({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "endpoints": [
+      "/claude-bridge/mcp"
+     ]
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the ChanglinWu account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T16:22:10.605Z",
+  "appliesTo": {
+   "slug": "zotero-claude-bridge",
+   "version": "0.5.0",
+   "sha256": "3b0a92fe456a2a70d266a81a23a4cd4f2174b02aa0a3250255fb0508a9cc0870"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "61ed10417ebd773ec027c606ecdea229f64c90e043fc932a13bbb79545ff21b2"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ],
+      "unconfirmed": [
+       "127.0.0.1"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "doi.org"
+      ],
+      "unconfirmed": [
+       "doi.org"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Only contacts services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "server-edits-library",
+      "label": "Other programs on this computer can change your library through it",
+      "concern": "low"
+     },
+     {
+      "id": "local-http-server",
+      "label": "Lets programs on this computer connect through Zotero's built-in server",
+      "concern": "none"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-21T07:38:31Z",
+    "lastCommitAt": "2026-11-21T07:38:27Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
