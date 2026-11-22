@@ -1,0 +1,600 @@
+{
+ "schemaVersion": 1,
+ "slug": "research-assistant-zotero",
+ "repo": "0frost0/research-assistant-zotero",
+ "version": "0.3.14",
+ "tag": "v0.3.14",
+ "releaseAuthor": "0frost0",
+ "publishedAt": "2026-11-22T02:52:54Z",
+ "prerelease": false,
+ "asset": {
+  "name": "research-assistant-0.3.14.xpi",
+  "url": "https://github.com/0frost0/research-assistant-zotero/releases/download/v0.3.14/research-assistant-0.3.14.xpi",
+  "size": 31779,
+  "sha256": "abcb34db618388ec076c9de610427e67035450b15e38b2466ec9213f75d837f1",
+  "githubAssetId": 777662741,
+  "uploader": "0frost0",
+  "uploadedAt": "2026-11-22T02:52:53Z",
+  "fetchedAt": "2026-11-22T11:49:04.203Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "research-assistant@local",
+  "name": "Research Assistant Bridge",
+  "version": "0.3.14",
+  "description": "Collection-scoped literature and reading-note knowledge bases.",
+  "updateUrl": "https://raw.githubusercontent.com/0frost0/research-assistant-zotero/main/updates.json",
+  "strictMinVersion": "9.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "assistant.css",
+   "size": 7497,
+   "sha256": "84631dfdf91e8841ed3741cfd62a0c1df008c9dd1edfa2cc9ca0c57c663f8df8"
+  },
+  {
+   "path": "assistant.js",
+   "size": 53134,
+   "sha256": "f271edf7706f6360fede38f1c00665e94ec28bd62401719f01abfd1cf257cfe5"
+  },
+  {
+   "path": "assistant.xhtml",
+   "size": 9681,
+   "sha256": "1cc71c2d92f8d8f59b6a1061053e1878a1d033ab8c5e41dad6b29d54e411324e"
+  },
+  {
+   "path": "bootstrap.js",
+   "size": 1226,
+   "sha256": "7c2d4565906df2960222db5784358d9f355347b72b69ddf20e0ee2954cdf6086"
+  },
+  {
+   "path": "bridge.js",
+   "size": 21186,
+   "sha256": "115b9a9e80c5bd42ab962a437f8591fc0f30aa4db0bbc72d252282408c76c3ac"
+  },
+  {
+   "path": "engine-settings.js",
+   "size": 1478,
+   "sha256": "f5352cff7d82e682245bb902c91b95289a3d747b84198c881cb8b3657b61bae9"
+  },
+  {
+   "path": "engine-settings.xhtml",
+   "size": 2989,
+   "sha256": "26318a38b07f602301de1f693ad1cae408f1fba5ced9a360c180ad854977d6be"
+  },
+  {
+   "path": "manifest.json",
+   "size": 475,
+   "sha256": "b92d98114ead2dcf1c73a4ab21a6c4c76e8c4da609cbe561eacbc0e27b38b3ca"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-22T11:49:04.203Z",
+  "input": {
+   "slug": "research-assistant-zotero",
+   "version": "0.3.14",
+   "sha256": "abcb34db618388ec076c9de610427e67035450b15e38b2466ec9213f75d837f1"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 6,
+   "filesSkipped": [
+    {
+     "path": "assistant.css",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 89694,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "fetch",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 33,
+       "column": 29,
+       "snippet": "const response = await window.fetch(this.endpoint() + \"/api/knowledge/\" + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "127.0.0.1",
+     "port": 8765,
+     "category": "localhost",
+     "provider": "This computer",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 4,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 20,
+       "column": 46,
+       "snippet": "const url = new URL(this.pref(\"endpoint\", \"http://127.0.0.1:8765\"));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 110,
+       "column": 69,
+       "snippet": "const endpoint = window.prompt(\"科研助手后端地址\", this.pref(\"endpoint\", \"http://127.0.0.1:8765\"));",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 150,
+       "column": 29,
+       "snippet": "this.setPref(\"endpoint\", \"http://127.0.0.1:8765\");",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "engine-settings.xhtml",
+       "line": 23,
+       "column": 24,
+       "snippet": "<p class=\"hint\">本机地址固定为 http://127.0.0.1:8765。连接令牌从项目目录自动读取，不需要填写；它不是模型 API 密钥。</p>",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.deepseek.com",
+     "category": "llm-provider",
+     "provider": "DeepSeek",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "assistant.xhtml",
+       "line": 33,
+       "column": 40,
+       "snippet": "<p class=\"muted\">填写 API 基础地址，例如 https://api.deepseek.com 或服务商提供的 /v1 地址；粘贴完整 /chat/completions 地址时会自动去掉接口路径。</p>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "<expr>/api/knowledge/<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bridge.js",
+       "line": 33,
+       "column": 29,
+       "snippet": "const response = await window.fetch(this.endpoint() + \"/api/knowledge/\" + path, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [
+    {
+     "prefKey": "serviceEmbeddingBaseUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "assistant.xhtml",
+       "line": 40,
+       "column": 8,
+       "snippet": "<input id=\"serviceEmbeddingBaseUrl\" type=\"url\" required=\"required\" />",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "serviceLlmBaseUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "assistant.xhtml",
+       "line": 32,
+       "column": 8,
+       "snippet": "<input id=\"serviceLlmBaseUrl\" type=\"url\" required=\"required\" />",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "prefKey": "serviceMineruUrl",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "assistant.xhtml",
+       "line": 56,
+       "column": 8,
+       "snippet": "<input id=\"serviceMineruUrl\" type=\"url\" />",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "credential-storage",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "493526068bd5",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 117,
+      "column": 4,
+      "snippet": "this.setPref(\"token\", secret.value.trim());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 125,
+      "column": 6,
+      "snippet": "this.setPref(\"token\", old.token);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 170,
+      "column": 36,
+      "snippet": "if (await IOUtils.exists(path)) this.setPref(\"token\", (await IOUtils.readUTF8(path)).trim());",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "prefKeys": [
+      "token"
+     ],
+     "apis": [
+      "preferences"
+     ]
+    }
+   },
+   {
+    "id": "filesystem",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "codeKey": "a6fdb9867d21",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 143,
+      "column": 33,
+      "snippet": "if (!values[key] || !await IOUtils.exists(values[key])) throw new Error('路径不存在：' + key);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 147,
+      "column": 39,
+      "snippet": "if (values.sshExecutable && !await IOUtils.exists(values.sshExecutable)) throw new Error('SSH 程序路径不存在。');",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 170,
+      "column": 14,
+      "snippet": "if (await IOUtils.exists(path)) this.setPref(\"token\", (await IOUtils.readUTF8(path)).trim());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 170,
+      "column": 65,
+      "snippet": "if (await IOUtils.exists(path)) this.setPref(\"token\", (await IOUtils.readUTF8(path)).trim());",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 175,
+      "column": 16,
+      "snippet": "if (await IOUtils.exists(configured)) return configured;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 185,
+      "column": 16,
+      "snippet": "if (await IOUtils.exists(candidate)) return candidate;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 277,
+      "column": 28,
+      "snippet": "const content = await IOUtils.read(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 383,
+      "column": 10,
+      "snippet": "await IOUtils.write(picker.file, bytes);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "user-chosen",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 5,
+    "inVendoredCodeOnly": false,
+    "codeKey": "4fda7086301b",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 13,
+      "column": 52,
+      "snippet": "const { Subprocess } = ChromeUtils.importESModule(\"resource://gre/modules/Subprocess.sys.mjs\");",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 180,
+      "column": 25,
+      "snippet": "try { return await Subprocess.pathSearch(name); } catch (_) {}",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 202,
+      "column": 26,
+      "snippet": "const setup = await Subprocess.call({command: this.pref(\"engineExecutable\"), arguments: args, workdir: root, stderr: \"stdout\"});",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 207,
+      "column": 35,
+      "snippet": "this.tunnelProcess = await Subprocess.call({command: ssh, arguments: [\"-N\", \"-L\", \"127.0.0.1:30001:127.0.0.1:30001\", \"-L\", \"127.0.0.1:30000:127.0.0.1:30000\", \"-L\", \"127.0.0.1:30002:127.0.0.1:3",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bridge.js",
+      "line": 224,
+      "column": 33,
+      "snippet": "this.engineProcess = await Subprocess.call({",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "Subprocess"
+     ],
+     "programs": [
+      "ssh"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/0frost0/research-assistant-zotero/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/0frost0/research-assistant-zotero/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-22T11:49:04.203Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the 0frost0 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-22T11:49:04.203Z",
+  "appliesTo": {
+   "slug": "research-assistant-zotero",
+   "version": "0.3.14",
+   "sha256": "abcb34db618388ec076c9de610427e67035450b15e38b2466ec9213f75d837f1"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "fcace021404f617dd49914b82cfaa82b4704d71aeff8e7339a265a22279c9deb"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "llm-provider",
+      "hosts": [
+       "api.deepseek.com"
+      ],
+      "unconfirmed": [
+       "api.deepseek.com"
+      ]
+     },
+     {
+      "category": "localhost",
+      "hosts": [
+       "127.0.0.1"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium",
+      "detail": "Programs it names include ssh"
+     },
+     {
+      "id": "credential-storage",
+      "label": "Stores API keys or passwords",
+      "concern": "low"
+     },
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "medium",
+    "drivers": [
+     "CAP-MINOR",
+     "CAP-PROCESS"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-22T02:52:54Z",
+    "lastCommitAt": "2026-11-22T06:19:21Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "capabilities"
+   ],
+   "reasons": [
+    "Launches programs on your computer"
+   ]
+  }
+ }
+}
