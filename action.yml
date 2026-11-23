@@ -1,0 +1,24 @@
+name: Zotero Plugins check
+description: See what zoteroplugins.org's code checks will say about your built Zotero plugin (.xpi) before you release it. Nothing is sent anywhere.
+author: Zotero Plugins
+branding:
+  icon: check-circle
+  color: purple
+inputs:
+  xpi:
+    description: The built .xpi file or files, as paths or globs (one per line). node_modules is skipped.
+    required: false
+    default: "**/*.xpi"
+  fail-on:
+    description: Fail the step when the grade from the code is this or worse. B fails on B and C; C fails on C only; none never fails.
+    required: false
+    default: none
+  repo:
+    description: The plugin's GitHub repository as owner/name, for the hints that tell your own servers apart and for our reviews of it. Defaults to the repository the workflow runs in.
+    required: false
+outputs:
+  grade:
+    description: The worst grade from the code among the files checked (A, B, C, or – when a file couldn't be graded).
+runs:
+  using: node24
+  main: check.mjs
