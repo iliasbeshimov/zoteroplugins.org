@@ -157,3 +157,13 @@ CREATE TABLE IF NOT EXISTS box_views (
   n INTEGER NOT NULL,
   PRIMARY KEY (day, host, pack)
 );
+
+-- Removals of Zotero Atlas (DELETE /api/v1/plugins/<id>?reason=removed): a count per day, plugin
+-- version and how long the install was there (day, week, month, longer). No ID, no plugin list.
+CREATE TABLE IF NOT EXISTS removals (
+  day TEXT NOT NULL,
+  atlas TEXT NOT NULL,
+  used TEXT NOT NULL,
+  n INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (day, atlas, used)
+);

@@ -253,6 +253,13 @@ export function previousMonth(month) {
 }
 
 /** Whole days between two ISO times, or null when the first is missing. */
+/** How long an install was there when Zotero Atlas was removed: day, week, month or longer. */
+export function usedBucket(firstSeen, now) {
+  const d = daysBetween(firstSeen, now);
+  if (d === null) return null;
+  return d < 1 ? "day" : d < 7 ? "week" : d < 30 ? "month" : "longer";
+}
+
 export function daysBetween(from, to) {
   if (!from || !to) return null;
   const ms = Date.parse(to) - Date.parse(from);

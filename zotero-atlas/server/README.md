@@ -11,8 +11,11 @@ on every report except that a plugin gone from the list is kept, marked removed,
 rating can say how long it was used); and the date and reason of every report (`events`). Nothing
 else from the request is kept: no IP address, no user agent. The nightly job deletes all of it for
 an install not heard from for 180 days. `DELETE /api/v1/plugins/<id>` (sent when the user unticks
-the box; uninstalling sends nothing) removes all of it at once; that install's ratings stay,
-unlinked.
+the box) removes all of it at once; that install's ratings stay, unlinked. Removing Zotero Atlas
+sends the same request with `?reason=removed` (from Atlas 1.6.0, only while sharing is on and
+Zotero is online): the record is deleted the same way, and one is added to `removals`, a count
+per day, plugin version and how long the install was there (day, week, month, longer), with no ID
+and no plugin list.
 
 **Ratings and reviews** (`POST /api/v1/ratings` from the plugin; `POST /api/v1/reviews` and
 `/api/v1/reviews/confirm` from zoteroplugins.org's form, which confirms an email address by a

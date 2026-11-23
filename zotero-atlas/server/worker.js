@@ -9,6 +9,10 @@
  *                                 kept, marked removed, for 30 days, so a rating can say how long
  *                                 it was used.
  * - DELETE /api/v1/plugins/<id>   forget everything about that ID (its ratings stay, unlinked).
+ *                                 With ?reason=removed (sent when Zotero Atlas is removed), one is
+ *                                 added to the count of removals for that day, plugin version and
+ *                                 how long the install was there (day, week, month, longer); the
+ *                                 count has no ID and no plugin list.
  * Nothing about plugin lists is published: there is no public endpoint for them. The owner reads
  * the database with wrangler (see README.md).
  *
@@ -65,6 +69,7 @@ import {
   randomHex,
   randomToken,
   sha256Hex,
+  usedBucket,
 } from "./lib.js";
 
 const MAX_BODY = 64 * 1024;
@@ -108,7 +113,8 @@ export default {
     if (m === "GET" && path === "/api/v1/ratings.json") return ratingsFile(env);
     if (m === "POST" && path === "/api/v1/plugins") return report(request, env);
     const del = path.match(/^\/api\/v1\/plugins\/([0-9a-f-]{36})$/);
-    if (m === "DELETE" && del) return forget(del[1], env);
+    if (m === "DELETE" && del)
+      return forget(del[1], env, url.searchParams.get("reason") === "removed");
     if (m === "POST" && path === "/api/v1/ratings") return rate(request, env);
     if (path === "/api/v1/reviews" || path === "/api/v1/reviews/confirm") {
       if (m === "OPTIONS") return reply(204, null, cors);
@@ -208,9 +214,25 @@ async function report(request, env) {
   return reply(204);
 }
 
-async function forget(id, env) {
+async function forget(id, env, removed = false) {
   if (!/^[0-9a-f-]{36}$/.test(id)) return reply(400, "Bad request");
+  const counted = [];
+  if (removed) {
+    const row = await env.DB.prepare("SELECT first_seen, atlas FROM installs WHERE id = ?1")
+      .bind(id)
+      .first();
+    const now = new Date().toISOString();
+    const used = row && usedBucket(row.first_seen, now);
+    if (used)
+      counted.push(
+        env.DB.prepare(
+          "INSERT INTO removals (day, atlas, used, n) VALUES (?1, ?2, ?3, 1) " +
+            "ON CONFLICT (day, atlas, used) DO UPDATE SET n = n + 1",
+        ).bind(now.slice(0, 10), row.atlas || "unknown", used),
+      );
+  }
   await env.DB.batch([
+    ...counted,
     env.DB.prepare("DELETE FROM plugins WHERE install_id = ?1").bind(id),
     env.DB.prepare("DELETE FROM events WHERE install_id = ?1").bind(id),
     env.DB.prepare("DELETE FROM installs WHERE id = ?1").bind(id),

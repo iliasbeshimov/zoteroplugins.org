@@ -11,6 +11,7 @@ import {
   parseWebReview,
   previousMonth,
   publicRatings,
+  usedBucket,
 } from "./lib.js";
 
 const rater = "a".repeat(64);
@@ -199,4 +200,14 @@ test("the public file: per version, spread, reviews with text only, who wrote th
   assert.equal(n.reviews[0].zotero, null);
   assert.equal(out.plugins.zoplicate.reviews[0].usedDays, 0);
   assert.deepEqual(Object.keys(out.plugins), ["notero", "zoplicate"]);
+});
+
+test("a removal is counted by how long the install was there", () => {
+  const now = "2026-12-01T12:00:00.000Z";
+  assert.equal(usedBucket("2026-12-01T09:00:00.000Z", now), "day");
+  assert.equal(usedBucket("2026-11-30T11:00:00.000Z", now), "week");
+  assert.equal(usedBucket("2026-11-24T12:00:00.000Z", now), "month");
+  assert.equal(usedBucket("2026-11-01T12:00:00.000Z", now), "longer");
+  assert.equal(usedBucket(null, now), null);
+  assert.equal(usedBucket("2026-12-02T00:00:00.000Z", now), null);
 });
