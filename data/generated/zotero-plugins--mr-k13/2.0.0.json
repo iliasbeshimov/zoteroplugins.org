@@ -1,0 +1,482 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-plugins--mr-k13",
+ "repo": "mr-k13/zotero-plugins",
+ "version": "2.0.0",
+ "tag": "v1.3.0",
+ "releaseAuthor": "Mr-K13",
+ "publishedAt": "2026-11-23T16:38:20Z",
+ "prerelease": false,
+ "asset": {
+  "name": "keyword-tags.xpi",
+  "url": "https://github.com/Mr-K13/zotero-plugins/releases/download/v1.3.0/keyword-tags.xpi",
+  "size": 10775,
+  "sha256": "093b0c07b457ed21a7c5f0553f98aa06478a2c95b21638d6346d3abc0bcb6d71",
+  "githubAssetId": 783709984,
+  "uploader": "Mr-K13",
+  "uploadedAt": "2026-11-23T16:38:18Z",
+  "fetchedAt": "2026-11-23T22:26:13.055Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "keyword-tags@zotero-plugins.local",
+  "name": "Keyword Tags",
+  "version": "2.0.0",
+  "description": "Tags the items in a collection by keywords found in their title or abstract, and by their journal's SCImago quartile.",
+  "updateUrl": "https://raw.githubusercontent.com/Mr-K13/zotero-plugins/main/updates.json",
+  "strictMinVersion": "8.0",
+  "strictMaxVersion": "10.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 650,
+   "sha256": "da6de52509ae269650ce2079e8e813b5816cd688ef073eff709593e95e901d6d"
+  },
+  {
+   "path": "journal-rank.js",
+   "size": 14431,
+   "sha256": "5d6fc14439bd7e62eb4ecd415007f81889bf24db966c618672511a0c554a6d5f"
+  },
+  {
+   "path": "keyword-tags.js",
+   "size": 12758,
+   "sha256": "5d2a5ef068987a34328567afead977a2050a055220f161f3a865c96304674c16"
+  },
+  {
+   "path": "locale/en-US/keyword-tags.ftl",
+   "size": 62,
+   "sha256": "262e43ecd3c0c592270577e341d018315fc1d94739b190707f04344de93b245a"
+  },
+  {
+   "path": "manifest.json",
+   "size": 499,
+   "sha256": "4a4d3f362183d30eccd288ef661b47a1f56cf00fc467315f9a0765451ed1d008"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-23T22:26:13.055Z",
+  "input": {
+   "slug": "zotero-plugins--mr-k13",
+   "version": "2.0.0",
+   "sha256": "093b0c07b457ed21a7c5f0553f98aa06478a2c95b21638d6346d3abc0bcb6d71"
+  },
+  "coverage": {
+   "filesTotal": 5,
+   "filesAnalyzed": 3,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/keyword-tags.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 27839,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "journal-rank.js",
+       "line": 122,
+       "column": 26,
+       "snippet": "let xhr = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "journal-rank.js",
+       "line": 352,
+       "column": 20,
+       "snippet": "let xhr = await Zotero.HTTP.request(\"GET\", url, {",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "journal-rank.js",
+       "line": 22,
+       "column": 17,
+       "snippet": "CROSSREF_BASE: \"https://api.crossref.org\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "journal-rank.js",
+       "line": 24,
+       "column": 25,
+       "snippet": "SEMANTIC_SCHOLAR_BASE: \"https://api.semanticscholar.org/graph/v1\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "doaj.org",
+     "category": "scholarly-api",
+     "provider": "DOAJ",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "journal-rank.js",
+       "line": 23,
+       "column": 13,
+       "snippet": "DOAJ_BASE: \"https://doaj.org/api\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "raw.githubusercontent.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "journal-rank.js",
+       "line": 27,
+       "column": 4,
+       "snippet": "\"https://raw.githubusercontent.com/bastianaravenaulagos/DATOS_SCIMAGO_REVISTAS/main/scimagojr%20{year}.csv\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "journal-rank.js",
+       "line": 28,
+       "column": 4,
+       "snippet": "\"https://raw.githubusercontent.com/flonat/flonat-research/main/.context/resources/venue-rankings/scimagojr-{year}.csv\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "journal-rank.js",
+       "line": 29,
+       "column": 4,
+       "snippet": "\"https://raw.githubusercontent.com/LukasRoeseler/openjournals/main/scimagojr_{year}.csv\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.scimagojr.com",
+     "category": "scholarly-api",
+     "provider": "SCImago",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "journal-rank.js",
+       "line": 25,
+       "column": 24,
+       "snippet": "SCIMAGO_OFFICIAL_URL: \"https://www.scimagojr.com/journalrank.php?year={year}&type=all&out=xls\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "journal-rank.js",
+       "line": 151,
+       "column": 8,
+       "snippet": "+ \"Download the CSV yourself from https://www.scimagojr.com/journalrank.php \"",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.23"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 8,
+    "inVendoredCodeOnly": false,
+    "codeKey": "01c522d92e4a",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "journal-rank.js",
+      "line": 107,
+      "column": 16,
+      "snippet": "if (await IOUtils.exists(path)) {",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "journal-rank.js",
+      "line": 109,
+      "column": 43,
+      "snippet": "return this.setIndex(year, await IOUtils.readUTF8(path), `cached file ${path}`);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "journal-rank.js",
+      "line": 113,
+      "column": 16,
+      "snippet": "await IOUtils.remove(path, { ignoreAbsent: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "journal-rank.js",
+      "line": 130,
+      "column": 16,
+      "snippet": "await IOUtils.makeDirectory(this.cacheDir(), { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "journal-rank.js",
+      "line": 131,
+      "column": 16,
+      "snippet": "await IOUtils.writeUTF8(path, text);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "journal-rank.js",
+      "line": 160,
+      "column": 22,
+      "snippet": "let bytes = await IOUtils.read(fp.file);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "journal-rank.js",
+      "line": 166,
+      "column": 10,
+      "snippet": "await IOUtils.makeDirectory(this.cacheDir(), { ignoreExisting: true });",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "journal-rank.js",
+      "line": 167,
+      "column": 10,
+      "snippet": "await IOUtils.writeUTF8(this.cachePath(year), text);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "user-chosen",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 10,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/Mr-K13/zotero-plugins/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/Mr-K13/zotero-plugins/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-23T22:26:13.055Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the Mr-K13 account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-23T22:26:13.055Z",
+  "appliesTo": {
+   "slug": "zotero-plugins--mr-k13",
+   "version": "2.0.0",
+   "sha256": "093b0c07b457ed21a7c5f0553f98aa06478a2c95b21638d6346d3abc0bcb6d71"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.23",
+   "currentZotero": "10.0.9",
+   "inputHash": "7e9a3a9fcb7c80139ee5290d39151f417322316c0a3964a36cc0421753defbf4"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "named-third-parties",
+    "hosts": [
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "api.semanticscholar.org",
+       "doaj.org",
+       "www.scimagojr.com"
+      ],
+      "unconfirmed": [
+       "api.crossref.org",
+       "api.semanticscholar.org",
+       "doaj.org",
+       "www.scimagojr.com"
+      ]
+     }
+    ],
+    "concern": "low",
+    "label": "Its code only names services we could identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NAMED"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-23T16:38:20Z",
+    "lastCommitAt": "2026-11-23T16:38:20Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
