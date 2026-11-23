@@ -1,4 +1,7 @@
-<p align="center"><img src="site/public/logo.png" width="88" height="88" alt=""></p>
+<p align="center"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/logo-dark.svg">
+  <img src="docs/readme/logo-light.svg" width="88" height="88" alt="">
+</picture></p>
 
 <h1 align="center">Zotero Plugins Atlas</h1>
 
