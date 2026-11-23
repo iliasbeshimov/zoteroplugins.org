@@ -128,6 +128,15 @@ for f in /Users/*/Library/Application\ Support/Zotero/Profiles/*/extensions.json
        ($k | length), (if $m then "https://zoteroplugins.org" + $m.url else "" end)] | @tsv' "$f"
 done`;
 
+const POLICY = `{
+  "policies": {
+    "ExtensionSettings": {
+      "*": { "installation_mode": "blocked" },
+      "better-bibtex@iris-advies.com": { "installation_mode": "allowed" }
+    }
+  }
+}`;
+
 const description = `Zotero plugins run with full access and nobody reviews them. What we found in the code of ${num(working)} plugins that work with Zotero ${cur}, and how to find and check the ones on your computers.`;
 const graph = [
   {
@@ -148,7 +157,7 @@ const graph = [
 <Guide title={`${h1} · Zotero Plugins Atlas`} description={description} h1={h1} crumb="For IT and security teams" graph={graph}>
   <Fragment slot="lead">
     <p>
-      Zotero plugins run with the same access to the computer as the person using Zotero. Zotero doesn't check their signatures and has no official directory, so nobody reviews them before people install them. We read the code of every Zotero plugin we can find on GitHub: {num(all.length)} so far, {num(working)} of which work with Zotero {cur}. This page sums up what matters on managed computers, how to find the plugins installed on yours, and how to check each one.
+      Zotero plugins run with the same access to the computer as the person using Zotero. Zotero doesn't check their signatures and has no official directory, so nobody reviews them before people install them. We read the code of every Zotero plugin we can find on GitHub: {num(all.length)} so far, {num(working)} of which work with Zotero {cur}. This page sums up what matters on managed computers, how to find the plugins installed on yours, how to check each one, and how to allow only the ones you approve.
     </p>
     <p class="tlp">Free to share (TLP:CLEAR). Rebuilt every night from our census; this copy is from {built}. Counts are of plugins that work with Zotero {cur}.</p>
   </Fragment>
@@ -261,8 +270,27 @@ const graph = [
       <li><span class="n">1</span><span><strong>Take stock.</strong> Run the scripts above, or collect the same files with your endpoint tools.</span></li>
       <li><span class="n">2</span><span><strong>Update.</strong> In Zotero, open Tools → Plugins, then the gear menu → Check for Updates. If a plugin's latest release still has a toolkit 5 link, only its developer can fix it; its card says so.</span></li>
       <li><span class="n">3</span><span><strong>Check before installing.</strong> Each card shows the grade, what the code can do and where data goes, with links to the lines of code. <a href="/browse?grade=A%2B%2CA">The A and A+ plugins</a> passed every check, and each plugin has a <a href="/review-sheets">printable review sheet</a> for software approval.</span></li>
-      <li><span class="n">4</span><span><strong>Blocking installs by policy.</strong> Zotero reads Firefox-style enterprise policies from a <code>policies.json</code> file, but whether they can block or allow-list plugins isn't documented, and we haven't confirmed it ourselves yet.</span></li>
+      <li><span class="n">4</span><span><strong>Allow only the plugins you approve.</strong> Zotero 10 follows Firefox's enterprise policies, so one file can block every plugin except those on your list. <a href="#policy">How, below.</a></span></li>
     </ol>
+  </section>
+
+  <section id="policy">
+    <h2>Blocking or allow-listing plugins by policy</h2>
+    <p class="prose">
+      Zotero reads Firefox's enterprise policies from <code>policies.json</code> in a <code>distribution</code> folder inside its install folder. On Windows that's <code>C:\Program Files\Zotero\distribution\</code>, the location <a href="https://forums.zotero.org/discussion/129576/zotero-8-0-2-upgraded-from-8-0-installed-as-system-how-to-disable-auto-updater">Zotero's developers give</a> for policies. On macOS it should be <code>Zotero.app/Contents/Resources/distribution/</code>, Firefox's convention, which we haven't tested. This file allows Better BibTeX and blocks every other plugin:
+    </p>
+    <pre><code>{POLICY}</code></pre>
+    <p class="prose">What we saw in Zotero 10.0.3, each time against a copy of Zotero without the policy:</p>
+    <ul class="facts">
+      <li>With <code>"*"</code> blocked, no plugin outside the list runs, whether it was installed from a file, from a link or copied into a new profile's folder.</li>
+      <li><strong>Plugins already installed that aren't on the list are deleted at the next start.</strong> Build the list from your inventory first, or people lose plugins they rely on.</li>
+      <li>A blocked install shows no error: the plugin appears to install but never turns on, and is gone after a restart. Tell people why.</li>
+      <li>To block only some plugins, turn it around: <code>"*"</code> allowed, and <code>"blocked"</code> for the add-on IDs you don't want.</li>
+      <li><code>"installation_mode": "force_installed"</code> with an <code>install_url</code> installs a plugin that people can't disable or remove, and <code>"BlockAboutAddons": true</code> closes the Plugins Manager.</li>
+    </ul>
+    <p class="prose small">
+      We tested on Linux, calling the same functions Zotero's Plugins Manager uses, with small test add-ons. We haven't tested Windows or macOS, Group Policy or registry settings, or Zotero 7 to 9. Firefox's policy engine is the same code on every platform, but try your file on one machine before you roll it out.
+    </p>
   </section>
 
   <section>
