@@ -7,6 +7,9 @@ name: Zotero Atlas on Windows
 # current Zotero beta runs too; its row may fail without failing the run.
 on:
   push:
+    # Branches only: path filters aren't applied to tag pushes, and the plugin check's tags
+    # (check-v*) hold no Atlas code.
+    branches: ["**"]
     paths: ["zotero-atlas/src/**", "sandbox/windows/**", ".github/workflows/atlas-windows.yml"]
   workflow_dispatch:
 
