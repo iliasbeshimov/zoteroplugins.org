@@ -3,16 +3,17 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import type { Analysis } from "@atlas/schema";
 import type { CensusRow } from "../census/run.ts";
-import { listZipEntries, readZipEntry, type XpiManifest } from "../census/xpi.ts";
+import type { XpiManifest } from "../census/xpi.ts";
 import { loadConfig, requireGithubToken } from "../config.ts";
 import { loadLibraryIndex } from "../libs/index.ts";
 import { GitHub } from "../net/github.ts";
 import { DiskCache, fetchWithRetry, mapLimit } from "../net/http.ts";
 import { paths } from "../paths.ts";
-import { ANALYZER_VERSION, analyzeXpi, developerHints, type XpiEntry } from "./analyze.ts";
+import { ANALYZER_VERSION, analyzeXpi, developerHints } from "./analyze.ts";
 import { loadHostTable } from "./hosts.ts";
 import { type Preview, preview } from "./preview.ts";
 import { buildScanReport } from "./report.ts";
+import { unzip } from "./unzip.ts";
 
 /** Plugins checked in every scan regardless of rank: the brief's regression targets. */
 const ALWAYS = [
@@ -267,21 +268,7 @@ export async function download(
   return { bytes, sha256 };
 }
 
-export async function unzip(bytes: Uint8Array): Promise<XpiEntry[]> {
-  const read = async (start: number, end: number) =>
-    bytes.subarray(start, Math.min(end + 1, bytes.length));
-  const entries = await listZipEntries(read, bytes.length);
-  const out: XpiEntry[] = [];
-  for (const e of entries) {
-    if (e.name.endsWith("/")) continue;
-    try {
-      out.push({ path: e.name, data: await readZipEntry(read, e) });
-    } catch {
-      out.push({ path: e.name, data: new Uint8Array() });
-    }
-  }
-  return out;
-}
+export { unzip };
 
 export function summarize(r: ScanResult) {
   const a = r.artifacts;

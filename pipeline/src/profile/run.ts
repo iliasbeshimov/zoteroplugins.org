@@ -61,13 +61,13 @@ import { applyMoved, dropCards, followLostCards as findLost, markRemoved } from 
 import { buildProfileReport } from "./report.ts";
 import {
   type FindingReview,
+  findingReviewsForScore,
   type NetworkReview,
+  networkReviewForScore,
   readFindingReviews,
   readNetworkReview,
-  reviewedFiles,
-  reviewedNetworkFiles,
 } from "./reviews.ts";
-import { observedHosts, readSandboxRecord, reviewedHosts } from "./sandbox.ts";
+import { observedHosts, readSandboxRecord } from "./sandbox.ts";
 import { RULES_VERSION, score } from "./score.ts";
 import {
   cachedUpdateText,
@@ -1120,36 +1120,8 @@ export function assemble(
       currentZotero: current.zoteroVersion,
       computedAt: ctx.now,
       ...(record ? { tested: { record, hosts: observedHosts(record, ctx.table, developer) } } : {}),
-      ...(g.findingReviews?.length
-        ? {
-            findingReviews: g.findingReviews.map((r) => ({
-              capability: r.capability,
-              real: r.real,
-              concern: r.concern,
-              rule: r.rule,
-              summary: r.summary,
-              ...(r.label ? { label: r.label } : {}),
-              ...(r.why ? { why: r.why } : {}),
-              ...(r.labelEnd ? { labelEnd: r.labelEnd } : {}),
-              files: reviewedFiles(r),
-              ...(r.codeKey ? { codeKey: r.codeKey } : {}),
-              version: r.version,
-            })),
-          }
-        : {}),
-      ...(g.networkReview
-        ? {
-            networkReview: {
-              outcome: g.networkReview.outcome,
-              summary: g.networkReview.summary,
-              files: reviewedNetworkFiles(g.networkReview),
-              observed:
-                g.networkReview.outcome === "hosts"
-                  ? reviewedHosts(g.networkReview.hosts ?? [], ctx.table, developer)
-                  : [],
-            },
-          }
-        : {}),
+      ...findingReviewsForScore(g.findingReviews),
+      ...networkReviewForScore(g.networkReview, ctx.table, developer),
     });
     const before = art.doc.trustCard;
     art.doc.trustCard = before && stable(before) === stable(card) ? before : card;

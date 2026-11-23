@@ -30,7 +30,12 @@ export interface HostClass {
 export async function loadHostTable(
   file = join(paths.pipelineData, "hosts.yaml"),
 ): Promise<HostTable> {
-  const doc = parse(await readFile(file, "utf8")) as {
+  return parseHostTable(await readFile(file, "utf8"));
+}
+
+/** The table from hosts.yaml's text (the plugin check ships it inside its data file). */
+export function parseHostTable(text: string): HostTable {
+  const doc = parse(text) as {
     version: string;
     categories: Record<string, { host: string; provider?: string; flags?: HostFlag[] }[]>;
     ignore: string[];

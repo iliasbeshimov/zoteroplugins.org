@@ -3,7 +3,10 @@ import { join } from "node:path";
 import { CapabilityId } from "@atlas/schema";
 import { z } from "zod";
 import { paths } from "../paths.ts";
+import type { DeveloperHints } from "../scan/analyze.ts";
+import type { HostTable } from "../scan/hosts.ts";
 import { classifyDownload, DownloadFacts, downloadLabelEnd, downloadWhy } from "./download.ts";
+import { reviewedHosts } from "./sandbox.ts";
 
 /**
  * A hand review of one finding in one plugin, a file per plugin in
@@ -186,4 +189,42 @@ export async function readNetworkReview(
 /** The SHA-256 of every release file a network review covers. */
 export function reviewedNetworkFiles(r: NetworkReview): string[] {
   return [r.sha256, ...(r.alsoAppliesTo ?? []).map((x) => x.sha256)];
+}
+
+/** A plugin's finding reviews as the scorer takes them (`findingReviews` in ScoreInput). */
+export function findingReviewsForScore(reviews: FindingReview[] | undefined) {
+  if (!reviews?.length) return {};
+  return {
+    findingReviews: reviews.map((r) => ({
+      capability: r.capability,
+      real: r.real,
+      concern: r.concern,
+      rule: r.rule,
+      summary: r.summary,
+      ...(r.label ? { label: r.label } : {}),
+      ...(r.why ? { why: r.why } : {}),
+      ...(r.labelEnd ? { labelEnd: r.labelEnd } : {}),
+      files: reviewedFiles(r),
+      ...(r.codeKey ? { codeKey: r.codeKey } : {}),
+      version: r.version,
+    })),
+  };
+}
+
+/** A network review as the scorer takes it (`networkReview` in ScoreInput). */
+export function networkReviewForScore(
+  review: NetworkReview | null | undefined,
+  table: HostTable,
+  developer: DeveloperHints,
+) {
+  if (!review) return {};
+  return {
+    networkReview: {
+      outcome: review.outcome,
+      summary: review.summary,
+      files: reviewedNetworkFiles(review),
+      observed:
+        review.outcome === "hosts" ? reviewedHosts(review.hosts ?? [], table, developer) : [],
+    },
+  };
 }

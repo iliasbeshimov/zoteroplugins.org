@@ -108,7 +108,8 @@ export const EMPTY_INDEX: LibraryIndex = {
 /** `@scope/name` → `@scope__name`, safe as a file name. */
 export const libraryFileName = (name: string) => name.replaceAll("/", "__");
 
-function build(
+/** An index from each library's hashed calls and literals (the plugin check ships them in its data file). */
+export function build(
   sets: Map<string, { calls: Iterable<string>; literals: Iterable<string> }>,
   aliases: Record<string, string[]>,
   network = new Map<string, NetworkDescriptor>(),
