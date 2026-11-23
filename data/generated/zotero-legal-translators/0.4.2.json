@@ -1,0 +1,461 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-legal-translators",
+ "repo": "jnsheff/zotero-legal-translators",
+ "version": "0.4.2",
+ "tag": "v0.4.2",
+ "releaseAuthor": "jnsheff",
+ "publishedAt": "2026-11-22T16:42:40Z",
+ "prerelease": false,
+ "asset": {
+  "name": "zotero-legal-translators.xpi",
+  "url": "https://github.com/jnsheff/zotero-legal-translators/releases/download/v0.4.2/zotero-legal-translators.xpi",
+  "size": 60701,
+  "sha256": "d465d297a21b24f57992dac2c4572632377ef3e32c659bef9d19161c1a878d44",
+  "githubAssetId": 779724190,
+  "uploader": "jnsheff",
+  "uploadedAt": "2026-11-22T16:42:40Z",
+  "fetchedAt": "2026-11-23T13:08:12.380Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "zotero-legal-translators@zotero.local",
+  "name": "Legal Translators (Westlaw, Lexis+, Cornell LII, Federal Register, Bloomberg Law, LegiScan)",
+  "version": "0.4.2",
+  "description": "Installs web translators for Westlaw, Lexis+, the Cornell Legal Information Institute, the Federal Register, Bloomberg Law dockets and LegiScan state bills, so the Zotero Connector can save cases, statutes, regulations, articles and treatises.",
+  "updateUrl": "https://raw.githubusercontent.com/jnsheff/zotero-legal-translators/main/updates.json",
+  "strictMinVersion": "8.999",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 1943,
+   "sha256": "a65fd723276bbe95c2134c4c2d8e8f738192c11ccc7cc962e7f79a2e2c7e705c"
+  },
+  {
+   "path": "manifest.json",
+   "size": 701,
+   "sha256": "22b55b2e78738591a4398a4b7b2ba6254e70a9da5c287e9a65b5aa18b0b026a4"
+  },
+  {
+   "path": "translators/Bloomberg Law (legal).js",
+   "size": 24799,
+   "sha256": "c4eda45c97c69dae808df1aa30e281394031e4cce7a9c7698ad03b7e51a10b01"
+  },
+  {
+   "path": "translators/Cornell LII (legal).js",
+   "size": 14342,
+   "sha256": "1c219fc5afdc4204d365e7cf6b32e244958605c68a9eda2be3e3a076f70268b6"
+  },
+  {
+   "path": "translators/Federal Register (legal).js",
+   "size": 7380,
+   "sha256": "4b08ad3494408a25f863a1bd9764dddf3800d61e2448ac3f318ff4418c02a5b6"
+  },
+  {
+   "path": "translators/LegiScan (legal).js",
+   "size": 12618,
+   "sha256": "3c0864b39b5611cecdd473d3f69f3c41c39a70c0f32b42366580bed4a754bd8d"
+  },
+  {
+   "path": "translators/Lexis+ (legal).js",
+   "size": 49340,
+   "sha256": "012e4e27f2a983238c9e90010997017f3d87e8e319e5cc1f794137f0719ce7e5"
+  },
+  {
+   "path": "translators/Westlaw (legal).js",
+   "size": 49199,
+   "sha256": "b2b04a92d8050be28c900c5e1999ac89c87c87ec78f7e29bd3f0c4655badb448"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-23T13:08:12.380Z",
+  "input": {
+   "slug": "zotero-legal-translators",
+   "version": "0.4.2",
+   "sha256": "d465d297a21b24f57992dac2c4572632377ef3e32c659bef9d19161c1a878d44"
+  },
+  "coverage": {
+   "filesTotal": 8,
+   "filesAnalyzed": 7,
+   "filesSkipped": [
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 159621,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [],
+   "hosts": [
+    {
+     "host": "1.next.westlaw.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "translators/Westlaw (legal).js",
+       "line": 855,
+       "column": 5,
+       "snippet": "? 'https://1.next.westlaw.com/Search/Results.html?query=find:' + encodeURIComponent(item.codeNumber + ' ' + (item.code === 'Fed. Reg.' ? 'FR' : item.code) + ' ' + item.section) + '#autoLogin' : '';",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "translators/Westlaw (legal).js",
+       "line": 858,
+       "column": 8,
+       "snippet": "return 'https://1.next.westlaw.com/Search/Results.html?query=find:' + encodeURIComponent(item.reporterVolume + ' ' + item.reporter + ' ' + item.firstPage) + '#autoLogin';",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "www.law.cornell.edu",
+     "category": "unknown",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 17,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "translators/Cornell LII (legal).js",
+       "line": 257,
+       "column": 9,
+       "snippet": "\"url\": \"https://www.law.cornell.edu/uscode/text/15/1125\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "translators/Cornell LII (legal).js",
+       "line": 266,
+       "column": 11,
+       "snippet": "\"url\": \"https://www.law.cornell.edu/uscode/text/15/1125\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "translators/Cornell LII (legal).js",
+       "line": 281,
+       "column": 9,
+       "snippet": "\"url\": \"https://www.law.cornell.edu/cfr/text/37/42.108\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "translators/Cornell LII (legal).js",
+       "line": 290,
+       "column": 11,
+       "snippet": "\"url\": \"https://www.law.cornell.edu/cfr/text/37/42.108\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "translators/Cornell LII (legal).js",
+       "line": 305,
+       "column": 9,
+       "snippet": "\"url\": \"https://www.law.cornell.edu/supremecourt/text/22-174\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "translators/Cornell LII (legal).js",
+       "line": 314,
+       "column": 11,
+       "snippet": "\"url\": \"https://www.law.cornell.edu/supremecourt/text/22-174\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "translators/Cornell LII (legal).js",
+       "line": 329,
+       "column": 9,
+       "snippet": "\"url\": \"https://www.law.cornell.edu/supremecourt/text/410/113\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "translators/Cornell LII (legal).js",
+       "line": 341,
+       "column": 11,
+       "snippet": "\"url\": \"https://www.law.cornell.edu/supremecourt/text/410/113\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "translators/Cornell LII (legal).js",
+       "line": 356,
+       "column": 9,
+       "snippet": "\"url\": \"https://www.law.cornell.edu/constitution/amendmentxiv\",",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "translators/Cornell LII (legal).js",
+       "line": 364,
+       "column": 11,
+       "snippet": "\"url\": \"https://www.law.cornell.edu/constitution/amendmentxiv\",",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.18"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 4,
+    "inVendoredCodeOnly": false,
+    "codeKey": "34889277c2da",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 9,
+      "column": 15,
+      "snippet": "return await Zotero.File.getResourceAsync(url);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 25,
+      "column": 25,
+      "snippet": "try { current = await Zotero.File.getContentsAsync(path); } catch (e) { /* not installed yet */ }",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 27,
+      "column": 9,
+      "snippet": "await Zotero.File.putContentsAsync(path, source);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 45,
+      "column": 38,
+      "snippet": "for (let name of TRANSLATORS) await IOUtils.remove(PathUtils.join(dir, name), { ignoreAbsent: true });",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils",
+      "Zotero.File"
+     ]
+    }
+   },
+   {
+    "id": "installs-translators",
+    "occurrences": 3,
+    "inVendoredCodeOnly": false,
+    "codeKey": "1f44844ef0e2",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 20,
+      "column": 11,
+      "snippet": "let dir = Zotero.getTranslatorsDirectory().path, changed = false;",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 32,
+      "column": 20,
+      "snippet": "if (changed) await Zotero.Translators.reinit();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 44,
+      "column": 12,
+      "snippet": "let dir = Zotero.getTranslatorsDirectory().path;",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "bundled"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/jnsheff/zotero-legal-translators/main/updates.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/jnsheff/zotero-legal-translators/main/updates.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-23T13:08:12.380Z",
+  "level": "not-checked",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The developer uploaded the release file from the jnsheff account. We haven't yet checked whether this file matches the public source code."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-23T13:08:12.380Z",
+  "appliesTo": {
+   "slug": "zotero-legal-translators",
+   "version": "0.4.2",
+   "sha256": "d465d297a21b24f57992dac2c4572632377ef3e32c659bef9d19161c1a878d44"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.18",
+   "currentZotero": "10.0.9",
+   "inputHash": "240e24c95a861ccd04f2a72806b8c1bc6dc0ba95a96c898dd41a4d33132eaa67"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "not-checked",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers this version"
+    },
+    "partialAnalysis": null,
+    "concern": "unknown",
+    "label": "Readable code; not yet checked against the published source",
+    "drivers": [
+     "ST-NOT-CHECKED"
+    ]
+   },
+   "dataSharing": {
+    "value": "no-network-found",
+    "hosts": [],
+    "concern": "none",
+    "label": "No web requests found; its code names servers we couldn't identify",
+    "legalRisk": false,
+    "drivers": [
+     "DS-NONE"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     },
+     {
+      "id": "installs-translators",
+      "label": "Adds Zotero translators it ships",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-22T16:42:40Z",
+    "lastCommitAt": "2026-11-22T16:42:35Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "compatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "incompatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "low-concern",
+   "ruleId": "OV-LOW",
+   "drivers": []
+  }
+ }
+}
