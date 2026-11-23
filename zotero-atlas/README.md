@@ -191,3 +191,7 @@ pictures of each.
 
 Needs Zotero 7.0 or later. The catalogue it reads is written by the catalogue's pipeline
 (`atlas catalog`); its shape is published as `catalog.schema.json` in the catalogue's repository.
+
+Zotero Atlas is developed together with the catalogue it reads, in
+[iliasbeshimov/zoteroplugins.org](https://github.com/iliasbeshimov/zoteroplugins.org) (`zotero-atlas/`); this
+repository publishes its releases. If it's useful to you, a star there helps other people find both.
