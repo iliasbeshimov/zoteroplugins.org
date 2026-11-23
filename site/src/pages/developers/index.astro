@@ -3,7 +3,13 @@ import GradeTag from "../../components/GradeTag.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import Base from "../../layouts/Base.astro";
-import { SITE, RESPOND_URL } from "../../lib/links.ts";
+import { REPO, SITE, RESPOND_URL } from "../../lib/links.ts";
+
+const ciSnippet = `- run: npm run build        # whatever makes your .xpi
+- uses: iliasbeshimov/zoteroplugins.org@check-v1
+  with:
+    fail-on: C              # optional: fail the job on a C`;
+const CHECK_URL = `${REPO}/tree/main/pipeline/check-action#readme`;
 
 const steps = [
   ["Find your plugin", "Search for it below or on the browse page. Every plugin's page links to its developer checklist."],
@@ -38,6 +44,13 @@ const steps = [
         ))
       }
     </ol>
+    <section id="check" class="box">
+      <strong>Check before you release</strong>
+      <span class="muted">Run our code checks on the .xpi you just built, in your own CI or on your computer: the grade the code earns (up to A, since A+ needs our live test in Zotero), where it sends data and what it can do. Nothing about your plugin is sent anywhere.</span>
+      <pre><code>{ciSnippet}</code></pre>
+      <code>npx github:iliasbeshimov/zoteroplugins.org#check-v1 build/your-plugin.xpi</code>
+      <span class="muted small">Inputs, exit codes and what it can't see before a release: <a href={CHECK_URL}>the plugin check on GitHub</a>.</span>
+    </section>
     <section id="badge" class="box">
       <strong>The README badge</strong>
       <span class="muted">Shows your plugin's current grade and links to its page. It updates itself when the grade changes.</span>
@@ -137,6 +150,17 @@ const steps = [
     background: var(--code-bg);
     border: 1px solid var(--line);
     overflow-wrap: anywhere;
+  }
+  pre {
+    margin: 0;
+    align-self: stretch;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  pre code {
+    display: block;
+    white-space: pre;
+    overflow-wrap: normal;
   }
   .muted {
     color: var(--ink-2);
