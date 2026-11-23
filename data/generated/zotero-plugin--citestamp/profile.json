@@ -270,6 +270,17 @@
   "launchesPrograms": false
  },
  "integrityEvents": [],
+ "responses": [
+  {
+   "date": "2026-11-23",
+   "from": "3RiversWebTech",
+   "about": "source-transparency",
+   "version": "1.0.12",
+   "text": "Thanks for grading CiteStamp. Here's what you need to check the source match for v1.0.12.\n\nThere's no compile or bundling step. The .xpi is a zip of seven files from the repository (manifest.json, bootstrap.js, icon.png and the content, lib and locale folders), and nothing in it is minified or generated.\n\nSix of the seven are byte-identical to tag v1.0.12. The seventh, content/citestamp.js, differs by one character in a comment on line 12: the release file has an em dash where the tag has a colon. No code differs.\n\nCommit dcec2d7 on main puts that character back and adds build.mjs, which builds the .xpi the way our releases are built (stored entries, one fixed timestamp, sorted paths). On that commit, `node build.mjs --verify citestamp-1.0.12.xpi` rebuilds the release file byte for byte. Each later release tag will rebuild its own release file the same way.",
+   "url": "https://github.com/iliasbeshimov/zoteroplugins.org/issues/22",
+   "status": "open"
+  }
+ ],
  "content": null,
  "categories": null,
  "requirements": null
