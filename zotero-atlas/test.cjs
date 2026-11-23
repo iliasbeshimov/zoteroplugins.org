@@ -1420,6 +1420,135 @@ const run = async (name, fn) => {
     },
   );
 
+  await run(
+    "a plugin you turned off: no dot and no notice; turned back on, it needs you again",
+    async () => {
+      const plugins = [
+        entry({ id: "held@x", name: "Held", slug: "held" }),
+        entry({
+          id: "drop@x",
+          name: "Drop",
+          grade: "B",
+          because: "it launches programs on your computer",
+          slug: "drop",
+        }),
+        entry({
+          id: "dis@x",
+          name: "Dis",
+          supports: [11],
+          file: build({ min: "11.0", max: "11.*", supports: [11] }),
+          builds: [build({ name: "dis-z10.xpi", supports: [10], min: "10.0", max: "10.*" })],
+          slug: "dis",
+        }),
+      ];
+      const t = load({
+        http: (_m, url) => (url === CATALOG_URL ? ok200(catalogJson(plugins)) : ok200(advJson([]))),
+        addons: [
+          {
+            id: "held@x",
+            type: "extension",
+            version: "1.2.0",
+            isActive: false,
+            userDisabled: true,
+          },
+          {
+            id: "drop@x",
+            type: "extension",
+            version: "1.2.0",
+            isActive: false,
+            userDisabled: true,
+          },
+          // Zotero turned this one off, not you: a version that works still needs you.
+          { id: "dis@x", type: "extension", version: "1.2.0", isActive: false, appDisabled: true },
+        ],
+      });
+      t.prefs["extensions.zotero-atlas.usage"] = "no";
+      t.prefs["extensions.zotero-atlas.updates"] = "hold";
+      t.prefs["extensions.zotero-atlas.state"] = JSON.stringify({
+        seen: { "drop@x": { grade: "A", version: "1.2.0" } },
+        held: {
+          "held@x": {
+            version: "1.3.0",
+            from: "1.2.0",
+            reason: "worse",
+            grade: "C",
+            before: "A",
+            at: Date.now(),
+          },
+          "dis@x": {
+            version: "1.3.0",
+            from: "1.2.0",
+            reason: "worse",
+            grade: "C",
+            before: "A",
+            at: Date.now(),
+          },
+        },
+      });
+      t.s.startup({ id: "a", version: "1.5.1", rootURI: "r/" });
+      const A = t.s.Zotero.ZoteroAtlas;
+      let rv = await A.review(true);
+      const of = (id) => rv.items.find((i) => i.addon.id === id).alerts;
+      assert.deepEqual(
+        of("held@x").map((a) => [a.flag, a.level, a.text]),
+        [
+          [
+            "held",
+            "info",
+            "Update 1.3.0 held: graded C, lower than the A of the version you have. It's turned off.",
+          ],
+        ],
+        "still listed, without the dot",
+      );
+      assert.deepEqual(
+        of("drop@x").map((a) => [a.flag, a.level]),
+        [["grade-drop", "info"]],
+      );
+      assert.deepEqual(
+        of("dis@x").map((a) => [a.flag, a.level]),
+        [
+          ["held", "important"],
+          ["disabled-fix", "important"],
+        ],
+        "turned off by Zotero: still needs you",
+      );
+      assert.deepEqual(
+        [...new Set(t.s.unseen(rv).map((a) => a.item.addon.id))],
+        ["dis@x"],
+        "the dot is only for the plugin Zotero turned off",
+      );
+      assert.deepEqual(
+        rv.fresh.map((f) => f.flag),
+        ["held", "disabled-fix"],
+        "no notice for the plugins you turned off",
+      );
+      // Turned back on: the held update needs you, with the dot and one notice.
+      const h = t.addons.find((a) => a.id === "held@x");
+      h.isActive = true;
+      h.userDisabled = false;
+      rv = await A.review(false);
+      assert.deepEqual(
+        of("held@x").map((a) => [a.flag, a.level, a.text]),
+        [
+          [
+            "held",
+            "important",
+            "Update 1.3.0 held: graded C, lower than the A of the version you have.",
+          ],
+        ],
+      );
+      assert.ok(
+        t.s.unseen(rv).some((a) => a.item.addon.id === "held@x"),
+        "the dot is back",
+      );
+      assert.deepEqual(
+        rv.fresh.map((f) => f.text),
+        ["Update 1.3.0 held: graded C, lower than the A of the version you have."],
+        "one notice, now",
+      );
+    },
+  );
+
   await run("the red dot, the bar and the notices: once each, cleared by looking", async () => {
     const e = entry({ id: "bad@x", name: "Bad", blocked: "it uploads your library" });
     const t = load({

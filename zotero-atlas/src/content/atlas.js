@@ -343,6 +343,12 @@
     rowEl.after(ask);
   }
 
+  /** An update's state, listed under "Updates": a held one too when it doesn't need you (the
+   * plugin is turned off), with the same choices as its card would have. */
+  const isUpdate = (a) =>
+    ["updated", "waiting", "kept", "pinned"].includes(a.flag) ||
+    (a.flag === "held" && a.level === "info");
+
   function updateRow(i, al) {
     const r = el("div", "urow");
     r.append(el("b", "", nameOf(i)));
@@ -366,8 +372,12 @@
       });
       act.append(b);
     }
-    if (al.flag === "kept")
+    if (al.flag === "kept" || al.flag === "held")
       act.append(button("Update anyway", "", () => A.decide.update(i.addon.id)));
+    if (al.flag === "held")
+      act.append(
+        button(`Keep ${al.held?.from || i.addon.version}`, "", () => A.decide.keep(i.addon.id)),
+      );
     if (al.flag === "pinned") act.append(button("Update", "", () => A.decide.unpin(i.addon.id)));
     r.append(act);
     return r;
@@ -585,11 +595,7 @@
 
     const updates = $("updates");
     updates.textContent = "";
-    const ups = items.flatMap((i) =>
-      i.alerts
-        .filter((a) => ["updated", "waiting", "kept", "pinned"].includes(a.flag))
-        .map((a) => [i, a]),
-    );
+    const ups = items.flatMap((i) => i.alerts.filter(isUpdate).map((a) => [i, a]));
     if (ups.length) {
       const s = section("Updates");
       const box = el("div", "box");
@@ -618,9 +624,7 @@
         const acts = rowActions(i);
         if (acts) top.append(acts);
         r.append(top);
-        const quiet = i.alerts.filter(
-          (a) => a.level === "info" && !["updated", "waiting", "kept", "pinned"].includes(a.flag),
-        );
+        const quiet = i.alerts.filter((a) => a.level === "info" && !isUpdate(a));
         for (const a of quiet) r.append(el("div", "pline", a.text));
         if (!i.entry) {
           const l = el("div", "pline");

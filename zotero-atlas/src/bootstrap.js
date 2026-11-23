@@ -15,7 +15,8 @@
  *   security problems (a bar above your library until you deal with it), when one drops a grade,
  *   when an update is held, when Zotero turned one off and a version that works is listed, or when
  *   a newer version is out and Zotero hasn't installed it (one notice, and a red dot on the
- *   Atlas button by the sync button until you look).
+ *   Atlas button by the sync button until you look). A plugin you turned off gets neither: what's
+ *   known about it waits in "Your plugins", and comes back with the dot when you turn it on.
  * - it shows each plugin's grade in Tools → Plugins, marks the plugins it can't check, and after
  *   an update lets you go back to the version you had (the file we analysed).
  * - it turns plugins off and on, and removes them: "Remove…" asks first, then Zotero stops the
@@ -1027,9 +1028,22 @@ const ago = (t) => Date.now() - (t || 0);
  * What to tell you about one installed plugin, most serious first. Each alert: { key, level,
  * flag, text, actions }. critical: a bar above the library until dealt with, the red dot and
  * one notice. important: the red dot and one notice. info: only in Zotero Atlas and the
- * Plugins window.
+ * Plugins window. A plugin you turned off doesn't run, so nothing about it interrupts you: its
+ * alerts are info until you turn it back on, when the dot and the notice come (the key is the
+ * same, so one you'd already seen stays seen).
  */
 function alertsFor(item, ctx) {
+  const out = alertsOf(item, ctx);
+  if (item.addon.userDisabled)
+    for (const al of out)
+      if (al.level !== "info") {
+        al.level = "info";
+        al.text += " It's turned off.";
+      }
+  return out;
+}
+
+function alertsOf(item, ctx) {
   const { addon: a, entry: e } = item;
   const out = [];
   const add = (level, flag, text, extra = {}, keyPart = "") =>

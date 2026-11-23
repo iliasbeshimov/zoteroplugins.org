@@ -318,6 +318,43 @@ async function run() {
   }
   await delay(2000);
   await snap(win, "09-main-after");
+
+  // 8. A plugin you turned off: its held update stays listed, without the dot or a notice.
+  step("turned off, held");
+  const zm = await AddonManager.getAddonByID("zotmoov@wileyy.com");
+  if (zm && state().held?.["zotmoov@wileyy.com"]) {
+    const zmAlerts = async () =>
+      ((await A.review(false)).items.find((i) => i.addon.id === zm.id)?.alerts || []).map((a) => [
+        a.flag,
+        a.level,
+        a.text,
+      ]);
+    out.turnedOff = { before: await zmAlerts() };
+    await zm.disable();
+    await delay(3000);
+    out.turnedOff.off = await zmAlerts();
+    out.turnedOff.attention = tb?.getAttribute("attention") ?? null;
+    A.openWindow("mine");
+    const ow = await waitFor(() => windowAt("zotero-atlas/content/atlas.xhtml"), 10000);
+    if (ow) {
+      await delay(4000);
+      const row = [...ow.document.querySelectorAll("#updates .urow")].find((r) =>
+        r.textContent.includes("ZotMoov"),
+      );
+      out.turnedOff.updatesRow = row
+        ? {
+            text: row.textContent,
+            buttons: [...row.querySelectorAll("button")].map((b) => b.textContent),
+          }
+        : null;
+      out.turnedOff.needsYou = ow.document.getElementById("needs").textContent.includes("ZotMoov");
+      await snap(ow, "13-turned-off-held");
+      ow.close();
+    }
+    await zm.enable();
+    await delay(3000);
+    out.turnedOff.on = await zmAlerts();
+  } else out.turnedOff = { skipped: zm ? "nothing held" : "not installed" };
 }
 
 /**

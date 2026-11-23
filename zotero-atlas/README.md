@@ -78,7 +78,8 @@ plugins, see what each one's code does, and install in one click.</p>
   gets a bar above your library until you turn it off or close the bar. A held update, a grade
   drop, a plugin Zotero turned off when a version that works is listed, or a newer version Zotero
   hasn't installed in three days gets one notice and a red dot on the Zotero Atlas button by the
-  sync button, until you look. Everything else waits quietly in "Your plugins".
+  sync button, until you look. A plugin you've turned off gets neither: what's known about it
+  waits in "Your plugins" until you turn it back on. Everything else waits quietly there too.
 
 ### Rate what you use
 
