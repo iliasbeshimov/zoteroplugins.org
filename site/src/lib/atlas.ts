@@ -784,6 +784,8 @@ function build(
     evidence: [],
   });
 
+  // "required" counts a key, token, password or sign-in of the user's own (requirements-check-1),
+  // so the labels say "key or sign-in": a Claude Code or Notion sign-in isn't an API key.
   // what you'll need: only what the requirements check could show from quoted evidence
   // (data/requirements); "unknown" shows nothing. The code alone can't tell whether a stored key is
   // required, and a local address isn't necessarily a model.
@@ -792,15 +794,15 @@ function build(
   const svc = req?.apiKey.services.length ? ` (${listJoin(req.apiKey.services)})` : "";
   const keyTip =
     keyNeed === "required"
-      ? `Needs a key you get from the service${svc}. What needs it: ${req?.apiKey.keyFor}.`
+      ? `Needs a key or sign-in of your own${svc}. What needs it: ${req?.apiKey.keyFor}.`
       : keyNeed === "optional"
-        ? `Works without one: ${req?.apiKey.worksWithout}. Needs a key${svc}: ${req?.apiKey.keyFor}.`
+        ? `Works without one: ${req?.apiKey.worksWithout}. Needs a key or sign-in${svc}: ${req?.apiKey.keyFor}.`
         : keyNeed === "none"
           ? "Nothing in it needs a key you supply."
           : "";
   const needs: { t: string; sub: string }[] = [];
-  if (keyNeed === "required") needs.push({ t: "An API key", sub: keyTip });
-  if (keyNeed === "optional") needs.push({ t: "An API key for some features", sub: keyTip });
+  if (keyNeed === "required") needs.push({ t: "A key or sign-in of your own", sub: keyTip });
+  if (keyNeed === "optional") needs.push({ t: "A key or sign-in for some features", sub: keyTip });
   const needsKey = keyNeed === "required";
   const localModel = req?.localModel === "yes";
   if (localModel)
@@ -815,9 +817,9 @@ function build(
     });
   const needsShort =
     keyNeed === "required"
-      ? "Needs an API key"
+      ? "Needs a key or sign-in"
       : keyNeed === "optional"
-        ? "API key optional"
+        ? "Key or sign-in optional"
         : keyNeed === "none"
           ? "No API key needed"
           : "";
