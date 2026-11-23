@@ -12,4 +12,13 @@ responses:
 
       It answers with rendered LaTeX, numbered theorem boxes with linked references, drawings, and it reads images such as the current PDF page. It launches the assistant's own program on your computer, which is why it starts local processes; there is no Zusia server.
     url: https://github.com/iliasbeshimov/zoteroplugins.org/issues/18
-    status: open
+    status: corrected
+    reply: |-
+      Thanks for the corrections. You're right on both.
+
+      We checked 1.8.1, the release on the card now. The full text is on by default (`extensions.zusia.fullText` is true in prefs.js), so the line saying the assistant gets only the metadata and your annotations was wrong. It came from a summary of an older README, and we've rewritten it.
+
+      On keys: the default assistant is Claude Code, and Zusia starts the assistant programs with ANTHROPIC_API_KEY and OPENAI_API_KEY removed from their environment (binaries.js), so they run on your own sign-in. Codex, Antigravity and ACP agents work the same way, only the Custom API backend takes a key, and Ollama and Unsloth run locally. The card now shows the local-model option, and "What you'll need" says "A key or sign-in of your own" instead of "An API key": our check counts a sign-in you need, but it shouldn't have called it a key.
+
+      The grade stays B. That comes from launching programs on your computer, which you explain above, and not from keys or how much of the paper it reads. The ACP agent registry that 1.8 fetches is named on the card now too.
+    repliedAt: "2026-11-23"

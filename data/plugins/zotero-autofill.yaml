@@ -84,4 +84,11 @@ responses:
 
       Compatibility is unchanged: the manifest declares Zotero 7 through 11.0.x.
     url: https://github.com/iliasbeshimov/zoteroplugins.org/issues/19
-    status: open
+    status: noted
+    reply: |-
+      Thanks for writing ahead of the re-check. The nightly run has since checked 1.3.2, and the card already shows it, with api.datacite.org listed among the scholarly catalogues.
+
+      We read the 1.3.2 release file and it matches your description. `fetchDataCiteWork` (zotero-metadata-assistant.js:2275) sends a GET to api.datacite.org/dois/<DOI> with only the plugin's User-Agent. It's called when Crossref answers 404 for an item's DOI (line 2311), and for preprint items without a DOI, using the arXiv DOI built from the Archive ID, Extra or URL (lines 2297 and 2600-2602). No key, title, author or other library data goes with it.
+
+      The grade stays B. DataCite is a public scholarly API, which is a low level for data sharing; the B comes from the default AI provider, tools.ailab.gc.cuny.edu, as explained in our reply to #14. Compatibility is unchanged on the card: Zotero 7 through 11.
+    repliedAt: "2026-11-23"
