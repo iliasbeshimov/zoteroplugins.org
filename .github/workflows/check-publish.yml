@@ -41,6 +41,16 @@ jobs:
           GIT_AUTHOR_EMAIL: 2678455+iliasbeshimov@users.noreply.github.com
         run: scripts/publish-check.sh
 
+      - name: Run the built check before publishing it
+        # What strangers' CI will run: the tagged files alone, on a tiny plugin that must grade A.
+        run: |
+          tag="check-v$(node -p "require('./pipeline/check-action/package.json').version.split('.')[0]")"
+          dir="$(mktemp -d)"
+          git archive "$tag" | tar -x -C "$dir"
+          (cd pipeline/check-action/smoke && zip -q -r "$dir/smoke.xpi" manifest.json bootstrap.js)
+          env -u GITHUB_STEP_SUMMARY node "$dir/check.mjs" --fail-on B "$dir/smoke.xpi" > "$dir/report.md"
+          grep -F "Grade from the code: A**" "$dir/report.md"
+
       - name: Push the tag
         run: |
           tag="check-v$(node -p "require('./pipeline/check-action/package.json').version.split('.')[0]")"
