@@ -14,7 +14,12 @@ import {
   supportsVersion,
 } from "../census/compat.ts";
 import { parseInstallRdf, parseManifestJson, type XpiManifest } from "../census/xpi.ts";
-import { classifyUpdateSource, provenanceLite, updateHostOf } from "../profile/checks.ts";
+import {
+  classifyUpdateSource,
+  codeHostRepo,
+  provenanceLite,
+  updateHostOf,
+} from "../profile/checks.ts";
 import { findingReviewsForScore, networkReviewForScore } from "../profile/reviews.ts";
 import { RULES_VERSION, score } from "../profile/score.ts";
 import { ANALYZER_VERSION, analyzeXpi, developerHints, pickManifest } from "../scan/analyze.ts";
@@ -48,6 +53,13 @@ export interface CheckResult {
   version: string;
   addonId: string | null;
   updateUrl: string | null;
+  /**
+   * A warning about the update address that needs no network: it names a GitHub repository other
+   * than this one, or a template name nobody controls. The catalogue drops the grade to B when
+   * that account or repository doesn't exist, which only a network call shows, so this never
+   * changes the grade here.
+   */
+  updateWarning: string | null;
   grade: CheckGrade;
   because: string;
   card: TrustCard;
@@ -59,6 +71,28 @@ export interface CheckResult {
   /** The capabilities whose hand review applied to this code, and by what (the file or its code). */
   reviewsApplied: { capability: string; how: "file" | "code" }[];
   networkReviewApplied: boolean;
+}
+
+/** The warning for an update address that points somewhere other than this repository. */
+function updateWarningOf(
+  updateUrl: string | null,
+  updates: ReturnType<typeof classifyUpdateSource>,
+  repo: string | undefined,
+): string | null {
+  if (!updateUrl) return null;
+  const risk =
+    "If that account or repository doesn't exist, anyone who registers it could serve updates to your users, and the published grade drops to B.";
+  let code: ReturnType<typeof codeHostRepo> = null;
+  try {
+    code = codeHostRepo(new URL(updateUrl));
+  } catch {}
+  if (code?.host !== "github") return null;
+  // A template name (your-username, example) is a name nobody controls, known without the repository.
+  if (updates.kind === "unclaimed-namespace")
+    return `Your update address is under "${code.repo.split("/")[0]}", a template name. ${risk}`;
+  if (!repo || updates.kind === "none") return null;
+  if (code.repo.toLowerCase() === repo.toLowerCase()) return null;
+  return `Your update address points to github.com/${code.repo}, not this repository (${repo}). ${risk}`;
 }
 
 export async function checkXpi(
@@ -158,6 +192,7 @@ export async function checkXpi(
     { repo: opts.repo ?? "", addonIdSharedWith: [] },
     new Map(),
   );
+  const updateWarning = updateWarningOf(updateUrl, updates, opts.repo);
   const card = score({
     analysis,
     ...(opts.repo ? { repo: opts.repo } : {}),
@@ -193,6 +228,7 @@ export async function checkXpi(
     version: manifest.version ?? analysis.input.version,
     addonId: manifest.addonId,
     updateUrl,
+    updateWarning,
     grade,
     because: becauseOf(profile, grade),
     card,

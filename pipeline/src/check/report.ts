@@ -114,7 +114,7 @@ function notChecked(r: CheckResult): string[] {
   const lines = [
     "- **Who uploads the release file.** The catalogue notes whether GitHub's own build or a person uploads it, and whether the file changes after you publish it.",
     r.updateUrl
-      ? `- **The update address.** Zotero installs whatever ${r.updateUrl} offers, so the catalogue fetches it, grades the file it serves, and checks that the GitHub account or repository it names exists (an update address nobody holds costs a grade). This check only reads the address in the manifest.`
+      ? `- **The update address.** Zotero installs whatever ${r.updateUrl} offers, so the catalogue fetches it, grades the file it serves, and checks that the GitHub account or repository it names exists (an update address nobody holds costs a grade). This check only reads the address in the manifest${r.updateWarning ? " (see the warning at the top)" : ""}.`
       : "- **The update address.** The manifest has none; Zotero 7 and later won't install a plugin without one.",
     "- **Our live test in Zotero.** It earns A+, and it settles network code the static check couldn't trace. CI can't run it.",
   ];
@@ -144,6 +144,7 @@ function one(r: CheckResult): string[] {
       : `**Grade from the code: ${r.grade}**, because ${r.because}.`,
     "",
   );
+  if (r.updateWarning) lines.push(`> **Warning: the update address.** ${r.updateWarning}`, "");
   lines.push(
     r.grade === "A"
       ? "This is what the code alone earns. It stops at A: an A+ also needs our live test in Zotero, which CI can't run."

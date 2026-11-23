@@ -165,6 +165,68 @@ describe("plugin check", () => {
   });
 });
 
+describe("update address warning", () => {
+  const withUpdate = (url: string) =>
+    buildZip({
+      "manifest.json": manifestJson({ update_url: url }),
+      "bootstrap.js": "function startup() {}",
+    });
+  const URL_OWN = "https://github.com/Me-Dev/My-Plugin/releases/download/release/update.json";
+
+  it("says nothing when the address is this repository, whatever the case", async () => {
+    const r = await checkXpi("a.xpi", withUpdate(URL_OWN), await data(), {
+      repo: "me-dev/my-plugin",
+    });
+    expect(r.updateWarning).toBeNull();
+    expect(renderReport([r], await data(), new Date("2026-11-21"))).not.toContain("Warning");
+  });
+
+  it("warns, without changing the grade, when it names another repository", async () => {
+    const other = await checkXpi("a.xpi", withUpdate(URL_OWN), await data(), {
+      repo: "someone/else",
+    });
+    const plain = await checkXpi("a.xpi", CLEAN, await data(), { repo: "someone/else" });
+    expect(other.grade).toBe(plain.grade);
+    expect(other.updateWarning).toContain(
+      "github.com/Me-Dev/My-Plugin, not this repository (someone/else)",
+    );
+    const md = renderReport([other], await data(), new Date("2026-11-21"));
+    expect(md).toContain("Warning: the update address.");
+    expect(md).toContain("the published grade drops to B");
+  });
+
+  it("reads the github.io and raw.githubusercontent.com forms", async () => {
+    for (const url of [
+      "https://me-dev.github.io/my-plugin/update.json",
+      "https://raw.githubusercontent.com/me-dev/my-plugin/main/update.json",
+    ]) {
+      const same = await checkXpi("a.xpi", withUpdate(url), await data(), {
+        repo: "Me-Dev/My-Plugin",
+      });
+      expect(same.updateWarning).toBeNull();
+      const diff = await checkXpi("a.xpi", withUpdate(url), await data(), { repo: "x/y" });
+      expect(diff.updateWarning).toContain("github.com/me-dev/my-plugin");
+    }
+  });
+
+  it("keeps the 'not checked' wording when the repository isn't known", async () => {
+    const r = await checkXpi("a.xpi", withUpdate(URL_OWN), await data());
+    expect(r.updateWarning).toBeNull();
+    const md = renderReport([r], await data(), new Date("2026-11-21"));
+    expect(md).not.toContain("Warning");
+    expect(md).toContain("This check only reads the address in the manifest.");
+  });
+
+  it("warns about a template name nobody controls", async () => {
+    const r = await checkXpi(
+      "a.xpi",
+      withUpdate("https://raw.githubusercontent.com/your-username/plugin/main/update.json"),
+      await data(),
+    );
+    expect(r.updateWarning).toContain('"your-username", a template name');
+  });
+});
+
 describe("--fail-on", () => {
   it("fails on the grade it names or worse, and never on an ungraded file", () => {
     expect(failsOn("C", "C")).toBe(true);
