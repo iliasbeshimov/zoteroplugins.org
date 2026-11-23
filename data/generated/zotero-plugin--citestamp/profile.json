@@ -278,7 +278,9 @@
    "version": "1.0.12",
    "text": "Thanks for grading CiteStamp. Here's what you need to check the source match for v1.0.12.\n\nThere's no compile or bundling step. The .xpi is a zip of seven files from the repository (manifest.json, bootstrap.js, icon.png and the content, lib and locale folders), and nothing in it is minified or generated.\n\nSix of the seven are byte-identical to tag v1.0.12. The seventh, content/citestamp.js, differs by one character in a comment on line 12: the release file has an em dash where the tag has a colon. No code differs.\n\nCommit dcec2d7 on main puts that character back and adds build.mjs, which builds the .xpi the way our releases are built (stored entries, one fixed timestamp, sorted paths). On that commit, `node build.mjs --verify citestamp-1.0.12.xpi` rebuilds the release file byte for byte. Each later release tag will rebuild its own release file the same way.",
    "url": "https://github.com/iliasbeshimov/zoteroplugins.org/issues/22",
-   "status": "open"
+   "status": "noted",
+   "reply": "Thanks for the detailed steps.\n\nWe checked it ourselves. The 1.0.12 release file (sha256 `21427d32…692aa3`, the same file citestamp.com serves) has seven files. Six are identical to tag v1.0.12. In `content/citestamp.js` the only difference is the comment on line 12, an em dash where the tag has a colon. We didn't run build.mjs. We rebuilt the zip with our own code, using the same layout: stored entries, sorted paths and one fixed timestamp. From commit dcec2d7 the result is byte for byte the release file. From the tag it differs only by that comment. No code differs.\n\nThe card will keep saying \"not yet checked against the published source\", because we don't rebuild plugins from source automatically yet. That line doesn't affect the grade, and CiteStamp stays at A. Tagging the exact tree you build from, as you plan to, makes the next release easy to check the same way.",
+   "repliedAt": "2026-11-23"
   }
  ],
  "content": null,
