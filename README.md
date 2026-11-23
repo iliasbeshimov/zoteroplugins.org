@@ -51,7 +51,7 @@ first) or **C** (not recommended). The rules, finding by finding:
 
 ## Open data
 
-Everything on the site is built from this repository. The data is CC BY 4.0: hand-checked listings
+Everything on the site is built from this repository. The data is CC BY 4.0: curated listings
 in `data/plugins/`, every analysis in `data/generated/`, and the catalogue as JSON at
 [zoteroplugins.org/api/plugins.json](https://zoteroplugins.org/api/plugins.json).
 
