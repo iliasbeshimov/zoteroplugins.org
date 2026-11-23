@@ -48,6 +48,9 @@ first) or **C** (not recommended). The rules, finding by finding:
 
 - [For developers](https://zoteroplugins.org/developers): how to see what holds your plugin's
   grade back.
+- Check your plugin before you release it: [the plugin check](pipeline/check-action/README.md) runs
+  these checks on the `.xpi` you just built, in your CI (`uses: iliasbeshimov/zoteroplugins.org@check-v1`)
+  or on your computer, and sends nothing anywhere.
 - Think a finding is wrong? [Respond to your card](https://github.com/iliasbeshimov/zoteroplugins.org/issues/new?template=card-response.yml).
   Your response is published on the card, and a fix to a check goes into the scanner for every plugin.
 - Graded A or B? Your card has a badge for your README.

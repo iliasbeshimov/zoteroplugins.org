@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: npm ci && npm run build   # whatever produces your .xpi
       - uses: iliasbeshimov/zoteroplugins.org@check-v1
         with:
@@ -59,3 +59,10 @@ The hosts table, library index and hand reviews change nightly, and a tag doesn'
 `check-v1` is rebuilt from the catalogue's data and moved forward regularly, and the report prints
 the date its tables are from (and warns when they are more than 45 days old). Pin to a commit
 instead of the tag if you want results that never change between runs.
+
+## Source
+
+The check is `pipeline/src/check/` in
+[iliasbeshimov/zoteroplugins.org](https://github.com/iliasbeshimov/zoteroplugins.org), built on the
+same analyzer and rules as the catalogue. Questions, wrong findings and ideas go to that repository's
+issues.
