@@ -17,7 +17,9 @@ export const GET: APIRoute = () =>
           addonId: p.addonId,
           name: p.name,
           version: p.version || null,
-          grade: p.grade,
+          // "–" (not graded yet) as null: Windows PowerShell 5.1 reads JSON served without a
+          // charset as Latin-1, which would garble the dash.
+          grade: p.grade === "–" ? null : p.grade,
           hidden: p.hidden,
           url: `/p/${p.slug}`,
         })),

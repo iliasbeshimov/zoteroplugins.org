@@ -188,11 +188,11 @@ const graph = [
     <p class="prose">
       <strong>Affected:</strong> {num(install)} plugins carry the install link and {num(debug)} the debug link, {num(linked.length)} in all, with {num(linkedDownloads)} downloads between them on GitHub. The handler belongs to the whole Zotero installation, so one such plugin is enough.
     </p>
-    <p class="prose"><strong>How a link can reach it</strong> (tested in Zotero 10.0.3, September 2026):</p>
+    <p class="prose"><strong>How a link can reach it:</strong></p>
     <ul class="facts">
-      <li>From a web page: the browser asks before passing a zotero:// link to Zotero, unless the user has told it to always allow them.</li>
-      <li>From another program, or <code>zotero -url</code> on the command line: the link reaches the handler with no prompt from Zotero.</li>
-      <li>Inside Zotero: a link in a note, including one synced from a shared group library, runs on Ctrl+click, or on two clicks. Links in PDFs don't trigger it.</li>
+      <li>From another program, or <code>zotero -url</code> on the command line: the link reaches the handler with no prompt from Zotero (tested in Zotero 10.0.3, September 2026).</li>
+      <li>Inside Zotero: a link in a note runs on Ctrl+click, or on two clicks (tested the same way). Notes can come from anyone with access to a shared group library. Links in PDFs didn't trigger it.</li>
+      <li>From a web page: browsers normally ask before passing a zotero:// link to Zotero, unless the user has told them to always allow it.</li>
     </ul>
     <p class="prose">
       <strong>Status:</strong> we reported it to the toolkit's maintainer, and toolkit 6.0.0 (3 October 2026) removed the install link and registers the debug link only when a plugin asks for it. zotero-plugin-template, which many plugins start from, moved to 6.0.0 on 7 November 2026. Plugins built earlier keep both links until their developers publish a rebuilt release. No CVE or GitHub security advisory has been published.
