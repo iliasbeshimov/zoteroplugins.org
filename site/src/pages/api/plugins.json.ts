@@ -72,6 +72,9 @@ export const GET: APIRoute = () =>
             concern: badges.get(id)?.concern ?? null,
           })),
           liveTest: p.liveTest?.verdict ?? null,
+          // The ID Zotero installs it under, so an inventory of installed add-ons can be matched
+          // against these rows. Copies and forks often reuse an ID, so one ID can match several.
+          addonId: p.addonId ?? null,
         };
       }),
     ),

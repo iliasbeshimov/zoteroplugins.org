@@ -1,0 +1,425 @@
+---
+/**
+ * A briefing for university IT and security teams: how Zotero plugins run, what the census found
+ * that matters on managed computers, how to inventory installed plugins and match them against
+ * /api/plugins.json. Every number is computed at build time from the profiles, over the plugins
+ * that work with the current Zotero (the ones that can be running on a machine today).
+ */
+import { readFileSync } from "node:fs";
+import type { PluginProfile } from "@atlas/schema";
+import Guide from "../layouts/Guide.astro";
+import { allPlugins, CURRENT_ZOTERO_MAJOR, fmtDate, type Plugin, ROOT } from "../lib/atlas.ts";
+import { breadcrumb, modifiedAt, num, PUBLISHER } from "../lib/guides.ts";
+import { SITE } from "../lib/links.ts";
+
+const path = "/security-teams";
+const h1 = "Zotero plugins: a briefing for IT and security teams";
+const cur = CURRENT_ZOTERO_MAJOR();
+const all = allPlugins();
+const blocked = all.filter((p) => p.banner).length;
+
+interface Seen {
+  p: Plugin;
+  badges: Map<string, { label: string; concern: string }>;
+  hosts: { host: string; category: string; confirmed: boolean }[];
+  obfuscated: boolean;
+}
+const seen: Seen[] = all
+  .filter((p) => p.currentOk)
+  .map((p) => {
+    const prof = JSON.parse(readFileSync(`${ROOT}generated/${p.slug}/profile.json`, "utf8")) as PluginProfile;
+    const f = prof.trust?.facets;
+    return {
+      p,
+      badges: new Map((f?.capabilities?.badges ?? []).map((b) => [b.id as string, { label: b.label, concern: b.concern }])),
+      hosts: (f?.dataSharing?.hosts ?? []).flatMap((g) =>
+        g.hosts.map((host) => ({ host, category: g.category, confirmed: !(g.unconfirmed ?? []).includes(host) })),
+      ),
+      obfuscated: Boolean(f?.sourceTransparency?.obfuscated),
+    };
+  });
+const working = seen.length;
+const count = (f: (s: Seen) => boolean) => seen.filter(f).length;
+const has = (id: string) => count((s) => s.badges.has(id));
+
+// The toolkit 5 links.
+const install = has("link-installs-addons");
+const debug = has("link-runs-code");
+const linked = seen.filter((s) => s.badges.has("link-installs-addons") || s.badges.has("link-runs-code"));
+const linkedDownloads = linked.reduce((n, s) => n + (s.p.downloadsN || 0), 0);
+
+// Download and run.
+const dl = has("download-exec");
+const dlHigh = count((s) => s.badges.get("download-exec")?.concern === "high");
+
+// AI services: requests we traced, and services only named in the code.
+const ai = (s: Seen, pred: (h: string) => boolean, traced: boolean) =>
+  s.hosts.some((h) => h.category === "llm-provider" && (!traced || h.confirmed) && pred(h.host));
+const any = () => true;
+const isDeepSeek = (h: string) => /(^|\.)deepseek\.com$/.test(h);
+/** AI services run by companies based in China, by the API hosts plugins use. */
+const CHINA_AI =
+  /(^|\.)(deepseek\.com|aliyuncs\.com|qwen\.ai|modelscope\.cn|bigmodel\.cn|chatglm\.cn|z\.ai|siliconflow\.cn|moonshot\.cn|moonshot\.ai|kimi\.com|volces\.com|doubao\.com|xiaomimimo\.com|minimaxi?\.(com|io|cn|chat)|minimax\.chat|baidubce\.com|aistudio-app\.com|hunyuan\.cloud\.tencent\.com|stepfun\.com|baichuan-ai\.com|lingyiwanwu\.com|xf-yun\.com|longcat\.chat)$/;
+const isChina = (h: string) => CHINA_AI.test(h);
+const aiTraced = count((s) => ai(s, any, true));
+const aiNamed = count((s) => ai(s, any, false));
+const dsTraced = count((s) => ai(s, isDeepSeek, true));
+const dsNamed = count((s) => ai(s, isDeepSeek, false));
+const cnTraced = count((s) => ai(s, isChina, true));
+const cnNamed = count((s) => ai(s, isChina, false));
+
+// Code nobody can read.
+const obf = count((s) => s.obfuscated);
+const enc = has("encrypted-code");
+
+const OTHER: [string, number][] = [
+  ["Stores API keys or passwords", has("credential-storage")],
+  ["Launches programs, or opens files with the system's own apps", has("process-launch")],
+  ["Lets programs on the computer connect through Zotero's built-in server", has("local-http-server")],
+  ["Loads native code", has("native-code")],
+  ["Sends text or keys over unencrypted http", has("sends-unencrypted")],
+  ["Reuses a sign-in saved in another program", has("reused-app-login")],
+  ["Watches Zotero's network traffic", has("network-intercept")],
+];
+const liveTested = all.filter((p) => p.liveTest).length;
+const built = fmtDate(new Date().toISOString());
+
+const PS = String.raw`# Lists every user's Zotero plugins on this computer and looks each one up in
+# zoteroplugins.org's open data. It only reads files. Run as administrator to see all users.
+[Net.ServicePointManager]::SecurityProtocol = 'Tls12'
+$db = Invoke-RestMethod 'https://zoteroplugins.org/api/addons.json'
+Get-ChildItem 'C:\Users\*\AppData\Roaming\Zotero\Zotero\Profiles\*\extensions.json' -ErrorAction SilentlyContinue |
+  ForEach-Object {
+    $user = $_.FullName.Split('\')[2]
+    (Get-Content $_.FullName -Raw | ConvertFrom-Json).addons |
+      Where-Object { $_.location -eq 'app-profile' -and $_.type -eq 'extension' } |
+      ForEach-Object {
+        $a = $_
+        $known = @($db | Where-Object { $_.addonId -eq $a.id })
+        # Several plugins can share an ID: prefer the same version, then a listed plugin.
+        $m = @($known | Where-Object { $_.version -eq $a.version }) +
+             @($known | Where-Object { -not $_.hidden }) + $known | Select-Object -First 1
+        [pscustomobject]@{
+          User      = $user
+          Id        = $a.id
+          Installed = $a.version
+          Active    = $a.active
+          Grade     = $m.grade
+          Checked   = $m.version
+          SameId    = $known.Count
+          Card      = $(if ($m) { 'https://zoteroplugins.org' + $m.url })
+        }
+      }
+  } | Format-Table -AutoSize -Wrap   # or: Export-Csv zotero-plugins.csv -NoTypeInformation`;
+
+const SH = String.raw`# macOS and Linux: every user's Zotero plugins, looked up in zoteroplugins.org's open data.
+# It only reads files; run with sudo to see all users. Needs jq (included in macOS 15 and later).
+setopt NULL_GLOB 2>/dev/null || true
+curl -fsS https://zoteroplugins.org/api/addons.json -o /tmp/zoteroplugins.json
+for f in /Users/*/Library/Application\ Support/Zotero/Profiles/*/extensions.json \
+         /home/*/.zotero/zotero/*/extensions.json; do
+  [ -f "$f" ] || continue
+  jq -r --arg f "$f" --slurpfile db /tmp/zoteroplugins.json '
+    .addons[] | select(.location == "app-profile" and .type == "extension") | . as $a
+    | ($db[0] | map(select(.addonId == $a.id))) as $k
+    # Several plugins can share an ID: prefer the same version, then a listed plugin.
+    | ([$k[] | select(.version == $a.version)] + [$k[] | select(.hidden | not)] + $k)[0] as $m
+    | [($f | split("/")[2]), $a.id, $a.version, $a.active, ($m.grade // ""), ($m.version // ""),
+       ($k | length), (if $m then "https://zoteroplugins.org" + $m.url else "" end)] | @tsv' "$f"
+done`;
+
+const description = `Zotero plugins run with full access and nobody reviews them. What we found in the code of ${num(working)} plugins that work with Zotero ${cur}, and how to find and check the ones on your computers.`;
+const graph = [
+  {
+    "@type": "Article",
+    "@id": `${SITE}${path}`,
+    url: `${SITE}${path}`,
+    headline: h1,
+    description,
+    about: { "@type": "Thing", name: "Zotero plugins" },
+    dateModified: modifiedAt(path),
+    author: PUBLISHER,
+    publisher: PUBLISHER,
+  },
+  breadcrumb("For IT and security teams", path),
+];
+---
+
+<Guide title={`${h1} · Zotero Plugins Atlas`} description={description} h1={h1} crumb="For IT and security teams" graph={graph}>
+  <Fragment slot="lead">
+    <p>
+      Zotero plugins run with the same access to the computer as the person using Zotero. Zotero doesn't check their signatures and has no official directory, so nobody reviews them before people install them. We read the code of every Zotero plugin we can find on GitHub: {num(all.length)} so far, {num(working)} of which work with Zotero {cur}. This page sums up what matters on managed computers, how to find the plugins installed on yours, and how to check each one.
+    </p>
+    <p class="tlp">Free to share (TLP:CLEAR). Rebuilt every night from our census; this copy is from {built}. Counts are of plugins that work with Zotero {cur}.</p>
+  </Fragment>
+
+  <section>
+    <h2>In short</h2>
+    <ul class="short">
+      <li><strong>{num(linked.length)}</strong><span>carry zotero:// link handlers from version 5 of a shared toolkit. One installs any add-on named in a link, with no prompt from Zotero. The toolkit dropped it in October 2026, but each plugin keeps it until its developer rebuilds.</span></li>
+      <li><strong>{num(dl)}</strong><span>download a program and run it. We rate {num(dlHigh)} of them high.</span></li>
+      <li><strong>{num(aiTraced)}</strong><span>send text to an AI service in requests we found in their code. {num(dsTraced)} send it to DeepSeek, and {num(cnTraced)} to an AI service run by a company based in China.</span></li>
+      <li><strong>{num(obf + enc)}</strong><span>ship code that is obfuscated ({num(obf)}) or encrypted ({num(enc)}), so nobody can review it.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>How Zotero plugins work</h2>
+    <ul class="facts">
+      <li><strong>Full access.</strong> A plugin is JavaScript that Zotero runs with full privileges. It can read and change the Zotero library, read and write any file the user can, launch programs and open network connections. There is no sandbox and no permission prompt.</li>
+      <li><strong>No signature check.</strong> Zotero sets <code>xpinstall.signatures.required</code> to false (<a href="https://github.com/zotero/zotero/blob/main/app/assets/prefs.js">app/assets/prefs.js</a> in Zotero's source), so unsigned plugins install and load.</li>
+      <li><strong>No directory and no review.</strong> People install a plugin from a file, usually downloaded from GitHub. Zotero's documentation says: “We don't currently provide a list of available plugins.”</li>
+      <li><strong>Updates come from the developer.</strong> Each plugin names its own update address, and Zotero installs updates from it.</li>
+      {blocked > 0 && <li><strong>A short blocklist.</strong> Zotero refuses a few add-ons it has blocked ({num(blocked)} of the plugins we track).</li>}
+    </ul>
+  </section>
+
+  <section>
+    <h2>What we found</h2>
+
+    <h3>zotero:// links that install add-ons or run code</h3>
+    <p class="prose">
+      Many plugins are built with a library, zotero-plugin-toolkit. Its version 5 registers two zotero:// link handlers when Zotero starts, in every plugin built with it, whether or not the plugin uses them:
+    </p>
+    <ul class="facts">
+      <li><code>zotero://plugin?action=install&amp;url=…</code> downloads and installs the add-on at that address. Zotero shows no prompt.</li>
+      <li><code>zotero://ztoolkit-debug</code> runs code from the link after a confirmation dialog whose sender name is taken from the link itself.</li>
+    </ul>
+    <p class="prose">
+      <strong>Affected:</strong> {num(install)} plugins carry the install link and {num(debug)} the debug link, {num(linked.length)} in all, with {num(linkedDownloads)} downloads between them on GitHub. The handler belongs to the whole Zotero installation, so one such plugin is enough.
+    </p>
+    <p class="prose"><strong>How a link can reach it</strong> (tested in Zotero 10.0.3, September 2026):</p>
+    <ul class="facts">
+      <li>From a web page: the browser asks before passing a zotero:// link to Zotero, unless the user has told it to always allow them.</li>
+      <li>From another program, or <code>zotero -url</code> on the command line: the link reaches the handler with no prompt from Zotero.</li>
+      <li>Inside Zotero: a link in a note, including one synced from a shared group library, runs on Ctrl+click, or on two clicks. Links in PDFs don't trigger it.</li>
+    </ul>
+    <p class="prose">
+      <strong>Status:</strong> we reported it to the toolkit's maintainer, and toolkit 6.0.0 (3 October 2026) removed the install link and registers the debug link only when a plugin asks for it. zotero-plugin-template, which many plugins start from, moved to 6.0.0 on 7 November 2026. Plugins built earlier keep both links until their developers publish a rebuilt release. No CVE or GitHub security advisory has been published.
+    </p>
+
+    <h3>Plugins that download and run programs</h3>
+    <p class="prose">
+      {num(dl)} plugins download a program and run it, often a helper such as a PDF converter or a local AI model. What they download isn't part of the release anyone checked. We rate {num(dlHigh)} of them high, because we haven't reviewed what they download or it comes over plain http. Downloads checked against a fixed fingerprint we rate lower.
+    </p>
+
+    <h3>Library text sent to AI services</h3>
+    <p class="prose">
+      {num(aiTraced)} plugins send text to an AI service in requests we found in their code, and {num(aiNamed)} name an AI service somewhere in it. Usually the user chooses the service and pastes in their own API key, and the plugin sends what it is asked to work on: text from papers, notes or the library itself.
+    </p>
+    <p class="prose">
+      {num(dsTraced)} send it to DeepSeek ({num(dsNamed)} name it), and {num(cnTraced)} to an AI service run by a company based in China, such as DeepSeek, Alibaba (Qwen), Zhipu, Moonshot (Kimi), ByteDance or MiniMax ({num(cnNamed)} name one). Several US states bar DeepSeek from state devices and networks, and in some, Virginia for example, public universities apply the rule to university-owned computers.
+    </p>
+
+    <h3>Code nobody can read</h3>
+    <p class="prose">
+      {num(obf)} plugins ship obfuscated code and {num(enc)} ship encrypted code, so neither we nor anyone else can check what they do. We grade them C.
+    </p>
+
+    <h3>Other abilities worth knowing</h3>
+    <table class="other">
+      <tbody>
+        {
+          OTHER.map(([t, n]) => (
+            <tr>
+              <td>{t}</td>
+              <td class="n">{num(n)}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Find the plugins on your computers</h2>
+    <p class="prose">
+      Each Zotero profile lists its add-ons in <code>extensions.json</code> and keeps them in its <code>extensions</code> folder, one file per add-on, named after its ID. Plugins a user installed have <code>"location": "app-profile"</code>. The profile folders, from <a href="https://www.zotero.org/support/kb/profile_directory">Zotero's documentation</a>:
+    </p>
+    <table class="paths">
+      <tbody>
+        <tr><th>Windows</th><td><code>C:\Users\&lt;user&gt;\AppData\Roaming\Zotero\Zotero\Profiles\&lt;random&gt;\</code></td></tr>
+        <tr><th>macOS</th><td><code>/Users/&lt;user&gt;/Library/Application Support/Zotero/Profiles/&lt;random&gt;/</code></td></tr>
+        <tr><th>Linux</th><td><code>~/.zotero/zotero/&lt;random&gt;/</code></td></tr>
+      </tbody>
+    </table>
+    <p class="prose">
+      These scripts list every user's plugins and look each one up in our open data: <a href="/api/addons.json">/api/addons.json</a> has each plugin's add-on ID, the version we checked, its grade and its card, and <a href="/api/plugins.json">/api/plugins.json</a> has everything on the cards. They only read files.
+    </p>
+    <p class="label">Windows (PowerShell)</p>
+    <pre><code>{PS}</code></pre>
+    <p class="label">macOS and Linux</p>
+    <pre><code>{SH}</code></pre>
+    <p class="prose small">
+      Columns: the user, the add-on ID, the installed version, whether it's enabled, our grade, the version we checked, how many plugins share that ID, and its card. Copies and forks often reuse an ID, so when several match, the scripts pick the one with the same version, then the one we list; check the card if the count is above 1. An installed version older than the one we checked may still have problems fixed since.
+    </p>
+  </section>
+
+  <section>
+    <h2>What you can do</h2>
+    <ol class="steps">
+      <li><span class="n">1</span><span><strong>Take stock.</strong> Run the scripts above, or collect the same files with your endpoint tools.</span></li>
+      <li><span class="n">2</span><span><strong>Update.</strong> In Zotero, open Tools → Plugins, then the gear menu → Check for Updates. If a plugin's latest release still has a toolkit 5 link, only its developer can fix it; its card says so.</span></li>
+      <li><span class="n">3</span><span><strong>Check before installing.</strong> Each card shows the grade, what the code can do and where data goes, with links to the lines of code. <a href="/browse?grade=A%2B%2CA">The A and A+ plugins</a> passed every check, and each plugin has a <a href="/review-sheets">printable review sheet</a> for software approval.</span></li>
+      <li><span class="n">4</span><span><strong>Blocking installs by policy.</strong> Zotero reads Firefox-style enterprise policies from a <code>policies.json</code> file, but whether they can block or allow-list plugins isn't documented, and we haven't confirmed it ourselves yet.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>How we know, and what we can't see</h2>
+    <ul class="facts">
+      <li>Every night we search GitHub for Zotero plugins, download each one's latest release and read its code. A plugin “sends” to a service when we found the request in its code; it “names” one when the address appears but we didn't find a request.</li>
+      <li>{num(liveTested)} plugins were also installed in a real Zotero, where we recorded every server they contacted.</li>
+      <li>We only see plugins published on GitHub. Plugins shared as files, on other sites or within an institution aren't covered.</li>
+      <li>The checks are automated and can be wrong. Every finding on a card links to the file and line it came from, and <a href="/log">grade changes</a> are logged in public. <a href="/how-we-grade">How we grade</a> has the method.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>About this page</h2>
+    <p class="prose">
+      zoteroplugins.org is a free catalogue of Zotero plugins, run by one person, Ilias Beshimov, with no ads. The data is open under CC BY 4.0. Questions and corrections are welcome at <a href="mailto:hello@zoteroplugins.org">hello@zoteroplugins.org</a>.
+    </p>
+  </section>
+</Guide>
+
+<style>
+  .tlp {
+    font-size: 14px;
+    color: var(--ink-3, var(--ink-2));
+  }
+  h3 {
+    margin: 28px 0 8px;
+    font-size: 19px;
+    font-weight: 650;
+    color: var(--ink);
+  }
+  .short,
+  .facts,
+  .steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    max-width: 780px;
+  }
+  .short li {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .short strong {
+    font: 700 22px/1.2 var(--font-mono);
+    color: var(--accent-fg);
+  }
+  .short span,
+  .facts li {
+    color: var(--ink-2);
+  }
+  .facts {
+    gap: 10px;
+    margin: 8px 0 12px;
+  }
+  .facts li {
+    font-size: 16px;
+    line-height: 1.55;
+    padding-left: 16px;
+    position: relative;
+  }
+  .facts li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--line-strong, var(--ink-2));
+  }
+  .facts strong {
+    color: var(--ink);
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    overflow-wrap: anywhere;
+  }
+  table {
+    border-collapse: collapse;
+    max-width: 780px;
+    width: 100%;
+    margin: 8px 0 16px;
+    font-size: 15.5px;
+  }
+  td,
+  th {
+    padding: 10px 12px 10px 0;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+  }
+  .paths th {
+    width: 90px;
+    font-weight: 600;
+  }
+  .other .n {
+    text-align: right;
+    font: 700 15px/1.4 var(--font-mono);
+    color: var(--accent-fg);
+    width: 72px;
+  }
+  .label {
+    margin: 16px 0 6px;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  pre {
+    max-width: 780px;
+    overflow-x: auto;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface-2, transparent);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  pre code {
+    overflow-wrap: normal;
+    white-space: pre;
+  }
+  .steps {
+    gap: 12px;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 12px;
+    align-items: baseline;
+    font-size: 16.5px;
+    line-height: 1.5;
+  }
+  .steps .n {
+    font: 700 14px/1 var(--font-mono);
+    color: var(--accent-fg);
+  }
+  .steps li > span:last-child {
+    color: var(--ink-2);
+  }
+  .steps strong {
+    color: var(--ink);
+  }
+  @media (max-width: 600px) {
+    .short li {
+      grid-template-columns: 56px minmax(0, 1fr);
+      gap: 12px;
+    }
+    .paths th {
+      width: 70px;
+    }
+  }
+</style>
