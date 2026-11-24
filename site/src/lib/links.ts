@@ -5,6 +5,9 @@ export const RESPOND_URL = `${REPO}/issues/new?template=card-response.yml`;
 /** Ideas sent with the suggestion box (components/IdeaBox.astro): public issues labelled `idea`. */
 export const IDEAS_URL = `${REPO}/issues?q=label%3Aidea`;
 export const SITE = "https://zoteroplugins.org";
+/** Our accounts elsewhere: in the footer and in the Organization sameAs (lib/meta.ts). */
+export const BLUESKY = "https://bsky.app/profile/zoteroplugins.org";
+export const LINKEDIN = "https://www.linkedin.com/company/zoteroplugins/";
 /** The README badge's Markdown: the grade image, linked to the plugin's page. */
 export const badgeMarkdown = (slug: string) =>
   `[![Zotero Plugins grade](${SITE}/badge/${slug}.svg)](${SITE}/p/${slug})`;

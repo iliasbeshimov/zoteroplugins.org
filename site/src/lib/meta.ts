@@ -1,6 +1,6 @@
 import type { Job } from "@atlas/schema";
 import { allPlugins, fmtDate, type Plugin } from "./atlas.ts";
-import { REPO, SITE } from "./links.ts";
+import { BLUESKY, LINKEDIN, REPO, SITE } from "./links.ts";
 import { indexable } from "./seo.ts";
 
 /**
@@ -173,7 +173,7 @@ export function siteLd(description: string): Ld {
       name: BRAND,
       url: `${SITE}/`,
       logo: `${SITE}/logo.png`,
-      sameAs: [REPO],
+      sameAs: [REPO, BLUESKY, LINKEDIN],
     },
   );
 }
