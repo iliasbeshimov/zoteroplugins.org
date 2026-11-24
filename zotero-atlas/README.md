@@ -36,7 +36,10 @@ plugins, see what each one's code does, and install in one click.</p>
   filtered to the plugins that work with your Zotero. Search for what you want Zotero to do: each
   result shows its grade and the reason for it, what it needs from you (an API key, a local
   model) and about how many people use it. A plugin's page in Atlas has the rest: what we found,
-  ratings, and the versions we checked. Nobody pays to be on a shelf.
+  ratings, and the versions we checked. Nobody pays to be on a shelf. When you install Atlas, it
+  asks what you use Zotero for (undergraduate work, a master's thesis, a PhD, research and
+  teaching, or just looking) and opens the matching pack. Nothing installs until you choose, and
+  the answer stays on your computer.
 - **Install the file we checked.** Every install, a whole pack included, goes through one sheet
   that shows the grade and its reason first, then what the plugin needs, then the file. Install
   hands that release file to Zotero's own installer with the SHA-256 of the file we analysed.
@@ -56,7 +59,7 @@ plugins, see what each one's code does, and install in one click.</p>
 <p align="center"><img src="docs/readme/your-plugins.png" width="880" alt="Your plugins in Zotero Atlas: a plugin with a known security problem needs you, the rest are fine"></p>
 <p align="center"><sub>Example: Lab Tools is a made-up plugin with a made-up advisory, from the project's test setup.</sub></p>
 
-- **Hold updates until they're checked** (the one question when you install it, recommended; a
+- **Hold updates until they're checked** (asked when you install it, recommended; a
   setting afterwards, in About and Zotero's settings). Zotero installs plugin updates by itself without looking at what changed. With
   this on, an update whose file the catalogue has analysed, and whose grade isn't lower than the
   version you have, installs as usual, usually within a day. Anything else waits in "Your
