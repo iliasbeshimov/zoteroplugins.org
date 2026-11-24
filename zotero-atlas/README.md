@@ -117,7 +117,9 @@ versions and whether each is turned on, under a random ID created on this comput
 your Zotero version, operating system and this plugin's version. That goes to zoteroatlas.com
 shortly after you install it, when the list changes, and once a week. We use the totals to see
 which plugins people actually use, and we don't publish them. Untick the box and nothing more is
-sent: the plugin asks the server to delete the record, and works just the same. If you chose
+sent: the plugin asks the server to delete the record, and works just the same. Removing Zotero
+Atlas deletes this record. We keep only a count of removals by day, version and how long it was
+installed. If you chose
 **Don't send** in an earlier version, that choice stays. "Exactly what's sent", under the box,
 shows the exact message. The server's code is in [server/](server/); it stores nothing from the
 request but those fields, no IP address.

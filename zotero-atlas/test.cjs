@@ -202,6 +202,7 @@ function load(opts = {}) {
     }
     return {
       document: doc,
+      screen: { availWidth: 1440, availHeight: 900 },
       openDialog: (url, name, features, args) => {
         if (String(url).includes("firstrun")) {
           t.firstRun = (t.firstRun ?? 0) + 1;
@@ -578,6 +579,41 @@ const run = async (name, fn) => {
   });
 
   await run(
+    "a new install: a pack picked on the first-run screen opens at Done and is kept here only",
+    async () => {
+      const http = (m) => (m === "POST" ? { status: 204 } : ok200(catalogJson([])));
+      const t = load({ firstRun: { start: "phd-students", done: true }, http });
+      t.s.startup({ id: "a", version: "1.6.0", rootURI: "r/" });
+      t.s.onMainWindowLoad({ window: t.window });
+      t.flush();
+      await settle(20);
+      assert.equal(t.prefs["extensions.zotero-atlas.start"], "phd-students");
+      assert.equal(t.prefs["extensions.zotero-atlas.updates"], "hold");
+      assert.match(t.opened[0], /atlas\.xhtml$/);
+      assert.equal(t.opened[3].tab, "find");
+      assert.equal(t.opened[3].pack, "phd-students");
+      assert.equal(t.s.Zotero.ZoteroAtlas.startPack(), "phd-students");
+      const post = t.http.find((h) => h.method === "POST");
+      assert.ok(!post.body.includes("phd-students"), "the pick isn't in the report");
+      t.s.uninstall({}, 6);
+      assert.ok(!("extensions.zotero-atlas.start" in t.prefs), "removed with Atlas");
+      for (const [answer, pref] of [
+        [{ start: "", done: true }, undefined], // Just looking: today's behaviour
+        [{ start: "researchers", done: false }, "researchers"], // closed another way: no window
+        [{ start: "not-a-pack", done: true }, undefined],
+      ]) {
+        const u = load({ firstRun: answer, http });
+        u.s.startup({ id: "a", version: "1.6.0", rootURI: "r/" });
+        u.s.onMainWindowLoad({ window: u.window });
+        u.flush();
+        await settle();
+        assert.equal(u.prefs["extensions.zotero-atlas.start"], pref);
+        assert.equal(u.opened, undefined, "no window");
+      }
+    },
+  );
+
+  await run(
     "a new install: if the screen can't open, the same question is asked plainly",
     async () => {
       const t = load({ firstRunFails: true, answer: [1], http: () => ok200(catalogJson([])) });
@@ -912,6 +948,76 @@ const run = async (name, fn) => {
       await settle();
       assert.deepEqual(posts(), ["weekly", "changed", "changed", "first-run"]);
       assert.ok(t.prefs["extensions.zotero-atlas.id"], "a new ID");
+    },
+  );
+
+  await run("usage: one weekly report per calendar week (UTC, from Monday)", async () => {
+    const t = load({
+      http: (_m, url) => (url === CATALOG_URL ? ok200(catalogJson([])) : { status: 204 }),
+      addons: [{ id: "a@x", type: "extension", version: "1.0", isActive: true }],
+    });
+    let now = Date.parse("2026-11-29T23:59:00Z"); // a Sunday
+    t.s.Date = class extends Date {
+      static now() {
+        return now;
+      }
+    };
+    t.prefs["extensions.zotero-atlas.usage"] = "yes";
+    t.prefs["extensions.zotero-atlas.id"] = "11111111-1111-4111-8111-111111111111";
+    t.prefs["extensions.zotero-atlas.state"] = JSON.stringify({
+      sentAt: Date.parse("2026-11-23T00:01:00Z"), // that week's Monday
+      sentHash: "a@x@1.0:1",
+    });
+    const posts = () =>
+      t.http.filter((h) => h.method === "POST").map((h) => JSON.parse(h.body).event);
+    const all = async () => t.s.maybeSend(await t.s.installed());
+    await all();
+    assert.deepEqual(posts(), [], "six days later, the same week: nothing");
+    now = Date.parse("2026-11-30T00:01:00Z"); // two minutes later, a new week
+    await all();
+    assert.deepEqual(posts(), ["weekly"]);
+    now = Date.parse("2026-12-06T23:00:00Z");
+    await all();
+    assert.deepEqual(posts(), ["weekly"], "once a week, however often it checks");
+    now = Date.parse("2026-12-07T09:00:00Z");
+    await all();
+    assert.deepEqual(posts(), ["weekly", "weekly"]);
+  });
+
+  await run(
+    "removal: with sharing on, removing Atlas deletes its record and is counted; nothing else is",
+    async () => {
+      const ID_ = "11111111-1111-4111-8111-111111111111";
+      const dels = (t) => t.http.filter((h) => h.method === "DELETE").map((h) => h.url);
+      const t = load({ http: () => ({ status: 204 }) });
+      t.prefs["extensions.zotero-atlas.usage"] = "yes";
+      t.prefs["extensions.zotero-atlas.id"] = ID_;
+      t.s.uninstall({}, 6);
+      assert.deepEqual(dels(t), [`${USAGE_URL}/${ID_}?reason=removed`]);
+      assert.deepEqual(t.prefs, {}, "and everything is cleared as before");
+      // The server down: Atlas is removed all the same.
+      const down = load({
+        http: () => {
+          throw new Error("503");
+        },
+      });
+      down.prefs["extensions.zotero-atlas.usage"] = "yes";
+      down.prefs["extensions.zotero-atlas.id"] = ID_;
+      down.s.uninstall({}, 6);
+      await settle();
+      assert.deepEqual(down.prefs, {});
+      for (const [usage, id, reason] of [
+        ["no", ID_, 6], // sharing off
+        ["yes", "", 6], // no ID yet
+        ["yes", ID_, 7], // an update
+        ["yes", ID_, 4], // turned off
+      ]) {
+        const u = load({ http: () => ({ status: 204 }) });
+        u.prefs["extensions.zotero-atlas.usage"] = usage;
+        u.prefs["extensions.zotero-atlas.id"] = id;
+        u.s.uninstall({}, reason);
+        assert.deepEqual(dels(u), [], `nothing sent (${usage}, ${id ? "ID" : "no ID"}, ${reason})`);
+      }
     },
   );
 

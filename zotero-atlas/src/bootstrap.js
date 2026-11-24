@@ -90,7 +90,13 @@ const PREF = {
   updates: "extensions.zotero-atlas.updates",
   id: "extensions.zotero-atlas.id", // the random ID, only while usage is "yes"
   state: "extensions.zotero-atlas.state", // JSON, see state()
+  // The plugin pack picked on the first-run screen ("" for none): Discover shows it first. Kept
+  // on this computer only, never sent.
+  start: "extensions.zotero-atlas.start",
 };
+// The first-run screen's answers to "What do you use Zotero for?", as pack slugs. Built in: the
+// screen opens before the catalogue is fetched, so it can't wait for the catalogue's list.
+const START_PACKS = ["undergraduates", "masters-students", "phd-students", "researchers"];
 const MINUTE = 60 * 1000;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
@@ -226,6 +232,7 @@ function shutdown() {
 
 function uninstall(_data, reason) {
   if (reason !== ADDON_UNINSTALL) return;
+  removed();
   clearPrefs();
   try {
     dataFile().remove(true);
@@ -261,6 +268,22 @@ function pref(key) {
 
 function setPref(key, value) {
   Services.prefs.setStringPref(key, value);
+}
+
+// Atlas removed while sharing was on: delete its record, as unticking the box does, and let the
+// server count one removal (by day, version and how long it was installed; nothing else). Not
+// waited for, and a failure is ignored: Zotero is removing Atlas either way. Never on an update.
+function removed() {
+  const id = pref(PREF.id);
+  if (pref(PREF.usage) !== "yes" || !id) return;
+  try {
+    Zotero.HTTP.request("DELETE", `${USAGE_URL}/${id}?reason=removed`, {
+      timeout: 20000,
+      errorDelayMax: 0,
+    }).catch((e) => Zotero.debug(`Zotero Atlas: removal not sent: ${e}`));
+  } catch (e) {
+    Zotero.debug(`Zotero Atlas: removal not sent: ${e}`);
+  }
 }
 
 function clearPrefs() {
@@ -1939,7 +1962,7 @@ function ask(window) {
   askTimer = null;
   if (pref(PREF.updates) !== "ask") return;
   // The recommended answer to start with; closing the screen keeps it.
-  const answer = { updates: "hold", done: false };
+  const answer = { updates: "hold", start: "", done: false };
   answer.wrappedJSObject = answer;
   try {
     (window || Zotero.getMainWindow()).openDialog(
@@ -1970,6 +1993,11 @@ function ask(window) {
     answer.updates = choice === 1 ? "off" : "hold";
   }
   setPref(PREF.updates, answer.updates === "off" ? "off" : "hold");
+  // A pack picked: Discover shows it first from now on, and Done opens it. Nothing installs.
+  if (START_PACKS.includes(answer.start)) {
+    setPref(PREF.start, answer.start);
+    if (answer.done) openWindow("find", answer.start);
+  }
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -2023,6 +2051,16 @@ async function send(event, addons) {
   return true;
 }
 
+/**
+ * The start of the UTC week (Monday 00:00) that `ms` falls in. One report per calendar week, the
+ * weeks the server counts in, rather than one more than 7 days after the last: a copy opened
+ * every week then counts every week, however the days fall.
+ */
+function weekOf(ms) {
+  const day = Math.floor(ms / DAY);
+  return (day - ((day + 3) % 7)) * DAY; // 1 January 1970 was a Thursday
+}
+
 async function maybeSend(addons) {
   if (pref(PREF.usage) !== "yes") return false;
   const st = state();
@@ -2030,7 +2068,7 @@ async function maybeSend(addons) {
   // another one), whether it follows a new install or the box being ticked again.
   if (!st.sentAt) return send("first-run", addons);
   if (pluginsHash(addons) !== st.sentHash) return send("changed", addons);
-  if (Date.now() - st.sentAt > WEEK) return send("weekly", addons);
+  if (weekOf(st.sentAt) < weekOf(Date.now())) return send("weekly", addons);
   return false;
 }
 
@@ -2231,13 +2269,15 @@ function changed() {
   }
 }
 
-function openWindow(tab) {
+/** The Atlas window, on a tab; `pack`, a pack's slug, opens Find plugins at that pack. */
+function openWindow(tab, pack) {
   if (atlasWindow && !atlasWindow.closed) {
     atlasWindow.focus();
     if (tab) atlasWindow.zoteroAtlasShow?.(tab);
+    if (pack) atlasWindow.zoteroAtlasFind?.openPack(pack);
     return atlasWindow;
   }
-  const args = { tab: tab || "find" };
+  const args = { tab: tab || "find", pack: pack || "" };
   args.wrappedJSObject = args;
   const main = Zotero.getMainWindow();
   // Zotero doesn't shrink a window it opens to fit the screen, and centring one taller than the
@@ -2531,6 +2571,7 @@ const Atlas = {
     listeners.add(fn);
     return () => listeners.delete(fn);
   },
+  startPack: () => pref(PREF.start),
   updates: {
     choice: () => pref(PREF.updates),
     set: (choice) => setPref(PREF.updates, choice === "hold" ? "hold" : "off"),

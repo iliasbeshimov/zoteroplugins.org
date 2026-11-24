@@ -937,6 +937,7 @@
     });
     const args = window.arguments?.[0]?.wrappedJSObject ?? window.arguments?.[0];
     showTab(args?.tab || "find");
+    if (args?.pack) find.openPack(args.pack);
     const off = A.subscribe(() => {
       if (tab === "about") renderAbout();
       if (data) show();

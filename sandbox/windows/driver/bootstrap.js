@@ -96,8 +96,9 @@ async function run() {
   if (!A) throw new Error("Zotero Atlas didn't start");
   results.push({ step: "atlas", version: A.version, zotero: Zotero.version });
 
-  // The first-run screen opens by itself a few seconds after the main window: one question,
-  // holding updates, ticked; Enter means Done. Sharing isn't on it and starts on by itself;
+  // The first-run screen opens by itself a few seconds after the main window: what Zotero is used
+  // for ("Just looking" to start with, which opens nothing) and holding updates, ticked; Enter
+  // means Done. Sharing isn't on it and starts on by itself;
   // run.ps1 points zoteroatlas.com at this computer, so the first report (with the first check,
   // 20 s after start) can't leave it. A release from before 1.4 asks about sharing too: answer
   // "Don't send" there.
@@ -106,9 +107,14 @@ async function run() {
     await waitFor(() => first.document?.getElementById("done"), 20000);
     const d = first.document;
     const text = d.body.textContent.replace(/\s+/g, " ");
+    const starts = [...d.querySelectorAll('input[name="start"]')];
     const screen = {
       holdTicked: d.getElementById("hold")?.checked,
-      mentionsSharing: /plugin list|send|shar/i.test(text),
+      // "shared with co-authors" describes a library, not the plugin list.
+      mentionsSharing: /plugin list|send|share my|sharing/i.test(text),
+      // 1.6: "What do you use Zotero for?", five answers, "Just looking" to start with.
+      starts: starts.length,
+      justLooking: starts.find((r) => r.checked)?.value === "",
     };
     d.getElementById("no")?.click();
     await check("firstrun", first, "{ENTER}", screen);

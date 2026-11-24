@@ -270,6 +270,7 @@ if (-not $driverOut) {
   $first = $by['firstrun']
   if ($first -and -not $first.missing) { Check 'Enter closes the first-run screen' ([bool]$first.closed) '' }
   Check 'The first-run screen asks only about holding updates (ticked), nothing about sharing' ([bool]($first -and $first.holdTicked -and -not $first.mentionsSharing)) "$($first | ConvertTo-Json -Compress)"
+  if ($first -and $null -ne $first.starts -and $first.starts -gt 0) { Check 'The first-run screen asks what Zotero is for: five answers, Just looking to start with' ($first.starts -eq 5 -and $first.justLooking) "$($first | ConvertTo-Json -Compress)" }
   Check 'Sharing starts on; holding as answered (kept ticked)' ($ans.usage -eq 'yes' -and $ans.updates -eq 'hold') "usage = $($ans.usage), updates = $($ans.updates)"
   Check 'No report left this computer (zoteroatlas.com points here)' ($ans.sentAt -eq 0) "sentAt = $($ans.sentAt)"
   $ab = $by['about']

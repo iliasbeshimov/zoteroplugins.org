@@ -472,9 +472,12 @@ window.ZoteroAtlasFind = (ctx) => {
     }
 
     // Plugin packs.
+    // The pack picked on the first-run screen comes first.
+    const picked = A.startPack?.() || "";
     const packs = (S?.packs || [])
       .map((p) => ({ p, picks: resolvePack(p) }))
-      .filter((x) => x.picks.length);
+      .filter((x) => x.picks.length)
+      .sort((a, b) => (b.p.slug === picked) - (a.p.slug === picked));
     if (packs.length) {
       const s = section(
         "Start with a pack",
@@ -992,6 +995,15 @@ window.ZoteroAtlasFind = (ctx) => {
 
   function renderPack(box, d) {
     const p = (d.shelves?.packs || []).find((x) => x.slug === view.slug);
+    // Opened from the first-run screen, a pack the catalogue no longer has: Discover instead.
+    if (!p && view.start) {
+      view = { name: "home" };
+      stack.length = 0;
+      $("back").hidden = true;
+      box.className = "fview v-home";
+      renderHome(box, d);
+      return;
+    }
     if (!p) {
       box.append(el("div", "empty", "This pack isn't in the catalogue any more."));
       return;
@@ -1225,6 +1237,11 @@ window.ZoteroAtlasFind = (ctx) => {
     render: refresh,
     home,
     showPlugin: (slug) => go({ name: "plugin", slug }),
+    // From the first-run screen: the pack, with Back going to Discover.
+    openPack: (slug) => {
+      home();
+      go({ name: "pack", slug, start: true });
+    },
     showList: (o) => go(listView(o || {})),
     escape: onEscape,
     get view() {
