@@ -184,7 +184,7 @@
  "analysis": {
   "schemaVersion": 1,
   "analyzerVersion": "0.13.1",
-  "analyzedAt": "2026-11-19T12:00:53.580Z",
+  "analyzedAt": "2026-11-25T18:24:44.691Z",
   "input": {
    "slug": "codex-bilingual-reader",
    "version": "1.6.0",
@@ -452,7 +452,8 @@
     },
     {
      "host": "files.pythonhosted.org",
-     "category": "unknown",
+     "category": "code-hosting",
+     "provider": "PyPI (package files)",
      "flags": [],
      "usage": "request",
      "inVendoredCode": false,
@@ -709,7 +710,7 @@
      ]
     }
    ],
-   "hostsTableVersion": "2026.11.23"
+   "hostsTableVersion": "2026.11.25"
   },
   "capabilities": [
    {
@@ -802,7 +803,7 @@
     "id": "download-exec",
     "occurrences": 2,
     "inVendoredCodeOnly": false,
-    "codeKey": "4de8806bfba6",
+    "codeKey": "1cdf2274a864",
     "evidence": [
      {
       "kind": "code",
@@ -823,8 +824,7 @@
     ],
     "details": {
      "apis": [
-      "pinned to a SHA-256",
-      "shell download and run"
+      "pinned to a SHA-256"
      ]
     }
    },
@@ -972,7 +972,12 @@
      "apis": [
       "npx / pip / uv"
      ],
-     "pinning": "unpinned"
+     "pinning": "top-level",
+     "packages": [
+      "babeldoc 0.6.2",
+      "bitstring 4.3.1",
+      "pdf2zh_next 2.9.0"
+     ]
     }
    },
    {
@@ -1099,7 +1104,7 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-23T22:26:13.055Z",
+  "computedAt": "2026-11-25T18:24:44.691Z",
   "appliesTo": {
    "slug": "codex-bilingual-reader",
    "version": "1.6.0",
@@ -1108,9 +1113,9 @@
   "inputs": {
    "analyzerVersion": "0.13.1",
    "provenanceCheckerVersion": "lite-0.4",
-   "hostsTableVersion": "2026.11.23",
+   "hostsTableVersion": "2026.11.25",
    "currentZotero": "10.0.9",
-   "inputHash": "aac07bed89ce4ddba88647416158638ae153b1e76e7b1346907a28e491b8d4d9"
+   "inputHash": "0a5ad538224b92f515bdda66afdcc741e3fe6a61c40370b4125309adbf72c9e4"
   },
   "facets": {
    "sourceTransparency": {
@@ -1132,11 +1137,12 @@
     ]
    },
    "dataSharing": {
-    "value": "unknown-endpoints",
+    "value": "named-third-parties",
     "hosts": [
      {
       "category": "code-hosting",
       "hosts": [
+       "files.pythonhosted.org",
        "github.com",
        "nodejs.org"
       ]
@@ -1173,34 +1179,28 @@
        "pdf2zh (Google Translate, or the translator it's set up with)",
        "pdf2zh-next (SiliconFlow, or the engine it's set up with)"
       ]
-     },
-     {
-      "category": "unknown",
-      "hosts": [
-       "files.pythonhosted.org"
-      ]
      }
     ],
-    "concern": "medium",
-    "label": "Contacts a server we couldn't identify: files.pythonhosted.org",
+    "concern": "low",
+    "label": "Only contacts services we could identify",
     "legalRisk": false,
     "drivers": [
-     "DS-UNKNOWN"
+     "DS-NAMED"
     ]
    },
    "capabilities": {
     "badges": [
      {
       "id": "download-exec",
-      "label": "Downloads and runs a program we haven't reviewed yet",
-      "concern": "high",
-      "detail": "We haven't yet reviewed who publishes the file or whether anything stops it changing, so it counts as a high concern until we do. Not checked against a fingerprint fixed in the plugin."
+      "label": "Downloads a program checked against a fixed fingerprint, and runs it",
+      "concern": "medium",
+      "detail": "It checks the download against a fingerprint written into the plugin, so only a new version of the plugin can change what runs. We haven't yet reviewed what it is."
      },
      {
       "id": "package-run",
-      "label": "Installs and runs npm or PyPI packages without a fixed version",
-      "concern": "high",
-      "detail": "Installs packages without a fixed version"
+      "label": "Installs and runs software packages from npm or PyPI",
+      "concern": "medium",
+      "detail": "babeldoc 0.6.2, bitstring 4.3.1, pdf2zh_next 2.9.0: installs a fixed version of each; their own dependencies can still change"
      },
      {
       "id": "process-launch",
@@ -1229,11 +1229,11 @@
       "concern": "low"
      }
     ],
-    "concern": "high",
+    "concern": "medium",
     "drivers": [
      "CAP-MINOR",
-     "CAP-DOWNLOAD-EXEC",
-     "CAP-PACKAGE-UNPINNED",
+     "CAP-DOWNLOAD-EXEC-PINNED",
+     "CAP-PACKAGE-RUN",
      "CAP-PROCESS"
     ]
    },
@@ -1273,14 +1273,15 @@
    }
   },
   "overall": {
-   "label": "high-concern",
-   "ruleId": "OV-HIGH",
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
    "drivers": [
     "capabilities"
    ],
    "reasons": [
-    "Downloads and runs a program we haven't reviewed yet",
-    "Installs and runs npm or PyPI packages without a fixed version"
+    "Downloads a program checked against a fixed fingerprint, and runs it",
+    "Installs and runs software packages from npm or PyPI",
+    "Launches programs on your computer"
    ]
   }
  }

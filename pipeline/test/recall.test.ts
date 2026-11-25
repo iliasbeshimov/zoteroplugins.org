@@ -1177,6 +1177,44 @@ describe("card review, 2026-09-26", () => {
     expect(r.card.label).toBe("review-details");
   });
 
+  it("reads a shell script's bare SHA-256 and its versions set in variables (codex-bilingual-reader 1.6.0)", async () => {
+    const sh = (versions: string) => `#!/bin/bash
+PDF2ZH_VERSION="2.9.0"
+${versions}
+install_tool() {
+  case "$tool/$platform/$arch" in
+    node/darwin/arm64) digest=${"b".repeat(64)} ;;
+  esac
+  curl -fsSL -o "$STAGING/archive" "$url" || fail "download"
+  actual="$(shasum -a 256 < "$STAGING/archive")"
+  [ "\${actual%% *}" = "$digest" ] || fail "checksum"
+  tar -xzf "$STAGING/archive" -C "$STAGING" "$member"
+  chmod 755 "$destination"
+}
+if ! engine_ready; then
+  requirements=("pdf2zh_next==$PDF2ZH_VERSION" "babeldoc==$BABELDOC_VERSION")
+  "$UV" pip install --python "$VENV/bin/python" "\${requirements[@]}"
+fi
+`;
+    const run = `Subprocess.call({ command: "/bin/bash", arguments: [root + "content/runtime/install.sh"] });`;
+    const r = await scanFiles({
+      "content/runtime/install.sh": sh(`BABELDOC_VERSION="0.6.2"`),
+      "content/a.js": run,
+    });
+    expect(capIn(r, "download-exec")?.details?.apis).toEqual(["pinned to a SHA-256"]);
+    expect(capIn(r, "package-run")?.details?.pinning).toBe("top-level");
+    expect(r.card.label).toBe("review-details");
+    // A version that isn't one fixed value stays unpinned: from a command, or set twice.
+    for (const v of [
+      `BABELDOC_VERSION="$(cat version.txt)"`,
+      `BABELDOC_VERSION="0.6.2"\n[ -n "$NEW" ] && BABELDOC_VERSION="0.7.0"`,
+      ``,
+    ]) {
+      const loose = await scanFiles({ "content/runtime/install.sh": sh(v), "content/a.js": run });
+      expect(capIn(loose, "package-run")?.details?.pinning, v).toBe("unpinned");
+    }
+  });
+
   it("doesn't count an XMLHttpRequest that only reads the plugin's own files (zotero-ner)", async () => {
     const r = await scanFiles({
       "bootstrap.js": `function readTextFromURI(uri) { const x = new XMLHttpRequest(); x.open("GET", uri, false); x.send(null); return x.responseText; }

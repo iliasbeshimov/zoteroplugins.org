@@ -8337,6 +8337,56 @@ const commandWords = (text: string) =>
     .map((w) => w.replace(/^(["'])(.*)\1$/, "$2"))
     .filter(Boolean);
 
+/** A shell script's plain assignments: a name's value, or null when it isn't one fixed value. */
+interface ShellAssigned {
+  vars: Map<string, string | null>;
+  arrays: Map<string, string[] | null>;
+}
+
+/**
+ * The names a shell script sets to values written out in full, for reading its install commands:
+ * `PDF2ZH_VERSION="2.9.0"`, then `requirements=("pdf2zh_next==$PDF2ZH_VERSION" …)`
+ * (codex-bilingual-reader). A value from a command, or a name set twice to different values,
+ * is unknown.
+ */
+function shellAssignments(code: string): ShellAssigned {
+  const vars = new Map<string, string | null>();
+  const arrays = new Map<string, string[] | null>();
+  const ASSIGN =
+    /(?:^|[;&|{]|\b(?:then|do|else))[ \t]*(?:(?:local|export|readonly|declare(?:[ \t]+-a)?)[ \t]+)?([A-Za-z_]\w*)=(.*)$/gm;
+  for (const m of code.matchAll(ASSIGN)) {
+    const name = m[1] as string;
+    const rest = (m[2] as string).trim();
+    if (rest.startsWith("(")) {
+      const close = rest.indexOf(")");
+      const inner = close > 0 ? rest.slice(1, close) : null;
+      const words = inner !== null && !/[`(]/.test(inner) ? commandWords(inner) : null;
+      const old = arrays.get(name);
+      arrays.set(
+        name,
+        arrays.has(name) && (!old || !words || old.join("\n") !== words.join("\n")) ? null : words,
+      );
+    } else {
+      const v = rest.match(/^"([^"$`\\]*)"|^'([^']*)'|^([^\s"'$`\\;&|()]*)(?=\s*(?:$|[;#&|]))/);
+      const value = v ? (v[1] ?? v[2] ?? v[3] ?? "") : null;
+      vars.set(name, vars.has(name) && vars.get(name) !== value ? null : value);
+    }
+  }
+  return { vars, arrays };
+}
+
+/** Command words with the script's own names filled in: `"${requirements[@]}"`, `$NAME`, `${NAME}`. */
+function expandShellWords(words: string[], a: ShellAssigned, depth = 0): string[] {
+  return words.flatMap((w) => {
+    const arr = w.match(/^\$\{(\w+)\[[@*]\]\}$/)?.[1];
+    if (arr !== undefined) {
+      const els = a.arrays.get(arr);
+      return els && depth < 2 ? expandShellWords(els, a, depth + 1) : [w];
+    }
+    return [w.replace(/\$\{(\w+)\}|\$(\w+)/g, (m, x, y) => a.vars.get(x ?? y) || m)];
+  });
+}
+
 /** The Python list around a match (`[py, "-m", "pip", "install", "-r", req]`) as words. */
 function pyListWords(text: string, at: number): string[] {
   const start = text.lastIndexOf("[", at);
@@ -10623,9 +10673,10 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
           DOWNLOAD_THEN_RUN.exec(text);
         // Pinned like the JavaScript check below: a SHA-256 written into the script and a hash
         // comparison (codex-bilingual-reader's installer checks the engine and Node.js this way).
+        // Shell writes it quoted or bare: `$engineSha256 = "…"`, `digest=8294b7aa… ;;`.
         const pinned =
           !DOWNLOAD_RUN.test(text) &&
-          /["'][0-9a-f]{64}["']/i.test(text) &&
+          /["'][0-9a-f]{64}["']|\b[A-Za-z_]\w*=[0-9a-f]{64}\b/i.test(text) &&
           /\b(Get-FileHash|sha256sum|shasum\s+-a\s+256|openssl\s+(?:dgst|sha256)|certutil\s+-hashfile)\b/i.test(
             text,
           );
@@ -10639,10 +10690,15 @@ export function analyzeXpi(input: AnalyzeInput): AnalyzeResult {
         // `& $uvPath pip install …` (iris-zotero). Comments and echoed instructions don't count.
         const code = text.replace(/^\s*(?:#|REM\b|::|echo\b|Write-Host\b|printf\b).*$/gim, "");
         const sf = new SourceFile(path, code, col.libraries);
+        const assigned = shellAssignments(code);
         for (const p of code.matchAll(new RegExp(SCRIPT_PACKAGE_RUN.source, "gim"))) {
           const end = code.indexOf("\n", p.index + 1);
           const line = code.slice(p.index, end < 0 ? undefined : end);
-          col.packageRuns.push({ file: sf, offset: p.index, words: commandWords(line) });
+          col.packageRuns.push({
+            file: sf,
+            offset: p.index,
+            words: expandShellWords(commandWords(line), assigned),
+          });
         }
       }
       // A Python (or shell) program it ships and runs, which makes requests itself: papermachines'
