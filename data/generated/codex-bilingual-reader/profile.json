@@ -340,6 +340,17 @@
   "launchesPrograms": true
  },
  "integrityEvents": [],
+ "responses": [
+  {
+   "date": "2026-11-25",
+   "from": "fangchenghao",
+   "about": "capabilities",
+   "version": "1.6.0",
+   "text": "Hi Atlas team, thanks for reviewing Codex Bilingual Reader. Could you recheck the `download-exec` finding for v1.6.0? The [report summary](https://github.com/iliasbeshimov/zoteroplugins.org/blob/main/data/generated/codex-bilingual-reader/1.6.0.json#L1190-L1202) says the downloads aren’t checked against a fingerprint fixed in the plugin, but the [underlying scan](https://github.com/iliasbeshimov/zoteroplugins.org/blob/main/data/generated/codex-bilingual-reader/1.6.0.json#L800-L828) records SHA-256 pinning.\n\n- On Windows, the [PowerShell installer](https://github.com/fangchenghao/codex-bilingual-reader/blob/v1.6.0/scripts/install-preserved-pdf-runtime.ps1#L8-L59) checks the PDF engine archive against a hard-coded SHA-256 digest before extraction. It uses the [same verification helper for the Node.js download](https://github.com/fangchenghao/codex-bilingual-reader/blob/v1.6.0/scripts/install-preserved-pdf-runtime.ps1#L76-L89).\n- On macOS and Linux, the [shell installer](https://github.com/fangchenghao/codex-bilingual-reader/blob/v1.6.0/scripts/install-preserved-pdf-runtime.sh#L44-L91) checks the Node.js and uv downloads against platform-specific SHA-256 digests before extraction.\n\nBoth tagged installer files match the sizes and SHA-256 hashes in [Atlas’s XPI inventory](https://github.com/iliasbeshimov/zoteroplugins.org/blob/main/data/generated/codex-bilingual-reader/1.6.0.json#L87-L96). The separate dependency finding is outside this request: the direct Python requirements are pinned, but the transitive dependency tree is not fully locked.\n\nCould you update the fingerprint wording, or point me to the specific download path that bypasses verification if the finding refers to a different path? Thanks.",
+   "url": "https://github.com/iliasbeshimov/zoteroplugins.org/issues/24",
+   "status": "open"
+  }
+ ],
  "content": null,
  "categories": null,
  "requirements": null
