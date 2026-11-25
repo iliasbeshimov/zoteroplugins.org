@@ -1247,7 +1247,8 @@ const ctaNote = canInstall ? `${p.size} .xpi file${p.worksWith.length ? ` · Zot
   blockquote :global(li + li) {
     margin-top: 0.3em;
   }
-  blockquote :global(pre) {
+  blockquote :global(pre),
+  .reply :global(pre) {
     padding: 10px 12px;
     border-radius: 8px;
     background: var(--bg);
@@ -1257,6 +1258,11 @@ const ctaNote = canInstall ? `${p.size} .xpi file${p.worksWith.length ? ` · Zot
     overflow-x: auto;
     white-space: pre;
     overflow-wrap: normal;
+  }
+  /* Our reply's code is a line to copy (a README badge): wrapped, so it's whole on a phone. */
+  .reply :global(pre) {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
   blockquote :global(code),
   .reply :global(code) {
