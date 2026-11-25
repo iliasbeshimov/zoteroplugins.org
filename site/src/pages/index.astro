@@ -10,6 +10,7 @@ import Stars from "../components/Stars.astro";
 import Tip from "../components/Tip.astro";
 import Base from "../layouts/Base.astro";
 import { CURRENT_ZOTERO_MAJOR, fmtDate, GRADES, type Plugin, ROOT, shownPlugins } from "../lib/atlas.ts";
+import { ecosystem } from "../lib/ecosystem.ts";
 import { JOBS, NEW_DAYS, newest } from "@atlas/schema";
 import { atlasLink } from "../lib/links.ts";
 import { siteLd } from "../lib/meta.ts";
@@ -19,6 +20,10 @@ import { RISING_DAYS, rising } from "../lib/rising.ts";
 import { loadGrowth, USE_TIP } from "../lib/usage.ts";
 
 const plugins = shownPlugins();
+// Every plugin we tracked and checked (hidden ones too), the figure /state-of-zotero-plugins leads
+// with, and how many of them no other plugin list has.
+const eco = ecosystem();
+const num = (n: number) => n.toLocaleString("en-GB");
 const tries = ["cite in Word", "translate PDFs", "summarise a paper", "find duplicates"];
 const cats = JOBS.map((j) => ({ ...j, n: plugins.filter((p) => p.jobs.includes(j.slug)).length }));
 const cur = CURRENT_ZOTERO_MAJOR();
@@ -70,6 +75,9 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
   <div class="hero">
     <div class="hl">
       <h1>Plugins for Zotero, checked before you install</h1>
+      <p class="claim">
+        <strong>The most complete directory of Zotero plugins.</strong> We track <a href="/state-of-zotero-plugins">{num(eco.checked)} of them</a>, and {num(eco.people.newFinds)} aren't in any other plugin list we know of.
+      </p>
       <form action="/browse" method="get" role="search" class="search">
         <span aria-hidden="true" class="glass"></span>
         <label class="visually-hidden" for="home-q">What do you want Zotero to do?</label>
@@ -326,6 +334,27 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     letter-spacing: -0.04em;
     font-weight: 780;
     text-wrap: balance;
+  }
+  .claim {
+    margin: -4px 0 2px;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink-2);
+  }
+  .claim strong {
+    color: var(--ink);
+    font-weight: 680;
+  }
+  .claim a {
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  .claim a:hover {
+    color: var(--accent-fg);
   }
   .search {
     display: flex;
@@ -843,6 +872,11 @@ const packs = PACKS.map((pack) => ({ pack, picks: resolvePack(pack) }));
     h1 {
       font-size: 34px;
       line-height: 1.05;
+    }
+    .claim {
+      margin-top: -2px;
+      font-size: 16.5px;
+      line-height: 1.45;
     }
     .search input {
       font-size: 17px;
