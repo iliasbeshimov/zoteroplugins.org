@@ -1,29 +1,29 @@
 {
  "schemaVersion": 1,
- "slug": "zotero-copy-attachment-file",
- "repo": "lislond/zotero-copy-attachment-file",
- "version": "1.1.0",
- "tag": "v1.1",
+ "slug": "zotero-attachment-manager",
+ "repo": "lislond/zotero-attachment-manager",
+ "version": "2.0.0",
+ "tag": "v2.0",
  "releaseAuthor": "lislond",
- "publishedAt": "2026-11-10T09:38:48Z",
+ "publishedAt": "2026-11-24T15:25:07Z",
  "prerelease": false,
  "asset": {
-  "name": "zotero-copy-attachment-file-1.1.0.xpi",
-  "url": "https://github.com/lislond/zotero-copy-attachment-file/releases/download/v1.1/zotero-copy-attachment-file-1.1.0.xpi",
-  "size": 3406,
-  "sha256": "b1ae295eb4f3eb93867755b90d4b0abbc993f3ee5250922e66a5364f0c6d3106",
-  "githubAssetId": 730878929,
+  "name": "zotero-attachment-manager-2.0.0.xpi",
+  "url": "https://github.com/lislond/zotero-attachment-manager/releases/download/v2.0/zotero-attachment-manager-2.0.0.xpi",
+  "size": 15063,
+  "sha256": "c74b7671e2b64d47c2b8f6bb9a8fc03355da343eaff13be856c02b0e827a3e85",
+  "githubAssetId": 787720422,
   "uploader": "lislond",
-  "uploadedAt": "2026-11-10T09:39:37Z",
-  "fetchedAt": "2026-11-22T16:22:10.605Z"
+  "uploadedAt": "2026-11-24T15:24:29Z",
+  "fetchedAt": "2026-11-25T13:18:42.875Z"
  },
  "manifest": {
   "format": "manifest.json",
   "legacy": false,
   "addonId": "copy-attachment-file@zotero-local.example",
-  "name": "复制附件文件",
-  "version": "1.1.0",
-  "description": "从 Zotero 附件右键菜单复制文件，可直接在 Windows 资源管理器中粘贴。",
+  "name": "附件管理器",
+  "version": "2.0.0",
+  "description": "扫描文献库附件、查看文件大小、搜索排序、批量删除和 PDF 压缩。",
   "updateUrl": "https://updates.invalid/zotero-copy-attachment-file.json",
   "strictMinVersion": "8.0",
   "strictMaxVersion": "10.0.*"
@@ -31,28 +31,52 @@
  "files": [
   {
    "path": "bootstrap.js",
-   "size": 7642,
-   "sha256": "be5a52029e3fa98b1eaf8b63565661d0a53cc577b61efdd1f40a8250948887ce"
+   "size": 22533,
+   "sha256": "1260bdc01c76d5dea359556f70820950216243c5419df54dec8b3568f4b462ab"
+  },
+  {
+   "path": "manager.css",
+   "size": 3767,
+   "sha256": "5cb4f79e1fbf23798b86f8b35c143586228042e20a2607f8bc23a6202fa651bc"
+  },
+  {
+   "path": "manager.js",
+   "size": 9996,
+   "sha256": "73ab070e80a6add0be5d317876df2bdce86a94134c8ba585d27edcf738b5647c"
+  },
+  {
+   "path": "manager.xhtml",
+   "size": 4088,
+   "sha256": "be55682338aa9250c58a49ccc40777555c6cf2d27a8b39d7859bd83e42639274"
   },
   {
    "path": "manifest.json",
-   "size": 454,
-   "sha256": "3f90b9c3eb72c0b673f053dd6ad8bb4618028a32bba4259e39da74769a1687a0"
+   "size": 459,
+   "sha256": "e12796efeac38a5f1536750d402b4194da76dd08b632dcef3eeed6394054abaa"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 1425,
+   "sha256": "8c8c52e8d3409c46d67135a7c1d28ea53e18a215554b8081d2e0ca27e7b1f4b8"
   }
  ],
  "analysis": {
   "schemaVersion": 1,
   "analyzerVersion": "0.13.1",
-  "analyzedAt": "2026-11-22T16:22:10.605Z",
+  "analyzedAt": "2026-11-25T13:18:42.875Z",
   "input": {
-   "slug": "zotero-copy-attachment-file",
-   "version": "1.1.0",
-   "sha256": "b1ae295eb4f3eb93867755b90d4b0abbc993f3ee5250922e66a5364f0c6d3106"
+   "slug": "zotero-attachment-manager",
+   "version": "2.0.0",
+   "sha256": "c74b7671e2b64d47c2b8f6bb9a8fc03355da343eaff13be856c02b0e827a3e85"
   },
   "coverage": {
-   "filesTotal": 2,
-   "filesAnalyzed": 1,
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
    "filesSkipped": [
+    {
+     "path": "manager.css",
+     "reason": "not-code"
+    },
     {
      "path": "manifest.json",
      "reason": "not-code"
@@ -60,7 +84,7 @@
    ],
    "parseFailures": [],
    "partial": false,
-   "codeBytes": 7642,
+   "codeBytes": 38042,
    "failedBytes": 0
   },
   "transparency": {
@@ -80,7 +104,34 @@
   },
   "network": {
    "apis": [],
-   "hosts": [],
+   "hosts": [
+    {
+     "host": "ghostscript.com",
+     "category": "unknown",
+     "flags": [],
+     "usage": "link",
+     "inVendoredCode": false,
+     "occurrences": 2,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "bootstrap.js",
+       "line": 345,
+       "column": 34,
+       "snippet": "download() { Zotero.launchURL(\"https://ghostscript.com/releases/gsdnld.html\"); },",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "manager.xhtml",
+       "line": 48,
+       "column": 12,
+       "snippet": "<h:a href=\"https://ghostscript.com/releases/gsdnld.html\" id=\"download\">下载 Ghostscript</h:a>",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
    "dynamicUrls": [],
    "configurableEndpoints": [],
    "hostsTableVersion": "2026.11.23"
@@ -88,22 +139,71 @@
   "capabilities": [
    {
     "id": "filesystem",
-    "occurrences": 1,
+    "occurrences": 7,
     "inVendoredCodeOnly": false,
-    "codeKey": "9a83ac26be03",
+    "codeKey": "8598476586b7",
     "evidence": [
      {
       "kind": "code",
       "file": "bootstrap.js",
-      "line": 114,
+      "line": 237,
       "column": 25,
       "snippet": "const sample = await Zotero.File.getSample(file);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 355,
+      "column": 18,
+      "snippet": "if (path) Zotero.File.pathToFile(path).reveal();",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 384,
+      "column": 31,
+      "snippet": "const info = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 507,
+      "column": 25,
+      "snippet": "const before = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 522,
+      "column": 24,
+      "snippet": "const after = await IOUtils.stat(path);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 527,
+      "column": 29,
+      "snippet": "const compressed = await IOUtils.stat(output);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 545,
+      "column": 18,
+      "snippet": "try { await IOUtils.remove(directory.path, { recursive: true }); }",
       "inVendoredCode": false
      }
     ],
     "details": {
-     "fsScope": "unknown",
+     "fsScope": "user-chosen",
      "apis": [
+      "IOUtils",
       "Zotero.File"
      ]
     }
@@ -117,7 +217,7 @@
      {
       "kind": "code",
       "file": "bootstrap.js",
-      "line": 147,
+      "line": 270,
       "column": 48,
       "snippet": "const { ctypes } = ChromeUtils.importESModule(\"resource://gre/modules/ctypes.sys.mjs\");",
       "inVendoredCode": false
@@ -125,7 +225,7 @@
      {
       "kind": "code",
       "file": "bootstrap.js",
-      "line": 150,
+      "line": 273,
       "column": 19,
       "snippet": "const hwnd = ptr(ctypes.UInt64(handle));",
       "inVendoredCode": false
@@ -133,7 +233,7 @@
      {
       "kind": "code",
       "file": "bootstrap.js",
-      "line": 153,
+      "line": 276,
       "column": 15,
       "snippet": "const user = ctypes.open(\"user32.dll\");",
       "inVendoredCode": false
@@ -141,7 +241,7 @@
      {
       "kind": "code",
       "file": "bootstrap.js",
-      "line": 156,
+      "line": 279,
       "column": 13,
       "snippet": "kernel = ctypes.open(\"kernel32.dll\");",
       "inVendoredCode": false
@@ -149,7 +249,7 @@
      {
       "kind": "code",
       "file": "bootstrap.js",
-      "line": 157,
+      "line": 280,
       "column": 79,
       "snippet": "const registerFormat = user.declare(\"RegisterClipboardFormatW\", abi, uint, ctypes.jschar.ptr);",
       "inVendoredCode": false
@@ -157,7 +257,7 @@
      {
       "kind": "code",
       "file": "bootstrap.js",
-      "line": 162,
+      "line": 285,
       "column": 64,
       "snippet": "const alloc = kernel.declare(\"GlobalAlloc\", abi, ptr, uint, ctypes.size_t);",
       "inVendoredCode": false
@@ -165,7 +265,7 @@
      {
       "kind": "code",
       "file": "bootstrap.js",
-      "line": 174,
+      "line": 297,
       "column": 25,
       "snippet": "const target = ctypes.cast(address, ctypes.uint16_t.array(data.length).ptr).contents;",
       "inVendoredCode": false
@@ -173,7 +273,7 @@
      {
       "kind": "code",
       "file": "bootstrap.js",
-      "line": 174,
+      "line": 297,
       "column": 46,
       "snippet": "const target = ctypes.cast(address, ctypes.uint16_t.array(data.length).ptr).contents;",
       "inVendoredCode": false
@@ -182,6 +282,35 @@
     "details": {
      "apis": [
       "js-ctypes"
+     ]
+    }
+   },
+   {
+    "id": "process-launch",
+    "occurrences": 2,
+    "inVendoredCodeOnly": false,
+    "codeKey": "84c5e463a0a3",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 466,
+      "column": 23,
+      "snippet": "const process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     },
+     {
+      "kind": "code",
+      "file": "bootstrap.js",
+      "line": 466,
+      "column": 69,
+      "snippet": "const process = Cc[\"@mozilla.org/process/util;1\"].createInstance(Ci.nsIProcess);",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "apis": [
+      "nsIProcess"
      ]
     }
    },
@@ -209,7 +338,7 @@
  "provenance": {
   "schemaVersion": 1,
   "checkerVersion": "lite-0.4",
-  "checkedAt": "2026-11-22T16:22:10.605Z",
+  "checkedAt": "2026-11-25T13:18:42.875Z",
   "level": "not-checked",
   "method": "none",
   "tag": null,
@@ -225,18 +354,18 @@
  "trustCard": {
   "schemaVersion": 1,
   "rulesVersion": "0.9.1-preview",
-  "computedAt": "2026-11-23T22:26:13.055Z",
+  "computedAt": "2026-11-25T13:18:42.875Z",
   "appliesTo": {
-   "slug": "zotero-copy-attachment-file",
-   "version": "1.1.0",
-   "sha256": "b1ae295eb4f3eb93867755b90d4b0abbc993f3ee5250922e66a5364f0c6d3106"
+   "slug": "zotero-attachment-manager",
+   "version": "2.0.0",
+   "sha256": "c74b7671e2b64d47c2b8f6bb9a8fc03355da343eaff13be856c02b0e827a3e85"
   },
   "inputs": {
    "analyzerVersion": "0.13.1",
    "provenanceCheckerVersion": "lite-0.4",
    "hostsTableVersion": "2026.11.23",
    "currentZotero": "10.0.9",
-   "inputHash": "c737fced46bc0bd8d541484f405e0cc2658ed6fa3e24362f7167bd1090226b13"
+   "inputHash": "331577c069d87b736a40fa21d5c8fc015053ce716acbf752e36e936a0c7eeac9"
   },
   "facets": {
    "sourceTransparency": {
@@ -274,6 +403,11 @@
       "concern": "medium"
      },
      {
+      "id": "process-launch",
+      "label": "Launches programs on your computer",
+      "concern": "medium"
+     },
+     {
       "id": "filesystem",
       "label": "Works with files on your computer",
       "concern": "low"
@@ -282,6 +416,7 @@
     "concern": "medium",
     "drivers": [
      "CAP-MINOR",
+     "CAP-PROCESS",
      "CAP-PROCESS"
     ]
    },
@@ -291,8 +426,8 @@
    },
    "maintenance": {
     "status": "active",
-    "lastReleaseAt": "2026-11-10T09:38:48Z",
-    "lastCommitAt": "2026-11-10T09:35:48Z",
+    "lastReleaseAt": "2026-11-24T15:25:07Z",
+    "lastCommitAt": "2026-11-24T15:21:46Z",
     "concern": "none"
    },
    "compatibility": {
@@ -327,7 +462,8 @@
     "capabilities"
    ],
    "reasons": [
-    "Loads native code"
+    "Loads native code",
+    "Launches programs on your computer"
    ]
   }
  }
