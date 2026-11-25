@@ -17,4 +17,17 @@ responses:
 
       Could you update the fingerprint wording, or point me to the specific download path that bypasses verification if the finding refers to a different path? Thanks.
     url: https://github.com/iliasbeshimov/zoteroplugins.org/issues/24
-    status: open
+    status: corrected
+    reply: |-
+      Thanks for the careful check. You were right, and your installers do what you said: both check every download against a SHA-256 written into the plugin before anything is unpacked or run.
+
+      Our scanner got your shell installer wrong in two places. It only recognised a digest written in quotes, and yours are bare (`digest=8294b7aa…`), so it marked that download unchecked. It also didn't follow the versions you set at the top of the script, so it read `pdf2zh_next==$PDF2ZH_VERSION` and the others as unpinned. And it didn't know files.pythonhosted.org is PyPI's file server. All three are fixed, for every plugin.
+
+      Codex Bilingual Reader is now graded B: https://zoteroplugins.org/p/codex-bilingual-reader. The downloads count as checked against a fixed fingerprint, and the Python packages as fixed versions. Those, and starting Codex CLI and the installer scripts, are medium findings, and B is the highest grade a plugin that installs packages and runs programs can get under our rules. So there's nothing more you need to change for it.
+
+      If you'd like to show it in your README:
+
+      ```
+      [![Zotero Plugins grade](https://zoteroplugins.org/badge/codex-bilingual-reader.svg)](https://zoteroplugins.org/p/codex-bilingual-reader)
+      ```
+    repliedAt: "2026-11-25"
