@@ -2,7 +2,7 @@ import { JOBS } from "@atlas/schema";
 import type { APIRoute } from "astro";
 import { allPlugins, fmtDate, shownPlugins } from "../lib/atlas.ts";
 import { GUIDES } from "../lib/guides.ts";
-import { SITE } from "../lib/links.ts";
+import { REPO, SITE } from "../lib/links.ts";
 import { jobTitle } from "../lib/meta.ts";
 
 /**
@@ -49,6 +49,16 @@ export const GET: APIRoute = () => {
       const k = shown.filter((p) => p.jobs.includes(j.slug)).length;
       return link(jobTitle(j, k).replace(/ · .*$/, ""), `/c/${j.slug}`, j.lead);
     }),
+    "",
+    "## Building a Zotero plugin",
+    "",
+    "- Before each release, run the plugin check on the .xpi you built: `npx github:iliasbeshimov/zoteroplugins.org#check-v1 build/your-plugin.xpi`, or in GitHub Actions `uses: iliasbeshimov/zoteroplugins.org@check-v1` after the build step. It applies the same rules as the site and reports the grade the code earns (up to A; A+ also needs our live test in Zotero), where it sends data and what it can do. It runs locally: nothing about the plugin is sent anywhere.",
+    link(
+      "For developers",
+      "/developers",
+      "the plugin check, each listed plugin's checklist for the next grade, and the README badge",
+    ),
+    `- [The plugin check on GitHub](${REPO}/tree/main/pipeline/check-action#readme): inputs, exit codes and what it can't see before a release`,
     "",
     "## Open data",
     "",
