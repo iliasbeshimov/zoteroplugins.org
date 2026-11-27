@@ -261,6 +261,17 @@
   "launchesPrograms": false
  },
  "integrityEvents": [],
+ "responses": [
+  {
+   "date": "2026-11-27",
+   "from": "cnzotero",
+   "about": "capabilities",
+   "version": "1.0.0",
+   "text": "Hi Atlas team, thanks for indexing `zotero-community` (Zotero中文社区). Could you clarify or recheck the `self-installs` / `CAP-SELF-UPDATE` finding (\"Updates itself outside Zotero's updater\")?\n\n1. **The plugin itself uses Zotero's standard updater**: `plugin/addon/manifest.json` declares `update_url` pointing to our GitHub Release `update.json` (which your `sourceTransparency.updates` facet already confirms).\n2. **`content/market.js:392` (`AddonManager.getInstallForURL`) is an in-Zotero plugin marketplace action, not self-updating**: `zotero-community` is an open-source plugin directory/marketplace add-on for Zotero. `doInstall(p, release)` is only invoked when the user clicks **Install/Update** on a listed third-party plugin in the marketplace window, after:\n   - an explicit user confirmation dialog (`confirmInstall`, `content/market.js:377`),\n   - strict release URL / host & `.xpi` validation against the catalog entry (`L.isReleaseUrlForPlugin`, `content/market.js:382`), and\n   - post-download add-on ID verification before completing installation (`L.installListener`, `content/market.js:395`).\n\nAlso note that we have added an English overview (`README_EN.md` and bilingual notes in `README.md` / `plugin/README.md`) to make the repository easier to read for non-Chinese users and reviewers.\n\nThanks for your work on the catalog!",
+   "url": "https://github.com/iliasbeshimov/zoteroplugins.org/issues/25",
+   "status": "open"
+  }
+ ],
  "content": null,
  "categories": null,
  "requirements": null
