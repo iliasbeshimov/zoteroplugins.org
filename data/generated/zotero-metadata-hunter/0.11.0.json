@@ -1,0 +1,675 @@
+{
+ "schemaVersion": 1,
+ "slug": "zotero-metadata-hunter",
+ "repo": "federicotorrielli/zotero-metadata-hunter",
+ "version": "0.11.0",
+ "tag": "v0.11.0",
+ "releaseAuthor": "github-actions[bot]",
+ "publishedAt": "2026-11-27T12:17:10Z",
+ "prerelease": false,
+ "asset": {
+  "name": "metadatahunter@federicotorrielli.github.io-0.11.0.xpi",
+  "url": "https://github.com/federicotorrielli/zotero-metadata-hunter/releases/download/v0.11.0/metadatahunter%40federicotorrielli.github.io-0.11.0.xpi",
+  "size": 27569,
+  "sha256": "b274b959a36bbf2a7b3eb02b7b167c843868533492408cd5e0e8a82f07f32458",
+  "githubAssetId": 800371707,
+  "uploader": "github-actions[bot]",
+  "uploadedAt": "2026-11-27T12:17:09Z",
+  "fetchedAt": "2026-11-27T12:44:10.282Z"
+ },
+ "manifest": {
+  "format": "manifest.json",
+  "legacy": false,
+  "addonId": "metadatahunter@federicotorrielli.github.io",
+  "name": "Metadata Hunter",
+  "version": "0.11.0",
+  "description": "A Zotero plugin to find and add missing DOIs and abstracts to references",
+  "updateUrl": "https://raw.githubusercontent.com/federicotorrielli/zotero-metadata-hunter/main/update.json",
+  "strictMinVersion": "10.0",
+  "strictMaxVersion": "10.0.*"
+ },
+ "files": [
+  {
+   "path": "bootstrap.js",
+   "size": 810,
+   "sha256": "223e0b8e7a162c243436fa1e67f41f5d2718c3196778de17d4511588a9ec5dcd"
+  },
+  {
+   "path": "content/scripts/index.js",
+   "size": 77423,
+   "sha256": "46bbede83e504d8a713830125487afd3365a1df401c54899474b9dd8bba43fb0"
+  },
+  {
+   "path": "locale/en-US/metadatahunter.ftl",
+   "size": 10423,
+   "sha256": "242999b66cfcd06ddf987ef9755f6fc863ed9ed4176ffaa335d64056c9e81549"
+  },
+  {
+   "path": "manifest.json",
+   "size": 466,
+   "sha256": "6e0750315509808c3d9a987b4a5d3de6bcd41bb71fa8a8aa315ea42de9f14ff6"
+  },
+  {
+   "path": "preferences.js",
+   "size": 2576,
+   "sha256": "70d038bd81696581b7d370216ad7adb4acb67b3411c0e9bdb5ea7fa7dc4e1737"
+  },
+  {
+   "path": "preferences.xhtml",
+   "size": 4537,
+   "sha256": "a621c2450359be9151f66859d4b290767b97bacbada84261bbd7f08887f6b557"
+  }
+ ],
+ "analysis": {
+  "schemaVersion": 1,
+  "analyzerVersion": "0.13.1",
+  "analyzedAt": "2026-11-27T12:44:10.282Z",
+  "input": {
+   "slug": "zotero-metadata-hunter",
+   "version": "0.11.0",
+   "sha256": "b274b959a36bbf2a7b3eb02b7b167c843868533492408cd5e0e8a82f07f32458"
+  },
+  "coverage": {
+   "filesTotal": 6,
+   "filesAnalyzed": 4,
+   "filesSkipped": [
+    {
+     "path": "locale/en-US/metadatahunter.ftl",
+     "reason": "not-code"
+    },
+    {
+     "path": "manifest.json",
+     "reason": "not-code"
+    }
+   ],
+   "parseFailures": [],
+   "partial": false,
+   "codeBytes": 85346,
+   "failedBytes": 0
+  },
+  "transparency": {
+   "verdict": "readable",
+   "obfuscation": {
+    "detected": false,
+    "confidence": "high",
+    "signals": []
+   },
+   "minifiedFiles": [],
+   "sourceMaps": {
+    "present": false,
+    "files": []
+   },
+   "suspiciousUnicode": [],
+   "vendoredLibraries": []
+  },
+  "network": {
+   "apis": [
+    {
+     "api": "zotero-http",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1987,
+       "column": 10,
+       "snippet": "await zotero.HTTP.processDocuments([url], async (doc) => {",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 2069,
+       "column": 41,
+       "snippet": "request: (method, url, options) => zotero.HTTP.request(method, url, options),",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "api": "zotero-lookup",
+     "occurrences": 2,
+     "inVendoredCodeOnly": false,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1947,
+       "column": 22,
+       "snippet": "const translate = new zotero.Translate.Search();",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1988,
+       "column": 24,
+       "snippet": "const translate = new zotero.Translate.Web();",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "hosts": [
+    {
+     "host": "api.crossref.org",
+     "category": "scholarly-api",
+     "provider": "Crossref",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1716,
+       "column": 29,
+       "snippet": "var worksURL = (params) => `https://api.crossref.org/works?${params.join(\"&\")}&rows=${ROWS}`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.openalex.org",
+     "category": "scholarly-api",
+     "provider": "OpenAlex",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1769,
+       "column": 6,
+       "snippet": "`https://api.openalex.org/works/doi:${doi}`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api.semanticscholar.org",
+     "category": "scholarly-api",
+     "provider": "Semantic Scholar",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 428,
+       "column": 12,
+       "snippet": "var API = \"https://api.semanticscholar.org/graph/v1\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 460,
+       "column": 6,
+       "snippet": "`${API}/paper/search/match?query=${query}&fields=${fields}`",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 489,
+       "column": 6,
+       "snippet": "`${API}/paper/DOI:${doi}?fields=abstract`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "api2.openreview.net",
+     "category": "scholarly-api",
+     "provider": "OpenReview",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1839,
+       "column": 6,
+       "snippet": "`https://api2.openreview.net/notes/search?term=${term}&content=title&type=exact&source=forum&limit=${SEARCH_LIMIT}`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1679,
+       "column": 24,
+       "snippet": "var ARXIV_NAMESPACE = \"http://arxiv.org/schemas/atom\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dblp.dagstuhl.de",
+     "category": "scholarly-api",
+     "provider": "dblp",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1530,
+       "column": 4,
+       "snippet": "\"https://dblp.dagstuhl.de\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dblp.federicotorrielli.me",
+     "category": "developer-server",
+     "provider": "Plugin developer (name match)",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1533,
+       "column": 21,
+       "snippet": "var DEFAULT_HOST = \"https://dblp.federicotorrielli.me\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dblp.org",
+     "category": "scholarly-api",
+     "provider": "dblp",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1529,
+       "column": 4,
+       "snippet": "\"https://dblp.org\",",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "dblp.uni-trier.de",
+     "category": "scholarly-api",
+     "provider": "dblp",
+     "flags": [],
+     "usage": "request",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1531,
+       "column": 4,
+       "snippet": "\"https://dblp.uni-trier.de\"",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "eutils.ncbi.nlm.nih.gov",
+     "category": "scholarly-api",
+     "provider": "NCBI E-utilities",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1850,
+       "column": 15,
+       "snippet": "var EUTILS = \"https://eutils.ncbi.nlm.nih.gov/entrez/eutils\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1861,
+       "column": 6,
+       "snippet": "`${EUTILS}/esearch.fcgi?db=pubmed&term=${encodeURIComponent(doi)}&retmode=json`",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1866,
+       "column": 6,
+       "snippet": "`${EUTILS}/efetch.fcgi?db=pubmed&id=${ids[0]}&retmode=xml`",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "export.arxiv.org",
+     "category": "scholarly-api",
+     "provider": "arXiv",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 3,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1678,
+       "column": 13,
+       "snippet": "var API2 = \"https://export.arxiv.org/api/query\";",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1695,
+       "column": 16,
+       "snippet": "const url = `${API2}?search_query=ti:${queryTitle}${author}&max_results=5&sortBy=relevance`;",
+       "inVendoredCode": false
+      },
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1706,
+       "column": 16,
+       "snippet": "const url = `${API2}?id_list=${arxivId}&max_results=1`;",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "github.com",
+     "category": "code-hosting",
+     "provider": "GitHub",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 12,
+       "column": 17,
+       "snippet": "var homepage = \"https://github.com/federicotorrielli/zotero-metadata-hunter#readme\";",
+       "inVendoredCode": false
+      }
+     ]
+    },
+    {
+     "host": "openreview.net",
+     "category": "scholarly-api",
+     "provider": "OpenReview",
+     "flags": [],
+     "usage": "unknown",
+     "inVendoredCode": false,
+     "occurrences": 1,
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1832,
+       "column": 16,
+       "snippet": "const url = `https://openreview.net/forum?id=${encodeURIComponent(forum)}`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "dynamicUrls": [
+    {
+     "pattern": "https://<expr>",
+     "evidence": [
+      {
+       "kind": "code",
+       "file": "content/scripts/index.js",
+       "line": 1482,
+       "column": 59,
+       "snippet": "const withScheme = /^https?:\\/\\//i.test(host) ? host : `https://${host}`;",
+       "inVendoredCode": false
+      }
+     ]
+    }
+   ],
+   "configurableEndpoints": [],
+   "hostsTableVersion": "2026.11.25"
+  },
+  "capabilities": [
+   {
+    "id": "filesystem",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "codeKey": "3b60f67152c9",
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "content/scripts/index.js",
+      "line": 2101,
+      "column": 43,
+      "snippet": "{ fileSize: async (path) => (await IOUtils.stat(path)).size },",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "fsScope": "unknown",
+     "apis": [
+      "IOUtils"
+     ]
+    }
+   },
+   {
+    "id": "self-update",
+    "occurrences": 1,
+    "inVendoredCodeOnly": false,
+    "evidence": [
+     {
+      "kind": "code",
+      "file": "manifest.json",
+      "line": 9,
+      "column": 21,
+      "snippet": "\"update_url\": \"https://raw.githubusercontent.com/federicotorrielli/zotero-metadata-hunter/main/update.json\",",
+      "inVendoredCode": false
+     }
+    ],
+    "details": {
+     "updateUrl": "https://raw.githubusercontent.com/federicotorrielli/zotero-metadata-hunter/main/update.json"
+    }
+   }
+  ],
+  "diff": null
+ },
+ "provenance": {
+  "schemaVersion": 1,
+  "checkerVersion": "lite-0.4",
+  "checkedAt": "2026-11-27T12:44:10.282Z",
+  "level": "plausible",
+  "method": "none",
+  "tag": null,
+  "build": null,
+  "diff": null,
+  "attestation": {
+   "present": false,
+   "verified": false
+  },
+  "explanation": "The release file was uploaded by the project's automated GitHub build. We haven't yet rebuilt it from the source to compare."
+ },
+ "dataFlow": null,
+ "trustCard": {
+  "schemaVersion": 1,
+  "rulesVersion": "0.9.1-preview",
+  "computedAt": "2026-11-27T12:44:10.282Z",
+  "appliesTo": {
+   "slug": "zotero-metadata-hunter",
+   "version": "0.11.0",
+   "sha256": "b274b959a36bbf2a7b3eb02b7b167c843868533492408cd5e0e8a82f07f32458"
+  },
+  "inputs": {
+   "analyzerVersion": "0.13.1",
+   "provenanceCheckerVersion": "lite-0.4",
+   "hostsTableVersion": "2026.11.25",
+   "currentZotero": "10.0.9",
+   "inputHash": "2b2a621605ed4a561aa81d66631a4181e81c7190d2040ec5a0607bd97a574d55"
+  },
+  "facets": {
+   "sourceTransparency": {
+    "provenance": "plausible",
+    "obfuscated": false,
+    "suspiciousUnicode": false,
+    "sourceMaps": false,
+    "assetReplaced": false,
+    "updates": {
+     "kind": "this-project",
+     "label": "Updates come from this project's GitHub repository",
+     "check": "The update address offers version 0.11.0, which isn't newer than this one, so Zotero won't update it for now"
+    },
+    "partialAnalysis": null,
+    "concern": "low",
+    "label": "Readable code, uploaded by the project's automated GitHub build",
+    "drivers": [
+     "ST-PLAUSIBLE"
+    ]
+   },
+   "dataSharing": {
+    "value": "developer-servers",
+    "hosts": [
+     {
+      "category": "developer-server",
+      "hosts": [
+       "dblp.federicotorrielli.me"
+      ],
+      "unconfirmed": [
+       "dblp.federicotorrielli.me"
+      ]
+     },
+     {
+      "category": "scholarly-api",
+      "hosts": [
+       "api.crossref.org",
+       "api.openalex.org",
+       "api.semanticscholar.org",
+       "api2.openreview.net",
+       "arxiv.org",
+       "dblp.dagstuhl.de",
+       "dblp.org",
+       "dblp.uni-trier.de",
+       "eutils.ncbi.nlm.nih.gov",
+       "export.arxiv.org",
+       "openreview.net"
+      ],
+      "unconfirmed": [
+       "api.crossref.org",
+       "api.openalex.org",
+       "api.semanticscholar.org",
+       "api2.openreview.net",
+       "arxiv.org",
+       "eutils.ncbi.nlm.nih.gov",
+       "export.arxiv.org",
+       "openreview.net"
+      ]
+     },
+     {
+      "category": "zotero",
+      "hosts": [
+       "Zotero lookup services"
+      ]
+     }
+    ],
+    "concern": "medium",
+    "label": "Its code names the developer's server: dblp.federicotorrielli.me",
+    "legalRisk": false,
+    "drivers": [
+     "DS-DEVELOPER"
+    ]
+   },
+   "capabilities": {
+    "badges": [
+     {
+      "id": "filesystem",
+      "label": "Works with files on your computer",
+      "concern": "low"
+     }
+    ],
+    "concern": "low",
+    "drivers": [
+     "CAP-MINOR"
+    ]
+   },
+   "requirements": {
+    "badges": [],
+    "reviewed": false
+   },
+   "maintenance": {
+    "status": "active",
+    "lastReleaseAt": "2026-11-27T12:17:10Z",
+    "lastCommitAt": "2026-11-27T12:28:02Z",
+    "concern": "none"
+   },
+   "compatibility": {
+    "current": {
+     "zoteroVersion": "10.0.9",
+     "major": 10,
+     "status": "compatible"
+    },
+    "previous": {
+     "zoteroVersion": "9.0.6",
+     "major": 9,
+     "status": "incompatible"
+    },
+    "next": {
+     "zoteroVersion": "11.0-dev.5+dac1ad489",
+     "major": 11,
+     "status": "compatible"
+    },
+    "blockedByZotero": null,
+    "label": "Works with Zotero 10",
+    "concern": "none"
+   },
+   "reviewStatus": {
+    "state": "automated-only",
+    "stale": false
+   }
+  },
+  "overall": {
+   "label": "review-details",
+   "ruleId": "OV-REVIEW",
+   "drivers": [
+    "dataSharing"
+   ],
+   "reasons": [
+    "Its code names the developer's server: dblp.federicotorrielli.me"
+   ]
+  }
+ }
+}
